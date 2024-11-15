@@ -6,10 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "prisma:format": "prisma format",
+    "prisma:seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@fontsource/inter": "5.0.20",
+    "@prisma/client": "5.22.0",
     "@tailwindcss/typography": "0.5.13",
     "next": "14.2.5",
     "next-intl": "3.17.3",
