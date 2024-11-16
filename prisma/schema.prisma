@@ -40,6 +40,8 @@ model Service {
   name        String
   description String?
   items       Item[]
+  packageId   Int
+  package     Package  @relation(fields: [packageId], references: [id])
 }
 
 model Item {
@@ -51,6 +53,14 @@ model Item {
   priceInCents Int
   serviceId    Int
   service      Service  @relation(fields: [serviceId], references: [id])
+}
+
+model Package {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  name      String    @unique
+  services  Service[]
 }
 
 enum Role {
