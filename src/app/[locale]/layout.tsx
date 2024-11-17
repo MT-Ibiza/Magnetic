@@ -2,8 +2,9 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Metadata } from "next";
 import App from "./app";
-import "tailwindcss/tailwind.css";
-import "../global.css"
+import '../global.css';
+import '@radix-ui/themes/styles.css';
+import 'tailwindcss/tailwind.css';
 
 export async function generateMetadata({
   params: { locale },
