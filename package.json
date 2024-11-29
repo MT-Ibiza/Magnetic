@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "app:dev": "npx nx run magnetic:dev",
-    "admin:dev": "npx nx run admin:serve",
+    "dev:app": "npx nx run magnetic:dev",
+    "dev:admin": "npx nx run admin:serve",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
     "prisma:format": "prisma format",
