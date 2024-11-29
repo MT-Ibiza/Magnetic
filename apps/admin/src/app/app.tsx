@@ -1,15 +1,13 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HeaderApp } from '@magnetic/ui';
-import styles from './app.module.scss';
-import NxWelcome from './nx-welcome';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AppRouter } from './routes/app-router';
 
-import { Route, Routes, Link } from 'react-router-dom';
+const queryClient = new QueryClient();
 
 export function App() {
   return (
-    <div>
-      <HeaderApp />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <AppRouter />
+    </QueryClientProvider>
   );
 }
 
