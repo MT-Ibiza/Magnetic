@@ -1,4 +1,6 @@
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
+import Layout from '../layout';
+import PrivateRoutes from './private-routes';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -11,8 +13,8 @@ export const AppRouter = () => {
   return (
     <Routes>
       <Route path="login" element={<PendingPage />} />
-      <Route element={<PendingPage />}>
-        <Route path="/" element={<LayoutBlank />}>
+      <Route element={<PrivateRoutes />}>
+        <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<PendingPage />} />
           <Route path="services" element={<PendingPage />} />
           <Route path="users" element={<PendingPage />} />
