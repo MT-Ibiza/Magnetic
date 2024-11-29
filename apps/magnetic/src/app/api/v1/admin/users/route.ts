@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Role } from '@prisma/client';
 import bcrypt from 'bcrypt';
-import db from '../../../libs/db';
-import { uploadFile } from '../../../services/upload';
-import { getParamsFromUrl, searchUsers } from '../../../services/users';
+import { uploadFile } from 'apps/magnetic/src/app/services/upload';
+import db from 'apps/magnetic/src/app/libs/db';
+import { getParamsFromUrl, searchUsers } from 'apps/magnetic/src/app/services/users';
 
 export async function POST(request: Request) {
   try {
