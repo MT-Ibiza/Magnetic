@@ -1,6 +1,18 @@
 const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
 const { join } = require('path');
 
+function customColors(cssVar) {
+  return ({ opacityVariable, opacityValue }) => {
+    if (opacityValue !== undefined) {
+      return `rgba(var(${cssVar}), ${opacityValue})`;
+    }
+    if (opacityVariable !== undefined) {
+      return `rgba(var(${cssVar}), var(${opacityVariable}, 1))`;
+    }
+    return `rgb(var(${cssVar}))`;
+  };
+}
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -10,55 +22,52 @@ module.exports = {
     ),
     ...createGlobPatternsForDependencies(__dirname),
   ],
+  darkMode: "class",
   theme: {
     container: {
       center: true,
+      padding: {
+        DEFAULT: "1rem",
+        "2xl": "1rem",
+      },
     },
     extend: {
       colors: {
         primary: {
-          DEFAULT: '',
-        },
-        body: {
-          DEFAULT: '#fff',
+          50: customColors("--c-primary-50"),
+          100: customColors("--c-primary-100"),
+          200: customColors("--c-primary-200"),
+          300: customColors("--c-primary-300"),
+          400: customColors("--c-primary-400"),
+          500: customColors("--c-primary-500"),
+          6000: customColors("--c-primary-600"),
+          700: customColors("--c-primary-700"),
+          800: customColors("--c-primary-800"),
+          900: customColors("--c-primary-900"),
         },
         secondary: {
-          DEFAULT: '',
+          50: customColors("--c-secondary-50"),
+          100: customColors("--c-secondary-100"),
+          200: customColors("--c-secondary-200"),
+          300: customColors("--c-secondary-300"),
+          400: customColors("--c-secondary-400"),
+          500: customColors("--c-secondary-500"),
+          6000: customColors("--c-secondary-600"),
+          700: customColors("--c-secondary-700"),
+          800: customColors("--c-secondary-800"),
+          900: customColors("--c-secondary-900"),
         },
-        success: {
-          DEFAULT: '#00ab55',
-          light: '#ddf5f0',
-          'dark-light': 'rgba(0,171,85,.15)',
-        },
-        danger: {
-          DEFAULT: '#e7515a',
-          light: '#fff5f5',
-          'dark-light': 'rgba(231,81,90,.15)',
-        },
-        warning: {
-          DEFAULT: '#e2a03f',
-          light: '#fff9ed',
-          'dark-light': 'rgba(226,160,63,.15)',
-        },
-        info: {
-          DEFAULT: '#2196f3',
-          light: '#e7f7ff',
-          'dark-light': 'rgba(33,150,243,.15)',
-        },
-        dark: {
-          DEFAULT: '#3b3f5c',
-          light: '#eaeaec',
-          'dark-light': 'rgba(59,63,92,.15)',
-        },
-        black: {
-          DEFAULT: '#000000',
-          light: '#e3e4eb',
-          'dark-light': 'rgba(14,23,38,.15)',
-        },
-        white: {
-          DEFAULT: '#ffffff',
-          light: '#e0e6ed',
-          dark: '#888ea8',
+        neutral: {
+          50: customColors("--c-neutral-50"),
+          100: customColors("--c-neutral-100"),
+          200: customColors("--c-neutral-200"),
+          300: customColors("--c-neutral-300"),
+          400: customColors("--c-neutral-400"),
+          500: customColors("--c-neutral-500"),
+          6000: customColors("--c-neutral-600"),
+          700: customColors("--c-neutral-700"),
+          800: customColors("--c-neutral-800"),
+          900: customColors("--c-neutral-900"),
         },
       },
       fontFamily: {
@@ -67,5 +76,9 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // require("@tailwindcss/typography"),
+    // require("@tailwindcss/forms"),
+    // require("@tailwindcss/aspect-ratio"),
+  ],
 };

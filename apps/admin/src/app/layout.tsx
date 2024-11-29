@@ -1,3 +1,4 @@
+import { HeaderApp } from '@magnetic/ui'
 import { Outlet } from 'react-router-dom'
 
 interface Props {}
@@ -7,7 +8,7 @@ function Layout(props: Props) {
 
   return (
     <div className='app'>
-      <h1>Magnetic</h1>
+      <HeaderApp/>
       <Outlet />
     </div>
   )
