@@ -24,7 +24,7 @@ export function Sidebar(props: Props) {
   return (
     <div className={semidark ? 'dark' : ''}>
       <nav
-        className={`sidebar fixed min-h-screen h-full w-full top-0 bottom-0 h-[calc(100vh-2rem)] max-w-[20rem] px-4 shadow-xl  shadow-blue-gray-900/5 z-50 transition-all duration-300
+        className={`sidebar z-100 fixed min-h-screen h-full w-full top-0 bottom-0 h-[calc(100vh-2rem)] max-w-[18rem] px-4 shadow-xl  shadow-blue-gray-900/5 z-50 transition-all duration-300
         ${semidark ? 'text-white-dark' : ''}
       `}
       >
@@ -34,12 +34,6 @@ export function Sidebar(props: Props) {
               to="/dashboard"
               className="main-logo flex items-center shrink-0 gap-2"
             >
-              {/* <img
-                className="mr-1 inline cover"
-                src="/icons/logo-app.png"
-                alt="Logo"
-                width='55px'
-              /> */}
               <h5 className="block antialiased tracking-normal font-sans text-xl font-semibold leading-snug text-gray-900">
                 Magnetic Travel
               </h5>

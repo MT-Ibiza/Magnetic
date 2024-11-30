@@ -26,10 +26,10 @@ module.exports = {
   theme: {
     container: {
       center: true,
-      padding: {
-        DEFAULT: "1rem",
-        "2xl": "1rem",
-      },
+      // padding: {
+      //   DEFAULT: "1rem",
+      //   "2xl": "1rem",
+      // },
     },
     extend: {
       colors: {

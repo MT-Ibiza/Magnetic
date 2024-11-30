@@ -36,10 +36,14 @@ function Layout(props: Props) {
     },
   ];
   return (
-    <div className='app'>
-      <HeaderApp/>
-      <Sidebar options={navigation}/>
-      <Outlet />
+    <div className="app flex flex-col min-h-screen">
+      <HeaderApp />
+      <div className="flex flex-1">
+        <Sidebar options={navigation} />
+        <div className="flex-1 ml-[20rem] p-4">
+        <Outlet />
+        </div>
+      </div>
     </div>
   )
 }
