@@ -16,7 +16,7 @@ export function HeaderApp(props: HeaderProps) {
       <div className={`nc-MainNav1 relative z-10 ${className}`}>
         <div className="lg:container py-4 lg:py-2 relative flex justify-between items-center">
           <div className="hidden md:flex justify-start flex-1 items-center space-x-4 sm:space-x-10">
-            <Link
+            {/* <Link
               to="/"
               className={`ttnc-logo inline-block text-primary-6000 focus:outline-none focus:ring-0 ${className}`}
             >
@@ -25,7 +25,7 @@ export function HeaderApp(props: HeaderProps) {
                 alt="Logo"
                 className="lg:h-[50px] lg:w-[100px]"
               />
-            </Link>
+            </Link> */}
           </div>
           <div className="flex xl:hidden items-center">
             <div className="px-0.5" />
