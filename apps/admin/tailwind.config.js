@@ -60,7 +60,7 @@ module.exports = {
         neutral: {
           50: customColors("--c-neutral-50"),
           100: customColors("--c-neutral-100"),
-          200: customColors("--c-neutral-200"),
+          200: customColors("#0000"),
           300: customColors("--c-neutral-300"),
           400: customColors("--c-neutral-400"),
           500: customColors("--c-neutral-500"),

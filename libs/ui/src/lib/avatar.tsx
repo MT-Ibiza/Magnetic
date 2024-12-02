@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import avatar1 from '/images/avatar.png';
 
 export interface AvatarProps {
   containerClassName?: string;
@@ -46,7 +45,7 @@ const Avatar: FC<AvatarProps> = ({
   containerClassName = 'ring-1 ring-white dark:ring-neutral-900',
   sizeClass = 'h-6 w-6 text-sm',
   radius = 'rounded-full',
-  imgUrl = avatar1,
+  imgUrl = '/images/avatar.png',
   userName,
   hasChecked,
   hasCheckedClass = 'w-4 h-4 -top-0.5 -right-0.5',

@@ -6,7 +6,6 @@ import {
   DialogPanel,
 } from '@headlessui/react';
 import { usePathname } from 'next/navigation';
-// import { Bars3BottomRightIcon } from '@heroicons/react/24/solid'
 
 export interface MenuBarProps {
   className?: string;
