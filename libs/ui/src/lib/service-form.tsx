@@ -24,7 +24,7 @@ export function ServiceForm(props: Props) {
 
   return (
     <div className={`service-form`}>
-      <div className="container mb-24 lg:mb-32">
+      <div className="container">
         <div className="mx-auto space-y-6">
           <form
             className="grid grid-cols-1 gap-6"

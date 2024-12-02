@@ -18,12 +18,9 @@ export interface BadgeProps {
   href?: string;
 }
 
-const Badge: FC<BadgeProps> = ({
-  className = "relative",
-  name,
-  color = "blue",
-  href,
-}) => {
+export function Badge(props: BadgeProps) {
+  const { color = 'blue', name, className='relative', href } = props;
+
   const getColorClass = (hasHover = true) => {
     switch (color) {
       case "pink":
