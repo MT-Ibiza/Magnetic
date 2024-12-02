@@ -14,6 +14,13 @@ function Layout(props: Props) {
       icon: 'dashboard',
     },
     {
+      text: 'Services',
+      key: 'services',
+      url: '/services',
+      links: [],
+      icon: 'user-group',
+    },
+    {
       text: 'Users',
       key: 'users',
       url: '/users',

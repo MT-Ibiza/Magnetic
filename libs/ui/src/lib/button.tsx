@@ -32,7 +32,7 @@ const Button: FC<ButtonProps> = ({
   type,
   loading,
   onClick = () => {},
-  radius = 'none',
+  radius = 'large',
 }) => {
   function twFocusClass(hasRing = false) {
     if (!hasRing) {

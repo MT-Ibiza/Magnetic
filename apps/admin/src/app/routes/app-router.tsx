@@ -2,6 +2,7 @@ import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import Layout from '../layout';
 import PrivateRoutes from './private-routes';
 import UsersPage from '../pages/user-page/user-page';
+import ServicePage from '../pages/services/services-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -17,7 +18,7 @@ export const AppRouter = () => {
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<PendingPage />} />
-          <Route path="services" element={<PendingPage />} />
+          <Route path="services" element={<ServicePage />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="bookings" element={<PendingPage />} />
         </Route>

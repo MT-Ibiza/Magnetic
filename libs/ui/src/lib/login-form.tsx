@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import Input from './Input';
-import Button from './buttom';
+import Button from './button';
 
 export interface Props {
   className?: string;
