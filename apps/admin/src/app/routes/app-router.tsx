@@ -3,6 +3,7 @@ import Layout from '../layout';
 import PrivateRoutes from './private-routes';
 import UsersPage from '../pages/user-page/user-page';
 import ServicePage from '../pages/services/services-page';
+import LoginPage from '../pages/login/login-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -14,7 +15,7 @@ export const AppRouter = () => {
 
   return (
     <Routes>
-      <Route path="login" element={<PendingPage />} />
+      <Route path="login" element={<LoginPage />} />
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<PendingPage />} />

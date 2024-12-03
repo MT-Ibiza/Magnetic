@@ -120,7 +120,7 @@ export function ProfileForm(props: Props) {
                 />
                 {errors.email && (
                   <p className="text-[12px] mt-1 text-red-500">
-                    El correo electrónico es obligatorio
+                    Email is required
                   </p>
                 )}
               </label>
@@ -136,7 +136,7 @@ export function ProfileForm(props: Props) {
                 />
                 {errors.phone && (
                   <p className="text-[12px] mt-1 text-red-500">
-                    El teléfono es obligatorio
+                    Phone is required
                   </p>
                 )}
               </label>

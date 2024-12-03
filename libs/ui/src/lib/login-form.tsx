@@ -1,37 +1,36 @@
 'use client';
 
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
 import Input from './Input';
 import Button from './button';
 
-export interface Props {
-  className?: string;
+interface LoginFormProps {
+  onSubmit: (data: { email: string; password: string }) => void;
 }
 
-export function LoginForm(props: Props) {
+export function LoginForm(props: LoginFormProps) {
+  const { onSubmit } = props;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [error, setError] = useState<any>(null);
 
-  const onSubmit = async (data: any) => {
-    console.log(data);
-  };
+  function onSubmitForm(data: any) {
+    onSubmit(data);
+  }
 
   return (
     <div className={`login`}>
-      <div className="container mb-24 lg:mb-32">
-        <h2 className="my-20 flex items-center text-3xl leading-[115%] md:text-5xl md:leading-[115%] font-semibold text-neutral-900 dark:text-neutral-100 justify-center">
+      <div className="container">
+        <h2 className="mb-[30px] flex items-center text-3xl leading-[115%] md:text-5xl md:leading-[115%] font-semibold text-neutral-900 dark:text-neutral-100 justify-center">
           Login
         </h2>
-        <div className="max-w-md mx-auto space-y-6">
+        <div className="w-[400px] mx-auto space-y-6">
           <form
             className="grid grid-cols-1 gap-6"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmitForm)}
           >
             <label className="block flex flex-col">
               <span className="text-neutral-800 dark:text-neutral-200">
@@ -52,9 +51,6 @@ export function LoginForm(props: Props) {
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 Password
-                <Link to="/" className="text-sm">
-                  Forgot password?
-                </Link>
               </span>
               <Input
                 type="password"
@@ -68,33 +64,8 @@ export function LoginForm(props: Props) {
                 </p>
               )}
             </label>
-            <div className="relative text-center">
-              <span className="relative z-10 inline-block px-4 font-medium text-sm bg-white dark:text-neutral-400 dark:bg-neutral-900">
-                OR
-              </span>
-              <div className="absolute left-0 w-full top-1/2 transform -translate-y-1/2 border border-neutral-100 dark:border-neutral-800"></div>
-            </div>
-            <div className="grid gap-3">
-              <a
-                href={''}
-                className="nc-will-change-transform flex w-full rounded-lg bg-primary-50 dark:bg-neutral-800 px-4 py-3 transform transition-transform sm:px-6 hover:translate-y-[-2px]"
-              >
-                <img
-                  className="flex-shrink-0"
-                  src={'/images/google.svg'}
-                  alt={'Continue with Google'}
-                />
-                <h3 className="flex-grow text-center text-sm font-medium text-neutral-700 dark:text-neutral-300 sm:text-sm">
-                  {'Continue with Google'}
-                </h3>
-              </a>
-            </div>
-            <Button type="submit">Continue</Button>
+            <Button type="submit">Login</Button>
           </form>
-          <span className="block text-center text-neutral-700 dark:text-neutral-300">
-            New user? {` `}
-            <Link to="/">Create an account</Link>
-          </span>
         </div>
       </div>
     </div>

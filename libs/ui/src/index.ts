@@ -6,6 +6,8 @@ export { LoginForm } from './lib/login-form';
 export { ServiceForm } from './lib/service-form';
 export { Badge } from './lib/badge';
 export { ProfileForm } from './lib/profile-form';
+export { RegisterForm } from './lib/register-form';
+
 
 
 
