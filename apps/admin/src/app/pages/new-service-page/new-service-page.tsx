@@ -1,4 +1,4 @@
-import ServiceForm from '../../components/services-form';
+import ServiceForm from '../../components/form-services';
 
 export function NewServiceForm() {
   return (

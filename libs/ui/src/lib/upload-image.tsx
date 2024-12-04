@@ -60,10 +60,10 @@ export const UploadImage: React.FC<UploadImageProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-1 space-y-2">
-      <label className="text-sm font-bold text-gray-500 tracking-wide">
+    <div className="flex flex-col gap-[10px]">
+      <span className="text-neutral-800 dark:text-neutral-200">
         Upload Image
-      </label>
+      </span>
       <div
         className={`flex items-center rounded-[10px] justify-center w-full ${
           isDragging
@@ -94,9 +94,7 @@ export const UploadImage: React.FC<UploadImageProps> = ({
             <p className="pointer-none text-gray-500">
               <span className="text-sm">Drag and drop</span> image here <br />{' '}
               or{' '}
-              <span
-                className="text-primary-6000 hover:underline cursor-pointer"
-              >
+              <span className="text-primary-6000 hover:underline cursor-pointer">
                 select a image
               </span>
             </p>
@@ -107,11 +105,9 @@ export const UploadImage: React.FC<UploadImageProps> = ({
               <p className="pointer-none text-white">
                 <span className="text-sm">Drag and drop</span> files here <br />{' '}
                 or{' '}
-                <span
-                className="text-white hover:underline cursor-pointer"
-              >
-                select a image
-              </span>
+                <span className="text-white hover:underline cursor-pointer">
+                  select a image
+                </span>
               </p>
             </div>
           )}
