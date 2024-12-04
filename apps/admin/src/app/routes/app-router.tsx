@@ -1,9 +1,13 @@
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import Layout from '../layout';
 import PrivateRoutes from './private-routes';
-import UsersPage from '../pages/user-page/user-page';
-import ServicePage from '../pages/services/services-page';
-import LoginPage from '../pages/login/login-page';
+import UsersPage from '../pages/users-page/users-page';
+import ServicePage from '../pages/services-page/services-page';
+import LoginPage from '../pages/login-page/login-page';
+import DashboardPage from '../pages/dashboard-page/dashboard';
+import BookingsPage from '../pages/bookings-page/bookings-page';
+import SettingsPage from '../pages/settings-page/settings-page';
+import NewServiceForm from '../pages/new-service-page/new-service-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -18,10 +22,12 @@ export const AppRouter = () => {
       <Route path="login" element={<LoginPage />} />
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
-          <Route path="dashboard" element={<PendingPage />} />
+          <Route path="dashboard" element={<DashboardPage />} />
           <Route path="services" element={<ServicePage />} />
           <Route path="users" element={<UsersPage />} />
-          <Route path="bookings" element={<PendingPage />} />
+          <Route path="bookings" element={<BookingsPage />} />
+          <Route path="services/new" element={<NewServiceForm />} />
+          <Route path="settings" element={<SettingsPage />} />
         </Route>
       </Route>
     </Routes>

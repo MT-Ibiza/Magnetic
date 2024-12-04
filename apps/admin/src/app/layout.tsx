@@ -33,7 +33,7 @@ function Layout(props: Props) {
     {
       text: 'Settings',
       key: 'settings',
-      url: '/',
+      url: '/settings',
       icon: 'cog',
     },
   ];
