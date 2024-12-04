@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, FC } from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 
 export interface ButtonProps {
@@ -18,7 +18,7 @@ export interface ButtonProps {
   radius?: 'none' | 'large' | 'full';
 }
 
-const Button: FC<ButtonProps> = ({
+export function Button({
   className = '',
   color = 'primary',
   variant = 'solid',
@@ -33,7 +33,7 @@ const Button: FC<ButtonProps> = ({
   loading,
   onClick = () => {},
   radius = 'large',
-}) => {
+}: ButtonProps) {
   function twFocusClass(hasRing = false) {
     if (!hasRing) {
       return 'focus:outline-none';
@@ -105,6 +105,6 @@ const Button: FC<ButtonProps> = ({
       {children || 'This is Button'}
     </button>
   );
-};
+}
 
 export default Button;

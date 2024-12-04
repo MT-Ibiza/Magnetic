@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 export interface AvatarProps {
   containerClassName?: string;
@@ -41,7 +41,7 @@ const avatarColors = [
 
 export { avatarColors };
 
-const Avatar: FC<AvatarProps> = ({
+export function Avatar({
   containerClassName = 'ring-1 ring-white dark:ring-neutral-900',
   sizeClass = 'h-6 w-6 text-sm',
   radius = 'rounded-full',
@@ -49,9 +49,10 @@ const Avatar: FC<AvatarProps> = ({
   userName,
   hasChecked,
   hasCheckedClass = 'w-4 h-4 -top-0.5 -right-0.5',
-}) => {
+}: AvatarProps) {
   const url = imgUrl || '';
   const name = userName || 'John Doe';
+
   const _setBgColor = (name: string) => {
     const backgroundIndex = Math.floor(
       name.charCodeAt(0) % avatarColors.length
@@ -75,13 +76,13 @@ const Avatar: FC<AvatarProps> = ({
 
       {hasChecked && (
         <span
-          className={` bg-teal-500 rounded-full text-white text-xs flex items-center justify-center absolute  ${hasCheckedClass}`}
+          className={`bg-teal-500 rounded-full text-white text-xs flex items-center justify-center absolute ${hasCheckedClass}`}
         >
           <i className="las la-check"></i>
         </span>
       )}
     </div>
   );
-};
+}
 
 export default Avatar;

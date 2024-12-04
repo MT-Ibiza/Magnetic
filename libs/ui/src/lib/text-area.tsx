@@ -1,11 +1,10 @@
-import React, { TextareaHTMLAttributes } from 'react';
+import React, { forwardRef, TextareaHTMLAttributes } from 'react';
 
-export interface TextareaProps
-  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   height?: string;
 }
 
-const TextArea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+export const TextArea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className = '', height = 'h-32', children, ...args }, ref) => {
     return (
       <textarea

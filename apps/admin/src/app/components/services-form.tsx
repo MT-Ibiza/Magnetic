@@ -1,10 +1,8 @@
 'use client';
 
+import { Button, Input, TextArea } from '@magnetic/ui';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Input from './Input';
-import Button from './button';
-import TextArea from './text-area';
 
 export interface Props {
   className?: string;
