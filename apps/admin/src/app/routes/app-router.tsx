@@ -8,6 +8,7 @@ import DashboardPage from '../pages/dashboard-page/dashboard';
 import BookingsPage from '../pages/bookings-page/bookings-page';
 import SettingsPage from '../pages/settings-page/settings-page';
 import NewServiceForm from '../pages/new-service-page/new-service-page';
+import RedirectRoute from './redirect-route';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -19,7 +20,7 @@ export const AppRouter = () => {
 
   return (
     <Routes>
-      <Route path="login" element={<LoginPage />} />
+      <Route path="login" element={<RedirectRoute />} />
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<DashboardPage />} />
