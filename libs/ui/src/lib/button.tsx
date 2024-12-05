@@ -6,7 +6,7 @@ export interface ButtonProps {
   color?: 'primary' | 'secondary' | 'neutral';
   variant?: 'solid' | 'outline';
   translate?: string;
-  sizeClass?: string;
+  size?: 1 | 2 | 3 | 4;
   fontSize?: string;
   loading?: boolean;
   disabled?: boolean;
@@ -23,7 +23,7 @@ export function Button({
   color = 'primary',
   variant = 'solid',
   translate = '',
-  sizeClass = 'px-4 py-3 sm:px-6',
+  size = 2,
   fontSize = 'text-sm sm:text-base font-medium',
   disabled = false,
   href,
@@ -34,12 +34,19 @@ export function Button({
   onClick = () => {},
   radius = 'large',
 }: ButtonProps) {
-  function twFocusClass(hasRing = false) {
-    if (!hasRing) {
-      return 'focus:outline-none';
-    }
-    return 'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 dark:focus:ring-offset-0';
-  }
+  const sizeClasses = {
+    1: 'px-2 py-1 text-xs',
+    2: 'px-4 py-3 text-sm',
+    3: 'px-6 py-4 text-lg',
+    4: 'px-8 py-5 text-xl',
+  };
+
+  const fontSizeClasses = {
+    1: 'text-xs',
+    2: 'text-sm',
+    3: 'text-lg',
+    4: 'text-xl',
+  };
 
   const colorClasses = {
     primary: {
@@ -65,15 +72,23 @@ export function Button({
     full: 'rounded-full',
   };
 
-  const disabledClasses = disabled
-    ? 'opacity-50 cursor-not-allowed'
-    : '';
+  const disabledClasses = disabled ? 'opacity-50 cursor-not-allowed' : '';
+
+  const twFocusClass = (hasRing = false) => {
+    if (!hasRing) {
+      return 'focus:outline-none';
+    }
+    return 'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 dark:focus:ring-offset-0';
+  };
+
+  const sizeClass = sizeClasses[size];
+  const fontSizeClass = fontSizeClasses[size];
 
   const CLASSES = `
-    nc-Button relative h-auto inline-flex items-center justify-center transition-colors 
+    nc-Button relative inline-flex items-center justify-center transition-colors 
     ${colorClasses[color][variant]} 
-    ${fontSize} 
-    ${sizeClass} 
+    ${fontSizeClass}  
+    ${sizeClass}     
     ${translate} 
     ${className} 
     ${twFocusClass(true)}

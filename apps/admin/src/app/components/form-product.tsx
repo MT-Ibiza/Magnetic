@@ -1,9 +1,8 @@
 'use client';
 
-import { Button, Input, TextArea, UploadImage } from '@magnetic/ui';
+import { Button, Input, UploadImage } from '@magnetic/ui';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 export interface Props {

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Input, TextArea, UploadImage } from '@magnetic/ui';
+import { Button, Input, UploadImage } from '@magnetic/ui';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactQuill from 'react-quill';
@@ -45,13 +45,13 @@ export function ServiceForm(props: Props) {
                 />
                 {errors.home_name && (
                   <p className="text-[12px] text-red-500">
-                    Home name is required
+                    Service name is required
                   </p>
                 )}
               </div>
               <div className="flex flex-col gap-[10px]">
                 <span className="text-neutral-800 dark:text-neutral-200">
-                  Home Description
+                  Service Description
                 </span>
                 <ReactQuill
                   theme="snow"
@@ -61,7 +61,8 @@ export function ServiceForm(props: Props) {
                 />
               </div>
             </div>
-            <div className="flex justify-end pt-[80px]">
+            <div className="flex gap-[10px] justify-end pt-[80px]">
+              <Button variant='outline' href={'/services'} type="submit">Cancel</Button>
               <Button type="submit">Save changes</Button>
             </div>
           </form>

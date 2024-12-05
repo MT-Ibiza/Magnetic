@@ -1,4 +1,4 @@
-import { Badge, CardWrapper, Button, DrawerContent } from '@magnetic/ui';
+import { Badge, CardWrapper, Button } from '@magnetic/ui';
 import { TwMainColor } from 'libs/ui/src/lib/badge';
 import { useState } from 'react';
 
@@ -64,13 +64,13 @@ export function ServicePage() {
           <div className="flex flex-col gap-1">
             <h2>Services</h2>
           </div>
+          <div>
           <Button
-            onClick={() => {
-              toggleDrawer();
-            }}
+            href={'/services/new'}
           >
-            New Service
+            + Add Service
           </Button>
+          </div>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
@@ -125,13 +125,6 @@ export function ServicePage() {
             </tbody>
           </table>
         </div>
-        <DrawerContent
-          title={'Add Service'}
-          open={openDrawer}
-          onClose={toggleDrawer}
-        >
-          <h1>Hi</h1>
-        </DrawerContent>
       </CardWrapper>
     </>
   );

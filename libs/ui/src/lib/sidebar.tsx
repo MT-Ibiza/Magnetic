@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import Icon from './icon';
+import { useState } from 'react';
 
 interface Props {
   options: {
@@ -39,11 +40,14 @@ export function Sidebar(props: Props) {
                   <div key={index}>
                     {option.url && (
                       <li className="cursor-pointer flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
-                        <NavLink to={option.url} className="w-full group">
-                          <div className="flex items-center gap-3 hover:text-primary">
-                            <Icon icon={option.icon || 'plus'} size={18} />
-                            <span>{option.text}</span>
-                          </div>
+                        <NavLink 
+                          to={option.url} 
+                          className={({ isActive }) => 
+                            `w-full group flex items-center gap-3 ${isActive ? 'text-primary-6000' : ''}`
+                          }
+                        >
+                          <Icon icon={option.icon || 'plus'} size={18} />
+                          <span>{option.text}</span>
                         </NavLink>
                       </li>
                     )}
