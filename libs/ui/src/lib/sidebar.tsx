@@ -38,7 +38,7 @@ export function Sidebar(props: Props) {
                 return (
                   <div key={index}>
                     {option.url && (
-                      <li className="cursor-pointer flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
+                      <li className="cursor-pointer flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-primary-50 hover:bg-opacity-80 focus:bg-primary-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-primary-900 focus:text-primary-900 active:text-primary-900 outline-none">
                         <NavLink 
                           to={option.url} 
                           className={({ isActive }) => 
