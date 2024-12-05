@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import Icon from './icon';
-import { useState } from 'react';
 
 interface Props {
   options: {
