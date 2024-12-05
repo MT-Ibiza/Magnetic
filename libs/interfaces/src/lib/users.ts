@@ -5,6 +5,13 @@ export interface CurrentUser {
   image?: string;
 }
 
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  image?: string;
+}
+
 export interface Credentials {
   email: string;
   password: string;

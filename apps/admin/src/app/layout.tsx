@@ -1,10 +1,15 @@
-import { HeaderApp, Sidebar } from '@magnetic/ui';
+import { HeaderApp, Sidebar, AvatarDropdown } from '@magnetic/ui';
 import { Outlet } from 'react-router-dom';
+import { useAuth } from './hooks/useAuth';
+import { User } from '@magnetic/interfaces';
 
 interface Props {}
 
 function Layout(props: Props) {
   const {} = props;
+  const { logout, getCurrentUser } = useAuth();
+  const user = getCurrentUser();
+
   const navigation = [
     {
       text: 'Dashboard',
@@ -39,7 +44,9 @@ function Layout(props: Props) {
   ];
   return (
     <div className="app flex flex-col min-h-screen">
-      <HeaderApp />
+      <HeaderApp>
+        {user && <AvatarDropdown logout={logout} user={user} />}
+      </HeaderApp>
       <div className="flex flex-1">
         <Sidebar options={navigation} />
         <div className="flex-1 ml-[20rem] p-4">

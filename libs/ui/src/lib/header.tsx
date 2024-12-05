@@ -1,13 +1,13 @@
-import AvatarDropdown from './avatar-dropdown';
+import React from 'react';
 import MenuBar from './menu-bar';
-import { Link } from 'react-router-dom';
 
 export interface HeaderProps {
   className?: string;
+  children?: React.ReactElement;
 }
 
 export function HeaderApp(props: HeaderProps) {
-  const { className } = props;
+  const { className, children } = props;
 
   return (
     <div
@@ -20,7 +20,7 @@ export function HeaderApp(props: HeaderProps) {
             <div className="px-0.5" />
             <MenuBar />
           </div>
-          <AvatarDropdown />
+          {children}
         </div>
       </div>
     </div>

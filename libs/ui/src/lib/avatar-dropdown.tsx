@@ -1,4 +1,9 @@
-import { Popover, PopoverButton, PopoverPanel, Transition } from "@headlessui/react";
+import {
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+  Transition,
+} from '@headlessui/react';
 // import {
 //   UserCircleIcon,
 //   ChatBubbleBottomCenterTextIcon,
@@ -7,44 +12,44 @@ import { Popover, PopoverButton, PopoverPanel, Transition } from "@headlessui/re
 //   ArrowRightOnRectangleIcon,
 //   LifebuoyIcon,
 // } from "@heroicons/react/24/outline";
-import { Fragment } from "react";
+import { Fragment, useState } from 'react';
 // import { Link } from "react-router-dom";
-import Avatar from "./avatar";
-
+import Avatar from './avatar';
+import { User } from '@magnetic/interfaces';
 
 const solutions = [
   {
-    name: "Account",
-    href: "/",
+    name: 'Account',
+    href: '/',
     icon: '',
   },
   {
-    name: "Messages",
-    href: "/",
+    name: 'Messages',
+    href: '/',
     icon: '',
   },
   {
-    name: "Booking",
-    href: "/",
+    name: 'Booking',
+    href: '/',
     icon: '',
   },
 ];
 
 const solutionsFoot = [
   {
-    name: "Help",
-    href: "/",
-    icon: '',
-  },
-
-  {
-    name: "Logout",
-    href: "/",
+    name: 'Help',
+    href: '/',
     icon: '',
   },
 ];
 
-export default function AvatarDropdown() {
+export function AvatarDropdown({
+  logout,
+  user,
+}: {
+  logout?: () => void;
+  user: User;
+}) {
   return (
     <div className="AvatarDropdown">
       <Popover className="relative">
@@ -53,7 +58,13 @@ export default function AvatarDropdown() {
             <PopoverButton
               className={`inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
-              <Avatar sizeClass="w-8 h-8 sm:w-9 sm:h-9" />
+              <div className="flex gap-5 items-center">
+                <Avatar sizeClass="w-8 h-8 sm:w-9 sm:h-9" />
+                <div className="flex flex-col items-start">
+                  <p className='text-md'>{user.name}</p>
+                  <p className='text-sm text-gray-500'>{user.email}</p>
+                </div>
+              </div>
             </PopoverButton>
             <Transition
               as={Fragment}
@@ -98,6 +109,17 @@ export default function AvatarDropdown() {
                         </div>
                       </a>
                     ))}
+                    <a
+                      href="#"
+                      className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                    >
+                      <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300"></div>
+                      <div className="ml-4" onClick={logout}>
+                        <p className="text-sm font-medium text-red-500">
+                          Logout
+                        </p>
+                      </div>
+                    </a>
                   </div>
                 </div>
               </PopoverPanel>
@@ -108,3 +130,4 @@ export default function AvatarDropdown() {
     </div>
   );
 }
+export default AvatarDropdown;

@@ -14,6 +14,7 @@ export { Checkbox } from './lib/checkbox';
 export { Avatar } from './lib/avatar';
 export { TextArea } from './lib/text-area';
 export { UploadImage } from './lib/upload-image';
+export { AvatarDropdown } from './lib/avatar-dropdown';
 
 
 

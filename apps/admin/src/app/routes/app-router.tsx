@@ -3,7 +3,6 @@ import Layout from '../layout';
 import PrivateRoutes from './private-routes';
 import UsersPage from '../pages/users-page/users-page';
 import ServicePage from '../pages/services-page/services-page';
-import LoginPage from '../pages/login-page/login-page';
 import DashboardPage from '../pages/dashboard-page/dashboard';
 import BookingsPage from '../pages/bookings-page/bookings-page';
 import SettingsPage from '../pages/settings-page/settings-page';
