@@ -17,11 +17,10 @@ export function ProductForm(props: Props) {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = (data: any) => {
     console.log(data);
   };
 
-  const [description, setDescription] = useState('');
 
   return (
     <div className={`product-form`}>

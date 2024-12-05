@@ -62,7 +62,7 @@ export function ServiceForm(props: Props) {
               </div>
             </div>
             <div className="flex gap-[10px] justify-end pt-[80px]">
-              <Button variant='outline' href={'/services'} type="submit">Cancel</Button>
+              <Button variant='outline' href={'/all-services'} type="submit">Cancel</Button>
               <Button type="submit">Save changes</Button>
             </div>
           </form>

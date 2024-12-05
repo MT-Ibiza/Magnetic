@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import db from 'apps/magnetic/src/app/libs/db';
-import { uploadFile } from 'apps/magnetic/src/app/services/upload';
+import { uploadFile } from 'apps/magnetic/src/app/upload';
 
 export async function GET(
   request: Request,

@@ -7,6 +7,9 @@ import DashboardPage from '../pages/dashboard-page/dashboard';
 import BookingsPage from '../pages/bookings-page/bookings-page';
 import SettingsPage from '../pages/settings-page/settings-page';
 import NewServiceForm from '../pages/new-service-page/new-service-page';
+import ServiceLayout from '../pages/services/services-layout';
+import OverviewPage from '../pages/services/overview-page';
+import ProductsPage from '../pages/services/products-page';
 import RedirectRoute from './redirect-route';
 
 export const AppRouter = () => {
@@ -23,11 +26,19 @@ export const AppRouter = () => {
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<DashboardPage />} />
-          <Route path="services" element={<ServicePage />} />
+          <Route path="all-services" element={<ServicePage />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="bookings" element={<BookingsPage />} />
           <Route path="services/new" element={<NewServiceForm />} />
           <Route path="settings" element={<SettingsPage />} />
+          <Route
+            path="services/:id"
+            element={<Navigate replace to="overview" />}
+          />
+          <Route path="services/:id" element={<ServiceLayout />}>
+            <Route path="products" element={<ProductsPage />} />
+            <Route path="overview" element={<OverviewPage />} />
+          </Route>
         </Route>
       </Route>
     </Routes>
