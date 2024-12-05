@@ -10,6 +10,8 @@ export interface User {
   name: string;
   email: string;
   image?: string;
+  role: string;
+  active: boolean;
 }
 
 export interface Credentials {
@@ -23,4 +25,20 @@ export interface LoginResponse {
   email: string;
   role: string;
   accessToken: string;
+}
+
+export interface SearchUsersParams {
+  searchText?: string;
+  page?: number;
+  itemsPerPage?: number;
+  onlyActive?: boolean;
+  role?: string;
+}
+
+export interface UserResponse {
+  page: number;
+  pageSize: number;
+  totalItems: number;
+  totalPages: number;
+  users: User[];
 }

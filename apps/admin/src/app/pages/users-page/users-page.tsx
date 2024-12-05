@@ -1,4 +1,5 @@
 import { CardWrapper } from '@magnetic/ui';
+import UsersTable from '../../components/users/users-table';
 
 interface User {
   id: number;
@@ -86,6 +87,7 @@ export function UsersPage() {
               </tbody>
             </table>
           </div>
+          <UsersTable />
         </>
       </CardWrapper>
     </>
