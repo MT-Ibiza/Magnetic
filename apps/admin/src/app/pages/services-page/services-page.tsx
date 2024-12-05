@@ -1,6 +1,7 @@
 import { Badge, CardWrapper, Button } from '@magnetic/ui';
 import { TwMainColor } from 'libs/ui/src/lib/badge';
 import { useState } from 'react';
+import ServicesTable from '../../components/services/services-table';
 
 interface Services {
   id: number;
@@ -65,13 +66,11 @@ export function ServicePage() {
             <h2>Services</h2>
           </div>
           <div>
-          <Button
-            href={'/services/new'}
-          >
-            + Add Service
-          </Button>
+            <button className="btn">Hello daisyUI</button>
+            <Button href={'/services/new'}>+ Add Service</Button>
           </div>
         </div>
+        <ServicesTable />
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
             <thead className="text-left">
