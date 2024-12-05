@@ -20,7 +20,7 @@ function Layout(props: Props) {
     {
       text: 'Services',
       key: 'services',
-      url: '/all-services',
+      url: '/services',
       icon: 'user-group',
     },
     {

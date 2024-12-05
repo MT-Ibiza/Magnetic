@@ -26,7 +26,7 @@ export const AppRouter = () => {
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<DashboardPage />} />
-          <Route path="all-services" element={<ServicePage />} />
+          <Route path="services" element={<ServicePage />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="bookings" element={<BookingsPage />} />
           <Route path="services/new" element={<NewServiceForm />} />
