@@ -36,16 +36,16 @@ model User {
 }
 
 model Service {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   name        String
   description String?
   items       Item[]
   packageId   Int
-  package     Package  @relation(fields: [packageId], references: [id])
-  providerId  Int
-  provider    Provider @relation(fields: [providerId], references: [id])
+  package     Package   @relation(fields: [packageId], references: [id])
+  providerId  Int?
+  provider    Provider? @relation(fields: [providerId], references: [id])
 }
 
 model Item {

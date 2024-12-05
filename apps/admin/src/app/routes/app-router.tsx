@@ -6,7 +6,7 @@ import ServicePage from '../pages/services-page/services-page';
 import DashboardPage from '../pages/dashboard-page/dashboard';
 import BookingsPage from '../pages/bookings-page/bookings-page';
 import SettingsPage from '../pages/settings-page/settings-page';
-import NewServiceForm from '../pages/new-service-page/new-service-page';
+import NewServicePage from '../pages/new-service-page/new-service-page';
 import ServiceLayout from '../pages/services/services-layout';
 import OverviewPage from '../pages/services/overview-page';
 import ProductsPage from '../pages/services/products-page';
@@ -29,7 +29,7 @@ export const AppRouter = () => {
           <Route path="services" element={<ServicePage />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="bookings" element={<BookingsPage />} />
-          <Route path="services/new" element={<NewServiceForm />} />
+          <Route path="services/new" element={<NewServicePage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route
             path="services/:id"

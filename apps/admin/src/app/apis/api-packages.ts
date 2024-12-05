@@ -1,8 +1,8 @@
-import { NewService, Service } from '@magnetic/interfaces';
-import { URL_GET_SERVICES, URL_NEW_SERVICE } from './api-constants';
+import { NewPackage, Package } from '@magnetic/interfaces';
+import { URL_GET_PACKAGES, URL_NEW_PACKAGE } from './api-constants';
 
-export async function getServices(): Promise<Service[]> {
-  const response = await fetch(URL_GET_SERVICES, {
+export async function getPackages(): Promise<Package[]> {
+  const response = await fetch(URL_GET_PACKAGES, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -13,8 +13,8 @@ export async function getServices(): Promise<Service[]> {
   return dataJson;
 }
 
-export async function newService(params: NewService): Promise<Service> {
-  const response = await fetch(URL_NEW_SERVICE, {
+export async function newPackage(params: NewPackage): Promise<Package> {
+  const response = await fetch(URL_NEW_PACKAGE, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

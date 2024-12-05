@@ -9,6 +9,11 @@ export const URL_LOGIN = `${API_URL}/admin/login`;
 
 //Services
 export const URL_GET_SERVICES = `${API_URL}/admin/services`;
+export const URL_NEW_SERVICE = `${API_URL}/admin/services`;
+
+//Packages
+export const URL_GET_PACKAGES = `${API_URL}/admin/packages`;
+export const URL_NEW_PACKAGE = `${API_URL}/admin/packages`;
 
 //Users
 export const URL_GET_USERS = `${API_URL}/users`;
@@ -16,4 +21,3 @@ export const URL_GET_USER = (id: number) => `${API_URL}/users/${id}`;
 export const URL_UPDATE_USER = (id: number) => `${API_URL}/users/${id}`;
 export const URL_ADD_USER = `${API_URL}/users`;
 export const URL_REMOVE_USER = (id: number) => `${API_URL}/users/${id}/remove`;
-

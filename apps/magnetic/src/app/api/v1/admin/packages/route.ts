@@ -26,7 +26,7 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   try {
     const packages = await db.package.findMany();
-    return NextResponse.json({ packages: packages });
+    return NextResponse.json(packages);
   } catch (error: any) {
     return NextResponse.json(
       {

@@ -22,9 +22,9 @@ function ServicesTable(props: Props) {
       <table className="table">
         <thead>
           <tr>
-            <th></th>
+            <th>N</th>
             <th>Name</th>
-            <th>Description</th>
+            {/* <th>Description</th> */}
             <th>Provider</th>
             <th>Package</th>
           </tr>
@@ -34,9 +34,9 @@ function ServicesTable(props: Props) {
             <tr className="hover">
               <th>{index + 1}</th>
               <td>{service.name}</td>
-              <td>{service.description}</td>
-              <td>{service.providerId}</td>
-              <td>{service.packageId}</td>
+              {/* <td>{service.description}</td> */}
+              <td>{service.providerId ? 'pending' : 'n/a'}</td>
+              <td>{service.package.name}</td>
             </tr>
           ))}
         </tbody>

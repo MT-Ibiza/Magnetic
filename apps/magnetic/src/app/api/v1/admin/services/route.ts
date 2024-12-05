@@ -1,9 +1,10 @@
+import { NewService } from '@magnetic/interfaces';
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const { name, description, items, packageId, providerId } =
-    await request.json();
+  const params: NewService = await request.json();
+  const { name, description, items, packageId } = params;
 
   try {
     const service = await db.service.create({
@@ -11,7 +12,6 @@ export async function POST(request: Request) {
         name: name,
         description,
         packageId,
-        providerId,
         items: {
           createMany: {
             data: items,
@@ -34,7 +34,19 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    const services = await db.service.findMany();
+    const services = await db.service.findMany({
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        packageId: true,
+        package: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
     return NextResponse.json(services);
   } catch (error: any) {
     return NextResponse.json(
