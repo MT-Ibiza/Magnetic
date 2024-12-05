@@ -1,20 +1,39 @@
-import { PrismaClient, Prisma } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
 async function main() {
   try {
-    const adminPassword = await bcrypt.hash('admin', 10);
-    await prisma.user.create({
-      data: {
-        name: 'Admin User',
+    const admin = await prisma.user.findUnique({
+      where: {
         email: 'admin@admin.com',
-        role: 'admin',
-        password: adminPassword,
       },
     });
-    console.log('Done!');
+    if (!admin) {
+      const adminPassword = await bcrypt.hash('admin', 10);
+      await prisma.user.create({
+        data: {
+          name: 'Admin User',
+          email: 'admin@admin.com',
+          role: 'admin',
+          password: adminPassword,
+        },
+      });
+      console.log('Admin Created!');
+    }
+
+    const packages = ['Gold', 'Platinum'];
+    for (const packageName of packages) {
+      await prisma.package.upsert({
+        where: { name: packageName },
+        update: {},
+        create: {
+          name: packageName,
+        },
+      });
+    }
+    console.log('Packages verified/created successfully!');
   } catch (error) {
     console.error(error);
   }
