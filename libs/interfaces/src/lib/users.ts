@@ -4,3 +4,16 @@ export interface CurrentUser {
   email: string;
   image?: string;
 }
+
+export interface Credentials {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  accessToken: string;
+}
