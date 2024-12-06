@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@magnetic/interfaces": ["libs/interfaces/src/index.ts"],
-      "@magnetic/ui": ["libs/ui/src/index.ts"]
+      "@magnetic/ui": ["libs/ui/src/index.ts"],
+      "@magnetic/utils": ["libs/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

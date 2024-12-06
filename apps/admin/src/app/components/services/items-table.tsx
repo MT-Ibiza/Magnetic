@@ -1,10 +1,6 @@
-import { useServices } from '../../hooks/useServices';
-import Loading from '../loading';
-import { ErrorText } from '../error-text';
-import { Link } from 'react-router-dom';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { Item } from '@magnetic/interfaces';
-import { priceCentsToDollars } from '../../utils/money';
+import { priceCentsToDollars } from '@magnetic/utils';
 
 interface Props {
   items: Item[];

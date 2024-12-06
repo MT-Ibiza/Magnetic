@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import 'react-quill/dist/quill.snow.css';
 import { toast } from 'sonner';
 import { editItem, newItem } from '../../apis/api-items';
-import { dollarsToCents } from '../../utils/money';
+import { dollarsToCents } from '@magnetic/utils';
 
 export interface Props {
   className?: string;
