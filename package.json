@@ -5,6 +5,7 @@
   "scripts": {
     "dev:app": "npx nx run magnetic:dev",
     "dev:admin": "npx nx run admin:serve",
+    "dev:client": "npx nx run client:serve",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
     "prisma:format": "prisma format",
