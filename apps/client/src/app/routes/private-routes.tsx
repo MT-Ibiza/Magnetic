@@ -1,15 +1,15 @@
-// import { Outlet } from 'react-router-dom';
-// import { useAuth } from '../hooks/useAuth';
-// import LoginPage from '../pages/login-page/login-page';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
-// const PrivateRoutes = () => {
-//   const { getCurrentUser } = useAuth();
-//   const user = getCurrentUser();
-//   if (user) {
-//     return <Outlet />
-//   }else{
-//     return <LoginPage />
-//   }
-// };
+const PrivateRoutes = () => {
+  const { getCurrentUser } = useAuth();
+  const user = getCurrentUser();
 
-// export default PrivateRoutes;
+  if (user) {
+    return <Outlet />;
+  } else {
+    return <Navigate to="/login" replace />;
+  }
+};
+
+export default PrivateRoutes;
