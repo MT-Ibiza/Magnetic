@@ -46,12 +46,12 @@ export function Sidebar({ options, isVisible, toggleSidebar }: SidebarProps) {
           {options.map((option) => (
             <li
               key={option.key}
-              className="cursor-pointer flex items-center w-full p-4 rounded-lg text-start leading-tight transition-all hover:bg-primary-50 hover:bg-opacity-80 focus:bg-primary-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-primary-900 focus:text-primary-900 active:text-primary-900 outline-none"
+              className="cursor-pointer flex items-center w-full  rounded-lg text-start leading-tight transition-all hover:bg-primary-50 hover:bg-opacity-80 focus:bg-primary-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-primary-900 focus:text-primary-900 active:text-primary-900 outline-none"
             >
               <NavLink
                 to={option.url || ''}
                 className={({ isActive }) =>
-                  `w-full group flex items-center gap-3 ${
+                  `w-full group flex items-center p-4 gap-3 ${
                     isActive ? 'text-primary-6000' : ''
                   }`
                 }
