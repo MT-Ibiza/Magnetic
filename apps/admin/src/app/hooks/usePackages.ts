@@ -17,6 +17,13 @@ export function usePackages() {
     isError,
     isSuccess,
     packages: data || [],
+    packagesOptions:
+      data?.map((packagePlan) => {
+        return {
+          label: packagePlan.name,
+          value: packagePlan.id,
+        };
+      }) || [],
     refetch,
     error,
   };

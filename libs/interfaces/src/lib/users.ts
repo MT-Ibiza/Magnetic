@@ -15,6 +15,7 @@ export interface User {
   role: string;
   active: boolean;
   package?: Package;
+  packageId?: number;
 }
 
 export interface NewUser {
@@ -22,6 +23,13 @@ export interface NewUser {
   email: string;
   role: string;
   password: string;
+  packageId: number;
+}
+
+export interface EditUser {
+  name: string;
+  email: string;
+  role?: string;
   packageId: number;
 }
 

@@ -8,19 +8,10 @@ interface Props {}
 
 function NewUserPage(props: Props) {
   const {} = props;
-  const { isLoading, isError, packages, error } = usePackages();
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <ErrorText text={error?.message || ''} />;
-  }
 
   return (
     <div>
-      <FormUser packages={packages} />
+      <FormUser />
     </div>
   );
 }

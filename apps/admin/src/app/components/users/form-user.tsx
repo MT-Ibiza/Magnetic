@@ -1,11 +1,14 @@
-import { NewUser, Package, User } from '@magnetic/interfaces';
-import { Button, Input, Text, UploadImage } from '@magnetic/ui';
+import { EditUser, NewUser, User } from '@magnetic/interfaces';
+import { Button, Input, Text } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import 'react-quill/dist/quill.snow.css';
-import { newUser } from '../../apis/api-users';
+import { editUser, newUser } from '../../apis/api-users';
 import { toast } from 'sonner';
+import { usePackages } from '../../hooks/usePackages';
+import Loading from '../loading';
+import { ErrorText } from '../error-text';
+
 export interface FormUserData {
   name: string;
   email: string;
@@ -15,25 +18,27 @@ export interface FormUserData {
 
 export interface Props {
   className?: string;
-  packages: Package[];
+  user?: User;
 }
 
 export function FormUser(props: Props) {
-  const { packages } = props;
+  const { className, user } = props;
+  const editMode = !!user;
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
-  } = useForm<FormUserData>();
-  const [description, setDescription] = useState('');
-
-  const packageOptions = packages.map((packagePlan) => {
-    return {
-      label: packagePlan.name,
-      value: packagePlan.id,
-    };
+  } = useForm<FormUserData>({
+    defaultValues: user
+      ? {
+          name: user.name,
+          email: user.email,
+          password: undefined,
+          packageId: user.packageId,
+        }
+      : undefined,
   });
+  const { isLoading, isError, error, packagesOptions } = usePackages();
 
   const createUser = useMutation<User, Error, NewUser>({
     mutationFn: (data: NewUser) => {
@@ -47,15 +52,44 @@ export function FormUser(props: Props) {
     },
   });
 
+  const updateUser = useMutation<User, Error, EditUser>({
+    mutationFn: (data: EditUser) => {
+      const id = user?.id || 0;
+      return editUser(id, data);
+    },
+    onSuccess: (user) => {
+      toast.success(`User updated!`);
+    },
+    onError: (error) => {
+      toast.error('The account could not be updated');
+    },
+  });
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <ErrorText text={error?.message || ''} />;
+  }
+
   const onSubmit = async (data: FormUserData) => {
     const { name, email, packageId, password } = data;
-    await createUser.mutateAsync({
-      name,
-      email,
-      password,
-      packageId: Number(packageId),
-      role: 'client',
-    });
+    if (editMode) {
+      await updateUser.mutateAsync({
+        name,
+        email,
+        packageId: Number(packageId),
+      });
+    } else {
+      await createUser.mutateAsync({
+        name,
+        email,
+        password,
+        packageId: Number(packageId),
+        role: 'client',
+      });
+    }
   };
 
   return (
@@ -102,34 +136,38 @@ export function FormUser(props: Props) {
                     },
                   })}
                 >
-                  {packageOptions.map((option, index) => (
+                  {packagesOptions.map((option, index) => (
                     <option value={option.value} key={index}>
                       {option.label}
                     </option>
                   ))}
                 </select>
               </div>
-              <div className="flex flex-col gap-[10px]">
-                <Text>Password</Text>
-                <input
-                  type="password"
-                  placeholder="*********"
-                  className="input input-bordered"
-                  {...register('password', { required: true })}
-                />
+              {!editMode && (
+                <div className="flex flex-col gap-[10px]">
+                  <Text>Password</Text>
+                  <input
+                    type="password"
+                    placeholder="*********"
+                    className="input input-bordered"
+                    {...register('password', { required: true })}
+                  />
 
-                {errors.name && (
-                  <p className="text-[12px] text-red-500">
-                    Password is required
-                  </p>
-                )}
-              </div>
+                  {errors.name && (
+                    <p className="text-[12px] text-red-500">
+                      Password is required
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
             <div className="flex gap-[10px] justify-end pt-[80px]">
               <Button variant="outline" href={'/users'} type="submit">
                 Cancel
               </Button>
-              <Button type="submit">Create User</Button>
+              <Button type="submit">
+                {editMode ? 'Update User' : 'Create User'}
+              </Button>
             </div>
           </form>
         </div>

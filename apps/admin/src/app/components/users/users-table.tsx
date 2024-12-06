@@ -1,13 +1,16 @@
-import React from 'react';
-import { useServices } from '../../hooks/useService';
 import Loading from '../loading';
 import { ErrorText } from '../error-text';
 import { useUsers } from '../../hooks/useUsers';
+import { HiOutlineDotsVertical } from 'react-icons/hi';
+import { User } from '@magnetic/interfaces';
 
-interface Props {}
+interface Props {
+  onClickEdit?: (user: User) => void;
+  onClickRemove?: (user: User) => void;
+}
 
 function UsersTable(props: Props) {
-  const {} = props;
+  const { onClickEdit, onClickRemove } = props;
   const {
     isLoading,
     isError,
@@ -37,6 +40,7 @@ function UsersTable(props: Props) {
             <th>Name</th>
             <th>Role</th>
             <th>Subscription</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -46,6 +50,28 @@ function UsersTable(props: Props) {
               <td>{user.name}</td>
               <td>{user.role}</td>
               <td>{user.package ? user.package.name : 'none'}</td>
+              <td>
+                <div className="dropdown dropdown-bottom dropdown-end">
+                  <div tabIndex={0} role="button" className="m-1">
+                    <HiOutlineDotsVertical />
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                  >
+                    <li>
+                      <a href={`/users/edit/${user.id}`}>Edit</a>
+                    </li>
+                    <li
+                      onClick={() => {
+                        onClickRemove && onClickRemove(user);
+                      }}
+                    >
+                      <a>Delete</a>
+                    </li>
+                  </ul>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>

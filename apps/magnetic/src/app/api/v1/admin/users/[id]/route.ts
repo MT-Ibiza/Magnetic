@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import db from 'apps/magnetic/src/app/libs/db';
 import { uploadFile } from 'apps/magnetic/src/app/services/upload';
+import { EditUser } from '@magnetic/interfaces';
 
 export async function GET(
   request: Request,
@@ -23,6 +24,7 @@ export async function GET(
         countryNamePhone: true,
         image: true,
         typeAccount: true,
+        packageId: true,
       },
     });
 
@@ -54,14 +56,8 @@ export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  const data = await request.formData();
-  const name = data.get('name') as string;
-  const phone = data.get('phone') as string;
-  const countryCodePhone = data.get('countryCodePhone') as string;
-  const countryNamePhone = data.get('countryNamePhone') as string;
-  const password = data.get('password') as string | null;
-  const newImage = data.get('newImageFile') as File;
-  const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
+  const data: EditUser = await request.json();
+  const { email, name, packageId } = data;
 
   const user = await db.user.findUnique({
     where: {
@@ -92,25 +88,17 @@ export async function PUT(
   }
 
   try {
-    let imagesUploaded;
-    if (newImage) {
-      imagesUploaded = await uploadFile(newImage);
-    }
-    const newUrl = imagesUploaded?.url;
     await db.user.update({
       where: {
         id: Number(params.id),
       },
       data: {
         name,
-        image: newUrl,
-        phone: phone,
-        countryCodePhone: countryCodePhone,
-        countryNamePhone: countryNamePhone,
-        password: password ? hashedPassword : user.password,
+        email,
+        packageId,
       },
     });
-    return NextResponse.json('ok');
+    return NextResponse.json({ message: 'ok' }, { status: 201 });
   } catch (error: any) {
     return NextResponse.json(
       {
