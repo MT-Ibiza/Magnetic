@@ -34,7 +34,7 @@ function UsersTable(props: Props) {
   }
 
   return (
-    <div className="">
+    <div>
       <table className="table">
         <thead>
           <tr>

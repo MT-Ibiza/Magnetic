@@ -13,7 +13,7 @@ interface Props {
 }
 const Header = ({ text, onClose }: { text: string; onClose?: () => void }) => {
   return (
-    <div className="px-6 mt-3">
+    <div className="px-6 mt-3 bg-base-100">
       <div className="flex justify-between">
         <h5>{text}</h5>
         <div
@@ -28,7 +28,7 @@ const Header = ({ text, onClose }: { text: string; onClose?: () => void }) => {
 };
 
 const Body = ({ children }: { children: React.ReactElement }) => {
-  return <div className="drawer-body p-6">{children}</div>;
+  return <div className="p-6">{children}</div>;
 };
 
 const CancelButton = ({ onClose }: { onClose?: () => void }) => {
@@ -57,7 +57,7 @@ export function Drawer(props: Props) {
       direction="right"
       style={{ minWidth: isMobile ? '100%' : '25rem' }}
     >
-      {isOpen && <div className="h-full">{children}</div>}
+      {isOpen && <div className="h-full bg-base-100">{children}</div>}
     </DrawerLib>
   );
 }

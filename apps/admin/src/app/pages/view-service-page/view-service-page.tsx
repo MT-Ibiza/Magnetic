@@ -2,7 +2,14 @@ import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
 import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
-import { Button, DrawerContent, Input, Text, UploadImage } from '@magnetic/ui';
+import {
+  Button,
+  CardWrapper,
+  DrawerContent,
+  Input,
+  Text,
+  UploadImage,
+} from '@magnetic/ui';
 import ItemsTable from '../../components/services/items-table';
 import { useState } from 'react';
 import FormProduct from '../../components/services/form-product';
@@ -53,13 +60,15 @@ function ViewServicePage(props: Props) {
             + New Item
           </button>
         </div>
-        <ItemsTable
-          items={service.items}
-          onClickEdit={(item) => {
-            toggleDrawer();
-            setSelectedItem(item);
-          }}
-        />
+        <CardWrapper>
+          <ItemsTable
+            items={service.items}
+            onClickEdit={(item) => {
+              toggleDrawer();
+              setSelectedItem(item);
+            }}
+          />
+        </CardWrapper>
       </div>
       <DrawerContent
         title={'Add Item'}
