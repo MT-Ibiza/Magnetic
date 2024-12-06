@@ -3,6 +3,7 @@
 import { useForm } from 'react-hook-form';
 import Input from './Input';
 import Button from './button';
+import Text from './text';
 
 interface LoginFormProps {
   onSubmit: (data: { email: string; password: string }) => void;
@@ -32,38 +33,27 @@ export function LoginForm(props: LoginFormProps) {
             className="grid grid-cols-1 gap-6"
             onSubmit={handleSubmit(onSubmitForm)}
           >
-            <label className="block flex flex-col">
-              <span className="text-neutral-800 dark:text-neutral-200">
-                Email
-              </span>
+            <div className="flex flex-col">
+              <Text>Email</Text>
               <Input
                 type="email"
                 placeholder="example@example.com"
                 className="mt-1"
                 {...register('email', { required: true })}
               />
-              {errors.email && (
-                <p className="text-[12px] mt-1 text-red-500">
-                  Email is required
-                </p>
-              )}
-            </label>
-            <label className="block">
-              <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
-                Password
-              </span>
+              {errors.email && <Text.TextInputError text="Email is required" />}
+            </div>
+            <div className="flex flex-col">
+              <Text>Password</Text>
               <Input
                 type="password"
                 placeholder="********"
-                className="border-neutral-200 mt-1"
                 {...register('password', { required: true })}
               />
               {errors.password && (
-                <p className="text-[12px] mt-1 text-red-500">
-                  Password is required
-                </p>
+                <Text.TextInputError text="Password is required" />
               )}
-            </label>
+            </div>
             <Button type="submit">Login</Button>
           </form>
         </div>

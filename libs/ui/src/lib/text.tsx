@@ -26,4 +26,12 @@ export function Text(props: Props) {
   );
 }
 
+const TextError = ({ text }: { text: string }) => (
+  <Text size="1" className="mt-1 text-red-500">
+    {text}
+  </Text>
+);
+
+Text.TextInputError = TextError;
+
 export default Text;
