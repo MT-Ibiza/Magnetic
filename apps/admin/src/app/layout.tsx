@@ -1,7 +1,7 @@
 import { HeaderApp, Sidebar, AvatarDropdown } from '@magnetic/ui';
 import { Outlet } from 'react-router-dom';
+import { useState } from 'react';
 import { useAuth } from './hooks/useAuth';
-import { User } from '@magnetic/interfaces';
 
 interface Props {}
 
@@ -9,6 +9,12 @@ function Layout(props: Props) {
   const {} = props;
   const { logout, getCurrentUser } = useAuth();
   const user = getCurrentUser();
+
+  const [isSidebarVisible, setSidebarVisible] = useState(true);
+
+  const toggleSidebar = () => {
+    setSidebarVisible(!isSidebarVisible);
+  };
 
   const navigation = [
     {
@@ -42,14 +48,26 @@ function Layout(props: Props) {
       icon: 'cog',
     },
   ];
+
   return (
     <div className="app flex flex-col min-h-screen">
-      <HeaderApp>
+      <HeaderApp
+        toggleSidebar={toggleSidebar}
+        isSidebarVisible={isSidebarVisible}
+      >
         {user && <AvatarDropdown logout={logout} user={user} />}
       </HeaderApp>
       <div className="flex flex-1">
-        <Sidebar options={navigation} />
-        <div className="flex-1 ml-[20rem] p-4">
+        <Sidebar
+          options={navigation}
+          isVisible={isSidebarVisible}
+          toggleSidebar={toggleSidebar}
+        />
+        <div
+          className={`flex-1 p-4 transition-all duration-300 ${
+            isSidebarVisible ? 'ml-[20rem]' : 'ml-0'
+          }`}
+        >
           <Outlet />
         </div>
       </div>
