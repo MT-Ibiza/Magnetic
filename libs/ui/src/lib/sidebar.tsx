@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { TfiArrowCircleLeft } from 'react-icons/tfi';
+import Text from './text';
 
 interface SidebarProps {
   options: {
@@ -29,9 +30,12 @@ export function Sidebar({ options, isVisible, toggleSidebar }: SidebarProps) {
           to="/dashboard"
           className="main-logo flex items-center shrink-0 gap-2"
         >
-          <h5 className="block px-4 antialiased tracking-normal text-xl leading-snug text-gray-900">
+          <Text
+            size="4"
+            className="block px-4 antialiased tracking-normal leading-snug"
+          >
             Magnetic Travel
-          </h5>
+          </Text>
         </NavLink>
         {/* <button
           type="button"
@@ -42,7 +46,7 @@ export function Sidebar({ options, isVisible, toggleSidebar }: SidebarProps) {
         </button> */}
       </div>
       <div className="relative">
-        <ul className="flex flex-col gap-1 min-w-[260px] px-6 py-2 font-sans text-base font-normal text-gray-700 relative">
+        <ul className="flex flex-col gap-1 min-w-[260px] px-6 py-2 font-sans text-base font-normal relative">
           {options.map((option) => (
             <li
               key={option.key}
@@ -57,7 +61,7 @@ export function Sidebar({ options, isVisible, toggleSidebar }: SidebarProps) {
                 }
               >
                 {renderIcon(option.icon)}
-                <span>{option.text}</span>
+                <Text>{option.text}</Text>
               </NavLink>
             </li>
           ))}
