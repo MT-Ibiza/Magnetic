@@ -4,7 +4,7 @@ import {
   Provider,
   EditService,
 } from '@magnetic/interfaces';
-import { Button, Input, Text, UploadImage } from '@magnetic/ui';
+import { Button, DrawerContent, Input, Text, UploadImage } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -32,6 +32,11 @@ export interface Props {
 
 export function ServiceForm(props: Props) {
   const { className, service } = props;
+  const [openDrawer, setOpenDrawer] = useState(false);
+
+  const toggleDrawer = () => {
+    setOpenDrawer((prevState) => !prevState);
+  };
 
   const {
     register,
@@ -133,7 +138,17 @@ export function ServiceForm(props: Props) {
                       </option>
                     ))}
                   </select>
-                  <FormProvider open={true} />
+                  <div>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault()
+                      toggleDrawer();
+                    }}
+                    className="text-orange-400"
+                  >
+                    + New Provider
+                  </button>
+                  </div>
                 </div>
                 <div className="flex flex-col gap-[10px]">
                   <Text size="1">Service Name</Text>
@@ -189,6 +204,13 @@ export function ServiceForm(props: Props) {
           </div>
         </div>
       </div>
+      <DrawerContent
+        title={'Add Provider'}
+        open={openDrawer}
+        onClose={toggleDrawer}
+      >
+        <FormProvider onCancel={toggleDrawer} />
+      </DrawerContent>
     </>
   );
 }
