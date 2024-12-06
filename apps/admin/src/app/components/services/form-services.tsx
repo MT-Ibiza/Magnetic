@@ -144,7 +144,7 @@ export function ServiceForm(props: Props) {
                         e.preventDefault();
                         toggleDrawer();
                       }}
-                      className="text-orange-400"
+                      className="text-primary-400"
                     >
                       + New Provider
                     </button>
@@ -152,10 +152,9 @@ export function ServiceForm(props: Props) {
                 </div>
                 <div className="flex flex-col gap-[10px]">
                   <Text size="1">Service Name</Text>
-                  <input
+                  <Input
                     type="text"
                     placeholder="Example: Chef Service"
-                    className="input input-bordered"
                     {...register('name', { required: true })}
                   />
                   {errors.name && (

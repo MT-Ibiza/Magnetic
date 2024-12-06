@@ -1,5 +1,5 @@
 import { NewProvider, Provider } from '@magnetic/interfaces';
-import { Button, Text } from '@magnetic/ui';
+import { Button, Input, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 
 interface Props {
@@ -36,10 +36,9 @@ function FormProvider(props: Props) {
         <div className="flex flex-col gap-[20px]">
           <div className="flex flex-col gap-[10px]">
             <Text>Provider Name</Text>
-            <input
+            <Input
               type="text"
               placeholder="Business Name"
-              className="input input-bordered"
               {...register('name', { required: true })}
             />
 
@@ -51,10 +50,9 @@ function FormProvider(props: Props) {
           </div>
           <div className="flex flex-col gap-[10px]">
             <Text>Contact Email</Text>
-            <input
+            <Input
               type="email"
               placeholder="business email"
-              className="input input-bordered"
               {...register('email', { required: true })}
             />
             {errors.email && (
@@ -64,10 +62,9 @@ function FormProvider(props: Props) {
 
           <div className="flex flex-col gap-[10px]">
             <Text>Webiste</Text>
-            <input
+            <Input
               type="url"
               placeholder="https://mysite.com"
-              className="input input-bordered"
               {...register('website')}
             />
           </div>

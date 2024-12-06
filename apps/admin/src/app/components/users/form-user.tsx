@@ -98,10 +98,9 @@ export function FormUser(props: Props) {
         <div className="flex flex-col gap-[20px]">
           <div className="flex flex-col gap-[10px]">
             <Text>Client Name</Text>
-            <input
+            <Input
               type="text"
               placeholder="Full Name"
-              className="input input-bordered"
               {...register('name', { required: true })}
             />
 
@@ -113,10 +112,9 @@ export function FormUser(props: Props) {
           </div>
           <div className="flex flex-col gap-[10px]">
             <Text>Client Email</Text>
-            <input
+            <Input
               type="email"
               placeholder="your email"
-              className="input input-bordered"
               {...register('email', { required: true })}
             />
             {errors.email && (
@@ -144,10 +142,9 @@ export function FormUser(props: Props) {
           {!editMode && (
             <div className="flex flex-col gap-[10px]">
               <Text>Password</Text>
-              <input
+              <Input
                 type="password"
                 placeholder="*********"
-                className="input input-bordered"
                 {...register('password', { required: true })}
               />
 
