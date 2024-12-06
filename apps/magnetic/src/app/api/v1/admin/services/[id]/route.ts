@@ -11,8 +11,13 @@ export async function GET(
         id: Number(params.id),
       },
       include: {
-        items: true
-      }
+        items: true,
+        package: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
     return NextResponse.json(service);
   } catch (error: any) {

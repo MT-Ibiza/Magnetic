@@ -22,6 +22,4 @@ export interface NewService {
   provider?: NewProvider;
 }
 
-export interface EditService extends NewService {
-  id: number;
-}
+export interface EditService extends NewService {}

@@ -1,15 +1,21 @@
-import { NewService, Service, Provider } from '@magnetic/interfaces';
+import {
+  NewService,
+  Service,
+  Provider,
+  EditService,
+} from '@magnetic/interfaces';
 import { Button, Input, Text, UploadImage } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { newService } from '../apis/api-services';
-import { usePackages } from '../hooks/usePackages';
+import { editService, newService } from '../apis/api-services';
 import Loading from './loading';
 import { ErrorText } from './error-text';
 import FormProvider from './form-provider';
+import { useNewServiceData } from '../hooks/useNewServiceData';
+import { toast } from 'sonner';
 
 export interface FormServiceData {
   name: string;
@@ -22,17 +28,11 @@ export interface FormServiceData {
 export interface Props {
   className?: string;
   service?: Service;
-  providers: Provider[];
 }
 
 export function ServiceForm(props: Props) {
-  const { className, service, providers } = props;
-  const providersOptions = providers?.map((provider) => {
-    return {
-      label: provider.name,
-      value: provider.id,
-    };
-  });
+  const { className, service } = props;
+
   const {
     register,
     handleSubmit,
@@ -50,14 +50,31 @@ export function ServiceForm(props: Props) {
       : undefined,
   });
   const [description, setDescription] = useState(service?.description);
-  const { isLoading, isError, error, packagesOptions } = usePackages();
+  const { isLoading, isError, data, error } = useNewServiceData();
 
   const createService = useMutation<Service, Error, NewService>({
     mutationFn: (data: NewService) => {
       return newService(data);
     },
-    onSuccess: () => {},
-    onError: () => {},
+    onSuccess: () => {
+      toast.success(`Service created!`);
+    },
+    onError: () => {
+      toast.success(`Service couldn't be created!`);
+    },
+  });
+
+  const updateService = useMutation<Service, Error, EditService>({
+    mutationFn: (data: EditService) => {
+      const serviceId = service?.id || 0;
+      return editService(serviceId, data);
+    },
+    onSuccess: () => {
+      toast.success(`Service updated!`);
+    },
+    onError: () => {
+      toast.success(`Service couldn't be update!`);
+    },
   });
 
   if (isLoading) {
@@ -68,14 +85,27 @@ export function ServiceForm(props: Props) {
     return <ErrorText text={error?.message || ''} />;
   }
 
+  if (!data) {
+    return <Text>Service Not Found</Text>;
+  }
+
   const onSubmit = async (data: FormServiceData) => {
     const { name, packageId } = data;
-    await createService.mutateAsync({
-      name,
-      description: description || '',
-      packageId: Number(packageId),
-      items: [],
-    });
+    if (service) {
+      await updateService.mutateAsync({
+        name,
+        description: description || '',
+        packageId: Number(packageId),
+        items: [],
+      });
+    } else {
+      await createService.mutateAsync({
+        name,
+        description: description || '',
+        packageId: Number(packageId),
+        items: [],
+      });
+    }
   };
 
   return (
@@ -97,9 +127,9 @@ export function ServiceForm(props: Props) {
                     className="select select-bordered w-full "
                     {...register('providerId')}
                   >
-                    {providersOptions.map((option, index) => (
-                      <option value={option.value} key={index}>
-                        {option.label}
+                    {data.providers.map((option, index) => (
+                      <option value={option.id} key={index}>
+                        {option.name}
                       </option>
                     ))}
                   </select>
@@ -130,9 +160,9 @@ export function ServiceForm(props: Props) {
                       },
                     })}
                   >
-                    {packagesOptions.map((option, index) => (
-                      <option value={option.value} key={index}>
-                        {option.label}
+                    {data.packages.map((option, index) => (
+                      <option value={option.id} key={index}>
+                        {option.name}
                       </option>
                     ))}
                   </select>
@@ -151,7 +181,9 @@ export function ServiceForm(props: Props) {
                 <Button variant="outline" href={'/services'} type="submit">
                   Cancel
                 </Button>
-                <Button type="submit">Save changes</Button>
+                <Button type="submit">
+                  {service ? 'Update Service' : 'Create Service'}
+                </Button>
               </div>
             </form>
           </div>

@@ -14,6 +14,7 @@ import RedirectRoute from './redirect-route';
 import NewUserPage from '../pages/new-user-page/new-user-page';
 import EditUserPage from '../pages/edit-user-page/edit-user-page';
 import EditServicePage from '../pages/edit-service-page/edit-service-page';
+import ViewServicePage from '../pages/view-service-page/view-service-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -31,6 +32,7 @@ export const AppRouter = () => {
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="services" element={<ServicePage />} />
           <Route path="services/edit/:id" element={<EditServicePage />} />
+          <Route path="services/:id" element={<ViewServicePage />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="users/new" element={<NewUserPage />} />
           <Route path="users/edit/:id" element={<EditUserPage />} />
