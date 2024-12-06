@@ -14,6 +14,14 @@ export interface User {
   active: boolean;
 }
 
+export interface NewUser {
+  name: string;
+  email: string;
+  role: string;
+  password: string;
+  packageId: number;
+}
+
 export interface Credentials {
   email: string;
   password: string;

@@ -17,17 +17,4 @@ export { UploadImage } from './lib/upload-image';
 export { AvatarDropdown } from './lib/avatar-dropdown';
 export { EmptyState } from './lib/empty-state';
 export { StatsCard } from './lib/stats-card';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export { Text } from './lib/text';

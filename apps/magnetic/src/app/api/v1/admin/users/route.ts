@@ -3,23 +3,16 @@ import { Role } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { uploadFile } from 'apps/magnetic/src/app/services/upload';
 import db from 'apps/magnetic/src/app/libs/db';
-import { getParamsFromUrl, searchUsers } from 'apps/magnetic/src/app/services/users';
+import {
+  getParamsFromUrl,
+  searchUsers,
+} from 'apps/magnetic/src/app/services/users';
+import { NewUser } from '@magnetic/interfaces';
 
 export async function POST(request: Request) {
   try {
-    const data = await request.formData();
-    const name = data.get('name') as string;
-    const email = data.get('email') as string;
-    const role = data.get('role') as Role;
-    const phone = data.get('phone') as string;
-    const countryCodePhone = data.get('countryCodePhone') as string;
-    const countryNamePhone = data.get('countryNamePhone') as string;
-    const password = data.get('password') as string;
-    const newImage = data.get('newImageFile') as File;
-    let imagesUploaded;
-    if (newImage) {
-      imagesUploaded = await uploadFile(newImage);
-    }
+    const data: NewUser = await request.json();
+    const { email, name, password, packageId } = data;
 
     const hashedPassword = password
       ? await bcrypt.hash(password, 10)
@@ -28,12 +21,10 @@ export async function POST(request: Request) {
       data: {
         name: name,
         email: email,
-        image: imagesUploaded?.url,
-        role: role,
-        createdAt: new Date(),
-        phone: phone,
-        countryCodePhone: countryCodePhone,
-        countryNamePhone: countryNamePhone,
+        role: 'client',
+        // phone: phone,
+        // countryCodePhone: countryCodePhone,
+        // countryNamePhone: countryNamePhone,
         password: hashedPassword,
       },
     });

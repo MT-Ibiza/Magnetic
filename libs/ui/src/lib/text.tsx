@@ -2,10 +2,10 @@ import React from 'react';
 
 interface Props extends React.HTMLAttributes<HTMLParagraphElement> {
   size?: '1' | '2' | '3' | '4' | '5';
-  children: React.ReactElement;
+  children: React.ReactElement | string;
 }
 
-function Text(props: Props) {
+export function Text(props: Props) {
   const { size, children, ...rest } = props;
 
   const sizes = {

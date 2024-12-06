@@ -1,7 +1,7 @@
 import {
-  NewService,
+  NewUser,
   SearchUsersParams,
-  Service,
+  User,
   UserResponse,
 } from '@magnetic/interfaces';
 import { URL_GET_USERS, URL_NEW_USER } from './api-constants';
@@ -33,7 +33,7 @@ export async function getUsers(
   return await response.json();
 }
 
-export async function newUser(params: NewService): Promise<Service> {
+export async function newUser(params: NewUser): Promise<User> {
   const response = await fetch(URL_NEW_USER, {
     method: 'POST',
     headers: {

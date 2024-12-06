@@ -1,4 +1,4 @@
-import { CardWrapper } from '@magnetic/ui';
+import { Button, CardWrapper, Text } from '@magnetic/ui';
 import UsersTable from '../../components/users/users-table';
 
 interface User {
@@ -10,31 +10,19 @@ interface User {
 }
 
 export function UsersPage() {
-  const users: User[] = [
-    {
-      id: 1,
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      dateCreated: '2022-01-15',
-      type: 'Admin',
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      email: 'jane.smith@example.com',
-      dateCreated: '2023-03-22',
-      type: 'Client',
-    },
-    {
-      id: 3,
-      name: 'Gary Barlow',
-      email: 'gary.barlow@example.com',
-      dateCreated: '2021-11-30',
-      type: 'Admin',
-    },
-  ];
-
-  return <UsersTable />;
+  return (
+    <CardWrapper>
+      <div className="header flex justify-between mb-8">
+        <div className="flex flex-col gap-1">
+          <Text size="4">Users</Text>
+        </div>
+        <div>
+          <Button href={'/users/new'}>+ Add User</Button>
+        </div>
+      </div>
+      <UsersTable />
+    </CardWrapper>
+  );
 }
 
 export default UsersPage;

@@ -11,6 +11,7 @@ import ServiceLayout from '../pages/services/services-layout';
 import OverviewPage from '../pages/services/overview-page';
 import ProductsPage from '../pages/services/products-page';
 import RedirectRoute from './redirect-route';
+import NewUserPage from '../pages/new-user-page/new-user-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -28,6 +29,7 @@ export const AppRouter = () => {
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="services" element={<ServicePage />} />
           <Route path="users" element={<UsersPage />} />
+          <Route path="users/new" element={<NewUserPage />} />
           <Route path="bookings" element={<BookingsPage />} />
           <Route path="services/new" element={<NewServicePage />} />
           <Route path="settings" element={<SettingsPage />} />
