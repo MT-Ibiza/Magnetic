@@ -10,11 +10,11 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { editService, newService } from '../apis/api-services';
-import Loading from './loading';
-import { ErrorText } from './error-text';
-import FormProvider from './form-provider';
-import { useNewServiceData } from '../hooks/useNewServiceData';
+import { editService, newService } from '../../apis/api-services';
+import Loading from '../loading';
+import { ErrorText } from '../error-text';
+import FormProvider from '../form-provider';
+import { useNewServiceData } from '../../hooks/useNewServiceData';
 import { toast } from 'sonner';
 
 export interface FormServiceData {
@@ -139,15 +139,15 @@ export function ServiceForm(props: Props) {
                     ))}
                   </select>
                   <div>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault()
-                      toggleDrawer();
-                    }}
-                    className="text-orange-400"
-                  >
-                    + New Provider
-                  </button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        toggleDrawer();
+                      }}
+                      className="text-orange-400"
+                    >
+                      + New Provider
+                    </button>
                   </div>
                 </div>
                 <div className="flex flex-col gap-[10px]">

@@ -1,5 +1,5 @@
 import { Text } from '@magnetic/ui';
-import ServiceForm from '../../components/form-services';
+import ServiceForm from '../../components/services/form-services';
 
 export function NewServicePage() {
   return (

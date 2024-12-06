@@ -1,5 +1,3 @@
-'use client';
-
 import { Button, Input, UploadImage } from '@magnetic/ui';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -9,7 +7,7 @@ export interface Props {
   className?: string;
 }
 
-export function ProductForm(props: Props) {
+export function FormProduct(props: Props) {
   const {
     register,
     handleSubmit,
@@ -20,7 +18,6 @@ export function ProductForm(props: Props) {
   const onSubmit = (data: any) => {
     console.log(data);
   };
-
 
   return (
     <div className={`product-form`}>
@@ -73,4 +70,4 @@ export function ProductForm(props: Props) {
   );
 }
 
-export default ProductForm;
+export default FormProduct;

@@ -1,23 +1,25 @@
-import React from 'react';
 import { useServices } from '../../hooks/useServices';
 import Loading from '../loading';
 import { ErrorText } from '../error-text';
 import { Link } from 'react-router-dom';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
+import { Item } from '@magnetic/interfaces';
 
-interface Props {}
+interface Props {
+  items: Item[];
+}
 
-function ServicesTable(props: Props) {
-  const {} = props;
-  const { isLoading, services, error, isError } = useServices();
+function ItemsTable(props: Props) {
+  const { items } = props;
+  // const { isLoading, services, error, isError } = useServices();
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
-  if (isError) {
-    return <ErrorText text={error?.message || ''} />;
-  }
+  // if (isError) {
+  //   return <ErrorText text={error?.message || ''} />;
+  // }
 
   return (
     <div className="overflow-x-auto">
@@ -26,20 +28,20 @@ function ServicesTable(props: Props) {
           <tr>
             <th>N</th>
             <th>Name</th>
-            <th>Provider</th>
-            <th>Subscription</th>
+            <th>Price</th>
+            <th>Description</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          {services.map((service, index) => (
-            <tr className="hover" key={index}>
+          {items.map((item, index) => (
+            <tr className="hover">
               <th>{index + 1}</th>
               <td>
-                <Link to={`/services/${service.id}`}>{service.name}</Link>
+                <Link to={`/services/${item.id}`}>{item.name}</Link>
               </td>
-              <td>{service.providerId ? 'pending' : 'n/a'}</td>
-              <td>{service.package.name}</td>
+              <td>{item.priceInCents}</td>
+              <td>{item.description}</td>
               <td>
                 <div className="dropdown dropdown-bottom dropdown-end">
                   <div tabIndex={0} role="button" className="m-1">
@@ -50,11 +52,9 @@ function ServicesTable(props: Props) {
                     className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
                   >
                     <li>
-                      <a href={`/services/edit/${service.id}`}>Edit Service</a>
+                      <a href={`/services/edit/${item.id}`}>Edit</a>
                     </li>
-                    <li>
-                      <a href={`/services/${service.id}`}>Add Item</a>
-                    </li>
+
                     <li
                       onClick={() => {
                         // onClickRemove && onClickRemove(user);
@@ -73,4 +73,4 @@ function ServicesTable(props: Props) {
   );
 }
 
-export default ServicesTable;
+export default ItemsTable;
