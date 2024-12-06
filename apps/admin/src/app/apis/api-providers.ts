@@ -18,7 +18,7 @@ export async function getProviders(): Promise<Provider[]> {
   return dataJson;
 }
 
-export async function newUser(params: NewProvider): Promise<Provider> {
+export async function newProvider(params: NewProvider): Promise<Provider> {
   const response = await fetch(URL_NEW_PROVIDER, {
     method: 'POST',
     headers: {
@@ -48,7 +48,7 @@ export async function editProvider(
   return dataJson;
 }
 
-export async function getUser(userId: number): Promise<User> {
+export async function getProvider(userId: number): Promise<User> {
   const url = URL_GET_PROVIDER(userId);
   const response = await fetch(url);
   const dataJson = await response.json();

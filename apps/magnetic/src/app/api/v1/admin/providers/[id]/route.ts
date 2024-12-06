@@ -1,3 +1,4 @@
+import { EditProvider } from '@magnetic/interfaces';
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 
@@ -28,15 +29,14 @@ export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  const { name } = await request.json();
+  const data: EditProvider = await request.json();
+  const { name, email, website } = data;
   try {
     const provider = await db.provider.update({
       where: {
         id: Number(params.id),
       },
-      data: {
-        name: name,
-      },
+      data,
     });
     return NextResponse.json(provider, { status: 201 });
   } catch (error: any) {

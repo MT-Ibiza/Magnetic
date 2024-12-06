@@ -3,11 +3,14 @@ import { ErrorText } from '../error-text';
 import { Link } from 'react-router-dom';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { useProviders } from '../../hooks/useProviders';
+import { Provider } from '@magnetic/interfaces';
 
-interface Props {}
+interface Props {
+  onClickEdit?: (provider: Provider) => void;
+}
 
 function ProvidersTable(props: Props) {
-  const {} = props;
+  const { onClickEdit } = props;
   const { isLoading, providers, error, isError } = useProviders();
 
   if (isLoading) {
@@ -48,8 +51,12 @@ function ProvidersTable(props: Props) {
                     tabIndex={0}
                     className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
                   >
-                    <li>
-                      <a href={`/services/edit/${provider.id}`}>Edit</a>
+                    <li
+                      onClick={() => {
+                        onClickEdit && onClickEdit(provider);
+                      }}
+                    >
+                      <a>Edit</a>
                     </li>
                     <li
                       onClick={() => {

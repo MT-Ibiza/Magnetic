@@ -2,7 +2,7 @@ import { Service } from './services';
 
 export interface ProviderBase {
   name: string;
-  phone: string;
+  phone?: string;
   website: string;
   email: string;
 }

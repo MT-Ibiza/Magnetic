@@ -13,7 +13,7 @@ import {
   URL_UPDATE_SERVICE,
 } from './api-constants';
 
-export async function getServices(): Promise<Provider[]> {
+export async function getServices(): Promise<Service[]> {
   const response = await fetch(URL_GET_SERVICES, {
     method: 'GET',
     headers: {
@@ -25,7 +25,7 @@ export async function getServices(): Promise<Provider[]> {
   return dataJson;
 }
 
-export async function getService(id: number): Promise<Provider> {
+export async function getService(id: number): Promise<Service> {
   const url = URL_GET_SERVICE(id);
   const response = await fetch(url, {
     method: 'GET',
@@ -53,7 +53,7 @@ export async function getNewServiceData(): Promise<{
   return dataJson;
 }
 
-export async function newService(params: NewService): Promise<Provider> {
+export async function newService(params: NewService): Promise<Service> {
   const response = await fetch(URL_NEW_SERVICE, {
     method: 'POST',
     headers: {
@@ -69,7 +69,7 @@ export async function newService(params: NewService): Promise<Provider> {
 export async function editService(
   serviceId: number,
   params: EditService
-): Promise<Provider> {
+): Promise<Service> {
   const url = URL_UPDATE_SERVICE(serviceId);
   const response = await fetch(url, {
     method: 'PUT',

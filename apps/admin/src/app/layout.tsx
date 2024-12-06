@@ -34,6 +34,12 @@ function Layout(props: Props) {
       icon: SiTask,
     },
     {
+      text: 'Providers',
+      key: 'providers',
+      url: '/providers',
+      icon: FaUserFriends,
+    },
+    {
       text: 'Users',
       key: 'users',
       url: '/users',

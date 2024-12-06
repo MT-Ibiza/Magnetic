@@ -1,6 +1,14 @@
-import { NewProvider, Provider } from '@magnetic/interfaces';
+import {
+  EditProvider,
+  NewProvider,
+  Provider,
+  ProviderBase,
+} from '@magnetic/interfaces';
 import { Button, Input, Text } from '@magnetic/ui';
+import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { editProvider, newProvider } from '../apis/api-providers';
 
 interface Props {
   provider?: Provider;
@@ -11,23 +19,54 @@ export interface FormProviderData extends NewProvider {}
 
 function FormProvider(props: Props) {
   const { provider, onCancel } = props;
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormProviderData>({
-    defaultValues: provider
-      ? {
-          name: provider.name,
-          email: provider.email,
-          phone: provider.phone,
-        }
-      : undefined,
+  } = useForm<ProviderBase>({
+    defaultValues: provider ? provider : undefined,
+  });
+
+  const createProvider = useMutation<Provider, Error, NewProvider>({
+    mutationFn: (data: NewProvider) => {
+      return newProvider(data);
+    },
+    onSuccess: () => {
+      toast.success(`Service created!`);
+    },
+    onError: () => {
+      toast.success(`Service couldn't be created!`);
+    },
+  });
+
+  const updateProvider = useMutation<Provider, Error, EditProvider>({
+    mutationFn: (data: EditProvider) => {
+      const providerId = provider?.id || 0;
+      return editProvider(providerId, data);
+    },
+    onSuccess: () => {
+      toast.success(`Provider updated!`);
+    },
+    onError: () => {
+      toast.success(`Provider couldn't be update!`);
+    },
   });
 
   const onSubmit = async (data: FormProviderData) => {
-    onCancel();
+    const { name, email, website } = data;
+    if (provider) {
+      await updateProvider.mutateAsync({
+        name,
+        email,
+        website,
+      });
+    } else {
+      await createProvider.mutateAsync({
+        name,
+        email,
+        website,
+      });
+    }
   };
 
   return (
