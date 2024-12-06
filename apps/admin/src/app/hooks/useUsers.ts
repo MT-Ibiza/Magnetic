@@ -37,7 +37,7 @@ export const useUsers = (params: SearchUsersParams) => {
       return fetchUsers({
         search: searchText,
         page: pageParam,
-        pageSize: 20,
+        pageSize: 10,
       });
     },
     initialPageParam: 1,

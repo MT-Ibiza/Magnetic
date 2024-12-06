@@ -3,6 +3,7 @@ import { ErrorText } from '../error-text';
 import { useUsers } from '../../hooks/useUsers';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { User } from '@magnetic/interfaces';
+import { Button } from '@magnetic/ui';
 
 interface Props {
   onClickEdit?: (user: User) => void;
@@ -32,7 +33,7 @@ function UsersTable(props: Props) {
   }
 
   return (
-    <div className="overflow-x-auto">
+    <div className="">
       <table className="table">
         <thead>
           <tr>
@@ -76,6 +77,19 @@ function UsersTable(props: Props) {
           ))}
         </tbody>
       </table>
+      {hasNextPage && (
+        <div className="text-center">
+          <Button
+            className="text-center m-5 bg-primary hover:bg-primary-800"
+            variant="solid"
+            onClick={() => {
+              fetchNextPage();
+            }}
+          >
+            Load More Results
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
