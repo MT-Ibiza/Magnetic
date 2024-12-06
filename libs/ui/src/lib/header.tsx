@@ -1,7 +1,7 @@
 import React from 'react';
 import MenuBar from './menu-bar';
 import { Link } from 'react-router-dom';
-import Icon from './icon';
+import { RiMenuUnfold3Fill } from 'react-icons/ri';
 
 export interface HeaderProps {
   className?: string;
@@ -32,14 +32,10 @@ export function HeaderApp(props: HeaderProps) {
                 </Link>
                 <button
                   type="button"
-                  className="collapse-icon text-primary flex-none dark:text-[#d0d2d6] hover:text-primary dark:hover:text-primary flex ltr:ml-2 rtl:mr-2 p-2 rounded-full dark:bg-dark/40 hover:bg-primary-50 dark:hover:bg-dark/60"
+                  className="collapse-icon text-primary flex-none dark:text-[#d0d2d6] hover:text-primary-6000 dark:hover:text-primary flex ltr:ml-2 rtl:mr-2 p-1 rounded-full dark:bg-dark/40 hover:bg-primary-50 dark:hover:bg-dark/60"
                   onClick={toggleSidebar}
                 >
-                  <Icon
-                    className="w-5 h-5 text-primary"
-                    icon="menu"
-                    size={20}
-                  />
+                  <RiMenuUnfold3Fill size={24} />
                 </button>
               </>
             )}

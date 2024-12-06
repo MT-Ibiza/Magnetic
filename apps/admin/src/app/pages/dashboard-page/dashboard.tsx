@@ -24,7 +24,7 @@ export function DashboardPage() {
     <div className="flex flex-col gap-5">
         <div className="grid grid-cols-3 gap-x-[20px]">
           {options.map((option, index) => (
-            <StatsCard icon={option.icon} title={option.title} percentage={option.number}/>
+            <StatsCard key={index} icon={option.icon} title={option.title} percentage={option.number}/>
           ))}
         </div>
     </div>

@@ -2,11 +2,13 @@ import { HeaderApp, Sidebar, AvatarDropdown } from '@magnetic/ui';
 import { Outlet } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from './hooks/useAuth';
+import { FaUserFriends, FaBook, FaCog } from 'react-icons/fa';
+import { MdDashboardCustomize } from 'react-icons/md';
+import { SiTask } from 'react-icons/si';
 
 interface Props {}
 
 function Layout(props: Props) {
-  const {} = props;
   const { logout, getCurrentUser } = useAuth();
   const user = getCurrentUser();
 
@@ -21,31 +23,31 @@ function Layout(props: Props) {
       text: 'Dashboard',
       key: 'dashboard',
       url: '/dashboard',
-      icon: 'dashboard',
+      icon: MdDashboardCustomize,
     },
     {
       text: 'Services',
       key: 'services',
       url: '/services',
-      icon: 'user-group',
+      icon: SiTask,
     },
     {
       text: 'Users',
       key: 'users',
       url: '/users',
-      icon: 'user-group',
+      icon: FaUserFriends,
     },
     {
       text: 'Bookings',
       key: 'bookings',
       url: '/bookings',
-      icon: 'book',
+      icon: FaBook,
     },
     {
       text: 'Settings',
       key: 'settings',
       url: '/settings',
-      icon: 'cog',
+      icon: FaCog,
     },
   ];
 
