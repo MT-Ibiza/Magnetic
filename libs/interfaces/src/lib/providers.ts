@@ -1,6 +1,6 @@
 import { Service } from './services';
 
-export interface Providers {
+export interface Provider {
   id: number;
   createdAt: Date;
   updatedAt: Date;

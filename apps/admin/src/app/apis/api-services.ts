@@ -1,5 +1,6 @@
-import { NewService, Service } from '@magnetic/interfaces';
+import { NewService, Package, Provider, Service } from '@magnetic/interfaces';
 import {
+  URL_DATA_NEW_SERVICE,
   URL_GET_SERVICE,
   URL_GET_SERVICES,
   URL_NEW_SERVICE,
@@ -20,6 +21,21 @@ export async function getServices(): Promise<Service[]> {
 export async function getService(id: number): Promise<Service> {
   const url = URL_GET_SERVICE(id);
   const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
+  return dataJson;
+}
+
+export async function getNewServiceData(): Promise<{
+  providers: Provider[];
+  packages: Package[];
+}> {
+  const response = await fetch(URL_DATA_NEW_SERVICE, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

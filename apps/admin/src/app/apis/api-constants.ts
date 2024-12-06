@@ -11,6 +11,7 @@ export const URL_LOGIN = `${API_URL}/login`;
 export const URL_GET_SERVICES = `${API_URL}/services`;
 export const URL_GET_SERVICE = (id: number) => `${API_URL}/services/${id}`;
 export const URL_NEW_SERVICE = `${API_URL}/services`;
+export const URL_DATA_NEW_SERVICE = `${API_URL}/services/new`;
 
 //Packages
 export const URL_GET_PACKAGES = `${API_URL}/packages`;

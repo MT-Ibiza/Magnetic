@@ -1,5 +1,6 @@
 import { Item, NewItem } from './items';
 import { Package } from './packages';
+import { NewProvider } from './providers';
 
 export interface Service {
   id: number;
@@ -18,6 +19,7 @@ export interface NewService {
   description: string;
   items: NewItem[];
   packageId: number;
+  provider?: NewProvider;
 }
 
 export interface EditService extends NewService {
