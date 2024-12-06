@@ -1,3 +1,5 @@
+"use client";
+
 import React, { FC, SelectHTMLAttributes } from 'react';
 
 export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {

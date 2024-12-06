@@ -1,3 +1,5 @@
+"use client";
+
 import { NavLink } from 'react-router-dom';
 import { TfiArrowCircleLeft } from 'react-icons/tfi';
 import Text from './text';

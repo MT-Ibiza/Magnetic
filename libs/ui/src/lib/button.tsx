@@ -1,3 +1,5 @@
+'use client';
+
 import React, { ButtonHTMLAttributes } from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 

@@ -1,3 +1,5 @@
+'use client';
+
 export interface CheckboxProps {
   label?: string;
   subLabel?: string;

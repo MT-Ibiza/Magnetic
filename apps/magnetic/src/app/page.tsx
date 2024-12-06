@@ -1,5 +1,4 @@
 import styles from './page.module.scss';
-import { LoginForm } from '@magnetic/ui'
 
 export default function Index() {
   /*
@@ -9,7 +8,6 @@ export default function Index() {
    */
   return (
     <div className={styles.page}>
-      <LoginForm/>
     </div>
   );
 }

@@ -1,3 +1,5 @@
+"use client";
+
 import Icon from './icon';
 import Text from './text';
 
