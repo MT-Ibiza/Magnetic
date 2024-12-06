@@ -6,6 +6,8 @@ import {
   PopoverPanel,
   Transition,
 } from '@headlessui/react';
+
+import { Text } from '@magnetic/ui';
 // import {
 //   UserCircleIcon,
 //   ChatBubbleBottomCenterTextIcon,
@@ -63,8 +65,10 @@ export function AvatarDropdown({
               <div className="flex gap-5 items-center">
                 <Avatar sizeClass="w-8 h-8 sm:w-9 sm:h-9" />
                 <div className="flex flex-col items-start">
-                  <p className='text-md'>{user.name}</p>
-                  <p className='text-sm text-gray-500'>{user.email}</p>
+                  <Text className="">{user.name}</Text>
+                  <Text size="1" className="text-gray-500">
+                    {user.email}
+                  </Text>
                 </div>
               </div>
             </PopoverButton>
