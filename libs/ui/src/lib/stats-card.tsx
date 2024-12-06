@@ -20,7 +20,7 @@ export function StatsCard(props: Props) {
           </Text>
         </div>
         {icon && (
-          <span className="rounded-full bg-primary-100 p-3 text-primary-6000">
+          <span className="rounded-full bg-primary-100 p-3 text-primary-600">
             <Icon icon={icon} size={28} />
           </span>
         )}

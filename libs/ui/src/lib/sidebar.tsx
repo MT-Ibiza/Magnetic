@@ -39,7 +39,7 @@ export function Sidebar({ options, isVisible, toggleSidebar }: SidebarProps) {
         </NavLink>
         {/* <button
           type="button"
-          className="text-primary hover:text-primary-6000 transition duration-300"
+          className="text-primary hover:text-primary-600 transition duration-300"
           onClick={toggleSidebar}
         >
           <TfiArrowCircleLeft size={24} />
@@ -56,7 +56,7 @@ export function Sidebar({ options, isVisible, toggleSidebar }: SidebarProps) {
                 to={option.url || ''}
                 className={({ isActive }) =>
                   `w-full group flex items-center p-4 gap-3 ${
-                    isActive ? 'text-primary-6000' : ''
+                    isActive ? 'text-primary-600' : ''
                   }`
                 }
               >

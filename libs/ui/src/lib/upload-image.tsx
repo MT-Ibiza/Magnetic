@@ -94,7 +94,7 @@ export const UploadImage: React.FC<UploadImageProps> = ({
             <p className="pointer-none text-gray-500">
               <span className="text-sm">Drag and drop</span> image here <br />{' '}
               or{' '}
-              <span className="text-primary-6000 hover:underline cursor-pointer">
+              <span className="text-primary-600 hover:underline cursor-pointer">
                 select a image
               </span>
             </p>

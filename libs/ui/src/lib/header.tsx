@@ -34,7 +34,7 @@ export function HeaderApp(props: HeaderProps) {
             )}
             <button
               type="button"
-              className="collapse-icon text-primary flex-none dark:text-[#d0d2d6] hover:text-primary-6000 dark:hover:text-primary flex rtl:mr-2 p-2 rounded-[10px] dark:bg-dark/40 hover:bg-primary-50 dark:hover:bg-dark/60"
+              className="collapse-icon text-primary flex-none dark:text-[#d0d2d6] hover:text-primary-600 dark:hover:text-primary flex rtl:mr-2 p-2 rounded-[10px] dark:bg-dark/40 hover:bg-primary-50 dark:hover:bg-dark/60"
               onClick={toggleSidebar}
             >
               <MdMenu size={24} />

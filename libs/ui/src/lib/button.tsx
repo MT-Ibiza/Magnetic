@@ -50,19 +50,19 @@ export function Button({
 
   const colorClasses = {
     primary: {
-      solid: 'bg-primary-6000 hover:bg-primary-700 text-neutral-50',
+      solid: 'bg-primary-600 hover:bg-primary-700 text-neutral-50',
       outline:
-        'border border-primary-6000 text-primary-6000 hover:bg-primary-100',
+        'border border-primary-600 text-primary-600 hover:bg-primary-100',
     },
     secondary: {
-      solid: 'bg-secondary-6000 hover:bg-secondary-700 text-neutral-50',
+      solid: 'bg-secondary-600 hover:bg-secondary-700 text-neutral-50',
       outline:
-        'border border-secondary-6000 text-secondary-6000 hover:bg-secondary-100',
+        'border border-secondary-600 text-secondary-600 hover:bg-secondary-100',
     },
     neutral: {
-      solid: 'bg-neutral-6000 hover:bg-neutral-700 text-neutral-50',
+      solid: 'bg-neutral-600 hover:bg-neutral-700 text-neutral-50',
       outline:
-        'border border-neutral-6000 text-neutral-6000 hover:bg-neutral-100',
+        'border border-neutral-600 text-neutral-600 hover:bg-neutral-100',
     },
   };
 
@@ -78,19 +78,19 @@ export function Button({
     if (!hasRing) {
       return 'focus:outline-none';
     }
-    return 'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 dark:focus:ring-offset-0';
+    return 'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600 dark:focus:ring-offset-0';
   };
 
   const sizeClass = sizeClasses[size];
   const fontSizeClass = fontSizeClasses[size];
 
   const CLASSES = `
-    nc-Button relative inline-flex items-center justify-center transition-colors 
-    ${colorClasses[color][variant]} 
-    ${fontSizeClass}  
-    ${sizeClass}     
-    ${translate} 
-    ${className} 
+    nc-Button relative inline-flex items-center justify-center transition-colors
+    ${colorClasses[color][variant]}
+    ${fontSizeClass}
+    ${sizeClass}
+    ${translate}
+    ${className}
     ${twFocusClass(true)}
     ${radiusClasses[radius]}
     ${disabledClasses}
