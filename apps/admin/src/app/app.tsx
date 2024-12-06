@@ -1,11 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AppRouter } from './routes/app-router';
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.scss';
-import '../styles/index.scss';
+import { AppRouter } from './routes/app-router-admin';
 const queryClient = new QueryClient();
-import { Toaster, toast } from 'sonner';
+import { Toaster } from 'sonner';
+import '../styles/index.scss';
 
 export function App() {
   return (
