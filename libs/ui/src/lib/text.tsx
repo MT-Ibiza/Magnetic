@@ -3,10 +3,11 @@ import React from 'react';
 interface Props extends React.HTMLAttributes<HTMLParagraphElement> {
   size?: '1' | '2' | '3' | '4' | '5';
   children: React.ReactElement | string;
+  className?: string;
 }
 
 export function Text(props: Props) {
-  const { size, children, ...rest } = props;
+  const { size, className, children, ...rest } = props;
 
   const sizes = {
     1: 'text-sm',
@@ -19,7 +20,7 @@ export function Text(props: Props) {
   const sizeSelected = size ? sizes[size] : sizes[2];
 
   return (
-    <p className={sizeSelected} {...rest}>
+    <p className={`${sizeSelected} ${className || ''}`} {...rest}>
       {children}
     </p>
   );

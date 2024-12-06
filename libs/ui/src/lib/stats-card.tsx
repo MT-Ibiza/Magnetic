@@ -1,4 +1,5 @@
 import Icon from './icon';
+import Text from './text';
 
 interface Props {
   icon?: string;
@@ -10,11 +11,13 @@ export function StatsCard(props: Props) {
   const { icon, title, percentage } = props;
 
   return (
-    <div className="rounded-lg border border-gray-100 bg-white p-6">
+    <div className="rounded-lg border border-gray-100 bg-base-100 p-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm text-gray-500">{title}</p>
-          <p className="text-2xl font-medium text-gray-900">{percentage}</p>
+          <Text size="1">{title}</Text>
+          <Text size="5" className="font-medium">
+            {percentage}
+          </Text>
         </div>
         {icon && (
           <span className="rounded-full bg-primary-100 p-3 text-primary-6000">
@@ -24,9 +27,11 @@ export function StatsCard(props: Props) {
       </div>
 
       <div className="mt-1 flex gap-1 text-green-600">
-        <p className="flex gap-2 text-xs">
-          <span className="font-medium"> 67.81% </span>
-          <span className="text-gray-500"> Since last week </span>
+        <p className="flex gap-2 items-center">
+          <Text className="font-medium">67.81%</Text>
+          <Text size="1" className="text-gray-500">
+            Since last week
+          </Text>
         </p>
       </div>
     </div>
