@@ -4,13 +4,15 @@ import { ErrorText } from '../error-text';
 import { Link } from 'react-router-dom';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { Item } from '@magnetic/interfaces';
+import { priceCentsToDollars } from '../../utils/money';
 
 interface Props {
   items: Item[];
+  onClickEdit?: (item: Item) => void;
 }
 
 function ItemsTable(props: Props) {
-  const { items } = props;
+  const { items, onClickEdit } = props;
   // const { isLoading, services, error, isError } = useServices();
 
   // if (isLoading) {
@@ -37,10 +39,8 @@ function ItemsTable(props: Props) {
           {items.map((item, index) => (
             <tr className="hover">
               <th>{index + 1}</th>
-              <td>
-                <Link to={`/services/${item.id}`}>{item.name}</Link>
-              </td>
-              <td>{item.priceInCents}</td>
+              <td>{item.name}</td>
+              <td>{priceCentsToDollars(item.priceInCents)}</td>
               <td>{item.description}</td>
               <td>
                 <div className="dropdown dropdown-bottom dropdown-end">
@@ -51,8 +51,12 @@ function ItemsTable(props: Props) {
                     tabIndex={0}
                     className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
                   >
-                    <li>
-                      <a href={`/services/edit/${item.id}`}>Edit</a>
+                    <li
+                      onClick={() => {
+                        onClickEdit && onClickEdit(item);
+                      }}
+                    >
+                      <a>Edit</a>
                     </li>
 
                     <li
@@ -60,7 +64,7 @@ function ItemsTable(props: Props) {
                         // onClickRemove && onClickRemove(user);
                       }}
                     >
-                      <a>Delete Service</a>
+                      <a>Delete</a>
                     </li>
                   </ul>
                 </div>

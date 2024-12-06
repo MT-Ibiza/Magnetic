@@ -5,16 +5,19 @@ import { useForm } from 'react-hook-form';
 import 'react-quill/dist/quill.snow.css';
 import { toast } from 'sonner';
 import { editItem, newItem } from '../../apis/api-items';
+import { dollarsToCents } from '../../utils/money';
 
 export interface Props {
   className?: string;
   onCancel: () => void;
+  onSave: () => void;
+  onError?: () => void;
   item?: Item;
   serviceId: number;
 }
 
 export function FormProduct(props: Props) {
-  const { item, onCancel, serviceId } = props;
+  const { item, onCancel, serviceId, onSave } = props;
   const editMode = !!item;
 
   const {
@@ -23,7 +26,9 @@ export function FormProduct(props: Props) {
     setValue,
     formState: { errors },
   } = useForm<ItemBase>({
-    defaultValues: item ? { ...item } : undefined,
+    defaultValues: item
+      ? { ...item, ...{ priceInCents: dollarsToCents(item.priceInCents) } }
+      : undefined,
   });
 
   const createItem = useMutation<Item, Error, NewItem>({
@@ -32,6 +37,7 @@ export function FormProduct(props: Props) {
     },
     onSuccess: (item) => {
       toast.success(`${item.name} created!`);
+      onSave();
     },
     onError: (error) => {
       toast.error('The product could not be created');
@@ -45,6 +51,7 @@ export function FormProduct(props: Props) {
     },
     onSuccess: () => {
       toast.success(`${item?.name} updated!`);
+      onSave();
     },
     onError: (error) => {
       toast.error('The product could not be updated');
@@ -57,14 +64,14 @@ export function FormProduct(props: Props) {
       await updateItem.mutateAsync({
         name,
         description,
-        priceInCents: Number(priceInCents),
+        priceInCents: Number(priceInCents) * 100,
         serviceId,
       });
     } else {
       await createItem.mutateAsync({
         name,
         description,
-        priceInCents: Number(priceInCents),
+        priceInCents: Number(priceInCents) * 100,
         serviceId,
       });
     }

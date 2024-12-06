@@ -11,7 +11,11 @@ export async function GET(
         id: Number(params.id),
       },
       include: {
-        items: true,
+        items: {
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
         package: {
           select: {
             name: true,

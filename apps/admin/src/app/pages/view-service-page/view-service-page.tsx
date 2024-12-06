@@ -6,6 +6,7 @@ import { Button, DrawerContent, Input, Text, UploadImage } from '@magnetic/ui';
 import ItemsTable from '../../components/services/items-table';
 import { useState } from 'react';
 import FormProduct from '../../components/services/form-product';
+import { Item } from '@magnetic/interfaces';
 
 interface Props {}
 
@@ -14,6 +15,7 @@ function ViewServicePage(props: Props) {
   const params = useParams();
   const serviceId = parseInt(params.id || '');
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<Item | undefined>();
   const { isLoading, isError, service, error } = useService(serviceId);
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -51,14 +53,27 @@ function ViewServicePage(props: Props) {
             + New Item
           </button>
         </div>
-        <ItemsTable items={service.items} />
+        <ItemsTable
+          items={service.items}
+          onClickEdit={(item) => {
+            toggleDrawer();
+            setSelectedItem(item);
+          }}
+        />
       </div>
       <DrawerContent
         title={'Add Item'}
         open={openDrawer}
         onClose={toggleDrawer}
       >
-        <FormProduct onCancel={toggleDrawer} serviceId={serviceId} />
+        <FormProduct
+          onCancel={toggleDrawer}
+          serviceId={serviceId}
+          item={selectedItem}
+          onSave={() => {
+            toggleDrawer();
+          }}
+        />
       </DrawerContent>
     </>
   );
