@@ -58,7 +58,7 @@ function ViewServicePage(props: Props) {
         open={openDrawer}
         onClose={toggleDrawer}
       >
-        <FormProduct />
+        <FormProduct onCancel={toggleDrawer} />
         {/* <FormProvider onCancel={toggleDrawer} /> */}
       </DrawerContent>
     </>

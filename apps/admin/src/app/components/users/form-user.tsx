@@ -93,85 +93,79 @@ export function FormUser(props: Props) {
   };
 
   return (
-    <div className="service-form">
-      <div className="">
-        <div className="mx-auto">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-[20px]">
-              <div className="flex flex-col gap-[10px]">
-                <Text>Client Name</Text>
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  className="input input-bordered"
-                  {...register('name', { required: true })}
-                />
+    <div className="mx-auto">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-[20px]">
+          <div className="flex flex-col gap-[10px]">
+            <Text>Client Name</Text>
+            <input
+              type="text"
+              placeholder="Full Name"
+              className="input input-bordered"
+              {...register('name', { required: true })}
+            />
 
-                {errors.name && (
-                  <p className="text-[12px] text-red-500">
-                    Service name is required
-                  </p>
-                )}
-              </div>
-              <div className="flex flex-col gap-[10px]">
-                <Text>Client Email</Text>
-                <input
-                  type="email"
-                  placeholder="your email"
-                  className="input input-bordered"
-                  {...register('email', { required: true })}
-                />
-                {errors.email && (
-                  <p className="text-[12px] text-red-500">Email is required</p>
-                )}
-              </div>
-              <div className="flex flex-col gap-[10px]">
-                <Text>Subscription</Text>
-                <select
-                  className="select select-bordered w-full "
-                  {...register('packageId', {
-                    required: {
-                      value: true,
-                      message: 'Package is required',
-                    },
-                  })}
-                >
-                  {packagesOptions.map((option, index) => (
-                    <option value={option.value} key={index}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {!editMode && (
-                <div className="flex flex-col gap-[10px]">
-                  <Text>Password</Text>
-                  <input
-                    type="password"
-                    placeholder="*********"
-                    className="input input-bordered"
-                    {...register('password', { required: true })}
-                  />
+            {errors.name && (
+              <p className="text-[12px] text-red-500">
+                Service name is required
+              </p>
+            )}
+          </div>
+          <div className="flex flex-col gap-[10px]">
+            <Text>Client Email</Text>
+            <input
+              type="email"
+              placeholder="your email"
+              className="input input-bordered"
+              {...register('email', { required: true })}
+            />
+            {errors.email && (
+              <p className="text-[12px] text-red-500">Email is required</p>
+            )}
+          </div>
+          <div className="flex flex-col gap-[10px]">
+            <Text>Subscription</Text>
+            <select
+              className="select select-bordered w-full "
+              {...register('packageId', {
+                required: {
+                  value: true,
+                  message: 'Package is required',
+                },
+              })}
+            >
+              {packagesOptions.map((option, index) => (
+                <option value={option.value} key={index}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          {!editMode && (
+            <div className="flex flex-col gap-[10px]">
+              <Text>Password</Text>
+              <input
+                type="password"
+                placeholder="*********"
+                className="input input-bordered"
+                {...register('password', { required: true })}
+              />
 
-                  {errors.name && (
-                    <p className="text-[12px] text-red-500">
-                      Password is required
-                    </p>
-                  )}
-                </div>
+              {errors.name && (
+                <p className="text-[12px] text-red-500">Password is required</p>
               )}
             </div>
-            <div className="flex gap-[10px] justify-end pt-[80px]">
-              <Button variant="outline" href={'/users'} type="submit">
-                Cancel
-              </Button>
-              <Button type="submit">
-                {editMode ? 'Update User' : 'Create User'}
-              </Button>
-            </div>
-          </form>
+          )}
         </div>
-      </div>
+        <div className="flex gap-[10px] justify-end pt-[80px]">
+          <Button variant="outline" href={'/users'} type="submit">
+            Cancel
+          </Button>
+          <Button type="submit">
+            {editMode ? 'Update User' : 'Create User'}
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }

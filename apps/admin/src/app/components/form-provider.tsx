@@ -72,14 +72,7 @@ function FormProvider(props: Props) {
             />
           </div>
         </div>
-        <div
-          className="buttons flex justify-end gap-3 p-4 w-full"
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            right: 0,
-          }}
-        >
+        <div className="buttons flex justify-end gap-3 p-4 w-full absolute bottom-0 right-0">
           <Button
             onClick={() => {
               onCancel && onCancel();
