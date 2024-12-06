@@ -22,6 +22,7 @@ function UsersTable(props: Props) {
     refetch,
   } = useUsers({
     searchText: undefined,
+    itemsPerPage: 10,
   });
 
   if (isLoading) {

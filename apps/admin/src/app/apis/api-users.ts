@@ -15,11 +15,12 @@ import {
 export async function getUsers(
   params: SearchUsersParams
 ): Promise<UserResponse> {
-  const { itemsPerPage, searchText, role } = params;
-  const page = 1;
+  console.log(params);
+  const { itemsPerPage, searchText, role, page } = params;
+  const searchPage = page || 1;
   const pageSize = itemsPerPage || 20;
   const queryParams: Record<string, string> = {
-    page: page.toString(),
+    page: searchPage.toString(),
     pageSize: pageSize.toString(),
   };
 

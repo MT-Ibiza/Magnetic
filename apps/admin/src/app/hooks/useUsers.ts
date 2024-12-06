@@ -57,13 +57,5 @@ export const useUsers = (params: SearchUsersParams) => {
     hasNextPage,
     refetch,
     users: data?.pages.flatMap((page) => page.users) || [],
-    usersAsOptions:
-      data?.pages[0]?.users.map((user) => {
-        return {
-          label: user.name,
-          value: user.id,
-          user,
-        };
-      }) || [],
   };
 };
