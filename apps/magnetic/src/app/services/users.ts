@@ -1,4 +1,4 @@
-import db from "../libs/db";
+import db from '../libs/db';
 
 type SearchParams = {
   searchText: string;
@@ -33,11 +33,14 @@ export async function searchUsers(params: SearchParams) {
         image: true,
         name: true,
         phone: true,
-        provider: true,
-        providerAccountId: true,
         role: true,
-        typeAccount: true,
         active: true,
+        packageId: true,
+        package: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
   } else {
@@ -59,11 +62,13 @@ export async function searchUsers(params: SearchParams) {
         image: true,
         name: true,
         phone: true,
-        provider: true,
-        providerAccountId: true,
         role: true,
-        typeAccount: true,
         active: true,
+        package: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
   }

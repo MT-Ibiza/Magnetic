@@ -1,3 +1,5 @@
+import { Package } from './packages';
+
 export interface CurrentUser {
   id: number;
   name: string;
@@ -12,6 +14,7 @@ export interface User {
   image?: string;
   role: string;
   active: boolean;
+  package?: Package;
 }
 
 export interface NewUser {

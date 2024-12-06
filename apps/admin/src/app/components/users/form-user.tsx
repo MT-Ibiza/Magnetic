@@ -92,7 +92,7 @@ export function FormUser(props: Props) {
                 )}
               </div>
               <div className="flex flex-col gap-[10px]">
-                <Text>Plan Subscribe</Text>
+                <Text>Subscription</Text>
                 <select
                   className="select select-bordered w-full "
                   {...register('packageId', {

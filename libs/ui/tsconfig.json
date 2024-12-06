@@ -9,6 +9,7 @@
   },
   "files": [],
   "include": [],
+  // @ts-ignore
   "references": [
     {
       "path": "./tsconfig.lib.json"

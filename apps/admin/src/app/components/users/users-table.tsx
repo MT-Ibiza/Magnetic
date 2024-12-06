@@ -36,7 +36,7 @@ function UsersTable(props: Props) {
             <th>N</th>
             <th>Name</th>
             <th>Role</th>
-            <th>Active</th>
+            <th>Subscription</th>
           </tr>
         </thead>
         <tbody>
@@ -45,7 +45,7 @@ function UsersTable(props: Props) {
               <th>{index + 1}</th>
               <td>{user.name}</td>
               <td>{user.role}</td>
-              <td>{user.active ? 'Active' : 'Disabled'}</td>
+              <td>{user.package ? user.package.name : 'none'}</td>
             </tr>
           ))}
         </tbody>
