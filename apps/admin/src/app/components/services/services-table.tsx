@@ -1,5 +1,5 @@
 import React from 'react';
-import { useServices } from '../../hooks/useService';
+import { useServices } from '../../hooks/useServices';
 import Loading from '../loading';
 import { ErrorText } from '../error-text';
 

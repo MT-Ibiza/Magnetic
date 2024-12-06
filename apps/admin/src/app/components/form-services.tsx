@@ -1,40 +1,46 @@
-import { NewService, Package, Service } from '@magnetic/interfaces';
-import { Button, Input, UploadImage } from '@magnetic/ui';
+import { NewService, Service } from '@magnetic/interfaces';
+import { Button, Input, Text, UploadImage } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { newService } from '../apis/api-services';
+import { usePackages } from '../hooks/usePackages';
+import Loading from './loading';
+import { ErrorText } from './error-text';
 
 export interface FormServiceData {
   name: string;
   description: string;
   packageId: number;
-  cover: File;
+  cover?: File;
 }
 
 export interface Props {
   className?: string;
-  packages: Package[];
+  service?: Service;
 }
 
 export function ServiceForm(props: Props) {
-  const { packages } = props;
+  const { className, service } = props;
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<FormServiceData>();
-  const [description, setDescription] = useState('');
-
-  const packageOptions = packages.map((packagePlan) => {
-    return {
-      label: packagePlan.name,
-      value: packagePlan.id,
-    };
+  } = useForm<FormServiceData>({
+    defaultValues: service
+      ? {
+          name: service.name,
+          description: service.description,
+          packageId: service.packageId,
+          cover: undefined,
+        }
+      : undefined,
   });
+  const [description, setDescription] = useState(service?.description);
+  const { isLoading, isError, error, packagesOptions } = usePackages();
 
   const createService = useMutation<Service, Error, NewService>({
     mutationFn: (data: NewService) => {
@@ -44,11 +50,19 @@ export function ServiceForm(props: Props) {
     onError: () => {},
   });
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <ErrorText text={error?.message || ''} />;
+  }
+
   const onSubmit = async (data: FormServiceData) => {
     const { name, packageId } = data;
     await createService.mutateAsync({
       name,
-      description,
+      description: description || '',
       packageId: Number(packageId),
       items: [],
     });
@@ -67,12 +81,11 @@ export function ServiceForm(props: Props) {
                 height="400px"
               /> */}
               <div className="flex flex-col gap-[10px]">
-                <span className="text-neutral-800 dark:text-neutral-200">
-                  Service Name
-                </span>
-                <Input
-                  type="text"
+                <Text size="1">Service Name</Text>
+                <input
+                  type="email"
                   placeholder="Enter the Service name"
+                  className="input input-bordered"
                   {...register('name', { required: true })}
                 />
                 {errors.name && (
@@ -82,16 +95,17 @@ export function ServiceForm(props: Props) {
                 )}
               </div>
               <div className="flex flex-col gap-[10px]">
+                <Text size="1">Available in subscription</Text>
                 <select
+                  className="select select-bordered w-full "
                   {...register('packageId', {
                     required: {
                       value: true,
                       message: 'Package is required',
                     },
                   })}
-                  className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
-                  {packageOptions.map((option, index) => (
+                  {packagesOptions.map((option, index) => (
                     <option value={option.value} key={index}>
                       {option.label}
                     </option>
@@ -99,9 +113,7 @@ export function ServiceForm(props: Props) {
                 </select>
               </div>
               <div className="flex flex-col gap-[10px]">
-                <span className="text-neutral-800 dark:text-neutral-200">
-                  Service Description
-                </span>
+                <Text size="1">Service Description</Text>
                 <ReactQuill
                   theme="snow"
                   defaultValue={description}

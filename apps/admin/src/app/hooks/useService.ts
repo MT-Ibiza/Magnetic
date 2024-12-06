@@ -1,23 +1,21 @@
-import { Service } from '@magnetic/interfaces';
+import { Service, User } from '@magnetic/interfaces';
 import { useQuery } from '@tanstack/react-query';
-import { getServices } from '../apis/api-services';
+import { getService } from '../apis/api-services';
 
-export const useServices = () => {
-  const { isLoading, isError, data, error, isSuccess, refetch } = useQuery<
-    Service[]
-  >({
-    queryKey: [`services`],
+export const useService = (serviceId: number) => {
+  const { isLoading, isError, data, error, refetch } = useQuery<Service>({
+    queryKey: [`service_${serviceId}`],
     queryFn: async () => {
-      return getServices();
+      return getService(serviceId);
     },
   });
 
   return {
     isLoading,
     isError,
-    isSuccess,
-    services: data || [],
-    refetch,
+    service: data,
     error,
+    refetch,
+    data,
   };
 };
