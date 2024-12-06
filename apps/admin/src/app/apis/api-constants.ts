@@ -14,6 +14,15 @@ export const URL_NEW_SERVICE = `${API_URL}/services`;
 export const URL_UPDATE_SERVICE = (id: number) => `${API_URL}/services/${id}`;
 export const URL_DATA_NEW_SERVICE = `${API_URL}/services/new`;
 
+//Items
+export const URL_GET_ITEMS = (serviceId: number) =>
+  `${API_URL}/services/${serviceId}/items`;
+export const URL_GET_ITEM = (serviceId: number, itemId: number) =>
+  `${API_URL}/services/${serviceId}/items/${itemId}`;
+export const URL_NEW_ITEM = (id: number) => `${API_URL}/services/${id}/items`;
+export const URL_UPDATE_ITEM = (serviceId: number, itemId: number) =>
+  `${API_URL}/services/${serviceId}/items/${itemId}`;
+
 //Packages
 export const URL_GET_PACKAGES = `${API_URL}/packages`;
 export const URL_NEW_PACKAGE = `${API_URL}/packages`;

@@ -1,36 +1,82 @@
-import { Item } from '@magnetic/interfaces';
-import { Button, Input, UploadImage } from '@magnetic/ui';
-import { useState } from 'react';
+import { EditItem, Item, ItemBase, NewItem } from '@magnetic/interfaces';
+import { Button, Input, TextArea, UploadImage } from '@magnetic/ui';
+import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import 'react-quill/dist/quill.snow.css';
+import { toast } from 'sonner';
+import { editItem, newItem } from '../../apis/api-items';
 
 export interface Props {
   className?: string;
   onCancel: () => void;
   item?: Item;
+  serviceId: number;
 }
 
 export function FormProduct(props: Props) {
-  const { item, onCancel } = props;
+  const { item, onCancel, serviceId } = props;
+  const editMode = !!item;
 
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm<ItemBase>({
+    defaultValues: item ? { ...item } : undefined,
+  });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const createItem = useMutation<Item, Error, NewItem>({
+    mutationFn: (data: NewItem) => {
+      return newItem(serviceId, data);
+    },
+    onSuccess: (item) => {
+      toast.success(`${item.name} created!`);
+    },
+    onError: (error) => {
+      toast.error('The product could not be created');
+    },
+  });
+
+  const updateItem = useMutation<Item, Error, EditItem>({
+    mutationFn: (data: EditItem) => {
+      const itemId = item?.id || 0;
+      return editItem(serviceId, itemId, data);
+    },
+    onSuccess: () => {
+      toast.success(`${item?.name} updated!`);
+    },
+    onError: (error) => {
+      toast.error('The product could not be updated');
+    },
+  });
+
+  const onSubmit = async (data: ItemBase) => {
+    const { name, description, priceInCents } = data;
+    if (editMode) {
+      await updateItem.mutateAsync({
+        name,
+        description,
+        priceInCents: Number(priceInCents),
+        serviceId,
+      });
+    } else {
+      await createItem.mutateAsync({
+        name,
+        description,
+        priceInCents: Number(priceInCents),
+        serviceId,
+      });
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-[20px]">
-        <UploadImage
+        {/* <UploadImage
           onChange={(file) => setValue('cover_image', file)}
           height="400px"
-        />
+        /> */}
         <div className="flex flex-col gap-[10px]">
           <span className="text-neutral-800 dark:text-neutral-200">
             Product Name
@@ -38,9 +84,9 @@ export function FormProduct(props: Props) {
           <Input
             type="text"
             placeholder="Enter the Service name"
-            {...register('product_name', { required: true })}
+            {...register('name', { required: true })}
           />
-          {errors.product_name && (
+          {errors.name && (
             <p className="text-[12px] text-red-500">Name is required</p>
           )}
         </div>
@@ -50,13 +96,27 @@ export function FormProduct(props: Props) {
           </span>
           <Input
             type="number"
+            min={1}
+            step={0.01}
             placeholder="Enter the price product"
-            {...register('price_product', { required: true })}
+            {...register('priceInCents', { required: true })}
           />
-          {errors.price_product && (
+          {errors.priceInCents && (
             <p className="text-[12px] text-red-500">
               product price is required
             </p>
+          )}
+        </div>
+        <div className="flex flex-col gap-[10px]">
+          <span className="text-neutral-800 dark:text-neutral-200">
+            Description
+          </span>
+          <TextArea
+            placeholder="Describe your product here"
+            {...register('description', { required: true })}
+          />
+          {errors.description && (
+            <p className="text-[12px] text-red-500">Name is required</p>
           )}
         </div>
       </div>
