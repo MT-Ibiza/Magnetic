@@ -5,6 +5,8 @@ import { useAuth } from './hooks/useAuth';
 import { FaUserFriends, FaBook, FaCog } from 'react-icons/fa';
 import { MdDashboardCustomize } from 'react-icons/md';
 import { SiTask } from 'react-icons/si';
+import { User } from '@magnetic/interfaces';
+import ThemeSelector from './components/theme-selector';
 
 interface Props {}
 
@@ -57,7 +59,10 @@ function Layout(props: Props) {
         toggleSidebar={toggleSidebar}
         isSidebarVisible={isSidebarVisible}
       >
-        {user && <AvatarDropdown logout={logout} user={user} />}
+        <div className="flex items-center gap-3">
+          <ThemeSelector />
+          {user && <AvatarDropdown logout={logout} user={user as User} />}
+        </div>
       </HeaderApp>
       <div className="flex flex-1">
         <Sidebar
