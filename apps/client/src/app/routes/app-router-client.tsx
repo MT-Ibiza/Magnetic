@@ -5,6 +5,7 @@ import PackagePage from '../pages/packages-page/packages-page';
 import RedirectRoute from './redirect-route';
 import LoginPage from '../pages/login-page/login-page';
 import PrivateRoutes from './private-routes';
+import ViewServicePage from '../pages/view-service-page/view-service-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -20,6 +21,7 @@ export const AppRouter = () => {
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
           <Route path="services" element={<ServiceClientPage />} />
+          <Route path="services/:id" element={<ViewServicePage />} />
           <Route path="packages" element={<PackagePage />} />
         </Route>
       </Route>
