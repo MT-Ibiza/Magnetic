@@ -1,19 +1,18 @@
 import { Service } from './services';
 
-export interface Provider {
+export interface ProviderBase {
+  name: string;
+  phone: string;
+  website: string;
+  email: string;
+}
+
+export interface Provider extends ProviderBase {
   id: number;
   createdAt: Date;
   updatedAt: Date;
-  name: string;
-  phone: string;
-  website: string;
-  email: string;
   services: Service[];
 }
 
-export interface NewProvider {
-  name: string;
-  phone: string;
-  website: string;
-  email: string;
-}
+export interface NewProvider extends ProviderBase {}
+export interface EditProvider extends ProviderBase {}

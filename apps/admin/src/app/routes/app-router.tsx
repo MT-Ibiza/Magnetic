@@ -2,7 +2,6 @@ import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import Layout from '../layout';
 import PrivateRoutes from './private-routes';
 import UsersPage from '../pages/users-page/users-page';
-import ServicePage from '../pages/services-page/services-page';
 import DashboardPage from '../pages/dashboard-page/dashboard';
 import BookingsPage from '../pages/bookings-page/bookings-page';
 import SettingsPage from '../pages/settings-page/settings-page';
@@ -15,6 +14,8 @@ import NewUserPage from '../pages/new-user-page/new-user-page';
 import EditUserPage from '../pages/edit-user-page/edit-user-page';
 import EditServicePage from '../pages/edit-service-page/edit-service-page';
 import ViewServicePage from '../pages/view-service-page/view-service-page';
+import ProvidersPage from '../pages/providers-page/providers-page';
+import ServicePage from '../pages/services-page/services-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -33,11 +34,12 @@ export const AppRouter = () => {
           <Route path="services" element={<ServicePage />} />
           <Route path="services/edit/:id" element={<EditServicePage />} />
           <Route path="services/:id" element={<ViewServicePage />} />
+          <Route path="services/new" element={<NewServicePage />} />
+          <Route path="providers" element={<ProvidersPage />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="users/new" element={<NewUserPage />} />
           <Route path="users/edit/:id" element={<EditUserPage />} />
           <Route path="bookings" element={<BookingsPage />} />
-          <Route path="services/new" element={<NewServicePage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route
             path="services/:id"

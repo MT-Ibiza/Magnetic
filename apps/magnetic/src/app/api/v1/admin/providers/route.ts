@@ -26,7 +26,7 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   try {
     const providers = await db.provider.findMany();
-    return NextResponse.json({ providers: providers });
+    return NextResponse.json(providers);
   } catch (error: any) {
     return NextResponse.json(
       {

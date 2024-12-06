@@ -32,4 +32,11 @@ export const URL_GET_USERS = `${API_URL}/users`;
 export const URL_GET_USER = (id: number) => `${API_URL}/users/${id}`;
 export const URL_UPDATE_USER = (id: number) => `${API_URL}/users/${id}`;
 export const URL_NEW_USER = `${API_URL}/users`;
-export const URL_REMOVE_USER = (id: number) => `${API_URL}/users/${id}/remove`;
+export const URL_REMOVE_USER = (id: number) => `${API_URL}/users/${id}`;
+
+//Providers
+export const URL_GET_PROVIDERS = `${API_URL}/providers`;
+export const URL_GET_PROVIDER = (id: number) => `${API_URL}/providers/${id}`;
+export const URL_UPDATE_PROVIDER = (id: number) => `${API_URL}/providers/${id}`;
+export const URL_NEW_PROVIDER = `${API_URL}/providers`;
+export const URL_REMOVE_PROVIDER = (id: number) => `${API_URL}/providers/${id}`;
