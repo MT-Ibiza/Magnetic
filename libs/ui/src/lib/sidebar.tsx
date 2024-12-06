@@ -42,7 +42,7 @@ export function Sidebar({ options, isVisible, toggleSidebar }: SidebarProps) {
         </button>
       </div>
       <div className="relative">
-        <ul className="flex flex-col gap-1 min-w-[240px] p-2 font-sans text-base font-normal text-gray-700 relative">
+        <ul className="flex flex-col gap-1 min-w-[240px] px-6 py-2 font-sans text-base font-normal text-gray-700 relative">
           {options.map((option) => (
             <li
               key={option.key}
