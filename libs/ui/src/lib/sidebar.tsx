@@ -20,11 +20,11 @@ export function Sidebar({ options, isVisible, toggleSidebar }: SidebarProps) {
 
   return (
     <div
-      className={`fixed shadow-xl shadow-blue-gray-900/5 z-50 top-0 bottom-0 h-full w-[20rem] bg-body dark:bg-black transition-transform duration-300 ${
+      className={`fixed z-50 border-r-[0.5px] border-gray-300 top-0 bottom-0 h-full w-[260px] bg-body dark:bg-black transition-transform duration-300 ${
         isVisible ? 'translate-x-0' : '-translate-x-full'
       }`}
     >
-      <div className="flex justify-between items-center px-4 py-3">
+      <div className="flex justify-center items-center px-4 py-3">
         <NavLink
           to="/dashboard"
           className="main-logo flex items-center shrink-0 gap-2"
@@ -33,16 +33,16 @@ export function Sidebar({ options, isVisible, toggleSidebar }: SidebarProps) {
             Magnetic Travel
           </h5>
         </NavLink>
-        <button
+        {/* <button
           type="button"
           className="text-primary hover:text-primary-6000 transition duration-300"
           onClick={toggleSidebar}
         >
           <TfiArrowCircleLeft size={24} />
-        </button>
+        </button> */}
       </div>
       <div className="relative">
-        <ul className="flex flex-col gap-1 min-w-[240px] px-6 py-2 font-sans text-base font-normal text-gray-700 relative">
+        <ul className="flex flex-col gap-1 min-w-[260px] px-6 py-2 font-sans text-base font-normal text-gray-700 relative">
           {options.map((option) => (
             <li
               key={option.key}

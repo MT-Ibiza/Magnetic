@@ -66,8 +66,8 @@ function Layout(props: Props) {
           toggleSidebar={toggleSidebar}
         />
         <div
-          className={`flex-1 p-4 transition-all duration-300 ${
-            isSidebarVisible ? 'ml-[20rem]' : 'ml-0'
+          className={`bg-[#f3f5f8] flex-1 p-4 transition-all duration-300 ${
+            isSidebarVisible ? 'ml-[260px]' : 'ml-0'
           }`}
         >
           <Outlet />
