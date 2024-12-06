@@ -80,7 +80,7 @@ export function FormUser(props: Props) {
                 <Text>Client Email</Text>
                 <input
                   type="email"
-                  placeholder="you mail"
+                  placeholder="your email"
                   className="input input-bordered"
                   {...register('email', { required: true })}
                 />

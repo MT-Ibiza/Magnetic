@@ -29,6 +29,8 @@ model User {
   countryNamePhone  String?
   active            Boolean  @default(true)
   role              Role     @default(client)
+  packageId         Int? // Relación con Package
+  package           Package? @relation(fields: [packageId], references: [id]) // Relación con Package
   cart              Cart?
   orders            Order[]
 
@@ -67,6 +69,7 @@ model Package {
   updatedAt DateTime  @updatedAt
   name      String    @unique
   services  Service[]
+  users     User[]
 }
 
 model Provider {
