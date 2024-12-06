@@ -26,6 +26,7 @@
     "react-modern-drawer": "^1.4.0",
     "react-quill": "^2.0.0",
     "react-router-dom": "6.11.2",
+    "sonner": "1.7.0",
     "zustand": "5.0.2"
   },
   "devDependencies": {

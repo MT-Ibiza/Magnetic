@@ -22,6 +22,7 @@ export async function POST(request: Request) {
         name: name,
         email: email,
         role: 'client',
+        packageId,
         // phone: phone,
         // countryCodePhone: countryCodePhone,
         // countryNamePhone: countryNamePhone,

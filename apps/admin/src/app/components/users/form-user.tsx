@@ -3,10 +3,9 @@ import { Button, Input, Text, UploadImage } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { newUser } from '../../apis/api-users';
-
+import { toast } from 'sonner';
 export interface FormUserData {
   name: string;
   email: string;
@@ -40,8 +39,12 @@ export function FormUser(props: Props) {
     mutationFn: (data: NewUser) => {
       return newUser(data);
     },
-    onSuccess: () => {},
-    onError: () => {},
+    onSuccess: (user) => {
+      toast.success(`${user.name} have now an account`);
+    },
+    onError: (error) => {
+      toast.error('The account could not be created');
+    },
   });
 
   const onSubmit = async (data: FormUserData) => {
@@ -50,7 +53,7 @@ export function FormUser(props: Props) {
       name,
       email,
       password,
-      packageId,
+      packageId: Number(packageId),
       role: 'client',
     });
   };

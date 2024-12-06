@@ -35,17 +35,15 @@ function UsersTable(props: Props) {
           <tr>
             <th>N</th>
             <th>Name</th>
-            {/* <th>Description</th> */}
             <th>Role</th>
             <th>Active</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user, index) => (
-            <tr className="hover">
+            <tr className="hover" key={index}>
               <th>{index + 1}</th>
               <td>{user.name}</td>
-              {/* <td>{user.description}</td> */}
               <td>{user.role}</td>
               <td>{user.active ? 'Active' : 'Disabled'}</td>
             </tr>
