@@ -1,6 +1,6 @@
 import { Item } from '@magnetic/interfaces';
 import { Text } from '@magnetic/ui';
-import { priceCentsToDollars } from '@magnetic/utils';
+import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useCartStore } from '../../hooks/useCartStore';
 
 interface Props {
@@ -20,7 +20,7 @@ function ItemCardCounter(props: Props) {
       />
       <div className="mb-3 text-lg font-semibold">{item.name}</div>
       <div className="text-gray-500">
-        Precio: ${priceCentsToDollars(item.priceInCents)}
+        Precio: ${centsToEurosWithCurrency(item.priceInCents)}
       </div>
       <div className="flex items-center gap-2 mt-2">
         <button

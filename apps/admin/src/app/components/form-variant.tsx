@@ -1,71 +1,79 @@
 import {
-  EditProvider,
+  EditItemVariant,
   ItemVariant,
   ItemVariantBase,
-  NewProvider,
-  Provider,
+  NewItemVariant,
 } from '@magnetic/interfaces';
 import { Button, Input, Text } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { editProvider, newProvider } from '../apis/api-providers';
+import { editVariant, newVariant } from '../apis/api-variants';
+import { centsToEuros, eurosToCents } from '@magnetic/utils';
 
 interface Props {
   variant?: ItemVariant;
   onCancel: () => void;
+  itemId: number;
 }
 
 function FormVariant(props: Props) {
-  const { variant, onCancel } = props;
+  const { variant, onCancel, itemId } = props;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ItemVariantBase>({
-    defaultValues: variant ? variant : undefined,
+    defaultValues: variant
+      ? {
+          ...variant,
+          ...{ priceInCents: centsToEuros(variant.priceInCents) },
+        }
+      : undefined,
   });
 
-  // const createProvider = useMutation<Provider, Error, NewProvider>({
-  //   mutationFn: (data: NewProvider) => {
-  //     return newProvider(data);
-  //   },
-  //   onSuccess: () => {
-  //     toast.success(`Service created!`);
-  //   },
-  //   onError: () => {
-  //     toast.success(`Service couldn't be created!`);
-  //   },
-  // });
+  const createVariant = useMutation<ItemVariant, Error, NewItemVariant>({
+    mutationFn: (data: NewItemVariant) => {
+      return newVariant(data);
+    },
+    onSuccess: () => {
+      toast.success(`Service created!`);
+    },
+    onError: () => {
+      toast.success(`Service couldn't be created!`);
+    },
+  });
 
-  // const updateProvider = useMutation<Provider, Error, EditProvider>({
-  //   mutationFn: (data: EditProvider) => {
-  //     const providerId = provider?.id || 0;
-  //     return editProvider(providerId, data);
-  //   },
-  //   onSuccess: () => {
-  //     toast.success(`Provider updated!`);
-  //   },
-  //   onError: () => {
-  //     toast.success(`Provider couldn't be update!`);
-  //   },
-  // });
+  const updateVariant = useMutation<ItemVariant, Error, EditItemVariant>({
+    mutationFn: (data: EditItemVariant) => {
+      const variantId = variant?.id || 0;
+      return editVariant(variantId, data);
+    },
+    onSuccess: () => {
+      toast.success(`Provider updated!`);
+    },
+    onError: () => {
+      toast.success(`Provider couldn't be update!`);
+    },
+  });
 
   const onSubmit = async (data: ItemVariantBase) => {
-    // const { name, email, website } = data;
-    // if (provider) {
-    //   await updateProvider.mutateAsync({
-    //     name,
-    //     email,
-    //     website,
-    //   });
-    // } else {
-    //   await createProvider.mutateAsync({
-    //     name,
-    //     email,
-    //     website,
-    //   });
-    // }
+    const { name, description, priceInCents } = data;
+    if (variant) {
+      await updateVariant.mutateAsync({
+        itemId,
+        name,
+        description,
+        priceInCents: eurosToCents(priceInCents),
+      });
+    } else {
+      await createVariant.mutateAsync({
+        itemId,
+        name,
+        description,
+        priceInCents: eurosToCents(priceInCents),
+      });
+    }
   };
 
   return (
@@ -108,7 +116,7 @@ function FormVariant(props: Props) {
               onCancel && onCancel();
             }}
             variant="outline"
-            type="submit"
+            type="button"
           >
             Cancel
           </Button>

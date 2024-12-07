@@ -1,7 +1,7 @@
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { Item } from '@magnetic/interfaces';
 import { Text } from '@magnetic/ui';
-import { priceCentsToDollars } from '@magnetic/utils';
+import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { Link } from 'react-router-dom';
 
 interface Props {
@@ -44,7 +44,7 @@ function ItemsTable(props: Props) {
             </td>
             <td>
               <Text.TextNumeric>
-                {priceCentsToDollars(item.priceInCents)}
+                {centsToEurosWithCurrency(item.priceInCents)}
               </Text.TextNumeric>
             </td>
             <td>{item.category?.name || 'none'}</td>

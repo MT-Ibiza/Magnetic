@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import 'react-quill/dist/quill.snow.css';
 import { toast } from 'sonner';
 import { editItem, newItem } from '../../apis/api-items';
-import { dollarsToCents } from '@magnetic/utils';
+import { centsToEuros, eurosToCents } from '@magnetic/utils';
 
 export interface Props {
   className?: string;
@@ -27,7 +27,7 @@ export function FormProduct(props: Props) {
     formState: { errors },
   } = useForm<ItemBase>({
     defaultValues: item
-      ? { ...item, ...{ priceInCents: dollarsToCents(item.priceInCents) } }
+      ? { ...item, ...{ priceInCents: centsToEuros(item.priceInCents) } }
       : undefined,
   });
 
@@ -64,14 +64,14 @@ export function FormProduct(props: Props) {
       await updateItem.mutateAsync({
         name,
         description,
-        priceInCents: Number(priceInCents) * 100,
+        priceInCents: eurosToCents(Number(priceInCents)),
         serviceId,
       });
     } else {
       await createItem.mutateAsync({
         name,
         description,
-        priceInCents: Number(priceInCents) * 100,
+        priceInCents: eurosToCents(Number(priceInCents)),
         serviceId,
       });
     }

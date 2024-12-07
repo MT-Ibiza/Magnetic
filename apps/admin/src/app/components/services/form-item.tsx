@@ -19,10 +19,15 @@ import { useForm } from 'react-hook-form';
 import 'react-quill/dist/quill.snow.css';
 import { toast } from 'sonner';
 import { editItem, newItem } from '../../apis/api-items';
-import { dollarsToCents } from '@magnetic/utils';
+import {
+  centsToEuros,
+  centsToEurosWithCurrency,
+  eurosToCents,
+} from '@magnetic/utils';
 import Select from 'react-select';
 import { useState } from 'react';
 import FormCategory from '../form-category';
+import FormVariant from '../form-variant';
 
 export interface Props {
   className?: string;
@@ -47,6 +52,7 @@ export function FormItem(props: Props) {
     (category) => category.value == item?.categoryId
   );
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [openForm, setOpenForm] = useState('');
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
   };
@@ -58,7 +64,7 @@ export function FormItem(props: Props) {
     formState: { errors },
   } = useForm<ItemBase>({
     defaultValues: item
-      ? { ...item, ...{ priceInCents: dollarsToCents(item.priceInCents) } }
+      ? { ...item, ...{ priceInCents: centsToEuros(item.priceInCents) } }
       : undefined,
   });
 
@@ -91,12 +97,11 @@ export function FormItem(props: Props) {
 
   const onSubmit = async (data: ItemBase) => {
     const { name, description, priceInCents, categoryId } = data;
-    console.log(data);
     if (editMode) {
       await updateItem.mutateAsync({
         name,
         description,
-        priceInCents: Number(priceInCents) * 100,
+        priceInCents: eurosToCents(Number(priceInCents)),
         serviceId,
         categoryId: categoryId || null,
       });
@@ -104,7 +109,7 @@ export function FormItem(props: Props) {
       await createItem.mutateAsync({
         name,
         description,
-        priceInCents: Number(priceInCents) * 100,
+        priceInCents: eurosToCents(Number(priceInCents)),
         serviceId,
         categoryId: categoryId || null,
       });
@@ -179,6 +184,7 @@ export function FormItem(props: Props) {
                 className="text-red-700 mt-3"
                 onClick={() => {
                   setOpenDrawer(true);
+                  setOpenForm('category');
                 }}
               >
                 + New Category
@@ -191,6 +197,7 @@ export function FormItem(props: Props) {
                   className="text-red-700 mt-3"
                   onClick={() => {
                     setOpenDrawer(true);
+                    setOpenForm('variant');
                   }}
                 >
                   + New Variant
@@ -198,8 +205,11 @@ export function FormItem(props: Props) {
               </div>
               <div>
                 {item?.variants.map((variant, index) => (
-                  <div key={index}>
+                  <div key={index} className="flex gap-5">
                     <Text>{variant.name}</Text>
+                    <Text>{`${centsToEurosWithCurrency(
+                      variant.priceInCents
+                    )}`}</Text>
                   </div>
                 ))}
               </div>
@@ -220,17 +230,31 @@ export function FormItem(props: Props) {
         </div>
       </form>
       <DrawerContent
-        title={'Add Category'}
+        title={openForm === 'category' ? 'New Category' : 'New Variant'}
         open={openDrawer}
         onClose={toggleDrawer}
       >
-        <FormCategory
-          onCancel={toggleDrawer}
-          onSave={(category) => {
-            toggleDrawer();
-            setValue('categoryId', category.id);
-          }}
-        />
+        <>
+          {openForm === 'category' && (
+            <FormCategory
+              onCancel={toggleDrawer}
+              onSave={(category) => {
+                toggleDrawer();
+                setValue('categoryId', category.id);
+              }}
+            />
+          )}
+          {openForm === 'variant' && item && (
+            <FormVariant
+              onCancel={toggleDrawer}
+              itemId={item.id}
+              // onSave={(category) => {
+              //   toggleDrawer();
+              //   setValue('categoryId', category.id);
+              // }}
+            />
+          )}
+        </>
       </DrawerContent>
     </>
   );

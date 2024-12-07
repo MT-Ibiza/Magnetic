@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCartStore } from '../../hooks/useCartStore';
-import { priceCentsToDollars } from '@magnetic/utils';
+import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { Button, Text } from '@magnetic/ui';
 
 interface Props {}
@@ -18,13 +18,13 @@ function CartSummary(props: Props) {
             {item.name} x {item.quantity}
           </span>
           <Text.TextNumeric>
-            {priceCentsToDollars(item.priceInCents * item.quantity)}
+            {centsToEurosWithCurrency(item.priceInCents * item.quantity)}
           </Text.TextNumeric>
         </div>
       ))}
 
       <Text.TextNumeric className="mt-3 font-bold">
-        {`Total: ${priceCentsToDollars(total)}`}
+        {`Total: ${centsToEurosWithCurrency(total)}`}
       </Text.TextNumeric>
       <div className="flex gap-5">
         <button

@@ -2,19 +2,16 @@ import { NewItemVariant } from '@magnetic/interfaces';
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 
-export async function POST(
-  request: Request,
-  { params }: { params: { id: string; itemId: string } }
-) {
+export async function POST(request: Request) {
   const data: NewItemVariant = await request.json();
-  const { name, description, priceInCents } = data;
+  const { name, description, priceInCents, itemId } = data;
   try {
     const variant = await db.itemVariant.create({
       data: {
         name,
         description,
         priceInCents,
-        itemId: Number(params.itemId),
+        itemId: Number(itemId),
       },
     });
     return NextResponse.json(variant);
@@ -30,14 +27,12 @@ export async function POST(
   }
 }
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string; itemId: string } }
-) {
+export async function GET(request: Request) {
+  const { itemId } = await request.json();
   try {
     const variants = await db.itemVariant.findMany({
       where: {
-        itemId: Number(params.itemId),
+        itemId: Number(itemId),
       },
     });
     return NextResponse.json(variants);

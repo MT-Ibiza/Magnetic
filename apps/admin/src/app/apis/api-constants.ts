@@ -45,3 +45,10 @@ export const URL_GET_PROVIDER = (id: number) => `${API_URL}/providers/${id}`;
 export const URL_UPDATE_PROVIDER = (id: number) => `${API_URL}/providers/${id}`;
 export const URL_NEW_PROVIDER = `${API_URL}/providers`;
 export const URL_REMOVE_PROVIDER = (id: number) => `${API_URL}/providers/${id}`;
+
+//Variants
+export const URL_GET_VARIANTS = `${API_URL}/variants`;
+export const URL_GET_VARIANT = (id: number) => `${API_URL}/variants/${id}`;
+export const URL_UPDATE_VARIANT = (id: number) => `${API_URL}/variants/${id}`;
+export const URL_NEW_VARIANT = `${API_URL}/variants`;
+export const URL_REMOVE_VARIANT = (id: number) => `${API_URL}/variants/${id}`;
