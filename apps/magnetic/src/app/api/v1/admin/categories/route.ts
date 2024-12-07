@@ -1,16 +1,19 @@
-import { NewProvider } from '@magnetic/interfaces';
+import { NewCategory } from '@magnetic/interfaces';
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const data: NewProvider = await request.json();
-  const { name, email, website } = data;
+  const data: NewCategory = await request.json();
+  const { name, description } = data;
 
   try {
-    const provider = await db.provider.create({
-      data,
+    const category = await db.category.create({
+      data: {
+        name,
+        description,
+      },
     });
-    return NextResponse.json(provider);
+    return NextResponse.json(category);
   } catch (error: any) {
     return NextResponse.json(
       {
@@ -25,12 +28,12 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    const providers = await db.category.findMany({
+    const categories = await db.category.findMany({
       orderBy: {
         createdAt: 'desc',
       },
     });
-    return NextResponse.json(providers);
+    return NextResponse.json(categories);
   } catch (error: any) {
     return NextResponse.json(
       {

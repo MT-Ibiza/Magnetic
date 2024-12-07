@@ -13,19 +13,6 @@ import {
   URL_UPDATE_ITEM,
 } from './api-constants';
 
-export async function getCategories(): Promise<Category[]> {
-  const url = URL_GET_CATEGORIES;
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  const dataJson = await response.json();
-  if (!response.ok) throw new Error(dataJson.message);
-  return dataJson;
-}
-
 export async function getItems(serviceId: number): Promise<Item[]> {
   const url = URL_GET_ITEMS(serviceId);
   const response = await fetch(url, {

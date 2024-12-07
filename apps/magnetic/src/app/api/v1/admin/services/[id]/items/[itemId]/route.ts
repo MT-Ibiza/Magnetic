@@ -29,17 +29,21 @@ export async function GET(
     });
 
     const categories = await db.category.findMany({
-      where: {
-        items: {
-          some: {
-            service: {
-              name: item?.category?.name,
-            },
-          },
-        },
+      select: {
+        id: true,
+        name: true,
+        description: true,
       },
+      // where: {
+      //   items: {
+      //     some: {
+      //       service: {
+      //         name: item?.category?.name,
+      //       },
+      //     },
+      //   },
+      // },
     });
-    console.log(categories);
     const data = {
       item,
       categories,
@@ -62,14 +66,21 @@ export async function PUT(
   { params }: { params: { id: string; itemId: string } }
 ) {
   const data: EditItem = await request.json();
-  const { name, priceInCents, description } = data;
+  const { name, priceInCents, description, categoryId } = data;
   try {
+    console.log('serviceId: ', params.id);
+    console.log('itemId: ', params.itemId);
     const service = await db.item.update({
       where: {
         id: Number(params.itemId),
         serviceId: Number(params.id),
       },
-      data,
+      data: {
+        name,
+        priceInCents,
+        description,
+        categoryId,
+      },
     });
     return NextResponse.json(service, { status: 201 });
   } catch (error: any) {

@@ -5,6 +5,8 @@ export interface ItemBase {
   name: string;
   description: string;
   priceInCents: number;
+  categoryId?: number | null;
+  category?: Category;
 }
 
 export interface Item extends ItemBase {
@@ -15,11 +17,6 @@ export interface Item extends ItemBase {
   service: Service;
   // cartItems: number;
   // ordenItems: number;
-}
-
-export interface ItemWithServiceCategories {
-  item: Item;
-  categories: Category[];
 }
 
 export interface NewItem extends ItemBase {
@@ -33,4 +30,9 @@ export interface EditItem extends ItemBase {
 export interface CartItem extends ItemBase {
   id: number;
   quantity: number;
+}
+
+export interface ItemWithServiceCategories {
+  item: Item;
+  categories: Category[];
 }

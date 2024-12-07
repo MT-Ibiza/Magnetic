@@ -47,7 +47,7 @@ export function EditItemPage() {
         <FormItem
           onCancel={() => {}}
           serviceCategories={serviceCategories}
-          serviceId={1}
+          serviceId={serviceId}
           item={item}
           onSave={() => {
             // toggleDrawer();

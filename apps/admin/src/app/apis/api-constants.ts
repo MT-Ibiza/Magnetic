@@ -25,7 +25,9 @@ export const URL_UPDATE_ITEM = (serviceId: number, itemId: number) =>
 
 //Categories
 export const URL_GET_CATEGORIES = `${API_URL}/categories`;
-
+export const URL_NEW_CATEGORY = `${API_URL}/categories`;
+export const URL_UPDATE_CATEGORY = (id: number) =>
+  `${API_URL}/categories/${id}`;
 //Packages
 export const URL_GET_PACKAGES = `${API_URL}/packages`;
 export const URL_NEW_PACKAGE = `${API_URL}/packages`;
