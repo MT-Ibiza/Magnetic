@@ -185,7 +185,24 @@ export function FormItem(props: Props) {
               </Text>
             </CardWrapper>
             <CardWrapper className="variants">
-              <Text>Product Variants</Text>
+              <div className="flex justify-between items-center">
+                <Text>Product Variants</Text>
+                <Text
+                  className="text-red-700 mt-3"
+                  onClick={() => {
+                    setOpenDrawer(true);
+                  }}
+                >
+                  + New Variant
+                </Text>
+              </div>
+              <div>
+                {item?.variants.map((variant, index) => (
+                  <div key={index}>
+                    <Text>{variant.name}</Text>
+                  </div>
+                ))}
+              </div>
             </CardWrapper>
           </div>
         </div>

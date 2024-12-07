@@ -25,6 +25,14 @@ export async function GET(
             name: true,
           },
         },
+        variants: {
+          select: {
+            id: true,
+            name: true,
+            priceInCents: true,
+            description: true,
+          },
+        },
       },
     });
 

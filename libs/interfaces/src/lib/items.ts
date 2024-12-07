@@ -1,5 +1,6 @@
 import { Category } from './categories';
 import { Service } from './services';
+import { ItemVariant } from './variants';
 
 export interface ItemBase {
   name: string;
@@ -15,6 +16,7 @@ export interface Item extends ItemBase {
   updatedAt: Date;
   serviceId: number;
   service: Service;
+  variants: ItemVariant[];
   // cartItems: number;
   // ordenItems: number;
 }
