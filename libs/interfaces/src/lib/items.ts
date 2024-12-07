@@ -19,3 +19,8 @@ export interface NewItem extends ItemBase {
 export interface EditItem extends ItemBase {
   serviceId: number;
 }
+
+export interface CartItem extends ItemBase {
+  id: number;
+  quantity: number;
+}

@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
 import { Item } from '@magnetic/interfaces';
+import ItemCardCounter from '../../components/items/item-card-counter';
+import { useCartStore } from '../../hooks/useCartStore';
 
 interface Props {}
 
@@ -13,9 +15,6 @@ function ViewServicePage(props: Props) {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Item | undefined>();
   const { isLoading, isError, service, error } = useService(serviceId);
-  const toggleDrawer = () => {
-    setOpenDrawer((prevState) => !prevState);
-  };
 
   if (isLoading) {
     return <p>Loading..</p>;
@@ -40,10 +39,8 @@ function ViewServicePage(props: Props) {
         />
         <Text className="my-4">Products</Text>
         <div className="flex flex-wrap gap-3">
-          {service.items.map((service, index) => (
-            <div key={index} className="border border-md p-5">
-              {service.name}
-            </div>
+          {service.items.map((item, index) => (
+            <ItemCardCounter key={index} item={item} />
           ))}
         </div>
       </div>
