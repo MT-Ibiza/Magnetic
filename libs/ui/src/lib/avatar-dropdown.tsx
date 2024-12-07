@@ -1,5 +1,3 @@
-'use client';
-
 import {
   Popover,
   PopoverButton,
@@ -8,51 +6,26 @@ import {
 } from '@headlessui/react';
 
 import { Text } from '@magnetic/ui';
-// import {
-//   UserCircleIcon,
-//   ChatBubbleBottomCenterTextIcon,
-//   HeartIcon,
-//   HomeIcon,
-//   ArrowRightOnRectangleIcon,
-//   LifebuoyIcon,
-// } from "@heroicons/react/24/outline";
-import { Fragment, useState } from 'react';
-// import { Link } from "react-router-dom";
+import { Fragment } from 'react';
+import { FiLogOut } from 'react-icons/fi';
 import Avatar from './avatar';
 import { User } from '@magnetic/interfaces';
 
-const solutions = [
-  {
-    name: 'Account',
-    href: '/',
-    icon: '',
-  },
-  {
-    name: 'Messages',
-    href: '/',
-    icon: '',
-  },
-  {
-    name: 'Booking',
-    href: '/',
-    icon: '',
-  },
-];
-
-const solutionsFoot = [
-  {
-    name: 'Help',
-    href: '/',
-    icon: '',
-  },
-];
+interface DropdownOption {
+  name: string;
+  href?: string;
+  icon?: React.ElementType;
+  onClick?: () => void;
+}
 
 export function AvatarDropdown({
   logout,
   user,
+  options = [],
 }: {
   logout?: () => void;
   user: User;
+  options: DropdownOption[];
 }) {
   return (
     <div className="AvatarDropdown">
@@ -81,45 +54,34 @@ export function AvatarDropdown({
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <PopoverPanel className="absolute z-10 w-screen max-w-[260px] px-4 mt-4 -right-10 sm:right-0 sm:px-0">
+              <PopoverPanel className="absolute z-10 w-screen max-w-[220px] px-4 mt-4 -right-10 sm:right-0 sm:px-0">
                 <div className="overflow-hidden rounded-3xl shadow-lg ring-1 ring-black ring-opacity-5">
                   <div className="relative grid gap-6 bg-white dark:bg-neutral-800 p-7">
-                    {solutions.map((item, index) => (
-                      <div
+                    {options.map((item, index) => (
+                      <a
                         key={index}
-                        // to={item.href}
+                        href={item.href || '#'}
+                        onClick={item.onClick}
                         className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                       >
                         <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">
-                          {/* <item.icon aria-hidden="true" /> */}
+                          {item.icon && <item.icon aria-hidden="true" className="w-4 h-4" />}
                         </div>
                         <div className="ml-4">
-                          <p className="text-sm font-medium ">{item.name}</p>
+                          <p className="text-sm font-medium">{item.name}</p>
                         </div>
-                      </div>
+                      </a>
                     ))}
                   </div>
                   <hr className="h-[1px] border-t border-neutral-300 dark:border-neutral-700" />
                   <div className="relative grid gap-6 bg-white dark:bg-neutral-800 p-7">
-                    {solutionsFoot.map((item, index) => (
-                      <a
-                        key={index}
-                        href={item.href}
-                        className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
-                      >
-                        <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">
-                          {/* <item.icon aria-hidden="true" /> */}
-                        </div>
-                        <div className="ml-4">
-                          <p className="text-sm font-medium ">{item.name}</p>
-                        </div>
-                      </a>
-                    ))}
                     <a
                       href="#"
                       className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                     >
-                      <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300"></div>
+                      <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">
+                        <FiLogOut className="w-4 h-4 text-red-500" />
+                      </div>
                       <div className="ml-4" onClick={logout}>
                         <p className="text-sm font-medium text-red-500">
                           Logout

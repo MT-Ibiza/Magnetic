@@ -5,6 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useMutation } from '@tanstack/react-query';
 import { Credentials, LoginResponse } from '@magnetic/interfaces';
 import { login } from '../../apis/api-auth';
+import { FaTwitter, FaFacebook, FaInstagram } from 'react-icons/fa';
 
 export function LoginPage() {
   const [error, setError] = useState('');
@@ -12,15 +13,9 @@ export function LoginPage() {
   const navigate = useNavigate();
 
   const mutation = useMutation<LoginResponse, Error, Credentials>({
-    mutationFn: (formData) => {
-      return login(formData);
-    },
-    onSuccess: () => {
-      console.log('logeado')
-    },
-    onError: (error) => {
-      console.log('error login',error)
-    }
+    mutationFn: (formData) => login(formData),
+    onSuccess: () => console.log('logeado'),
+    onError: (error) => console.log('error login', error),
   });
 
   async function onSubmitForm(data: Credentials) {
@@ -39,13 +34,54 @@ export function LoginPage() {
     }
   }
 
+  const socialLinks = [
+    { href: 'https://twitter.com/', icon: <FaTwitter />, label: 'Twitter' },
+    { href: 'https://facebook.com/', icon: <FaFacebook />, label: 'Facebook' },
+    {
+      href: 'https://instagram.com/',
+      icon: <FaInstagram />,
+      label: 'Instagram',
+    },
+  ];
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center">
-      {error.length > 0 && (
-        <p className="text-lg text-red-500 p-3 rounded mb-2">{error}</p>
-      )}
-      <LoginForm onSubmit={onSubmitForm} />
-    </div>
+    <section className="min-h-screen flex items-stretch text-white">
+      <div
+        className="bg-[url('https://www.magnetic-travel.com/wp-content/uploads/2023/07/2-min.png')] 
+        lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center"
+      >
+        <div className="absolute bg-black opacity-50 inset-0 z-0"></div>
+        <div className="w-full px-24 z-10">
+          <h1 className="text-5xl font-bold text-left tracking-wide">
+            Magnetic Travel
+          </h1>
+          <p className="text-3xl my-4">
+            Capture your personal memory in unique way, anywhere.
+          </p>
+        </div>
+        <div className="bottom-0 absolute p-4 text-center right-0 left-0 flex justify-center space-x-4">
+          {socialLinks.map((social, index) => (
+            <a
+              key={index}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white"
+              aria-label={social.label}
+            >
+              <div className="text-2xl">{social.icon}</div>
+            </a>
+          ))}
+        </div>
+      </div>
+      <div className="lg:w-1/2 w-full flex flex-col items-center justify-center md:px-16 px-0 z-0 b-[#161616]">
+        {error && (
+          <p className="text-lg text-red-500 p-3 rounded mb-2">{error}</p>
+        )}
+        <img className="w-[250px]" src="/icons/logo-app.png" alt="Logo" />
+        <LoginForm onSubmit={onSubmitForm} />
+      </div>
+    </section>
   );
 }
 

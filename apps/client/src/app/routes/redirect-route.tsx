@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth';
 const RedirectRoute = () => {
   const { getCurrentUser } = useAuth();
   const user = getCurrentUser();
-  return user ? <Navigate to="/services" /> : <LoginPage />;
+  return user ? <Navigate to="/dashboard" /> : <LoginPage />;
 };
 
 export default RedirectRoute;

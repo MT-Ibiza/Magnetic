@@ -7,6 +7,7 @@ import { MdDashboardCustomize } from 'react-icons/md';
 import { SiTask } from 'react-icons/si';
 import { User } from '@magnetic/interfaces';
 import ThemeSelector from './components/theme-selector';
+import { FiBookOpen, FiUser } from 'react-icons/fi';
 
 interface Props {}
 
@@ -59,6 +60,11 @@ function Layout(props: Props) {
     },
   ];
 
+  const navigationOptions = [
+    { name: 'Account', href: '/', icon: FiUser },
+    { name: 'Booking', href: '/', icon: FiBookOpen },
+  ];
+
   return (
     <div className="app flex flex-col min-h-screen">
       <HeaderApp
@@ -67,7 +73,13 @@ function Layout(props: Props) {
       >
         <div className="flex items-center gap-3">
           <ThemeSelector />
-          {user && <AvatarDropdown logout={logout} user={user as User} />}
+          {user && (
+            <AvatarDropdown
+              logout={logout}
+              user={user as User}
+              options={navigationOptions}
+            />
+          )}
         </div>
       </HeaderApp>
       <div className="flex flex-1">

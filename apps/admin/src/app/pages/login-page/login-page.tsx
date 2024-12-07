@@ -38,7 +38,7 @@ export function LoginPage() {
       {error.length > 0 && (
         <p className="text-lg text-red-500 p-3 rounded mb-2">{error}</p>
       )}
-      <LoginForm onSubmit={onSubmitForm} />
+      <LoginForm title='Login' onSubmit={onSubmitForm} />
     </div>
   );
 }
