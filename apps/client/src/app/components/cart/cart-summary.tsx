@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCartStore } from '../../hooks/useCartStore';
 import { priceCentsToDollars } from '@magnetic/utils';
-import { Text } from '@magnetic/ui';
+import { Button, Text } from '@magnetic/ui';
 
 interface Props {}
 
@@ -26,12 +26,15 @@ function CartSummary(props: Props) {
         className="mt-3 font-bold"
         text={`Total: ${priceCentsToDollars(total)}`}
       />
-      <button
-        onClick={clearCart}
-        className="mt-3 bg-red-500 text-white px-4 py-2 rounded"
-      >
-        Vaciar Carrito
-      </button>
+      <div className="flex gap-5">
+        <button
+          onClick={clearCart}
+          className="mt-3 bg-red-500 text-white px-4 py-2 rounded"
+        >
+          Remove All Items
+        </button>
+        <Button onClick={clearCart}>Add Items Cart</Button>
+      </div>
     </div>
   );
 }
