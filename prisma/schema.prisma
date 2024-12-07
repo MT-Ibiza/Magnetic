@@ -47,17 +47,40 @@ model Service {
   provider    Provider? @relation(fields: [providerId], references: [id])
 }
 
+model Category {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  description String?
+  items       Item[]
+}
+
 model Item {
-  id           Int         @id @default(autoincrement())
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  id           Int           @id @default(autoincrement())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   name         String
   description  String
   priceInCents Int
   serviceId    Int
-  service      Service     @relation(fields: [serviceId], references: [id])
+  service      Service       @relation(fields: [serviceId], references: [id])
   cartItems    CartItem[]
   ordenItems   OrderItem[]
+  variants     ItemVariant[]
+  categoryId   Int?
+  category     Category?     @relation(fields: [categoryId], references: [id])
+}
+
+model ItemVariant {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  name         String
+  description  String?
+  priceInCents Int
+  itemId       Int
+  item         Item     @relation(fields: [itemId], references: [id])
 }
 
 model Package {
