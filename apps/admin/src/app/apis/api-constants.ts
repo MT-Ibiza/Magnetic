@@ -23,6 +23,9 @@ export const URL_NEW_ITEM = (id: number) => `${API_URL}/services/${id}/items`;
 export const URL_UPDATE_ITEM = (serviceId: number, itemId: number) =>
   `${API_URL}/services/${serviceId}/items/${itemId}`;
 
+//Categories
+export const URL_GET_CATEGORIES = `${API_URL}/categories`;
+
 //Packages
 export const URL_GET_PACKAGES = `${API_URL}/packages`;
 export const URL_NEW_PACKAGE = `${API_URL}/packages`;

@@ -34,8 +34,33 @@ async function main() {
       });
     }
     console.log('Packages verified/created successfully!');
+
+    const categories = [
+      {
+        name: 'Airport & Resort Transfers',
+        description: 'Transfers to/from airports and resorts',
+      },
+      {
+        name: 'Private Driver & Vehicle On-Call',
+        description: 'On-call private driver services',
+      },
+      { name: 'Cocktails', description: 'Signature and classic cocktails' },
+      { name: 'Appetizers', description: 'Delicious starters for your meals' },
+    ];
+
+    for (const category of categories) {
+      await prisma.category.upsert({
+        where: { name: category.name },
+        update: {},
+        create: {
+          name: category.name,
+          description: category.description,
+        },
+      });
+    }
+    console.log('Categories verified/created successfully!');
   } catch (error) {
-    console.error(error);
+    console.error('Error seeding the database:', error);
   }
 }
 

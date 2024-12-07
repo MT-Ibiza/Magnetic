@@ -13,6 +13,7 @@ import 'react-quill/dist/quill.snow.css';
 import { toast } from 'sonner';
 import { editItem, newItem } from '../../apis/api-items';
 import { dollarsToCents } from '@magnetic/utils';
+import SelectCategories from './items/select-categeries';
 
 export interface Props {
   className?: string;
@@ -139,6 +140,7 @@ export function FormItem(props: Props) {
         <div className="adicional-info flex-1">
           <CardWrapper className="category">
             <Text>Category</Text>
+            <SelectCategories />
           </CardWrapper>
         </div>
       </div>
