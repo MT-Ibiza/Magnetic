@@ -12,6 +12,14 @@ export async function GET(
       },
       include: {
         items: {
+          include: {
+            category: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
           orderBy: {
             createdAt: 'desc',
           },

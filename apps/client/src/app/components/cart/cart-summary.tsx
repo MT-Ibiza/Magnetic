@@ -17,15 +17,15 @@ function CartSummary(props: Props) {
           <span>
             {item.name} x {item.quantity}
           </span>
-          <Text.TextNumeric
-            text={priceCentsToDollars(item.priceInCents * item.quantity)}
-          />
+          <Text.TextNumeric>
+            {priceCentsToDollars(item.priceInCents * item.quantity)}
+          </Text.TextNumeric>
         </div>
       ))}
-      <Text.TextNumeric
-        className="mt-3 font-bold"
-        text={`Total: ${priceCentsToDollars(total)}`}
-      />
+
+      <Text.TextNumeric className="mt-3 font-bold">
+        {`Total: ${priceCentsToDollars(total)}`}
+      </Text.TextNumeric>
       <div className="flex gap-5">
         <button
           onClick={clearCart}

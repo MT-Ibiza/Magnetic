@@ -35,18 +35,18 @@ const TextError = ({ text }: { text: string }) => (
 );
 
 const TextNumeric = ({
-  text,
   className,
+  children,
 }: {
-  text: string;
   className?: string;
+  children?: React.ReactElement | string;
 }) => (
   <Text
     size="1"
     className={className || ''}
     style={{ fontVariantNumeric: 'tabular-nums' }}
   >
-    {text}
+    <>{children}</>
   </Text>
 );
 

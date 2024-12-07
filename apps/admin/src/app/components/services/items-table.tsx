@@ -1,5 +1,6 @@
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { Item } from '@magnetic/interfaces';
+import { Text } from '@magnetic/ui';
 import { priceCentsToDollars } from '@magnetic/utils';
 import { Link } from 'react-router-dom';
 
@@ -27,6 +28,7 @@ function ItemsTable(props: Props) {
           <th>N</th>
           <th>Name</th>
           <th>Price</th>
+          <th>Category</th>
           <th>Description</th>
           <th></th>
         </tr>
@@ -40,7 +42,12 @@ function ItemsTable(props: Props) {
                 {item.name}
               </Link>
             </td>
-            <td>{priceCentsToDollars(item.priceInCents)}</td>
+            <td>
+              <Text.TextNumeric>
+                {priceCentsToDollars(item.priceInCents)}
+              </Text.TextNumeric>
+            </td>
+            <td>{item.category?.name || 'none'}</td>
             <td>{item.description}</td>
             <td>
               <div className="dropdown dropdown-bottom dropdown-end">
