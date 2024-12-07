@@ -1,4 +1,10 @@
-import { Category, EditItem, Item, NewItem } from '@magnetic/interfaces';
+import {
+  Category,
+  EditItem,
+  Item,
+  ItemWithServiceCategories,
+  NewItem,
+} from '@magnetic/interfaces';
 import {
   URL_GET_CATEGORIES,
   URL_GET_ITEM,
@@ -33,7 +39,10 @@ export async function getItems(serviceId: number): Promise<Item[]> {
   return dataJson;
 }
 
-export async function getItem(serviceId: number, id: number): Promise<Item> {
+export async function getItem(
+  serviceId: number,
+  id: number
+): Promise<ItemWithServiceCategories> {
   const url = URL_GET_ITEM(serviceId, id);
   const response = await fetch(url, {
     method: 'GET',

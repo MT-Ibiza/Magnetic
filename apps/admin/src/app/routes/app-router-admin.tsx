@@ -42,7 +42,7 @@ export const AppRouter = () => {
             element={<NewItemPage />}
           />
           <Route
-            path="services/:serviceId/items/edit/:itemId"
+            path="services/:serviceId/items/:itemId/edit"
             element={<EditItemPage />}
           />
           <Route path="providers" element={<ProvidersPage />} />

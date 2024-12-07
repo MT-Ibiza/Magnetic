@@ -1,6 +1,7 @@
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { Item } from '@magnetic/interfaces';
 import { priceCentsToDollars } from '@magnetic/utils';
+import { Link } from 'react-router-dom';
 
 interface Props {
   items: Item[];
@@ -35,7 +36,11 @@ function ItemsTable(props: Props) {
           {items.map((item, index) => (
             <tr className="hover">
               <th>{index + 1}</th>
-              <td>{item.name}</td>
+              <td>
+                <Link to={`/services/${item.serviceId}/items/${item.id}/edit`}>
+                  {item.name}
+                </Link>
+              </td>
               <td>{priceCentsToDollars(item.priceInCents)}</td>
               <td>{item.description}</td>
               <td>

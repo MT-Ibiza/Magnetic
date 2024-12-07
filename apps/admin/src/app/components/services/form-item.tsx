@@ -1,4 +1,10 @@
-import { EditItem, Item, ItemBase, NewItem } from '@magnetic/interfaces';
+import {
+  Category,
+  EditItem,
+  Item,
+  ItemBase,
+  NewItem,
+} from '@magnetic/interfaces';
 import {
   Button,
   CardWrapper,
@@ -22,10 +28,11 @@ export interface Props {
   onError?: () => void;
   item?: Item;
   serviceId: number;
+  serviceCategories: Category[];
 }
 
 export function FormItem(props: Props) {
-  const { item, onCancel, serviceId, onSave } = props;
+  const { item, onCancel, serviceId, onSave, serviceCategories } = props;
   const editMode = !!item;
 
   const {
@@ -140,7 +147,7 @@ export function FormItem(props: Props) {
         <div className="adicional-info flex-1">
           <CardWrapper className="category">
             <Text>Category</Text>
-            <SelectCategories />
+            <SelectCategories categories={serviceCategories} />
           </CardWrapper>
         </div>
       </div>

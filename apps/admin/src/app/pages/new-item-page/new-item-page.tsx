@@ -1,5 +1,4 @@
 import { CardWrapper, Text } from '@magnetic/ui';
-import FormProduct from '../../components/services/form-product';
 import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
 import Loading from '../../components/loading';
@@ -42,7 +41,8 @@ export function NewServicePage() {
       <div className="mt-3 p-5 border-md border-[1.5px] border-gray-300">
         <FormItem
           onCancel={() => {}}
-          serviceId={1}
+          serviceId={serviceId}
+          serviceCategories={[]}
           // item={selectedItem}
           onSave={() => {
             // toggleDrawer();

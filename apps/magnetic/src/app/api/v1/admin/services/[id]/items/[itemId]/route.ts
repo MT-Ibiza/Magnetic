@@ -12,8 +12,39 @@ export async function GET(
         id: Number(params.itemId),
         serviceId: Number(params.id),
       },
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        service: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
     });
-    return NextResponse.json(item);
+
+    const categories = await db.category.findMany({
+      where: {
+        items: {
+          some: {
+            service: {
+              name: item?.category?.name,
+            },
+          },
+        },
+      },
+    });
+    console.log(categories);
+    const data = {
+      item,
+      categories,
+    };
+    return NextResponse.json(data);
   } catch (error: any) {
     return NextResponse.json(
       {
