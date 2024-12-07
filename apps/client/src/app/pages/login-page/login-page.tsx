@@ -1,5 +1,5 @@
 import { LoginForm } from '@magnetic/ui';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useMutation } from '@tanstack/react-query';
@@ -11,12 +11,26 @@ export function LoginPage() {
   const [error, setError] = useState('');
   const { setToken, setLoggedIn, setCurrentUser } = useAuth();
   const navigate = useNavigate();
-
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const mutation = useMutation<LoginResponse, Error, Credentials>({
     mutationFn: (formData) => login(formData),
-    onSuccess: () => console.log('logeado'),
+    onSuccess: () => console.log('logged'),
     onError: (error) => console.log('error login', error),
   });
+
+  useEffect(() => {
+    const darkModeMediaQuery = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    );
+    setIsDarkMode(darkModeMediaQuery.matches);
+    const handleChange = (e: MediaQueryListEvent) => {
+      setIsDarkMode(e.matches);
+    };
+    darkModeMediaQuery.addEventListener('change', handleChange);
+    return () => {
+      darkModeMediaQuery.removeEventListener('change', handleChange);
+    };
+  }, []);
 
   async function onSubmitForm(data: Credentials) {
     try {
@@ -47,7 +61,7 @@ export function LoginPage() {
   return (
     <section className="min-h-screen flex items-stretch text-white">
       <div
-        className="bg-[url('https://www.magnetic-travel.com/wp-content/uploads/2023/07/2-min.png')] 
+        className="bg-[url('https://www.magnetic-travel.com/wp-content/uploads/2023/07/2-min.png')]
         lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center"
       >
         <div className="absolute bg-black opacity-50 inset-0 z-0"></div>
@@ -55,8 +69,8 @@ export function LoginPage() {
           <h1 className="text-5xl font-bold text-left tracking-wide">
             Magnetic Travel
           </h1>
-          <p className="text-3xl my-4">
-            Capture your personal memory in unique way, anywhere.
+          <p className="text-2xl mt-5">
+            How can we assist you organizing the perfect Ibiza holiday?
           </p>
         </div>
         <div className="bottom-0 absolute p-4 text-center right-0 left-0 flex justify-center space-x-4">
@@ -78,7 +92,15 @@ export function LoginPage() {
         {error && (
           <p className="text-lg text-red-500 p-3 rounded mb-2">{error}</p>
         )}
-        <img className="w-[250px]" src="/icons/logo-app.png" alt="Logo" />
+        <img
+          className="w-[250px]"
+          src={
+            isDarkMode
+              ? '/icons/logo-app-white.png'
+              : '/icons/logo-app-black.png'
+          }
+          alt="Logo"
+        />
         <LoginForm onSubmit={onSubmitForm} />
       </div>
     </section>
