@@ -8,10 +8,15 @@ import { Outlet } from 'react-router-dom';
 import { useState } from 'react';
 import { FaUserFriends } from 'react-icons/fa';
 import { SiTask } from 'react-icons/si';
+import { MdDashboardCustomize } from 'react-icons/md';
+import { useAuth } from './hooks/useAuth';
+import { User } from 'libs/interfaces/src/lib/users';
 
 interface Props {}
 
 function Layout(props: Props) {
+  const { logout, getCurrentUser } = useAuth();
+  const user = getCurrentUser();
   const [isSidebarVisible, setSidebarVisible] = useState(true);
 
   const toggleSidebar = () => {
@@ -19,6 +24,12 @@ function Layout(props: Props) {
   };
 
   const navigation = [
+    {
+      text: 'Dashboard',
+      key: 'dashboard',
+      url: '/dashboard',
+      icon: MdDashboardCustomize,
+    },
     {
       text: 'Services',
       key: 'services',
@@ -41,7 +52,7 @@ function Layout(props: Props) {
       >
         <div className="flex items-center gap-3">
           <ThemeSelector uniqueKey={'client'} />
-          {/* {user && <AvatarDropdown logout={logout} user={user as User} />} */}
+          {user && <AvatarDropdown logout={logout} user={user as User} />}
         </div>
       </HeaderApp>
       <div className="flex flex-1">

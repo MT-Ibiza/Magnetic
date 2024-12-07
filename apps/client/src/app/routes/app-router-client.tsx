@@ -3,9 +3,9 @@ import Layout from '../layout-client';
 import ServiceClientPage from '../pages/services-page/services-client-page';
 import PackagePage from '../pages/packages-page/packages-page';
 import RedirectRoute from './redirect-route';
-import LoginPage from '../pages/login-page/login-page';
 import PrivateRoutes from './private-routes';
 import ViewServicePage from '../pages/view-service-page/view-service-page';
+import DashboardClientPage from '../pages/dashboard-page/dashboard-client';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -20,6 +20,7 @@ export const AppRouter = () => {
       <Route path="login" element={<RedirectRoute />} />
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
+          <Route path="dashboard" element={<DashboardClientPage />} />
           <Route path="services" element={<ServiceClientPage />} />
           <Route path="services/:id" element={<ViewServicePage />} />
           <Route path="packages" element={<PackagePage />} />
