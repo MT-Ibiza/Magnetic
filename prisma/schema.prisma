@@ -14,25 +14,22 @@ datasource db {
 }
 
 model User {
-  id                Int      @id @default(autoincrement())
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  email             String   @unique
-  name              String
-  password          String?
-  typeAccount       String?
-  provider          String?
-  providerAccountId String?
-  image             String?
-  phone             String?
-  countryCodePhone  String?
-  countryNamePhone  String?
-  active            Boolean  @default(true)
-  role              Role     @default(client)
-  packageId         Int? // Relación con Package
-  package           Package? @relation(fields: [packageId], references: [id]) // Relación con Package
-  cart              Cart?
-  orders            Order[]
+  id               Int      @id @default(autoincrement())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  email            String   @unique
+  name             String
+  password         String
+  image            String?
+  phone            String?
+  countryCodePhone String?
+  countryNamePhone String?
+  active           Boolean  @default(true)
+  role             Role     @default(client)
+  packageId        Int? // Relación con Package
+  package          Package? @relation(fields: [packageId], references: [id]) // Relación con Package
+  cart             Cart?
+  orders           Order[]
 
   @@index([email])
 }
