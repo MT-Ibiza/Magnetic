@@ -164,31 +164,28 @@ export function FormItem(props: Props) {
               <UploadImage onChange={(file) => {}} height="400px" />
             </div>
           </div>
-          <div className="adicional-info flex-1">
+          <div className="adicional-info flex-1 flex flex-col gap-5">
             <CardWrapper className="category">
               <Text>Category</Text>
-              {categories.length === 0 ? (
-                <div
-                  onClick={() => {
-                    setOpenDrawer(true);
-                  }}
-                >
-                  Create New
-                </div>
-              ) : (
-                <Select
-                  isClearable
-                  options={categories}
-                  defaultValue={selectedCategory}
-                  onChange={(category) => {
-                    console.log(category);
-                    setValue(
-                      'categoryId',
-                      category ? category.value : undefined
-                    );
-                  }}
-                />
-              )}
+              <Select
+                isClearable
+                options={categories}
+                defaultValue={selectedCategory}
+                onChange={(category) => {
+                  setValue('categoryId', category ? category.value : undefined);
+                }}
+              />
+              <Text
+                className="text-red-700 mt-3"
+                onClick={() => {
+                  setOpenDrawer(true);
+                }}
+              >
+                + New Category
+              </Text>
+            </CardWrapper>
+            <CardWrapper className="variants">
+              <Text>Product Variants</Text>
             </CardWrapper>
           </div>
         </div>

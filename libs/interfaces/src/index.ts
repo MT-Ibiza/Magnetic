@@ -4,3 +4,4 @@ export * from './lib/items';
 export * from './lib/providers';
 export * from './lib/packages';
 export * from './lib/categories';
+export * from './lib/variants';
