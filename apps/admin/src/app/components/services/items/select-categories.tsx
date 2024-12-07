@@ -11,7 +11,9 @@ function SelectCategories(props: Props) {
   return (
     <div>
       {categories.length === 0 ? (
-        <Text> No categories</Text>
+        <div className="border rounded-md">
+          <Text> No categories</Text>
+        </div>
       ) : (
         <>
           <select className="select select-bordered w-full ">

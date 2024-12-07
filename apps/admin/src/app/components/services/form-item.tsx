@@ -19,7 +19,7 @@ import 'react-quill/dist/quill.snow.css';
 import { toast } from 'sonner';
 import { editItem, newItem } from '../../apis/api-items';
 import { dollarsToCents } from '@magnetic/utils';
-import SelectCategories from './items/select-categeries';
+import SelectCategories from './items/select-categories';
 
 export interface Props {
   className?: string;
