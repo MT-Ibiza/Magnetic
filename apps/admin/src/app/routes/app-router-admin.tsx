@@ -16,6 +16,8 @@ import EditServicePage from '../pages/edit-service-page/edit-service-page';
 import ViewServicePage from '../pages/view-service-page/view-service-page';
 import ProvidersPage from '../pages/providers-page/providers-page';
 import ServicePage from '../pages/services-page/services-page';
+import EditItemPage from '../pages/edit-item-page/edit-item-page';
+import NewItemPage from '../pages/new-item-page/new-item-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -35,6 +37,14 @@ export const AppRouter = () => {
           <Route path="services/edit/:id" element={<EditServicePage />} />
           <Route path="services/:id" element={<ViewServicePage />} />
           <Route path="services/new" element={<NewServicePage />} />
+          <Route
+            path="services/:serviceId/items/new"
+            element={<NewItemPage />}
+          />
+          <Route
+            path="services/:serviceId/items/edit/:itemId"
+            element={<EditItemPage />}
+          />
           <Route path="providers" element={<ProvidersPage />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="users/new" element={<NewUserPage />} />

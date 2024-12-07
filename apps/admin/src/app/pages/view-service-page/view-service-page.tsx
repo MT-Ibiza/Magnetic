@@ -1,6 +1,6 @@
 import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
 import {
   Button,
@@ -50,15 +50,21 @@ function ViewServicePage(props: Props) {
           dangerouslySetInnerHTML={{ __html: service.description }}
         />
         <div>
-          <button
+          <Link
+            to={`/services/${service.id}/items/new`}
+            className="text-red-800"
+          >
+            + New Item
+          </Link>
+          {/* <button
             onClick={(e) => {
               e.preventDefault();
               toggleDrawer();
             }}
             className="text-orange-400"
           >
-            + New Item
-          </button>
+
+          </button> */}
         </div>
         <CardWrapper>
           <ItemsTable

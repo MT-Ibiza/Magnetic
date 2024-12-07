@@ -1,0 +1,56 @@
+import { CardWrapper, Text } from '@magnetic/ui';
+import FormProduct from '../../components/services/form-product';
+import { useParams } from 'react-router-dom';
+import { useService } from '../../hooks/useService';
+import Loading from '../../components/loading';
+import { ErrorText } from '../../components/error-text';
+import FormItem from '../../components/services/form-item';
+
+export function NewServicePage() {
+  const params = useParams();
+  const serviceId = Number(params.serviceId);
+  const { isLoading, isError, service, error } = useService(serviceId);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <ErrorText text={error?.message || ''} />;
+  }
+
+  if (!service) {
+    return <Text>Service Not Found</Text>;
+  }
+
+  return (
+    <div className="new-booking-page">
+      <Text size="4" className="mb-3">
+        New Item
+      </Text>
+      <div className="breadcrumbs text-sm">
+        <ul>
+          <li>
+            <a href="/services">Services</a>
+          </li>
+          <li>
+            <a href={`/services/${serviceId}`}>{service.name}</a>
+          </li>
+          <li>New Item</li>
+        </ul>
+      </div>
+      <div className="mt-3 p-5 border-md border-[1.5px] border-gray-300">
+        <FormItem
+          onCancel={() => {}}
+          serviceId={1}
+          // item={selectedItem}
+          onSave={() => {
+            // toggleDrawer();
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default NewServicePage;
