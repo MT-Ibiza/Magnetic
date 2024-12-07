@@ -5,6 +5,7 @@ import { useService } from '../../hooks/useService';
 import { Item } from '@magnetic/interfaces';
 import ItemCardCounter from '../../components/items/item-card-counter';
 import { useCartStore } from '../../hooks/useCartStore';
+import CartSummary from '../../components/cart/cart-summary';
 
 interface Props {}
 
@@ -37,11 +38,16 @@ function ViewServicePage(props: Props) {
           className="editor-text"
           dangerouslySetInnerHTML={{ __html: service.description }}
         />
-        <Text className="my-4">Products</Text>
-        <div className="flex flex-wrap gap-3">
-          {service.items.map((item, index) => (
-            <ItemCardCounter key={index} item={item} />
-          ))}
+        <Text className="my-4">Choose your favorites</Text>
+        <div className="flex gap-5">
+          <div className="flex flex-wrap gap-3 flex-4">
+            {service.items.map((item, index) => (
+              <ItemCardCounter key={index} item={item} />
+            ))}
+          </div>
+          <div className="flex-2">
+            <CartSummary />
+          </div>
         </div>
       </div>
     </CardWrapper>

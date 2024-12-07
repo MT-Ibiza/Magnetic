@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from 'react';
 
@@ -34,6 +34,23 @@ const TextError = ({ text }: { text: string }) => (
   </Text>
 );
 
+const TextNumeric = ({
+  text,
+  className,
+}: {
+  text: string;
+  className?: string;
+}) => (
+  <Text
+    size="1"
+    className={className || ''}
+    style={{ fontVariantNumeric: 'tabular-nums' }}
+  >
+    {text}
+  </Text>
+);
+
+Text.TextNumeric = TextNumeric;
 Text.TextInputError = TextError;
 
 export default Text;
