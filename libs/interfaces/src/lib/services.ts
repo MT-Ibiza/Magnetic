@@ -1,17 +1,25 @@
-import { Item, NewItem } from './items';
+import { Item, ItemWithCount, NewItem } from './items';
 import { Package } from './packages';
 import { NewProvider } from './providers';
 
-export interface Service {
-  id: number;
-  createdAt: Date;
-  updatedAt: Date;
+export interface ServiceBase {
   name: string;
   description: string;
   packageId: number;
+  providerId: number;
+}
+
+export interface Service extends ServiceBase {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
   package: Package;
   providerId: number;
   items: Item[];
+}
+
+export interface ServiceInTable extends Service {
+  items: ItemWithCount[];
 }
 
 export interface NewService {

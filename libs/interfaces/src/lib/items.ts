@@ -21,6 +21,12 @@ export interface Item extends ItemBase {
   // ordenItems: number;
 }
 
+export interface ItemWithCount extends Item {
+  _count?: {
+    variants: number;
+  };
+}
+
 export interface NewItem extends ItemBase {
   serviceId: number;
 }

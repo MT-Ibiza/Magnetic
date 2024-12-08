@@ -1,11 +1,11 @@
 import { HiOutlineDotsVertical } from 'react-icons/hi';
-import { Item } from '@magnetic/interfaces';
+import { Item, ItemWithCount } from '@magnetic/interfaces';
 import { Text } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { Link } from 'react-router-dom';
 
 interface Props {
-  items: Item[];
+  items: ItemWithCount[];
   onClickEdit?: (item: Item) => void;
 }
 
@@ -29,13 +29,14 @@ function ItemsTable(props: Props) {
           <th>Name</th>
           <th>Price</th>
           <th>Category</th>
+          <th>Variants</th>
           <th>Description</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         {items.map((item, index) => (
-          <tr className="hover">
+          <tr className="hover" key={index}>
             <th>{index + 1}</th>
             <td>
               <Link to={`/services/${item.serviceId}/items/${item.id}/edit`}>
@@ -48,6 +49,7 @@ function ItemsTable(props: Props) {
               </Text.TextNumeric>
             </td>
             <td>{item.category?.name || 'none'}</td>
+            <td>{item._count?.variants || '0'}</td>
             <td>{item.description}</td>
             <td>
               <div className="dropdown dropdown-bottom dropdown-end">

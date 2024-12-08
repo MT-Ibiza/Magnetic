@@ -19,6 +19,11 @@ export async function GET(
                 name: true,
               },
             },
+            _count: {
+              select: {
+                variants: true,
+              },
+            },
           },
           orderBy: {
             createdAt: 'desc',
