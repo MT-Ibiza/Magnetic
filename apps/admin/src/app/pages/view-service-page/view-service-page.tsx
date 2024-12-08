@@ -14,6 +14,7 @@ import ItemsTable from '../../components/services/items-table';
 import { useState } from 'react';
 import FormProduct from '../../components/services/form-product';
 import { Item } from '@magnetic/interfaces';
+import FormVariant from '../../components/form-variant';
 
 interface Props {}
 
@@ -22,6 +23,7 @@ function ViewServicePage(props: Props) {
   const params = useParams();
   const serviceId = parseInt(params.id || '');
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [openForm, setOpenForm] = useState('');
   const [selectedItem, setSelectedItem] = useState<Item | undefined>();
   const { isLoading, isError, service, error } = useService(serviceId);
   const toggleDrawer = () => {
@@ -56,15 +58,6 @@ function ViewServicePage(props: Props) {
           >
             + New Item
           </Link>
-          {/* <button
-            onClick={(e) => {
-              e.preventDefault();
-              toggleDrawer();
-            }}
-            className="text-orange-400"
-          >
-
-          </button> */}
         </div>
         <CardWrapper>
           <ItemsTable
@@ -72,23 +65,40 @@ function ViewServicePage(props: Props) {
             onClickEdit={(item) => {
               toggleDrawer();
               setSelectedItem(item);
+              setOpenForm('product');
+            }}
+            onClickVariant={(item) => {
+              toggleDrawer();
+              setSelectedItem(item);
+              setOpenForm('variant');
             }}
           />
         </CardWrapper>
       </div>
       <DrawerContent
-        title={'Add Item'}
+        title={'Edit Service'}
         open={openDrawer}
         onClose={toggleDrawer}
       >
-        <FormProduct
-          onCancel={toggleDrawer}
-          serviceId={serviceId}
-          item={selectedItem}
-          onSave={() => {
-            toggleDrawer();
-          }}
-        />
+        {openForm === 'product' && (
+          <FormProduct
+            onCancel={toggleDrawer}
+            serviceId={serviceId}
+            item={selectedItem}
+            onSave={() => {
+              toggleDrawer();
+            }}
+          />
+        )}
+        {openForm === 'variant' && selectedItem && (
+          <FormVariant
+            onCancel={toggleDrawer}
+            itemId={selectedItem.id}
+            onSave={() => {
+              // setSelectedVariant(undefined);
+            }}
+          />
+        )}
       </DrawerContent>
     </>
   );

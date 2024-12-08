@@ -3,14 +3,16 @@ import { Item, ItemWithCount } from '@magnetic/interfaces';
 import { Text } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 interface Props {
   items: ItemWithCount[];
   onClickEdit?: (item: Item) => void;
+  onClickVariant?: (item: Item) => void;
 }
 
 function ItemsTable(props: Props) {
-  const { items, onClickEdit } = props;
+  const { items, onClickEdit, onClickVariant } = props;
   // const { isLoading, services, error, isError } = useServices();
 
   // if (isLoading) {
@@ -62,10 +64,17 @@ function ItemsTable(props: Props) {
                 >
                   <li
                     onClick={() => {
+                      onClickVariant && onClickVariant(item);
+                    }}
+                  >
+                    <a>New Variant</a>
+                  </li>
+                  <li
+                    onClick={() => {
                       onClickEdit && onClickEdit(item);
                     }}
                   >
-                    <a>Edit</a>
+                    <a>Edit Service</a>
                   </li>
 
                   <li
