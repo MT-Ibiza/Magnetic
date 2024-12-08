@@ -32,6 +32,9 @@ export async function GET(
             priceInCents: true,
             description: true,
           },
+          orderBy: {
+            createdAt: 'asc',
+          },
         },
       },
     });

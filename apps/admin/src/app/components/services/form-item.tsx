@@ -3,6 +3,7 @@ import {
   EditItem,
   Item,
   ItemBase,
+  ItemVariant,
   NewItem,
 } from '@magnetic/interfaces';
 import {
@@ -53,6 +54,7 @@ export function FormItem(props: Props) {
   );
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openForm, setOpenForm] = useState('');
+  const [selectedVariant, setSelectedVariant] = useState<ItemVariant>();
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
   };
@@ -183,7 +185,7 @@ export function FormItem(props: Props) {
               <Text
                 className="text-red-700 mt-3"
                 onClick={() => {
-                  setOpenDrawer(true);
+                  toggleDrawer();
                   setOpenForm('category');
                 }}
               >
@@ -196,7 +198,7 @@ export function FormItem(props: Props) {
                 <Text
                   className="text-red-700 mt-3"
                   onClick={() => {
-                    setOpenDrawer(true);
+                    toggleDrawer();
                     setOpenForm('variant');
                   }}
                 >
@@ -210,6 +212,18 @@ export function FormItem(props: Props) {
                     <Text>{`${centsToEurosWithCurrency(
                       variant.priceInCents
                     )}`}</Text>
+                    <div className="flex gap-2">
+                      <Text
+                        onClick={() => {
+                          setSelectedVariant(variant);
+                          setOpenForm('variant');
+                          toggleDrawer();
+                        }}
+                      >
+                        Edit
+                      </Text>
+                      <button>Remove</button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -226,13 +240,16 @@ export function FormItem(props: Props) {
           >
             Cancel
           </Button>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit">{item ? 'Update Item' : 'Create Item'}</Button>
         </div>
       </form>
       <DrawerContent
         title={openForm === 'category' ? 'New Category' : 'New Variant'}
         open={openDrawer}
-        onClose={toggleDrawer}
+        onClose={() => {
+          toggleDrawer();
+          setSelectedVariant(undefined);
+        }}
       >
         <>
           {openForm === 'category' && (
@@ -248,10 +265,10 @@ export function FormItem(props: Props) {
             <FormVariant
               onCancel={toggleDrawer}
               itemId={item.id}
-              // onSave={(category) => {
-              //   toggleDrawer();
-              //   setValue('categoryId', category.id);
-              // }}
+              variant={selectedVariant}
+              onSave={() => {
+                setSelectedVariant(undefined);
+              }}
             />
           )}
         </>

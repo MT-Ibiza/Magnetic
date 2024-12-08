@@ -14,11 +14,12 @@ import { centsToEuros, eurosToCents } from '@magnetic/utils';
 interface Props {
   variant?: ItemVariant;
   onCancel: () => void;
+  onSave: (variant: ItemVariant) => void;
   itemId: number;
 }
 
 function FormVariant(props: Props) {
-  const { variant, onCancel, itemId } = props;
+  const { variant, onCancel, itemId, onSave } = props;
   const {
     register,
     handleSubmit,
@@ -36,7 +37,8 @@ function FormVariant(props: Props) {
     mutationFn: (data: NewItemVariant) => {
       return newVariant(data);
     },
-    onSuccess: () => {
+    onSuccess: (variant) => {
+      onSave(variant);
       toast.success(`Service created!`);
     },
     onError: () => {
@@ -49,7 +51,8 @@ function FormVariant(props: Props) {
       const variantId = variant?.id || 0;
       return editVariant(variantId, data);
     },
-    onSuccess: () => {
+    onSuccess: (variant) => {
+      onSave(variant);
       toast.success(`Provider updated!`);
     },
     onError: () => {
@@ -120,7 +123,9 @@ function FormVariant(props: Props) {
           >
             Cancel
           </Button>
-          <Button type="submit">Create Variant</Button>
+          <Button type="submit">
+            {variant ? 'Update Variant' : 'Create Variant'}{' '}
+          </Button>
         </div>
       </form>
     </div>
