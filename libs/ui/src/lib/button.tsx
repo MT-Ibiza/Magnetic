@@ -15,7 +15,7 @@ export interface ButtonProps {
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
   href?: LinkProps['to'] | '#';
   targetBlank?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
   children?: React.ReactNode;
   radius?: 'none' | 'large' | 'full';
 }

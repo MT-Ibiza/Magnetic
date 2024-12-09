@@ -110,7 +110,8 @@ function FormProvider(props: Props) {
         </div>
         <div className="buttons flex justify-end gap-3 p-4 w-full absolute bottom-0 right-0">
           <Button
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               onCancel && onCancel();
             }}
             variant="outline"

@@ -232,7 +232,8 @@ export function FormItem(props: Props) {
         </div>
         <div className="buttons flex">
           <Button
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               onCancel && onCancel();
             }}
             variant="outline"
