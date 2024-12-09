@@ -18,6 +18,7 @@ import ProvidersPage from '../pages/providers-page/providers-page';
 import ServicePage from '../pages/services-page/services-page';
 import EditItemPage from '../pages/edit-item-page/edit-item-page';
 import NewItemPage from '../pages/new-item-page/new-item-page';
+import UserLayout from '../pages/users-page/user-layout';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -51,6 +52,8 @@ export const AppRouter = () => {
           <Route path="users/edit/:id" element={<EditUserPage />} />
           <Route path="bookings" element={<BookingsPage />} />
           <Route path="settings" element={<SettingsPage />} />
+          <Route path="users/:id" element={<UserLayout />}>
+          </Route>
           <Route
             path="services/:id"
             element={<Navigate replace to="overview" />}

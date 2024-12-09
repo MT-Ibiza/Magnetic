@@ -23,7 +23,6 @@ export async function GET(
         countryCodePhone: true,
         countryNamePhone: true,
         image: true,
-        typeAccount: true,
         packageId: true,
       },
     });

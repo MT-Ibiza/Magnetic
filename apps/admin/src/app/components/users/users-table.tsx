@@ -4,6 +4,7 @@ import { useUsers } from '../../hooks/useUsers';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { User } from '@magnetic/interfaces';
 import { Button, Text } from '@magnetic/ui';
+import { Link } from 'react-router-dom';
 
 interface Props {
   onClickEdit?: (user: User) => void;
@@ -51,7 +52,9 @@ function UsersTable(props: Props) {
             <tr className="hover" key={index}>
               <th>{index + 1}</th>
               <td>
+              <Link to={`/users/${user.id}`}>
                 <Text>{user.name}</Text>
+                </Link>
               </td>
               <td>
                 <div className="flex flex-col gap-1">
