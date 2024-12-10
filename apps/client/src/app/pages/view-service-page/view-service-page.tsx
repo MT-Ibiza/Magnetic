@@ -39,15 +39,10 @@ function ViewServicePage(props: Props) {
           dangerouslySetInnerHTML={{ __html: service.description }}
         />
         <Text className="my-4">Choose your favorites</Text>
-        <div className="flex gap-5">
-          <div className="flex flex-wrap gap-3 flex-4">
+        <div className="grid grid-cols-1 gap-4">
             {service.items.map((item, index) => (
               <ItemCardCounter key={index} item={item} />
             ))}
-          </div>
-          <div className="flex-2">
-            <CartSummary />
-          </div>
         </div>
       </div>
     </CardWrapper>
