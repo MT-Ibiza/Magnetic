@@ -58,9 +58,8 @@ function Layout(props: Props) {
         toggleSidebar={toggleSidebar}
         isSidebarVisible={isSidebarVisible}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <ThemeSelector uniqueKey={'client'} />
-          <CartShopping />{' '}
           {user && (
             <AvatarDropdown
               logout={logout}
@@ -68,6 +67,7 @@ function Layout(props: Props) {
               options={navigationOptions}
             />
           )}
+          <CartShopping />
         </div>
       </HeaderApp>
       <div className="flex flex-1">

@@ -6,6 +6,7 @@ import RedirectRoute from './redirect-route';
 import PrivateRoutes from './private-routes';
 import ViewServicePage from '../pages/view-service-page/view-service-page';
 import DashboardClientPage from '../pages/dashboard-page/dashboard-client';
+import CartPage from '../pages/cart/cart';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -21,6 +22,7 @@ export const AppRouter = () => {
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<DashboardClientPage />} />
+          <Route path="cart" element={<CartPage />} />
           <Route path="services" element={<ServiceClientPage />} />
           <Route path="services/:id" element={<ViewServicePage />} />
           <Route path="packages" element={<PackagePage />} />
