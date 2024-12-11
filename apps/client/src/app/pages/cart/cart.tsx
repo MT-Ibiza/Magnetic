@@ -1,5 +1,3 @@
-'use client';
-
 import { Button, CardWrapper } from '@magnetic/ui';
 import { useCartStore } from '../../hooks/useCartStore';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
@@ -18,7 +16,7 @@ export function CartPage() {
     <div className="grid grid-cols-12 gap-x-[20px]">
       <CardWrapper className="col-span-9 p-4">
         <div className="flex flex-col gap-4">
-          <p className="text-primary-900 text-2xl font-semibold">My Cart</p>
+          <p className="text-2xl font-semibold">My Cart</p>
           {cart.length > 0 ? (
             <>
               <div className="grid grid-cols-4 gap-4 text-center font-semibold border-b pb-2 mb-4 text-sm">
@@ -40,9 +38,9 @@ export function CartPage() {
                         alt={item.name}
                       />
                     </div>
-                    <div className="ml-3 text-gray-800">{item.name}</div>
+                    <div className="ml-3 ">{item.name}</div>
                   </div>
-                  <div className="text-gray-800 text-center">
+                  <div className="text-center">
                     {centsToEurosWithCurrency(item.priceInCents)}
                   </div>
                   <div className="flex justify-center items-center gap-2">
@@ -56,7 +54,7 @@ export function CartPage() {
                       type="number"
                       value={item.quantity}
                       min="1"
-                      className="w-10 h-6 text-center text-gray-900 text-sm outline-none border border-gray-300 rounded-sm"
+                      className="bg-base-100 w-10 h-6 text-center text-sm outline-none border border-gray-300 rounded-sm"
                       readOnly
                     />
                     <button
@@ -66,7 +64,7 @@ export function CartPage() {
                       <FiPlus size={16} color="#6b7280" />
                     </button>
                   </div>
-                  <div className="text-gray-800 text-center">
+                  <div className=" text-center">
                     {centsToEurosWithCurrency(
                       item.priceInCents * item.quantity
                     )}

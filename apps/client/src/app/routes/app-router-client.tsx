@@ -7,6 +7,7 @@ import PrivateRoutes from './private-routes';
 import ViewServicePage from '../pages/view-service-page/view-service-page';
 import DashboardClientPage from '../pages/dashboard-page/dashboard-client';
 import CartPage from '../pages/cart/cart';
+import CheckoutPage from '../pages/checkout/checkout';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -24,6 +25,7 @@ export const AppRouter = () => {
           <Route path="dashboard" element={<DashboardClientPage />} />
           <Route path="cart" element={<CartPage />} />
           <Route path="services" element={<ServiceClientPage />} />
+          <Route path="checkout" element={<CheckoutPage />} />
           <Route path="services/:id" element={<ViewServicePage />} />
           <Route path="packages" element={<PackagePage />} />
         </Route>

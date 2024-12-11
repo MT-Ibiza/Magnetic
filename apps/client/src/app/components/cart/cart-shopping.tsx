@@ -36,7 +36,7 @@ export function CartShopping() {
     <Popover className="relative">
       {({ open }) => (
         <>
-          <PopoverButton className="inline-flex items-center text-gray-600 hover:text-gray-900 transition relative">
+          <PopoverButton className="inline-flex items-center hover:text-gray-900 transition relative">
             <FaShoppingCart size={24} />
             {totalItems > 0 && (
               <div
@@ -61,7 +61,7 @@ export function CartShopping() {
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                 <div className="bg-white dark:bg-neutral-800 p-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-gray-200">
+                    <h3 className="text-lg font-medium dark:text-gray-200">
                       My Cart
                     </h3>
                     {cart.length > 0 && (
@@ -87,13 +87,13 @@ export function CartShopping() {
                               className="w-16 h-16 rounded object-cover"
                             />
                             <div className="flex flex-col">
-                              <h4 className="text-sm text-gray-900 dark:text-gray-100">
+                              <h4 className="text-sm dark:text-gray-100">
                                 {item.name}
                               </h4>
-                              <p className="text-xs text-gray-500">
+                              <p className="text-xs">
                                 Quantity: {item.quantity}
                               </p>
-                              <p className="text-xs text-gray-500">
+                              <p className="text-xs">
                                 {centsToEurosWithCurrency(item.priceInCents)}{' '}
                                 each
                               </p>
@@ -125,12 +125,21 @@ export function CartShopping() {
                       <div className="flex flex-col gap-2">
                         <Button
                           variant="outline"
-                          href={'/cart'}
                           className="py-[8px] text-[16px]"
+                          onClick={() => {
+                            close();
+                            window.location.href = '/cart';
+                          }}
                         >
                           View My Cart
                         </Button>
-                        <Button className="py-[8px] text-[16px]">
+                        <Button
+                          className="py-[8px] text-[16px]"
+                          onClick={() => {
+                            close();
+                            window.location.href = '/checkout';
+                          }}
+                        >
                           Checkout
                         </Button>
                       </div>

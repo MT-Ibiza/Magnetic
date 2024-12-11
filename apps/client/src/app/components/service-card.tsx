@@ -1,5 +1,5 @@
 import { Service } from '@magnetic/interfaces';
-import { CardWrapper, Text } from '@magnetic/ui';
+import { Text } from '@magnetic/ui';
 import React from 'react';
 
 interface Props {
@@ -11,27 +11,19 @@ function ServiceCard(props: Props) {
   const { name, description } = service;
 
   return (
-    <div className="relative flex flex-col justify-center overflow-hidden bg-gray-50">
-      <div className="absolute inset-0 bg-center dark:bg-black"></div>
-      <div className="group relative m-0 flex h-72 w-96 rounded-xl shadow-xl ring-gray-900/5 sm:mx-auto sm:max-w-lg">
-        <div className="z-4 h-full w-full overflow-hidden rounded-xl border border-gray-200 opacity-80 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:opacity-70">
-          <img
-            src="https://images.unsplash.com/photo-1506187334569-7596f62cf93f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3149&q=80"
-            className="animate-fade-in block h-full w-full scale-100 transform object-cover object-center opacity-100 transition duration-300 group-hover:scale-110"
-            alt=""
-          />
-        </div>
-        <div className="absolute bottom-0 z-8 m-0 pb-4 ps-4 transition duration-300 ease-in-out group-hover:-translate-y-1 group-hover:translate-x-3 group-hover:scale-110">
-          <h1 className="font-serif text-2xl font-bold text-white shadow-xl">
-            <Text>{name}</Text>
-          </h1>
-          <h1 className="text-sm font-light text-gray-200 shadow-xl">
-            <div
-              className="wordpress-editor-text line-clamp-[2]"
-              dangerouslySetInnerHTML={{ __html: description }}
-            />
-          </h1>
-        </div>
+    <div className="relative flex flex-col justify-between bg-base-100 border border-gray-300 rounded-lg overflow-hidden shadow-sm group hover:shadow-md transition duration-200 ease-in-out">
+      <div className="w-full h-48 bg-gray-100"></div>
+      <div className="p-4 space-y-3">
+        <h2 className="text-xl font-medium">{name}</h2>
+        <div
+          className="text-sm text-gray-500 line-clamp-3"
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
+      </div>
+      <div className="p-4 pt-0">
+        <button className="w-full py-2 bg-primary-600 text-white rounded-lg text-sm font-semibold hover:bg-primary-700 focus:outline-none transition duration-150 ease-in-out">
+          See more
+        </button>
       </div>
     </div>
   );
