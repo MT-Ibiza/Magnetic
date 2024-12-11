@@ -88,6 +88,9 @@ model Package {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   name      String    @unique
+  description String?
+  features String?
+  priceInCents Int @default(1)
   services  Service[]
   users     User[]
 }

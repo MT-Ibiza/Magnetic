@@ -1,15 +1,6 @@
 import { CardWrapper, Button } from '@magnetic/ui';
 import ServicesTable from '../../components/services/services-table';
 
-interface Services {
-  id: number;
-  name: string;
-  address: string;
-  date: string;
-  type: string;
-  status: 'Published' | 'Archived' | 'Private';
-}
-
 export function ServicePage() {
   return (
     <CardWrapper>

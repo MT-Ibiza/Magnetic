@@ -29,6 +29,12 @@ function Layout(props: Props) {
       icon: MdDashboardCustomize,
     },
     {
+      text: 'Packages',
+      key: 'packages',
+      url: '/packages',
+      icon: SiTask,
+    },
+    {
       text: 'Services',
       key: 'services',
       url: '/services',

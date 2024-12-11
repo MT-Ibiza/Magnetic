@@ -5,6 +5,9 @@ export interface Package {
   createdAt: Date;
   updatedAt: Date;
   name: string;
+  description?: string;
+  features?: string;
+  priceInCents: number;
   services: Service[];
 }
 
