@@ -63,16 +63,6 @@ export const authOptions: AuthOptions = {
         return true;
       }
 
-      await db.user.create({
-        data: {
-          email: user.email,
-          name: user.name,
-          typeAccount: account.type,
-          provider: account.provider,
-          providerAccountId: account.providerAccountId,
-        },
-      });
-
       return true;
     },
   },

@@ -14,9 +14,7 @@ export async function POST(request: Request) {
     const data: NewUser = await request.json();
     const { email, name, password, packageId } = data;
 
-    const hashedPassword = password
-      ? await bcrypt.hash(password, 10)
-      : undefined;
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await db.user.create({
       data: {
         name: name,
