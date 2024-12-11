@@ -1,11 +1,13 @@
+import { NewPackage } from '@magnetic/interfaces';
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const { name, description, features, priceInCents } = await request.json();
-
+  const params: NewPackage = await request.json();
+  const { name, description, features, priceInCents } = params;
+console.log(features)
   try {
-    const newPackage = await db.package.create({
+    const packageData = await db.package.create({
       data: {
         name: name,
         description: description,
@@ -13,7 +15,7 @@ export async function POST(request: Request) {
         priceInCents: priceInCents,
       },
     });
-    return NextResponse.json({ package: newPackage });
+    return NextResponse.json(packageData);
   } catch (error: any) {
     return NextResponse.json(
       {

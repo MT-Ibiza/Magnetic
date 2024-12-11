@@ -21,6 +21,7 @@ import NewItemPage from '../pages/new-item-page/new-item-page';
 import UserLayout from '../pages/users-page/user-layout';
 import PackagesPage from '../pages/packages-page/package-page';
 import NewPackagePage from '../pages/new-package-page/new-package-page';
+import EditPackagePage from '../pages/edit-package-page/edit-package-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -39,6 +40,7 @@ export const AppRouter = () => {
           <Route path="services" element={<ServicePage />} />
           <Route path="packages" element={<PackagesPage />} />
           <Route path="packages/new" element={<NewPackagePage />} />
+          <Route path="packages/edit/:id" element={<EditPackagePage />} />
           <Route path="services/edit/:id" element={<EditServicePage />} />
           <Route path="services/:id" element={<ViewServicePage />} />
           <Route path="services/new" element={<NewServicePage />} />
@@ -56,8 +58,7 @@ export const AppRouter = () => {
           <Route path="users/edit/:id" element={<EditUserPage />} />
           <Route path="bookings" element={<BookingsPage />} />
           <Route path="settings" element={<SettingsPage />} />
-          <Route path="users/:id" element={<UserLayout />}>
-          </Route>
+          <Route path="users/:id" element={<UserLayout />}></Route>
           <Route
             path="services/:id"
             element={<Navigate replace to="overview" />}

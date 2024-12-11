@@ -1,7 +1,7 @@
 import { Text } from '@magnetic/ui';
-import PackagesForm from '../../components/services/form-packages';
+import PackagesForm from '../../components/packages/form-packages';
 
-export function NewServicePage() {
+export function NewPackagePage() {
   return (
     <div className="new-booking-page">
       <Text size="4" className="mb-3">
@@ -12,4 +12,4 @@ export function NewServicePage() {
   );
 }
 
-export default NewServicePage;
+export default NewPackagePage;

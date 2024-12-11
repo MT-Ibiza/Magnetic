@@ -13,4 +13,9 @@ export interface Package {
 
 export interface NewPackage {
   name: string;
+  description?: string;
+  features?: string;
+  priceInCents: number;
 }
+
+export interface EditPackage extends NewPackage {}

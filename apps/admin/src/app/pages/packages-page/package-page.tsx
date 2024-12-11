@@ -1,4 +1,5 @@
 import { Button, CardWrapper } from '@magnetic/ui';
+import PackagesTable from '../../components/packages/package-table';
 
 interface Props {}
 
@@ -15,6 +16,7 @@ function PackagesPage(props: Props) {
           <Button href={'/packages/new'}>+ Add Packages</Button>
         </div>
       </div>
+      <PackagesTable/>
     </CardWrapper>
   );
 }

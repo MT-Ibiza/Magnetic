@@ -31,6 +31,9 @@ export const URL_UPDATE_CATEGORY = (id: number) =>
 //Packages
 export const URL_GET_PACKAGES = `${API_URL}/packages`;
 export const URL_NEW_PACKAGE = `${API_URL}/packages`;
+export const URL_DATA_NEW_PACKAGE = `${API_URL}/packages/new`;
+export const URL_UPDATE_PACKAGE = (id: number) => `${API_URL}/packages/${id}`;
+export const URL_GET_PACKAGE= (id: number) => `${API_URL}/packages/${id}`;
 
 //Users
 export const URL_GET_USERS = `${API_URL}/users`;

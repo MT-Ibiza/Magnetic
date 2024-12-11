@@ -28,7 +28,7 @@ export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  const { name } = await request.json();
+  const { name, description, features, priceInCents } = await request.json();
   try {
     const packageUpdated = await db.package.update({
       where: {
@@ -36,6 +36,9 @@ export async function PUT(
       },
       data: {
         name: name,
+        description: description,
+        features: features,
+        priceInCents: priceInCents,
       },
     });
     return NextResponse.json({ package: packageUpdated }, { status: 201 });
