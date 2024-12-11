@@ -53,3 +53,29 @@ export async function PUT(
     );
   }
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    await db.package.delete({
+      where: {
+        id: Number(params.id),
+      },
+    });
+    return NextResponse.json(
+      { message: 'Package deleted successfully' },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        message: error.message,
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}

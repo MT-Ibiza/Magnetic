@@ -1,5 +1,5 @@
 import { Button, CardWrapper } from '@magnetic/ui';
-import PackagesTable from '../../components/packages/package-table';
+import { PackagesTable } from '../../components/packages/package-table';
 
 interface Props {}
 

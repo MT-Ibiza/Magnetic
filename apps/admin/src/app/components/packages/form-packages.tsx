@@ -112,7 +112,7 @@ export function PackagesForm(props: Props) {
                   <Text size="1">Package Name</Text>
                   <Input
                     type="text"
-                    placeholder="Example: Chef Service"
+                    placeholder="Example: Diamond"
                     {...register('name', { required: true })}
                   />
                   {errors.name && (
@@ -143,7 +143,7 @@ export function PackagesForm(props: Props) {
                   <Text size="1">Price</Text>
                   <Input
                     type="number"
-                    placeholder="Example: 10000 (for $100.00)"
+                    placeholder="Example: 10000"
                     {...register('priceInCents', { required: false })}
                   />
                   {errors.priceInCents && (

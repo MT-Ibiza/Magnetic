@@ -1,16 +1,23 @@
-import React from 'react';
-import { useServices } from '../../hooks/useServices';
 import Loading from '../loading';
 import { ErrorText } from '../error-text';
 import { Link } from 'react-router-dom';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { usePackages } from '../../hooks/usePackages';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { removePackage } from '../../apis/api-packages';
 
 interface Props {}
 
-function PackagesTable(props: Props) {
+export function PackagesTable(props: Props) {
   const {} = props;
-  const { isLoading, packages, error, isError } = usePackages();
+  const { isLoading, packages, error, isError, refetch } = usePackages();
+
+  const mutation = useMutation<any, Error, any>({
+    mutationFn: (packageId) => {
+      return removePackage(packageId);
+    },
+  });
 
   if (isLoading) {
     return <Loading />;
@@ -19,6 +26,17 @@ function PackagesTable(props: Props) {
   if (isError) {
     return <ErrorText text={error?.message || ''} />;
   }
+
+  const handleDelete = (id: number) => {
+    toast.promise(mutation.mutateAsync(id), {
+      loading: 'Deleting..',
+      success: () => {
+        refetch();
+        return 'Package removed!';
+      },
+      error: (data) => data.message,
+    });
+  };
 
   return (
     <div className="">
@@ -36,7 +54,9 @@ function PackagesTable(props: Props) {
             <tr className="hover" key={index}>
               <th>{index + 1}</th>
               <td>
-                <Link to={`/package/${packageItem.id}`}>{packageItem.name}</Link>
+                <Link to={`/package/${packageItem.id}`}>
+                  {packageItem.name}
+                </Link>
               </td>
               <td>{packageItem.priceInCents}</td>
               <td>
@@ -49,11 +69,13 @@ function PackagesTable(props: Props) {
                     className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
                   >
                     <li>
-                      <a href={`/packages/edit/${packageItem.id}`}>Edit Package</a>
+                      <a href={`/packages/edit/${packageItem.id}`}>
+                        Edit Package
+                      </a>
                     </li>
                     <li
                       onClick={() => {
-                        // onClickRemove && onClickRemove(user);
+                        handleDelete(packageItem.id);
                       }}
                     >
                       <a>Delete Package</a>
@@ -69,4 +91,3 @@ function PackagesTable(props: Props) {
   );
 }
 
-export default PackagesTable;
