@@ -1,9 +1,10 @@
 import ServiceCardHorizontal from '../../components/service-card-horizontal';
+import { useDashboard } from '../../hooks/useDashboard';
 import { useServices } from '../../hooks/useServices';
 import { Link } from 'react-router-dom';
 
 export function DashboardClientPage() {
-  const { isLoading, services, error, isError } = useServices();
+  const { isLoading, packages, services, error, isError } = useDashboard();
   const videoUrl = {
     id: 'Ao7e4iisKMs',
     title: 'Magical Scotland - 4K Scenic Relaxation Film with Calming Music',
@@ -41,6 +42,13 @@ export function DashboardClientPage() {
               className="w-full"
             >
               <ServiceCardHorizontal service={service} />
+            </Link>
+          ))}
+        </div>
+        <div>
+          {packages.map((item, index) => (
+            <Link key={item.id} to={`/services/${item.id}`} className="w-full">
+              {item.name}
             </Link>
           ))}
         </div>
