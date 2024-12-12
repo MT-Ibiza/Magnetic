@@ -99,6 +99,17 @@ export function Button({
   `;
 
   if (!!href && href !== '#') {
+    if (disabled) {
+      // Para enlaces deshabilitados, evita el click y cambia el estilo.
+      return (
+        <span
+          className={`${CLASSES} cursor-not-allowed opacity-50`}
+          onClick={(e) => e.preventDefault()}
+        >
+          {children || 'This is Link'}
+        </span>
+      );
+    }
     return (
       <Link
         to={href}
@@ -111,7 +122,7 @@ export function Button({
       </Link>
     );
   }
-
+  
   return (
     <button
       disabled={disabled || loading}
@@ -119,9 +130,10 @@ export function Button({
       onClick={onClick}
       type={type}
     >
-      {children || 'This is Button'}
+      {loading ? 'Loading...' : children || 'This is Button'}
     </button>
   );
+  
 }
 
 export default Button;

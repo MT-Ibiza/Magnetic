@@ -101,6 +101,17 @@ export function PackagesForm(props: Props) {
       });
     }
   };
+
+  const modules = {
+    toolbar: [
+      [{ list: 'ordered' }, { list: 'bullet' }],
+    ],
+  };
+
+  const formats = [
+    'list',
+  ];
+  
   return (
     <>
       <div className={`service-form`}>
@@ -121,24 +132,6 @@ export function PackagesForm(props: Props) {
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col gap-[10px] pb-[40px]">
-                  <Text size="1">Package Description</Text>
-                  <ReactQuill
-                    theme="snow"
-                    defaultValue={description}
-                    onChange={setDescription}
-                    className="h-[200px]"
-                  />
-                </div>
-                <div className="flex flex-col gap-[10px] pb-[40px]">
-                  <Text size="1">Features</Text>
-                  <ReactQuill
-                    theme="snow"
-                    defaultValue={features}
-                    onChange={setFeatures}
-                    className="h-[200px]"
-                  />
-                </div>
                 <div className="flex flex-col gap-[10px]">
                   <Text size="1">Price</Text>
                   <Input
@@ -151,6 +144,26 @@ export function PackagesForm(props: Props) {
                       Price is required
                     </p>
                   )}
+                </div>
+                <div className="flex flex-col gap-[10px] pb-[40px]">
+                  <Text size="1">Package Description</Text>
+                  <ReactQuill
+                    theme="snow"
+                    defaultValue={description}
+                    onChange={setDescription}
+                    className="h-[200px]"
+                  />
+                </div>
+                <div className="flex flex-col gap-[10px]">
+                  <Text size="1">Features</Text>
+                  <ReactQuill
+                    theme="snow"
+                    defaultValue={features}
+                    onChange={setFeatures}
+                    modules={modules}
+                    className="h-[200px]"
+                    formats={formats}
+                  />
                 </div>
               </div>
               <div className="flex gap-[10px] justify-end pt-[80px]">

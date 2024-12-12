@@ -54,7 +54,7 @@ export function PackagesTable(props: Props) {
             <tr className="hover" key={index}>
               <th>{index + 1}</th>
               <td>
-                <Link to={`/package/${packageItem.id}`}>
+                <Link to={`/packages/${packageItem.id}`}>
                   {packageItem.name}
                 </Link>
               </td>

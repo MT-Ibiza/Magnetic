@@ -22,6 +22,7 @@ import UserLayout from '../pages/users-page/user-layout';
 import PackagesPage from '../pages/packages-page/package-page';
 import NewPackagePage from '../pages/new-package-page/new-package-page';
 import EditPackagePage from '../pages/edit-package-page/edit-package-page';
+import ViewPackagePage from '../pages/view-package-page/view-package-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -39,6 +40,7 @@ export const AppRouter = () => {
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="services" element={<ServicePage />} />
           <Route path="packages" element={<PackagesPage />} />
+          <Route path="packages/:id" element={<ViewPackagePage />} />
           <Route path="packages/new" element={<NewPackagePage />} />
           <Route path="packages/edit/:id" element={<EditPackagePage />} />
           <Route path="services/edit/:id" element={<EditServicePage />} />
