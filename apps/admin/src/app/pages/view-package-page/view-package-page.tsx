@@ -58,7 +58,7 @@ function ViewPackagePage(props: Props) {
             <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
             {plan.description && (
               <div
-                className="text-neutral-6000 dark:text-neutral-300"
+                className=""
                 dangerouslySetInnerHTML={{ __html: plan.description }}
               />
             )}
@@ -66,18 +66,18 @@ function ViewPackagePage(props: Props) {
           <div className="bg-base-100 listingSection__wrap">
             <div>
               <h2 className="text-2xl font-semibold">Include </h2>
-              <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
+              <span className="block mt-2">
                 Included in the price
               </span>
             </div>
             <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm text-neutral-700 dark:text-neutral-300 ">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm dark:text-neutral-300 ">
               {parsedFeatures.map((feature, index) => (
                 <li className="flex items-center" key={index}>
-                  <span className="mr-4 inline-flex flex-shrink-0 text-primary-6000">
+                  <span className="mr-4 inline-flex flex-shrink-0">
                     <FaCheck />
                   </span>
-                  <span className="text-neutral-700 dark:text-neutral-300">
+                  <span>
                     {feature}
                   </span>
                 </li>
@@ -95,10 +95,10 @@ function ViewPackagePage(props: Props) {
               PLAN
             </span>
             <div className="mb-8">
-              <h3 className="block text-sm uppercase tracking-widest text-neutral-6000 dark:text-neutral-300 mb-2 font-medium">
+              <h3 className="block text-sm uppercase tracking-widest  mb-2 font-medium">
                 {plan.name}
               </h3>
-              <h2 className="text-5xl leading-none flex items-center text-neutral-900 dark:text-neutral-300">
+              <h2 className="text-5xl leading-none flex items-center ">
                 <span>{plan.priceInCents}</span>
                 <span className="text-lg ml-1 font-normal text-neutral-500">
                   /mo
@@ -108,10 +108,10 @@ function ViewPackagePage(props: Props) {
             <nav className="space-y-4 mb-8">
               {parsedFeatures.map((item, index) => (
                 <li className="flex items-center" key={index}>
-                  <span className="mr-4 inline-flex flex-shrink-0 text-primary-6000">
+                  <span className="mr-4 inline-flex flex-shrink-0">
                     <FaCheck />
                   </span>
-                  <span className="text-neutral-700 dark:text-neutral-300">
+                  <span>
                     {item}
                   </span>
                 </li>

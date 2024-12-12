@@ -43,21 +43,32 @@ function ViewServicePage(props: Props) {
   }
 
   return (
-    <>
+    <CardWrapper>
       <div>
-        <h1>{service.name}</h1>
-        <span>{service.package.name}</span>
-        <div
-          className="editor-text"
-          dangerouslySetInnerHTML={{ __html: service.description }}
-        />
-        <div>
-          <Link
-            to={`/services/${service.id}/items/new`}
-            className="text-red-800"
-          >
-            + New Item
-          </Link>
+        <div className="flex flex-col gap-[15px]">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold">{service.name}</h2>
+            <div className="">
+              <Button
+                href={`/services/${service.id}/items/new`}
+                variant="outline"
+                size={2}
+              >
+                + New Item
+              </Button>
+            </div>
+          </div>
+          <div className="flex flex-col gap-[15px]">
+            <span className="text-lg font-semibold block">
+              {service.package.name} Plan
+            </span>
+            <div className="flex justify-between w-full">
+              <div
+                className="block"
+                dangerouslySetInnerHTML={{ __html: service.description }}
+              />
+            </div>
+          </div>
         </div>
         <CardWrapper>
           <ItemsTable
@@ -100,7 +111,7 @@ function ViewServicePage(props: Props) {
           />
         )}
       </DrawerContent>
-    </>
+    </CardWrapper>
   );
 }
 

@@ -230,7 +230,7 @@ export function FormItem(props: Props) {
             </CardWrapper>
           </div>
         </div>
-        <div className="buttons flex">
+        <div className="buttons flex gap-[15px] pt-[30px]">
           <Button
             onClick={(e) => {
               e.preventDefault();
