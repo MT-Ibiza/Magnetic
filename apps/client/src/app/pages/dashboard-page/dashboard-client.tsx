@@ -1,3 +1,4 @@
+import { PlanCard } from '@magnetic/ui';
 import ServiceCardHorizontal from '../../components/service-card-horizontal';
 import { useDashboard } from '../../hooks/useDashboard';
 import { useServices } from '../../hooks/useServices';
@@ -33,9 +34,9 @@ export function DashboardClientPage() {
           </video>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-y-[20px]">
-        <div className="flex flex-col gap-2">
-          {services.map((service, index) => (
+      <div className="grid grid-cols-10 gap-x-4 gap-y-4">
+        <div className="col-span-5 flex flex-col gap-2">
+          {services.map((service) => (
             <Link
               key={service.id}
               to={`/services/${service.id}`}
@@ -45,11 +46,16 @@ export function DashboardClientPage() {
             </Link>
           ))}
         </div>
-        <div>
+        <div className="col-span-5 grid grid-cols-2 gap-4">
           {packages.map((item, index) => (
-            <Link key={item.id} to={`/services/${item.id}`} className="w-full">
-              {item.name}
-            </Link>
+            <PlanCard
+              maxFeatures={3}
+              seeMoreLink="/services"
+              key={index}
+              title={item.name}
+              price={item.priceInCents}
+              features={item.features}
+            />
           ))}
         </div>
       </div>
