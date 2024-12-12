@@ -75,7 +75,7 @@ export function PackagesTable(props: Props) {
                     </li>
                     <li
                       onClick={() => {
-                        handleDelete(packageItem.id);
+                        // handleDelete(packageItem.id);
                       }}
                     >
                       <a>Delete Package</a>
