@@ -5,6 +5,8 @@ export interface CurrentUser {
   name: string;
   email: string;
   image?: string;
+  packageId?: number;
+  package?: Package;
 }
 
 export interface User {
@@ -44,6 +46,7 @@ export interface LoginResponse {
   email: string;
   role: string;
   accessToken: string;
+  package: Package;
 }
 
 export interface SearchUsersParams {

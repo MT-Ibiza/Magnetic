@@ -1,11 +1,18 @@
 import { PlanCard } from '@magnetic/ui';
 import ServiceCardHorizontal from '../../components/service-card-horizontal';
 import { useDashboard } from '../../hooks/useDashboard';
-import { useServices } from '../../hooks/useServices';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 export function DashboardClientPage() {
   const { isLoading, packages, services, error, isError } = useDashboard();
+  const { getCurrentUser } = useAuth();
+  const user = getCurrentUser();
+
+  const filteredPackages = packages.filter(
+    (item) => item.id !== user?.package?.id
+  );
+
   const videoUrl = {
     id: 'Ao7e4iisKMs',
     title: 'Magical Scotland - 4K Scenic Relaxation Film with Calming Music',
@@ -14,49 +21,70 @@ export function DashboardClientPage() {
   };
 
   return (
-    <div className="flex flex-col gap-5">
-      <div className="grid grid-cols-2 gap-4">
-        <div className="bg-base-100 listingSection__wrap">
-          <h2 className="text-2xl font-semibold"> Welcome User Name</h2>
-          <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
-        </div>
-        <div
-          className="group aspect-w-16 aspect-h-16 sm:aspect-h-9 bg-neutral-800 rounded-3xl overflow-hidden border-4 border-white dark:border-neutral-900 sm:rounded-[50px] sm:border-[10px] will-change-transform"
-          title={videoUrl.title}
-        >
-          <video
-            controls
-            src={videoUrl.thumbnail}
-            className="h-[350px] w-full"
-            poster={videoUrl.thumbnail}
-          >
-            Your browser does not support the video tag.
-          </video>
+    <div className="bg-base-100 min-h-screen flex flex-col">
+      <div className="bg-base-100 py-10 px-6">
+        <div className="container mx-auto text-center">
+          <h1 className="text-3xl font-bold text-gray-800">
+            Welcome, {user?.name}
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Explore your services and packages below.
+          </p>
+          {user?.package?.name && (
+            <p className="text-lg font-bold text-primary-600 mt-4">
+              {user?.package?.name}
+            </p>
+          )}
         </div>
       </div>
-      <div className="grid grid-cols-10 gap-x-4 gap-y-4">
-        <div className="col-span-5 flex flex-col gap-2">
-          {services.map((service) => (
-            <Link
-              key={service.id}
-              to={`/services/${service.id}`}
-              className="w-full"
+      <div className="bg-gray-100 py-10">
+        <div className="container mx-auto px-6">
+          <div className="rounded-lg overflow-hidden shadow-lg">
+            <video
+              controls
+              className="w-full h-[300px] md:h-[450px] object-cover"
+              src={videoUrl.thumbnail}
+              poster={videoUrl.thumbnail}
             >
-              <ServiceCardHorizontal service={service} />
-            </Link>
-          ))}
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <p className="text-gray-500 mt-2 text-center">{videoUrl.title}</p>
         </div>
-        <div className="col-span-5 grid grid-cols-2 gap-4">
-          {packages.map((item, index) => (
-            <PlanCard
-              maxFeatures={3}
-              seeMoreLink="/services"
-              key={index}
-              title={item.name}
-              price={item.priceInCents}
-              features={item.features}
-            />
-          ))}
+      </div>
+      <div className="container mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div>
+          <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+            Your Services
+          </h2>
+          <div className="flex flex-col gap-4">
+            {services.map((service) => (
+              <Link
+                key={service.id}
+                to={`/services/${service.id}`}
+                className="block"
+              >
+                <ServiceCardHorizontal service={service} />
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+            Available Packages
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {filteredPackages.map((item, index) => (
+              <PlanCard
+                key={index}
+                maxFeatures={3}
+                seeMoreLink={`/packages/${item.id}`}
+                title={item.name}
+                price={item.priceInCents}
+                features={item.features}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

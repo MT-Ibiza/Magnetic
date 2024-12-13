@@ -39,6 +39,7 @@ export function LoginPage() {
         name: user.name,
         email: user.email,
         id: user.id,
+        package: user.package,
       });
       setToken(user.accessToken);
       setLoggedIn(true);

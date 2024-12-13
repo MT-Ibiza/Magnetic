@@ -37,7 +37,7 @@ export function PlanCard(props: Props) {
   return (
     <div
       className={
-        'bg-base-100  relative px-6 py-8 rounded-3xl border-[1px] flex flex-col overflow-hidden border-primary-500'
+        'bg-base-100 relative px-6 py-8 rounded-3xl border-[1px] flex flex-col overflow-hidden border-primary-500'
       }
     >
       <span className="bg-primary-500 text-white px-3 py-1 tracking-widest text-xs absolute right-3 top-3 rounded-full z-5">
@@ -70,11 +70,11 @@ export function PlanCard(props: Props) {
             maxFeatures !== undefined &&
             parsedFeatures.length > maxFeatures && (
               <Link
-                to={seeMoreLink}
-                className="text-primary-500 text-right cursor-pointer text-sm"
-              >
-                See more
-              </Link>
+              to={seeMoreLink}
+              className="text-primary-500 text-sm underline hover:text-primary-700 transition"
+            >
+              See more features
+            </Link>
             )}
         </div>
         <Button>Submit</Button>

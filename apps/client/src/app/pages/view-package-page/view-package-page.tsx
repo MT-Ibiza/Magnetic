@@ -1,10 +1,7 @@
-import Loading from '../../components/loading';
-import { ErrorText } from '../../components/error-text';
 import { useParams } from 'react-router-dom';
-import { PlanCard, Text } from '@magnetic/ui';
-import { usePackage } from '../../hooks/usePackage';
-import { FaCheck } from 'react-icons/fa6';
+import { Text } from '@magnetic/ui';
 import { FaCircleCheck } from 'react-icons/fa6';
+import { usePackage } from '../../hooks/usePackage';
 
 interface Props {}
 export interface PricingItem {
@@ -21,14 +18,6 @@ function ViewPackagePage(props: Props) {
   const params = useParams();
   const packageId = parseInt(params.id || '');
   const { isLoading, isError, plan, error } = usePackage(packageId);
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <ErrorText text={error?.message || ''} />;
-  }
 
   if (!plan) {
     return <Text>Package Not Found</Text>;
@@ -81,13 +70,6 @@ function ViewPackagePage(props: Props) {
               ))}
             </div>
           </div>
-        </div>
-        <div className="col-span-4">
-          <PlanCard
-            title={plan.name}
-            price={plan.priceInCents}
-            features={plan.features}
-          />
         </div>
       </div>
     </>

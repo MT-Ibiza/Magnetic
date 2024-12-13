@@ -17,6 +17,14 @@ export async function POST(request: Request) {
       email: email,
       role: 'client',
     },
+    include: {
+      package: {
+        select: {
+          id: true,
+          name: true
+        }
+      }
+    }
   });
 
   if (!client) {
@@ -44,6 +52,7 @@ export async function POST(request: Request) {
     name: client.name,
     email: client.email,
     image: client.image,
+    package: client.package,
     accessToken,
   });
 }

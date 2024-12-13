@@ -8,6 +8,7 @@ import ViewServicePage from '../pages/view-service-page/view-service-page';
 import DashboardClientPage from '../pages/dashboard-page/dashboard-client';
 import CartPage from '../pages/cart/cart';
 import CheckoutPage from '../pages/checkout/checkout';
+import ViewPackagePage from '../pages/view-package-page/view-package-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -28,6 +29,7 @@ export const AppRouter = () => {
           <Route path="checkout" element={<CheckoutPage />} />
           <Route path="services/:id" element={<ViewServicePage />} />
           <Route path="packages" element={<PackagePage />} />
+          <Route path="packages/:id" element={<ViewPackagePage />} />
         </Route>
       </Route>
     </Routes>
