@@ -13,6 +13,8 @@ export const URL_GET_SERVICE = (id: number) => `${API_URL}/services/${id}`;
 
 //Package
 export const URL_GET_PACKAGE= (id: number) => `${API_URL}/packages/${id}`;
+export const URL_GET_PACKAGES = `${API_URL}/packages`;
+
 
 //Dashboard
 export const URL_GET_DASHBOARD = `${API_URL}/dashboard`;

@@ -1,9 +1,10 @@
 import { useParams } from 'react-router-dom';
-import { Text } from '@magnetic/ui';
+import { Text, Button } from '@magnetic/ui';
 import { FaCircleCheck } from 'react-icons/fa6';
 import { usePackage } from '../../hooks/usePackage';
 
 interface Props {}
+
 export interface PricingItem {
   isPopular: boolean;
   name: string;
@@ -68,6 +69,27 @@ function ViewPackagePage(props: Props) {
                   <span>{feature}</span>
                 </li>
               ))}
+            </div>
+          </div>
+        </div>
+        <div className="col-span-4">
+          <div className="bg-base-100 listingSection__wrap">
+            <h3 className="text-xl font-semibold">Need Assistance?</h3>
+            <p className="text-md">
+              Speak with our team to discuss your needs and discover Platinum
+              Package benefits.
+            </p>
+            <div className="space-y-4">
+              <Button variant="outline" className="w-full">
+                Upgrade Now
+              </Button>
+              <Button
+                variant="outline"
+                href="tel:+123456789"
+                className="w-full "
+              >
+                Book a Call
+              </Button>
             </div>
           </div>
         </div>

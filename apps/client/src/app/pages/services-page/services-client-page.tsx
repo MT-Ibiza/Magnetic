@@ -7,29 +7,50 @@ export function ServiceClientPage() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-lg font-semibold text-gray-500">Loading...</p>
+      <div className="flex justify-center items-center h-screen bg-gray-50">
+        <div className="flex flex-col items-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-primary-500"></div>
+          <p className="text-lg font-semibold text-gray-500 mt-4">Loading...</p>
+        </div>
       </div>
     );
   }
 
   if (isError) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-lg font-semibold text-red-500">{error?.message || 'Unknown error'}</p>
+      <div className="flex justify-center items-center h-screen bg-gray-50">
+        <div className="text-center">
+          <p className="text-xl font-semibold text-red-500">
+            {error?.message || 'An unknown error occurred'}
+          </p>
+          <p className="text-gray-500 mt-2">
+            Please try refreshing the page or contact support.
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-semibold mb-8">Our Services</h1>
-      <div className="flex flex-wrap gap-6 justify-center">
-        {services.map((service) => (
-          <Link key={service.id} to={`/services/${service.id}`} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
-            <ServiceCard service={service} />
-          </Link>
-        ))}
+    <div className="bg-base-100 min-h-screen py-12">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-extrabold text-gray-800">Explore Our Services</h1>
+          <p className="text-gray-500 mt-2 max-w-2xl mx-auto">
+            Browse through our wide range of services designed to make your life easier and more efficient.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {services.map((service) => (
+            <Link
+              key={service.id}
+              to={`/services/${service.id}`}
+              className="block"
+            >
+              <ServiceCard service={service} />
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -8,10 +8,11 @@ interface Props {
   features?: string;
   maxFeatures?: number;
   seeMoreLink?: string;
+  className?: string;
 }
 
 export function PlanCard(props: Props) {
-  const { title, price, features, maxFeatures, seeMoreLink } = props;
+  const { title, price, features, maxFeatures, seeMoreLink, className } = props;
 
   const parseFeaturesFromHtml = (
     featuresHtml: string | undefined
@@ -36,9 +37,7 @@ export function PlanCard(props: Props) {
 
   return (
     <div
-      className={
-        'bg-base-100 relative px-6 py-8 rounded-3xl border-[1px] flex flex-col overflow-hidden border-primary-500'
-      }
+      className={`bg-base-100 relative px-6 py-8 rounded-3xl border-[1px] flex flex-col overflow-hidden border-primary-500 ${className}`}
     >
       <span className="bg-primary-500 text-white px-3 py-1 tracking-widest text-xs absolute right-3 top-3 rounded-full z-5">
         PLAN
@@ -70,11 +69,11 @@ export function PlanCard(props: Props) {
             maxFeatures !== undefined &&
             parsedFeatures.length > maxFeatures && (
               <Link
-              to={seeMoreLink}
-              className="text-primary-500 text-sm underline hover:text-primary-700 transition"
-            >
-              See more features
-            </Link>
+                to={seeMoreLink}
+                className="text-primary-500 text-sm underline hover:text-primary-700 transition"
+              >
+                See more features
+              </Link>
             )}
         </div>
         <Button>Submit</Button>
