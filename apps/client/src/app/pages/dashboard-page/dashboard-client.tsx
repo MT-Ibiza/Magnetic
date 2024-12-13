@@ -1,5 +1,5 @@
 import { PlanCard } from '@magnetic/ui';
-import ServiceCardHorizontal from '../../components/service-card-horizontal';
+import ServiceCardHorizontal from '../../components/services/service-card-horizontal';
 import { useDashboard } from '../../hooks/useDashboard';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';

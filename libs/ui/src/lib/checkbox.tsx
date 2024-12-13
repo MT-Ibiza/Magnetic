@@ -10,10 +10,10 @@ export interface CheckboxProps {
 }
 
 export function Checkbox({
-  subLabel = "",
-  label = "",
+  subLabel = '',
+  label = '',
   name,
-  className = "",
+  className = '',
   defaultChecked,
   onChange,
 }: CheckboxProps) {
@@ -23,16 +23,16 @@ export function Checkbox({
         id={name}
         name={name}
         type="checkbox"
-        className="focus:ring-action-primary h-6 w-6 text-primary-500 border-primary rounded border-neutral-500 bg-white dark:bg-neutral-700  dark:checked:bg-primary-500 focus:ring-primary-500"
+        className="cursor-pointer focus:ring-primary-700 h-5 w-5 text-primary-700 border-primary rounded border-neutral-500 bg-white dark:bg-neutral-700 dark:checked:text-primary-500 dark:focus:ring-primary-500"
         defaultChecked={defaultChecked}
         onChange={(e) => onChange && onChange(e.target.checked)}
       />
       {label && (
         <label
           htmlFor={name}
-          className="ml-3.5 flex flex-col flex-1 justify-center"
+          className="cursor-pointer ml-3.5 flex flex-col flex-1 justify-center"
         >
-          <span className="text-neutral-900 dark:text-neutral-100">
+          <span className="dark:text-neutral-100">
             {label}
           </span>
           {subLabel && (

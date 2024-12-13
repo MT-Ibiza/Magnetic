@@ -1,5 +1,5 @@
 import { useServices } from '../../hooks/useServices';
-import ServiceCard from '../../components/service-card';
+import ServiceCard from '../../components/services/service-card';
 import { Link } from 'react-router-dom';
 
 export function ServiceClientPage() {
@@ -35,9 +35,12 @@ export function ServiceClientPage() {
     <div className="bg-base-100 min-h-screen py-12">
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-gray-800">Explore Our Services</h1>
+          <h1 className="text-4xl font-extrabold text-gray-800">
+            Explore Our Services
+          </h1>
           <p className="text-gray-500 mt-2 max-w-2xl mx-auto">
-            Browse through our wide range of services designed to make your life easier and more efficient.
+            Browse through our wide range of services designed to make your life
+            easier and more efficient.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
