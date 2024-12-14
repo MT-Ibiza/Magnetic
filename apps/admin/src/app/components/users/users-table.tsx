@@ -38,7 +38,7 @@ function UsersTable(props: Props) {
     <div>
       <table className="table">
         <thead>
-          <tr>
+          <tr className="">
             <th>N</th>
             <th>Name</th>
             <th>Contact</th>
@@ -52,8 +52,8 @@ function UsersTable(props: Props) {
             <tr className="hover" key={index}>
               <th>{index + 1}</th>
               <td>
-              <Link to={`/users/${user.id}`}>
-                <Text>{user.name}</Text>
+                <Link to={`/users/${user.id}`}>
+                  <Text>{user.name}</Text>
                 </Link>
               </td>
               <td>

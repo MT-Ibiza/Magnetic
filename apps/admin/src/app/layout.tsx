@@ -1,5 +1,5 @@
 import { HeaderApp, Sidebar, AvatarDropdown, Text } from '@magnetic/ui';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from './hooks/useAuth';
 import { FaUserFriends, FaBook, FaCog } from 'react-icons/fa';
@@ -8,12 +8,24 @@ import { SiTask } from 'react-icons/si';
 import { User } from '@magnetic/interfaces';
 import { FiBookOpen, FiUser } from 'react-icons/fi';
 import ThemeSelector from './components/theme-selector';
+import { usePathname } from 'next/navigation';
 
 interface Props {}
+
+const titles = {
+  users: 'Users',
+  dashboard: 'Dashboard',
+  providers: 'Providers',
+  services: 'Services',
+  packages: 'Packages',
+  bookings: 'Bookings',
+};
 
 function Layout(props: Props) {
   const { logout, getCurrentUser } = useAuth();
   const user = getCurrentUser();
+  const location = useLocation();
+  const { pathname } = location;
 
   const [isSidebarVisible, setSidebarVisible] = useState(true);
 
@@ -36,7 +48,7 @@ function Layout(props: Props) {
       text: 'Users',
       options: [
         {
-          text: 'Users',
+          text: 'Clients',
           key: 'users',
           url: '/users',
           icon: FaUserFriends,
@@ -46,6 +58,12 @@ function Layout(props: Props) {
           url: '/providers',
           icon: FaUserFriends,
         },
+        // {
+        //   text: 'Admin',
+        //   key: 'users',
+        //   url: '/users',
+        //   icon: FaUserFriends,
+        // },
       ],
     },
     {
@@ -82,61 +100,22 @@ function Layout(props: Props) {
     },
   ];
 
-  const navigation = [
-    {
-      text: 'Dashboard',
-      key: 'dashboard',
-      url: '/dashboard',
-      icon: MdDashboardCustomize,
-    },
-    {
-      text: 'Packages',
-      key: 'packages',
-      url: '/packages',
-      icon: SiTask,
-    },
-    {
-      text: 'Services',
-      key: 'services',
-      url: '/services',
-      icon: SiTask,
-    },
-    {
-      text: 'Providers',
-      key: 'providers',
-      url: '/providers',
-      icon: FaUserFriends,
-    },
-    {
-      text: 'Users',
-      key: 'users',
-      url: '/users',
-      icon: FaUserFriends,
-    },
-    {
-      text: 'Bookings',
-      key: 'bookings',
-      url: '/bookings',
-      icon: FaBook,
-    },
-    {
-      text: 'Settings',
-      key: 'settings',
-      url: '/settings',
-      icon: FaCog,
-    },
-  ];
-
   const navigationOptions = [
     { name: 'Account', href: '/', icon: FiUser },
     { name: 'Booking', href: '/', icon: FiBookOpen },
   ];
+
+  function getPageTitle() {
+    const route = pathname.split('/')[1];
+    return titles[route as 'users'];
+  }
 
   return (
     <div className="app flex flex-col min-h-screen bg-base-100">
       <HeaderApp
         toggleSidebar={toggleSidebar}
         isSidebarVisible={isSidebarVisible}
+        pageTitle={getPageTitle()}
       >
         <div className="flex items-center gap-3">
           {user && (
@@ -162,7 +141,7 @@ function Layout(props: Props) {
           </div>
         </Sidebar>
         <div
-          className={`flex-1 p-4 transition-all duration-300 mt-5 ${
+          className={`p-6 flex-1 transition-all duration-300 ${
             isSidebarVisible ? 'ml-[260px]' : 'ml-0'
           }`}
         >

@@ -2,6 +2,7 @@
 
 import { NavLink } from 'react-router-dom';
 import Text from './text';
+import { BsLayoutSidebarInsetReverse } from 'react-icons/bs';
 
 interface SidebarSingleOption {
   text: string;
@@ -40,24 +41,27 @@ export function Sidebar({
 
   return (
     <div
-      className={`bg-base-200 fixed z-50 border-r-[0.5px] border-gray-300 top-0 bottom-0 h-full w-[260px] bg-body transition-transform duration-300 ${
+      className={`bg-base-200 fixed z-50 border-r-[0.5px] border-gray-300 top-0 bottom-0 h-full w-[260px] transition-transform duration-300 ${
         isVisible ? 'translate-x-0' : '-translate-x-full'
       }`}
     >
-      <div className="flex justify-center items-center py-2 border-b">
+      <div className="flex justify-between items-center py-2 px-6 border-b">
         <NavLink
           to="/dashboard"
           className="main-logo flex items-center shrink-0 gap-2"
         >
           <img
-            className="w-[110px]"
+            className="w-[100px]"
             src={'/icons/logo-app-trim.png'}
             alt="Logo"
           />
         </NavLink>
+        <button type="button" className="collapse-icon" onClick={toggleSidebar}>
+          <BsLayoutSidebarInsetReverse size={20} className="" />
+        </button>
       </div>
       <div className="relative">
-        <div className="flex flex-col gap-5 px-6 py-2">
+        <div className="flex flex-col gap-5 p-6">
           {options.map((option, index) => (
             <div key={index}>
               {option.options ? (
