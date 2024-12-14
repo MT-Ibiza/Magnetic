@@ -103,79 +103,71 @@ export function PackagesForm(props: Props) {
   };
 
   const modules = {
-    toolbar: [
-      [{ list: 'ordered' }, { list: 'bullet' }],
-    ],
+    toolbar: [[{ list: 'ordered' }, { list: 'bullet' }]],
   };
 
-  const formats = [
-    'list',
-  ];
-  
+  const formats = ['list'];
+
   return (
     <>
       <div className={`service-form`}>
-        <div className="">
-          <div className="mx-auto">
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="flex flex-col gap-[20px]">
-                <div className="flex flex-col gap-[10px]">
-                  <Text size="1">Package Name</Text>
-                  <Input
-                    type="text"
-                    placeholder="Example: Diamond"
-                    {...register('name', { required: true })}
-                  />
-                  {errors.name && (
-                    <p className="text-[12px] text-red-500">
-                      Service name is required
-                    </p>
-                  )}
-                </div>
-                <div className="flex flex-col gap-[10px]">
-                  <Text size="1">Price</Text>
-                  <Input
-                    type="number"
-                    placeholder="Example: 10000"
-                    {...register('priceInCents', { required: false })}
-                  />
-                  {errors.priceInCents && (
-                    <p className="text-[12px] text-red-500">
-                      Price is required
-                    </p>
-                  )}
-                </div>
-                <div className="flex flex-col gap-[10px] pb-[40px]">
-                  <Text size="1">Package Description</Text>
-                  <ReactQuill
-                    theme="snow"
-                    defaultValue={description}
-                    onChange={setDescription}
-                    className="h-[200px]"
-                  />
-                </div>
-                <div className="flex flex-col gap-[10px]">
-                  <Text size="1">Features</Text>
-                  <ReactQuill
-                    theme="snow"
-                    defaultValue={features}
-                    onChange={setFeatures}
-                    modules={modules}
-                    className="h-[200px]"
-                    formats={formats}
-                  />
-                </div>
+        <div className="bg-base-100 listingSection__wrap">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-[20px]">
+              <div className="flex flex-col gap-[10px]">
+                <Text size="1">Package Name</Text>
+                <Input
+                  type="text"
+                  placeholder="Example: Diamond"
+                  {...register('name', { required: true })}
+                />
+                {errors.name && (
+                  <p className="text-[12px] text-red-500">
+                    Service name is required
+                  </p>
+                )}
               </div>
-              <div className="flex gap-[10px] justify-end pt-[80px]">
-                <Button variant="outline" href={'/packages'} type="submit">
-                  Cancel
-                </Button>
-                <Button type="submit">
-                  {packageData ? 'Update Package' : 'Create Package'}
-                </Button>
+              <div className="flex flex-col gap-[10px]">
+                <Text size="1">Price</Text>
+                <Input
+                  type="number"
+                  placeholder="Example: 10000"
+                  {...register('priceInCents', { required: false })}
+                />
+                {errors.priceInCents && (
+                  <p className="text-[12px] text-red-500">Price is required</p>
+                )}
               </div>
-            </form>
-          </div>
+              <div className="flex flex-col gap-[10px] pb-[40px]">
+                <Text size="1">Package Description</Text>
+                <ReactQuill
+                  theme="snow"
+                  defaultValue={description}
+                  onChange={setDescription}
+                  className="h-[200px]"
+                />
+              </div>
+              <div className="flex flex-col gap-[10px]">
+                <Text size="1">Features</Text>
+                <ReactQuill
+                  theme="snow"
+                  defaultValue={features}
+                  onChange={setFeatures}
+                  modules={modules}
+                  className="h-[200px]"
+                  formats={formats}
+                />
+              </div>
+            </div>
+            <div className="flex gap-[10px] justify-end pt-[80px]">
+              <Button variant="outline" href={'/packages'} type="submit">
+                Cancel
+              </Button>
+              <Button type="submit">
+                {packageData ? 'Update Package' : 'Create Package'}
+              </Button>
+            </div>
+          </form>
         </div>
       </div>
     </>

@@ -43,7 +43,7 @@ export function EditItemPage() {
           <li>Edit Item</li>
         </ul>
       </div>
-      <div className="mt-3 p-5 border-md border-[1.5px] border-gray-300">
+      <div className="bg-base-100 listingSection__wrap">
         <FormItem
           onCancel={() => {}}
           serviceCategories={serviceCategories}

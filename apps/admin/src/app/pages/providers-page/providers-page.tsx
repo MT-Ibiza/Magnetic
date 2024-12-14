@@ -9,19 +9,28 @@ export function ProvidersPage() {
   const [selectedProvider, setSelectedProvider] = useState<
     Provider | undefined
   >();
+
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
   };
 
   return (
     <>
-      <CardWrapper>
-        <div className="header flex justify-between mb-8">
-          <div className="flex flex-col gap-1">
-            <Text size="3">Providers</Text>
+      <CardWrapper className="p-6 bg-base-100 shadow-lg rounded-lg">
+        <div className="header flex justify-between items-start mb-6 pb-4">
+          <div>
+            <h2 className="text-2xl font-semibold">Providers</h2>
+            <p className="text-sm text-gray-500 mt-[8px]">
+              Manage and view all your providers here.
+            </p>
           </div>
           <div>
-            <Button onClick={toggleDrawer}>+ Add Provider</Button>
+            <Button
+              onClick={toggleDrawer}
+              className="px-6 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600"
+            >
+              + Add Provider
+            </Button>
           </div>
         </div>
         <ProvidersTable

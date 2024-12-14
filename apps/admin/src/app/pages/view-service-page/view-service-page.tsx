@@ -26,6 +26,7 @@ function ViewServicePage(props: Props) {
   const [openForm, setOpenForm] = useState('');
   const [selectedItem, setSelectedItem] = useState<Item | undefined>();
   const { isLoading, isError, service, error } = useService(serviceId);
+
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
   };
@@ -43,34 +44,28 @@ function ViewServicePage(props: Props) {
   }
 
   return (
-    <CardWrapper>
-      <div>
+    <CardWrapper className="p-6 bg-white shadow-lg rounded-lg">
+      <div className="flex flex-col gap-[20px]">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-semibold text-gray-800">{service.name}</h2>
+          <Button
+            href={`/services/${service.id}/items/new`}
+            variant="outline"
+            className="px-6 py-2 text-primary-500 border-primary-500 hover:bg-primary-50"
+          >
+            + New Item
+          </Button>
+        </div>
         <div className="flex flex-col gap-[15px]">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold">{service.name}</h2>
-            <div className="">
-              <Button
-                href={`/services/${service.id}/items/new`}
-                variant="outline"
-                size={2}
-              >
-                + New Item
-              </Button>
-            </div>
-          </div>
-          <div className="flex flex-col gap-[15px]">
-            <span className="text-lg font-semibold block">
-              {service.package.name} Plan
-            </span>
-            <div className="flex justify-between w-full">
-              <div
-                className="block"
-                dangerouslySetInnerHTML={{ __html: service.description }}
-              />
-            </div>
+          <span className="text-lg font-semibold text-gray-700">{service.package.name}</span>
+          <div className="text-sm text-gray-500 leading-relaxed">
+            <div
+              className="block"
+              dangerouslySetInnerHTML={{ __html: service.description }}
+            />
           </div>
         </div>
-        <CardWrapper>
+        <div className="mt-6">
           <ItemsTable
             items={service.items}
             onClickEdit={(item) => {
@@ -84,10 +79,10 @@ function ViewServicePage(props: Props) {
               setOpenForm('variant');
             }}
           />
-        </CardWrapper>
+        </div>
       </div>
       <DrawerContent
-        title={'Edit Service'}
+        title={'Edit Item or Variant'}
         open={openDrawer}
         onClose={toggleDrawer}
       >
@@ -96,18 +91,14 @@ function ViewServicePage(props: Props) {
             onCancel={toggleDrawer}
             serviceId={serviceId}
             item={selectedItem}
-            onSave={() => {
-              toggleDrawer();
-            }}
+            onSave={toggleDrawer}
           />
         )}
         {openForm === 'variant' && selectedItem && (
           <FormVariant
             onCancel={toggleDrawer}
             itemId={selectedItem.id}
-            onSave={() => {
-              // setSelectedVariant(undefined);
-            }}
+            onSave={toggleDrawer}
           />
         )}
       </DrawerContent>

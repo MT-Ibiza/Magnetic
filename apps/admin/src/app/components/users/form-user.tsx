@@ -93,7 +93,7 @@ export function FormUser(props: Props) {
   };
 
   return (
-    <div className="mx-auto">
+    <div className="bg-base-100 listingSection__wrap">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-[20px]">
           <div className="flex flex-col gap-[10px]">

@@ -1,24 +1,24 @@
-import { Button, CardWrapper, Text } from '@magnetic/ui';
+import { Button, CardWrapper } from '@magnetic/ui';
 import UsersTable from '../../components/users/users-table';
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  dateCreated: string;
-  type: string;
-}
+interface Props {}
 
-export function UsersPage() {
+export function UsersPage(props: Props) {
+  const {} = props;
+
   return (
-    <CardWrapper>
-      <div className="header flex justify-between mb-8">
-        <div className="flex flex-col gap-1">
-          <Text size="4">Users</Text>
-        </div>
+    <CardWrapper className="p-6 bg-base-100 shadow-lg rounded-lg">
+      <div className="header flex justify-between items-start mb-6 pb-4">
         <div>
-          <Button href={'/users/new'}>+ Add User</Button>
+          <h2 className="text-2xl font-semibold">Users</h2>
+          <p className="text-sm text-gray-500 mt-[8px]">Manage and view all your users here.</p>
         </div>
+        <Button
+          href={'/users/new'}
+          className="px-6 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600"
+        >
+          + Add User
+        </Button>
       </div>
       <UsersTable />
     </CardWrapper>

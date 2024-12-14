@@ -29,6 +29,7 @@ import Select from 'react-select';
 import { useState } from 'react';
 import FormCategory from '../form-category';
 import FormVariant from '../form-variant';
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 export interface Props {
   className?: string;
@@ -120,70 +121,82 @@ export function FormItem(props: Props) {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex gap-5 w-full">
-          <div className="main-info flex-1">
-            <div className="item-info flex flex-col gap-5">
-              <div className="flex flex-col">
-                <span className="text-neutral-800 dark:text-neutral-200">
-                  Product Name
-                </span>
-                <Input
-                  type="text"
-                  placeholder="Enter the Service name"
-                  {...register('name', { required: true })}
-                />
-                {errors.name && (
-                  <p className="text-[12px] text-red-500">Name is required</p>
-                )}
-              </div>
-              <div className="flex flex-col">
-                <span className="text-neutral-800 dark:text-neutral-200">
-                  Price Product
-                </span>
-                <Input
-                  type="number"
-                  min={1}
-                  step={0.01}
-                  placeholder="Enter the price product"
-                  {...register('priceInCents', { required: true })}
-                />
-                {errors.priceInCents && (
-                  <p className="text-[12px] text-red-500">
-                    product price is required
-                  </p>
-                )}
-              </div>
-              <div className="flex flex-col">
-                <span className="text-neutral-800 dark:text-neutral-200">
-                  Description
-                </span>
-                <TextArea
-                  placeholder="Describe your product here"
-                  {...register('description', { required: true })}
-                />
-                {errors.description && (
-                  <p className="text-[12px] text-red-500">Name is required</p>
-                )}
-              </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <div className="flex gap-6">
+          <div className="main-info flex-1 space-y-6">
+            <div className="flex flex-col">
+              <label
+                htmlFor="name"
+                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+              >
+                Product Name
+              </label>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Enter the Service name"
+                {...register('name', { required: true })}
+                className="mt-2"
+              />
+              {errors.name && (
+                <p className="text-xs text-red-500 mt-1">Name is required</p>
+              )}
             </div>
-            <div className="media">
+
+            <div className="flex flex-col">
+              <label
+                htmlFor="priceInCents"
+                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+              >
+                Price Product
+              </label>
+              <Input
+                id="priceInCents"
+                type="number"
+                min={1}
+                step={0.01}
+                placeholder="Enter the price product"
+                {...register('priceInCents', { required: true })}
+                className="mt-2"
+              />
+              {errors.priceInCents && (
+                <p className="text-xs text-red-500 mt-1">
+                  Product price is required
+                </p>
+              )}
+            </div>
+
+            <div className="flex flex-col">
+              <label
+                htmlFor="description"
+                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+              >
+                Description
+              </label>
+              <TextArea
+                id="description"
+                placeholder="Describe your product here"
+                {...register('description', { required: true })}
+                className="mt-2"
+              />
+              {errors.description && (
+                <p className="text-xs text-red-500 mt-1">
+                  Description is required
+                </p>
+              )}
+            </div>
+
+            <div className="media mt-6">
               <UploadImage onChange={(file) => {}} height="400px" />
             </div>
           </div>
-          <div className="adicional-info flex-1 flex flex-col gap-5">
-            <CardWrapper className="category">
-              <Text>Category</Text>
-              <Select
-                isClearable
-                options={categories}
-                defaultValue={selectedCategory}
-                onChange={(category) => {
-                  setValue('categoryId', category ? category.value : undefined);
-                }}
-              />
+
+          <div className="adicional-info flex-1 space-y-6">
+            <div className="category bg-base-100 listingSection__wrap">
+            <div className="flex justify-between items-center border-b pb-2">
+              <Text className="font-semibold text-lg">Category</Text>
               <Text
-                className="text-red-700 mt-3"
+                className="text-primary-500 mt-2 cursor-pointer"
                 onClick={() => {
                   toggleDrawer();
                   setOpenForm('category');
@@ -191,59 +204,91 @@ export function FormItem(props: Props) {
               >
                 + New Category
               </Text>
-            </CardWrapper>
-            <CardWrapper className="variants">
-              <div className="flex justify-between items-center">
-                <Text>Product Variants</Text>
+              </div>
+              <Select
+                isClearable
+                options={categories}
+                defaultValue={selectedCategory}
+                onChange={(category) => {
+                  setValue('categoryId', category ? category.value : undefined);
+                }}
+                className="mt-2"
+              />
+            </div>
+
+            <div className="variants bg-base-100 listingSection__wrap">
+              <div className="flex justify-between items-center border-b pb-2">
+                <Text className="font-semibold text-lg">
+                  Product Variants
+                </Text>
                 <Text
-                  className="text-red-700 mt-3"
+                  className="text-primary-500 text-md font-medium cursor-pointer"
                   onClick={() => {
                     toggleDrawer();
                     setOpenForm('variant');
                   }}
                 >
-                  + New Variant
+                  + Add New Variant
                 </Text>
               </div>
-              <div>
-                {item?.variants.map((variant, index) => (
-                  <div key={index} className="flex gap-5">
-                    <Text>{variant.name}</Text>
-                    <Text>{`${centsToEurosWithCurrency(
-                      variant.priceInCents
-                    )}`}</Text>
-                    <div className="flex gap-2">
-                      <Text
-                        onClick={() => {
-                          setSelectedVariant(variant);
-                          setOpenForm('variant');
-                          toggleDrawer();
-                        }}
-                      >
-                        Edit
-                      </Text>
-                      <button>Remove</button>
+              <div className="space-y-3">
+                {item?.variants.length ? (
+                  item.variants.map((variant, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm hover:shadow-md transition-shadow"
+                    >
+                      <div className="flex gap-4">
+                        <Text className="font-medium text-gray-800">
+                          {variant.name}
+                        </Text>
+                        <Text className="text-gray-500">
+                          {`${centsToEurosWithCurrency(variant.priceInCents)}`}
+                        </Text>
+                      </div>
+                      <div className="flex gap-4">
+                        <FaEdit
+                          onClick={() => {
+                            setSelectedVariant(variant);
+                            setOpenForm('variant');
+                            toggleDrawer();
+                          }}
+                          className="cursor-pointer hover:scale-110 transition-transform"
+                          size={18}
+                        />
+                        <FaTrashAlt
+                          onClick={() => {}}
+                          className="cursor-pointer hover:scale-110 transition-transform"
+                          size={18}
+                        />
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <Text className="text-gray-500">No variants added yet.</Text>
+                )}
               </div>
-            </CardWrapper>
+            </div>
           </div>
         </div>
-        <div className="buttons flex gap-[15px] pt-[30px]">
+
+        <div className="flex justify-end gap-6 mt-8">
           <Button
             onClick={(e) => {
               e.preventDefault();
               onCancel && onCancel();
             }}
             variant="outline"
-            type="submit"
+            className="px-8 py-2"
           >
             Cancel
           </Button>
-          <Button type="submit">{item ? 'Update Item' : 'Create Item'}</Button>
+          <Button type="submit" className="px-8 py-2">
+            {item ? 'Update Item' : 'Create Item'}
+          </Button>
         </div>
       </form>
+
       <DrawerContent
         title={openForm === 'category' ? 'New Category' : 'New Variant'}
         open={openDrawer}

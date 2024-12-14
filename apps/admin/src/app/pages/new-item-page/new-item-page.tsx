@@ -32,13 +32,13 @@ export function NewServicePage() {
           <li>
             <a href="/services">Services</a>
           </li>
-          <li>
+          <li> 
             <a href={`/services/${serviceId}`}>{service.name}</a>
           </li>
           <li>New Item</li>
         </ul>
       </div>
-      <div className="bg-base-100 mt-3 p-5 border-md border-[1.5px] border-gray-300">
+      <div className="bg-base-100 listingSection__wrap">
         <FormItem
           onCancel={() => {}}
           serviceId={serviceId}

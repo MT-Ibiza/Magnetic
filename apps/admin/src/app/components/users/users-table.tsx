@@ -59,7 +59,7 @@ function UsersTable(props: Props) {
               <td>
                 <div className="flex flex-col gap-1">
                   <Text size="1">5932902000</Text>
-                  <Text size="1" className="text-indigo-500">
+                  <Text size="1" className="text-primary-500">
                     {user.email}
                   </Text>
                 </div>

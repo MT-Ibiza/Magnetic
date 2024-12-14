@@ -20,7 +20,6 @@ function ServicesTable(props: Props) {
   }
 
   return (
-    <div className="overflow-x-auto">
       <table className="table">
         <thead>
           <tr>
@@ -69,7 +68,6 @@ function ServicesTable(props: Props) {
           ))}
         </tbody>
       </table>
-    </div>
   );
 }
 
