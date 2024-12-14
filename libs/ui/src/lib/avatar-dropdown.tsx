@@ -35,10 +35,10 @@ export function AvatarDropdown({
             <PopoverButton
               className={`inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
-              <div className="flex gap-5 items-center">
+              <div className="flex gap-3 items-center">
                 <Avatar sizeClass="w-8 h-8 sm:w-9 sm:h-9" />
                 <div className="flex flex-col items-start">
-                  <Text className="">{user.name}</Text>
+                  <Text size="1">{user.name}</Text>
                   <Text size="1" className="text-gray-500">
                     {user.email}
                   </Text>
@@ -55,8 +55,8 @@ export function AvatarDropdown({
               leaveTo="opacity-0 translate-y-1"
             >
               <PopoverPanel className="absolute z-10 w-screen max-w-[220px] px-4 mt-4 -right-10 sm:right-0 sm:px-0">
-                <div className="overflow-hidden rounded-3xl shadow-lg ring-1 ring-black ring-opacity-5">
-                  <div className="relative grid gap-6 bg-white dark:bg-neutral-800 p-7">
+                <div className="overflow-hidden rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+                  <div className="relative grid gap-6 bg-white dark:bg-neutral-800 p-6">
                     {options.map((item, index) => (
                       <a
                         key={index}
@@ -65,7 +65,9 @@ export function AvatarDropdown({
                         className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                       >
                         <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">
-                          {item.icon && <item.icon aria-hidden="true" className="w-4 h-4" />}
+                          {item.icon && (
+                            <item.icon aria-hidden="true" className="w-4 h-4" />
+                          )}
                         </div>
                         <div className="ml-4">
                           <p className="text-sm font-medium">{item.name}</p>
@@ -74,7 +76,7 @@ export function AvatarDropdown({
                     ))}
                   </div>
                   <hr className="h-[1px] border-t border-neutral-300 dark:border-neutral-700" />
-                  <div className="relative grid gap-6 bg-white dark:bg-neutral-800 p-7">
+                  <div className="relative grid gap-6 bg-white dark:bg-neutral-800 p-6">
                     <a
                       href="#"
                       className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
