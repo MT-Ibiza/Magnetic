@@ -7,7 +7,7 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   sizeClass?: string;
 }
 
-const Select: FC<SelectProps> = ({
+export const Select: FC<SelectProps> = ({
   className = '',
   sizeClass = 'h-11',
   children,
