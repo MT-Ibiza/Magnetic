@@ -16,7 +16,7 @@ export function ProvidersPage() {
 
   return (
     <>
-      <CardWrapper className="p-6 bg-base-100 shadow-lg rounded-lg">
+      <CardWrapper className="p-6">
         <div className="header flex justify-between items-start mb-6 pb-4">
           <div>
             <h2 className="text-2xl font-semibold">Providers</h2>

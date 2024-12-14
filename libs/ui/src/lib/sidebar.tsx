@@ -57,7 +57,7 @@ export function Sidebar({
         </NavLink>
       </div>
       <div className="relative">
-        <div className="flex flex-col gap-1 px-6 py-2">
+        <div className="flex flex-col gap-5 px-6 py-2">
           {options.map((option, index) => (
             <div key={index}>
               {option.options ? (
@@ -115,21 +115,23 @@ const SidebarOptionNav = ({
 }) => (
   <>
     {option.url ? (
-      <li className="cursor-pointer flex items-center w-full rounded-lg text-start leading-tight transition-all hover:bg-primary-50 hover:bg-opacity-80 focus:bg-primary-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-primary-900 focus:text-primary-900 active:text-primary-900 outline-none">
+      <li className="cursor-pointer flex items-center w-full rounded-md hover:bg-base-100 ">
         <NavLink
           to={option.url || ''}
           className={({ isActive }) =>
-            `w-full group flex items-center p-4 gap-3 ${
-              isActive ? 'text-primary-500 bg-zinc-100 rounded-md' : ''
+            `w-full group flex items-center px-3 py-2 gap-3 ${
+              isActive ? 'text-primary-500 bg-base-100 rounded-md' : ''
             }`
           }
         >
           {renderIcon(option.icon)}
-          <Text>{option.text}</Text>
+          <Text className="font-light">{option.text}</Text>
         </NavLink>
       </li>
     ) : (
-      <Text className="flex items-center text-bold mb-3">{option.text}</Text>
+      <Text className="flex items-center mb-3" size="1">
+        {option.text}
+      </Text>
     )}
   </>
 );

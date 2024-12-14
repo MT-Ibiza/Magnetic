@@ -15,7 +15,9 @@ export interface ButtonProps {
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
   href?: LinkProps['to'] | '#';
   targetBlank?: boolean;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+  onClick?: (
+    e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
+  ) => void;
   children?: React.ReactNode;
   radius?: 'none' | 'large' | 'full';
 }
@@ -25,7 +27,7 @@ export function Button({
   color = 'primary',
   variant = 'solid',
   translate = '',
-  size = 2,
+  size = 1,
   fontSize = 'text-sm sm:text-base font-medium',
   disabled = false,
   href,
@@ -122,7 +124,7 @@ export function Button({
       </Link>
     );
   }
-  
+
   return (
     <button
       disabled={disabled || loading}
@@ -133,7 +135,6 @@ export function Button({
       {loading ? 'Loading...' : children || 'This is Button'}
     </button>
   );
-  
 }
 
 export default Button;

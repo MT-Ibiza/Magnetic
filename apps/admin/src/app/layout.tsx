@@ -33,7 +33,23 @@ function Layout(props: Props) {
       ],
     },
     {
-      text: 'Services',
+      text: 'Users',
+      options: [
+        {
+          text: 'Users',
+          key: 'users',
+          url: '/users',
+          icon: FaUserFriends,
+        },
+        {
+          text: 'Providers',
+          url: '/providers',
+          icon: FaUserFriends,
+        },
+      ],
+    },
+    {
+      text: 'Services & Products',
       options: [
         {
           text: 'Services',
@@ -45,30 +61,24 @@ function Layout(props: Props) {
           url: '/packages',
           icon: SiTask,
         },
-        {
-          text: 'Providers',
-          url: '/providers',
-          icon: FaUserFriends,
-        },
       ],
     },
     {
-      text: 'Users',
-      key: 'users',
-      url: '/users',
-      icon: FaUserFriends,
-    },
-    {
       text: 'Bookings',
-      key: 'bookings',
-      url: '/bookings',
-      icon: FaBook,
-    },
-    {
-      text: 'Settings',
-      key: 'settings',
-      url: '/settings',
-      icon: FaCog,
+      options: [
+        {
+          text: 'Bookings',
+          key: 'bookings',
+          url: '/bookings',
+          icon: FaBook,
+        },
+        // {
+        //   text: 'Settings',
+        //   key: 'settings',
+        //   url: '/settings',
+        //   icon: FaCog,
+        // },
+      ],
     },
   ];
 

@@ -7,11 +7,13 @@ export function UsersPage(props: Props) {
   const {} = props;
 
   return (
-    <CardWrapper className="p-6 bg-base-100 shadow-lg rounded-lg">
+    <CardWrapper className="p-6">
       <div className="header flex justify-between items-start mb-6 pb-4">
         <div>
           <h2 className="text-2xl font-semibold">Users</h2>
-          <p className="text-sm text-gray-500 mt-[8px]">Manage and view all your users here.</p>
+          <p className="text-sm text-gray-500 mt-[8px]">
+            Manage and view all your users here.
+          </p>
         </div>
         <Button
           href={'/users/new'}
