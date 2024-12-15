@@ -183,7 +183,7 @@ export function FormUser(props: Props) {
         <div className="flex gap-[10px] justify-end pt-[80px]">
           <Button
             variant="outline"
-            href={'/users'}
+            href={'/clients'}
             type="submit"
             color="neutral"
           >

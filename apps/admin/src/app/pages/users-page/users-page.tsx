@@ -16,7 +16,7 @@ export function UsersPage(props: Props) {
           </p>
         </div>
         <Button
-          href={'/users/new'}
+          href={'/clients/new'}
           className="px-6 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600"
         >
           + New Account

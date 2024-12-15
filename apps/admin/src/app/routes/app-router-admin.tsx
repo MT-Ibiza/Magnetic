@@ -58,11 +58,11 @@ export const AppRouter = () => {
           <Route path="providers" element={<ProvidersPage />} />
           <Route path="clients" element={<UsersPage />} />
           <Route path="users" element={<AdminUsersPage />} />
-          <Route path="users/new" element={<NewUserPage />} />
-          <Route path="users/edit/:id" element={<EditUserPage />} />
+          <Route path="clients/new" element={<NewUserPage />} />
+          <Route path="clients/edit/:id" element={<EditUserPage />} />
           <Route path="bookings" element={<BookingsPage />} />
           <Route path="settings" element={<SettingsPage />} />
-          <Route path="users/:id" element={<UserLayout />}></Route>
+          <Route path="clients/:id" element={<UserLayout />}></Route>
           <Route
             path="services/:id"
             element={<Navigate replace to="overview" />}

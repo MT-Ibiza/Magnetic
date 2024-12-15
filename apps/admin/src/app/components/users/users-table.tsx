@@ -74,7 +74,7 @@ function UsersTable(props: Props) {
                     className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
                   >
                     <li>
-                      <a href={`/users/edit/${user.id}`}>Edit</a>
+                      <a href={`/clients/edit/${user.id}`}>Edit</a>
                     </li>
                     <li
                       onClick={() => {

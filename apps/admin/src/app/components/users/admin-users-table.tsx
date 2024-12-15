@@ -51,9 +51,7 @@ function AdminUsersTable(props: Props) {
             <tr className="hover" key={index}>
               <th>{index + 1}</th>
               <td>
-                <Link to={`/users/${user.id}`}>
-                  <Text>{user.name}</Text>
-                </Link>
+                <Text>{user.name}</Text>
               </td>
               <td>
                 <div className="flex flex-col gap-1">
@@ -72,8 +70,12 @@ function AdminUsersTable(props: Props) {
                     tabIndex={0}
                     className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
                   >
-                    <li>
-                      <a href={`/users/edit/${user.id}`}>Edit</a>
+                    <li
+                      onClick={() => {
+                        onClickEdit && onClickEdit(user);
+                      }}
+                    >
+                      <a>Edit</a>
                     </li>
                     <li
                       onClick={() => {

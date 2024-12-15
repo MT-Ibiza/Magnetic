@@ -1,7 +1,6 @@
-import { StatsCard } from "@magnetic/ui";
+import { StatsCard } from '@magnetic/ui';
 
 export function DashboardPage() {
-
   const options = [
     {
       title: 'Total Guests',
@@ -14,7 +13,7 @@ export function DashboardPage() {
       icon: 'calendar',
     },
     {
-      title: 'Total Comissions',
+      title: 'Total Commissions',
       number: '2040',
       icon: 'house',
     },
@@ -22,11 +21,11 @@ export function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-5">
-        <div className="grid grid-cols-3 gap-x-[20px]">
-          {options.map((option, index) => (
+      <div className="grid grid-cols-3 gap-x-[20px]">
+        {/* {options.map((option, index) => (
             <StatsCard key={index} icon={option.icon} title={option.title} percentage={option.number}/>
-          ))}
-        </div>
+          ))} */}
+      </div>
     </div>
   );
 }

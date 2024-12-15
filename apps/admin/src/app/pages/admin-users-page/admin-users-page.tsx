@@ -3,12 +3,14 @@ import AdminUsersTable from '../../components/users/admin-users-table';
 import { useState } from 'react';
 import FormUser from '../../components/users/form-user';
 import FormAdminUser from '../../components/users/form-admin-user';
+import { User } from '@magnetic/interfaces';
 
 interface Props {}
 
 export function AdminUsersPage(props: Props) {
   const {} = props;
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User>();
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
   };
@@ -27,13 +29,21 @@ export function AdminUsersPage(props: Props) {
             onClick={toggleDrawer}
             className="px-6 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600"
           >
-            + New Account
+            + New User
           </Button>
         </div>
-        <AdminUsersTable />
+        <AdminUsersTable
+          onClickEdit={(user) => {
+            setSelectedUser(user);
+            toggleDrawer();
+          }}
+          onClickRemove={(user) => {
+            setSelectedUser(user);
+          }}
+        />
       </CardWrapper>
       <DrawerContent
-        title={'New Admin User'}
+        title={selectedUser ? 'Edit Admin User' : 'New Admin User'}
         open={openDrawer}
         onClose={() => {
           toggleDrawer();
@@ -41,6 +51,7 @@ export function AdminUsersPage(props: Props) {
         }}
       >
         <FormAdminUser
+          user={selectedUser}
           onSaveSuccess={() => {
             toggleDrawer();
           }}

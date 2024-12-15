@@ -141,7 +141,7 @@ export function FormAdminUser(props: Props) {
           />
         </div>
         <div className="flex flex-col gap-[10px]">
-          <Text>Password</Text>
+          <Text>{editMode ? 'New Password' : 'Password'}</Text>
           <Input
             type="password"
             placeholder="*******"
