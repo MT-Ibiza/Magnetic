@@ -57,7 +57,9 @@ export function LoginForm(props: LoginFormProps) {
                 <Text.TextInputError text="Password is required" />
               )}
             </div>
-            <Button type="submit">Login</Button>
+            <Button type="submit" size={2}>
+              Login
+            </Button>
           </form>
         </div>
       </div>

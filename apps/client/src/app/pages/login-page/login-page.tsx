@@ -60,17 +60,17 @@ export function LoginPage() {
   ];
 
   return (
-    <section className="min-h-screen flex items-stretch text-white">
+    <div className="min-h-screen flex items-stretch ">
       <div
         className="bg-[url('https://www.magnetic-travel.com/wp-content/uploads/2023/07/2-min.png')]
         lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center"
       >
         <div className="absolute bg-black opacity-50 inset-0 z-0"></div>
         <div className="w-full px-24 z-10">
-          <h1 className="text-5xl font-bold text-left tracking-wide">
+          <h1 className="text-5xl font-bold text-left tracking-wide text-white">
             Magnetic Travel
           </h1>
-          <p className="text-2xl mt-5">
+          <p className="text-2xl mt-5 text-white">
             How can we assist you organizing the perfect Ibiza holiday?
           </p>
         </div>
@@ -104,7 +104,7 @@ export function LoginPage() {
         />
         <LoginForm onSubmit={onSubmitForm} />
       </div>
-    </section>
+    </div>
   );
 }
 
