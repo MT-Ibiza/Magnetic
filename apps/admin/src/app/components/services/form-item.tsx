@@ -50,12 +50,16 @@ export function FormItem(props: Props) {
       value: category.id,
     };
   });
-  const selectedCategory = categories.find(
+  const categoryFound = categories.find(
     (category) => category.value == item?.categoryId
   );
+
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openForm, setOpenForm] = useState('');
   const [selectedVariant, setSelectedVariant] = useState<ItemVariant>();
+  const [itemCategories, setItemCategories] = useState(categories);
+  const [selectedCategory, setSelectedCategory] = useState(categoryFound);
+
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
   };
@@ -193,23 +197,24 @@ export function FormItem(props: Props) {
 
           <div className="adicional-info flex-1 space-y-6">
             <div className="category bg-base-100 listingSection__wrap">
-            <div className="flex justify-between items-center border-b pb-2">
-              <Text className="font-semibold text-lg">Category</Text>
-              <Text
-                className="text-primary-500 mt-2 cursor-pointer"
-                onClick={() => {
-                  toggleDrawer();
-                  setOpenForm('category');
-                }}
-              >
-                + New Category
-              </Text>
+              <div className="flex justify-between items-center border-b pb-2">
+                <Text className="font-semibold text-lg">Category</Text>
+                <Text
+                  className="text-primary-500 mt-2 cursor-pointer"
+                  onClick={() => {
+                    toggleDrawer();
+                    setOpenForm('category');
+                  }}
+                >
+                  + New Category
+                </Text>
               </div>
               <Select
                 isClearable
-                options={categories}
-                defaultValue={selectedCategory}
+                options={itemCategories}
+                value={selectedCategory}
                 onChange={(category) => {
+                  setSelectedCategory(category ? category : undefined);
                   setValue('categoryId', category ? category.value : undefined);
                 }}
                 className="mt-2"
@@ -218,9 +223,7 @@ export function FormItem(props: Props) {
 
             <div className="variants bg-base-100 listingSection__wrap">
               <div className="flex justify-between items-center border-b pb-2">
-                <Text className="font-semibold text-lg">
-                  Product Variants
-                </Text>
+                <Text className="font-semibold text-lg">Product Variants</Text>
                 <Text
                   className="text-primary-500 text-md font-medium cursor-pointer"
                   onClick={() => {
@@ -304,6 +307,12 @@ export function FormItem(props: Props) {
               onSave={(category) => {
                 toggleDrawer();
                 setValue('categoryId', category.id);
+                const newCategory = {
+                  label: category.name,
+                  value: category.id,
+                };
+                setSelectedCategory(newCategory);
+                setItemCategories(itemCategories.concat(newCategory));
               }}
             />
           )}
