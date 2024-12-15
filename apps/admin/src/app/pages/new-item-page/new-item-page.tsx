@@ -1,5 +1,5 @@
 import { CardWrapper, Text } from '@magnetic/ui';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
 import FormItem from '../../components/services/form-item';
@@ -8,6 +8,8 @@ import { useNewItem } from '../../hooks/useNewItem';
 export function NewItemPage() {
   const params = useParams();
   const serviceId = Number(params.serviceId);
+  const navigate = useNavigate();
+
   const { isLoading, isError, service, categories, error } =
     useNewItem(serviceId);
 
@@ -46,6 +48,8 @@ export function NewItemPage() {
           serviceCategories={categories}
           // item={selectedItem}
           onSave={() => {
+            navigate(`/services/${serviceId}`, { replace: true });
+
             // toggleDrawer();
           }}
         />
