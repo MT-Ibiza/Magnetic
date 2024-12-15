@@ -196,7 +196,7 @@ export function FormItem(props: Props) {
           </div>
 
           <div className="adicional-info flex-1 space-y-6">
-            <div className="category bg-base-100 listingSection__wrap">
+            <div className="category bg-base-100 border rounded-lg p-6">
               <div className="flex justify-between items-center border-b pb-2">
                 <Text className="font-semibold text-lg">Category</Text>
                 <Text
@@ -221,8 +221,8 @@ export function FormItem(props: Props) {
               />
             </div>
 
-            <div className="variants bg-base-100 listingSection__wrap">
-              <div className="flex justify-between items-center border-b pb-2">
+            <div className="variants bg-base-100 border rounded-lg p-6">
+              <div className="flex justify-between items-center pb-2">
                 <Text className="font-semibold text-lg">Product Variants</Text>
                 <Text
                   className="text-primary-500 text-md font-medium cursor-pointer"
@@ -231,7 +231,7 @@ export function FormItem(props: Props) {
                     setOpenForm('variant');
                   }}
                 >
-                  + Add New Variant
+                  + New Variant
                 </Text>
               </div>
               <div className="space-y-3">
@@ -239,11 +239,13 @@ export function FormItem(props: Props) {
                   item.variants.map((variant, index) => (
                     <div
                       key={index}
-                      className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm hover:shadow-md transition-shadow"
+                      className="flex justify-between items-center border p-3 rounded-md"
                     >
                       <div className="flex gap-4">
                         <Text className="font-medium text-gray-800">
-                          {variant.name}
+                          <div>
+                            {item.name} - {variant.name}
+                          </div>
                         </Text>
                         <Text className="text-gray-500">
                           {`${centsToEurosWithCurrency(variant.priceInCents)}`}
@@ -268,7 +270,14 @@ export function FormItem(props: Props) {
                     </div>
                   ))
                 ) : (
-                  <Text className="text-gray-500">No variants added yet.</Text>
+                  <div className="bg-zinc-50 dark:bg-zinc-500 p-5 text-center">
+                    <Text className="text-gray-500" size="1">
+                      Variables are products similar
+                    </Text>
+                    <Text className="text-gray-500" size="1">
+                      but with different price
+                    </Text>
+                  </div>
                 )}
               </div>
             </div>
