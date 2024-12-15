@@ -13,9 +13,8 @@ import RedirectRoute from './redirect-route';
 import NewUserPage from '../pages/new-user-page/new-user-page';
 import EditUserPage from '../pages/edit-user-page/edit-user-page';
 import EditServicePage from '../pages/edit-service-page/edit-service-page';
-import ViewServicePage from '../pages/view-service-page/view-service-page';
 import ProvidersPage from '../pages/providers-page/providers-page';
-import ServicePage from '../pages/services-page/services-page';
+import ServicesPage from '../pages/services-page/services-page';
 import EditItemPage from '../pages/edit-item-page/edit-item-page';
 import NewItemPage from '../pages/new-item-page/new-item-page';
 import UserLayout from '../pages/users-page/user-layout';
@@ -23,6 +22,7 @@ import PackagesPage from '../pages/packages-page/package-page';
 import NewPackagePage from '../pages/new-package-page/new-package-page';
 import EditPackagePage from '../pages/edit-package-page/edit-package-page';
 import ViewPackagePage from '../pages/view-package-page/view-package-page';
+import ServicePage from '../pages/service-page/service-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -38,13 +38,13 @@ export const AppRouter = () => {
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<DashboardPage />} />
-          <Route path="services" element={<ServicePage />} />
+          <Route path="services" element={<ServicesPage />} />
           <Route path="packages" element={<PackagesPage />} />
           <Route path="packages/:id" element={<ViewPackagePage />} />
           <Route path="packages/new" element={<NewPackagePage />} />
           <Route path="packages/edit/:id" element={<EditPackagePage />} />
           <Route path="services/edit/:id" element={<EditServicePage />} />
-          <Route path="services/:id" element={<ViewServicePage />} />
+          <Route path="services/:id" element={<ServicePage />} />
           <Route path="services/new" element={<NewServicePage />} />
           <Route
             path="services/:serviceId/items/new"

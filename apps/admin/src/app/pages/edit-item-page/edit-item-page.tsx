@@ -1,7 +1,7 @@
 import { Text } from '@magnetic/ui';
 import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import FormItem from '../../components/services/form-item';
 import { useItem } from '../../hooks/useItem';
 
@@ -9,6 +9,7 @@ export function EditItemPage() {
   const params = useParams();
   const serviceId = Number(params.serviceId);
   const itemId = Number(params.itemId);
+  const navigate = useNavigate();
 
   const { isLoading, isError, item, serviceCategories, error } = useItem(
     serviceId,
@@ -50,7 +51,7 @@ export function EditItemPage() {
           serviceId={serviceId}
           item={item}
           onSave={() => {
-            // toggleDrawer();
+            navigate(`/services/${serviceId}`);
           }}
         />
       </div>

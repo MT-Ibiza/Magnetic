@@ -18,14 +18,16 @@ import FormVariant from '../../components/form-variant';
 
 interface Props {}
 
-function ViewServicePage(props: Props) {
+function ServicePage(props: Props) {
   const {} = props;
   const params = useParams();
   const serviceId = parseInt(params.id || '');
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openForm, setOpenForm] = useState('');
   const [selectedItem, setSelectedItem] = useState<Item | undefined>();
-  const { isLoading, isError, service, error } = useService(serviceId);
+  const { isLoading, isError, service, error, isSuccess } =
+    useService(serviceId);
+  console.log(service);
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -44,43 +46,49 @@ function ViewServicePage(props: Props) {
   }
 
   return (
-    <CardWrapper className="p-6 bg-white shadow-lg rounded-lg">
-      <div className="flex flex-col gap-[20px]">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold text-gray-800">{service.name}</h2>
-          <Button
-            href={`/services/${service.id}/items/new`}
-            variant="outline"
-            className="px-6 py-2 text-primary-500 border-primary-500 hover:bg-primary-50"
-          >
-            + New Item
-          </Button>
-        </div>
-        <div className="flex flex-col gap-[15px]">
-          <span className="text-lg font-semibold text-gray-700">{service.package.name}</span>
-          <div className="text-sm text-gray-500 leading-relaxed">
-            <div
-              className="block"
-              dangerouslySetInnerHTML={{ __html: service.description }}
+    <>
+      <CardWrapper className="p-6 bg-white shadow-lg rounded-lg">
+        <div className="flex flex-col gap-[20px]">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-semibold text-gray-800">
+              {service.name}
+            </h2>
+            <Button
+              href={`/services/${service.id}/items/new`}
+              variant="outline"
+              className="px-6 py-2 text-primary-500 border-primary-500 hover:bg-primary-50"
+            >
+              + New Item
+            </Button>
+          </div>
+          <div className="flex flex-col gap-[15px]">
+            <span className="text-lg font-semibold text-gray-700">
+              {service.package?.name}
+            </span>
+            <div className="text-sm text-gray-500 leading-relaxed">
+              <div
+                className="block"
+                dangerouslySetInnerHTML={{ __html: service.description }}
+              />
+            </div>
+          </div>
+          <div className="mt-6">
+            <ItemsTable
+              items={service.items || []}
+              onClickEdit={(item) => {
+                toggleDrawer();
+                setSelectedItem(item);
+                setOpenForm('product');
+              }}
+              onClickVariant={(item) => {
+                toggleDrawer();
+                setSelectedItem(item);
+                setOpenForm('variant');
+              }}
             />
           </div>
         </div>
-        <div className="mt-6">
-          <ItemsTable
-            items={service.items}
-            onClickEdit={(item) => {
-              toggleDrawer();
-              setSelectedItem(item);
-              setOpenForm('product');
-            }}
-            onClickVariant={(item) => {
-              toggleDrawer();
-              setSelectedItem(item);
-              setOpenForm('variant');
-            }}
-          />
-        </div>
-      </div>
+      </CardWrapper>
       <DrawerContent
         title={'Edit Item or Variant'}
         open={openDrawer}
@@ -102,8 +110,8 @@ function ViewServicePage(props: Props) {
           />
         )}
       </DrawerContent>
-    </CardWrapper>
+    </>
   );
 }
 
-export default ViewServicePage;
+export default ServicePage;

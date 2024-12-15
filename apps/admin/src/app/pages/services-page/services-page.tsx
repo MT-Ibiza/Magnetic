@@ -1,7 +1,7 @@
 import { CardWrapper, Button } from '@magnetic/ui';
 import ServicesTable from '../../components/services/services-table';
 
-export function ServicePage() {
+export function ServicesPage() {
   return (
     <CardWrapper className="p-6">
       <div className="header flex justify-between items-start mb-6 pb-4">
@@ -23,4 +23,4 @@ export function ServicePage() {
   );
 }
 
-export default ServicePage;
+export default ServicesPage;
