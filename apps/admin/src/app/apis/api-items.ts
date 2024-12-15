@@ -4,8 +4,10 @@ import {
   Item,
   ItemWithServiceCategories,
   NewItem,
+  NewItemFromCategory,
 } from '@magnetic/interfaces';
 import {
+  URL_CREATE_ITEM,
   URL_GET_CATEGORIES,
   URL_GET_ITEM,
   URL_GET_ITEMS,
@@ -46,7 +48,7 @@ export async function newItem(
   serviceId: number,
   params: NewItem
 ): Promise<Item> {
-  const url = URL_NEW_ITEM(serviceId);
+  const url = URL_CREATE_ITEM(serviceId);
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -71,6 +73,21 @@ export async function editItem(
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(params),
+  });
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
+  return dataJson;
+}
+
+export async function getNewItem(
+  serviceId: number
+): Promise<NewItemFromCategory> {
+  const url = URL_NEW_ITEM(serviceId);
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);

@@ -44,3 +44,8 @@ export interface ItemWithServiceCategories {
   item: Item;
   categories: Category[];
 }
+
+export interface NewItemFromCategory {
+  service: Service;
+  categories: Category[];
+}

@@ -19,10 +19,11 @@ export interface FormUserData {
 export interface Props {
   className?: string;
   user?: User;
+  onSuccess: () => void;
 }
 
 export function FormUser(props: Props) {
-  const { className, user } = props;
+  const { className, user, onSuccess } = props;
   const editMode = !!user;
   const {
     register,
@@ -45,7 +46,12 @@ export function FormUser(props: Props) {
       return newUser(data);
     },
     onSuccess: (user) => {
-      toast.success(`${user.name} have now an account`);
+      toast.custom((t) => (
+        <div className="bg-green-800 text-white px-5 py-3">
+          <h1>New Account Created!</h1>
+        </div>
+      ));
+      onSuccess();
     },
     onError: (error) => {
       toast.error('The account could not be created');
@@ -58,7 +64,13 @@ export function FormUser(props: Props) {
       return editUser(id, data);
     },
     onSuccess: (user) => {
-      toast.success(`User updated!`);
+      toast.custom((t) => (
+        <div className="bg-green-800 text-white">
+          <h1>New Account Created!</h1>
+          <button onClick={() => toast.dismiss(t)}>Dismiss</button>
+        </div>
+      ));
+      onSuccess();
     },
     onError: (error) => {
       toast.error('The account could not be updated');
@@ -155,11 +167,16 @@ export function FormUser(props: Props) {
           )}
         </div>
         <div className="flex gap-[10px] justify-end pt-[80px]">
-          <Button variant="outline" href={'/users'} type="submit">
+          <Button
+            variant="outline"
+            href={'/users'}
+            type="submit"
+            color="neutral"
+          >
             Cancel
           </Button>
           <Button type="submit">
-            {editMode ? 'Update User' : 'Create User'}
+            {editMode ? 'Update User' : 'Create Account'}
           </Button>
         </div>
       </form>

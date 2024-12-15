@@ -19,7 +19,10 @@ export const URL_GET_ITEMS = (serviceId: number) =>
   `${API_URL}/services/${serviceId}/items`;
 export const URL_GET_ITEM = (serviceId: number, itemId: number) =>
   `${API_URL}/services/${serviceId}/items/${itemId}`;
-export const URL_NEW_ITEM = (id: number) => `${API_URL}/services/${id}/items`;
+export const URL_CREATE_ITEM = (id: number) =>
+  `${API_URL}/services/${id}/items`;
+export const URL_NEW_ITEM = (id: number) =>
+  `${API_URL}/services/${id}/items/new`;
 export const URL_UPDATE_ITEM = (serviceId: number, itemId: number) =>
   `${API_URL}/services/${serviceId}/items/${itemId}`;
 
@@ -33,7 +36,7 @@ export const URL_GET_PACKAGES = `${API_URL}/packages`;
 export const URL_NEW_PACKAGE = `${API_URL}/packages`;
 export const URL_DATA_NEW_PACKAGE = `${API_URL}/packages/new`;
 export const URL_UPDATE_PACKAGE = (id: number) => `${API_URL}/packages/${id}`;
-export const URL_GET_PACKAGE= (id: number) => `${API_URL}/packages/${id}`;
+export const URL_GET_PACKAGE = (id: number) => `${API_URL}/packages/${id}`;
 export const URL_DELETE_PACKAGE = (id: number) => `${API_URL}/packages/${id}`;
 
 //Users
