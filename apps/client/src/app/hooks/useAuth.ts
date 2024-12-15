@@ -1,11 +1,11 @@
-import { useAppStore } from "../store/store";
+import { useAppStore } from '../store/store';
 
 export function useAuth() {
   const {
     setToken,
     loggedIn,
     token,
-    logout,
+    logoutClient,
     setLoggedIn,
     currentUser,
     setCurrentUser,
@@ -16,7 +16,7 @@ export function useAuth() {
     setToken,
     loggedIn,
     token,
-    logout,
+    logoutClient,
     setLoggedIn,
     setCurrentUser,
     getCurrentUser,

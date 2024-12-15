@@ -15,7 +15,7 @@ export type AuthSlice = {
   setToken: (token: string) => void;
   setLoggedIn: (isLogin: boolean) => void;
   loggedIn: boolean;
-  logout: () => void;
+  logoutClient: () => void;
   currentUser?: CurrentUser;
   setCurrentUser: (user: CurrentUser) => void;
   getCurrentUser: () => CurrentUser | undefined;
@@ -44,7 +44,7 @@ export const createAuthSlice: StateCreator<StoreState, [], [], AuthSlice> = (
     set({ token });
   },
   loggedIn: getInitialLoggedIn(),
-  logout: () => {
+  logoutClient: () => {
     localStorage.removeItem(LOCAL_LOGIN_KEY);
     localStorage.removeItem(CURRENT_USER_KEY);
     set({ token: '', loggedIn: false, currentUser: undefined });

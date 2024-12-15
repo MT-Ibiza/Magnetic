@@ -17,7 +17,7 @@ import CartShopping from './components/cart/cart-shopping';
 interface Props {}
 
 function Layout(props: Props) {
-  const { logout, getCurrentUser } = useAuth();
+  const { logoutClient, getCurrentUser } = useAuth();
   const user = getCurrentUser();
   const [isSidebarVisible, setSidebarVisible] = useState(true);
   const [isCartOpen, setCartOpen] = useState(false);
@@ -62,7 +62,7 @@ function Layout(props: Props) {
           <ThemeSelector uniqueKey={'client'} />
           {user && (
             <AvatarDropdown
-              logout={logout}
+              logout={logoutClient}
               user={user as User}
               options={navigationOptions}
             />
