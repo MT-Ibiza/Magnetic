@@ -104,6 +104,7 @@ function ServicePage(props: Props) {
         )}
         {openForm === 'variant' && selectedItem && (
           <FormVariant
+            itemName={selectedItem.name}
             onCancel={toggleDrawer}
             itemId={selectedItem.id}
             onSave={toggleDrawer}

@@ -32,7 +32,7 @@ export async function PUT(
   const data: EditItemVariant = await request.json();
   const { name, priceInCents, description, itemId } = data;
   try {
-    const service = await db.itemVariant.update({
+    const variant = await db.itemVariant.update({
       where: {
         id: Number(params.variantId),
         itemId: Number(itemId),
@@ -43,7 +43,7 @@ export async function PUT(
         description,
       },
     });
-    return NextResponse.json(service, { status: 201 });
+    return NextResponse.json(variant, { status: 201 });
   } catch (error: any) {
     return NextResponse.json(
       {

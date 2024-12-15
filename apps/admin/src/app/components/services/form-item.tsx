@@ -57,6 +57,9 @@ export function FormItem(props: Props) {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openForm, setOpenForm] = useState('');
   const [selectedVariant, setSelectedVariant] = useState<ItemVariant>();
+  const [itemVariants, setItemVariants] = useState<ItemVariant[]>(
+    item?.variants || []
+  );
   const [itemCategories, setItemCategories] = useState(categories);
   const [selectedCategory, setSelectedCategory] = useState(categoryFound);
 
@@ -235,8 +238,8 @@ export function FormItem(props: Props) {
                 </Text>
               </div>
               <div className="space-y-3">
-                {item?.variants.length ? (
-                  item.variants.map((variant, index) => (
+                {itemVariants.length ? (
+                  itemVariants.map((variant, index) => (
                     <div
                       key={index}
                       className="flex justify-between items-center border p-3 rounded-md"
@@ -244,7 +247,7 @@ export function FormItem(props: Props) {
                       <div className="flex gap-4">
                         <Text className="font-medium text-gray-800">
                           <div>
-                            {item.name} - {variant.name}
+                            {item?.name} - {variant.name}
                           </div>
                         </Text>
                         <Text className="text-gray-500">
@@ -272,7 +275,7 @@ export function FormItem(props: Props) {
                 ) : (
                   <div className="bg-zinc-50 dark:bg-zinc-500 p-5 text-center">
                     <Text className="text-gray-500" size="1">
-                      Variables are products similar
+                      Variables are similar products
                     </Text>
                     <Text className="text-gray-500" size="1">
                       but with different price
@@ -327,11 +330,24 @@ export function FormItem(props: Props) {
           )}
           {openForm === 'variant' && item && (
             <FormVariant
+              itemName={item.name}
               onCancel={toggleDrawer}
               itemId={item.id}
               variant={selectedVariant}
-              onSave={() => {
+              onSave={(variantUpdated) => {
+                if (selectedVariant) {
+                  const allVariants = itemVariants.map((variant) => {
+                    return variantUpdated.id === variant.id
+                      ? variantUpdated
+                      : variant;
+                  });
+                  setItemVariants(allVariants);
+                } else {
+                  const allVariants = [variantUpdated].concat(itemVariants);
+                  setItemVariants(allVariants);
+                }
                 setSelectedVariant(undefined);
+                toggleDrawer();
               }}
             />
           )}

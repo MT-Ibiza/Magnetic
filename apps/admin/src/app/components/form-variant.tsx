@@ -9,9 +9,14 @@ import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { editVariant, newVariant } from '../apis/api-variants';
-import { centsToEuros, eurosToCents } from '@magnetic/utils';
+import {
+  centsToEuros,
+  centsToEurosWithCurrency,
+  eurosToCents,
+} from '@magnetic/utils';
 
 interface Props {
+  itemName: string;
   variant?: ItemVariant;
   onCancel: () => void;
   onSave: (variant: ItemVariant) => void;
@@ -19,10 +24,11 @@ interface Props {
 }
 
 function FormVariant(props: Props) {
-  const { variant, onCancel, itemId, onSave } = props;
+  const { itemName, variant, onCancel, itemId, onSave } = props;
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<ItemVariantBase>({
     defaultValues: variant
@@ -39,10 +45,10 @@ function FormVariant(props: Props) {
     },
     onSuccess: (variant) => {
       onSave(variant);
-      toast.success(`Service created!`);
+      toast.success(`Variant created!`);
     },
     onError: () => {
-      toast.success(`Service couldn't be created!`);
+      toast.success(`Variant couldn't be created!`);
     },
   });
 
@@ -51,12 +57,13 @@ function FormVariant(props: Props) {
       const variantId = variant?.id || 0;
       return editVariant(variantId, data);
     },
-    onSuccess: (variant) => {
-      onSave(variant);
-      toast.success(`Provider updated!`);
+    onSuccess: (variantUpdated) => {
+      console.log(variantUpdated);
+      onSave(variantUpdated);
+      toast.success(`Variant updated!`);
     },
     onError: () => {
-      toast.success(`Provider couldn't be update!`);
+      toast.success(`Variant couldn't be update!`);
     },
   });
 
@@ -111,6 +118,17 @@ function FormVariant(props: Props) {
               placeholder="Short description"
               {...register('description')}
             />
+          </div>
+        </div>
+        <div className="mt-5 p-5 bg-sky-100">
+          <Text size="1">Preview</Text>
+          <div className="flex justify-between mt-1">
+            <Text size="1" className="text-gray-500">{`${itemName} - ${
+              watch().name || ''
+            }`}</Text>
+            <Text size="1">
+              {`${centsToEurosWithCurrency((watch().priceInCents || 0) * 100)}`}
+            </Text>
           </div>
         </div>
         <div className="buttons flex justify-end gap-3 p-4 w-full absolute bottom-0 right-0">
