@@ -34,7 +34,7 @@ function NewUserPage(props: Props) {
       </div>
       <FormUser
         onSaveSuccess={() => {
-          navigate('/users', { replace: true });
+          navigate('/clients', { replace: true });
         }}
       />
     </div>

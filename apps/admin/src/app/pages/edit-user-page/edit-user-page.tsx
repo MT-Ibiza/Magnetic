@@ -28,7 +28,7 @@ function EditUserPage(props: Props) {
       <FormUser
         user={user}
         onSaveSuccess={() => {
-          navigate('/users', { replace: true });
+          navigate('/clients', { replace: true });
         }}
       />
     </div>
