@@ -19,7 +19,7 @@ export interface ButtonProps {
     e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
   ) => void;
   children?: React.ReactNode;
-  radius?: 'none' | 'large' | 'full';
+  radius?: 'none' | 'medium' | 'large' | 'full';
 }
 
 export function Button({
@@ -36,10 +36,10 @@ export function Button({
   type,
   loading,
   onClick = () => {},
-  radius = 'large',
+  radius = 'medium',
 }: ButtonProps) {
   const sizeClasses = {
-    1: 'px-2 py-1 text-xs',
+    1: 'px-3 py-2 text-xs',
     2: 'px-4 py-3 text-sm',
     3: 'px-6 py-4 text-lg',
     4: 'px-8 py-5 text-xl',
@@ -72,6 +72,7 @@ export function Button({
 
   const radiusClasses = {
     none: 'rounded-none',
+    medium: 'rounded-md',
     large: 'rounded-lg',
     full: 'rounded-full',
   };
