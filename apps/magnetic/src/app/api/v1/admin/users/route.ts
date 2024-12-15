@@ -12,14 +12,14 @@ import { NewUser } from '@magnetic/interfaces';
 export async function POST(request: Request) {
   try {
     const data: NewUser = await request.json();
-    const { email, name, password, packageId, phone } = data;
+    const { email, name, password, packageId, phone, role } = data;
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await db.user.create({
       data: {
         name: name,
         email: email,
-        role: 'client',
+        role: role as 'client',
         packageId,
         phone: phone,
         // countryCodePhone: countryCodePhone,

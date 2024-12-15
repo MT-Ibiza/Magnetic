@@ -43,7 +43,6 @@ function AdminUsersTable(props: Props) {
             <th>N</th>
             <th>Name</th>
             <th>Contact</th>
-            <th>Subscription</th>
             <th></th>
           </tr>
         </thead>
@@ -64,7 +63,6 @@ function AdminUsersTable(props: Props) {
                   </Text>
                 </div>
               </td>
-              <td>{user.package ? user.package.name : 'none'}</td>
               <td>
                 <div className="dropdown dropdown-bottom dropdown-end">
                   <div tabIndex={0} role="button" className="m-1">

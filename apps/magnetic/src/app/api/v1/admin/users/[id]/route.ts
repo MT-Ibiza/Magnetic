@@ -137,18 +137,23 @@ export async function DELETE(
         }
       );
     }
-    const pseudonym = `client_${user.id}_${Date.now()}`;
-    await db.user.update({
+    await db.user.delete({
       where: {
         id: user.id,
       },
-      data: {
-        active: false,
-        email: `${pseudonym}@example.com`,
-        name: `Deleted Client ${user.id}`,
-        phone: null,
-      },
     });
+    // const pseudonym = `client_${user.id}_${Date.now()}`;
+    // await db.user.update({
+    //   where: {
+    //     id: user.id,
+    //   },
+    //   data: {
+    //     active: false,
+    //     email: `${pseudonym}@example.com`,
+    //     name: `Deleted Client ${user.id}`,
+    //     phone: null,
+    //   },
+    // });
 
     return NextResponse.json('ok');
   } catch (error: any) {
