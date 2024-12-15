@@ -80,6 +80,11 @@ function Layout(props: Props) {
           icon: SiTask,
         },
         {
+          text: 'All Products',
+          url: '/products',
+          icon: SiTask,
+        },
+        {
           text: 'Packages',
           url: '/packages',
           icon: SiTask,

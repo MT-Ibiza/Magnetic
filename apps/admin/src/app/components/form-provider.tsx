@@ -4,7 +4,7 @@ import {
   Provider,
   ProviderBase,
 } from '@magnetic/interfaces';
-import { Button, Input, Text } from '@magnetic/ui';
+import { Button, Input, Text, TextArea } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -100,12 +100,20 @@ function FormProvider(props: Props) {
           </div>
 
           <div className="flex flex-col gap-[10px]">
-            <Text>Webiste</Text>
+            <Text>Website</Text>
             <Input
               type="url"
               placeholder="https://mysite.com"
               {...register('website')}
             />
+          </div>
+          <div className="flex flex-col gap-[10px]">
+            <Text>Script</Text>
+            <TextArea placeholder="Add Script to load external products" />
+            <Text size="1" className="text-gray-500">
+              Add the script, which will be integrated into the client's app for
+              selecting and buying products or services.
+            </Text>
           </div>
         </div>
         <div className="buttons flex justify-end gap-3 p-4 w-full absolute bottom-0 right-0">

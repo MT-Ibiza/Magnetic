@@ -40,6 +40,7 @@ export const AppRouter = () => {
         <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="services" element={<ServicesPage />} />
+          <Route path="products" element={<PendingPage />} />
           <Route path="packages" element={<PackagesPage />} />
           <Route path="packages/:id" element={<ViewPackagePage />} />
           <Route path="packages/new" element={<NewPackagePage />} />
