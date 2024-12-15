@@ -75,6 +75,7 @@ export async function searchUsers(params: SearchParams) {
   const totalItems = await db.user.count({
     where: {
       OR: [{ name: { contains: searchText, mode: 'insensitive' } }],
+      role: role as 'client',
     },
   });
   const totalPages = Math.ceil(totalItems / pageSize);

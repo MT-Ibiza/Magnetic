@@ -50,12 +50,17 @@ function Layout(props: Props) {
         {
           text: 'Clients',
           key: 'users',
-          url: '/users',
+          url: '/clients',
           icon: FaUserFriends,
         },
         {
           text: 'Providers',
           url: '/providers',
+          icon: FaUserFriends,
+        },
+        {
+          text: 'Admin Users',
+          url: '/users',
           icon: FaUserFriends,
         },
         // {

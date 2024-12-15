@@ -32,7 +32,7 @@ export const useUsers = (params: SearchUsersParams) => {
     hasNextPage,
     refetch,
   } = useInfiniteQuery({
-    queryKey: ['users', searchText],
+    queryKey: [`users`, searchText],
     queryFn: async ({ pageParam }) => {
       return fetchUsers({
         search: searchText,

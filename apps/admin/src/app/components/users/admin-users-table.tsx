@@ -11,7 +11,7 @@ interface Props {
   onClickRemove?: (user: User) => void;
 }
 
-function UsersTable(props: Props) {
+function AdminUsersTable(props: Props) {
   const { onClickEdit, onClickRemove } = props;
   const {
     isLoading,
@@ -24,6 +24,7 @@ function UsersTable(props: Props) {
   } = useUsers({
     searchText: undefined,
     itemsPerPage: 10,
+    role: 'admin',
   });
 
   if (isLoading) {
@@ -107,4 +108,4 @@ function UsersTable(props: Props) {
   );
 }
 
-export default UsersTable;
+export default AdminUsersTable;
