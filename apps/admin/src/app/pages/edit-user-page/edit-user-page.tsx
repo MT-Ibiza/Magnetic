@@ -2,7 +2,7 @@ import { usePackages } from '../../hooks/usePackages';
 import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
 import FormUser from '../../components/users/form-user';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useUser } from '../../hooks/useUser';
 
 interface Props {}
@@ -11,6 +11,7 @@ function EditUserPage(props: Props) {
   const {} = props;
   const params = useParams();
   const userId = parseInt(params.id || '');
+  const navigate = useNavigate();
 
   const { isLoading, isError, user, error } = useUser(userId);
 
@@ -24,7 +25,12 @@ function EditUserPage(props: Props) {
 
   return (
     <div>
-      <FormUser user={user} />
+      <FormUser
+        user={user}
+        onSaveSuccess={() => {
+          navigate('/users', { replace: true });
+        }}
+      />
     </div>
   );
 }

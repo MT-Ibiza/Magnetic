@@ -14,6 +14,7 @@ export interface User {
   name: string;
   email: string;
   image?: string;
+  phone?: string;
   role: string;
   active: boolean;
   package?: Package;
@@ -23,6 +24,7 @@ export interface User {
 export interface NewUser {
   name: string;
   email: string;
+  phone?: string;
   role: string;
   password: string;
   packageId: number;
@@ -31,6 +33,7 @@ export interface NewUser {
 export interface EditUser {
   name: string;
   email: string;
+  phone?: string;
   role?: string;
   packageId: number;
 }

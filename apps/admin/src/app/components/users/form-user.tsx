@@ -12,6 +12,7 @@ import { ErrorText } from '../error-text';
 export interface FormUserData {
   name: string;
   email: string;
+  phone?: string;
   password: string;
   packageId: number;
 }
@@ -19,11 +20,11 @@ export interface FormUserData {
 export interface Props {
   className?: string;
   user?: User;
-  onSuccess: () => void;
+  onSaveSuccess: () => void;
 }
 
 export function FormUser(props: Props) {
-  const { className, user, onSuccess } = props;
+  const { className, user, onSaveSuccess } = props;
   const editMode = !!user;
   const {
     register,
@@ -34,6 +35,7 @@ export function FormUser(props: Props) {
       ? {
           name: user.name,
           email: user.email,
+          phone: user.phone,
           password: undefined,
           packageId: user.packageId,
         }
@@ -46,12 +48,13 @@ export function FormUser(props: Props) {
       return newUser(data);
     },
     onSuccess: (user) => {
-      toast.custom((t) => (
-        <div className="bg-green-800 text-white px-5 py-3">
-          <h1>New Account Created!</h1>
-        </div>
-      ));
-      onSuccess();
+      // toast.custom((t) => (
+      //   <div className="bg-green-800 text-white px-5 py-3">
+      //     <h1>New Account Created!</h1>
+      //   </div>
+      // ));
+      toast.success('New Account Created!');
+      onSaveSuccess();
     },
     onError: (error) => {
       toast.error('The account could not be created');
@@ -64,13 +67,14 @@ export function FormUser(props: Props) {
       return editUser(id, data);
     },
     onSuccess: (user) => {
-      toast.custom((t) => (
-        <div className="bg-green-800 text-white">
-          <h1>New Account Created!</h1>
-          <button onClick={() => toast.dismiss(t)}>Dismiss</button>
-        </div>
-      ));
-      onSuccess();
+      // toast.custom((t) => (
+      //   <div className="bg-green-800 text-white">
+      //     <h1>New Account Created!</h1>
+      //     <button onClick={() => toast.dismiss(t)}>Dismiss</button>
+      //   </div>
+      // ));
+      toast.success('Account Updated!');
+      onSaveSuccess();
     },
     onError: (error) => {
       toast.error('The account could not be updated');
@@ -86,11 +90,12 @@ export function FormUser(props: Props) {
   }
 
   const onSubmit = async (data: FormUserData) => {
-    const { name, email, packageId, password } = data;
+    const { name, email, packageId, password, phone } = data;
     if (editMode) {
       await updateUser.mutateAsync({
         name,
         email,
+        phone,
         packageId: Number(packageId),
       });
     } else {
@@ -98,6 +103,7 @@ export function FormUser(props: Props) {
         name,
         email,
         password,
+        phone,
         packageId: Number(packageId),
         role: 'client',
       });
@@ -126,12 +132,20 @@ export function FormUser(props: Props) {
             <Text>Client Email</Text>
             <Input
               type="email"
-              placeholder="your email"
+              // placeholder="client email"
               {...register('email', { required: true })}
             />
             {errors.email && (
               <p className="text-[12px] text-red-500">Email is required</p>
             )}
+          </div>
+          <div className="flex flex-col gap-[10px]">
+            <Text>Client Phone</Text>
+            <Input
+              type="tel"
+              // placeholder="client phone"
+              {...register('phone')}
+            />
           </div>
           <div className="flex flex-col gap-[10px]">
             <Text>Subscription</Text>

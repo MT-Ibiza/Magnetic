@@ -56,7 +56,7 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   const data: EditUser = await request.json();
-  const { email, name, packageId } = data;
+  const { email, name, packageId, phone } = data;
 
   const user = await db.user.findUnique({
     where: {
@@ -94,6 +94,7 @@ export async function PUT(
       data: {
         name,
         email,
+        phone,
         packageId,
       },
     });
