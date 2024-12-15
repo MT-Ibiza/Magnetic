@@ -24,6 +24,7 @@ function UsersTable(props: Props) {
   } = useUsers({
     searchText: undefined,
     itemsPerPage: 10,
+    role: 'client',
   });
 
   if (isLoading) {
