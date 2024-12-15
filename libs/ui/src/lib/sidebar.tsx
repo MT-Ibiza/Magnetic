@@ -10,11 +10,6 @@ interface SidebarSingleOption {
   icon?: React.ElementType;
 }
 
-// interface SidebarOptionGroup {
-//   title: string;
-//   options: SidebarOption[];
-// }
-
 interface SidebarOption {
   text: string;
   url?: string;
@@ -41,7 +36,7 @@ export function Sidebar({
 
   return (
     <div
-      className={`bg-base-200 fixed z-50 border-r-[0.5px] border-gray-300 top-0 bottom-0 h-full w-[260px] transition-transform duration-300 ${
+      className={`bg-base-100 fixed z-50 border-r-[0.5px] border-gray-300 top-0 bottom-0 h-full w-[260px] transition-transform duration-300 ${
         isVisible ? 'translate-x-0' : '-translate-x-full'
       }`}
     >
@@ -119,7 +114,7 @@ const SidebarOptionNav = ({
 }) => (
   <>
     {option.url ? (
-      <li className="cursor-pointer flex items-center w-full rounded-md hover:bg-base-100 ">
+      <li className="cursor-pointer flex items-center w-full rounded-md hover:bg-base-200 ">
         <NavLink
           to={option.url || ''}
           className={({ isActive }) =>

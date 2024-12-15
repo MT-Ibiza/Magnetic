@@ -111,7 +111,7 @@ function Layout(props: Props) {
   }
 
   return (
-    <div className="app flex flex-col min-h-screen bg-base-100">
+    <div className="app flex flex-col min-h-screen bg-base-200">
       <HeaderApp
         toggleSidebar={toggleSidebar}
         isSidebarVisible={isSidebarVisible}
@@ -134,7 +134,7 @@ function Layout(props: Props) {
           toggleSidebar={toggleSidebar}
         >
           <div className="absolute bottom-0 p-4  w-full">
-            <div className="bg-base-100 flex justify-between px-6 py-3 rounded-md">
+            <div className="bg-base-200 flex justify-between px-6 py-3 rounded-md">
               <Text size="1">Dark Mode</Text>
               <ThemeSelector />
             </div>

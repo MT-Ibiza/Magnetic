@@ -13,7 +13,9 @@ export function CardWrapper(props: Props) {
 
   return (
     <div
-      className={`bg-base-100 border rounded-md p-4 lg:p-8 ${className || ''}`}
+      className={`bg-base-100 shadow-sm rounded-lg p-4 lg:p-8 ${
+        className || ''
+      }`}
     >
       {title && <p className="mb-1 capitalize">{title}</p>}
       <div className="w-full">{children}</div>
