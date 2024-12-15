@@ -52,7 +52,7 @@ function UsersTable(props: Props) {
             <tr className="hover" key={index}>
               <th>{index + 1}</th>
               <td>
-                <Link to={`/users/${user.id}`}>
+                <Link to={`/clients/${user.id}`}>
                   <Text>{user.name}</Text>
                 </Link>
               </td>
