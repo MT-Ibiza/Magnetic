@@ -1,3 +1,4 @@
+import { EditService } from '@magnetic/interfaces';
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 
@@ -53,14 +54,18 @@ export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  const { name } = await request.json();
+  const data: EditService = await request.json();
+  const { name, description, packageId, providerId } = data;
   try {
     const service = await db.service.update({
       where: {
         id: Number(params.id),
       },
       data: {
-        name: name,
+        name,
+        description,
+        packageId,
+        providerId,
       },
     });
     return NextResponse.json(service, { status: 201 });

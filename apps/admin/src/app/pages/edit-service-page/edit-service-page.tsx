@@ -1,8 +1,8 @@
 import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
-import FormServices from '../../components/services/form-services';
+import ServiceForm from '../../components/services/form-services';
 
 interface Props {}
 
@@ -10,6 +10,7 @@ function EditServicePage(props: Props) {
   const {} = props;
   const params = useParams();
   const serviceId = parseInt(params.id || '');
+  const navigate = useNavigate();
 
   const { isLoading, isError, service, error } = useService(serviceId);
 
@@ -23,7 +24,12 @@ function EditServicePage(props: Props) {
 
   return (
     <div>
-      <FormServices service={service} />
+      <ServiceForm
+        service={service}
+        onSaveSuccess={() => {
+          navigate(`/services`, { replace: true });
+        }}
+      />
     </div>
   );
 }

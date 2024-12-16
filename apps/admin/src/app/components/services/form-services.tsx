@@ -29,10 +29,11 @@ export interface FormServiceData {
 export interface Props {
   className?: string;
   service?: Service;
+  onSaveSuccess: () => void;
 }
 
 export function ServiceForm(props: Props) {
-  const { className, service } = props;
+  const { className, service, onSaveSuccess } = props;
   const [openDrawer, setOpenDrawer] = useState(false);
   const [formType, setFormType] = useState<string | undefined>(undefined);
 
@@ -65,6 +66,7 @@ export function ServiceForm(props: Props) {
       return newService(data);
     },
     onSuccess: () => {
+      onSaveSuccess();
       toast.success(`Service created!`);
     },
     onError: () => {
@@ -78,6 +80,7 @@ export function ServiceForm(props: Props) {
       return editService(serviceId, data);
     },
     onSuccess: () => {
+      onSaveSuccess();
       toast.success(`Service updated!`);
     },
     onError: () => {
@@ -160,13 +163,14 @@ export function ServiceForm(props: Props) {
                 )}
               </div>
               <div className="flex flex-col gap-[10px]">
-                <Text size="1">Select a Form Service</Text>
+                <Text size="1">Booking Form</Text>
                 <select
                   className="select select-bordered w-full"
                   {...register('formType')}
                   onChange={(e) => setFormType(e.target.value)}
                 >
-                  <option value="">Select a form</option>
+                  <option value="">-- Select a form --</option>
+                  <option value="none">External Form</option>
                   <option value="single-chef">Single Chef Service</option>
                   <option value="weekly-chef">Weekly Chef Service</option>
                   <option value="boat-charter">Boat Charters (Gold)</option>

@@ -53,13 +53,18 @@ function ServicePage(props: Props) {
             <h2 className="text-2xl font-semibold text-gray-800">
               {service.name}
             </h2>
-            <Button
-              href={`/services/${service.id}/items/new`}
-              variant="outline"
-              className="px-6 py-2 text-primary-500 border-primary-500 hover:bg-primary-50"
-            >
-              + New Item
-            </Button>
+            <div className="flex gap-3">
+              <Button
+                href={`/services/edit/${service.id}`}
+                variant="outline"
+                className="px-6 py-2 text-primary-500 border-primary-500 hover:bg-primary-50"
+              >
+                Edit Service
+              </Button>
+              <Button href={`/services/${service.id}/items/new`}>
+                + New Item
+              </Button>
+            </div>
           </div>
           <div className="flex flex-col gap-[15px]">
             <span className="text-lg font-semibold text-gray-700">

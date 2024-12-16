@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     const newPackage = await db.package.create({
       data: {
         name: name,
-        description: description,
+        description: description as string,
         features: features,
         priceInCents: priceInCents,
       },

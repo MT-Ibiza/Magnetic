@@ -28,6 +28,7 @@ export interface NewService {
   items: NewItem[];
   packageId: number;
   provider?: NewProvider;
+  providerId?: number;
 }
 
 export interface EditService extends NewService {}
