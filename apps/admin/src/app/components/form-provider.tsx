@@ -127,7 +127,9 @@ function FormProvider(props: Props) {
           >
             Cancel
           </Button>
-          <Button type="submit">Create Provider</Button>
+          <Button type="submit">
+            {provider?.id ? 'Update Provider' : 'Create Provider'}
+          </Button>
         </div>
       </form>
     </div>

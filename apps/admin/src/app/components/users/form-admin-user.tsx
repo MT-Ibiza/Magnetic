@@ -21,10 +21,11 @@ export interface Props {
   className?: string;
   user?: User;
   onSaveSuccess: () => void;
+  onCancel: () => void;
 }
 
 export function FormAdminUser(props: Props) {
-  const { className, user, onSaveSuccess } = props;
+  const { className, user, onSaveSuccess, onCancel } = props;
   const editMode = !!user;
   const {
     register,
@@ -153,8 +154,15 @@ export function FormAdminUser(props: Props) {
           )}
         </div>
       </div>
-      <div className="flex gap-[10px] justify-end pt-[80px]">
-        <Button variant="outline" href={'/users'} type="submit" color="neutral">
+      <div className="buttons flex justify-end gap-3 p-4 w-full absolute bottom-0 right-0">
+        <Button
+          variant="outline"
+          onClick={(e) => {
+            e.preventDefault();
+            onCancel && onCancel();
+          }}
+          color="neutral"
+        >
           Cancel
         </Button>
         <Button type="submit">

@@ -51,6 +51,9 @@ export function AdminUsersPage(props: Props) {
         }}
       >
         <FormAdminUser
+          onCancel={() => {
+            toggleDrawer();
+          }}
           user={selectedUser}
           onSaveSuccess={() => {
             toggleDrawer();

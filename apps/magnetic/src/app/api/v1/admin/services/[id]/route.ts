@@ -62,10 +62,10 @@ export async function PUT(
         id: Number(params.id),
       },
       data: {
-        name,
-        description,
-        packageId,
-        providerId,
+        name: name,
+        description: description,
+        packageId: packageId,
+        providerId: providerId,
       },
     });
     return NextResponse.json(service, { status: 201 });

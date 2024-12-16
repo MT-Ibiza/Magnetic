@@ -20,6 +20,7 @@ import { useForm } from 'react-hook-form';
 import 'react-quill/dist/quill.snow.css';
 import { toast } from 'sonner';
 import { editItem, newItem } from '../../apis/api-items';
+import { useNavigate } from 'react-router-dom';
 import {
   centsToEuros,
   centsToEurosWithCurrency,
@@ -44,6 +45,7 @@ export interface Props {
 export function FormItem(props: Props) {
   const { item, onCancel, serviceId, onSave, serviceCategories } = props;
   const editMode = !!item;
+  const navigate = useNavigate();
   const categories = serviceCategories.map((category) => {
     return {
       label: category.name,
@@ -291,7 +293,7 @@ export function FormItem(props: Props) {
           <Button
             onClick={(e) => {
               e.preventDefault();
-              onCancel && onCancel();
+              navigate(-1);
             }}
             variant="outline"
             className="px-8 py-2"
