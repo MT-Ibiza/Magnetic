@@ -5,10 +5,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import Loading from '../loading';
-import { ErrorText } from '../error-text';
 import { toast } from 'sonner';
-import { useNewPackageData } from '../../hooks/useNewPackage';
 import { editPackage, newPackage } from '../../apis/api-packages';
 
 export interface FormPackagesData {
@@ -20,11 +17,11 @@ export interface FormPackagesData {
 
 export interface Props {
   className?: string;
-  packageData?: Package;
+  plan?: Package;
 }
 
 export function PackagesForm(props: Props) {
-  const { className, packageData } = props;
+  const { className, plan } = props;
 
   const {
     register,
@@ -32,19 +29,18 @@ export function PackagesForm(props: Props) {
     setValue,
     formState: { errors },
   } = useForm<FormPackagesData>({
-    defaultValues: packageData
+    defaultValues: plan
       ? {
-          name: packageData.name,
-          description: packageData.description,
-          features: packageData.features,
-          priceInCents: packageData.priceInCents,
+          name: plan.name,
+          description: plan.description,
+          features: plan.features,
+          priceInCents: plan.priceInCents,
         }
       : undefined,
   });
 
-  const [description, setDescription] = useState(packageData?.description);
-  const [features, setFeatures] = useState(packageData?.features);
-  const { isLoading, isError, data, error } = useNewPackageData();
+  const [description, setDescription] = useState(plan?.description);
+  const [features, setFeatures] = useState(plan?.features);
 
   const createPackage = useMutation<Package, Error, NewPackage>({
     mutationFn: (data: NewPackage) => {
@@ -60,7 +56,7 @@ export function PackagesForm(props: Props) {
 
   const updatePackages = useMutation<Package, Error, EditPackage>({
     mutationFn: (data: EditPackage) => {
-      const packageId = packageData?.id || 0;
+      const packageId = plan?.id || 0;
       return editPackage(packageId, data);
     },
     onSuccess: () => {
@@ -71,21 +67,9 @@ export function PackagesForm(props: Props) {
     },
   });
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <ErrorText text={error?.message || ''} />;
-  }
-
-  if (!data) {
-    return <Text>Service Not Found</Text>;
-  }
-
   const onSubmit = async (data: FormPackagesData) => {
     const { name, priceInCents } = data;
-    if (packageData) {
+    if (plan) {
       await updatePackages.mutateAsync({
         name,
         description: description || '',
@@ -164,7 +148,7 @@ export function PackagesForm(props: Props) {
                 Cancel
               </Button>
               <Button type="submit">
-                {packageData ? 'Update Package' : 'Create Package'}
+                {plan ? 'Update Package' : 'Create Package'}
               </Button>
             </div>
           </form>

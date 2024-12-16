@@ -21,11 +21,9 @@ function EditPackagePage(props: Props) {
     return <ErrorText text={error?.message || ''} />;
   }
 
-  console.log(plan)
-
   return (
     <div>
-      <PackagesForm packageData={plan} />
+      <PackagesForm plan={plan} />
     </div>
   );
 }
