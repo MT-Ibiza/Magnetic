@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from './Input';
 import Button from './button';
-import Icon from './icon';
+// import Icon from './icon';
 
 export interface Props {
   className?: string;
@@ -63,10 +63,10 @@ export function ProfileForm(props: Props) {
                     className="w-[120px] h-[120px] m-auto rounded-full shadow flex justify-center items-center bg-gray-100 cursor-pointer"
                     onClick={() => document.getElementById('photo')?.click()}
                   >
-                    <Icon
+                    {/* <Icon
                       icon={'camera'}
                       className="w-[30px] h-[30px] text-gray-500"
-                    />
+                    /> */}
                   </div>
                 )}
               </div>

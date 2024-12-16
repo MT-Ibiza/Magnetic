@@ -1,6 +1,6 @@
 'use client';
 
-import Icon from './icon';
+// import Icon from './icon';
 
 interface EmptyStateProps {
   className?: string;
@@ -18,7 +18,7 @@ export function EmptyState(props: EmptyStateProps) {
       <div className="flex flex-col w-full max-w-sm px-4 mx-auto">
         {icon && (
           <div className="p-3 mx-auto text-primary-500 bg-primary-100 rounded-full dark:bg-gray-800">
-            <Icon icon={icon} size={45} />
+            {/* <Icon icon={icon} size={45} /> */}
           </div>
         )}
         <h1 className="mt-3 text-lg text-gray-800 dark:text-white">{title}</h1>
