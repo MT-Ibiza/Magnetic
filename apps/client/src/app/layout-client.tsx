@@ -48,7 +48,7 @@ function Layout(props: Props) {
   ];
 
   const navigationOptions = [
-    { name: 'Account', href: '/', icon: FiUser },
+    { name: 'Account', href: '/account', icon: FiUser },
     { name: 'Booking', href: '/', icon: FiBookOpen },
   ];
 

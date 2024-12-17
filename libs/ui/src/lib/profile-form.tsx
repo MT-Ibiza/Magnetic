@@ -4,18 +4,29 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from './Input';
 import Button from './button';
-// import Icon from './icon';
+import { CurrentUser, User } from '@magnetic/interfaces';
 
 export interface Props {
   className?: string;
+  user?: CurrentUser;
 }
 
 export function ProfileForm(props: Props) {
+  const { user } = props;
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      first_name: user?.name || '',
+      last_name: '',
+      email: user?.email || '',
+      phone: '',
+      date: '',
+    },
+  });
+
   const [error, setError] = useState<any>(null);
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -62,12 +73,7 @@ export function ProfileForm(props: Props) {
                   <div
                     className="w-[120px] h-[120px] m-auto rounded-full shadow flex justify-center items-center bg-gray-100 cursor-pointer"
                     onClick={() => document.getElementById('photo')?.click()}
-                  >
-                    {/* <Icon
-                      icon={'camera'}
-                      className="w-[30px] h-[30px] text-gray-500"
-                    /> */}
-                  </div>
+                  ></div>
                 )}
               </div>
               <input
@@ -154,7 +160,9 @@ export function ProfileForm(props: Props) {
               </label>
             </div>
             <div className="flex justify-end">
-              <Button type="submit">Save changes</Button>
+              <Button size={2} type="submit">
+                Save changes
+              </Button>
             </div>
           </form>
         </div>

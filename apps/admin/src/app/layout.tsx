@@ -1,4 +1,4 @@
-import { HeaderApp, Sidebar, AvatarDropdown, Text } from '@magnetic/ui';
+import { HeaderApp, Sidebar, AvatarDropdown, Text, ThemeSelector } from '@magnetic/ui';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from './hooks/useAuth';
@@ -7,7 +7,6 @@ import { MdDashboardCustomize } from 'react-icons/md';
 import { SiTask } from 'react-icons/si';
 import { User } from '@magnetic/interfaces';
 import { FiBookOpen, FiUser } from 'react-icons/fi';
-import ThemeSelector from './components/theme-selector';
 import { usePathname } from 'next/navigation';
 
 interface Props {}
@@ -146,7 +145,7 @@ function Layout(props: Props) {
           <div className="absolute bottom-0 p-4  w-full">
             <div className="bg-base-200 flex justify-between px-6 py-3 rounded-md">
               <Text size="1">Dark Mode</Text>
-              <ThemeSelector />
+              <ThemeSelector uniqueKey={'admin'} />
             </div>
           </div>
         </Sidebar>

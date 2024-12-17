@@ -19,7 +19,7 @@ export function ThemeSelector(props: Props) {
     const savedTheme = localStorage.getItem(`theme-${uniqueKey}`) || 'light';
     setTheme(savedTheme);
     document.documentElement.setAttribute('data-theme', savedTheme);
-  }, [uniqueKey]);
+  }, [theme]);
 
   return (
     <input

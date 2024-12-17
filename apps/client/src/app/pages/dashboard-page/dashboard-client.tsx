@@ -13,6 +13,10 @@ export function DashboardClientPage() {
     (item) => item.id !== user?.package?.id
   );
 
+  const filteredServices = services.filter(
+    (service) => service.packageId === user?.package?.id
+  );
+
   const videoUrl = {
     id: 'Ao7e4iisKMs',
     title: 'Magical Scotland - 4K Scenic Relaxation Film with Calming Music',
@@ -24,10 +28,10 @@ export function DashboardClientPage() {
     <div className="bg-base-100 min-h-screen flex flex-col">
       <div className="bg-base-100 py-10 px-6">
         <div className="container mx-auto text-center">
-          <h1 className="text-3xl font-bold text-gray-800">
+          <h1 className="text-3xl font-bold">
             Welcome, {user?.name}
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="mt-2">
             Explore your services and packages below.
           </p>
           {user?.package?.name && (
@@ -54,11 +58,11 @@ export function DashboardClientPage() {
       </div>
       <div className="container mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
-          <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+          <h2 className="text-2xl font-semibold mb-4">
             Your Services
           </h2>
           <div className="flex flex-col gap-4">
-            {services.map((service) => (
+            {filteredServices.map((service) => (
               <Link
                 key={service.id}
                 to={`/services/${service.id}`}
@@ -70,7 +74,7 @@ export function DashboardClientPage() {
           </div>
         </div>
         <div>
-          <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+          <h2 className="text-2xl font-semibold mb-4">
             Available Packages
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
