@@ -1,6 +1,6 @@
 import { Button, EmptyState } from '@magnetic/ui';
 
-export function ProductsPage() {
+export function ProductsViewPage() {
   return (
     <div className="page px-2.5 py-5 lg:px-5">
       <EmptyState
@@ -14,4 +14,4 @@ export function ProductsPage() {
   );
 }
 
-export default ProductsPage;
+export default ProductsViewPage;

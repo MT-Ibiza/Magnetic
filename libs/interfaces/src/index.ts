@@ -6,4 +6,6 @@ export * from './lib/packages';
 export * from './lib/categories';
 export * from './lib/variants';
 export * from './lib/dashboard';
+export * from './lib/products';
+
 

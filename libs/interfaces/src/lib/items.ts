@@ -2,12 +2,27 @@ import { Category } from './categories';
 import { Service } from './services';
 import { ItemVariant } from './variants';
 
+export interface SearchItemParams {
+  searchText?: string;
+  page?: number;
+  itemsPerPage?: number;
+  categoryId?: number;
+}
+
 export interface ItemBase {
   name: string;
   description: string;
   priceInCents: number;
   categoryId?: number | null;
   category?: Category;
+}
+
+export interface ItemResponse {
+  page: number;
+  pageSize: number;
+  totalItems: number;
+  totalPages: number;
+  products: Item[];
 }
 
 export interface Item extends ItemBase {
@@ -17,6 +32,7 @@ export interface Item extends ItemBase {
   serviceId: number;
   service: Service;
   variants: ItemVariant[];
+  published: boolean;
   // cartItems: number;
   // ordenItems: number;
 }

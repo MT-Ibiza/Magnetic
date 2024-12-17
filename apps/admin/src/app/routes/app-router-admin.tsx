@@ -8,7 +8,7 @@ import SettingsPage from '../pages/settings-page/settings-page';
 import NewServicePage from '../pages/new-service-page/new-service-page';
 import ServiceLayout from '../pages/services/services-layout';
 import OverviewPage from '../pages/services/overview-page';
-import ProductsPage from '../pages/services/products-page';
+import ProductsViewPage from '../pages/services/products-page';
 import RedirectRoute from './redirect-route';
 import NewUserPage from '../pages/new-user-page/new-user-page';
 import EditUserPage from '../pages/edit-user-page/edit-user-page';
@@ -24,6 +24,7 @@ import EditPackagePage from '../pages/edit-package-page/edit-package-page';
 import ViewPackagePage from '../pages/view-package-page/view-package-page';
 import ServicePage from '../pages/service-page/service-page';
 import AdminUsersPage from '../pages/admin-users-page/admin-users-page';
+import ProductsPage from '../pages/products/products-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -40,7 +41,7 @@ export const AppRouter = () => {
         <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="services" element={<ServicesPage />} />
-          <Route path="products" element={<PendingPage />} />
+          <Route path="products" element={<ProductsPage />} />
           <Route path="packages" element={<PackagesPage />} />
           <Route path="packages/:id" element={<ViewPackagePage />} />
           <Route path="packages/new" element={<NewPackagePage />} />
@@ -69,7 +70,7 @@ export const AppRouter = () => {
             element={<Navigate replace to="overview" />}
           />
           <Route path="services/:id" element={<ServiceLayout />}>
-            <Route path="products" element={<ProductsPage />} />
+            <Route path="products" element={<ProductsViewPage />} />
             <Route path="overview" element={<OverviewPage />} />
           </Route>
         </Route>
