@@ -9,10 +9,11 @@ interface Props {
   items: ItemWithCount[];
   onClickEdit?: (item: Item) => void;
   onClickVariant?: (item: Item) => void;
+  onTogglePublish?: (itemId: number, isPublished: boolean) => void;
 }
 
 function ItemsTable(props: Props) {
-  const { items, onClickEdit, onClickVariant } = props;
+  const { items, onClickEdit, onClickVariant, onTogglePublish } = props;
   // const { isLoading, services, error, isError } = useServices();
 
   // if (isLoading) {
@@ -32,7 +33,7 @@ function ItemsTable(props: Props) {
           <th>Price</th>
           <th>Category</th>
           <th>Variants</th>
-          <th>Description</th>
+          <th>Publish</th>
           <th></th>
         </tr>
       </thead>
@@ -52,7 +53,17 @@ function ItemsTable(props: Props) {
             </td>
             <td>{item.category?.name || 'none'}</td>
             <td>{item._count?.variants || '0'}</td>
-            <td>{item.description}</td>
+            <td>
+              <input
+                type="checkbox"
+                className="toggle toggle-sm"
+                checked={item.published}
+                onChange={
+                  () =>
+                    onTogglePublish && onTogglePublish(item.id, item.published)
+                }
+              />
+            </td>
             <td>
               <div className="dropdown dropdown-bottom dropdown-end">
                 <div tabIndex={0} role="button" className="m-1">

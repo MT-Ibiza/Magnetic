@@ -25,8 +25,15 @@ function ServicePage(props: Props) {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openForm, setOpenForm] = useState('');
   const [selectedItem, setSelectedItem] = useState<Item | undefined>();
-  const { isLoading, isError, service, error, isSuccess } =
-    useService(serviceId);
+  const {
+    isLoading,
+    isError,
+    service,
+    error,
+    isSuccess,
+    publishOrUnpublishItemApi,
+    refetch,
+  } = useService(serviceId);
   console.log(service);
 
   const toggleDrawer = () => {
@@ -44,6 +51,18 @@ function ServicePage(props: Props) {
   if (!service) {
     return <Text>Service Not Found</Text>;
   }
+
+  const handlePublishToggle = async (
+    productId: number,
+    currentStatus: boolean
+  ) => {
+    const newStatus = !currentStatus;
+    await publishOrUnpublishItemApi.mutateAsync({
+      itemId: productId,
+      isPublished: newStatus,
+    });
+    refetch();
+  };
 
   return (
     <>
@@ -90,6 +109,7 @@ function ServicePage(props: Props) {
                 setSelectedItem(item);
                 setOpenForm('variant');
               }}
+              onTogglePublish={handlePublishToggle}
             />
           </div>
         </div>

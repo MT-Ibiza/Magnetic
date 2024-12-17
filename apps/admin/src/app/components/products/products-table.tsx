@@ -64,7 +64,11 @@ export function ProductsTable(props: Props) {
             <tr className="hover" key={product.id}>
               <th>{index + 1}</th>
               <td>
-                <Link to={`/products/${product.id}`}>{product.name}</Link>
+                <Link
+                  to={`/services/${product.serviceId}/items/${product.id}/edit`}
+                >
+                  {product.name}
+                </Link>
               </td>
               <td>{product.service.name}</td>
               <td>€{product.priceInCents / 100}</td>
@@ -77,18 +81,13 @@ export function ProductsTable(props: Props) {
                     handlePublishToggle(product.id, product.published)
                   }
                 />
-              </td>{' '}
+              </td>
               <td>
                 <div className="dropdown dropdown-bottom dropdown-end">
                   <div tabIndex={0} role="button" className="m-1">
                     <HiOutlineDotsVertical />
                   </div>
                   <ul className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                    <li>
-                      <Link to={`/products/edit/${product.id}`}>
-                        Edit Product
-                      </Link>
-                    </li>
                     <li onClick={() => {}}>
                       <a>Delete Product</a>
                     </li>

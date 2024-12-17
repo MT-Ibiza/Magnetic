@@ -1,5 +1,6 @@
 import {
   EditService,
+  Item,
   NewService,
   Package,
   Provider,
@@ -10,6 +11,7 @@ import {
   URL_GET_SERVICE,
   URL_GET_SERVICES,
   URL_NEW_SERVICE,
+  URL_PUBLISH_PRODUCT,
   URL_UPDATE_SERVICE,
 } from './api-constants';
 
@@ -37,6 +39,31 @@ export async function getService(id: number): Promise<Service> {
   if (!response.ok) throw new Error(dataJson.message);
   return dataJson;
 }
+
+export async function updatePublishStatus({
+  itemId,
+  isPublished,
+}: {
+  itemId: number;
+  isPublished: boolean;
+}): Promise<Item> {
+  const url = URL_PUBLISH_PRODUCT(itemId);
+
+  const data = { published: isPublished };
+
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
+  return dataJson;
+}
+
 
 export async function getNewServiceData(): Promise<{
   providers: Provider[];

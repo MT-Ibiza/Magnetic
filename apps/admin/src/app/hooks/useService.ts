@@ -1,6 +1,6 @@
-import { Service, User } from '@magnetic/interfaces';
-import { useQuery } from '@tanstack/react-query';
-import { getService } from '../apis/api-services';
+import { Item, Service, User } from '@magnetic/interfaces';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getService, updatePublishStatus } from '../apis/api-services';
 
 export const useService = (serviceId: number) => {
   const { isLoading, isError, data, error, refetch, isSuccess } =
@@ -11,6 +11,16 @@ export const useService = (serviceId: number) => {
       },
     });
 
+  const publishOrUnpublishItemApi = useMutation<
+    Item,
+    Error,
+    { itemId: number; isPublished: boolean }
+  >({
+    mutationFn: (params) => {
+      return updatePublishStatus(params);
+    },
+  });
+
   return {
     isLoading,
     isError,
@@ -19,5 +29,6 @@ export const useService = (serviceId: number) => {
     error,
     refetch,
     data,
+    publishOrUnpublishItemApi,
   };
 };
