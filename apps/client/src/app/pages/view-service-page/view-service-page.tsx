@@ -23,6 +23,8 @@ function ViewServicePage(props: Props) {
     return <p>Service Not Found</p>;
   }
 
+  const publishedItems = service.items.filter((item) => item.published);
+
   return (
     <CardWrapper>
       <div>
@@ -36,7 +38,7 @@ function ViewServicePage(props: Props) {
         />
         <Text className="text-lg font-bold my-4">Choose your favorites</Text>
         <div className="grid grid-cols-1 gap-4">
-          {service.items.map((item, index) => (
+          {publishedItems.map((item, index) => (
             <ItemCardCounter key={index} item={item} />
           ))}
         </div>

@@ -8,7 +8,7 @@ interface Props {
 
 function ServiceCard(props: Props) {
   const { service } = props;
-  const { name, description } = service;
+  const { name, description, } = service;
 
   return (
     <div className="relative flex flex-col justify-between bg-base-100 border border-gray-300 rounded-lg overflow-hidden shadow-sm group hover:shadow-md transition duration-200 ease-in-out">
