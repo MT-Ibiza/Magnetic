@@ -8,7 +8,7 @@ import { Button, Input, Text, TextArea } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { editProvider, newProvider } from '../apis/api-providers';
+import { editProvider, newProvider } from '../../apis/api-providers';
 
 interface Props {
   provider?: Provider;

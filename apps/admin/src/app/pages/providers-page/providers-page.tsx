@@ -1,7 +1,7 @@
 import { CardWrapper, Button, Text, DrawerContent } from '@magnetic/ui';
 import ProvidersTable from '../../components/providers/providers-table';
 import { useState } from 'react';
-import FormProvider from '../../components/form-provider';
+import FormProvider from '../../components/providers/form-provider';
 import { Provider } from '@magnetic/interfaces';
 
 export function ProvidersPage() {

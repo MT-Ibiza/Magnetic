@@ -5,6 +5,7 @@ import {
   ItemBase,
   ItemVariant,
   NewItem,
+  Service,
 } from '@magnetic/interfaces';
 import {
   Button,
@@ -31,6 +32,7 @@ import { useState } from 'react';
 import FormCategory from '../form-category';
 import FormVariant from '../form-variant';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import BoatAttributesForm, { BoatAttributesFormData } from '../form-boat';
 
 export interface Props {
   className?: string;
@@ -40,10 +42,12 @@ export interface Props {
   item?: Item;
   serviceId: number;
   serviceCategories: Category[];
+  service: Service;
 }
 
 export function FormItem(props: Props) {
-  const { item, onCancel, serviceId, onSave, serviceCategories } = props;
+  const { item, onCancel, serviceId, onSave, serviceCategories, service } =
+    props;
   const editMode = !!item;
   const navigate = useNavigate();
   const categories = serviceCategories.map((category) => {
@@ -55,6 +59,7 @@ export function FormItem(props: Props) {
   const categoryFound = categories.find(
     (category) => category.value == item?.categoryId
   );
+  const isBoatRental = service.name === 'Boat rental';
 
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openForm, setOpenForm] = useState('');
@@ -174,7 +179,13 @@ export function FormItem(props: Props) {
                 </p>
               )}
             </div>
-
+            {isBoatRental && (
+              <BoatAttributesForm
+                onSubmit={(data: BoatAttributesFormData) =>
+                  console.log('Boat Data:', data)
+                }
+              />
+            )}
             <div className="flex flex-col">
               <label
                 htmlFor="description"

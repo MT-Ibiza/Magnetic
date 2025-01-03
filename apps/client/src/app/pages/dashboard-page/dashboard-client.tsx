@@ -46,7 +46,7 @@ export function DashboardClientPage() {
           <div className="rounded-lg overflow-hidden shadow-lg">
             <video
               controls
-              className="w-full h-[300px] md:h-[450px] object-cover"
+              className="h-[1000px] lg:h-[500px] w-full  object-cover"
               src={videoUrl.thumbnail}
               poster={videoUrl.thumbnail}
             >

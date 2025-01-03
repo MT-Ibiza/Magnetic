@@ -13,7 +13,7 @@ import 'react-quill/dist/quill.snow.css';
 import { editService, newService } from '../../apis/api-services';
 import Loading from '../loading';
 import { ErrorText } from '../error-text';
-import FormProvider from '../form-provider';
+import FormProvider from '../providers/form-provider';
 import { useNewServiceData } from '../../hooks/useNewServiceData';
 import { toast } from 'sonner';
 

@@ -38,7 +38,7 @@ export function NewItemPage() {
           <li>
             <a href={`/services/${serviceId}`}>{service.name}</a>
           </li>
-          <li>New Item</li>
+          <li>New Item {service.name}</li>
         </ul>
       </div>
       <div className="bg-base-100 listingSection__wrap">
@@ -46,6 +46,7 @@ export function NewItemPage() {
           onCancel={() => {}}
           serviceId={serviceId}
           serviceCategories={categories}
+          service={service}
           // item={selectedItem}
           onSave={() => {
             navigate(`/services/${serviceId}`, { replace: true });

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import FormUser from '../../components/users/form-user';
 import FormAdminUser from '../../components/users/form-admin-user';
 import { User } from '@magnetic/interfaces';
+import BoatAttributesForm, { BoatAttributesFormData } from '../../components/form-boat';
 
 interface Props {}
 

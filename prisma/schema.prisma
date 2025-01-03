@@ -56,21 +56,41 @@ model Category {
   items       Item[]
 }
 
+model BoatAttributes {
+  id                      Int      @id @default(autoincrement())
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  boatType                String  
+  berth                   String
+  guests                  Int   
+  crew                    Int
+  beamInCentimeters       Int
+  cabins                  Int
+  fuelConsumption         Int
+  description             String?
+  latitude                String?
+  longitude               String?
+  boatSizeInCentimeters   String   
+  itemId                  Int      @unique
+  item                    Item     @relation(fields: [itemId], references: [id])
+}
+
 model Item {
-  id           Int           @id @default(autoincrement())
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  name         String
-  description  String
-  published    Boolean      @default(false)
-  priceInCents Int
-  serviceId    Int
-  service      Service       @relation(fields: [serviceId], references: [id])
-  cartItems    CartItem[]
-  ordenItems   OrderItem[]
-  variants     ItemVariant[]
-  categoryId   Int?
-  category     Category?     @relation(fields: [categoryId], references: [id])
+  id             Int           @id @default(autoincrement())
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  name           String
+  description    String
+  published      Boolean      @default(false)
+  priceInCents   Int
+  serviceId      Int
+  service        Service       @relation(fields: [serviceId], references: [id])
+  cartItems      CartItem[]
+  ordenItems     OrderItem[]
+  variants       ItemVariant[]
+  categoryId     Int?
+  category       Category?     @relation(fields: [categoryId], references: [id])
+  boatAttributes BoatAttributes?
 }
 
 model ItemVariant {
