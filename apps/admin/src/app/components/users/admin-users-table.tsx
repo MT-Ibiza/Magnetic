@@ -36,8 +36,8 @@ function AdminUsersTable(props: Props) {
   }
 
   return (
-    <div>
-      <table className="table">
+    <div className='custom-overflow'>
+      <table className="table w-full">
         <thead>
           <tr className="">
             <th>N</th>

@@ -68,11 +68,11 @@ function ServicePage(props: Props) {
     <>
       <CardWrapper className="p-6 bg-white shadow-lg rounded-lg">
         <div className="flex flex-col gap-[20px]">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-[15px] lg:flex-row lg:justify-between lg:items-center">
             <h2 className="text-2xl font-semibold text-gray-800">
               {service.name}
             </h2>
-            <div className="flex gap-3">
+            <div className="gap-3 flex justify-end lg:w-auto w-full">
               <Button
                 href={`/services/edit/${service.id}`}
                 variant="outline"

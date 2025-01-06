@@ -48,8 +48,8 @@ export function ProductsTable(props: Props) {
   };
 
   return (
-    <div>
-      <table className="table">
+    <div className="custom-overflow">
+      <table className="table w-full">
         <thead>
           <tr>
             <th>N</th>

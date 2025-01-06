@@ -37,6 +37,35 @@ body {
   font-family: 'Poppins-Light', sans-serif !important;
 }
 
-// a {
-//   font-family: 'Poppins-Medium', sans-serif !important;
-// }
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.custom-overflow {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+@media (max-width: 768px) {
+
+  .table {
+    display: block !important;
+  }
+
+  .custom-overflow {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  
+  .custom-overflow::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .custom-overflow {
+    scrollbar-width: none;
+  }
+}
+

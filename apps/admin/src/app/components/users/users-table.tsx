@@ -36,10 +36,10 @@ function UsersTable(props: Props) {
   }
 
   return (
-    <div>
-      <table className="table">
+    <div className="custom-overflow">
+      <table className="table w-full">
         <thead>
-          <tr className="">
+          <tr>
             <th>N</th>
             <th>Name</th>
             <th>Contact</th>

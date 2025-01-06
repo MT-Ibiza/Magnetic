@@ -43,7 +43,6 @@ export function NewItemPage() {
       </div>
       <div className="bg-base-100 listingSection__wrap">
         <FormItem
-          onCancel={() => {}}
           serviceId={serviceId}
           serviceCategories={categories}
           service={service}

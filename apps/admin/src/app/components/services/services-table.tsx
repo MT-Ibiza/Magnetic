@@ -20,7 +20,8 @@ function ServicesTable(props: Props) {
   }
 
   return (
-      <table className="table">
+    <div className='custom-overflow'>
+      <table className="table w-full">
         <thead>
           <tr>
             <th>N</th>
@@ -68,6 +69,7 @@ function ServicesTable(props: Props) {
           ))}
         </tbody>
       </table>
+    </div>
   );
 }
 

@@ -47,8 +47,8 @@ export function PlanCard(props: Props) {
           {title}
         </h3>
         <h2 className="text-5xl leading-none flex items-center ">
-          <span>{price}</span>
-          <span className="text-lg ml-1 font-normal text-neutral-500">
+          <span className="text-3xl lg:text-5xl">{price}</span>
+          <span className="text-base lg:text-lg ml-1 font-normal text-neutral-500">
             /per week
           </span>
         </h2>
@@ -59,7 +59,7 @@ export function PlanCard(props: Props) {
             <span className="mr-4 inline-flex flex-shrink-0">
               <FaCheck />
             </span>
-            <span>{item}</span>
+            <span className="text-[14px] lg:text-[16px]">{item}</span>
           </li>
         ))}
       </nav>

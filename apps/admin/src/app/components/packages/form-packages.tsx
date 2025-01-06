@@ -122,7 +122,7 @@ export function PackagesForm(props: Props) {
                   <p className="text-[12px] text-red-500">Price is required</p>
                 )}
               </div>
-              <div className="flex flex-col gap-[10px] pb-[40px]">
+              <div className="flex flex-col gap-[10px] pb-[70px] lg:pb-[40px]">
                 <Text size="1">Package Description</Text>
                 <ReactQuill
                   theme="snow"

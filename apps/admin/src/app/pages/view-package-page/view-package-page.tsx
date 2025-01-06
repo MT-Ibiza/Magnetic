@@ -52,14 +52,14 @@ function ViewPackagePage(props: Props) {
 
   return (
     <>
-      <div className="grid grid-cols-12 gap-4">
+      <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4">
         <div className="col-span-8 flex flex-col gap-[20px]">
           <div className="bg-base-100 listingSection__wrap">
             <h2 className="text-2xl font-semibold">{plan.name}</h2>
             <div className="w-14 border-b border-primary-700 dark:border-neutral-700"></div>
             {plan.description && (
               <div
-                className=""
+                className="text-[14px] lg:text-[16px]"
                 dangerouslySetInnerHTML={{ __html: plan.description }}
               />
             )}
@@ -76,7 +76,7 @@ function ViewPackagePage(props: Props) {
                   <span className="mr-4 inline-flex flex-shrink-0">
                     <FaCircleCheck className="text-primary-700" />
                   </span>
-                  <span>{feature}</span>
+                  <span className='text-[14px] lg:text-[16px]'>{feature}</span>
                 </li>
               ))}
             </div>

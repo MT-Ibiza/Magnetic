@@ -37,7 +37,7 @@ export function AvatarDropdown({
             >
               <div className="flex gap-3 items-center">
                 <Avatar sizeClass="w-8 h-8 sm:w-9 sm:h-9" />
-                <div className="flex flex-col items-start">
+                <div className="hidden lg:flex flex-col items-start">
                   <Text size="1">{user.name}</Text>
                   <Text size="1" className="text-gray-500">
                     {user.email}
@@ -54,7 +54,7 @@ export function AvatarDropdown({
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <PopoverPanel className="absolute z-10 w-screen max-w-[220px] px-4 mt-4 -right-10 sm:right-0 sm:px-0">
+              <PopoverPanel className="absolute z-10 w-screen max-w-[190px] lg:max-w-[220px] lg:px-4 mt-4 right-[-15px] lg:right-[-20px] sm:right-0 sm:px-0">
                 <div className="overflow-hidden rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
                   <div className="relative grid gap-6 bg-white dark:bg-neutral-800 p-6">
                     {options.map((item, index) => (

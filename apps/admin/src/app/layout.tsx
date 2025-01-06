@@ -1,6 +1,12 @@
-import { HeaderApp, Sidebar, AvatarDropdown, Text, ThemeSelector } from '@magnetic/ui';
+import {
+  HeaderApp,
+  Sidebar,
+  AvatarDropdown,
+  Text,
+  ThemeSelector,
+} from '@magnetic/ui';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from './hooks/useAuth';
 import { FaUserFriends, FaBook, FaCog } from 'react-icons/fa';
 import { MdDashboardCustomize } from 'react-icons/md';
@@ -26,11 +32,20 @@ function Layout(props: Props) {
   const location = useLocation();
   const { pathname } = location;
 
-  const [isSidebarVisible, setSidebarVisible] = useState(true);
+  const [isSidebarVisible, setSidebarVisible] = useState(
+    window.innerWidth >= 1024
+  );
 
   const toggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);
   };
+
+  useEffect(() => {
+    const isMobile = window.innerWidth < 1024;
+    if (isMobile) {
+      setSidebarVisible(false);
+    }
+  }, [pathname]);
 
   const navigationGroup = [
     {
@@ -136,7 +151,7 @@ function Layout(props: Props) {
           )}
         </div>
       </HeaderApp>
-      <div className="flex flex-1">
+      <div className="lg:flex lg:flex-1">
         <Sidebar
           options={navigationGroup}
           isVisible={isSidebarVisible}
@@ -151,7 +166,7 @@ function Layout(props: Props) {
         </Sidebar>
         <div
           className={`p-6 flex-1 transition-all duration-300 ${
-            isSidebarVisible ? 'ml-[260px]' : 'ml-0'
+            isSidebarVisible ? 'lg:ml-[260px]' : 'lg:ml-0'
           }`}
         >
           <Outlet />

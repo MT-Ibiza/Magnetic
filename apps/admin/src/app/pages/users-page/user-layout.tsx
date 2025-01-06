@@ -40,16 +40,16 @@ export function UserLayout() {
   return (
     <>
       {hasCurrentProfileUser && (
-        <div className="grid grid-cols-3 gap-x-[20px]">
-          <div className="block flex-grow mb-24 lg:mb-0">
+        <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-x-[20px]">
+          <div className="block flex-grow mb-4 lg:mb-0">
             <div className="lg:sticky lg:top-24">
-              <div className="bg-base-100 w-full flex flex-col items-center text-center sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-6 sm:space-y-7 px-0 sm:p-6 xl:p-8">
+              <div className="bg-base-100 w-full flex flex-col items-center text-center rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-6 sm:space-y-7 px-0 p-6 xl:p-8">
                 <Avatar
                   hasCheckedClass="w-6 h-6 -top-0.5 right-2"
                   sizeClass="w-28 h-28"
                 />
                 <div className="space-y-3 text-center flex flex-col items-center">
-                  <h2 className="text-3xl font-semibold">
+                  <h2 className="text-2xl lg:text-3xl font-semibold">
                     {currentProfileUser.name}
                   </h2>
                 </div>
@@ -57,19 +57,19 @@ export function UserLayout() {
                 <div className="space-y-4">
                   <div className="flex items-center space-x-4">
                     <FiMail className="h-6 w-6 text-neutral-400" />
-                    <span className="text-neutral-6000 dark:text-neutral-300">
+                    <span className="lg:text-[16px] text-[14px] text-neutral-6000 dark:text-neutral-300">
                       {user?.email}
                     </span>
                   </div>
                   <div className="flex items-center space-x-4">
                     <FiPhone className="h-6 w-6 text-neutral-400" />
-                    <span className="text-neutral-6000 dark:text-neutral-300">
+                    <span className="lg:text-[16px] text-[14px] text-neutral-6000 dark:text-neutral-300">
                       5932902000
                     </span>
                   </div>
                   <div className="flex items-center space-x-4">
                     <FiPackage className="h-6 w-6 text-neutral-400" />
-                    <span className="text-neutral-6000 dark:text-neutral-300">
+                    <span className="lg:text-[16px] text-[14px] text-neutral-6000 dark:text-neutral-300">
                       {user?.package ? user.package.name : 'none'}
                     </span>
                   </div>
@@ -80,10 +80,10 @@ export function UserLayout() {
           <div className="col-span-2">
             <div className="bg-base-100 listingSection__wrap">
               <div>
-                <h2 className="text-2xl font-semibold">
+                <h2 className="text-xl lg:text-2xl font-semibold">
                   {currentProfileUser.name} listings
                 </h2>
-                <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
+                <span className="lg:text-[16px] text-[14px] block mt-2 text-neutral-500 dark:text-neutral-400">
                   {currentProfileUser.name} listings is very rich, 5 star
                   reviews help him to be more branded.
                 </span>

@@ -36,18 +36,16 @@ import BoatAttributesForm, { BoatAttributesFormData } from '../form-boat';
 
 export interface Props {
   className?: string;
-  onCancel: () => void;
   onSave: () => void;
   onError?: () => void;
   item?: Item;
   serviceId: number;
   serviceCategories: Category[];
-  service: Service;
+  service?: Service;
 }
 
 export function FormItem(props: Props) {
-  const { item, onCancel, serviceId, onSave, serviceCategories, service } =
-    props;
+  const { item, serviceId, onSave, serviceCategories, service } = props;
   const editMode = !!item;
   const navigate = useNavigate();
   const categories = serviceCategories.map((category) => {
@@ -136,7 +134,7 @@ export function FormItem(props: Props) {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="flex gap-6">
+        <div className="flex flex-col lg:flex-row gap-6">
           <div className="main-info flex-1 space-y-6">
             <div className="flex flex-col">
               <label

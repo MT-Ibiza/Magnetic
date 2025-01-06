@@ -46,7 +46,6 @@ export function EditItemPage() {
       </div>
       <div className="bg-base-100 listingSection__wrap">
         <FormItem
-          onCancel={() => {}}
           serviceCategories={serviceCategories}
           serviceId={serviceId}
           item={item}
