@@ -11,7 +11,7 @@ interface Props {
 function ItemCardCounter(props: Props) {
   const { item } = props;
 
-  const { cart, addItemToCart } = useCart(13);
+  const { cart, addItemToCart } = useCart(13); //REMOVE ID
 
   const productCart = cart?.items.find((itemCart) => itemCart.id === item.id);
 
@@ -60,13 +60,9 @@ function ItemCardCounter(props: Props) {
                 {centsToEurosWithCurrency(item.priceInCents)}
               </h2>
             </div>
-            <Text className="line-clamp-4">
-              {item.description}
-            </Text>
+            <Text className="line-clamp-4">{item.description}</Text>
             <div className="flex items-center justify-end gap-4 mt-4">
-              <button
-                className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
-              >
+              <button className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors">
                 -
               </button>
               <span className="text-md font-semibold">
