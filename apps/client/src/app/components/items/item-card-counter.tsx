@@ -10,10 +10,11 @@ interface Props {
 
 function ItemCardCounter(props: Props) {
   const { item } = props;
-
   const { cart, addItemToCart } = useCart();
-  const productCart = cart?.items.find((itemCart) => itemCart.id === item.id);
-
+  const productCart = cart?.items.find(
+    (cartItem) => cartItem.item.id === item.id
+  );
+  console.log('productCart: ', productCart);
   const [alert, setAlert] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning';

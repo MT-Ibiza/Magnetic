@@ -64,6 +64,7 @@ export interface EditItem extends ItemBase {
 
 export interface CartItem extends ItemBase {
   id: number;
+  item: Item;
   quantity: number;
 }
 

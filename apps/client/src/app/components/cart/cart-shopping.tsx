@@ -14,11 +14,11 @@ import { Button } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 
 export function CartShopping() {
-  const { isLoading, data } = useCart();
-  const { cart, clearCart, removeItem } = useCartStore();
-
+  const { isLoading, data, removeAllItemsCart } = useCart();
+  const { cart, clearCart, removeItem, addItem } = useCartStore();
+  console.log(cart);
   const total = cart.reduce(
-    (sum, item) => sum + item.priceInCents * item.quantity,
+    (sum, cartItem) => sum + cartItem.item.priceInCents * cartItem.quantity,
     0
   );
 
@@ -34,8 +34,28 @@ export function CartShopping() {
     }
   }, [totalItems]);
 
+  useEffect(() => {
+    if (data) {
+      clearCart();
+      data.items.map((item) => {
+        addItem(item);
+      });
+    }
+  }, [data]);
+
   if (isLoading) {
     return <h1>Loading....</h1>;
+  }
+
+  async function handleRemoveAllItems() {
+    await removeAllItemsCart.mutate(undefined, {
+      onSuccess: () => {
+        clearCart();
+      },
+      onError: () => {
+        // showAlert('Failed to add item to the cart', 'error');
+      },
+    });
   }
 
   return (
@@ -72,7 +92,7 @@ export function CartShopping() {
                     </h3>
                     {cart.length > 0 && (
                       <button
-                        onClick={clearCart}
+                        onClick={handleRemoveAllItems}
                         className="text-primary-700 underline text-sm"
                       >
                         Clear All
@@ -81,7 +101,7 @@ export function CartShopping() {
                   </div>
                   <ul className="mt-4 space-y-4">
                     {cart.length > 0 ? (
-                      cart.map((item, index) => (
+                      cart.map((cartItem, index) => (
                         <li
                           key={index}
                           className="flex items-center gap-4 justify-between"
@@ -89,18 +109,20 @@ export function CartShopping() {
                           <div className="flex items-center gap-4">
                             <img
                               src={'https://via.placeholder.com/50'}
-                              alt={item.name}
+                              alt={cartItem.item.name}
                               className="w-16 h-16 rounded object-cover"
                             />
                             <div className="flex flex-col">
                               <h4 className="text-sm dark:text-gray-100">
-                                {item.name}
+                                {cartItem.item.name}
                               </h4>
                               <p className="text-xs">
-                                Quantity: {item.quantity}
+                                Quantity: {cartItem.quantity}
                               </p>
                               <p className="text-xs">
-                                {centsToEurosWithCurrency(item.priceInCents)}{' '}
+                                {centsToEurosWithCurrency(
+                                  cartItem.item.priceInCents
+                                )}{' '}
                                 each
                               </p>
                             </div>

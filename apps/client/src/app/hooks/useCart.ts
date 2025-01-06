@@ -1,6 +1,6 @@
 import { Cart } from '@magnetic/interfaces';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { getCart, addToCart } from '../apis/api-cart';
+import { getCart, addToCart, removeCart } from '../apis/api-cart';
 
 export const useCart = () => {
   const { isLoading, isError, data, error, refetch, isSuccess } =
@@ -20,6 +20,13 @@ export const useCart = () => {
     },
   });
 
+  const removeAllItemsCart = useMutation({
+    mutationFn: () => removeCart(),
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
   return {
     isLoading,
     isError,
@@ -28,6 +35,7 @@ export const useCart = () => {
     error,
     refetch,
     addItemToCart,
+    removeAllItemsCart,
     data,
   };
 };

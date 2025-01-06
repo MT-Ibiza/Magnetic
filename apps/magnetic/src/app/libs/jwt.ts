@@ -5,7 +5,7 @@ interface SignOptions {
 }
 
 const defaultSignOptions: SignOptions = {
-  expiresIn: '1h',
+  expiresIn: '4h',
 };
 
 export function signJwtAccessToken(
