@@ -19,7 +19,7 @@ const getInitialCart = () => {
 export type CartSlice = {
   cart: CartItem[];
   total: number;
-  addItem: (item: Item) => void;
+  addItem: (item: CartItem) => void;
   removeItem: (id: number) => void;
   clearCart: () => void;
   calculateTotal: () => number;
