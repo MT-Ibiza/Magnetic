@@ -19,7 +19,7 @@ export const URL_GET_PACKAGES = `${API_URL}/packages`;
 export const URL_GET_DASHBOARD = `${API_URL}/dashboard`;
 
 // Cart
-export const URL_GET_CART = (userId: number) => `${API_URL}/${userId}/cart`;
+export const URL_GET_CART = () => `${API_URL}/cart`;
 export const URL_ADD_TO_CART = () => `${API_URL}/cart/items`;
 
 //TOKEN

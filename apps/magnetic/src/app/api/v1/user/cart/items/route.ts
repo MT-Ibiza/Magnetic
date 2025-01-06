@@ -1,9 +1,6 @@
 import { NextResponse } from 'next/server';
 import db from 'apps/magnetic/src/app/libs/db';
-import {
-  decodeJwtAccessToken,
-  verifyJwtAccessToken,
-} from 'apps/magnetic/src/app/libs/jwt';
+import { decodeJwtAccessToken } from 'apps/magnetic/src/app/libs/jwt';
 
 export async function POST(request: Request) {
   try {

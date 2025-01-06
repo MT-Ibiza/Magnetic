@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     email: client.email,
     image: client.image,
     package: client.package,
-    cart,
+    cartId: cart?.id,
     accessToken,
   });
 }

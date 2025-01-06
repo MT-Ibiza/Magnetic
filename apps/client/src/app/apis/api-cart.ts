@@ -1,8 +1,8 @@
 import { Cart, CartItem } from '@magnetic/interfaces';
 import { URL_GET_CART, URL_ADD_TO_CART, accessToken } from './api-constants';
 
-export async function getCart(userId: number): Promise<Cart> {
-  const url = URL_GET_CART(userId);
+export async function getCart(): Promise<Cart> {
+  const url = URL_GET_CART();
   const response = await fetch(url, {
     method: 'GET',
     headers: {

@@ -6,7 +6,7 @@ export const useCart = () => {
   const { isLoading, isError, data, error, refetch } = useQuery<Cart>({
     queryKey: [`cart`],
     queryFn: async () => {
-      return getCart(11);
+      return getCart();
     },
     enabled: true,
   });

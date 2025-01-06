@@ -12,7 +12,6 @@ function ItemCardCounter(props: Props) {
   const { item } = props;
 
   const { cart, addItemToCart } = useCart();
-
   const productCart = cart?.items.find((itemCart) => itemCart.id === item.id);
 
   const [alert, setAlert] = useState<{
