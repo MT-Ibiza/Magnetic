@@ -11,8 +11,10 @@ import { FaShoppingCart, FaCartArrowDown } from 'react-icons/fa';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useCartStore } from '../../hooks/useCartStore';
 import { Button } from '@magnetic/ui';
+import { useCart } from '../../hooks/useCart';
 
 export function CartShopping() {
+  const { isLoading, data } = useCart();
   const { cart, clearCart, removeItem } = useCartStore();
 
   const total = cart.reduce(
@@ -31,6 +33,10 @@ export function CartShopping() {
       return () => clearTimeout(timeout);
     }
   }, [totalItems]);
+
+  if (isLoading) {
+    return <h1>Loading....</h1>;
+  }
 
   return (
     <Popover className="relative">

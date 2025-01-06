@@ -23,6 +23,4 @@ export const URL_GET_CART = () => `${API_URL}/cart`;
 export const URL_ADD_TO_CART = () => `${API_URL}/cart/items`;
 
 //TOKEN
-const stringUser = localStorage.getItem('magnetic_user');
-const user = stringUser ? (JSON.parse(stringUser) as CurrentUser) : undefined;
-export const accessToken = user ? user.token : null;
+export const accessToken = localStorage.getItem('magnetic_auth');

@@ -3,13 +3,14 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { getCart, addToCart } from '../apis/api-cart';
 
 export const useCart = () => {
-  const { isLoading, isError, data, error, refetch } = useQuery<Cart>({
-    queryKey: [`cart`],
-    queryFn: async () => {
-      return getCart();
-    },
-    enabled: true,
-  });
+  const { isLoading, isError, data, error, refetch, isSuccess } =
+    useQuery<Cart>({
+      queryKey: [`cart`],
+      queryFn: async () => {
+        return getCart();
+      },
+      enabled: true,
+    });
 
   const addItemToCart = useMutation({
     mutationFn: ({ itemId, quantity }: { itemId: number; quantity: number }) =>
@@ -22,6 +23,7 @@ export const useCart = () => {
   return {
     isLoading,
     isError,
+    isSuccess,
     cart: data,
     error,
     refetch,
