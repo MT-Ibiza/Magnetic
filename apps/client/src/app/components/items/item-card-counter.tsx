@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Item } from '@magnetic/interfaces';
 import { Alert, Text } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
-import { useCartStore } from '../../hooks/useCartStore';
+import { useCart } from '../../hooks/useCart';
 
 interface Props {
   item: Item;
@@ -10,8 +10,10 @@ interface Props {
 
 function ItemCardCounter(props: Props) {
   const { item } = props;
-  const { cart, addItem, removeItem } = useCartStore();
-  const productCart = cart.find((itemCart) => itemCart.id === item.id);
+
+  const { cart, addItemToCart } = useCart(13);
+
+  const productCart = cart?.items.find((itemCart) => itemCart.id === item.id);
 
   const [alert, setAlert] = useState<{
     message: string;
@@ -24,6 +26,20 @@ function ItemCardCounter(props: Props) {
   ) => {
     setAlert({ message, type });
     setTimeout(() => setAlert(null), 3000);
+  };
+
+  const handleAddItem = () => {
+    addItemToCart.mutate(
+      { itemId: item.id, quantity: (productCart?.quantity || 0) + 1 },
+      {
+        onSuccess: () => {
+          showAlert('Item added to the cart', 'success');
+        },
+        onError: () => {
+          showAlert('Failed to add item to the cart', 'error');
+        },
+      }
+    );
   };
 
   return (
@@ -49,10 +65,6 @@ function ItemCardCounter(props: Props) {
             </Text>
             <div className="flex items-center justify-end gap-4 mt-4">
               <button
-                onClick={() => {
-                  removeItem(item.id);
-                  showAlert('Item removed from the cart', 'error');
-                }}
                 className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
               >
                 -
@@ -61,10 +73,7 @@ function ItemCardCounter(props: Props) {
                 {productCart?.quantity || 0}
               </span>
               <button
-                onClick={() => {
-                  addItem(item);
-                  showAlert('Item added to the cart', 'success');
-                }}
+                onClick={handleAddItem}
                 className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
               >
                 +

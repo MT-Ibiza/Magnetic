@@ -44,6 +44,16 @@ export interface ItemWithCount extends Item {
   };
 }
 
+export interface Cart {
+  id: number;
+  userId: number;
+  items: CartItem[];
+  totalItems: number;
+  totalPriceInCents: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface NewItem extends ItemBase {
   serviceId: number;
 }
