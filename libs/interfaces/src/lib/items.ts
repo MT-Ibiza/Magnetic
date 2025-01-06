@@ -33,6 +33,7 @@ export interface Item extends ItemBase {
   service: Service;
   variants: ItemVariant[];
   published: boolean;
+  priceInCents: number;
   // cartItems: number;
   // ordenItems: number;
 }

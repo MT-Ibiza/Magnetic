@@ -59,7 +59,7 @@ export function FormItem(props: Props) {
   const categoryFound = categories.find(
     (category) => category.value == item?.categoryId
   );
-  const isBoatRental = service.name === 'Boat rental';
+  const isBoatRental = service?.name === 'Boat rental';
 
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openForm, setOpenForm] = useState('');

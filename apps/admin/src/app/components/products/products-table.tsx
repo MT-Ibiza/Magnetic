@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { useProducts } from '../../hooks/useProducts';
 import { Button } from '@magnetic/ui';
+import { centsToEurosWithCurrency } from '@magnetic/utils';
 
 interface Props {}
 
@@ -71,11 +72,11 @@ export function ProductsTable(props: Props) {
                 </Link>
               </td>
               <td>{product.service.name}</td>
-              <td>€{product.priceInCents / 100}</td>
+              <td>{centsToEurosWithCurrency(product.priceInCents)}</td>
               <td>
                 <input
                   type="checkbox"
-                  className="toggle toggle-sm"
+                  className="toggle toggle-sm toggle-success"
                   checked={product.published}
                   onChange={() =>
                     handlePublishToggle(product.id, product.published)
