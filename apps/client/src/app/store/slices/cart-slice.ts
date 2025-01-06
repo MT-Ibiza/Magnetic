@@ -45,7 +45,7 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
             : cartItem
         );
       } else {
-        updatedCart = [...state.cart, { ...item, quantity: 1 }];
+        updatedCart = [...state.cart, { ...item, quantity: item.quantity }];
       }
       // localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
       return {
