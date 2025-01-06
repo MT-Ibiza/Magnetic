@@ -12,7 +12,8 @@ export function LoginPage() {
   const { setToken, setLoggedIn, setCurrentUser } = useAuth();
   const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const mutation = useMutation<LoginResponse, Error, Credentials>({
+
+  const loginMutation = useMutation<LoginResponse, Error, Credentials>({
     mutationFn: (formData) => login(formData),
     onSuccess: () => console.log('logged'),
     onError: (error) => console.log('error login', error),
@@ -34,13 +35,13 @@ export function LoginPage() {
 
   async function onSubmitForm(data: Credentials) {
     try {
-      const user = await mutation.mutateAsync(data);
+      const user = await loginMutation.mutateAsync(data);
       setCurrentUser({
         name: user.name,
         email: user.email,
         id: user.id,
         package: user.package,
-        token: user.accessToken,
+        cartId: user.cartId,
       });
       setToken(user.accessToken);
       setLoggedIn(true);

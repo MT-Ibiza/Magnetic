@@ -8,8 +8,7 @@ export interface CurrentUser {
   image?: string;
   packageId?: number;
   package?: Package;
-  cart?: Cart;
-  token: string;
+  cartId?: number;
 }
 
 export interface User {
@@ -53,6 +52,7 @@ export interface LoginResponse {
   role: string;
   accessToken: string;
   package: Package;
+  cartId?: number;
 }
 
 export interface SearchUsersParams {
