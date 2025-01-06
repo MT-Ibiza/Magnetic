@@ -17,7 +17,6 @@ import { Link } from 'react-router-dom';
 export function CartShopping() {
   const { isLoading, data, removeAllItemsCart } = useCart();
   const { cart, clearCart, removeItem, addItem } = useCartStore();
-  console.log('modal cart: ', cart);
   const total = cart.reduce(
     (sum, cartItem) => sum + cartItem.item.priceInCents * cartItem.quantity,
     0
@@ -37,11 +36,9 @@ export function CartShopping() {
 
   useEffect(() => {
     if (data) {
-      // clearCart();
       data.items.map((item) => {
-        console.log('item: ', item);
         return addItem({
-          id: item.id,
+          id: item.item.id,
           item: item.item,
           quantity: item.quantity,
         });

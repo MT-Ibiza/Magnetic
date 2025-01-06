@@ -16,7 +16,7 @@ export const useCart = () => {
     mutationFn: ({ itemId, quantity }: { itemId: number; quantity: number }) =>
       addToCart(itemId, quantity),
     onSuccess: () => {
-      refetch();
+      // refetch();
     },
   });
 

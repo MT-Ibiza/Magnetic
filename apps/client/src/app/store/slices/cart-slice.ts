@@ -45,7 +45,10 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
             : cartItem
         );
       } else {
-        updatedCart = [...state.cart, { ...item, quantity: item.quantity }];
+        updatedCart = [
+          ...state.cart,
+          { ...item, quantity: item.quantity, id: item.id },
+        ];
       }
       // localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
       return {
@@ -54,7 +57,6 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
       };
     });
   },
-
   removeItem: (id) => {
     set((state) => {
       const updatedCart = state.cart
@@ -62,8 +64,6 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
           item.id === id ? { ...item, quantity: item.quantity - 1 } : item
         )
         .filter((item) => item.quantity > 0);
-
-      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
 
       return {
         cart: updatedCart,
