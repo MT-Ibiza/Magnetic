@@ -12,7 +12,7 @@ export const URL_GET_SERVICES = `${API_URL}/services`;
 export const URL_GET_SERVICE = (id: number) => `${API_URL}/services/${id}`;
 
 //Package
-export const URL_GET_PACKAGE= (id: number) => `${API_URL}/packages/${id}`;
+export const URL_GET_PACKAGE = (id: number) => `${API_URL}/packages/${id}`;
 export const URL_GET_PACKAGES = `${API_URL}/packages`;
 
 //Dashboard
@@ -20,4 +20,9 @@ export const URL_GET_DASHBOARD = `${API_URL}/dashboard`;
 
 // Cart
 export const URL_GET_CART = (userId: number) => `${API_URL}/${userId}/cart`;
-export const URL_ADD_TO_CART = (userId: number) => `${API_URL}/${userId}/cart/items`;
+export const URL_ADD_TO_CART = () => `${API_URL}/cart/items`;
+
+//TOKEN
+const stringUser = localStorage.getItem('magnetic_user');
+const user = stringUser ? (JSON.parse(stringUser) as CurrentUser) : undefined;
+export const accessToken = user ? user.token : null;

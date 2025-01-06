@@ -11,7 +11,7 @@ interface Props {
 function ItemCardCounter(props: Props) {
   const { item } = props;
 
-  const { cart, addItemToCart } = useCart(13); //REMOVE ID
+  const { cart, addItemToCart } = useCart();
 
   const productCart = cart?.items.find((itemCart) => itemCart.id === item.id);
 

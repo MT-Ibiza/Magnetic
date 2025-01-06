@@ -25,3 +25,14 @@ export function verifyJwtAccessToken(token: string) {
     console.log(error);
   }
 }
+
+export function decodeJwtAccessToken(token: string) {
+  const decoded = jwt.verify(token, process.env.NEXTAUTH_SECRET as string);
+  return decoded as {
+    id: number;
+    email: string;
+    role: string;
+    iat: number;
+    exp: number;
+  };
+}

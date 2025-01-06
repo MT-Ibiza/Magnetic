@@ -2,18 +2,18 @@ import { Cart } from '@magnetic/interfaces';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { getCart, addToCart } from '../apis/api-cart';
 
-export const useCart = (userId: number) => {
+export const useCart = () => {
   const { isLoading, isError, data, error, refetch } = useQuery<Cart>({
-    queryKey: [`cart_${userId}`],
+    queryKey: [`cart`],
     queryFn: async () => {
-      return getCart(userId);
+      return getCart(11);
     },
-    enabled: !!userId,
+    enabled: true,
   });
 
   const addItemToCart = useMutation({
     mutationFn: ({ itemId, quantity }: { itemId: number; quantity: number }) =>
-      addToCart(userId, itemId, quantity),
+      addToCart(itemId, quantity),
     onSuccess: () => {
       refetch();
     },

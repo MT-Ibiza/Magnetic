@@ -9,6 +9,7 @@ export interface CurrentUser {
   packageId?: number;
   package?: Package;
   cart?: Cart;
+  token: string;
 }
 
 export interface User {
