@@ -12,11 +12,12 @@ import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useCartStore } from '../../hooks/useCartStore';
 import { Button } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
+import { Link } from 'react-router-dom';
 
 export function CartShopping() {
   const { isLoading, data, removeAllItemsCart } = useCart();
   const { cart, clearCart, removeItem, addItem } = useCartStore();
-  console.log(cart);
+  console.log('modal cart: ', cart);
   const total = cart.reduce(
     (sum, cartItem) => sum + cartItem.item.priceInCents * cartItem.quantity,
     0
@@ -36,9 +37,14 @@ export function CartShopping() {
 
   useEffect(() => {
     if (data) {
-      clearCart();
+      // clearCart();
       data.items.map((item) => {
-        addItem(item);
+        console.log('item: ', item);
+        return addItem({
+          id: item.id,
+          item: item.item,
+          quantity: item.quantity,
+        });
       });
     }
   }, [data]);
@@ -123,7 +129,7 @@ export function CartShopping() {
                                 {centsToEurosWithCurrency(
                                   cartItem.item.priceInCents
                                 )}{' '}
-                                each
+                                x unit
                               </p>
                             </div>
                           </div>
@@ -151,25 +157,19 @@ export function CartShopping() {
                         </p>
                       </div>
                       <div className="flex flex-col gap-2">
-                        <Button
-                          variant="outline"
-                          className="py-[8px] text-[16px]"
-                          onClick={() => {
-                            close();
-                            window.location.href = '/cart';
-                          }}
-                        >
-                          View My Cart
-                        </Button>
-                        <Button
-                          className="py-[8px] text-[16px]"
-                          onClick={() => {
-                            close();
-                            window.location.href = '/checkout';
-                          }}
-                        >
-                          Checkout
-                        </Button>
+                        <Link to="/cart">
+                          <Button
+                            variant="outline"
+                            className="py-[8px] text-[16px] w-full"
+                          >
+                            View My Cart
+                          </Button>
+                        </Link>
+                        <Link to="/checkout">
+                          <Button className="py-[8px] text-[16px] w-full">
+                            Checkout
+                          </Button>
+                        </Link>
                       </div>
                     </div>
                   )}

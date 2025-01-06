@@ -29,9 +29,8 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
   set,
   get
 ) => ({
-  cart: getInitialCart(),
+  cart: [],
   total: 0,
-
   addItem: (item) => {
     set((state) => {
       const existingItem = state.cart.find(
@@ -48,9 +47,7 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
       } else {
         updatedCart = [...state.cart, { ...item, quantity: 1 }];
       }
-
-      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
-
+      // localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
       return {
         cart: updatedCart,
         total: get().calculateTotal(),
@@ -83,7 +80,8 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
   calculateTotal: () => {
     const { cart } = get();
     return cart.reduce(
-      (total, item) => total + item.priceInCents * item.quantity,
+      (total, cartItem) =>
+        total + cartItem.item.priceInCents * cartItem.quantity,
       0
     );
   },

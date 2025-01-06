@@ -62,7 +62,7 @@ export interface EditItem extends ItemBase {
   serviceId: number;
 }
 
-export interface CartItem extends ItemBase {
+export interface CartItem {
   id: number;
   item: Item;
   quantity: number;

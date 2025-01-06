@@ -14,7 +14,7 @@ function ItemCardCounter(props: Props) {
   const productCart = cart?.items.find(
     (cartItem) => cartItem.item.id === item.id
   );
-  console.log('productCart: ', productCart);
+  // console.log('productCart: ', productCart);
   const [alert, setAlert] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning';
@@ -30,7 +30,7 @@ function ItemCardCounter(props: Props) {
 
   const handleAddItem = () => {
     addItemToCart.mutate(
-      { itemId: item.id, quantity: (productCart?.quantity || 0) + 1 },
+      { itemId: item.id, quantity: 1 },
       {
         onSuccess: () => {
           showAlert('Item added to the cart', 'success');

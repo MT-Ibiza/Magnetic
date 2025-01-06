@@ -29,13 +29,6 @@ export async function GET(request: Request) {
         },
       },
     });
-
-    if (!cart) {
-      console.log('Cart not found for userId:', userId);
-      return NextResponse.json({ message: 'Cart not found' }, { status: 404 });
-    }
-
-    console.log('Cart found:', cart);
     return NextResponse.json(cart);
   } catch (error: any) {
     console.error('Error fetching cart:', error);
