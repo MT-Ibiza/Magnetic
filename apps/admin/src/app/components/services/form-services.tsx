@@ -63,7 +63,8 @@ export function ServiceForm(props: Props) {
           packageId: service.packageId,
           providerId: service.packageId,
           cover: undefined,
-          serviceType: undefined,
+          serviceType: service.serviceType,
+          script: service.script,
         }
       : undefined,
   });
@@ -229,7 +230,6 @@ export function ServiceForm(props: Props) {
                 />
               </div>
             </div>
-
             <div className="flex gap-[10px] justify-end pt-[80px]">
               <Button variant="outline" href={'/services'} type="submit">
                 Cancel

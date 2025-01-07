@@ -16,6 +16,7 @@ export interface Service extends ServiceBase {
   updatedAt: Date;
   package: Package;
   providerId: number;
+  script?: string;
   items: Item[];
 }
 
