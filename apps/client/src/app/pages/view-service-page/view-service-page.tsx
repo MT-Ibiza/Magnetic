@@ -42,6 +42,13 @@ function ViewServicePage(props: Props) {
             <ItemCardCounter key={index} item={item} />
           ))}
         </div>
+        {/* <iframe
+          style={{ width: '100%', border: 'none' }}
+          id="iframe_carplus_afiliado"
+          src="https://bookings.motoluis.com/?idioma=en&afiliado=4300008212&color_afiliado=custom&color1hex=CCCCCC&color2hex=C
+CCCCC"
+          scrolling="no"
+        ></iframe> */}
       </div>
     </CardWrapper>
   );
