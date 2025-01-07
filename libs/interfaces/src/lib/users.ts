@@ -1,3 +1,4 @@
+import { Cart } from './items';
 import { Package } from './packages';
 
 export interface CurrentUser {
@@ -7,6 +8,7 @@ export interface CurrentUser {
   image?: string;
   packageId?: number;
   package?: Package;
+  cartId?: number;
 }
 
 export interface User {
@@ -50,6 +52,7 @@ export interface LoginResponse {
   role: string;
   accessToken: string;
   package: Package;
+  cartId?: number;
 }
 
 export interface SearchUsersParams {

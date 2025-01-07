@@ -11,12 +11,14 @@ import { FaShoppingCart, FaCartArrowDown } from 'react-icons/fa';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useCartStore } from '../../hooks/useCartStore';
 import { Button } from '@magnetic/ui';
+import { useCart } from '../../hooks/useCart';
+import { Link } from 'react-router-dom';
 
 export function CartShopping() {
-  const { cart, clearCart, removeItem } = useCartStore();
-
+  const { isLoading, data, removeAllItemsCart } = useCart();
+  const { cart, clearCart, removeItem, addItem } = useCartStore();
   const total = cart.reduce(
-    (sum, item) => sum + item.priceInCents * item.quantity,
+    (sum, cartItem) => sum + cartItem.item.priceInCents * cartItem.quantity,
     0
   );
 
@@ -31,6 +33,33 @@ export function CartShopping() {
       return () => clearTimeout(timeout);
     }
   }, [totalItems]);
+
+  useEffect(() => {
+    if (data) {
+      data.items.map((item) => {
+        return addItem({
+          id: item.item.id,
+          item: item.item,
+          quantity: item.quantity,
+        });
+      });
+    }
+  }, [data]);
+
+  if (isLoading) {
+    return <h1>Loading....</h1>;
+  }
+
+  async function handleRemoveAllItems() {
+    await removeAllItemsCart.mutate(undefined, {
+      onSuccess: () => {
+        clearCart();
+      },
+      onError: () => {
+        // showAlert('Failed to add item to the cart', 'error');
+      },
+    });
+  }
 
   return (
     <Popover className="relative">
@@ -66,7 +95,7 @@ export function CartShopping() {
                     </h3>
                     {cart.length > 0 && (
                       <button
-                        onClick={clearCart}
+                        onClick={handleRemoveAllItems}
                         className="text-primary-700 underline text-sm"
                       >
                         Clear All
@@ -75,7 +104,7 @@ export function CartShopping() {
                   </div>
                   <ul className="mt-4 space-y-4">
                     {cart.length > 0 ? (
-                      cart.map((item, index) => (
+                      cart.map((cartItem, index) => (
                         <li
                           key={index}
                           className="flex items-center gap-4 justify-between"
@@ -83,19 +112,21 @@ export function CartShopping() {
                           <div className="flex items-center gap-4">
                             <img
                               src={'https://via.placeholder.com/50'}
-                              alt={item.name}
+                              alt={cartItem.item.name}
                               className="w-16 h-16 rounded object-cover"
                             />
                             <div className="flex flex-col">
                               <h4 className="text-sm dark:text-gray-100">
-                                {item.name}
+                                {cartItem.item.name}
                               </h4>
                               <p className="text-xs">
-                                Quantity: {item.quantity}
+                                Quantity: {cartItem.quantity}
                               </p>
                               <p className="text-xs">
-                                {centsToEurosWithCurrency(item.priceInCents)}{' '}
-                                each
+                                {centsToEurosWithCurrency(
+                                  cartItem.item.priceInCents
+                                )}{' '}
+                                x unit
                               </p>
                             </div>
                           </div>
@@ -123,25 +154,19 @@ export function CartShopping() {
                         </p>
                       </div>
                       <div className="flex flex-col gap-2">
-                        <Button
-                          variant="outline"
-                          className="py-[8px] text-[16px]"
-                          onClick={() => {
-                            close();
-                            window.location.href = '/cart';
-                          }}
-                        >
-                          View My Cart
-                        </Button>
-                        <Button
-                          className="py-[8px] text-[16px]"
-                          onClick={() => {
-                            close();
-                            window.location.href = '/checkout';
-                          }}
-                        >
-                          Checkout
-                        </Button>
+                        <Link to="/cart">
+                          <Button
+                            variant="outline"
+                            className="py-[8px] text-[16px] w-full"
+                          >
+                            View My Cart
+                          </Button>
+                        </Link>
+                        <Link to="/checkout">
+                          <Button className="py-[8px] text-[16px] w-full">
+                            Checkout
+                          </Button>
+                        </Link>
                       </div>
                     </div>
                   )}

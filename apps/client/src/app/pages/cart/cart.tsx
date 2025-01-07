@@ -6,9 +6,8 @@ import { Link } from 'react-router-dom';
 
 export function CartPage() {
   const { cart, addItem, removeItem } = useCartStore();
-
   const total = cart.reduce(
-    (sum, item) => sum + item.priceInCents * item.quantity,
+    (sum, item) => sum + item.item.priceInCents * item.quantity,
     0
   );
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -44,13 +43,13 @@ export function CartPage() {
                   <img
                     className="w-full h-full object-cover"
                     src={'https://via.placeholder.com/100'}
-                    alt={item.name}
+                    alt={item.item.name}
                   />
                 </div>
-                <div className="ml-3 ">{item.name}</div>
+                <div className="ml-3 ">{item.item.name}</div>
               </div>
               <div className="text-center">
-                {centsToEurosWithCurrency(item.priceInCents)}
+                {centsToEurosWithCurrency(item.item.priceInCents)}
               </div>
               <div className="flex justify-center items-center gap-2">
                 <button
@@ -74,7 +73,9 @@ export function CartPage() {
                 </button>
               </div>
               <div className=" text-center">
-                {centsToEurosWithCurrency(item.priceInCents * item.quantity)}
+                {centsToEurosWithCurrency(
+                  item.item.priceInCents * item.quantity
+                )}
               </div>
             </div>
           ))}

@@ -1,13 +1,29 @@
-import { Cart, CartItem } from '@magnetic/interfaces';
+import { Cart, CartItem, Order } from '@magnetic/interfaces';
 import {
-  URL_GET_CART,
-  URL_ADD_TO_CART,
+  URL_CREATE_ORDER,
+  URL_GET_ORDER,
+  URL_GET_ORDERS,
   accessToken,
-  REMOVE_CART,
 } from './api-constants';
 
-export async function getCart(): Promise<Cart> {
-  const url = URL_GET_CART;
+export async function createOrder(): Promise<Order> {
+  const url = URL_CREATE_ORDER;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  const dataJson = await response.json();
+  if (!response.ok)
+    throw new Error(dataJson.message || 'Failed to create order');
+  return dataJson;
+}
+
+export async function getOrder(id: number): Promise<Order> {
+  const url = URL_GET_ORDER(id);
   const response = await fetch(url, {
     method: 'GET',
     headers: {
@@ -17,34 +33,15 @@ export async function getCart(): Promise<Cart> {
   });
 
   const dataJson = await response.json();
-  if (!response.ok) throw new Error(dataJson.message || 'Failed to fetch cart');
-  return dataJson;
-}
-
-export async function addToCart(
-  itemId: number,
-  quantity: number
-): Promise<CartItem> {
-  const url = URL_ADD_TO_CART;
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify({ itemId, quantity }),
-  });
-
-  const dataJson = await response.json();
   if (!response.ok)
-    throw new Error(dataJson.message || 'Failed to add item to cart');
+    throw new Error(dataJson.message || 'Failed to fetch order');
   return dataJson;
 }
 
-export async function removeCart(): Promise<null> {
-  const url = REMOVE_CART;
+export async function getOrders(): Promise<Order[]> {
+  const url = URL_GET_ORDERS;
   const response = await fetch(url, {
-    method: 'DELETE',
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
@@ -53,6 +50,6 @@ export async function removeCart(): Promise<null> {
 
   const dataJson = await response.json();
   if (!response.ok)
-    throw new Error(dataJson.message || 'Failed to add item to cart');
+    throw new Error(dataJson.message || 'Failed to fetch order');
   return dataJson;
 }

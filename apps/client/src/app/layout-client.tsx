@@ -56,6 +56,12 @@ function Layout(props: Props) {
       url: '/packages',
       icon: FaUserFriends,
     },
+    {
+      text: 'My Orders',
+      key: 'orders',
+      url: '/orders',
+      icon: FaShoppingCart,
+    },
   ];
 
   const navigationOptions = [

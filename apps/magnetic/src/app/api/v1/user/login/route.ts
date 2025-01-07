@@ -21,10 +21,10 @@ export async function POST(request: Request) {
       package: {
         select: {
           id: true,
-          name: true
-        }
-      }
-    }
+          name: true,
+        },
+      },
+    },
   });
 
   if (!client) {
@@ -47,12 +47,19 @@ export async function POST(request: Request) {
     role: client.role,
   });
 
+  const cart = await db.cart.findUnique({
+    where: {
+      userId: client.id,
+    },
+  });
+
   return NextResponse.json({
     id: client.id,
     name: client.name,
     email: client.email,
     image: client.image,
     package: client.package,
+    cartId: cart?.id,
     accessToken,
   });
 }

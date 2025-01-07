@@ -3,6 +3,7 @@ import { Item } from '@magnetic/interfaces';
 import { Alert, Text } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useCart } from '../../hooks/useCart';
+import { useCartStore } from '../../hooks/useCartStore';
 
 interface Props {
   item: Item;
@@ -10,11 +11,9 @@ interface Props {
 
 function ItemCardCounter(props: Props) {
   const { item } = props;
-
-  const { cart, addItemToCart } = useCart(13);
-
-  const productCart = cart?.items.find((itemCart) => itemCart.id === item.id);
-
+  const { addItemToCart } = useCart();
+  const { addItem, removeItem, cart } = useCartStore();
+  const productCart = cart.find((cartItem) => cartItem.item.id === item.id);
   const [alert, setAlert] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning';
@@ -28,11 +27,17 @@ function ItemCardCounter(props: Props) {
     setTimeout(() => setAlert(null), 3000);
   };
 
-  const handleAddItem = () => {
+  const handleAddItem = (quantity: number) => {
+    const newVal = quantity + 1;
     addItemToCart.mutate(
-      { itemId: item.id, quantity: (productCart?.quantity || 0) + 1 },
+      { itemId: item.id, quantity: newVal },
       {
         onSuccess: () => {
+          addItem({
+            id: item.id,
+            item: item,
+            quantity: newVal,
+          });
           showAlert('Item added to the cart', 'success');
         },
         onError: () => {
@@ -42,6 +47,23 @@ function ItemCardCounter(props: Props) {
     );
   };
 
+  const handleRemoveItem = (quantity: number) => {
+    const newVal = quantity - 1;
+    if (newVal > 0) {
+      addItemToCart.mutate(
+        { itemId: item.id, quantity: newVal },
+        {
+          onSuccess: () => {
+            removeItem(item.id);
+            showAlert('Item removed to the cart', 'success');
+          },
+          onError: () => {
+            showAlert('Failed to remove item to the cart', 'error');
+          },
+        }
+      );
+    }
+  };
   return (
     <>
       <div className="border rounded-xl border-neutral-200 p-4 space-y-4 shadow-sm hover:border-primary-700 transition-shadow">
@@ -60,12 +82,13 @@ function ItemCardCounter(props: Props) {
                 {centsToEurosWithCurrency(item.priceInCents)}
               </h2>
             </div>
-            <Text className="line-clamp-4">
-              {item.description}
-            </Text>
+            <Text className="line-clamp-4">{item.description}</Text>
             <div className="flex items-center justify-end gap-4 mt-4">
               <button
                 className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
+                onClick={() => {
+                  handleRemoveItem(productCart?.quantity || 0);
+                }}
               >
                 -
               </button>
@@ -73,7 +96,9 @@ function ItemCardCounter(props: Props) {
                 {productCart?.quantity || 0}
               </span>
               <button
-                onClick={handleAddItem}
+                onClick={() => {
+                  handleAddItem(productCart?.quantity || 0);
+                }}
                 className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
               >
                 +

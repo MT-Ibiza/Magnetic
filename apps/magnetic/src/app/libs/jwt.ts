@@ -5,7 +5,7 @@ interface SignOptions {
 }
 
 const defaultSignOptions: SignOptions = {
-  expiresIn: '1h',
+  expiresIn: '4h',
 };
 
 export function signJwtAccessToken(
@@ -24,4 +24,15 @@ export function verifyJwtAccessToken(token: string) {
   } catch (error) {
     console.log(error);
   }
+}
+
+export function decodeJwtAccessToken(token: string) {
+  const decoded = jwt.verify(token, process.env.NEXTAUTH_SECRET as string);
+  return decoded as {
+    id: number;
+    email: string;
+    role: string;
+    iat: number;
+    exp: number;
+  };
 }
