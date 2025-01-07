@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 
 export function CartPage() {
   const { cart, addItem, removeItem } = useCartStore();
-  console.log('cart page: ', cart);
   const total = cart.reduce(
     (sum, item) => sum + item.item.priceInCents * item.quantity,
     0

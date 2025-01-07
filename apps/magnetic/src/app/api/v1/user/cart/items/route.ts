@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import db from 'apps/magnetic/src/app/libs/db';
-import { getTokenFromRequest } from '../util';
+import { getTokenFromRequest } from '../../../util';
 
 export async function POST(request: Request) {
   try {

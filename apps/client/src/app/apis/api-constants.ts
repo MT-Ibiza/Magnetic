@@ -23,5 +23,9 @@ export const URL_GET_CART = `${API_URL}/cart`;
 export const URL_ADD_TO_CART = `${API_URL}/cart/items`;
 export const REMOVE_CART = `${API_URL}/cart`;
 
+// Order
+export const URL_CREATE_ORDER = `${API_URL}/orders`;
+export const URL_GET_ORDER = (id: number) => `${API_URL}/orders/${id}`;
+
 //TOKEN
 export const accessToken = localStorage.getItem('magnetic_auth');

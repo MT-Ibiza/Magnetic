@@ -1,6 +1,6 @@
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
-import { getTokenFromRequest } from './util';
+import { getTokenFromRequest } from '../../util';
 
 export async function GET(request: Request) {
   try {
