@@ -22,10 +22,10 @@ export function PackagePage() {
   return (
     <div className="bg-base-100 listingSection__wrap">
       <div className="text-center mb-10">
-        <h1 className="text-3xl font-semibold text-gray-800">
+        <h1 className="text-2xl lg:text-3xl font-semibold">
           Explore Our Packages
         </h1>
-        <p className="text-lg text-gray-600 mt-2">
+        <p className="text-base lg:text-lg mt-2">
           Find the perfect package for your needs. Choose the one that best fits
           your goals.
         </p>

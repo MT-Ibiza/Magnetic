@@ -34,11 +34,11 @@ export function ServiceClientPage() {
   return (
     <div className="bg-base-100 listingSection__wrap">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-gray-800">
+        <div className="text-center mb-8 lg:mb-12">
+          <h1 className="text-2xl lg:text-4xl font-extrabold">
             Explore Our Services
-          </h1>
-          <p className="text-gray-500 mt-2 max-w-2xl mx-auto">
+          </h1> 
+          <p className="lg:text-[16px] text-[14px] text-gray-500 mt-2 max-w-2xl mx-auto">
             Browse through our wide range of services designed to make your life
             easier and more efficient.
           </p>

@@ -42,25 +42,25 @@ function ViewPackagePage(props: Props) {
 
   return (
     <>
-      <div className="grid grid-cols-12 gap-4">
+      <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4">
         <div className="col-span-8 flex flex-col gap-[20px]">
           <div className="bg-base-100 listingSection__wrap">
-            <h2 className="text-2xl font-semibold">{plan.name}</h2>
+            <h2 className="text-xl lg:text-2xl font-semibold">{plan.name}</h2>
             <div className="w-14 border-b border-primary-700 dark:border-neutral-700"></div>
             {plan.description && (
               <div
-                className=""
+                className="lg:text-[16px] text-[14px]"
                 dangerouslySetInnerHTML={{ __html: plan.description }}
               />
             )}
           </div>
           <div className="bg-base-100 listingSection__wrap">
             <div>
-              <h2 className="text-2xl font-semibold">Include </h2>
+              <h2 className="text-xl lg:text-2xl font-semibold">Include </h2>
               <span className="block mt-2">Included in the price</span>
             </div>
             <div className="w-14 border-b border-primary-700 dark:border-neutral-700"></div>
-            <div className="grid grid-cols-1 gap-4 text-md">
+            <div className="grid grid-cols-1 gap-4 lg:text-[16px] text-[14px]">
               {parsedFeatures.map((feature, index) => (
                 <li className="flex items-center" key={index}>
                   <span className="mr-4 inline-flex flex-shrink-0">
@@ -75,7 +75,7 @@ function ViewPackagePage(props: Props) {
         <div className="col-span-4">
           <div className="bg-base-100 listingSection__wrap">
             <h3 className="text-xl font-semibold">Need Assistance?</h3>
-            <p className="text-md">
+            <p className="lg:text-[16px] text-[14px]">
               Speak with our team to discuss your needs and discover Platinum
               Package benefits.
             </p>

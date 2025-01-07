@@ -84,7 +84,7 @@ export function Badge(props: BadgeProps) {
     }
   };
 
-  const CLASSES = 'nc-Badge inline-flex rounded-full font-medium ' + className;
+  const CLASSES = 'nc-Badge inline-flex rounded-full font-medium text-center ' + className;
 
   return !!href ? (
     <Link

@@ -39,7 +39,7 @@ export function Sidebar({
         onClick={toggleSidebar}
       />
       <div
-        className={`bg-base-100 fixed z-50 border-r-[0.5px] border-gray-300 top-0 bottom-0 h-full w-[280px] lg:w-[260px] transition-transform duration-300 ${
+        className={`bg-base-100 fixed z-50 border-r-[0.5px] border-gray-300 top-0 bottom-0 h-full w-[260px] transition-transform duration-300 ${
           isVisible ? 'translate-x-0' : '-translate-x-full'
         }`}
       >

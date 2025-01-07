@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 interface Props {
   uniqueKey: string;
+  className?: string;
 }
 
 export function ThemeSelector(props: Props) {
-  const { uniqueKey } = props;
+  const { uniqueKey, className } = props;
 
   const [theme, setTheme] = useState('light');
 
@@ -19,12 +20,12 @@ export function ThemeSelector(props: Props) {
     const savedTheme = localStorage.getItem(`theme-${uniqueKey}`) || 'light';
     setTheme(savedTheme);
     document.documentElement.setAttribute('data-theme', savedTheme);
-  }, [theme]);
+  }, [theme, uniqueKey]);
 
   return (
     <input
       type="checkbox"
-      className="toggle toggle-sm"
+      className={`toggle toggle-sm ${className || ''}`}
       onClick={toggleTheme}
       defaultChecked={theme === 'dark'}
     />

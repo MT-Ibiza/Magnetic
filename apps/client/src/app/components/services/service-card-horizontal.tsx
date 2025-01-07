@@ -13,7 +13,7 @@ function ServiceCardHorizontal(props: Props) {
   return (
     <div className="w-full relative flex items-center bg-base-100 border border-gray-300 rounded-lg overflow-hidden shadow-sm group hover:shadow-md transition duration-200 ease-in-out">
       <div className="p-4 flex-1">
-        <h2 className="text-xl font-medium">{name}</h2>
+        <h2 className="text-lg lg:text-xl font-medium">{name}</h2>
         <div
           className="text-sm text-gray-500 line-clamp-2 mt-2"
           dangerouslySetInnerHTML={{ __html: description }}

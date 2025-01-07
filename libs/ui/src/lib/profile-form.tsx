@@ -91,7 +91,7 @@ export function ProfileForm(props: Props) {
                 Upload Photo
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-y-[25px] gap-x-[40px]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-[25px] gap-x-[40px]">
               <label className="block flex flex-col">
                 <span className="text-neutral-800 dark:text-neutral-200">
                   First Name

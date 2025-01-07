@@ -29,11 +29,11 @@ function ViewServicePage(props: Props) {
     <CardWrapper>
       <div>
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-semibold">{service.name}</h1>
+          <h1 className="text-xl lg:text-2xl font-semibold">{service.name}</h1>
           <Badge size={3} color="yellow" name={service.package.name} />
         </div>
         <div
-          className="editor-text"
+          className="lg:text-[16px] text-[14px] editor-text"
           dangerouslySetInnerHTML={{ __html: service.description }}
         />
         <Text className="text-lg font-bold my-4">Choose your favorites</Text>
