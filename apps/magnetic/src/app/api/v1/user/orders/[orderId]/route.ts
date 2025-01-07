@@ -16,6 +16,13 @@ export async function GET(
             item: {
               select: {
                 name: true,
+                service: {
+                  select: {
+                    id: true,
+                    name: true,
+                    serviceType: true,
+                  },
+                },
               },
             },
           },

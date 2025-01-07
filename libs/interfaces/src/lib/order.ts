@@ -18,5 +18,10 @@ export interface OrderItem {
   orderId: number;
   item: {
     name: string;
+    service: {
+      id: number;
+      name: string;
+      serviceType: string;
+    };
   };
 }

@@ -57,7 +57,7 @@ function ItemsTable(props: Props) {
               <td>
                 <input
                   type="checkbox"
-                  className="toggle toggle-sm"
+                  className="toggle toggle-sm toggle-success"
                   checked={item.published}
                   onChange={() =>
                     onTogglePublish && onTogglePublish(item.id, item.published)

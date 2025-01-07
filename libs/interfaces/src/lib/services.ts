@@ -7,6 +7,7 @@ export interface ServiceBase {
   description: string;
   packageId: number;
   providerId: number;
+  serviceType: string;
 }
 
 export interface Service extends ServiceBase {
