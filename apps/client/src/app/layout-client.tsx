@@ -49,7 +49,7 @@ function Layout(props: Props) {
       text: 'My Orders',
       key: 'orders',
       url: '/orders',
-      icon: FaUserFriends,
+      icon: FaShoppingCart,
     },
   ];
 

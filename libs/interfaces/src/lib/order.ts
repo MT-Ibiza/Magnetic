@@ -7,6 +7,7 @@ export interface Order {
   items: OrderItem[];
   userId: number;
   status: string;
+  totalInCents: number;
 }
 
 export interface OrderItem {
