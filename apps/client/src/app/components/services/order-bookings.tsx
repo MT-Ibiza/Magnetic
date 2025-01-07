@@ -1,4 +1,5 @@
 import { OrderItem } from '@magnetic/interfaces';
+import RenderBookingForm from './booking-forms/render-booking-form';
 
 interface Props {
   items: OrderItem[];
@@ -6,15 +7,27 @@ interface Props {
 
 function OrderBookings(props: Props) {
   const { items } = props;
-
-  const allServicesIds = items.map((orderItem) => {
-    return orderItem.item.service.serviceType;
+  const allServices = items.map((orderItem) => {
+    return orderItem.item.service;
   });
-  const servicesType = [...new Set(allServicesIds)];
-  console.log(servicesType);
+  const servicesType = allServices.filter(
+    (item, index, self) => index === self.findIndex((t) => t.id === item.id)
+  );
   return (
     <div className="s">
-      <div></div>
+      <h1>Please Fill this forms</h1>
+      <div>
+        {servicesType.map((service, index) => (
+          <div key={index}>
+            <div>
+              {service.name} / {service.serviceType}
+            </div>
+            <div className="border border-md p-5 my-3">
+              <RenderBookingForm type={service.serviceType} />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

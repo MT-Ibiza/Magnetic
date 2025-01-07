@@ -27,10 +27,14 @@ function OrderPage(props: Props) {
   }
 
   return (
-    <div className="bg-base-100 listingSection__wrap">
-      <h1>{`Order #${order.id}`}</h1>
-      <OrderItemsTable items={order.items} />
-      <OrderBookings items={order.items} />
+    <div className="flex flex-col gap-5">
+      <div className="bg-base-100 listingSection__wrap">
+        <h1>{`Order #${order.id}`}</h1>
+        <OrderItemsTable items={order.items} />
+      </div>
+      <div className="bg-base-100 listingSection__wrap">
+        <OrderBookings items={order.items} />
+      </div>
     </div>
   );
 }

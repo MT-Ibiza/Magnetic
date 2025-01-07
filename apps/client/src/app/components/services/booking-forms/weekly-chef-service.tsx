@@ -44,7 +44,7 @@ export function WeeklyChefServiceForm({ onSubmit }: Props) {
   };
 
   return (
-    <div className="weekly-chef-service-form max-w-5xl mx-auto p-6 bg-base-100 shadow-md rounded-md">
+    <div className="">
       <h2 className="text-2xl font-bold text-center mb-6">
         Weekly Chef Service Booking
       </h2>
@@ -162,7 +162,9 @@ export function WeeklyChefServiceForm({ onSubmit }: Props) {
           />
         </div>
         <div>
-          <Text className="mb-2">First Meal Requests (1st Dinner & 1st Breakfast)</Text>
+          <Text className="mb-2">
+            First Meal Requests (1st Dinner & 1st Breakfast)
+          </Text>
           <TextArea
             className="w-full"
             placeholder="First dinner and breakfast requests"
