@@ -19,7 +19,7 @@ interface Props {
   onSubmit: (data: BoatAttributesFormData) => void;
 }
 
-export function BoatAttributesForm({ boat, onSubmit }: Props) {
+export function FormBoat({ boat, onSubmit }: Props) {
   const {
     register,
     handleSubmit,
@@ -175,30 +175,32 @@ export function BoatAttributesForm({ boat, onSubmit }: Props) {
           </p>
         )}
       </div>
-      <div>
-        <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-          Latitude
-        </Text>
-        <Input
-          type="text"
-          className="mt-2 w-full"
-          placeholder="Enter the latitude"
-          {...register('latitude')}
-        />
-      </div>
-      <div>
-        <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-          Longitude
-        </Text>
-        <Input
-          type="text"
-          className="mt-2 w-full"
-          placeholder="Enter the longitude"
-          {...register('longitude')}
-        />
+      <div className="flex gap-5">
+        <div className="w-full">
+          <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+            Latitude
+          </Text>
+          <Input
+            type="text"
+            className="mt-2 w-full"
+            placeholder="Enter the latitude"
+            {...register('latitude')}
+          />
+        </div>
+        <div className="w-full">
+          <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+            Longitude
+          </Text>
+          <Input
+            type="text"
+            className="mt-2 w-full"
+            placeholder="Enter the longitude"
+            {...register('longitude')}
+          />
+        </div>
       </div>
     </div>
   );
 }
 
-export default BoatAttributesForm;
+export default FormBoat;

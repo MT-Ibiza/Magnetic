@@ -32,7 +32,10 @@ import { useState } from 'react';
 import FormCategory from '../form-category';
 import FormVariant from '../form-variant';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
-import BoatAttributesForm, { BoatAttributesFormData } from '../form-boat';
+import BoatAttributesForm, {
+  BoatAttributesFormData,
+  FormBoat,
+} from '../form-boat';
 
 export interface Props {
   className?: string;
@@ -57,8 +60,7 @@ export function FormItem(props: Props) {
   const categoryFound = categories.find(
     (category) => category.value == item?.categoryId
   );
-  const isBoatRental = service?.name === 'Boat rental';
-
+  const isBoatRental = service?.serviceType === 'boat_rental';
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openForm, setOpenForm] = useState('');
   const [selectedVariant, setSelectedVariant] = useState<ItemVariant>();
@@ -178,7 +180,7 @@ export function FormItem(props: Props) {
               )}
             </div>
             {isBoatRental && (
-              <BoatAttributesForm
+              <FormBoat
                 onSubmit={(data: BoatAttributesFormData) =>
                   console.log('Boat Data:', data)
                 }

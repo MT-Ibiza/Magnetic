@@ -7,4 +7,4 @@ export * from './lib/categories';
 export * from './lib/variants';
 export * from './lib/dashboard';
 export * from './lib/boats';
-export * from './lib/order';
+export * from './lib/orders';

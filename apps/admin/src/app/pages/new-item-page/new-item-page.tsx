@@ -4,6 +4,8 @@ import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
 import FormItem from '../../components/services/form-item';
 import { useNewItem } from '../../hooks/useNewItem';
+import FormBoat from '../../components/form-boat';
+import FormBoatItem from '../../components/services/form-boat-item';
 
 export function NewItemPage() {
   const params = useParams();
@@ -38,7 +40,7 @@ export function NewItemPage() {
           <li>
             <a href={`/services/${serviceId}`}>{service.name}</a>
           </li>
-          <li>New Item {service.name}</li>
+          <li>New Item</li>
         </ul>
       </div>
       <div className="bg-base-100 listingSection__wrap">
@@ -49,7 +51,6 @@ export function NewItemPage() {
           // item={selectedItem}
           onSave={() => {
             navigate(`/services/${serviceId}`, { replace: true });
-
             // toggleDrawer();
           }}
         />

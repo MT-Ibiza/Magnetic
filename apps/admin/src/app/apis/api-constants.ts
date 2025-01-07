@@ -26,6 +26,18 @@ export const URL_NEW_ITEM = (id: number) =>
 export const URL_UPDATE_ITEM = (serviceId: number, itemId: number) =>
   `${API_URL}/services/${serviceId}/items/${itemId}`;
 
+//Boats
+export const URL_GET_BOATS = (serviceId: number) =>
+  `${API_URL}/services/${serviceId}/items`;
+export const URL_GET_BOAT = (serviceId: number, itemId: number) =>
+  `${API_URL}/services/${serviceId}/items/${itemId}`;
+export const URL_CREATE_BOAT = (id: number) =>
+  `${API_URL}/services/${id}/items`;
+export const URL_NEW_BOAT = (id: number) =>
+  `${API_URL}/services/${id}/items/new`;
+export const URL_UPDATE_BOAT = (serviceId: number, itemId: number) =>
+  `${API_URL}/services/${serviceId}/items/${itemId}`;
+
 //Categories
 export const URL_GET_CATEGORIES = `${API_URL}/categories`;
 export const URL_NEW_CATEGORY = `${API_URL}/categories`;
@@ -62,9 +74,9 @@ export const URL_REMOVE_VARIANT = (id: number) => `${API_URL}/variants/${id}`;
 
 //Products
 export const URL_GET_PRODUCTS = `${API_URL}/products`;
-export const URL_PUBLISH_PRODUCT = (id: number) => `${API_URL}/products/${id}/publish`;
+export const URL_PUBLISH_PRODUCT = (id: number) =>
+  `${API_URL}/products/${id}/publish`;
 
 //Orders
 export const URL_GET_ORDERS = `${API_URL}/orders`;
 export const URL_GET_ORDER = (id: number) => `${API_URL}/orders/${id}`;
-
