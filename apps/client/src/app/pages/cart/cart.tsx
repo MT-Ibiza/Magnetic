@@ -23,11 +23,13 @@ export function CartPage() {
   }
 
   return (
-    <div className="grid grid-cols-12 gap-x-[20px]">
+    <div className="flex flex-col gap-[15px] lg:grid lg:grid-cols-12 lg:gap-x-[20px]">
       <CardWrapper className="col-span-9 p-4">
         <div className="flex flex-col gap-4">
-          <p className="text-2xl font-semibold">My Cart</p>
-          <div className="grid grid-cols-4 gap-4 text-center font-semibold border-b pb-2 mb-4 text-sm">
+          <p className="text-center lg:text-start text-2xl font-semibold pb-[15px] lg:pb-[0px]">
+            My Cart
+          </p>
+          <div className="hidden lg:grid grid-cols-4 gap-4 text-center font-semibold border-b pb-2 mb-4 text-sm">
             <span className="text-left">Item</span>
             <span>Price</span>
             <span>Quantity</span>
@@ -39,10 +41,12 @@ export function CartPage() {
               className="grid grid-cols-4 gap-4 items-center border-b py-2 text-sm"
             >
               <div className="flex items-center justify-start">
-                <div className="w-20 h-20">
+                <div className="w-5 h-5 lg:w-20 lg:h-20">
                   <img
-                    className="w-full h-full object-cover"
-                    src={'https://via.placeholder.com/100'}
+                    className="w-[20px] h-[20px] lg:w-full lg:h-full object-cover"
+                    src={
+                      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQMAAADCCAMAAAB6zFdcAAAAS1BMVEX///+hoaGdnZ3ExMTx8fGlpaXNzc2enp7i4uL4+PjIyMj19fWampr5+fn8/PzT09Pr6+u9vb2zs7OsrKzc3NzW1tapqam4uLjh4eFxahFAAAADCUlEQVR4nO3bDW+qMBiG4VKpRSlFwM39/196QBER+ZiDxLw995UtSxw260MpbytTCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC51Uab+rw6R69zxfa2ihqvleztmkm+XSX3nZoOr9FAF0Qx0936W1p/Web7USRFpmBPmSH5utq+POtX2T+qGWOA+e3a25PBgFk4JX36wKRn8F6ojOoz398LMti5d1ddgYqd02No8tVhZ7oDNSXM9caR5drpgTRGaT3WtG4fEVzojPIXVftViuaE51B8Vgz6P/1Wrg8MnDZ35sTncFedxmYFc2JzuDkbNTeGOY7kaZq5loRnYHadQMhnTu+sK7IplMQnYH3F3fbTzrNneeiTkpX0weIzqB2Lo35Ps6OgtsdVO8mD5CegfKHdGaYq2bSaO8cP2riOOkZzJcFdQXtv+3SnCE9gwW+ngxMV0tOvCfwDOpV1WP3eOoGGngG8dMWuk5Gr52wM/DV86cQdrSiDjkDr3YuelaOzaIhZ6DOwwii0X2GkDOIhwk0U8Lp9biAMvBJv391aVCOfST5/VpRhZNBbJzr7a16ddQjEUS2CDeDzOjI6Oox8Scvk8HUlBBIBl5drmddF/eJPx1PoBkJwykhkAy67VV3bl+4jF4J1wyGNXMgGZy6Huv4+kI+GUF/sNyEkIFXWTU4y8nsUyr1YAktg/6e2m1l5M1sBrYdLK0gMniuB13S33QfD6FSvQ/nQsggHl77+4nbYm+w7FRIGfh6cWiee7j8yJrV58e8KD+Dp8ng98xjSpCfwc+fIohs2TUnPoPpenCB6/otPoPqz8+runvNLD2D8cXh75h2s114BvP14AJ7ud0bZGeQzteDS9pltOwMpheHv3PbWROdQb5YDy4xzTOuUjNonj86rY6g2VmTOw7qDA6Rc067FXT97lx0BvFPsgXB18KGzUnNwO63Uwr9fyajm2e1N1EvtQVmkJlten9nVz3u/CHJblv5hv8RIhYZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIH7B0uwLlAhgDlaAAAAAElFTkSuQmCC'
+                    }
                     alt={item.item.name}
                   />
                 </div>
@@ -81,7 +85,7 @@ export function CartPage() {
           ))}
         </div>
       </CardWrapper>
-      <div className="col-span-3 hidden lg:block flex-grow lg:mt-0">
+      <div className="col-span-3 lg:block flex-grow lg:mt-0">
         <div className="sticky top-16">
           <div className="bg-base-100 listingSectionSidebar__wrap shadow-xl">
             <div className="flex justify-between">

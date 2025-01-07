@@ -41,3 +41,16 @@ a {
   font-family: 'Poppins-Medium', sans-serif !important;
 }
 
+.custom-overflow {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.custom-overflow::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-overflow {
+  scrollbar-width: none;
+}
+

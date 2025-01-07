@@ -86,7 +86,7 @@ export function CartShopping() {
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-1"
           >
-            <PopoverPanel className="absolute z-10 w-[350px] max-w-sm px-4 mt-4 lg:right-[-245px] right-[-75px] sm:px-0">
+            <PopoverPanel className="absolute z-10 w-[350px] max-w-sm px-4 mt-4 lg:right-[-50px] right-[-75px] sm:px-0">
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                 <div className="bg-white dark:bg-neutral-800 p-4">
                   <div className="flex items-center justify-between">

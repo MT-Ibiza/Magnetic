@@ -33,7 +33,7 @@ export function CheckoutPage() {
     <div className={`nc-CheckOutPagePageMain`}>
       <main className="container mt-11 mb-24 lg:mb-32 flex flex-col-reverse lg:flex-row">
         <div className="w-full lg:w-3/5 xl:w-2/3 lg:pr-10 ">
-          <div className="bg-base-100 w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 px-0 sm:p-6 xl:p-8">
+          <div className="bg-base-100 w-full flex flex-col rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 p-6 xl:p-8">
             <h2 className="text-lg lg:text-2xl font-semibold">
               Confirm and payment
             </h2>

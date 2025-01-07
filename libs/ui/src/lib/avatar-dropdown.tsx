@@ -22,10 +22,12 @@ export function AvatarDropdown({
   logout,
   user,
   options = [],
+  showInformation,
 }: {
   logout?: () => void;
   user: User;
   options: DropdownOption[];
+  showInformation?: true;
 }) {
   return (
     <div className="AvatarDropdown">
@@ -37,12 +39,14 @@ export function AvatarDropdown({
             >
               <div className="flex gap-3 items-center">
                 <Avatar sizeClass="w-8 h-8 sm:w-9 sm:h-9" />
-                <div className="hidden lg:flex flex-col items-start">
-                  <Text size="1">{user.name}</Text>
-                  <Text size="1" className="text-gray-500">
-                    {user.email}
-                  </Text>
-                </div>
+                {showInformation && (
+                  <div className="hidden lg:flex flex-col items-start">
+                    <Text size="1">{user.name}</Text>
+                    <Text size="1" className="text-gray-500">
+                      {user.email}
+                    </Text>
+                  </div>
+                )}
               </div>
             </PopoverButton>
             <Transition

@@ -145,6 +145,7 @@ function Layout(props: Props) {
           <ThemeSelector className="lg:hidden" uniqueKey={'client'} />
           {user && (
             <AvatarDropdown
+              showInformation={true}
               logout={logout}
               user={user as User}
               options={navigationOptions}
@@ -158,7 +159,7 @@ function Layout(props: Props) {
           isVisible={isSidebarVisible}
           toggleSidebar={toggleSidebar}
         >
-          <div className="hidden lg:absolute bottom-0 p-4  w-full">
+          <div className="sm:block hidden lg:absolute bottom-0 p-4 w-full">
             <div className="bg-base-200 flex justify-between px-6 py-3 rounded-md">
               <Text size="1">Dark Mode</Text>
               <ThemeSelector uniqueKey={'admin'} />
