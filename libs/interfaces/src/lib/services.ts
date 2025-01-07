@@ -30,6 +30,7 @@ export interface NewService {
   packageId: number;
   provider?: NewProvider;
   providerId?: number;
+  serviceType: string;
 }
 
 export interface EditService extends NewService {}
