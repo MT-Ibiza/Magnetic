@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { createOrder } from '../../apis/api-order';
 import { useNavigate } from 'react-router-dom';
 import { Order } from '@magnetic/interfaces';
+import { centsToEurosWithCurrency } from '@magnetic/utils';
 
 export function CheckoutPage() {
   const { cart, addItem, removeItem, clearCart } = useCartStore();
@@ -12,7 +13,6 @@ export function CheckoutPage() {
   const createOrderMutation = useMutation({
     mutationFn: () => createOrder(),
     onSuccess: (order: Order) => {
-      debugger;
       clearCart();
       navigate(`/orders/${order.id}`);
       // refetch();
@@ -29,10 +29,15 @@ export function CheckoutPage() {
     await createOrderMutation.mutateAsync();
   }
 
+  const total = cart.reduce(
+    (sum, cartItem) => sum + cartItem.item.priceInCents * cartItem.quantity,
+    0
+  );
+
   return (
     <div className={`nc-CheckOutPagePageMain`}>
-      <main className="container mt-11 mb-24 lg:mb-32 flex flex-col-reverse lg:flex-row">
-        <div className="w-full lg:w-3/5 xl:w-2/3 lg:pr-10 ">
+      <main className="container mt-11 flex flex-col gap-[15px] lg:grid lg:grid-cols-12 lg:gap-x-[20px]">
+        <div className="col-span-8 w-full ">
           <div className="bg-base-100 w-full flex flex-col rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 p-6 xl:p-8">
             <h2 className="text-lg lg:text-2xl font-semibold">
               Confirm and payment
@@ -45,7 +50,6 @@ export function CheckoutPage() {
             </div>
             <div>
               <Text>Payment Methods</Text>
-
               <div className="join join-vertical w-full my-5">
                 {paymentMethods.map((method, index) => {
                   return (
@@ -68,23 +72,43 @@ export function CheckoutPage() {
             </div>
           </div>
         </div>
-        <div className=" hidden lg:block flex-grow">
-          <div className="bg-base-100 w-full flex flex-col sm:rounded-2xl lg:border border-neutral-200 dark:border-neutral-700 space-y-6 sm:space-y-8 px-0 sm:p-6 xl:p-8">
+        <div className="col-span-4">
+          <div className="bg-base-100 w-full flex flex-col rounded-2xl lg:border border-neutral-200 dark:border-neutral-700 space-y-6 sm:space-y-8 p-6 xl:p-8">
             <div className="flex flex-col space-y-4">
               <h3 className="text-2xl font-semibold">Price detail</h3>
-              <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-                <span>$19</span>
-                <span>$57</span>
-              </div>
-              <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-                <span>Service charge</span>
-                <span>$0</span>
-              </div>
-
+              <ul className="space-y-4 w-full">
+                {cart.map((cartItem, index) => (
+                  <li
+                    key={index}
+                    className="grid grid-cols-10 items-center gap-4 w-full"
+                  >
+                    <img
+                      src={'https://via.placeholder.com/50'}
+                      alt={cartItem.item.name}
+                      className="col-span-3 w-16 h-16 rounded object-cover"
+                    />
+                    <div className="col-span-6 flex flex-col">
+                      <Text size="1" className="font-semibold">
+                        {cartItem.item.name}
+                      </Text>
+                      <Text size="1" className="text-sm">
+                        {`Quantity: ${cartItem.quantity}`}
+                      </Text>
+                    </div>
+                    <div className="col-span-1 flex justify-end w-full">
+                      <Text size="1" className="text-sm">
+                        {centsToEurosWithCurrency(
+                          cartItem.item.priceInCents * cartItem.quantity
+                        )}
+                      </Text>
+                    </div>
+                  </li>
+                ))}
+              </ul>
               <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
               <div className="flex justify-between font-semibold">
-                <span>Total</span>
-                <span>$57</span>
+                <span className="font-semibold">Total</span>
+                <span>{`€${(total / 100).toFixed(2)}`}</span>
               </div>
             </div>
           </div>
