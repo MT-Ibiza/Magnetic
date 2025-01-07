@@ -14,6 +14,11 @@ export function ProvidersPage() {
     setOpenDrawer((prevState) => !prevState);
   };
 
+  const handleAddProvider = () => {
+    setSelectedProvider(undefined);
+    toggleDrawer();
+  };
+
   return (
     <>
       <CardWrapper className="p-6">
@@ -26,7 +31,7 @@ export function ProvidersPage() {
           </div>
           <div className="flex justify-end lg:w-auto w-full">
             <Button
-              onClick={toggleDrawer}
+              onClick={handleAddProvider}
               className="px-6 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600"
             >
               + Add Provider
@@ -41,7 +46,7 @@ export function ProvidersPage() {
         />
       </CardWrapper>
       <DrawerContent
-        title="Add Provider"
+        title={selectedProvider ? 'Edit Provider' : 'Add Provider'}
         open={openDrawer}
         onClose={toggleDrawer}
       >

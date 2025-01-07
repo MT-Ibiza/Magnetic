@@ -89,18 +89,23 @@ function Layout(props: Props) {
       text: 'Services & Products',
       options: [
         {
-          text: 'Services',
-          url: '/services',
-          icon: SiTask,
-        },
-        {
           text: 'All Products',
           url: '/products',
           icon: SiTask,
         },
         {
+          text: 'Services',
+          url: '/services',
+          icon: SiTask,
+        },
+        {
           text: 'Packages',
           url: '/packages',
+          icon: SiTask,
+        },
+        {
+          text: 'Categories',
+          url: '/categories',
           icon: SiTask,
         },
       ],

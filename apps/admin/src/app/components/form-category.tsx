@@ -98,7 +98,7 @@ function FormCategory(props: Props) {
         >
           Cancel
         </Button>
-        <Button type="submit">Create Category</Button>
+        <Button type="submit"> {category ? 'Update' : 'Create'} Category</Button>
       </div>
     </form>
   );
