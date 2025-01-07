@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   const params: NewService = await request.json();
-  const { name, description, items, packageId, serviceType } = params;
+  const { name, description, items, packageId, serviceType, script } = params;
 
   try {
     const service = await db.service.create({
@@ -12,6 +12,7 @@ export async function POST(request: Request) {
         name: name,
         description,
         packageId,
+        script,
         serviceType: serviceType as 'none',
         items: {
           createMany: {

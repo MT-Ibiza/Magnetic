@@ -42,6 +42,7 @@ model Service {
   description String?
   serviceType ServiceType @default(none)
   items       Item[]
+  script      String?
   packageId   Int
   package     Package     @relation(fields: [packageId], references: [id])
   providerId  Int?
@@ -125,7 +126,6 @@ model Provider {
   phone     String?
   website   String?
   email     String?
-  script    String?
   services  Service[]
 }
 

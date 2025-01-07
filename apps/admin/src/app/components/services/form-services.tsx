@@ -4,7 +4,14 @@ import {
   Provider,
   EditService,
 } from '@magnetic/interfaces';
-import { Button, DrawerContent, Input, Text, UploadImage } from '@magnetic/ui';
+import {
+  Button,
+  DrawerContent,
+  Input,
+  Text,
+  TextArea,
+  UploadImage,
+} from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -25,6 +32,7 @@ export interface FormServiceData {
   providerId: number;
   cover?: File;
   serviceType: string;
+  script?: string;
 }
 
 export interface Props {
@@ -102,13 +110,14 @@ export function ServiceForm(props: Props) {
   }
 
   const onSubmit = async (data: FormServiceData) => {
-    const { name, packageId, serviceType } = data;
+    const { name, packageId, serviceType, script } = data;
     if (service) {
       await updateService.mutateAsync({
         name,
         description: description || '',
         packageId: Number(packageId),
         items: [],
+        script,
         serviceType,
       });
     } else {
@@ -117,6 +126,7 @@ export function ServiceForm(props: Props) {
         description: description || '',
         packageId: Number(packageId),
         items: [],
+        script,
         serviceType,
       });
     }
@@ -199,6 +209,17 @@ export function ServiceForm(props: Props) {
                 </select>
               </div>
               <div className="flex flex-col gap-[10px]">
+                <Text size="1">Script</Text>
+                <Text size="1" className="text-gray-500">
+                  This will be integrated into the client's app for selecting
+                  and buying products or services.
+                </Text>
+                <TextArea
+                  placeholder="Add Script to load external products"
+                  {...register('script')}
+                />
+              </div>
+              <div className="flex flex-col gap-[10px]">
                 <Text size="1">Service Description</Text>
                 <ReactQuill
                   theme="snow"
@@ -208,6 +229,7 @@ export function ServiceForm(props: Props) {
                 />
               </div>
             </div>
+
             <div className="flex gap-[10px] justify-end pt-[80px]">
               <Button variant="outline" href={'/services'} type="submit">
                 Cancel
