@@ -37,7 +37,14 @@ export function CategoriesTable(props: Props) {
           {categories.map((category, index) => (
             <tr className="hover" key={index}>
               <th>{index + 1}</th>
-              <td>{category.name}</td>
+              <td
+                className="cursor-pointer hover:underline"
+                onClick={() => {
+                  onClickEdit && onClickEdit(category);
+                }}
+              >
+                {category.name}
+              </td>
               <td> {moment(category.createdAt).format('DD MMM YYYY')}</td>
               <td>
                 <div className="dropdown dropdown-bottom dropdown-end">

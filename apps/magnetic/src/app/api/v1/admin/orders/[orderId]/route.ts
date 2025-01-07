@@ -11,11 +11,21 @@ export async function GET(
         id: Number(params.orderId),
       },
       include: {
+        user: {
+          select: { id: true, name: true, email: true, phone: true },
+        },
         items: {
           include: {
             item: {
               select: {
                 name: true,
+                service: {
+                  select: {
+                    id: true,
+                    name: true,
+                    serviceType: true,
+                  },
+                },
               },
             },
           },

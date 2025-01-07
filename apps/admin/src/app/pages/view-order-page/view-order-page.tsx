@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useOrder } from '../../hooks/useOrder';
-import OrderItemsTable from '../../components/orders/order-items-table';
+import OrderDetails from '../../components/orders/order-details';
 
 interface Props {}
 
@@ -24,9 +24,8 @@ function ViewOrderPage(props: Props) {
   }
 
   return (
-    <div className="bg-base-100 listingSection__wrap">
-      <h1>{`Order #${order.id}`}</h1>
-      <OrderItemsTable items={order.items} />
+    <div className="bg-base-100 rounded-lg">
+      <OrderDetails order={order} />
     </div>
   );
 }
