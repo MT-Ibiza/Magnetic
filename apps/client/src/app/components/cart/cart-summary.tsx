@@ -15,10 +15,10 @@ function CartSummary(props: Props) {
       {cart.map((item) => (
         <div key={item.id} className="flex justify-between">
           <span>
-            {item.name} x {item.quantity}
+            {item.item.name} x {item.quantity}
           </span>
           <Text.TextNumeric>
-            {centsToEurosWithCurrency(item.priceInCents * item.quantity)}
+            {centsToEurosWithCurrency(item.item.priceInCents * item.quantity)}
           </Text.TextNumeric>
         </div>
       ))}

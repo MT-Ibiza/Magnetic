@@ -11,7 +11,15 @@ export async function GET(
         id: Number(params.orderId),
       },
       include: {
-        items: true,
+        items: {
+          include: {
+            item: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
       },
     });
     return NextResponse.json(order);

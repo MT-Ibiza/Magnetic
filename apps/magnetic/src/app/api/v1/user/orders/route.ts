@@ -27,34 +27,51 @@ export async function POST(request: Request) {
         },
       },
     });
-    const items =
-      cart?.items.map((cartItem) => {
-        const { id, item, quantity } = cartItem;
-        return {
-          quantity,
-          priceInCents: item.priceInCents,
-          itemId: item.id,
-        };
-      }) || [];
 
-    const totalOrder = items.reduce(
-      (sum, item) => sum + item.priceInCents * item.quantity,
-      0
-    );
+    if (cart) {
+      const items =
+        cart?.items.map((cartItem) => {
+          const { item, quantity } = cartItem;
+          return {
+            quantity,
+            priceInCents: item.priceInCents,
+            itemId: item.id,
+          };
+        }) || [];
 
-    const order = await db.order.create({
-      data: {
-        userId,
-        totalInCents: totalOrder,
-        items: {
-          createMany: {
-            data: items,
+      const totalOrder = items.reduce(
+        (sum, item) => sum + item.priceInCents * item.quantity,
+        0
+      );
+
+      const order = await db.order.create({
+        data: {
+          userId,
+          totalInCents: totalOrder,
+          items: {
+            createMany: {
+              data: items,
+            },
           },
         },
-      },
-    });
+      });
 
-    return NextResponse.json(order);
+      await db.cart.delete({
+        where: {
+          id: cart.id,
+        },
+      });
+      return NextResponse.json(order);
+    } else {
+      return NextResponse.json(
+        {
+          message: 'Cart Not Found',
+        },
+        {
+          status: 400,
+        }
+      );
+    }
   } catch (error: any) {
     console.error('Error creating order:', error);
     return NextResponse.json(

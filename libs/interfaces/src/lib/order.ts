@@ -16,4 +16,7 @@ export interface OrderItem {
   quantity: number;
   itemId: number;
   orderId: number;
+  item: {
+    name: string;
+  };
 }

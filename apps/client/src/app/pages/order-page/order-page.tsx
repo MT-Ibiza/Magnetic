@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useOrder } from '../../hooks/useOrder';
+import { Text } from '@magnetic/ui';
+import OrderItemsTable from '../../components/order/order-items-table';
 
 interface Props {}
 
@@ -23,7 +25,12 @@ function OrderPage(props: Props) {
     return <p>Order Not Found</p>;
   }
 
-  return <div className="s">{order.id}</div>;
+  return (
+    <div className="bg-base-100 listingSection__wrap">
+      <h1>{`Order #${order.id}`}</h1>
+      <OrderItemsTable items={order.items} />
+    </div>
+  );
 }
 
 export default OrderPage;
