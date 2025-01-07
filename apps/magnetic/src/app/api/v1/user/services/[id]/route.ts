@@ -15,6 +15,9 @@ export async function GET(
           orderBy: {
             createdAt: 'desc',
           },
+          include: {
+            boatAttributes: true,
+          },
         },
         package: {
           select: {

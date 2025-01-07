@@ -2,6 +2,7 @@ import { Badge, CardWrapper, Text } from '@magnetic/ui';
 import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
 import ItemCardCounter from '../../components/items/item-card-counter';
+import ItemBoatCard from '../../components/items/item-boat-card';
 
 interface Props {}
 
@@ -45,7 +46,13 @@ function ViewServicePage(props: Props) {
             </Text>
             <div className="grid grid-cols-1 gap-4">
               {publishedItems.map((item, index) => (
-                <ItemCardCounter key={index} item={item} />
+                <div key={index}>
+                  {service.serviceType === 'boat_rental' ? (
+                    <ItemBoatCard item={item} />
+                  ) : (
+                    <ItemCardCounter item={item} />
+                  )}
+                </div>
               ))}
             </div>
           </div>

@@ -17,7 +17,7 @@ export async function POST(request: Request) {
 
     console.log('quantity: ', quantity);
 
-    if (!itemId || !quantity || quantity < 0) {
+    if (!itemId || quantity < 0) {
       return NextResponse.json(
         {
           message:
@@ -48,8 +48,15 @@ export async function POST(request: Request) {
       },
     });
 
-    // Actualizar o crear el ítem en el carrito
-    if (existingCartItem) {
+    if (quantity === 0 && existingCartItem) {
+      const updatedCartItem = await db.cartItem.delete({
+        where: { id: existingCartItem.id },
+      });
+      return NextResponse.json({
+        message: 'Cart item removed successfully',
+        cartItem: updatedCartItem,
+      });
+    } else if (quantity > 0 && existingCartItem) {
       const updatedCartItem = await db.cartItem.update({
         where: { id: existingCartItem.id },
         data: {
@@ -61,20 +68,19 @@ export async function POST(request: Request) {
         message: 'Cart item updated successfully',
         cartItem: updatedCartItem,
       });
+    } else {
+      const newCartItem = await db.cartItem.create({
+        data: {
+          cartId: cart.id,
+          itemId: itemId,
+          quantity: quantity,
+        },
+      });
+      return NextResponse.json({
+        message: 'Item added to cart successfully',
+        cartItem: newCartItem,
+      });
     }
-
-    const newCartItem = await db.cartItem.create({
-      data: {
-        cartId: cart.id,
-        itemId: itemId,
-        quantity: quantity,
-      },
-    });
-
-    return NextResponse.json({
-      message: 'Item added to cart successfully',
-      cartItem: newCartItem,
-    });
   } catch (error: any) {
     console.error('Error adding item to cart:', error);
 
