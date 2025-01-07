@@ -73,34 +73,36 @@ export function CheckoutPage() {
           </div>
         </div>
         <div className="col-span-4">
-          <div className="bg-base-100 w-full flex flex-col rounded-2xl lg:border border-neutral-200 dark:border-neutral-700 space-y-6 sm:space-y-8 p-6 xl:p-8">
+          <div className="sticky top-[60px] bg-base-100 w-full flex flex-col rounded-2xl lg:border border-neutral-200 dark:border-neutral-700 space-y-6 sm:space-y-8 p-6 xl:p-8">
             <div className="flex flex-col space-y-4">
               <h3 className="text-2xl font-semibold">Price detail</h3>
               <ul className="space-y-4 w-full">
                 {cart.map((cartItem, index) => (
                   <li
                     key={index}
-                    className="grid grid-cols-10 items-center gap-4 w-full"
+                    className="grid grid-cols-8 items-center gap-4 w-full"
                   >
                     <img
                       src={'https://via.placeholder.com/50'}
                       alt={cartItem.item.name}
-                      className="col-span-3 w-16 h-16 rounded object-cover"
+                      className="col-span-2 w-16 h-16 rounded object-cover"
                     />
-                    <div className="col-span-6 flex flex-col">
-                      <Text size="1" className="font-semibold">
-                        {cartItem.item.name}
-                      </Text>
-                      <Text size="1" className="text-sm">
-                        {`Quantity: ${cartItem.quantity}`}
-                      </Text>
-                    </div>
-                    <div className="col-span-1 flex justify-end w-full">
-                      <Text size="1" className="text-sm">
-                        {centsToEurosWithCurrency(
-                          cartItem.item.priceInCents * cartItem.quantity
-                        )}
-                      </Text>
+                    <div className="col-span-6 grid grid-cols-5 gap-4 items-center">
+                      <div className="col-span-4 flex flex-col">
+                        <Text size="1" className="font-semibold line-clamp-2">
+                          {cartItem.item.name}
+                        </Text>
+                        <Text size="1" className="text-sm">
+                          {`Quantity: ${cartItem.quantity}`}
+                        </Text>
+                      </div>
+                      <div className="col-span-1 flex justify-end w-full">
+                        <Text size="1" className="text-sm">
+                          {centsToEurosWithCurrency(
+                            cartItem.item.priceInCents * cartItem.quantity
+                          )}
+                        </Text>
+                      </div>
                     </div>
                   </li>
                 ))}
