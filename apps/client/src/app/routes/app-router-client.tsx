@@ -11,6 +11,7 @@ import CheckoutPage from '../pages/checkout/checkout';
 import ViewPackagePage from '../pages/view-package-page/view-package-page';
 import AccountPage from '../pages/account/account';
 import OrderPage from '../pages/order-page/order-page';
+import OrdersPage from '../pages/orders-page/orders-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -33,6 +34,7 @@ export const AppRouter = () => {
           <Route path="services/:id" element={<ViewServicePage />} />
           <Route path="packages" element={<PackagePage />} />
           <Route path="packages/:id" element={<ViewPackagePage />} />
+          <Route path="orders" element={<OrdersPage />} />
           <Route path="orders/:id" element={<OrderPage />} />
         </Route>
       </Route>

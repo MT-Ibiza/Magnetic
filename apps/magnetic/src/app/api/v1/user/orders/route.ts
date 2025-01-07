@@ -67,3 +67,42 @@ export async function POST(request: Request) {
     );
   }
 }
+
+export async function GET(request: Request) {
+  try {
+    const decodedToken = getTokenFromRequest(request);
+    if (!decodedToken) {
+      return NextResponse.json({ message: 'Invalid Token' }, { status: 403 });
+    }
+    const userId = decodedToken.id;
+    const orders = await db.order.findMany({
+      where: { userId },
+      include: {
+        items: {
+          select: {
+            id: true,
+            quantity: true,
+            item: {
+              select: {
+                id: true,
+                name: true,
+                priceInCents: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return NextResponse.json(orders);
+  } catch (error: any) {
+    console.error('Error fetching cart:', error);
+    return NextResponse.json(
+      {
+        message: error.message,
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
