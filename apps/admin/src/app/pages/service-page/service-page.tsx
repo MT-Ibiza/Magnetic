@@ -80,9 +80,11 @@ function ServicePage(props: Props) {
               >
                 Edit Service
               </Button>
-              <Button href={`/services/${service.id}/items/new`}>
-                + New Item
-              </Button>
+              {!service.script && (
+                <Button href={`/services/${service.id}/items/new`}>
+                  + New Item
+                </Button>
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-[15px]">
@@ -96,22 +98,26 @@ function ServicePage(props: Props) {
               />
             </div>
           </div>
-          <div className="mt-6">
-            <ItemsTable
-              items={service.items || []}
-              onClickEdit={(item) => {
-                toggleDrawer();
-                setSelectedItem(item);
-                setOpenForm('product');
-              }}
-              onClickVariant={(item) => {
-                toggleDrawer();
-                setSelectedItem(item);
-                setOpenForm('variant');
-              }}
-              onTogglePublish={handlePublishToggle}
-            />
-          </div>
+          {service.script ? (
+            <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
+          ) : (
+            <div className="mt-6">
+              <ItemsTable
+                items={service.items || []}
+                onClickEdit={(item) => {
+                  toggleDrawer();
+                  setSelectedItem(item);
+                  setOpenForm('product');
+                }}
+                onClickVariant={(item) => {
+                  toggleDrawer();
+                  setSelectedItem(item);
+                  setOpenForm('variant');
+                }}
+                onTogglePublish={handlePublishToggle}
+              />
+            </div>
+          )}
         </div>
       </CardWrapper>
       <DrawerContent

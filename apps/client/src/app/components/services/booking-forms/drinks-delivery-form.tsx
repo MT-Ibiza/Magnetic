@@ -37,8 +37,10 @@ export function DrinksDeliveryBookingForm({ onSubmit }: Props) {
   };
 
   return (
-    <div className="drinks-delivery-form max-w-5xl mx-auto p-6 bg-base-100 shadow-md rounded-md">
-      <h2 className="text-2xl font-bold text-center mb-6">Drinks Delivery Booking</h2>
+    <div>
+      <h2 className="text-2xl font-bold text-center mb-6">
+        Drinks Delivery Booking
+      </h2>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
@@ -49,7 +51,9 @@ export function DrinksDeliveryBookingForm({ onSubmit }: Props) {
               {...register('date', { required: 'Date is required' })}
             />
             {errors.date && (
-              <p className="text-[12px] text-red-500 pt-2">{errors.date.message}</p>
+              <p className="text-[12px] text-red-500 pt-2">
+                {errors.date.message}
+              </p>
             )}
           </div>
           <div>
@@ -61,7 +65,9 @@ export function DrinksDeliveryBookingForm({ onSubmit }: Props) {
               {...register('location', { required: 'Location is required' })}
             />
             {errors.location && (
-              <p className="text-[12px] text-red-500 pt-2">{errors.location.message}</p>
+              <p className="text-[12px] text-red-500 pt-2">
+                {errors.location.message}
+              </p>
             )}
           </div>
           <div>
@@ -72,7 +78,9 @@ export function DrinksDeliveryBookingForm({ onSubmit }: Props) {
               {...register('time', { required: 'Time is required' })}
             />
             {errors.time && (
-              <p className="text-[12px] text-red-500 pt-2">{errors.time.message}</p>
+              <p className="text-[12px] text-red-500 pt-2">
+                {errors.time.message}
+              </p>
             )}
           </div>
           <div>
@@ -88,7 +96,9 @@ export function DrinksDeliveryBookingForm({ onSubmit }: Props) {
               })}
             />
             {errors.minimumSpend && (
-              <p className="text-[12px] text-red-500 pt-2">{errors.minimumSpend.message}</p>
+              <p className="text-[12px] text-red-500 pt-2">
+                {errors.minimumSpend.message}
+              </p>
             )}
           </div>
         </div>

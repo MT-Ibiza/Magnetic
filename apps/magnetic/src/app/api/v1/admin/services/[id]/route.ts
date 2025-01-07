@@ -55,7 +55,8 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   const data: EditService = await request.json();
-  const { name, description, packageId, providerId } = data;
+  const { name, description, packageId, providerId, serviceType, script } =
+    data;
   try {
     const service = await db.service.update({
       where: {
@@ -66,6 +67,8 @@ export async function PUT(
         description: description,
         packageId: packageId,
         providerId: providerId,
+        serviceType: serviceType as 'none',
+        script,
       },
     });
     return NextResponse.json(service, { status: 201 });

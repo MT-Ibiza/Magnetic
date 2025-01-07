@@ -4,7 +4,14 @@ import {
   Provider,
   EditService,
 } from '@magnetic/interfaces';
-import { Button, DrawerContent, Input, Text, UploadImage } from '@magnetic/ui';
+import {
+  Button,
+  DrawerContent,
+  Input,
+  Text,
+  TextArea,
+  UploadImage,
+} from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -16,6 +23,7 @@ import { ErrorText } from '../error-text';
 import FormProvider from '../providers/form-provider';
 import { useNewServiceData } from '../../hooks/useNewServiceData';
 import { toast } from 'sonner';
+import { ALL_SERVICES } from '../../constants';
 
 export interface FormServiceData {
   name: string;
@@ -23,7 +31,8 @@ export interface FormServiceData {
   packageId: number;
   providerId: number;
   cover?: File;
-  formType?: string;
+  serviceType: string;
+  script?: string;
 }
 
 export interface Props {
@@ -35,7 +44,7 @@ export interface Props {
 export function ServiceForm(props: Props) {
   const { className, service, onSaveSuccess } = props;
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [formType, setFormType] = useState<string | undefined>(undefined);
+  const [serviceType, setServiceType] = useState<string | undefined>(undefined);
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -54,7 +63,8 @@ export function ServiceForm(props: Props) {
           packageId: service.packageId,
           providerId: service.packageId,
           cover: undefined,
-          formType: undefined,
+          serviceType: service.serviceType,
+          script: service.script,
         }
       : undefined,
   });
@@ -101,13 +111,15 @@ export function ServiceForm(props: Props) {
   }
 
   const onSubmit = async (data: FormServiceData) => {
-    const { name, packageId } = data;
+    const { name, packageId, serviceType, script } = data;
     if (service) {
       await updateService.mutateAsync({
         name,
         description: description || '',
         packageId: Number(packageId),
         items: [],
+        script,
+        serviceType,
       });
     } else {
       await createService.mutateAsync({
@@ -115,6 +127,8 @@ export function ServiceForm(props: Props) {
         description: description || '',
         packageId: Number(packageId),
         items: [],
+        script,
+        serviceType,
       });
     }
   };
@@ -163,23 +177,18 @@ export function ServiceForm(props: Props) {
                 )}
               </div>
               <div className="flex flex-col gap-[10px]">
-                <Text size="1">Booking Form</Text>
+                <Text size="1">Service Type</Text>
                 <select
                   className="select select-bordered w-full"
-                  {...register('formType')}
-                  onChange={(e) => setFormType(e.target.value)}
+                  {...register('serviceType')}
+                  onChange={(e) => setServiceType(e.target.value)}
                 >
                   <option value="">-- Select a form --</option>
-                  <option value="none">External Form</option>
-                  <option value="single-chef">Single Chef Service</option>
-                  <option value="weekly-chef">Weekly Chef Service</option>
-                  <option value="boat-charter">Boat Charters (Gold)</option>
-                  <option value="spa-beauty">Spa & Beauty (Platinum)</option>
-                  <option value="security">Security (Platinum)</option>
-                  <option value="childcare">Childcare (Platinum)</option>
-                  <option value="restaurant">Restaurant Booking</option>
-                  <option value="beach-club">Beach Club Booking</option>
-                  <option value="club">Club Booking</option>
+                  {ALL_SERVICES.map((service, index) => (
+                    <option value={service.key} key={index}>
+                      {service.name}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="flex flex-col gap-[10px]">
@@ -199,6 +208,17 @@ export function ServiceForm(props: Props) {
                     </option>
                   ))}
                 </select>
+              </div>
+              <div className="flex flex-col gap-[10px]">
+                <Text size="1">Script</Text>
+                <Text size="1" className="text-gray-500">
+                  This will be integrated into the client's app for selecting
+                  and buying products or services.
+                </Text>
+                <TextArea
+                  placeholder="Add Script to load external products"
+                  {...register('script')}
+                />
               </div>
               <div className="flex flex-col gap-[10px]">
                 <Text size="1">Service Description</Text>

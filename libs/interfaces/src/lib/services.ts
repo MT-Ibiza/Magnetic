@@ -7,6 +7,7 @@ export interface ServiceBase {
   description: string;
   packageId: number;
   providerId: number;
+  serviceType: string;
 }
 
 export interface Service extends ServiceBase {
@@ -15,6 +16,7 @@ export interface Service extends ServiceBase {
   updatedAt: Date;
   package: Package;
   providerId: number;
+  script?: string;
   items: Item[];
 }
 
@@ -29,6 +31,8 @@ export interface NewService {
   packageId: number;
   provider?: NewProvider;
   providerId?: number;
+  serviceType: string;
+  script?: string;
 }
 
 export interface EditService extends NewService {}

@@ -36,12 +36,20 @@ function ViewServicePage(props: Props) {
           className="lg:text-[16px] text-[14px] editor-text"
           dangerouslySetInnerHTML={{ __html: service.description }}
         />
-        <Text className="text-lg font-bold my-4">Choose your favorites</Text>
-        <div className="grid grid-cols-1 gap-4">
-          {publishedItems.map((item, index) => (
-            <ItemCardCounter key={index} item={item} />
-          ))}
-        </div>
+        {service.script ? (
+          <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
+        ) : (
+          <div>
+            <Text className="text-lg font-bold my-4">
+              Choose your favorites
+            </Text>
+            <div className="grid grid-cols-1 gap-4">
+              {publishedItems.map((item, index) => (
+                <ItemCardCounter key={index} item={item} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </CardWrapper>
   );

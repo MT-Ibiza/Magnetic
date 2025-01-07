@@ -35,16 +35,18 @@ model User {
 }
 
 model Service {
-  id          Int       @id @default(autoincrement())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id          Int         @id @default(autoincrement())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
   name        String
   description String?
+  serviceType ServiceType @default(none)
   items       Item[]
+  script      String?
   packageId   Int
-  package     Package   @relation(fields: [packageId], references: [id])
+  package     Package     @relation(fields: [packageId], references: [id])
   providerId  Int?
-  provider    Provider? @relation(fields: [providerId], references: [id])
+  provider    Provider?   @relation(fields: [providerId], references: [id])
 }
 
 model Category {
@@ -124,7 +126,6 @@ model Provider {
   phone     String?
   website   String?
   email     String?
-  script    String?
   services  Service[]
 }
 
@@ -174,4 +175,19 @@ model OrderItem {
 enum Role {
   client
   admin
+}
+
+enum ServiceType {
+  cart_rental
+  boat_rental
+  transfer
+  chefs
+  food
+  drinks
+  security
+  spa
+  wellness
+  childcare
+  reservations
+  none
 }
