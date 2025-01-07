@@ -4,6 +4,7 @@ import { ErrorText } from '../../components/error-text';
 import { useNavigate, useParams } from 'react-router-dom';
 import FormItem from '../../components/services/form-item';
 import { useItem } from '../../hooks/useItem';
+import FormBoatItem from '../../components/services/form-boat-item';
 
 export function EditItemPage() {
   const params = useParams();
@@ -27,7 +28,7 @@ export function EditItemPage() {
   if (!item) {
     return <Text>Item Not Found</Text>;
   }
-
+  console.log(item);
   return (
     <div className="new-booking-page">
       <Text size="4" className="mb-3">
@@ -45,14 +46,24 @@ export function EditItemPage() {
         </ul>
       </div>
       <div className="bg-base-100 listingSection__wrap">
-        <FormItem
-          serviceCategories={serviceCategories}
-          serviceId={serviceId}
-          item={item}
-          onSave={() => {
-            navigate(`/services/${serviceId}`);
-          }}
-        />
+        {item.service.serviceType === 'boat_rental' ? (
+          <FormBoatItem
+            serviceId={serviceId}
+            onSave={() => {
+              navigate(`/services/${serviceId}`, { replace: true });
+            }}
+            serviceCategories={serviceCategories}
+          />
+        ) : (
+          <FormItem
+            serviceCategories={serviceCategories}
+            serviceId={serviceId}
+            item={item}
+            onSave={() => {
+              navigate(`/services/${serviceId}`);
+            }}
+          />
+        )}
       </div>
     </div>
   );

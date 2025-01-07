@@ -44,16 +44,26 @@ export function NewItemPage() {
         </ul>
       </div>
       <div className="bg-base-100 listingSection__wrap">
-        <FormItem
-          serviceId={serviceId}
-          serviceCategories={categories}
-          service={service}
-          // item={selectedItem}
-          onSave={() => {
-            navigate(`/services/${serviceId}`, { replace: true });
-            // toggleDrawer();
-          }}
-        />
+        {service.serviceType === 'boat_rental' ? (
+          <FormBoatItem
+            serviceId={serviceId}
+            onSave={() => {
+              navigate(`/services/${serviceId}`, { replace: true });
+            }}
+            serviceCategories={categories}
+          />
+        ) : (
+          <FormItem
+            serviceId={serviceId}
+            serviceCategories={categories}
+            service={service}
+            // item={selectedItem}
+            onSave={() => {
+              navigate(`/services/${serviceId}`, { replace: true });
+              // toggleDrawer();
+            }}
+          />
+        )}
       </div>
     </div>
   );

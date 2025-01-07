@@ -1,3 +1,4 @@
+import { BoatAttributes, BoatBase } from './boats';
 import { Category } from './categories';
 import { Service } from './services';
 import { ItemVariant } from './variants';
@@ -15,6 +16,7 @@ export interface ItemBase {
   priceInCents: number;
   categoryId?: number | null;
   category?: Category;
+  boatAttributes?: BoatBase;
 }
 
 export interface ItemResponse {
@@ -56,6 +58,7 @@ export interface Cart {
 
 export interface NewItem extends ItemBase {
   serviceId: number;
+  boatAttributes?: BoatBase;
 }
 
 export interface EditItem extends ItemBase {

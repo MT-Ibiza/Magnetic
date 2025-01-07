@@ -23,8 +23,10 @@ export async function GET(
           select: {
             id: true,
             name: true,
+            serviceType: true,
           },
         },
+        boatAttributes: true,
         variants: {
           select: {
             id: true,

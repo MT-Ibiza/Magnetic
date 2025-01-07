@@ -7,17 +7,44 @@ export async function POST(
   { params }: { params: { id: number } }
 ) {
   const data: NewItem = await request.json();
-  const { name, description, priceInCents } = data;
+  const { name, description, priceInCents, boatAttributes } = data;
   try {
-    const item = await db.item.create({
-      data: {
-        name,
-        description,
-        priceInCents,
-        serviceId: Number(params.id),
-      },
-    });
-    return NextResponse.json(item);
+    if (boatAttributes) {
+      const item = await db.item.create({
+        data: {
+          name,
+          description,
+          priceInCents,
+          serviceId: Number(params.id),
+          boatAttributes: {
+            create: {
+              boatType: boatAttributes.boatType,
+              berth: boatAttributes.berth,
+              guests: boatAttributes.guests,
+              crew: boatAttributes.crew,
+              beamInCentimeters: boatAttributes.beamInCentimeters,
+              cabins: boatAttributes.cabins,
+              fuelConsumption: boatAttributes.fuelConsumption,
+              description: boatAttributes.description,
+              latitude: boatAttributes.latitude,
+              longitude: boatAttributes.longitude,
+              boatSizeInCentimeters: boatAttributes.boatSizeInCentimeters,
+            },
+          },
+        },
+      });
+      return NextResponse.json(item);
+    } else {
+      const item = await db.item.create({
+        data: {
+          name,
+          description,
+          priceInCents,
+          serviceId: Number(params.id),
+        },
+      });
+      return NextResponse.json(item);
+    }
   } catch (error: any) {
     return NextResponse.json(
       {
