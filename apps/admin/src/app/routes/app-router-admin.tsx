@@ -25,6 +25,8 @@ import ViewPackagePage from '../pages/view-package-page/view-package-page';
 import ServicePage from '../pages/service-page/service-page';
 import AdminUsersPage from '../pages/admin-users-page/admin-users-page';
 import ProductsPage from '../pages/products/products-page';
+import OrdersPage from '../pages/orders-page/orders-page';
+import ViewOrderPage from '../pages/view-order-page/view-order-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -43,6 +45,8 @@ export const AppRouter = () => {
           <Route path="services" element={<ServicesPage />} />
           <Route path="products" element={<ProductsPage />} />
           <Route path="packages" element={<PackagesPage />} />
+          <Route path="orders" element={<OrdersPage />} />
+          <Route path="orders/:id" element={<ViewOrderPage />} />
           <Route path="packages/:id" element={<ViewPackagePage />} />
           <Route path="packages/new" element={<NewPackagePage />} />
           <Route path="packages/edit/:id" element={<EditPackagePage />} />

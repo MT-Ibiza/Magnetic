@@ -106,6 +106,23 @@ function Layout(props: Props) {
       ],
     },
     {
+      text: 'Orders',
+      options: [
+        {
+          text: 'Orders',
+          key: 'orders',
+          url: '/orders',
+          icon: SiTask,
+        },
+        // {
+        //   text: 'Settings',
+        //   key: 'settings',
+        //   url: '/settings',
+        //   icon: FaCog,
+        // },
+      ],
+    },
+    {
       text: 'Bookings',
       options: [
         {

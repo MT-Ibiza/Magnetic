@@ -1,9 +1,16 @@
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
 export interface Order {
   id: number;
   createdAt: Date;
   updatedAt: Date;
   name: string;
   description: string;
+  user: User;
   items: OrderItem[];
   userId: number;
   status: string;

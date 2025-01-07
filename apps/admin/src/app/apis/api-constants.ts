@@ -63,3 +63,8 @@ export const URL_REMOVE_VARIANT = (id: number) => `${API_URL}/variants/${id}`;
 //Products
 export const URL_GET_PRODUCTS = `${API_URL}/products`;
 export const URL_PUBLISH_PRODUCT = (id: number) => `${API_URL}/products/${id}/publish`;
+
+//Orders
+export const URL_GET_ORDERS = `${API_URL}/orders`;
+export const URL_GET_ORDER = (id: number) => `${API_URL}/orders/${id}`;
+
