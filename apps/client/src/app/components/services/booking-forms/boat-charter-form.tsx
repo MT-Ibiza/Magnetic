@@ -32,7 +32,6 @@ export function BoatCharterBookingForm({ onSubmit }: Props) {
       startTime: '',
       lunchBooking: false,
       extras: '',
-      depositPaid: false,
     },
   });
 
@@ -131,7 +130,7 @@ export function BoatCharterBookingForm({ onSubmit }: Props) {
             />
           </div>
           <div>
-            <Text className="mb-2">Lunch Booking</Text>
+            {/* <Text className="mb-2">Lunch Booking</Text> */}
             <Checkbox
               name="lunchBooking"
               label="I would like to book lunch"
@@ -141,18 +140,6 @@ export function BoatCharterBookingForm({ onSubmit }: Props) {
             />
           </div>
         </div>
-        <Checkbox
-          name="depositPaid"
-          label="I confirm 50% deposit payment at the time of booking."
-          className="mt-4"
-          defaultChecked={watch('depositPaid')}
-          onChange={(checked) => setValue('depositPaid', checked)}
-        />
-        {errors.depositPaid && (
-          <p className="text-[12px] text-red-500 pt-2">
-            {errors.depositPaid.message}
-          </p>
-        )}
         <div className="flex justify-end gap-3">
           <Button type="submit">Submit Booking</Button>
         </div>

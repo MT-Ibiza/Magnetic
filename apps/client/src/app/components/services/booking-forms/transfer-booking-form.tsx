@@ -35,8 +35,7 @@ export function TransferBookingForm({ onSubmit }: Props) {
       contactName: '',
       contactNumber: '',
       flightNumber: '',
-      luggageAmount: 0,
-      paymentConfirmed: false,
+      luggageAmount: 1,
     },
   });
 
@@ -181,18 +180,6 @@ export function TransferBookingForm({ onSubmit }: Props) {
             />
           </div>
         </div>
-        <Checkbox
-          name="paymentConfirmed"
-          label="I confirm full payment for this booking."
-          className="mt-4"
-          defaultChecked={watch('paymentConfirmed')}
-          onChange={(checked) => setValue('paymentConfirmed', checked)}
-        />
-        {errors.paymentConfirmed && (
-          <p className="text-[12px] text-red-500 pt-2">
-            {errors.paymentConfirmed.message}
-          </p>
-        )}
         <div className="flex justify-end gap-3">
           <Button type="submit">Submit Booking</Button>
         </div>

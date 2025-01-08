@@ -27,8 +27,6 @@ export function DrinksDeliveryBookingForm({ onSubmit }: Props) {
       location: '',
       time: '',
       acceptSubstitutes: false,
-      minimumSpend: 0,
-      paymentConfirmed: false,
     },
   });
 
@@ -57,20 +55,6 @@ export function DrinksDeliveryBookingForm({ onSubmit }: Props) {
             )}
           </div>
           <div>
-            <Text className="mb-2">Location</Text>
-            <Input
-              type="text"
-              className="w-full"
-              placeholder="Your villa address"
-              {...register('location', { required: 'Location is required' })}
-            />
-            {errors.location && (
-              <p className="text-[12px] text-red-500 pt-2">
-                {errors.location.message}
-              </p>
-            )}
-          </div>
-          <div>
             <Text className="mb-2">Time</Text>
             <Input
               type="time"
@@ -84,20 +68,16 @@ export function DrinksDeliveryBookingForm({ onSubmit }: Props) {
             )}
           </div>
           <div>
-            <Text className="mb-2">Minimum Spend Required (€)</Text>
+            <Text className="mb-2">Location</Text>
             <Input
-              type="number"
-              min="0"
+              type="text"
               className="w-full"
-              placeholder="e.g., 700"
-              {...register('minimumSpend', {
-                required: 'Minimum spend is required',
-                valueAsNumber: true,
-              })}
+              placeholder="Your villa address"
+              {...register('location', { required: 'Location is required' })}
             />
-            {errors.minimumSpend && (
+            {errors.location && (
               <p className="text-[12px] text-red-500 pt-2">
-                {errors.minimumSpend.message}
+                {errors.location.message}
               </p>
             )}
           </div>
@@ -109,20 +89,10 @@ export function DrinksDeliveryBookingForm({ onSubmit }: Props) {
           defaultChecked={watch('acceptSubstitutes')}
           onChange={(checked) => setValue('acceptSubstitutes', checked)}
         />
-        <Checkbox
-          name="paymentConfirmed"
-          label="I confirm 100% payment for this booking."
-          className="mt-4"
-          defaultChecked={watch('paymentConfirmed')}
-          onChange={(checked) => setValue('paymentConfirmed', checked)}
-        />
-        {errors.paymentConfirmed && (
-          <p className="text-[12px] text-red-500 pt-2">
-            {errors.paymentConfirmed.message}
-          </p>
-        )}
         <div className="flex justify-end gap-3">
-          <Button type="submit">Submit Booking</Button>
+          <Button type="submit" disabled={!watch('acceptSubstitutes')}>
+            Submit Booking
+          </Button>
         </div>
       </form>
     </div>
