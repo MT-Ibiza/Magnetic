@@ -9,7 +9,7 @@ export interface BoatBase {
   description?: string;
   latitude?: string;
   longitude?: string;
-  sizeInCentimeters: string;
+  sizeInCentimeters: number;
   itemId: number;
 }
 
