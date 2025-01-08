@@ -28,7 +28,7 @@ export async function POST(
               description: boatAttributes.description,
               latitude: boatAttributes.latitude,
               longitude: boatAttributes.longitude,
-              boatSizeInCentimeters: boatAttributes.boatSizeInCentimeters,
+              sizeInCentimeters: boatAttributes.sizeInCentimeters,
             },
           },
         },

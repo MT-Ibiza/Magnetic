@@ -32,7 +32,6 @@ import { useState } from 'react';
 import FormCategory from '../form-category';
 import FormVariant from '../form-variant';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
-import { BoatAttributesFormData, FormBoat } from '../form-boat';
 
 export interface Props {
   className?: string;
@@ -57,7 +56,6 @@ export function FormBoatItem(props: Props) {
   const categoryFound = categories.find(
     (category) => category.value == item?.categoryId
   );
-  const isBoatRental = service?.serviceType === 'boat_rental';
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openForm, setOpenForm] = useState('');
   const [selectedVariant, setSelectedVariant] = useState<ItemVariant>();
@@ -76,23 +74,23 @@ export function FormBoatItem(props: Props) {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm({
+  } = useForm<ItemBase>({
     defaultValues: {
-      name: '',
-      priceInCents: 0,
-      description: '',
-      categoryId: undefined,
+      name: item?.name,
+      priceInCents: centsToEuros(item?.priceInCents || 100),
+      description: item?.description,
+      categoryId: item?.categoryId,
       boatAttributes: {
-        boatType: '',
-        berth: '',
-        guests: 0,
-        crew: 0,
-        beamInCentimeters: 0,
-        cabins: 0,
-        fuelConsumption: 0,
-        latitude: '',
-        longitude: '',
-        boatSizeInCentimeters: '',
+        boatType: item?.boatAttributes?.boatType,
+        berth: item?.boatAttributes?.berth,
+        guests: item?.boatAttributes?.guests,
+        crew: item?.boatAttributes?.crew,
+        beamInCentimeters: item?.boatAttributes?.beamInCentimeters,
+        cabins: item?.boatAttributes?.cabins,
+        fuelConsumption: item?.boatAttributes?.fuelConsumption,
+        latitude: item?.boatAttributes?.latitude,
+        longitude: item?.boatAttributes?.longitude,
+        sizeInCentimeters: item?.boatAttributes?.sizeInCentimeters,
       },
     },
   });
@@ -176,12 +174,11 @@ export function FormBoatItem(props: Props) {
                 htmlFor="name"
                 className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
               >
-                Product Name
+                Boat Name
               </label>
               <Input
                 id="name"
                 type="text"
-                placeholder="Enter the Service name"
                 {...register('name', { required: true })}
                 className="mt-2"
               />
@@ -195,7 +192,7 @@ export function FormBoatItem(props: Props) {
                 htmlFor="priceInCents"
                 className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
               >
-                Price Product
+                Price
               </label>
               <Input
                 id="priceInCents"
@@ -368,16 +365,16 @@ export function FormBoatItem(props: Props) {
                   Boat Size (in cm)
                 </Text>
                 <Input
-                  type="text"
+                  type="number"
                   className="mt-2 w-full"
                   placeholder="Enter the boat size in centimeters"
-                  {...register('boatAttributes.boatSizeInCentimeters', {
+                  {...register('boatAttributes.sizeInCentimeters', {
                     required: 'Boat size is required',
                   })}
                 />
-                {errors.boatAttributes?.boatSizeInCentimeters && (
+                {errors.boatAttributes?.sizeInCentimeters && (
                   <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.boatSizeInCentimeters.message}
+                    {errors.boatAttributes?.sizeInCentimeters.message}
                   </p>
                 )}
               </div>

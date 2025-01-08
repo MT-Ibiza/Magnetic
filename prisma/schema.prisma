@@ -59,22 +59,22 @@ model Category {
 }
 
 model BoatAttributes {
-  id                    Int      @id @default(autoincrement())
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  boatType              String
-  berth                 String
-  guests                Int
-  crew                  Int
-  beamInCentimeters     Int
-  cabins                Int
-  fuelConsumption       Int
-  description           String?
-  latitude              String?
-  longitude             String?
-  boatSizeInCentimeters String
-  itemId                Int      @unique
-  item                  Item     @relation(fields: [itemId], references: [id])
+  id                Int      @id @default(autoincrement())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  boatType          String
+  berth             String
+  guests            Int
+  crew              Int
+  beamInCentimeters Int
+  cabins            Int
+  fuelConsumption   Int
+  description       String?
+  latitude          String?
+  longitude         String?
+  sizeInCentimeters Int      @default(100)
+  itemId            Int      @unique
+  item              Item     @relation(fields: [itemId], references: [id])
 }
 
 model Item {

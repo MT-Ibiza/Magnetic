@@ -11,7 +11,7 @@ export interface BoatAttributesFormData {
   fuelConsumption: number;
   latitude: string;
   longitude: string;
-  boatSizeInCentimeters: string;
+  sizeInCentimeters: string;
 }
 
 interface Props {
@@ -35,7 +35,7 @@ export function FormBoat({ boat, onSubmit }: Props) {
       fuelConsumption: 0,
       latitude: '',
       longitude: '',
-      boatSizeInCentimeters: '',
+      sizeInCentimeters: '',
     },
   });
 
@@ -165,13 +165,13 @@ export function FormBoat({ boat, onSubmit }: Props) {
           type="text"
           className="mt-2 w-full"
           placeholder="Enter the boat size in centimeters"
-          {...register('boatSizeInCentimeters', {
+          {...register('sizeInCentimeters', {
             required: 'Boat size is required',
           })}
         />
-        {errors.boatSizeInCentimeters && (
+        {errors.sizeInCentimeters && (
           <p className="text-[12px] text-red-500 pt-2">
-            {errors.boatSizeInCentimeters.message}
+            {errors.sizeInCentimeters.message}
           </p>
         )}
       </div>

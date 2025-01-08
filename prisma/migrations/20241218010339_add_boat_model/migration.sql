@@ -13,7 +13,7 @@ CREATE TABLE "BoatAttributes" (
     "description" TEXT,
     "latitude" TEXT,
     "longitude" TEXT,
-    "boatSizeInCentimeters" TEXT NOT NULL,
+    "sizeInCentimeters" TEXT NOT NULL,
     "itemId" INTEGER NOT NULL,
 
     CONSTRAINT "BoatAttributes_pkey" PRIMARY KEY ("id")

@@ -48,6 +48,7 @@ export function EditItemPage() {
       <div className="bg-base-100 listingSection__wrap">
         {item.service.serviceType === 'boat_rental' ? (
           <FormBoatItem
+            item={item}
             serviceId={serviceId}
             onSave={() => {
               navigate(`/services/${serviceId}`, { replace: true });
