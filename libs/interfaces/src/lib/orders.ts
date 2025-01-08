@@ -1,9 +1,4 @@
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-}
+import { User } from './users';
 
 export interface Order {
   id: number;

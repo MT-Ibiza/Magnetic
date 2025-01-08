@@ -1,4 +1,3 @@
-import { Cart } from './items';
 import { Package } from './packages';
 
 export interface CurrentUser {
