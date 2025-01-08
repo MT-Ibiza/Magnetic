@@ -3,15 +3,21 @@ import { useCartStore } from '../../hooks/useCartStore';
 import { useMutation } from '@tanstack/react-query';
 import { createOrder } from '../../apis/api-order';
 import { useNavigate } from 'react-router-dom';
-import { Order, OrderItem } from '@magnetic/interfaces';
+import { Order } from '@magnetic/interfaces';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
-import OrderBookings from '../../components/services/order-bookings';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import RenderBookingForm from '../../components/services/booking-forms/render-booking-form';
 
 export function CheckoutPage() {
   const { cart, addItem, removeItem, clearCart } = useCartStore();
   const [forms, setForms] = useState<
-    { data: any; serviceId: number; itemId?: number }[]
+    {
+      data: any;
+      serviceId: number;
+      serviceType: string;
+      serviceName: string;
+      itemId?: number;
+    }[]
   >([]);
   const navigate = useNavigate();
 
@@ -39,7 +45,28 @@ export function CheckoutPage() {
     0
   );
 
-  const items = cart.map((cartItem) => cartItem.item);
+  useEffect(() => {
+    if (cart.length) {
+      const allServices = cart.map((orderItem) => {
+        return orderItem.item.service;
+      });
+
+      const servicesNeedForm = allServices.filter(
+        (item, index, self) => index === self.findIndex((t) => t.id === item.id)
+      );
+
+      const forms = servicesNeedForm.map((service) => {
+        return {
+          data: {},
+          serviceId: service.id,
+          serviceType: service.serviceType,
+          serviceName: service.name,
+          itemId: undefined,
+        };
+      });
+      setForms(forms);
+    }
+  }, [cart]);
 
   return (
     <div className={`nc-CheckOutPagePageMain`}>
@@ -55,14 +82,21 @@ export function CheckoutPage() {
                 pay
               </Text>
             </div>
-            <OrderBookings
-              items={cart}
-              onSubmit={(data) => {
-                const allForms = forms.concat(data.form);
-                setForms(allForms);
-                console.log('allForms: ', allForms);
-              }}
-            />
+            {forms.map((form, index) => (
+              <div key={index}>
+                <h1>{form.serviceName}</h1>
+                <div className="border border-md p-5 my-3">
+                  <RenderBookingForm
+                    type={form.serviceType}
+                    formData={form.data}
+                    onSubmit={(data) => {
+                      form.data = data;
+                      setForms(forms);
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
             <div>
               <Text>Payment Methods</Text>
               <div className="join join-vertical w-full my-5">
