@@ -35,18 +35,19 @@ model User {
 }
 
 model Service {
-  id          Int         @id @default(autoincrement())
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id          Int               @id @default(autoincrement())
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
   name        String
   description String?
-  serviceType ServiceType @default(none)
+  serviceType ServiceType       @default(none)
   items       Item[]
   script      String?
   packageId   Int
-  package     Package     @relation(fields: [packageId], references: [id])
+  package     Package           @relation(fields: [packageId], references: [id])
   providerId  Int?
-  provider    Provider?   @relation(fields: [providerId], references: [id])
+  provider    Provider?         @relation(fields: [providerId], references: [id])
+  forms       CartBookingForm[]
 }
 
 model Category {
@@ -130,12 +131,13 @@ model Provider {
 }
 
 model Cart {
-  id        Int        @id @default(autoincrement())
-  userId    Int        @unique
-  user      User       @relation(fields: [userId], references: [id])
+  id        Int               @id @default(autoincrement())
+  userId    Int               @unique
+  user      User              @relation(fields: [userId], references: [id])
   items     CartItem[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  forms     CartBookingForm[]
 }
 
 model CartItem {
@@ -147,6 +149,18 @@ model CartItem {
   cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model CartBookingForm {
+  id         Int      @id @default(autoincrement())
+  cartItemId Int? //could be associate specific item and service
+  formData   Json
+  cartId     Int
+  cart       Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  serviceId  Int
+  service    Service  @relation(fields: [serviceId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Order {
