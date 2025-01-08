@@ -20,7 +20,9 @@ function RenderBookingForm(props: Props) {
   return (
     <div>
       {type === 'none' && <div></div>}
-      {type === 'transfer' && <TransferBookingForm onSubmit={onSubmit} />}
+      {type === 'transfer' && (
+        <TransferBookingForm onSubmit={onSubmit} formData={formData} />
+      )}
       {type === 'drinks' && (
         <DrinksDeliveryBookingForm onSubmit={onSubmit} formData={formData} />
       )}

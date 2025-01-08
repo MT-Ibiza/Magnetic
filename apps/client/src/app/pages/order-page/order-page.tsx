@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useOrder } from '../../hooks/useOrder';
 import { Text } from '@magnetic/ui';
@@ -8,6 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import { editFormOrder } from '../../apis/api-order';
 import { OrderForm } from '@magnetic/interfaces';
 import { toast } from 'sonner';
+import RenderBookingForm from '../../components/services/booking-forms/render-booking-form';
 
 interface Props {}
 
@@ -15,8 +16,10 @@ function OrderPage(props: Props) {
   const {} = props;
   const params = useParams();
   const orderId = parseInt(params.id || '');
+  const [forms, setForms] = useState<OrderForm[]>([]);
 
   const { isLoading, isError, order, error } = useOrder(orderId);
+
   const editFormMutation = useMutation<
     OrderForm,
     Error,
@@ -32,6 +35,13 @@ function OrderPage(props: Props) {
       toast.error(`Cannot submitted form!`);
     },
   });
+
+  useEffect(() => {
+    if (order?.forms.length) {
+      setForms(order.forms);
+      console.log(order.forms);
+    }
+  }, [order]);
 
   if (isLoading) {
     return <p>Loading..</p>;
@@ -52,7 +62,24 @@ function OrderPage(props: Props) {
         <OrderItemsTable items={order.items} />
       </div>
       <div className="bg-base-100 listingSection__wrap">
-        <OrderBookings
+        {forms.map((form, index) => (
+          <div key={index}>
+            <h1>{form.service.name}</h1>
+            <div className="border border-md p-5 my-3">
+              <RenderBookingForm
+                type={form.service.serviceType}
+                formData={form.formData}
+                onSubmit={async (data) => {
+                  await editFormMutation.mutateAsync({
+                    form: data,
+                    formId: form.id,
+                  });
+                }}
+              />
+            </div>
+          </div>
+        ))}
+        {/* <OrderBookings
           items={order.items}
           onSubmit={async (data) => {
             await editFormMutation.mutateAsync({
@@ -61,7 +88,7 @@ function OrderPage(props: Props) {
             });
           }}
           forms={order.forms}
-        />
+        /> */}
       </div>
     </div>
   );

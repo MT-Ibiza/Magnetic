@@ -16,9 +16,10 @@ export interface TransferFormData {
 
 interface Props {
   onSubmit: (data: TransferFormData) => void;
+  formData?: any;
 }
 
-export function TransferBookingForm({ onSubmit }: Props) {
+export function TransferBookingForm({ onSubmit, formData }: Props) {
   const {
     register,
     handleSubmit,
@@ -26,21 +27,23 @@ export function TransferBookingForm({ onSubmit }: Props) {
     setValue,
     watch,
   } = useForm<TransferFormData>({
-    defaultValues: {
-      date: '',
-      time: '',
-      pickUpLocation: '',
-      dropOffLocation: '',
-      numberOfPeople: 1,
-      contactName: '',
-      contactNumber: '',
-      flightNumber: '',
-      luggageAmount: 1,
-    },
+    defaultValues: formData
+      ? {
+          date: formData.date,
+          time: formData.time,
+          pickUpLocation: formData.pickUpLocation,
+          dropOffLocation: formData.dropOffLocation,
+          numberOfPeople: formData.numberOfPeople,
+          contactName: formData.contactName,
+          contactNumber: formData.contactNumber,
+          flightNumber: formData.flightNumber,
+          luggageAmount: formData.luggageAmount,
+        }
+      : undefined,
   });
 
   const handleFormSubmit = async (data: TransferFormData) => {
-    console.log(data);
+    onSubmit(data);
   };
 
   return (

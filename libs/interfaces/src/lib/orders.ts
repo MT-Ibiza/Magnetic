@@ -39,8 +39,13 @@ export interface OrderBookingForm {
 }
 
 export interface OrderForm {
+  id: number;
   formData: any;
   serviceId: number;
   orderId: number;
   orderItemId?: number;
+  service: {
+    name: string;
+    serviceType: string;
+  };
 }

@@ -27,7 +27,16 @@ export async function GET(
             },
           },
         },
-        forms: true,
+        forms: {
+          include: {
+            service: {
+              select: {
+                name: true,
+                serviceType: true,
+              },
+            },
+          },
+        },
       },
     });
     return NextResponse.json(order);
