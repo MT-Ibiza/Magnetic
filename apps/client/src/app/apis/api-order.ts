@@ -3,11 +3,11 @@ import {
   URL_CREATE_ORDER,
   URL_GET_ORDER,
   URL_GET_ORDERS,
-  accessToken,
 } from './api-constants';
 
 export async function createOrder(): Promise<Order> {
   const url = URL_CREATE_ORDER;
+  const accessToken = localStorage.getItem('magnetic_auth');
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -24,6 +24,7 @@ export async function createOrder(): Promise<Order> {
 
 export async function getOrder(id: number): Promise<Order> {
   const url = URL_GET_ORDER(id);
+  const accessToken = localStorage.getItem('magnetic_auth');
   const response = await fetch(url, {
     method: 'GET',
     headers: {
@@ -40,6 +41,7 @@ export async function getOrder(id: number): Promise<Order> {
 
 export async function getOrders(): Promise<Order[]> {
   const url = URL_GET_ORDERS;
+  const accessToken = localStorage.getItem('magnetic_auth');
   const response = await fetch(url, {
     method: 'GET',
     headers: {
