@@ -3,8 +3,11 @@ import { useCartStore } from '../../hooks/useCartStore';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import { useCart } from '../../hooks/useCart';
 
 export function CartPage() {
+  const { addItemToCart } = useCart();
+
   const { cart, addItem, removeItem } = useCartStore();
   const total = cart.reduce(
     (sum, item) => sum + item.item.priceInCents * item.quantity,
@@ -21,6 +24,44 @@ export function CartPage() {
       </EmptyState>
     );
   }
+
+  const handleAddItem = (item: any, quantity: number) => {
+    const newVal = quantity + 1;
+    addItemToCart.mutate(
+      { itemId: item.id, quantity: newVal },
+      {
+        onSuccess: () => {
+          addItem({
+            id: item.id,
+            item: item,
+            quantity: newVal,
+          });
+          // showAlert('Item added to the cart', 'success');
+        },
+        onError: () => {
+          // showAlert('Failed to add item to the cart', 'error');
+        },
+      }
+    );
+  };
+
+  const handleRemoveItem = (item: any, quantity: number) => {
+    const newVal = quantity - 1;
+    if (newVal > 0) {
+      addItemToCart.mutate(
+        { itemId: item.id, quantity: newVal },
+        {
+          onSuccess: () => {
+            removeItem(item.id);
+            // showAlert('Item removed to the cart', 'success');
+          },
+          onError: () => {
+            // showAlert('Failed to remove item to the cart', 'error');
+          },
+        }
+      );
+    }
+  };
 
   return (
     <div className="flex flex-col gap-[15px] lg:grid lg:grid-cols-12 lg:gap-x-[20px]">
@@ -58,7 +99,7 @@ export function CartPage() {
               <div className="flex justify-center items-center gap-2">
                 <button
                   className="w-6 h-6 flex items-center justify-center rounded-full border border-gray-300"
-                  onClick={() => removeItem(item.id)}
+                  onClick={() => handleRemoveItem(item, item.quantity)}
                 >
                   <FiMinus size={16} color="#6b7280" />
                 </button>
@@ -71,7 +112,7 @@ export function CartPage() {
                 />
                 <button
                   className="w-6 h-6 flex items-center justify-center rounded-full border border-gray-300"
-                  onClick={() => addItem(item)}
+                  onClick={() => handleAddItem(item, item.quantity)}
                 >
                   <FiPlus size={16} color="#6b7280" />
                 </button>

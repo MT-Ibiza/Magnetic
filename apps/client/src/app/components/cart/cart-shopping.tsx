@@ -36,6 +36,7 @@ export function CartShopping() {
 
   useEffect(() => {
     if (data) {
+      clearCart();
       data.items.map((item) => {
         return addItem({
           id: item.item.id,

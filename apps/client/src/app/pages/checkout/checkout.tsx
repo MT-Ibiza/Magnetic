@@ -3,13 +3,14 @@ import { useCartStore } from '../../hooks/useCartStore';
 import { useMutation } from '@tanstack/react-query';
 import { createOrder } from '../../apis/api-order';
 import { useNavigate } from 'react-router-dom';
-import { Order } from '@magnetic/interfaces';
+import { Order, OrderItem } from '@magnetic/interfaces';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
+import OrderBookings from '../../components/services/order-bookings';
 
 export function CheckoutPage() {
   const { cart, addItem, removeItem, clearCart } = useCartStore();
   const navigate = useNavigate();
-
+  console.log(cart);
   const createOrderMutation = useMutation({
     mutationFn: () => createOrder(),
     onSuccess: (order: Order) => {
@@ -34,6 +35,8 @@ export function CheckoutPage() {
     0
   );
 
+  const items = cart.map((cartItem) => cartItem.item);
+
   return (
     <div className={`nc-CheckOutPagePageMain`}>
       <main className="container mt-11 flex flex-col gap-[15px] lg:grid lg:grid-cols-12 lg:gap-x-[20px]">
@@ -48,6 +51,7 @@ export function CheckoutPage() {
                 pay
               </Text>
             </div>
+            <OrderBookings items={cart as OrderItem} />
             <div>
               <Text>Payment Methods</Text>
               <div className="join join-vertical w-full my-5">

@@ -1,5 +1,6 @@
 import { OrderItem } from '@magnetic/interfaces';
 import RenderBookingForm from './booking-forms/render-booking-form';
+import { Text } from '@magnetic/ui';
 
 interface Props {
   items: OrderItem[];
@@ -15,13 +16,44 @@ function OrderBookings(props: Props) {
   );
   return (
     <div className="s">
-      <h1>Please Fill this forms</h1>
-      <div>
+      <h1>Complete this forms</h1>
+      {/* <div role="tablist" className="tabs tabs-bordered">
+        <input
+          type="radio"
+          name="my_tabs_1"
+          role="tab"
+          className="tab"
+          aria-label="Tab 1"
+        />
+        <div role="tabpanel" className="tab-content p-10">
+          Tab content 1
+        </div>
+        <input
+          type="radio"
+          name="my_tabs_1"
+          role="tab"
+          className="tab"
+          aria-label="Tab 2"
+          checked
+        />
+        <div role="tabpanel" className="tab-content p-10">
+          Tab content 2
+        </div>
+        <input
+          type="radio"
+          name="my_tabs_1"
+          role="tab"
+          className="tab"
+          aria-label="Tab 3"
+        />
+        <div role="tabpanel" className="tab-content p-10">
+          Tab content 3
+        </div>
+      </div> */}
+      <div className="mt-5">
         {servicesType.map((service, index) => (
           <div key={index}>
-            <div>
-              {service.name} / {service.serviceType}
-            </div>
+            <h1>{service.name}</h1>
             <div className="border border-md p-5 my-3">
               <RenderBookingForm type={service.serviceType} />
             </div>

@@ -64,6 +64,7 @@ function ItemCardCounter(props: Props) {
       );
     }
   };
+
   return (
     <>
       <div className="border rounded-xl border-neutral-200 p-4 space-y-4 shadow-sm hover:border-primary-700 transition-shadow">
