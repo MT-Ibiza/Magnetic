@@ -13,18 +13,20 @@ export interface Order {
   totalInCents: number;
 }
 
+export interface ItemBaseFields {
+  name: string;
+  service: {
+    id: number;
+    name: string;
+    serviceType: string;
+  };
+}
+
 export interface OrderItem {
   id: number;
   priceInCents: number;
   quantity: number;
   itemId: number;
   orderId: number;
-  item: {
-    name: string;
-    service: {
-      id: number;
-      name: string;
-      serviceType: string;
-    };
-  };
+  item: ItemBaseFields;
 }

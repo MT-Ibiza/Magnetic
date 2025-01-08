@@ -1,9 +1,9 @@
-import { OrderItem } from '@magnetic/interfaces';
+import { Cart, CartItem, OrderItem } from '@magnetic/interfaces';
 import RenderBookingForm from './booking-forms/render-booking-form';
 import { Text } from '@magnetic/ui';
 
 interface Props {
-  items: OrderItem[];
+  items: OrderItem[] | CartItem[];
 }
 
 function OrderBookings(props: Props) {

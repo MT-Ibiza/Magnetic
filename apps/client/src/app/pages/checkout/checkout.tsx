@@ -51,7 +51,7 @@ export function CheckoutPage() {
                 pay
               </Text>
             </div>
-            <OrderBookings items={cart as OrderItem} />
+            <OrderBookings items={cart} />
             <div>
               <Text>Payment Methods</Text>
               <div className="join join-vertical w-full my-5">
