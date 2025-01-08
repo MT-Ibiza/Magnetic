@@ -4,10 +4,11 @@ import { Text } from '@magnetic/ui';
 
 interface Props {
   items: OrderItem[] | CartItem[];
+  onSubmit: (form: { data: any; serviceId: number }) => void;
 }
 
 function OrderBookings(props: Props) {
-  const { items } = props;
+  const { items, onSubmit } = props;
   const allServices = items.map((orderItem) => {
     return orderItem.item.service;
   });
@@ -55,7 +56,12 @@ function OrderBookings(props: Props) {
           <div key={index}>
             <h1>{service.name}</h1>
             <div className="border border-md p-5 my-3">
-              <RenderBookingForm type={service.serviceType} />
+              <RenderBookingForm
+                type={service.serviceType}
+                onSubmit={(data) => {
+                  onSubmit({ data, serviceId: service.id });
+                }}
+              />
             </div>
           </div>
         ))}

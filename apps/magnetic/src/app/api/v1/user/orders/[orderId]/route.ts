@@ -27,6 +27,7 @@ export async function GET(
             },
           },
         },
+        forms: true,
       },
     });
     return NextResponse.json(order);

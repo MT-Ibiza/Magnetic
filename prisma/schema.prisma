@@ -35,19 +35,19 @@ model User {
 }
 
 model Service {
-  id          Int               @id @default(autoincrement())
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  id          Int                @id @default(autoincrement())
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
   name        String
   description String?
-  serviceType ServiceType       @default(none)
+  serviceType ServiceType        @default(none)
   items       Item[]
   script      String?
   packageId   Int
-  package     Package           @relation(fields: [packageId], references: [id])
+  package     Package            @relation(fields: [packageId], references: [id])
   providerId  Int?
-  provider    Provider?         @relation(fields: [providerId], references: [id])
-  forms       CartBookingForm[]
+  provider    Provider?          @relation(fields: [providerId], references: [id])
+  forms       OrderBookingForm[]
 }
 
 model Category {
@@ -131,13 +131,12 @@ model Provider {
 }
 
 model Cart {
-  id        Int               @id @default(autoincrement())
-  userId    Int               @unique
-  user      User              @relation(fields: [userId], references: [id])
+  id        Int        @id @default(autoincrement())
+  userId    Int        @unique
+  user      User       @relation(fields: [userId], references: [id])
   items     CartItem[]
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
-  forms     CartBookingForm[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model CartItem {
@@ -151,33 +150,34 @@ model CartItem {
   updatedAt DateTime @updatedAt
 }
 
-model CartBookingForm {
-  id         Int      @id @default(autoincrement())
-  cartItemId Int? //could be associate specific item and service
-  formData   Json
-  cartId     Int
-  cart       Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  serviceId  Int
-  service    Service  @relation(fields: [serviceId], references: [id])
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model OrderBookingForm {
+  id          Int      @id @default(autoincrement())
+  orderItemId Int? //could be associate specific item and service
+  formData    Json
+  orderId     Int
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  serviceId   Int
+  service     Service  @relation(fields: [serviceId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Order {
-  id           Int         @id @default(autoincrement())
+  id           Int                @id @default(autoincrement())
   userId       Int
-  user         User        @relation(fields: [userId], references: [id])
+  user         User               @relation(fields: [userId], references: [id])
   items        OrderItem[]
   totalInCents Int
-  status       String      @default("pending")
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  status       String             @default("pending")
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  forms        OrderBookingForm[]
 }
 
 model OrderItem {
   id           Int      @id @default(autoincrement())
-  quantity     Int // Cantidad del item en la orden
-  priceInCents Int // Precio al momento de la orden
+  quantity     Int
+  priceInCents Int
   itemId       Int
   item         Item     @relation(fields: [itemId], references: [id])
   orderId      Int

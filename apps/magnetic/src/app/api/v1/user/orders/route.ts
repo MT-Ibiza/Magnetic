@@ -4,6 +4,8 @@ import { getTokenFromRequest } from '../../util';
 
 export async function POST(request: Request) {
   try {
+    const body: { forms: any[] } = await request.json();
+    const { forms } = body;
     const decodedToken = getTokenFromRequest(request);
     if (!decodedToken) {
       return NextResponse.json({ message: 'Invalid Token' }, { status: 403 });
@@ -51,6 +53,16 @@ export async function POST(request: Request) {
           items: {
             createMany: {
               data: items,
+            },
+          },
+          forms: {
+            createMany: {
+              data: forms.map((form) => {
+                return {
+                  formData: form.data,
+                  serviceId: form.serviceId,
+                };
+              }),
             },
           },
         },

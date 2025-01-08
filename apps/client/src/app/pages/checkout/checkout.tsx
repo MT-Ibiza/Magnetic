@@ -6,13 +6,17 @@ import { useNavigate } from 'react-router-dom';
 import { Order, OrderItem } from '@magnetic/interfaces';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import OrderBookings from '../../components/services/order-bookings';
+import { useState } from 'react';
 
 export function CheckoutPage() {
   const { cart, addItem, removeItem, clearCart } = useCartStore();
+  const [forms, setForms] = useState<
+    { data: any; serviceId: number; itemId?: number }[]
+  >([]);
   const navigate = useNavigate();
-  console.log(cart);
+
   const createOrderMutation = useMutation({
-    mutationFn: () => createOrder(),
+    mutationFn: () => createOrder(forms),
     onSuccess: (order: Order) => {
       clearCart();
       navigate(`/orders/${order.id}`);
@@ -51,7 +55,14 @@ export function CheckoutPage() {
                 pay
               </Text>
             </div>
-            <OrderBookings items={cart} />
+            <OrderBookings
+              items={cart}
+              onSubmit={(form) => {
+                const allForms = forms.concat(form);
+                setForms(allForms);
+                console.log('allForms: ', allForms);
+              }}
+            />
             <div>
               <Text>Payment Methods</Text>
               <div className="join join-vertical w-full my-5">

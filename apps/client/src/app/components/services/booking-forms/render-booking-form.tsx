@@ -9,22 +9,23 @@ import ChildcareBookingForm from './childcare-booking-form';
 
 interface Props {
   type: string;
+  itemId?: number;
+  onSubmit: (data: any) => void;
 }
 
 function RenderBookingForm(props: Props) {
-  const { type } = props;
-
+  const { type, itemId, onSubmit } = props;
   return (
     <div>
       {type === 'none' && <div></div>}
-      {type === 'transfer' && <TransferBookingForm onSubmit={() => {}} />}
-      {type === 'drinks' && <DrinksDeliveryBookingForm onSubmit={() => {}} />}
+      {type === 'transfer' && <TransferBookingForm onSubmit={onSubmit} />}
+      {type === 'drinks' && <DrinksDeliveryBookingForm onSubmit={onSubmit} />}
       {type === 'food' && <div></div>}
-      {type === 'chefs' && <WeeklyChefServiceForm onSubmit={() => {}} />}
-      {type === 'boat_rental' && <BoatCharterBookingForm onSubmit={() => {}} />}
-      {type === 'spa' && <SpaBeautyBookingForm onSubmit={() => {}} />}
-      {type === 'security' && <SecurityBookingForm onSubmit={() => {}} />}
-      {type === 'childcare' && <ChildcareBookingForm onSubmit={() => {}} />}
+      {type === 'chefs' && <WeeklyChefServiceForm onSubmit={onSubmit} />}
+      {type === 'boat_rental' && <BoatCharterBookingForm onSubmit={onSubmit} />}
+      {type === 'spa' && <SpaBeautyBookingForm onSubmit={onSubmit} />}
+      {type === 'security' && <SecurityBookingForm onSubmit={onSubmit} />}
+      {type === 'childcare' && <ChildcareBookingForm onSubmit={onSubmit} />}
     </div>
   );
 }

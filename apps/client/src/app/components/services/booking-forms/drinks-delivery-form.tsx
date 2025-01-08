@@ -31,7 +31,7 @@ export function DrinksDeliveryBookingForm({ onSubmit }: Props) {
   });
 
   const handleFormSubmit = async (data: DrinksDeliveryFormData) => {
-    console.log(data);
+    onSubmit(data);
   };
 
   return (

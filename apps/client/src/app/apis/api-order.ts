@@ -5,15 +5,19 @@ import {
   URL_GET_ORDERS,
 } from './api-constants';
 
-export async function createOrder(): Promise<Order> {
+export async function createOrder(
+  forms: { data: any; serviceId: number; itemId?: number }[]
+): Promise<Order> {
   const url = URL_CREATE_ORDER;
   const accessToken = localStorage.getItem('magnetic_auth');
+
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
+    body: JSON.stringify({ forms }),
   });
 
   const dataJson = await response.json();
