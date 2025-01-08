@@ -140,6 +140,7 @@ export function FormBoatItem(props: Props) {
             crew: Number(boatAttributes.crew),
             beamInCentimeters: Number(boatAttributes.beamInCentimeters),
             fuelConsumption: Number(boatAttributes.fuelConsumption),
+            sizeInCentimeters: Number(boatAttributes.sizeInCentimeters),
           },
         },
       });
@@ -158,6 +159,7 @@ export function FormBoatItem(props: Props) {
             crew: Number(boatAttributes.crew),
             beamInCentimeters: Number(boatAttributes.beamInCentimeters),
             fuelConsumption: Number(boatAttributes.fuelConsumption),
+            sizeInCentimeters: Number(boatAttributes.sizeInCentimeters),
           },
         },
       });

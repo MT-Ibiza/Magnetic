@@ -79,23 +79,67 @@ export async function PUT(
   { params }: { params: { id: string; itemId: string } }
 ) {
   const data: EditItem = await request.json();
-  const { name, priceInCents, description, categoryId } = data;
+  const { name, priceInCents, description, categoryId, boatAttributes } = data;
   try {
-    console.log('serviceId: ', params.id);
-    console.log('itemId: ', params.itemId);
-    const service = await db.item.update({
-      where: {
-        id: Number(params.itemId),
-        serviceId: Number(params.id),
-      },
-      data: {
-        name,
-        priceInCents,
-        description,
-        categoryId,
-      },
-    });
-    return NextResponse.json(service, { status: 201 });
+    if (boatAttributes) {
+      const item = await db.item.update({
+        where: {
+          id: Number(params.itemId),
+          serviceId: Number(params.id),
+        },
+        data: {
+          name,
+          description,
+          priceInCents,
+          serviceId: Number(params.id),
+          boatAttributes: {
+            upsert: {
+              create: {
+                boatType: boatAttributes.boatType,
+                berth: boatAttributes.berth,
+                guests: boatAttributes.guests,
+                crew: boatAttributes.crew,
+                beamInCentimeters: boatAttributes.beamInCentimeters,
+                cabins: boatAttributes.cabins,
+                fuelConsumption: boatAttributes.fuelConsumption,
+                description: boatAttributes.description,
+                latitude: boatAttributes.latitude,
+                longitude: boatAttributes.longitude,
+                sizeInCentimeters: boatAttributes.sizeInCentimeters,
+              },
+              update: {
+                boatType: boatAttributes.boatType,
+                berth: boatAttributes.berth,
+                guests: boatAttributes.guests,
+                crew: boatAttributes.crew,
+                beamInCentimeters: boatAttributes.beamInCentimeters,
+                cabins: boatAttributes.cabins,
+                fuelConsumption: boatAttributes.fuelConsumption,
+                description: boatAttributes.description,
+                latitude: boatAttributes.latitude,
+                longitude: boatAttributes.longitude,
+                sizeInCentimeters: boatAttributes.sizeInCentimeters,
+              },
+            },
+          },
+        },
+      });
+      return NextResponse.json(item, { status: 201 });
+    } else {
+      const item = await db.item.update({
+        where: {
+          id: Number(params.itemId),
+          serviceId: Number(params.id),
+        },
+        data: {
+          name,
+          priceInCents,
+          description,
+          categoryId,
+        },
+      });
+      return NextResponse.json(item, { status: 201 });
+    }
   } catch (error: any) {
     return NextResponse.json(
       {
