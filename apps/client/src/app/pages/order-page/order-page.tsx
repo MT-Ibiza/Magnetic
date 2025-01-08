@@ -4,6 +4,10 @@ import { useOrder } from '../../hooks/useOrder';
 import { Text } from '@magnetic/ui';
 import OrderItemsTable from '../../components/order/order-items-table';
 import OrderBookings from '../../components/services/order-bookings';
+import { useMutation } from '@tanstack/react-query';
+import { editFormOrder } from '../../apis/api-order';
+import { OrderForm } from '@magnetic/interfaces';
+import { toast } from 'sonner';
 
 interface Props {}
 
@@ -13,6 +17,21 @@ function OrderPage(props: Props) {
   const orderId = parseInt(params.id || '');
 
   const { isLoading, isError, order, error } = useOrder(orderId);
+  const editFormMutation = useMutation<
+    OrderForm,
+    Error,
+    { form: any; formId?: number }
+  >({
+    mutationFn: (data) => {
+      return editFormOrder({ id: data.formId || 0, formData: data.form });
+    },
+    onSuccess: () => {
+      toast.success(`Form submitted!`);
+    },
+    onError: () => {
+      toast.error(`Cannot submitted form!`);
+    },
+  });
 
   if (isLoading) {
     return <p>Loading..</p>;
@@ -35,7 +54,12 @@ function OrderPage(props: Props) {
       <div className="bg-base-100 listingSection__wrap">
         <OrderBookings
           items={order.items}
-          onSubmit={() => {}}
+          onSubmit={async (data) => {
+            await editFormMutation.mutateAsync({
+              form: data.form.data,
+              formId: data.formId,
+            });
+          }}
           forms={order.forms}
         />
       </div>

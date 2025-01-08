@@ -57,8 +57,8 @@ export function CheckoutPage() {
             </div>
             <OrderBookings
               items={cart}
-              onSubmit={(form) => {
-                const allForms = forms.concat(form);
+              onSubmit={(data) => {
+                const allForms = forms.concat(data.form);
                 setForms(allForms);
                 console.log('allForms: ', allForms);
               }}

@@ -1,16 +1,17 @@
 import { CartItem, OrderForm, OrderItem } from '@magnetic/interfaces';
 import RenderBookingForm from './booking-forms/render-booking-form';
-import { Text } from '@magnetic/ui';
 
 interface Props {
   items: OrderItem[] | CartItem[];
-  onSubmit: (form: { data: any; serviceId: number }) => void;
+  onSubmit: (data: {
+    form: { data: any; serviceId: number };
+    formId?: number;
+  }) => void;
   forms?: OrderForm[];
 }
 
 function OrderBookings(props: Props) {
   const { items, onSubmit, forms = [] } = props;
-  console.log('OrderBookings: ', forms);
   const allServices = items.map((orderItem) => {
     return orderItem.item.service;
   });
@@ -66,7 +67,11 @@ function OrderBookings(props: Props) {
                   forms.find((form) => form.serviceId === service.id)?.formData
                 }
                 onSubmit={(data) => {
-                  onSubmit({ data, serviceId: service.id });
+                  onSubmit({
+                    form: { data, serviceId: service.id },
+                    formId: forms.find((form) => form.serviceId === service.id)
+                      ?.orderId,
+                  });
                 }}
               />
             </div>
