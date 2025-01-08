@@ -1,20 +1,24 @@
-import { Cart, CartItem, OrderItem } from '@magnetic/interfaces';
+import { CartItem, OrderForm, OrderItem } from '@magnetic/interfaces';
 import RenderBookingForm from './booking-forms/render-booking-form';
 import { Text } from '@magnetic/ui';
 
 interface Props {
   items: OrderItem[] | CartItem[];
   onSubmit: (form: { data: any; serviceId: number }) => void;
+  forms?: OrderForm[];
 }
 
 function OrderBookings(props: Props) {
-  const { items, onSubmit } = props;
+  const { items, onSubmit, forms = [] } = props;
+  console.log('OrderBookings: ', forms);
   const allServices = items.map((orderItem) => {
     return orderItem.item.service;
   });
+
   const servicesType = allServices.filter(
     (item, index, self) => index === self.findIndex((t) => t.id === item.id)
   );
+
   return (
     <div className="s">
       <h1>Complete this forms</h1>
@@ -58,6 +62,9 @@ function OrderBookings(props: Props) {
             <div className="border border-md p-5 my-3">
               <RenderBookingForm
                 type={service.serviceType}
+                formData={
+                  forms.find((form) => form.serviceId === service.id)?.formData
+                }
                 onSubmit={(data) => {
                   onSubmit({ data, serviceId: service.id });
                 }}

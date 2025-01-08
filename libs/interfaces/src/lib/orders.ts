@@ -11,6 +11,7 @@ export interface Order {
   userId: number;
   status: string;
   totalInCents: number;
+  forms: OrderForm[];
 }
 
 export interface ItemBaseFields {
@@ -29,4 +30,17 @@ export interface OrderItem {
   itemId: number;
   orderId: number;
   item: ItemBaseFields;
+}
+
+export interface OrderBookingForm {
+  data: any;
+  serviceId: number;
+  itemId?: number;
+}
+
+export interface OrderForm {
+  formData: any;
+  serviceId: number;
+  orderId: number;
+  orderItemId?: number;
 }

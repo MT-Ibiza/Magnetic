@@ -33,7 +33,11 @@ function OrderPage(props: Props) {
         <OrderItemsTable items={order.items} />
       </div>
       <div className="bg-base-100 listingSection__wrap">
-        <OrderBookings items={order.items} />
+        <OrderBookings
+          items={order.items}
+          onSubmit={() => {}}
+          forms={order.forms}
+        />
       </div>
     </div>
   );

@@ -12,9 +12,11 @@ export interface DrinksDeliveryFormData {
 
 interface Props {
   onSubmit: (data: DrinksDeliveryFormData) => void;
+  formData?: any;
 }
 
-export function DrinksDeliveryBookingForm({ onSubmit }: Props) {
+export function DrinksDeliveryBookingForm(props: Props) {
+  const { onSubmit, formData } = props;
   const {
     register,
     handleSubmit,
@@ -22,12 +24,14 @@ export function DrinksDeliveryBookingForm({ onSubmit }: Props) {
     setValue,
     watch,
   } = useForm<DrinksDeliveryFormData>({
-    defaultValues: {
-      date: '',
-      location: '',
-      time: '',
-      acceptSubstitutes: false,
-    },
+    defaultValues: formData
+      ? {
+          date: formData.date,
+          location: formData.location,
+          time: formData.time,
+          acceptSubstitutes: false,
+        }
+      : undefined,
   });
 
   const handleFormSubmit = async (data: DrinksDeliveryFormData) => {
