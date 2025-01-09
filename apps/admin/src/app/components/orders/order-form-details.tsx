@@ -29,6 +29,14 @@ function OrderFormDetails(props: Props) {
     dropOffLocation: 'Drop Off Location',
   };
 
+  if (keys.length === 0) {
+    return (
+      <Text className="text-gray-500">
+        The client has not yet filled out the form
+      </Text>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-3">
       {keys.map((key) => (

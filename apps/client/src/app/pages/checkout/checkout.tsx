@@ -7,9 +7,15 @@ import { Order } from '@magnetic/interfaces';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useEffect, useState } from 'react';
 import RenderBookingForm from '../../components/services/booking-forms/render-booking-form';
+import { useCart } from '../../hooks/useCart';
+import { toast } from 'sonner';
 
 export function CheckoutPage() {
   const { cart, addItem, removeItem, clearCart } = useCartStore();
+  const { isLoading, data, removeAllItemsCart } = useCart();
+
+  const [currentTab, setCurrentTab] = useState(0);
+
   const [forms, setForms] = useState<
     {
       data: any;
@@ -25,6 +31,7 @@ export function CheckoutPage() {
     mutationFn: () => createOrder(forms),
     onSuccess: (order: Order) => {
       clearCart();
+      // toast.success('Order Created!');
       navigate(`/orders/${order.id}`);
       // refetch();
     },
@@ -46,8 +53,17 @@ export function CheckoutPage() {
   );
 
   useEffect(() => {
-    if (cart.length) {
-      const allServices = cart.map((orderItem) => {
+    if (data) {
+      clearCart();
+      data.items.map((item) => {
+        return addItem({
+          id: item.item.id,
+          item: item.item,
+          quantity: item.quantity,
+        });
+      });
+
+      const allServices = data.items.map((orderItem) => {
         return orderItem.item.service;
       });
 
@@ -66,7 +82,7 @@ export function CheckoutPage() {
       });
       setForms(forms);
     }
-  }, [cart]);
+  }, [data]);
 
   return (
     <div className={`nc-CheckOutPagePageMain`}>
@@ -76,27 +92,57 @@ export function CheckoutPage() {
             <h2 className="text-lg lg:text-2xl font-semibold">
               Confirm and payment
             </h2>
-            <div className="border-b border-neutral-200 dark:border-neutral-700">
+            <div className="">
               <Text>
-                Some servicies need fill a form, you can review/fill them after
-                pay
+                Some servicies require fill some forms, no worries you can fill
+                in after pay
               </Text>
             </div>
-            {forms.map((form, index) => (
-              <div key={index}>
-                <h1>{form.serviceName}</h1>
-                <div className="border border-md p-5 my-3">
-                  <RenderBookingForm
-                    type={form.serviceType}
-                    formData={form.data}
-                    onSubmit={(data) => {
-                      form.data = data;
-                      setForms(forms);
+            <div role="tablist" className="tabs tabs-lifted mt-8">
+              {forms.map((form, index) => (
+                <>
+                  <input
+                    type="radio"
+                    name="my_tabs_2"
+                    role="tab"
+                    className="tab"
+                    aria-label={`${form.serviceName}`}
+                    checked={index === currentTab}
+                    onChange={() => {
+                      setCurrentTab(index);
                     }}
                   />
-                </div>
-              </div>
-            ))}
+                  <div
+                    role="tabpanel"
+                    className="tab-content bg-base-100 border-base-300 rounded-box p-6"
+                  >
+                    <div className="p-5 my-3">
+                      <RenderBookingForm
+                        type={form.serviceType}
+                        formData={form.data}
+                        onSubmit={(data) => {
+                          form.data = data;
+                          setForms(forms);
+                        }}
+                      />
+                    </div>
+                  </div>
+                </>
+                // <div key={index}>
+                //   <h1>{form.serviceName}</h1>
+                //   <div className="border border-md p-5 my-3">
+                //     <RenderBookingForm
+                //       type={form.serviceType}
+                //       formData={form.data}
+                //       onSubmit={(data) => {
+                //         form.data = data;
+                //         setForms(forms);
+                //       }}
+                //     />
+                //   </div>
+                // </div>
+              ))}
+            </div>
             <div>
               <Text>Payment Methods</Text>
               <div className="join join-vertical w-full my-5">

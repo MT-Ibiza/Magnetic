@@ -56,6 +56,18 @@ function Layout(props: Props) {
           url: '/dashboard',
           icon: MdDashboardCustomize,
         },
+        {
+          text: 'Orders',
+          key: 'orders',
+          url: '/orders',
+          icon: SiTask,
+        },
+        {
+          text: 'Bookings',
+          key: 'bookings',
+          url: '/bookings',
+          icon: FaBook,
+        },
       ],
     },
     {
@@ -110,40 +122,40 @@ function Layout(props: Props) {
         },
       ],
     },
-    {
-      text: 'Orders',
-      options: [
-        {
-          text: 'Orders',
-          key: 'orders',
-          url: '/orders',
-          icon: SiTask,
-        },
-        // {
-        //   text: 'Settings',
-        //   key: 'settings',
-        //   url: '/settings',
-        //   icon: FaCog,
-        // },
-      ],
-    },
-    {
-      text: 'Bookings',
-      options: [
-        {
-          text: 'Bookings',
-          key: 'bookings',
-          url: '/bookings',
-          icon: FaBook,
-        },
-        // {
-        //   text: 'Settings',
-        //   key: 'settings',
-        //   url: '/settings',
-        //   icon: FaCog,
-        // },
-      ],
-    },
+    // {
+    //   text: 'Orders',
+    //   options: [
+    //     {
+    //       text: 'Orders',
+    //       key: 'orders',
+    //       url: '/orders',
+    //       icon: SiTask,
+    //     },
+    //     // {
+    //     //   text: 'Settings',
+    //     //   key: 'settings',
+    //     //   url: '/settings',
+    //     //   icon: FaCog,
+    //     // },
+    //   ],
+    // },
+    // {
+    //   text: 'Bookings',
+    //   options: [
+    //     {
+    //       text: 'Bookings',
+    //       key: 'bookings',
+    //       url: '/bookings',
+    //       icon: FaBook,
+    //     },
+    //     // {
+    //     //   text: 'Settings',
+    //     //   key: 'settings',
+    //     //   url: '/settings',
+    //     //   icon: FaCog,
+    //     // },
+    //   ],
+    // },
   ];
 
   const navigationOptions = [

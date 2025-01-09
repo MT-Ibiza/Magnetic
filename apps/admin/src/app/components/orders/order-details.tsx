@@ -12,7 +12,6 @@ interface Props {
 function OrderDetail(props: Props) {
   const { order } = props;
   const [currentTab, setCurrentTab] = useState(0);
-  const [forms, setForms] = useState<OrderForm[]>(order.forms);
 
   return (
     <CardWrapper className="">
@@ -48,7 +47,7 @@ function OrderDetail(props: Props) {
       <OrderItemsTable items={order.items} totalInCents={order.totalInCents} />
       <h1>Booking Forms</h1>
       <div role="tablist" className="tabs tabs-lifted mt-8">
-        {forms.map((form, index) => (
+        {order.forms.map((form, index) => (
           <>
             <input
               type="radio"
