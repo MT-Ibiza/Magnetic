@@ -49,3 +49,26 @@ export interface OrderForm {
     serviceType: string;
   };
 }
+
+export interface BookingForm {
+  id: number;
+  orderItemId?: number;
+  formData: any;
+  orderId: number;
+  serviceId: number;
+  createdAt: Date;
+  updatedAt: Date;
+  order: {
+    id: number;
+    status: string;
+    totalInCents: number;
+    user: {
+      name: string;
+    };
+  };
+  service: {
+    name: string;
+    serviceType: string;
+    id: number;
+  };
+}
