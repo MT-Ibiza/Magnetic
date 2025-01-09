@@ -15,9 +15,10 @@ export interface WeeklyChefServiceFormData {
 
 interface Props {
   onSubmit: (data: WeeklyChefServiceFormData) => void;
+  formData?: any;
 }
 
-export function WeeklyChefServiceForm({ onSubmit }: Props) {
+export function WeeklyChefServiceForm({ onSubmit, formData }: Props) {
   const {
     register,
     handleSubmit,
@@ -25,21 +26,22 @@ export function WeeklyChefServiceForm({ onSubmit }: Props) {
     setValue,
     watch,
   } = useForm<WeeklyChefServiceFormData>({
-    defaultValues: {
-      service: '',
-      date: '',
-      startTime: '',
-      numberOfPeople: 1,
-      kidsAges: '',
-      location: '',
-      dietaryComments: '',
-      shoppingListRequests: '',
-      firstMealRequests: '',
-    },
+    defaultValues: formData
+      ? {
+          service: formData.service,
+          date: formData.date,
+          startTime: formData.startTime,
+          numberOfPeople: formData.numberOfPeople,
+          kidsAges: formData.kidsAges,
+          location: formData.location,
+          dietaryComments: formData.dietaryComments,
+          shoppingListRequests: formData.shoppingListRequests,
+          firstMealRequests: formData.firstMealRequests,
+        }
+      : undefined,
   });
 
   const handleFormSubmit = async (data: WeeklyChefServiceFormData) => {
-    console.log(data);
     onSubmit(data);
   };
 

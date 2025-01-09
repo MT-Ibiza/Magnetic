@@ -27,8 +27,12 @@ function RenderBookingForm(props: Props) {
         <DrinksDeliveryBookingForm onSubmit={onSubmit} formData={formData} />
       )}
       {type === 'food' && <div></div>}
-      {type === 'chefs' && <WeeklyChefServiceForm onSubmit={onSubmit} />}
-      {type === 'boat_rental' && <BoatCharterBookingForm onSubmit={onSubmit} />}
+      {type === 'chefs' && (
+        <WeeklyChefServiceForm onSubmit={onSubmit} formData={formData} />
+      )}
+      {type === 'boat_rental' && (
+        <BoatCharterBookingForm onSubmit={onSubmit} formData={formData} />
+      )}
       {type === 'spa' && <SpaBeautyBookingForm onSubmit={onSubmit} />}
       {type === 'security' && <SecurityBookingForm onSubmit={onSubmit} />}
       {type === 'childcare' && <ChildcareBookingForm onSubmit={onSubmit} />}

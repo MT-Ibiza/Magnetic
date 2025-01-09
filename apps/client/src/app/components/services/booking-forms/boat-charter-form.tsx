@@ -14,9 +14,10 @@ export interface BoatCharterFormData {
 
 interface Props {
   onSubmit: (data: BoatCharterFormData) => void;
+  formData?: any;
 }
 
-export function BoatCharterBookingForm({ onSubmit }: Props) {
+export function BoatCharterBookingForm({ onSubmit, formData }: Props) {
   const {
     register,
     handleSubmit,
@@ -24,15 +25,17 @@ export function BoatCharterBookingForm({ onSubmit }: Props) {
     setValue,
     watch,
   } = useForm<BoatCharterFormData>({
-    defaultValues: {
-      date: '',
-      boat: '',
-      numberOfPeople: 1,
-      kidsAges: '',
-      startTime: '',
-      lunchBooking: false,
-      extras: '',
-    },
+    defaultValues: formData
+      ? {
+          date: formData.date,
+          boat: formData.boat,
+          numberOfPeople: formData.numberOfPeople,
+          kidsAges: formData.kidsAges,
+          startTime: formData.startTime,
+          lunchBooking: false,
+          extras: formData.extras,
+        }
+      : undefined,
   });
 
   const handleFormSubmit = async (data: BoatCharterFormData) => {
