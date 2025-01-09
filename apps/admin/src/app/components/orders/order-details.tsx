@@ -1,6 +1,7 @@
 import { Order } from '@magnetic/interfaces';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import moment from 'moment';
+import OrderItemsTable from './order-items.table';
 
 interface Props {
   order: Order;
@@ -40,7 +41,8 @@ function OrderDetail(props: Props) {
           </p>
         </div>
       </div>
-      <div className="space-y-4">
+      <OrderItemsTable items={order.items} totalInCents={order.totalInCents} />
+      {/* <div className="space-y-4">
         {order.items.map((item) => (
           <div
             key={item.id}
@@ -84,7 +86,7 @@ function OrderDetail(props: Props) {
           <strong>Total Order:</strong>{' '}
           {centsToEurosWithCurrency(order.totalInCents)}
         </h2>
-      </div>
+      </div> */}
     </div>
   );
 }

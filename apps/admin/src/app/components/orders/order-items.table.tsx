@@ -19,18 +19,25 @@ function OrderItemsTable(props: Props) {
             <th>Price</th>
             <th>Quantity</th>
             <th>Total</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
           {items.map((item, index) => (
             <tr className="hover" key={index}>
               <td>
-                <div className="flex flex-col gap-1">
-                  <Text>{item.item.name}</Text>
-                  <Text className="text-gray-500" size="1">
-                    {item.item.service.name}
-                  </Text>
+                <div className="flex gap-3">
+                  <img
+                    src={'https://via.placeholder.com/50'}
+                    alt={item.item.name}
+                    className="w-16 h-16 object-cover rounded-md"
+                  />
+
+                  <div className="flex flex-col gap-1">
+                    <Text>{item.item.name}</Text>
+                    <Text className="text-gray-500" size="1">
+                      {item.item.service.name}
+                    </Text>
+                  </div>
                 </div>
               </td>
               <td>
@@ -38,7 +45,7 @@ function OrderItemsTable(props: Props) {
                   {centsToEurosWithCurrency(item.priceInCents)}
                 </Text.TextNumeric>
               </td>
-              <td>{item.quantity}</td>
+              <td>x {item.quantity}</td>
               <td>
                 <Text.TextNumeric>
                   {centsToEurosWithCurrency(item.quantity * item.priceInCents)}
@@ -57,7 +64,6 @@ function OrderItemsTable(props: Props) {
                 {centsToEurosWithCurrency(totalInCents)}
               </Text.TextNumeric>
             </td>
-            <td></td>
           </tr>
         </tbody>
       </table>

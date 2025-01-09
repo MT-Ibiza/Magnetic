@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useOrder } from '../../hooks/useOrder';
-import { Text } from '@magnetic/ui';
+import { CardWrapper, Text } from '@magnetic/ui';
 import OrderItemsTable from '../../components/order/order-items-table';
 import OrderBookings from '../../components/services/order-bookings';
 import { useMutation } from '@tanstack/react-query';
@@ -17,6 +17,7 @@ function OrderPage(props: Props) {
   const params = useParams();
   const orderId = parseInt(params.id || '');
   const [forms, setForms] = useState<OrderForm[]>([]);
+  const [currentTab, setCurrentTab] = useState(0);
 
   const { isLoading, isError, order, error } = useOrder(orderId);
 
@@ -57,39 +58,68 @@ function OrderPage(props: Props) {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="bg-base-100 listingSection__wrap">
+      <CardWrapper className="bg-base-100">
         <h1>{`Order #${order.id}`}</h1>
-        <OrderItemsTable items={order.items} />
-      </div>
-      <div className="bg-base-100 listingSection__wrap">
-        {forms.map((form, index) => (
-          <div key={index}>
-            <h1>{form.service.name}</h1>
-            <div className="border border-md p-5 my-3">
-              <RenderBookingForm
-                type={form.service.serviceType}
-                formData={form.formData}
-                onSubmit={async (data) => {
-                  await editFormMutation.mutateAsync({
-                    form: data,
-                    formId: form.id,
-                  });
+        <OrderItemsTable
+          items={order.items}
+          totalInCents={order.totalInCents}
+        />
+      </CardWrapper>
+      <CardWrapper className="bg-base-100 ">
+        <h1>Booking Forms</h1>
+        <Text className="text-gray-500 mt-1" size="1">
+          Please fill this forms they are required to give a better service
+        </Text>
+        <div role="tablist" className="tabs tabs-lifted mt-8">
+          {forms.map((form, index) => (
+            <>
+              <input
+                type="radio"
+                name="my_tabs_2"
+                role="tab"
+                className="tab"
+                aria-label={`${form.service.name}`}
+                checked={index === currentTab}
+                onClick={() => {
+                  setCurrentTab(index);
                 }}
               />
-            </div>
-          </div>
-        ))}
-        {/* <OrderBookings
-          items={order.items}
-          onSubmit={async (data) => {
-            await editFormMutation.mutateAsync({
-              form: data.form.data,
-              formId: data.formId,
-            });
-          }}
-          forms={order.forms}
-        /> */}
-      </div>
+              <div
+                role="tabpanel"
+                className="tab-content bg-base-100 border-base-300 rounded-box p-6"
+              >
+                <div className="p-5 my-3">
+                  <RenderBookingForm
+                    type={form.service.serviceType}
+                    formData={form.formData}
+                    onSubmit={async (data) => {
+                      await editFormMutation.mutateAsync({
+                        form: data,
+                        formId: form.id,
+                      });
+                    }}
+                  />
+                </div>
+              </div>
+            </>
+            // <div key={index}>
+            //   <h1>{form.service.name}</h1>
+            //   <div className="border border-md p-5 my-3">
+            //     <RenderBookingForm
+            //       type={form.service.serviceType}
+            //       formData={form.formData}
+            //       onSubmit={async (data) => {
+            //         await editFormMutation.mutateAsync({
+            //           form: data,
+            //           formId: form.id,
+            //         });
+            //       }}
+            //     />
+            //   </div>
+            // </div>
+          ))}
+        </div>
+      </CardWrapper>
     </div>
   );
 }
