@@ -30,6 +30,19 @@ export async function GET(
             },
           },
         },
+        forms: {
+          include: {
+            service: {
+              select: {
+                name: true,
+                serviceType: true,
+              },
+            },
+          },
+          orderBy: {
+            createdAt: 'asc',
+          },
+        },
       },
     });
     return NextResponse.json(order);

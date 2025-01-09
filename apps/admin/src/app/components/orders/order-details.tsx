@@ -1,7 +1,9 @@
-import { Order } from '@magnetic/interfaces';
-import { centsToEurosWithCurrency } from '@magnetic/utils';
+import { Order, OrderForm } from '@magnetic/interfaces';
 import moment from 'moment';
 import OrderItemsTable from './order-items.table';
+import { CardWrapper, Text } from '@magnetic/ui';
+import { useState } from 'react';
+import OrderFormDetails from './order-form-details';
 
 interface Props {
   order: Order;
@@ -9,9 +11,11 @@ interface Props {
 
 function OrderDetail(props: Props) {
   const { order } = props;
+  const [currentTab, setCurrentTab] = useState(0);
+  const [forms, setForms] = useState<OrderForm[]>(order.forms);
 
   return (
-    <div className="p-6 space-y-6 bg-white rounded-lg shadow-md">
+    <CardWrapper className="">
       <div className="flex items-center justify-between mb-4">
         <div className="text-base text-gray-800">
           <h1 className="font-semibold text-xl">{`Order #${order.id}`}</h1>
@@ -42,6 +46,32 @@ function OrderDetail(props: Props) {
         </div>
       </div>
       <OrderItemsTable items={order.items} totalInCents={order.totalInCents} />
+      <h1>Booking Forms</h1>
+      <div role="tablist" className="tabs tabs-lifted mt-8">
+        {forms.map((form, index) => (
+          <>
+            <input
+              type="radio"
+              name="my_tabs_2"
+              role="tab"
+              className="tab"
+              aria-label={`${form.service.name}`}
+              checked={index === currentTab}
+              onChange={() => {
+                setCurrentTab(index);
+              }}
+            />
+            <div
+              role="tabpanel"
+              className="tab-content bg-base-100 border-base-300 rounded-box p-6"
+            >
+              <div className="p-5 my-3">
+                <OrderFormDetails formData={form.formData} />
+              </div>
+            </div>
+          </>
+        ))}
+      </div>
       {/* <div className="space-y-4">
         {order.items.map((item) => (
           <div
@@ -87,7 +117,7 @@ function OrderDetail(props: Props) {
           {centsToEurosWithCurrency(order.totalInCents)}
         </h2>
       </div> */}
-    </div>
+    </CardWrapper>
   );
 }
 
