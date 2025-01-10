@@ -125,9 +125,7 @@ export function CheckoutPage() {
                       type="radio"
                       name="my_tabs_2"
                       role="tab"
-                      className={`tab ${
-                        formCheckout.completed && 'text-green-600'
-                      }`}
+                      className={`tab`}
                       aria-label={`${form.serviceName}`}
                       checked={index === currentTab}
                       onChange={() => {
@@ -138,7 +136,7 @@ export function CheckoutPage() {
                       role="tabpanel"
                       className="tab-content bg-base-100 border-base-300 rounded-box p-6"
                     >
-                      <div className="p-5 my-3">
+                      <div className="p-3 my-3">
                         {formCheckout.completed ? (
                           <div className="flex flex-col gap-3 ">
                             <FormJsonDetails formData={form.data} />
@@ -157,21 +155,44 @@ export function CheckoutPage() {
                             </Button>
                           </div>
                         ) : (
-                          <RenderBookingForm
-                            type={form.serviceType}
-                            formData={form.data}
-                            onSubmit={(data) => {
-                              form.data = data;
-                              setForms(forms);
-                              formCheckout.completed = true;
-                              const formsFilled = formsCheckout.map((f) => {
-                                return f.form.serviceId === form.serviceId
-                                  ? { ...f, ...{ completed: true } }
-                                  : f;
-                              });
-                              setFormsCheckout(formsFilled);
-                            }}
-                          />
+                          <>
+                            <div className="flex justify-between bg-sky-100 p-3 mb-3 items-center">
+                              <Text size="2">
+                                I would like complete this form later
+                              </Text>
+                              <Button
+                                type="button"
+                                variant="outline"
+                                color="neutral"
+                                onClick={() => {
+                                  const formsFilled = formsCheckout.map((f) => {
+                                    return f.form.serviceId === form.serviceId
+                                      ? { ...f, ...{ completed: true } }
+                                      : f;
+                                  });
+                                  setFormsCheckout(formsFilled);
+                                }}
+                              >
+                                Skip for now
+                              </Button>
+                            </div>
+
+                            <RenderBookingForm
+                              type={form.serviceType}
+                              formData={form.data}
+                              onSubmit={(data) => {
+                                form.data = data;
+                                setForms(forms);
+                                formCheckout.completed = true;
+                                const formsFilled = formsCheckout.map((f) => {
+                                  return f.form.serviceId === form.serviceId
+                                    ? { ...f, ...{ completed: true } }
+                                    : f;
+                                });
+                                setFormsCheckout(formsFilled);
+                              }}
+                            />
+                          </>
                         )}
                       </div>
                     </div>
@@ -199,7 +220,12 @@ export function CheckoutPage() {
                   );
                 })}
               </div>
-              <Button onClick={handleCreateOrder}>Create Order</Button>
+              <Button
+                onClick={handleCreateOrder}
+                disabled={formsCheckout.some((f) => f.completed === false)}
+              >
+                Create Order
+              </Button>
             </div>
           </div>
         </div>

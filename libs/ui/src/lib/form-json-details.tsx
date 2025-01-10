@@ -32,11 +32,7 @@ export function FormJsonDetails(props: Props) {
   };
 
   if (keys.length === 0) {
-    return (
-      <Text className="text-gray-500">
-        The client has not yet filled out the form
-      </Text>
-    );
+    return <Text className="text-gray-500">This form is pending</Text>;
   }
 
   return (
