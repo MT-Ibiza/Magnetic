@@ -15,6 +15,7 @@ import { useState } from 'react';
 import FormProduct from '../../components/services/form-product';
 import { Item } from '@magnetic/interfaces';
 import FormVariant from '../../components/form-variant';
+import './styles.scss';
 
 interface Props {}
 
@@ -91,7 +92,7 @@ function ServicePage(props: Props) {
             <span className="text-lg font-semibold text-gray-700">
               {service.package?.name}
             </span>
-            <div className="text-sm text-gray-500 leading-relaxed">
+            <div className="text-sm text-gray-500 leading-relaxed editor-text">
               <div
                 className="block"
                 dangerouslySetInnerHTML={{ __html: service.description }}

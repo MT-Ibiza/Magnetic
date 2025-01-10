@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Item } from '@magnetic/interfaces';
-import { Alert, Text } from '@magnetic/ui';
+import { Alert, Button, Text } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
+import { Link } from 'react-router-dom';
 
 interface Props {
   item: Item;
+  availableInPlan: boolean;
 }
 
 function ItemCardCounter(props: Props) {
-  const { item } = props;
+  const { item, availableInPlan } = props;
   const { addItemToCart } = useCart();
   const { addItem, removeItem, cart } = useCartStore();
   const productCart = cart.find((cartItem) => cartItem.item.id === item.id);
@@ -88,7 +90,12 @@ function ItemCardCounter(props: Props) {
               <button
                 className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
                 onClick={() => {
-                  handleRemoveItem(productCart?.quantity || 0);
+                  if (availableInPlan) {
+                    handleRemoveItem(productCart?.quantity || 0);
+                  } else {
+                    //@ts-ignore
+                    document.getElementById('my_modal_1').showModal();
+                  }
                 }}
               >
                 -
@@ -98,7 +105,12 @@ function ItemCardCounter(props: Props) {
               </span>
               <button
                 onClick={() => {
-                  handleAddItem(productCart?.quantity || 0);
+                  if (availableInPlan) {
+                    handleAddItem(productCart?.quantity || 0);
+                  } else {
+                    //@ts-ignore
+                    document.getElementById('my_modal_1').showModal();
+                  }
                 }}
                 className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
               >
@@ -115,6 +127,25 @@ function ItemCardCounter(props: Props) {
           onClose={() => setAlert(null)}
         />
       )}
+      <dialog id="my_modal_1" className="modal">
+        <div className="modal-box">
+          <h3 className="text-lg font-bold">Upgrade your package</h3>
+          <p className="mt-3">This service is not available in your package </p>
+          {/* <p className="">Upgrade your package and dont miss these services</p> */}
+          <div className="modal-action">
+            <form method="dialog">
+              <div className="flex gap-3">
+                <Button className="" variant="outline" color="neutral">
+                  Close
+                </Button>
+                <Link to={'/packages'}>
+                  <Button className="">Upgrade Now</Button>
+                </Link>
+              </div>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </>
   );
 }

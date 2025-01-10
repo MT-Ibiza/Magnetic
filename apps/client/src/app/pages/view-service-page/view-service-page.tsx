@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
 import ItemCardCounter from '../../components/items/item-card-counter';
 import ItemBoatCard from '../../components/items/item-boat-card';
+import './styles.scss';
+import { useAuth } from '../../hooks/useAuth';
 
 interface Props {}
 
@@ -10,6 +12,8 @@ function ViewServicePage(props: Props) {
   const {} = props;
   const params = useParams();
   const serviceId = parseInt(params.id || '');
+  const { getCurrentUser } = useAuth();
+  const user = getCurrentUser();
   const { isLoading, isError, service, error } = useService(serviceId);
 
   if (isLoading) {
@@ -50,7 +54,10 @@ function ViewServicePage(props: Props) {
                   {service.serviceType === 'boat_rental' ? (
                     <ItemBoatCard item={item} />
                   ) : (
-                    <ItemCardCounter item={item} />
+                    <ItemCardCounter
+                      item={item}
+                      availableInPlan={user?.packageId === service.packageId}
+                    />
                   )}
                 </div>
               ))}
