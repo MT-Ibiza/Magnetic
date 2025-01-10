@@ -14,6 +14,7 @@ function ViewServicePage(props: Props) {
   const serviceId = parseInt(params.id || '');
   const { getCurrentUser } = useAuth();
   const user = getCurrentUser();
+
   const { isLoading, isError, service, error } = useService(serviceId);
 
   if (isLoading) {
@@ -56,7 +57,7 @@ function ViewServicePage(props: Props) {
                   ) : (
                     <ItemCardCounter
                       item={item}
-                      availableInPlan={user?.packageId === service.packageId}
+                      availableInPlan={user?.package?.id === service.packageId}
                     />
                   )}
                 </div>
