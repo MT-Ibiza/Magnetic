@@ -19,7 +19,6 @@ export const AppRouter = () => {
       <h1>This Page is still pending</h1>
     </div>
   );
-  const LayoutBlank = () => <Outlet />;
 
   return (
     <Routes>
@@ -32,6 +31,7 @@ export const AppRouter = () => {
           <Route path="services" element={<ServiceClientPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
           <Route path="services/:id" element={<ViewServicePage />} />
+          <Route path="services/:id/item/:itemId" element={<PendingPage />} />
           <Route path="packages" element={<PackagePage />} />
           <Route path="packages/:id" element={<ViewPackagePage />} />
           <Route path="orders" element={<OrdersPage />} />

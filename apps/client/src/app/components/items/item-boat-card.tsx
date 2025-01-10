@@ -84,7 +84,7 @@ function ItemBoatCard(props: Props) {
               </div>
               <div className="flex flex-col gap-3 items-end">
                 <h2 className="text-lg font-semibold text-secondary">
-                  {centsToEurosWithCurrency(item.priceInCents)} x 8h
+                  {centsToEurosWithCurrency(item.priceInCents)}
                 </h2>
                 <div className="flex gap-5">
                   <Link to={`item/${item.id}`}>

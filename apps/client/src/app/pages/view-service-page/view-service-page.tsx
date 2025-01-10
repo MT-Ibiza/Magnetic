@@ -45,10 +45,7 @@ function ViewServicePage(props: Props) {
         {service.script ? (
           <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
         ) : (
-          <div>
-            <Text className="text-lg font-bold my-4">
-              Choose your favorites
-            </Text>
+          <div className="mt-5">
             <div className="grid grid-cols-1 gap-4">
               {publishedItems.map((item, index) => (
                 <div key={index}>
