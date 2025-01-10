@@ -96,7 +96,6 @@ export function Button({
     ${sizeClass}
     ${translate}
     ${className}
-    ${twFocusClass(true)}
     ${radiusClasses[radius]}
     ${disabledClasses}
   `;
