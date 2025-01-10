@@ -22,9 +22,4 @@ export { ThemeSelector } from './lib/theme-selector';
 export { Alert } from './lib/alert';
 export { PlanCard } from './lib/plan-card';
 export { Select } from './lib/select';
-
-
-
-
-
-
+export { FormJsonDetails } from './lib/form-json-details';

@@ -1,9 +1,8 @@
-import { Order, OrderForm } from '@magnetic/interfaces';
+import { Order } from '@magnetic/interfaces';
 import moment from 'moment';
 import OrderItemsTable from './order-items.table';
-import { CardWrapper, Text } from '@magnetic/ui';
+import { CardWrapper, FormJsonDetails, Text } from '@magnetic/ui';
 import { useState } from 'react';
-import OrderFormDetails from './order-form-details';
 
 interface Props {
   order: Order;
@@ -65,7 +64,7 @@ function OrderDetail(props: Props) {
               className="tab-content bg-base-100 border-base-300 rounded-box p-6"
             >
               <div className="p-5 my-3">
-                <OrderFormDetails formData={form.formData} />
+                <FormJsonDetails formData={form.formData} />
               </div>
             </div>
           </>

@@ -1,4 +1,4 @@
-import { Button, Text } from '@magnetic/ui';
+import { Button, FormJsonDetails, Text } from '@magnetic/ui';
 import { useCartStore } from '../../hooks/useCartStore';
 import { useMutation } from '@tanstack/react-query';
 import { createOrder } from '../../apis/api-order';
@@ -10,21 +10,29 @@ import RenderBookingForm from '../../components/services/booking-forms/render-bo
 import { useCart } from '../../hooks/useCart';
 import { toast } from 'sonner';
 
+interface FormOrderData {
+  data: any;
+  serviceId: number;
+  serviceType: string;
+  serviceName: string;
+  itemId?: number;
+}
 export function CheckoutPage() {
   const { cart, addItem, removeItem, clearCart } = useCartStore();
   const { isLoading, data, removeAllItemsCart } = useCart();
 
   const [currentTab, setCurrentTab] = useState(0);
 
-  const [forms, setForms] = useState<
+  const [forms, setForms] = useState<FormOrderData[]>([]);
+
+  const [formsCheckout, setFormsCheckout] = useState<
     {
-      data: any;
-      serviceId: number;
-      serviceType: string;
-      serviceName: string;
-      itemId?: number;
+      formIndex: number;
+      form: FormOrderData;
+      completed: boolean;
     }[]
   >([]);
+
   const navigate = useNavigate();
 
   const createOrderMutation = useMutation({
@@ -80,7 +88,17 @@ export function CheckoutPage() {
           itemId: undefined,
         };
       });
+
       setForms(forms);
+      setFormsCheckout(
+        forms.map((form, index) => {
+          return {
+            formIndex: 0,
+            form: form,
+            completed: false,
+          };
+        })
+      );
     }
   }, [data]);
 
@@ -99,49 +117,67 @@ export function CheckoutPage() {
               </Text>
             </div>
             <div role="tablist" className="tabs tabs-lifted mt-8">
-              {forms.map((form, index) => (
-                <>
-                  <input
-                    type="radio"
-                    name="my_tabs_2"
-                    role="tab"
-                    className="tab"
-                    aria-label={`${form.serviceName}`}
-                    checked={index === currentTab}
-                    onChange={() => {
-                      setCurrentTab(index);
-                    }}
-                  />
-                  <div
-                    role="tabpanel"
-                    className="tab-content bg-base-100 border-base-300 rounded-box p-6"
-                  >
-                    <div className="p-5 my-3">
-                      <RenderBookingForm
-                        type={form.serviceType}
-                        formData={form.data}
-                        onSubmit={(data) => {
-                          form.data = data;
-                          setForms(forms);
-                        }}
-                      />
+              {formsCheckout.map((formCheckout, index) => {
+                const { form } = formCheckout;
+                return (
+                  <>
+                    <input
+                      type="radio"
+                      name="my_tabs_2"
+                      role="tab"
+                      className={`tab ${
+                        formCheckout.completed && 'text-green-600'
+                      }`}
+                      aria-label={`${form.serviceName}`}
+                      checked={index === currentTab}
+                      onChange={() => {
+                        setCurrentTab(index);
+                      }}
+                    />
+                    <div
+                      role="tabpanel"
+                      className="tab-content bg-base-100 border-base-300 rounded-box p-6"
+                    >
+                      <div className="p-5 my-3">
+                        {formCheckout.completed ? (
+                          <div className="flex flex-col gap-3 ">
+                            <FormJsonDetails formData={form.data} />
+                            <Button
+                              className="w-[10rem]"
+                              onClick={() => {
+                                const formsFilled = formsCheckout.map((f) => {
+                                  return f.form.serviceId === form.serviceId
+                                    ? { ...f, ...{ completed: false } }
+                                    : f;
+                                });
+                                setFormsCheckout(formsFilled);
+                              }}
+                            >
+                              Edit Again
+                            </Button>
+                          </div>
+                        ) : (
+                          <RenderBookingForm
+                            type={form.serviceType}
+                            formData={form.data}
+                            onSubmit={(data) => {
+                              form.data = data;
+                              setForms(forms);
+                              formCheckout.completed = true;
+                              const formsFilled = formsCheckout.map((f) => {
+                                return f.form.serviceId === form.serviceId
+                                  ? { ...f, ...{ completed: true } }
+                                  : f;
+                              });
+                              setFormsCheckout(formsFilled);
+                            }}
+                          />
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </>
-                // <div key={index}>
-                //   <h1>{form.serviceName}</h1>
-                //   <div className="border border-md p-5 my-3">
-                //     <RenderBookingForm
-                //       type={form.serviceType}
-                //       formData={form.data}
-                //       onSubmit={(data) => {
-                //         form.data = data;
-                //         setForms(forms);
-                //       }}
-                //     />
-                //   </div>
-                // </div>
-              ))}
+                  </>
+                );
+              })}
             </div>
             <div>
               <Text>Payment Methods</Text>

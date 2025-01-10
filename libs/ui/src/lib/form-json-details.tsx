@@ -1,17 +1,19 @@
 import { Text } from '@magnetic/ui';
-import React from 'react';
 
 interface Props {
   formData: any;
 }
 
-function OrderFormDetails(props: Props) {
+export function FormJsonDetails(props: Props) {
   const { formData } = props;
   const keys = Object.keys(formData);
 
   const dictionary = {
     date: 'Date',
     time: 'Time',
+    Boat: 'Boat',
+    extras: 'Extras',
+    lunchBooking: 'Lunch Booking',
     service: 'Service',
     kidsAges: 'kids Ages',
     location: 'Location',
@@ -49,4 +51,4 @@ function OrderFormDetails(props: Props) {
   );
 }
 
-export default OrderFormDetails;
+export default FormJsonDetails;
