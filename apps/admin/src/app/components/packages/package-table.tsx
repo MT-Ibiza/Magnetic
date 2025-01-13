@@ -39,7 +39,7 @@ export function PackagesTable(props: Props) {
   };
 
   return (
-    <div className="custom-overflow">
+    <div className="">
       <table className="table w-full">
         <thead>
           <tr>
@@ -90,4 +90,3 @@ export function PackagesTable(props: Props) {
     </div>
   );
 }
-

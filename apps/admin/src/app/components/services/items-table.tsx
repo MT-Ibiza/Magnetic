@@ -25,7 +25,7 @@ function ItemsTable(props: Props) {
   // }
 
   return (
-    <div className="custom-overflow">
+    <div className="">
       <table className="table">
         <thead>
           <tr>

@@ -11,7 +11,7 @@ function OrderItemsTable(props: Props) {
   const { items, totalInCents } = props;
 
   return (
-    <div className="custom-overflow">
+    <div className="">
       <table className="table">
         <thead>
           <tr>

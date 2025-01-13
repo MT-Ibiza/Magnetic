@@ -42,7 +42,7 @@ export function OrdersTable(props: Props) {
   };
 
   return (
-    <div className="custom-overflow">
+    <div className="">
       <table className="table w-full">
         <thead>
           <tr>
