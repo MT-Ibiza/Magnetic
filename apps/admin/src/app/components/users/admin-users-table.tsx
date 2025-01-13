@@ -50,9 +50,7 @@ function AdminUsersTable(props: Props) {
           {users.map((user, index) => (
             <tr className="hover" key={index}>
               <th>{index + 1}</th>
-              <td>
-                <Text>{user.name}</Text>
-              </td>
+              <td>{user.name}</td>
               <td>
                 <div className="flex flex-col gap-1">
                   <Text size="1">{user.phone || 'N/A'}</Text>

@@ -11,7 +11,7 @@ export function FormJsonDetails(props: Props) {
   const dictionary = {
     date: 'Date',
     time: 'Time',
-    Boat: 'Boat',
+    boat: 'Boat',
     extras: 'Extras',
     lunchBooking: 'Lunch Booking',
     service: 'Service',
