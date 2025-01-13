@@ -1,6 +1,8 @@
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 import { getTokenFromRequest } from '../../util';
+import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
+import { newOrderTemplate } from 'apps/magnetic/src/app/emails/new-order';
 
 export async function POST(request: Request) {
   try {
@@ -25,6 +27,11 @@ export async function POST(request: Request) {
                 priceInCents: true,
               },
             },
+          },
+        },
+        user: {
+          select: {
+            email: true,
           },
         },
       },
@@ -66,6 +73,20 @@ export async function POST(request: Request) {
             },
           },
         },
+        include: {
+          items: {
+            include: {
+              item: true,
+            },
+          },
+          user: true,
+        },
+      });
+
+      await sendEmail({
+        to: cart.user.email,
+        subject: `New Order ${order.id}`,
+        html: newOrderTemplate(order as any),
       });
 
       await db.cart.delete({
@@ -73,6 +94,7 @@ export async function POST(request: Request) {
           id: cart.id,
         },
       });
+
       return NextResponse.json(order);
     } else {
       return NextResponse.json(
