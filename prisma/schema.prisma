@@ -44,7 +44,7 @@ model Service {
   items       Item[]
   script      String?
   packageId   Int
-  imageUrl    String             @default("")
+  imageUrl    String?
   package     Package            @relation(fields: [packageId], references: [id])
   providerId  Int?
   provider    Provider?          @relation(fields: [providerId], references: [id])

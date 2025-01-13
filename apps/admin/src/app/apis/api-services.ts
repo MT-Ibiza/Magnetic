@@ -64,7 +64,6 @@ export async function updatePublishStatus({
   return dataJson;
 }
 
-
 export async function getNewServiceData(): Promise<{
   providers: Provider[];
   packages: Package[];
@@ -80,7 +79,7 @@ export async function getNewServiceData(): Promise<{
   return dataJson;
 }
 
-export async function newService(params: NewService): Promise<Service> {
+export async function newService(params: FormData): Promise<Service> {
   const response = await fetch(URL_NEW_SERVICE, {
     method: 'POST',
     headers: {

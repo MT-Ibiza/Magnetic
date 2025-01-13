@@ -8,7 +8,7 @@ export interface ServiceBase {
   packageId: number;
   providerId: number;
   serviceType: string;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 export interface Service extends ServiceBase {

@@ -30,7 +30,7 @@ export interface FormServiceData {
   description: string;
   packageId: number;
   providerId: number;
-  cover?: File;
+  cover?: string;
   serviceType: string;
   script?: string;
 }
@@ -45,10 +45,10 @@ export function ServiceForm(props: Props) {
   const { className, service, onSaveSuccess } = props;
   const [openDrawer, setOpenDrawer] = useState(false);
   const [serviceType, setServiceType] = useState<string | undefined>(undefined);
-
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
   };
+  const [imageFile, setImageFile] = useState<File>();
 
   const {
     register,
@@ -62,7 +62,7 @@ export function ServiceForm(props: Props) {
           description: service.description,
           packageId: service.packageId,
           providerId: service.packageId,
-          cover: undefined,
+          cover: service.imageUrl,
           serviceType: service.serviceType,
           script: service.script,
         }
@@ -71,8 +71,8 @@ export function ServiceForm(props: Props) {
   const [description, setDescription] = useState(service?.description);
   const { isLoading, isError, data, error } = useNewServiceData();
 
-  const createService = useMutation<Service, Error, NewService>({
-    mutationFn: (data: NewService) => {
+  const createService = useMutation<Service, Error, FormData>({
+    mutationFn: (data: FormData) => {
       return newService(data);
     },
     onSuccess: () => {
@@ -122,14 +122,14 @@ export function ServiceForm(props: Props) {
         serviceType,
       });
     } else {
-      await createService.mutateAsync({
-        name,
-        description: description || '',
-        packageId: Number(packageId),
-        items: [],
-        script,
-        serviceType,
-      });
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('description', description || '');
+      formData.append('packageId', packageId.toString());
+      script && formData.append('script', script);
+      formData.append('serviceType', serviceType);
+      imageFile && formData.append('imageFile', imageFile);
+      await createService.mutateAsync(formData);
     }
   };
 
@@ -229,6 +229,12 @@ export function ServiceForm(props: Props) {
                   className="h-[200px]"
                 />
               </div>
+              <UploadImage
+                onChange={(file) => {
+                  file && setImageFile(file);
+                }}
+                height="400px"
+              />
             </div>
             <div className="flex gap-[10px] justify-end pt-[80px]">
               <Button variant="outline" href={'/services'} type="submit">

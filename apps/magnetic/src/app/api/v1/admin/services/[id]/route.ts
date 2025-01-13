@@ -1,5 +1,6 @@
 import { EditService } from '@magnetic/interfaces';
 import db from 'apps/magnetic/src/app/libs/db';
+import { uploadBulkImages } from 'apps/magnetic/src/app/libs/s3';
 import { NextResponse } from 'next/server';
 
 export async function GET(
@@ -54,10 +55,23 @@ export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  const data: EditService = await request.json();
-  const { name, description, packageId, providerId, serviceType, script } =
-    data;
+  const data = await request.formData();
+  const name = data.get('name') as string;
+  const description = data.get('description') as string;
+  const packageId = data.get('packageId') as string;
+  const providerId = data.get('providerId') as string;
+  const serviceType = data.get('serviceType') as string;
+  const script = data.get('script') as string;
+  const imageFile = data.get('imageFile') as File;
+
   try {
+    let imageUrl = null;
+
+    if (imageFile) {
+      const images = await uploadBulkImages([imageFile]);
+      imageUrl = images[0];
+    }
+
     const service = await db.service.update({
       where: {
         id: Number(params.id),
@@ -65,9 +79,10 @@ export async function PUT(
       data: {
         name: name,
         description: description,
-        packageId: packageId,
-        providerId: providerId,
+        packageId: Number(packageId),
+        providerId: Number(providerId),
         serviceType: serviceType as 'none',
+        imageUrl,
         script,
       },
     });
