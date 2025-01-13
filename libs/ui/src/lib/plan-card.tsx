@@ -76,7 +76,9 @@ export function PlanCard(props: Props) {
               </Link>
             )}
         </div>
-        <Button>Submit</Button>
+        {/* <Link to={seeMoreLink || ''}> */}
+        <Button className="w-full">Upgrade Now</Button>
+        {/* </Link> */}
       </div>
     </div>
   );

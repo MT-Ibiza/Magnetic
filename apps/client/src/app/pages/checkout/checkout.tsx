@@ -40,7 +40,7 @@ export function CheckoutPage() {
       clearCart();
       setCreatedOrderId(order.id);
       //@ts-ignore
-      document.getElementById('my_modal_1').showModal();
+      document.getElementById('order_success_modal').showModal();
       // toast.success('Order Created!');
       // navigate(`/orders/${order.id}`);
       // refetch();
@@ -274,7 +274,7 @@ export function CheckoutPage() {
           </div>
         </main>
       </div>
-      <dialog id="my_modal_1" className="modal">
+      <dialog id="order_success_modal" className="modal">
         <div className="modal-box">
           <h3 className="text-lg font-bold">Order Created</h3>
           <p className="py-4">We have send an email with all details</p>
