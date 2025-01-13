@@ -101,13 +101,13 @@ function Layout(props: Props) {
       text: 'Services & Products',
       options: [
         {
-          text: 'All Products',
-          url: '/products',
+          text: 'Services',
+          url: '/services',
           icon: SiTask,
         },
         {
-          text: 'Services',
-          url: '/services',
+          text: 'All Products',
+          url: '/products',
           icon: SiTask,
         },
         {
