@@ -8,6 +8,8 @@ import {
   searchUsers,
 } from 'apps/magnetic/src/app/services/users';
 import { NewUser } from '@magnetic/interfaces';
+import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
+import { newAccountTemplate } from 'apps/magnetic/src/app/emails/new-account';
 
 export async function POST(request: Request) {
   try {
@@ -26,7 +28,21 @@ export async function POST(request: Request) {
         // countryNamePhone: countryNamePhone,
         password: hashedPassword,
       },
+      include: {
+        package: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
+
+    await sendEmail({
+      to: newUser.email,
+      subject: `Welcome to Magnetic Travel`,
+      html: newAccountTemplate(newUser.name, newUser.package?.name || ''),
+    });
+
     return NextResponse.json(newUser);
   } catch (error: any) {
     return NextResponse.json(
