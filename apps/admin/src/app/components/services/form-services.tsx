@@ -84,8 +84,8 @@ export function ServiceForm(props: Props) {
     },
   });
 
-  const updateService = useMutation<Service, Error, EditService>({
-    mutationFn: (data: EditService) => {
+  const updateService = useMutation<Service, Error, FormData>({
+    mutationFn: (data: FormData) => {
       const serviceId = service?.id || 0;
       return editService(serviceId, data);
     },
@@ -111,24 +111,18 @@ export function ServiceForm(props: Props) {
   }
 
   const onSubmit = async (data: FormServiceData) => {
-    const { name, packageId, serviceType, script } = data;
+    const { name, packageId, serviceType, script, providerId } = data;
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('description', description || '');
+    formData.append('packageId', packageId.toString());
+    formData.append('serviceType', serviceType);
+    script && formData.append('script', script);
+    providerId && formData.append('providerId', providerId.toString());
+    imageFile && formData.append('imageFile', imageFile);
     if (service) {
-      await updateService.mutateAsync({
-        name,
-        description: description || '',
-        packageId: Number(packageId),
-        items: [],
-        script,
-        serviceType,
-      });
+      await updateService.mutateAsync(formData);
     } else {
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('description', description || '');
-      formData.append('packageId', packageId.toString());
-      script && formData.append('script', script);
-      formData.append('serviceType', serviceType);
-      imageFile && formData.append('imageFile', imageFile);
       await createService.mutateAsync(formData);
     }
   };
@@ -230,6 +224,7 @@ export function ServiceForm(props: Props) {
                 />
               </div>
               <UploadImage
+                imageUrl={service?.imageUrl}
                 onChange={(file) => {
                   file && setImageFile(file);
                 }}

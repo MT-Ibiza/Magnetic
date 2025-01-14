@@ -64,30 +64,48 @@ export async function PUT(
   const script = data.get('script') as string;
   const imageFile = data.get('imageFile') as File;
 
+  const service = await db.service.findUnique({
+    where: {
+      id: Number(params.id),
+    },
+  });
+
+  if (!service) {
+    return NextResponse.json(
+      {
+        message: 'Service not found',
+      },
+      {
+        status: 404,
+      }
+    );
+  }
+
   try {
     let imageUrl = null;
 
     if (imageFile) {
-      const images = await uploadBulkImages([imageFile]);
+      const images = await uploadBulkImages([imageFile], 'services');
       imageUrl = images[0];
     }
 
-    const service = await db.service.update({
+    const serviceUpdated = await db.service.update({
       where: {
-        id: Number(params.id),
+        id: service.id,
       },
       data: {
         name: name,
         description: description,
         packageId: Number(packageId),
-        providerId: Number(providerId),
+        providerId: providerId ? Number(providerId) : null,
         serviceType: serviceType as 'none',
-        imageUrl,
+        imageUrl: imageUrl ? imageUrl : service.imageUrl,
         script,
       },
     });
     return NextResponse.json(service, { status: 201 });
   } catch (error: any) {
+    console.log(error);
     return NextResponse.json(
       {
         message: error.message,

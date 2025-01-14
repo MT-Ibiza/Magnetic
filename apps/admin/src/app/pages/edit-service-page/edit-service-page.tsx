@@ -22,12 +22,16 @@ function EditServicePage(props: Props) {
     return <ErrorText text={error?.message || ''} />;
   }
 
+  if (!service) {
+    return <ErrorText text={'No service found'} />;
+  }
+
   return (
     <div>
       <ServiceForm
         service={service}
         onSaveSuccess={() => {
-          navigate(`/services`, { replace: true });
+          navigate(`/services/${service.id}`, { replace: true });
         }}
       />
     </div>

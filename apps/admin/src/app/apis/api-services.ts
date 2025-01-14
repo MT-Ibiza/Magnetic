@@ -82,10 +82,7 @@ export async function getNewServiceData(): Promise<{
 export async function newService(params: FormData): Promise<Service> {
   const response = await fetch(URL_NEW_SERVICE, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(params),
+    body: params,
   });
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);
@@ -94,15 +91,12 @@ export async function newService(params: FormData): Promise<Service> {
 
 export async function editService(
   serviceId: number,
-  params: EditService
+  params: FormData
 ): Promise<Service> {
   const url = URL_UPDATE_SERVICE(serviceId);
   const response = await fetch(url, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(params),
+    body: params,
   });
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);

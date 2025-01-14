@@ -6,14 +6,16 @@ interface UploadImageProps {
   onChange: (file: File | null) => void;
   value?: string | null;
   height?: string;
+  imageUrl?: string;
 }
 
 export const UploadImage: React.FC<UploadImageProps> = ({
   onChange,
+  imageUrl,
   value = null,
   height = '15rem',
 }) => {
-  const [preview, setPreview] = useState<string | null>(value);
+  const [preview, setPreview] = useState<string | null | undefined>(imageUrl);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
