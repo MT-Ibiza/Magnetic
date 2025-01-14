@@ -1,24 +1,32 @@
 import { NewService } from '@magnetic/interfaces';
 import db from 'apps/magnetic/src/app/libs/db';
+import { uploadBulkImages } from 'apps/magnetic/src/app/libs/s3';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const params: NewService = await request.json();
-  const { name, description, items, packageId, serviceType, script } = params;
-
+  const data = await request.formData();
+  const name = data.get('name') as string;
+  const description = data.get('description') as string;
+  const packageId = data.get('packageId') as string;
+  const providerId = data.get('providerId') as string;
+  const serviceType = data.get('serviceType') as string;
+  const script = data.get('script') as string;
+  const imageFile = data.get('imageFile') as File;
   try {
+    let imageUrl = null;
+    if (imageFile) {
+      const images = await uploadBulkImages([imageFile], 'services');
+      imageUrl = images[0];
+    }
     const service = await db.service.create({
       data: {
         name: name,
-        description,
-        packageId,
-        script,
+        description: description,
+        packageId: Number(packageId),
+        providerId: providerId ? Number(providerId) : null,
         serviceType: serviceType as 'none',
-        items: {
-          createMany: {
-            data: items,
-          },
-        },
+        imageUrl,
+        script,
       },
     });
     return NextResponse.json(service);

@@ -64,13 +64,13 @@ export async function PUT(
   const script = data.get('script') as string;
   const imageFile = data.get('imageFile') as File;
 
-  const service = await db.service.findUnique({
+  const serviceFound = await db.service.findUnique({
     where: {
       id: Number(params.id),
     },
   });
 
-  if (!service) {
+  if (!serviceFound) {
     return NextResponse.json(
       {
         message: 'Service not found',
@@ -89,9 +89,9 @@ export async function PUT(
       imageUrl = images[0];
     }
 
-    const serviceUpdated = await db.service.update({
+    const service = await db.service.update({
       where: {
-        id: service.id,
+        id: serviceFound.id,
       },
       data: {
         name: name,
@@ -99,7 +99,7 @@ export async function PUT(
         packageId: Number(packageId),
         providerId: providerId ? Number(providerId) : null,
         serviceType: serviceType as 'none',
-        imageUrl: imageUrl ? imageUrl : service.imageUrl,
+        imageUrl: imageUrl ? imageUrl : serviceFound.imageUrl,
         script,
       },
     });
