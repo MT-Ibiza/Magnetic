@@ -99,6 +99,13 @@ function ServicePage(props: Props) {
               />
             </div>
           </div>
+          {/* <div className="w-full">
+            <img
+              src={service.imageUrl}
+              alt={service.name}
+              className="object-cover w-full"
+            />
+          </div> */}
           {service.script ? (
             <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
           ) : (

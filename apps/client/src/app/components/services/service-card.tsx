@@ -8,11 +8,13 @@ interface Props {
 
 function ServiceCard(props: Props) {
   const { service } = props;
-  const { name, description, } = service;
+  const { name, description, imageUrl } = service;
 
   return (
     <div className="relative flex flex-col justify-between bg-base-100 border border-gray-300 rounded-lg overflow-hidden shadow-sm group hover:shadow-md transition duration-200 ease-in-out">
-      <div className="w-full h-48 bg-gray-100"></div>
+      <div className="w-full h-48 bg-gray-100">
+        <img src={imageUrl} alt={name} className="object-cover h-full" />
+      </div>
       <div className="p-4 space-y-3">
         <h2 className="text-xl font-medium">{name}</h2>
         <div

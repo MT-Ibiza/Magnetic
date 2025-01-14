@@ -10,6 +10,7 @@ export async function GET(request: Request) {
         name: true,
         description: true,
         packageId: true,
+        imageUrl: true,
         package: {
           select: {
             name: true,
