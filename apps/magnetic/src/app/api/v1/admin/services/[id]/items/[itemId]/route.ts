@@ -13,6 +13,7 @@ export async function GET(
         serviceId: Number(params.id),
       },
       include: {
+        images: true,
         category: {
           select: {
             id: true,

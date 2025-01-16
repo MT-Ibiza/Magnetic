@@ -95,6 +95,15 @@ model Item {
   categoryId     Int?
   category       Category?       @relation(fields: [categoryId], references: [id])
   boatAttributes BoatAttributes?
+  images         Image[] 
+}
+
+model Image {
+  id        Int    @id @default(autoincrement())
+  url       String
+  itemId    Int
+  item      Item    @relation(fields: [itemId], references: [id])
+  createdAt DateTime @default(now())
 }
 
 model ItemVariant {

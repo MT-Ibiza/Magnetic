@@ -46,25 +46,24 @@ export async function getItem(
 
 export async function newItem(
   serviceId: number,
-  params: NewItem
+  params: FormData
 ): Promise<Item> {
   const url = URL_CREATE_ITEM(serviceId);
   const response = await fetch(url, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(params),
+    body: params,
   });
+
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);
+
   return dataJson;
 }
 
 export async function editItem(
   serviceId: number,
   itemId: number,
-  params: EditItem
+  params: FormData
 ): Promise<Item> {
   const url = URL_UPDATE_ITEM(serviceId, itemId);
   const response = await fetch(url, {

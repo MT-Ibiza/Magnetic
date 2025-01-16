@@ -17,6 +17,7 @@ export interface ItemBase {
   categoryId?: number | null;
   category?: Category;
   boatAttributes?: BoatBase;
+  images?: Image[];
 }
 
 export interface ItemResponse {
@@ -43,6 +44,7 @@ export interface Item extends ItemBase {
 export interface ItemWithCount extends Item {
   _count?: {
     variants: number;
+    images?: number;
   };
 }
 
@@ -59,6 +61,13 @@ export interface Cart {
 export interface NewItem extends ItemBase {
   serviceId: number;
   boatAttributes?: BoatBase;
+}
+
+export interface Image {
+  id: number;
+  url: string;
+  itemId: number;
+  createdAt: Date;
 }
 
 export interface EditItem extends ItemBase {

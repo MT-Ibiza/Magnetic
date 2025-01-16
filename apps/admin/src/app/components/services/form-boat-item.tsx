@@ -64,6 +64,7 @@ export function FormBoatItem(props: Props) {
   );
   const [itemCategories, setItemCategories] = useState(categories);
   const [selectedCategory, setSelectedCategory] = useState(categoryFound);
+  const [imagesFiles, setImagesFiles] = useState<File[]>([]);
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -95,8 +96,8 @@ export function FormBoatItem(props: Props) {
     },
   });
 
-  const createItem = useMutation<Item, Error, NewItem>({
-    mutationFn: (data: NewItem) => {
+  const createItem = useMutation<Item, Error, FormData>({
+    mutationFn: (data: FormData) => {
       return newItem(serviceId, data);
     },
     onSuccess: (item) => {
@@ -108,8 +109,8 @@ export function FormBoatItem(props: Props) {
     },
   });
 
-  const updateItem = useMutation<Item, Error, EditItem>({
-    mutationFn: (data: EditItem) => {
+  const updateItem = useMutation<Item, Error, FormData>({
+    mutationFn: (data: FormData) => {
       const itemId = item?.id || 0;
       return editItem(serviceId, itemId, data);
     },
@@ -123,48 +124,39 @@ export function FormBoatItem(props: Props) {
   });
 
   const onSubmit = async (data: any) => {
-    const { name, description, priceInCents, categoryId, boatAttributes } =
-      data;
+    const { name, description, priceInCents, categoryId, boatAttributes } = data;
+  
+    const formData: FormData = new FormData();
+    formData.append('name', name);
+    formData.append('description', description);
+    formData.append('priceInCents', eurosToCents(Number(priceInCents)).toString());
+    formData.append('serviceId', serviceId.toString());
+    formData.append('categoryId', categoryId ? categoryId.toString() : '');
+    formData.append('boatAttributes', JSON.stringify({
+      boatType: boatAttributes.boatType,
+      berth: boatAttributes.berth,
+      guests: Number(boatAttributes.guests),
+      crew: Number(boatAttributes.crew),
+      beamInCentimeters: Number(boatAttributes.beamInCentimeters),
+      cabins: Number(boatAttributes.cabins),
+      fuelConsumption: Number(boatAttributes.fuelConsumption),
+      sizeInCentimeters: Number(boatAttributes.sizeInCentimeters),
+      latitude: boatAttributes.latitude.toString(),  
+      longitude: boatAttributes.longitude.toString(),  
+    }));
+  
+    imagesFiles.forEach((file) => {
+      formData.append('imageFiles', file);
+    });
+  
     if (editMode) {
-      await updateItem.mutateAsync({
-        name,
-        description,
-        priceInCents: eurosToCents(Number(priceInCents)),
-        serviceId,
-        categoryId: categoryId || null,
-        boatAttributes: {
-          ...boatAttributes,
-          ...{
-            cabins: Number(boatAttributes.cabins),
-            guests: Number(boatAttributes.guests),
-            crew: Number(boatAttributes.crew),
-            beamInCentimeters: Number(boatAttributes.beamInCentimeters),
-            fuelConsumption: Number(boatAttributes.fuelConsumption),
-            sizeInCentimeters: Number(boatAttributes.sizeInCentimeters),
-          },
-        },
-      });
+      await updateItem.mutateAsync(formData);
     } else {
-      await createItem.mutateAsync({
-        name,
-        description,
-        priceInCents: eurosToCents(Number(priceInCents)),
-        serviceId,
-        categoryId: categoryId || null,
-        boatAttributes: {
-          ...boatAttributes,
-          ...{
-            cabins: Number(boatAttributes.cabins),
-            guests: Number(boatAttributes.guests),
-            crew: Number(boatAttributes.crew),
-            beamInCentimeters: Number(boatAttributes.beamInCentimeters),
-            fuelConsumption: Number(boatAttributes.fuelConsumption),
-            sizeInCentimeters: Number(boatAttributes.sizeInCentimeters),
-          },
-        },
-      });
+      await createItem.mutateAsync(formData);
     }
   };
+  
+  
 
   return (
     <>
@@ -427,7 +419,6 @@ export function FormBoatItem(props: Props) {
                 value={selectedCategory}
                 onChange={(category) => {
                   setSelectedCategory(category ? category : undefined);
-                  // setValue('categoryId', category ? category.value : undefined);
                 }}
                 className="mt-2"
               />
@@ -527,7 +518,7 @@ export function FormBoatItem(props: Props) {
               onCancel={toggleDrawer}
               onSave={(category) => {
                 toggleDrawer();
-                // setValue('categoryId', category.id);
+
                 const newCategory = {
                   label: category.name,
                   value: category.id,

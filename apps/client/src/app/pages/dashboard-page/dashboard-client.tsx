@@ -13,9 +13,9 @@ export function DashboardClientPage() {
     (item) => item.id !== user?.package?.id
   );
 
-  const filteredServices = services.filter(
-    (service) => service.packageId === user?.package?.id
-  );
+  const filteredServices = services
+    .filter((service) => service.packageId === user?.package?.id)
+    .slice(0, 3);
 
   const videoUrl = {
     id: 'Ao7e4iisKMs',
@@ -25,38 +25,35 @@ export function DashboardClientPage() {
   };
 
   return (
-    <div className="bg-base-100 min-h-screen flex flex-col">
-      <div className="bg-base-100 py-10 px-6">
-        <div className="container mx-auto text-center">
-          <h1 className="text-2xl lg:text-3xl font-bold">
-            Welcome, {user?.name}
-          </h1>
-          <p className="mt-2">
-            Explore your services and packages below.
-          </p>
-          {user?.package?.name && (
-            <p className="text-base lg:text-lg font-bold text-primary-600 mt-4">
-              {user?.package?.name}
-            </p>
-          )}
-        </div>
-      </div>
-      <div className="bg-gray-100 py-8 lg:py-10">
-        <div className="container mx-auto px-0 lg:px-6">
-          <div className="rounded-lg overflow-hidden shadow-lg">
-            <video
-              controls
-              className="h-[350px] lg:h-[600px] w-full  object-cover"
-              src={videoUrl.thumbnail}
-              poster={videoUrl.thumbnail}
-            >
-              Your browser does not support the video tag.
-            </video>
+    <div className="min-h-screen flex flex-col">
+      <div className="flex flex-col lg:grid lg:grid-cols-2 gap-[20px]">
+        <div className="bg-base-100 py-10 px-6">
+          <div className="container mx-auto text-center">
+            <h1 className="text-2xl lg:text-3xl font-bold">
+              Welcome, {user?.name}
+            </h1>
+            <p className="mt-2">Explore your services and packages below.</p>
+            {user?.package?.name && (
+              <p className="text-base lg:text-lg font-bold text-primary-600 mt-4">
+                {user?.package?.name}
+              </p>
+            )}
           </div>
-          <p className="text-[16px] text-[14px] text-gray-500 mt-2 text-center">{videoUrl.title}</p>
+        </div>
+        <div className="">
+          <div className="container mx-auto">
+            <div className="rounded-lg overflow-hidden shadow-lg">
+              <video
+                controls
+                className="h-[350px] lg:h-[400px] w-full  object-cover"
+                src={videoUrl.thumbnail}
+                poster={videoUrl.thumbnail}
+              ></video>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="container mx-auto px-4 lg:px-6 py-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="container mx-auto px-4 lg:px-2 py-10 grid grid-cols-1 lg:grid-cols-2 gap-[20px]">
         <div>
           <h2 className="text-xl lg:text-2xl font-semibold mb-4">
             Your Services
@@ -71,6 +68,16 @@ export function DashboardClientPage() {
                 <ServiceCardHorizontal service={service} />
               </Link>
             ))}
+            {filteredServices.length > 2 && (
+              <div className='flex justify-end'>
+                <Link
+                  to="/services"
+                  className="text-primary-600 font-semibold mt-4 hover:underline"
+                >
+                  View All
+                </Link>
+              </div>
+            )}
           </div>
         </div>
         <div>

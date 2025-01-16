@@ -23,3 +23,5 @@ export { Alert } from './lib/alert';
 export { PlanCard } from './lib/plan-card';
 export { Select } from './lib/select';
 export { FormJsonDetails } from './lib/form-json-details';
+export { UploadMultipleImages } from './lib/multiple-images';
+

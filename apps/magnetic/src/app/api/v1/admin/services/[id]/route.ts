@@ -21,6 +21,7 @@ export async function GET(
                 name: true,
               },
             },
+            images: true,
             _count: {
               select: {
                 variants: true,
@@ -82,14 +83,14 @@ export async function PUT(
   }
 
   try {
-    let imageUrl = null;
+    let imageUrl = serviceFound.imageUrl;
 
     if (imageFile) {
       const images = await uploadBulkImages([imageFile], 'services');
       imageUrl = images[0];
     }
 
-    const service = await db.service.update({
+    const updatedService = await db.service.update({
       where: {
         id: serviceFound.id,
       },
@@ -99,11 +100,12 @@ export async function PUT(
         packageId: Number(packageId),
         providerId: providerId ? Number(providerId) : null,
         serviceType: serviceType as 'none',
-        imageUrl: imageUrl ? imageUrl : serviceFound.imageUrl,
+        imageUrl: imageUrl,
         script,
       },
     });
-    return NextResponse.json(service, { status: 201 });
+
+    return NextResponse.json(updatedService, { status: 201 });
   } catch (error: any) {
     console.log(error);
     return NextResponse.json(

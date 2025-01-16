@@ -14,7 +14,7 @@ import {
   Input,
   Text,
   TextArea,
-  UploadImage,
+  UploadMultipleImages,
 } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
@@ -44,7 +44,7 @@ export interface Props {
 }
 
 export function FormItem(props: Props) {
-  const { item, serviceId, onSave, serviceCategories, service } = props;
+  const { item, serviceId, onSave, serviceCategories } = props;
   const editMode = !!item;
   const navigate = useNavigate();
   const categories = serviceCategories.map((category) => {
@@ -64,6 +64,7 @@ export function FormItem(props: Props) {
   );
   const [itemCategories, setItemCategories] = useState(categories);
   const [selectedCategory, setSelectedCategory] = useState(categoryFound);
+  const [imagesFiles, setImagesFiles] = useState<File[]>([]); 
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -80,8 +81,8 @@ export function FormItem(props: Props) {
       : undefined,
   });
 
-  const createItem = useMutation<Item, Error, NewItem>({
-    mutationFn: (data: NewItem) => {
+  const createItem = useMutation<Item, Error, FormData>({
+    mutationFn: (data: FormData) => {
       return newItem(serviceId, data);
     },
     onSuccess: (item) => {
@@ -93,8 +94,8 @@ export function FormItem(props: Props) {
     },
   });
 
-  const updateItem = useMutation<Item, Error, EditItem>({
-    mutationFn: (data: EditItem) => {
+  const updateItem = useMutation<Item, Error, FormData>({
+    mutationFn: (data: FormData) => {
       const itemId = item?.id || 0;
       return editItem(serviceId, itemId, data);
     },
@@ -109,25 +110,32 @@ export function FormItem(props: Props) {
 
   const onSubmit = async (data: ItemBase) => {
     const { name, description, priceInCents, categoryId } = data;
+    const formData: FormData = new FormData(); 
+  
+    formData.append('name', name);
+    formData.append('description', description);
+    formData.append('priceInCents', eurosToCents(Number(priceInCents)).toString());
+    formData.append('serviceId', serviceId.toString());
+    formData.append('categoryId', categoryId ? categoryId.toString() : '');  
+    imagesFiles.forEach((file) => {
+      formData.append('imageFiles', file);  
+    });
+  
+    formData.forEach((value, key) => {
+      if (value instanceof File) {
+        console.log(`${key}: ${value.name}, ${value.size} bytes`); 
+      } else {
+        console.log(`${key}: ${value}`); 
+      }
+    });
+    
     if (editMode) {
-      await updateItem.mutateAsync({
-        name,
-        description,
-        priceInCents: eurosToCents(Number(priceInCents)),
-        serviceId,
-        categoryId: categoryId || null,
-      });
+      await updateItem.mutateAsync(formData);
     } else {
-      await createItem.mutateAsync({
-        name,
-        description,
-        priceInCents: eurosToCents(Number(priceInCents)),
-        serviceId,
-        categoryId: categoryId || null,
-      });
+      await createItem.mutateAsync(formData);
     }
   };
-
+  
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -194,11 +202,20 @@ export function FormItem(props: Props) {
               )}
             </div>
 
-            <div className="media mt-6">
-              <UploadImage onChange={(file) => {}} height="400px" />
+            <div className="flex flex-col">
+              <label
+                htmlFor="imageFiles"
+                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+              >
+                Product Images
+              </label>
+              <UploadMultipleImages
+                images={imagesFiles}
+                onChange={(files) => setImagesFiles(files)} 
+                height="200px"
+              />
             </div>
           </div>
-
           <div className="adicional-info flex-1 space-y-6">
             <div className="category bg-base-100 border rounded-lg p-6">
               <div className="flex justify-between items-center border-b pb-2">
@@ -335,20 +352,9 @@ export function FormItem(props: Props) {
               onCancel={toggleDrawer}
               itemId={item.id}
               variant={selectedVariant}
-              onSave={(variantUpdated) => {
-                if (selectedVariant) {
-                  const allVariants = itemVariants.map((variant) => {
-                    return variantUpdated.id === variant.id
-                      ? variantUpdated
-                      : variant;
-                  });
-                  setItemVariants(allVariants);
-                } else {
-                  const allVariants = [variantUpdated].concat(itemVariants);
-                  setItemVariants(allVariants);
-                }
-                setSelectedVariant(undefined);
+              onSave={(variant) => {
                 toggleDrawer();
+                setItemVariants([...itemVariants, variant]);
               }}
             />
           )}
