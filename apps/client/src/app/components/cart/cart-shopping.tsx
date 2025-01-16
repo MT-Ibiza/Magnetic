@@ -112,10 +112,20 @@ export function CartShopping() {
                         >
                           <div className="flex items-center gap-4">
                             <img
+                              className="w-16 h-16 rounded object-cover"
+                              src={
+                                cartItem.item.images &&
+                                cartItem.item.images.length > 0
+                                  ? cartItem.item.images[0].url
+                                  : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
+                              }
+                              alt={cartItem.item.name}
+                            />
+                            {/* <img
                               src={'https://via.placeholder.com/50'}
                               alt={cartItem.item.name}
                               className="w-16 h-16 rounded object-cover"
-                            />
+                            /> */}
                             <div className="flex flex-col">
                               <h4 className="text-sm dark:text-gray-100">
                                 {cartItem.item.name}

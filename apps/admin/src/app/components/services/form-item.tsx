@@ -64,10 +64,21 @@ export function FormItem(props: Props) {
   );
   const [itemCategories, setItemCategories] = useState(categories);
   const [selectedCategory, setSelectedCategory] = useState(categoryFound);
-  const [imagesFiles, setImagesFiles] = useState<File[]>([]); 
+  const [existingImages, setExistingImages] = useState<string[]>(
+    item?.images?.map((img) => img.url) || []
+  );
+  const [imagesFiles, setImagesFiles] = useState<File[]>([]);
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
+  };
+
+  const handleImageChange = (newFiles: File[]) => {
+    setImagesFiles(newFiles);
+  };
+
+  const handleRemoveExistingImage = (url: string) => {
+    setExistingImages(existingImages.filter((image) => image !== url));
   };
 
   const {
@@ -110,32 +121,35 @@ export function FormItem(props: Props) {
 
   const onSubmit = async (data: ItemBase) => {
     const { name, description, priceInCents, categoryId } = data;
-    const formData: FormData = new FormData(); 
-  
+    const formData: FormData = new FormData();
+
     formData.append('name', name);
     formData.append('description', description);
-    formData.append('priceInCents', eurosToCents(Number(priceInCents)).toString());
+    formData.append(
+      'priceInCents',
+      eurosToCents(Number(priceInCents)).toString()
+    );
     formData.append('serviceId', serviceId.toString());
-    formData.append('categoryId', categoryId ? categoryId.toString() : '');  
+    formData.append('categoryId', categoryId ? categoryId.toString() : '');
     imagesFiles.forEach((file) => {
-      formData.append('imageFiles', file);  
+      formData.append('imageFiles', file);
     });
-  
+
     formData.forEach((value, key) => {
       if (value instanceof File) {
-        console.log(`${key}: ${value.name}, ${value.size} bytes`); 
+        console.log(`${key}: ${value.name}, ${value.size} bytes`);
       } else {
-        console.log(`${key}: ${value}`); 
+        console.log(`${key}: ${value}`);
       }
     });
-    
+
     if (editMode) {
       await updateItem.mutateAsync(formData);
     } else {
       await createItem.mutateAsync(formData);
     }
   };
-  
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -205,14 +219,15 @@ export function FormItem(props: Props) {
             <div className="flex flex-col">
               <label
                 htmlFor="imageFiles"
-                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+                className="mb-2 text-sm font-semibold text-neutral-800 dark:text-neutral-200"
               >
                 Product Images
               </label>
               <UploadMultipleImages
                 images={imagesFiles}
-                onChange={(files) => setImagesFiles(files)} 
-                height="200px"
+                onChange={handleImageChange}
+                height="250px"
+                existingImages={item?.images?.map((img) => img.url)}
               />
             </div>
           </div>

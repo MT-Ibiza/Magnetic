@@ -17,6 +17,7 @@ export async function GET(
           },
           include: {
             boatAttributes: true,
+            images: true,
           },
         },
         package: {

@@ -4,9 +4,7 @@ import { getTokenFromRequest } from '../../util';
 
 export async function GET(request: Request) {
   try {
-    // Obtener el token del encabezado
     const decodedToken = getTokenFromRequest(request);
-    // Verificar y decodificar el token
     if (!decodedToken) {
       return NextResponse.json({ message: 'Invalid Token' }, { status: 403 });
     }
@@ -23,6 +21,7 @@ export async function GET(request: Request) {
                 id: true,
                 name: true,
                 priceInCents: true,
+                images: true,
                 service: {
                   select: {
                     serviceType: true,

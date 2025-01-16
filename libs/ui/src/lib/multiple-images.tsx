@@ -1,27 +1,37 @@
 import { useState, useEffect } from 'react';
+import { FaCloudUploadAlt } from 'react-icons/fa';
 
 interface UploadMultipleImagesProps {
   images: File[];
+  existingImages?: string[];
   onChange: (files: File[]) => void;
+  onRemoveExistingImage?: (url: string) => void;
   height?: string;
 }
 
 export const UploadMultipleImages = ({
   images,
+  existingImages = [],
   onChange,
-  height,
+  onRemoveExistingImage,
+  height = '200px',
 }: UploadMultipleImagesProps) => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>(images);
+  const [existing, setExisting] = useState<string[]>(existingImages);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     setSelectedFiles(images);
   }, [images]);
 
+  useEffect(() => {
+    setExisting(existingImages);
+  }, [existingImages]);
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
       const fileArray = Array.from(files);
-
       const updatedFiles = [...selectedFiles, ...fileArray];
       setSelectedFiles(updatedFiles);
       onChange(updatedFiles);
@@ -34,36 +44,102 @@ export const UploadMultipleImages = ({
     onChange(updatedFiles);
   };
 
+  const handleRemoveExistingImage = (url: string) => {
+    if (onRemoveExistingImage) {
+      onRemoveExistingImage(url);
+    }
+    setExisting(existing.filter((img) => img !== url));
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDragging(false);
+
+    const files = event.dataTransfer.files;
+    if (files) {
+      const fileArray = Array.from(files);
+      const updatedFiles = [...selectedFiles, ...fileArray];
+      setSelectedFiles(updatedFiles);
+      onChange(updatedFiles);
+    }
+  };
+
   return (
-    <div>
-      <div className="flex flex-wrap gap-4">
+    <div className="space-y-6">
+      <div className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-3">
+        {existing.map((url, index) => (
+          <div key={`existing-${index}`} className="relative group">
+            <img
+              src={url}
+              alt={`Existing ${index}`}
+              className="object-cover w-full h-[200px] rounded-md"
+            />
+            <button
+              type="button"
+              onClick={() => handleRemoveExistingImage(url)}
+              className="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-sm rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+              title="Remove"
+            >
+              ✕
+            </button>
+          </div>
+        ))}
         {selectedFiles.map((file, index) => (
-          <div key={index} className="relative w-32 h-32">
+          <div key={`new-${index}`} className="relative group">
             <img
               src={URL.createObjectURL(file)}
               alt={`Uploaded ${index}`}
-              className="object-cover w-full h-full rounded-md"
-              style={{ height: height || 'auto' }}
+              className="object-cover w-full h-[200px] rounded-md"
             />
             <button
               type="button"
               onClick={() => handleRemoveFile(file)}
-              className="absolute top-0 right-0 text-white bg-red-500 rounded-full p-1"
+              className="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-sm rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+              title="Remove"
             >
-              X
+              ✕
             </button>
           </div>
         ))}
       </div>
-
-      <div className="mt-4">
+      <div
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        className={`flex flex-col items-center justify-center border-2 rounded-md transition-all ${
+          isDragging
+            ? 'border-blue-500 bg-blue-50'
+            : 'border-dashed border-gray-300'
+        }`}
+        style={{ height }}
+      >
         <input
           type="file"
           accept="image/*"
           multiple
           onChange={handleFileChange}
-          className="block w-full py-2 px-4 border border-gray-300 rounded-md"
+          className="hidden"
+          id="upload-input"
         />
+        <label
+          htmlFor="upload-input"
+          className="text-gray-500 hover:text-gray-700 cursor-pointer"
+        >
+          <div className="flex flex-col items-center space-y-2">
+            <FaCloudUploadAlt className="text-4xl text-gray-400" />
+            <span>Click to upload images</span>
+            <span className="text-sm text-gray-400">or drag them here</span>
+          </div>
+        </label>
       </div>
     </div>
   );

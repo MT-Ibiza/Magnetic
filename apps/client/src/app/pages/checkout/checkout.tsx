@@ -216,9 +216,14 @@ export function CheckoutPage() {
                       className="grid grid-cols-8 items-center gap-2 w-full"
                     >
                       <img
-                        src={'https://via.placeholder.com/50'}
-                        alt={cartItem.item.name}
                         className="col-span-1 w-10 h-10 rounded object-cover"
+                        src={
+                          cartItem.item.images &&
+                          cartItem.item.images.length > 0
+                            ? cartItem.item.images[0].url
+                            : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
+                        }
+                        alt={cartItem.item.name}
                       />
                       <div className="col-span-6">
                         <div className="flex flex-col w-full">
