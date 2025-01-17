@@ -11,6 +11,10 @@ export const URL_LOGIN = `${API_URL}/login`;
 export const URL_GET_SERVICES = `${API_URL}/services`;
 export const URL_GET_SERVICE = (id: number) => `${API_URL}/services/${id}`;
 
+//Items
+export const URL_GET_ITEM = (serviceId: number, itemId: number) =>
+  `${API_URL}/services/${serviceId}/items/${itemId}`;
+
 //Package
 export const URL_GET_PACKAGE = (id: number) => `${API_URL}/packages/${id}`;
 export const URL_GET_PACKAGES = `${API_URL}/packages`;

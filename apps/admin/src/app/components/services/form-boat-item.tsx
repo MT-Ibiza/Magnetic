@@ -15,6 +15,7 @@ import {
   Text,
   TextArea,
   UploadImage,
+  UploadMultipleImages,
 } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
@@ -68,6 +69,10 @@ export function FormBoatItem(props: Props) {
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
+  };
+
+  const handleImageChange = (newFiles: File[]) => {
+    setImagesFiles(newFiles);
   };
 
   const {
@@ -124,39 +129,44 @@ export function FormBoatItem(props: Props) {
   });
 
   const onSubmit = async (data: any) => {
-    const { name, description, priceInCents, categoryId, boatAttributes } = data;
-  
+    const { name, description, priceInCents, categoryId, boatAttributes } =
+      data;
+
     const formData: FormData = new FormData();
     formData.append('name', name);
     formData.append('description', description);
-    formData.append('priceInCents', eurosToCents(Number(priceInCents)).toString());
+    formData.append(
+      'priceInCents',
+      eurosToCents(Number(priceInCents)).toString()
+    );
     formData.append('serviceId', serviceId.toString());
     formData.append('categoryId', categoryId ? categoryId.toString() : '');
-    formData.append('boatAttributes', JSON.stringify({
-      boatType: boatAttributes.boatType,
-      berth: boatAttributes.berth,
-      guests: Number(boatAttributes.guests),
-      crew: Number(boatAttributes.crew),
-      beamInCentimeters: Number(boatAttributes.beamInCentimeters),
-      cabins: Number(boatAttributes.cabins),
-      fuelConsumption: Number(boatAttributes.fuelConsumption),
-      sizeInCentimeters: Number(boatAttributes.sizeInCentimeters),
-      latitude: boatAttributes.latitude.toString(),  
-      longitude: boatAttributes.longitude.toString(),  
-    }));
-  
+    formData.append(
+      'boatAttributes',
+      JSON.stringify({
+        boatType: boatAttributes.boatType,
+        berth: boatAttributes.berth,
+        guests: Number(boatAttributes.guests),
+        crew: Number(boatAttributes.crew),
+        beamInCentimeters: Number(boatAttributes.beamInCentimeters),
+        cabins: Number(boatAttributes.cabins),
+        fuelConsumption: Number(boatAttributes.fuelConsumption),
+        sizeInCentimeters: Number(boatAttributes.sizeInCentimeters),
+        latitude: boatAttributes.latitude.toString(),
+        longitude: boatAttributes.longitude.toString(),
+      })
+    );
+
     imagesFiles.forEach((file) => {
       formData.append('imageFiles', file);
     });
-  
+
     if (editMode) {
       await updateItem.mutateAsync(formData);
     } else {
       await createItem.mutateAsync(formData);
     }
   };
-  
-  
 
   return (
     <>
@@ -224,7 +234,12 @@ export function FormBoatItem(props: Props) {
             </div>
 
             <div className="media mt-6">
-              <UploadImage onChange={(file) => {}} height="400px" />
+              <UploadMultipleImages
+                images={imagesFiles}
+                onChange={handleImageChange}
+                height="250px"
+                existingImages={item?.images}
+              />
             </div>
 
             <div className="boat-attributes-form space-y-6">

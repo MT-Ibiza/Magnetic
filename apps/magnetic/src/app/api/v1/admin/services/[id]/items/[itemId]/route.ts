@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { EditItem } from '@magnetic/interfaces';
 import db from 'apps/magnetic/src/app/libs/db';
+import { uploadBulkImages } from 'apps/magnetic/src/app/libs/s3';
 
 export async function GET(
   request: Request,
@@ -79,68 +80,102 @@ export async function PUT(
   request: Request,
   { params }: { params: { id: string; itemId: string } }
 ) {
-  const data: EditItem = await request.json();
-  const { name, priceInCents, description, categoryId, boatAttributes } = data;
+  const data = await request.formData();
+  const name = data.get('name') as string;
+  const description = data.get('description') as string;
+  const priceInCents = Number(data.get('priceInCents') as string);
+  const rawBoatAttributes = data.get('boatAttributes') as string;
+  const boatAttributes = rawBoatAttributes ? JSON.parse(rawBoatAttributes) : null;
+  const imageFiles = data.getAll('imageFiles') as File[];
+
+  const cleanObject = (obj: Record<string, any>) =>
+    Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== undefined));
+
   try {
-    if (boatAttributes) {
-      const item = await db.item.update({
+    let newImageUrls: string[] = [];
+    if (imageFiles.length > 0) {
+      const uploadedImages = await uploadBulkImages(imageFiles, 'items');
+      newImageUrls = uploadedImages;
+    }
+
+    const currentImages = await db.image.findMany({
+      where: {
+        itemId: Number(params.itemId),
+      },
+    });
+
+    const currentImageUrls = currentImages.map((image) => image.url);
+    const imagesToDelete = currentImageUrls.filter(
+      (url) => !newImageUrls.includes(url)
+    );
+
+    if (imagesToDelete.length > 0) {
+      await db.image.deleteMany({
         where: {
-          id: Number(params.itemId),
-          serviceId: Number(params.id),
-        },
-        data: {
-          name,
-          description,
-          priceInCents,
-          serviceId: Number(params.id),
-          boatAttributes: {
-            upsert: {
-              create: {
-                boatType: boatAttributes.boatType,
-                berth: boatAttributes.berth,
-                guests: boatAttributes.guests,
-                crew: boatAttributes.crew,
-                beamInCentimeters: boatAttributes.beamInCentimeters,
-                cabins: boatAttributes.cabins,
-                fuelConsumption: boatAttributes.fuelConsumption,
-                description: boatAttributes.description,
-                latitude: boatAttributes.latitude,
-                longitude: boatAttributes.longitude,
-                sizeInCentimeters: boatAttributes.sizeInCentimeters,
-              },
-              update: {
-                boatType: boatAttributes.boatType,
-                berth: boatAttributes.berth,
-                guests: boatAttributes.guests,
-                crew: boatAttributes.crew,
-                beamInCentimeters: boatAttributes.beamInCentimeters,
-                cabins: boatAttributes.cabins,
-                fuelConsumption: boatAttributes.fuelConsumption,
-                description: boatAttributes.description,
-                latitude: boatAttributes.latitude,
-                longitude: boatAttributes.longitude,
-                sizeInCentimeters: boatAttributes.sizeInCentimeters,
-              },
-            },
+          url: {
+            in: imagesToDelete,
           },
         },
       });
-      return NextResponse.json(item, { status: 201 });
-    } else {
-      const item = await db.item.update({
-        where: {
-          id: Number(params.itemId),
-          serviceId: Number(params.id),
-        },
-        data: {
-          name,
-          priceInCents,
-          description,
-          categoryId,
-        },
-      });
-      return NextResponse.json(item, { status: 201 });
     }
+
+    if (newImageUrls.length > 0) {
+      const newImagePromises = newImageUrls.map((url) =>
+        db.image.create({
+          data: {
+            url,
+            itemId: Number(params.itemId),
+          },
+        })
+      );
+      await Promise.all(newImagePromises);
+    }
+
+    const cleanedBoatAttributes = boatAttributes
+      ? {
+          create: cleanObject({
+            boatType: boatAttributes.boatType,
+            berth: boatAttributes.berth,
+            guests: boatAttributes.guests,
+            crew: boatAttributes.crew,
+            beamInCentimeters: boatAttributes.beamInCentimeters,
+            cabins: boatAttributes.cabins,
+            fuelConsumption: boatAttributes.fuelConsumption,
+            description: boatAttributes.description,
+            latitude: boatAttributes.latitude,
+            longitude: boatAttributes.longitude,
+            sizeInCentimeters: boatAttributes.sizeInCentimeters,
+          }),
+          update: cleanObject({
+            boatType: boatAttributes.boatType,
+            berth: boatAttributes.berth,
+            guests: boatAttributes.guests,
+            crew: boatAttributes.crew,
+            beamInCentimeters: boatAttributes.beamInCentimeters,
+            cabins: boatAttributes.cabins,
+            fuelConsumption: boatAttributes.fuelConsumption,
+            description: boatAttributes.description,
+            latitude: boatAttributes.latitude,
+            longitude: boatAttributes.longitude,
+            sizeInCentimeters: boatAttributes.sizeInCentimeters,
+          }),
+        }
+      : {};
+
+    const item = await db.item.update({
+      where: {
+        id: Number(params.itemId),
+        serviceId: Number(params.id),
+      },
+      data: {
+        name,
+        description,
+        priceInCents,
+        // boatAttributes: cleanedBoatAttributes,
+      },
+    });
+
+    return NextResponse.json(item, { status: 201 });
   } catch (error: any) {
     return NextResponse.json(
       {
@@ -152,3 +187,4 @@ export async function PUT(
     );
   }
 }
+

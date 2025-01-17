@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { Image } from '@magnetic/interfaces';
+import { useState } from 'react';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 
 interface UploadMultipleImagesProps {
   images: File[];
-  existingImages?: string[];
+  existingImages?: Image[];
   onChange: (files: File[]) => void;
   onRemoveExistingImage?: (url: string) => void;
   height?: string;
@@ -17,16 +18,7 @@ export const UploadMultipleImages = ({
   height = '200px',
 }: UploadMultipleImagesProps) => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>(images);
-  const [existing, setExisting] = useState<string[]>(existingImages);
   const [isDragging, setIsDragging] = useState(false);
-
-  useEffect(() => {
-    setSelectedFiles(images);
-  }, [images]);
-
-  useEffect(() => {
-    setExisting(existingImages);
-  }, [existingImages]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -42,13 +34,6 @@ export const UploadMultipleImages = ({
     const updatedFiles = selectedFiles.filter((file) => file !== fileToRemove);
     setSelectedFiles(updatedFiles);
     onChange(updatedFiles);
-  };
-
-  const handleRemoveExistingImage = (url: string) => {
-    if (onRemoveExistingImage) {
-      onRemoveExistingImage(url);
-    }
-    setExisting(existing.filter((img) => img !== url));
   };
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -76,16 +61,15 @@ export const UploadMultipleImages = ({
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-3">
-        {existing.map((url, index) => (
+        {existingImages.map((image, index) => (
           <div key={`existing-${index}`} className="relative group">
             <img
-              src={url}
+              src={image.url}
               alt={`Existing ${index}`}
               className="object-cover w-full h-[200px] rounded-md"
             />
             <button
               type="button"
-              onClick={() => handleRemoveExistingImage(url)}
               className="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-sm rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
               title="Remove"
             >

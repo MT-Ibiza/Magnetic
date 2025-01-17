@@ -12,6 +12,7 @@ import ViewPackagePage from '../pages/view-package-page/view-package-page';
 import AccountPage from '../pages/account/account';
 import OrderPage from '../pages/order-page/order-page';
 import OrdersPage from '../pages/orders-page/orders-page';
+import ViewItemPage from '../pages/view-item-page/view-item-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -31,7 +32,7 @@ export const AppRouter = () => {
           <Route path="services" element={<ServiceClientPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
           <Route path="services/:id" element={<ViewServicePage />} />
-          <Route path="services/:id/item/:itemId" element={<PendingPage />} />
+          <Route path="services/:serviceId/item/:itemId" element={<ViewItemPage />} />
           <Route path="packages" element={<PackagePage />} />
           <Route path="packages/:id" element={<ViewPackagePage />} />
           <Route path="orders" element={<OrdersPage />} />

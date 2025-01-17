@@ -68,10 +68,7 @@ export async function editItem(
   const url = URL_UPDATE_ITEM(serviceId, itemId);
   const response = await fetch(url, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(params),
+    body: params,
   });
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);

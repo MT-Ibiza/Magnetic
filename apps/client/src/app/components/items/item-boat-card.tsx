@@ -69,7 +69,11 @@ function ItemBoatCard(props: Props) {
         <div className="flex gap-5">
           <img
             className="object-cover rounded-lg h-[125px] w-[125px]"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU"
+            src={
+              item.images && item.images.length > 0
+                ? item.images[0].url
+                : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
+            }
             alt={item.name}
           />
           <div className="flex flex-col w-full">

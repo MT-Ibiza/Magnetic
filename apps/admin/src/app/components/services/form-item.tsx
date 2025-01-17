@@ -64,9 +64,6 @@ export function FormItem(props: Props) {
   );
   const [itemCategories, setItemCategories] = useState(categories);
   const [selectedCategory, setSelectedCategory] = useState(categoryFound);
-  const [existingImages, setExistingImages] = useState<string[]>(
-    item?.images?.map((img) => img.url) || []
-  );
   const [imagesFiles, setImagesFiles] = useState<File[]>([]);
 
   const toggleDrawer = () => {
@@ -75,10 +72,6 @@ export function FormItem(props: Props) {
 
   const handleImageChange = (newFiles: File[]) => {
     setImagesFiles(newFiles);
-  };
-
-  const handleRemoveExistingImage = (url: string) => {
-    setExistingImages(existingImages.filter((image) => image !== url));
   };
 
   const {
@@ -227,7 +220,7 @@ export function FormItem(props: Props) {
                 images={imagesFiles}
                 onChange={handleImageChange}
                 height="250px"
-                existingImages={item?.images?.map((img) => img.url)}
+                existingImages={item?.images}
               />
             </div>
           </div>
