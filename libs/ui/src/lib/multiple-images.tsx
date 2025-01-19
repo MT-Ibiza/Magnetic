@@ -70,6 +70,7 @@ export const UploadMultipleImages = ({
             />
             <button
               type="button"
+              onClick={() => onRemoveExistingImage?.(image.url)}
               className="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-sm rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
               title="Remove"
             >

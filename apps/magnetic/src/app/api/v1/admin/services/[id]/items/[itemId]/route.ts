@@ -78,91 +78,26 @@ export async function GET(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string; itemId: string } }
+  { params }: { params: { id: number; itemId: number } }
 ) {
   const data = await request.formData();
+
   const name = data.get('name') as string;
   const description = data.get('description') as string;
   const priceInCents = Number(data.get('priceInCents') as string);
-  const rawBoatAttributes = data.get('boatAttributes') as string;
-  const boatAttributes = rawBoatAttributes ? JSON.parse(rawBoatAttributes) : null;
+  const boatAttributes = data.get('boatAttributes')
+    ? JSON.parse(data.get('boatAttributes') as string)
+    : null;
   const imageFiles = data.getAll('imageFiles') as File[];
 
-  const cleanObject = (obj: Record<string, any>) =>
-    Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== undefined));
-
   try {
-    let newImageUrls: string[] = [];
+    let imageUrls: string[] = [];
     if (imageFiles.length > 0) {
       const uploadedImages = await uploadBulkImages(imageFiles, 'items');
-      newImageUrls = uploadedImages;
+      imageUrls = uploadedImages;
     }
 
-    const currentImages = await db.image.findMany({
-      where: {
-        itemId: Number(params.itemId),
-      },
-    });
-
-    const currentImageUrls = currentImages.map((image) => image.url);
-    const imagesToDelete = currentImageUrls.filter(
-      (url) => !newImageUrls.includes(url)
-    );
-
-    if (imagesToDelete.length > 0) {
-      await db.image.deleteMany({
-        where: {
-          url: {
-            in: imagesToDelete,
-          },
-        },
-      });
-    }
-
-    if (newImageUrls.length > 0) {
-      const newImagePromises = newImageUrls.map((url) =>
-        db.image.create({
-          data: {
-            url,
-            itemId: Number(params.itemId),
-          },
-        })
-      );
-      await Promise.all(newImagePromises);
-    }
-
-    const cleanedBoatAttributes = boatAttributes
-      ? {
-          create: cleanObject({
-            boatType: boatAttributes.boatType,
-            berth: boatAttributes.berth,
-            guests: boatAttributes.guests,
-            crew: boatAttributes.crew,
-            beamInCentimeters: boatAttributes.beamInCentimeters,
-            cabins: boatAttributes.cabins,
-            fuelConsumption: boatAttributes.fuelConsumption,
-            description: boatAttributes.description,
-            latitude: boatAttributes.latitude,
-            longitude: boatAttributes.longitude,
-            sizeInCentimeters: boatAttributes.sizeInCentimeters,
-          }),
-          update: cleanObject({
-            boatType: boatAttributes.boatType,
-            berth: boatAttributes.berth,
-            guests: boatAttributes.guests,
-            crew: boatAttributes.crew,
-            beamInCentimeters: boatAttributes.beamInCentimeters,
-            cabins: boatAttributes.cabins,
-            fuelConsumption: boatAttributes.fuelConsumption,
-            description: boatAttributes.description,
-            latitude: boatAttributes.latitude,
-            longitude: boatAttributes.longitude,
-            sizeInCentimeters: boatAttributes.sizeInCentimeters,
-          }),
-        }
-      : {};
-
-    const item = await db.item.update({
+    const updatedItem = await db.item.update({
       where: {
         id: Number(params.itemId),
         serviceId: Number(params.id),
@@ -171,19 +106,39 @@ export async function PUT(
         name,
         description,
         priceInCents,
-        // boatAttributes: cleanedBoatAttributes,
+        serviceId: Number(params.id),
+        ...(boatAttributes && {
+          boatAttributes: {
+            upsert: {
+              create: {
+                ...boatAttributes,
+              },
+              update: {
+                ...boatAttributes,
+              },
+            },
+          },
+        }),
       },
     });
 
-    return NextResponse.json(item, { status: 201 });
+    if (imageUrls.length > 0) {
+      const imagePromises = imageUrls.map((url) =>
+        db.image.create({
+          data: {
+            url,
+            itemId: updatedItem.id,
+          },
+        })
+      );
+      await Promise.all(imagePromises);
+    }
+    
+    return NextResponse.json(updatedItem);
   } catch (error: any) {
     return NextResponse.json(
-      {
-        message: error.message,
-      },
-      {
-        status: 500,
-      }
+      { message: error.message },
+      { status: 500 }
     );
   }
 }
