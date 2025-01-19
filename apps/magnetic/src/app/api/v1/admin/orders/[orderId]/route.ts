@@ -19,6 +19,7 @@ export async function GET(
             item: {
               select: {
                 name: true,
+                images: true,
                 service: {
                   select: {
                     id: true,

@@ -27,11 +27,14 @@ function OrderItemsTable(props: Props) {
               <td>
                 <div className="flex gap-3">
                   <img
-                    src={'https://via.placeholder.com/50'}
-                    alt={item.item.name}
                     className="w-16 h-16 object-cover rounded-md"
+                    src={
+                      item.item.images && item.item.images.length > 0
+                        ? item.item.images[0].url
+                        : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
+                    }
+                    alt={item.item.name}
                   />
-
                   <div className="flex flex-col gap-1">
                     <Text>{item.item.name}</Text>
                     <Text className="text-gray-500" size="1">

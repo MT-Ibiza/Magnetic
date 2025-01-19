@@ -1,3 +1,4 @@
+import { Image } from './items';
 import { User } from './users';
 
 export interface Order {
@@ -16,6 +17,7 @@ export interface Order {
 
 export interface ItemBaseFields {
   name: string;
+  images: Image[];
   service: {
     id: number;
     name: string;
