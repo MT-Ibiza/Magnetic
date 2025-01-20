@@ -56,30 +56,30 @@ export function ViewItemPage(props: Props) {
 
   return (
     <div className="flex flex-col gap-6 p-6">
-      {item?.images && item.images.length > 0 && <ItemsGallery images={item?.images} />}
+      {item?.images && item.images.length > 0 && (
+        <ItemsGallery images={item?.images} />
+      )}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="col-span-2 space-y-6">
           <div className="bg-base-100 p-6 rounded-lg shadow">
             <h2 className="text-2xl uppercase font-semibold">{item?.name}</h2>
-            <div className="w-14 border-b border-neutral-200 dark:border-neutral-700 my-2"></div>
-            <p className="text-neutral-600 dark:text-neutral-300">
+            <p className='mt-[4px] text-primary-600'>{item?.boatAttributes?.boatType}</p>
+            <p className="mt-[10px] text-neutral-600 dark:text-neutral-300">
               {item?.description}
             </p>
           </div>
           <div className="bg-base-100 p-6 rounded-lg shadow space-y-4">
             <h3 className="text-xl font-semibold">Boat Attributes</h3>
-            <ul className="space-y-2 text-neutral-600 dark:text-neutral-300">
-              <li>
-                <strong>Type:</strong> {item?.boatAttributes?.boatType || 'N/A'}
-              </li>
-              <li>
-                <strong>Berth:</strong> {item?.boatAttributes?.berth || 'N/A'}
-              </li>
+            <ul className="list-items-props space-y-2">
               <li>
                 <strong>Guests:</strong> {item?.boatAttributes?.guests || 'N/A'}
               </li>
               <li>
                 <strong>Crew:</strong> {item?.boatAttributes?.crew || 'N/A'}
+              </li>
+              <li>
+                <strong>Size (cm):</strong>{' '}
+                {item?.boatAttributes?.sizeInCentimeters || 'N/A'}
               </li>
               <li>
                 <strong>Beam (cm):</strong>{' '}
@@ -91,17 +91,6 @@ export function ViewItemPage(props: Props) {
               <li>
                 <strong>Fuel Consumption (liters/hour):</strong>{' '}
                 {item?.boatAttributes?.fuelConsumption || 'N/A'}
-              </li>
-              <li>
-                <strong>Size (cm):</strong>{' '}
-                {item?.boatAttributes?.sizeInCentimeters || 'N/A'}
-              </li>
-              <li>
-                <strong>Location:</strong>
-                {item?.boatAttributes?.latitude &&
-                item?.boatAttributes?.longitude
-                  ? `Lat: ${item.boatAttributes.latitude}, Lon: ${item.boatAttributes.longitude}`
-                  : 'N/A'}
               </li>
             </ul>
           </div>
