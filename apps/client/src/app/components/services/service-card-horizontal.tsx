@@ -1,6 +1,4 @@
 import { Service } from '@magnetic/interfaces';
-import { Text } from '@magnetic/ui';
-import React from 'react';
 
 interface Props {
   service: Service;
@@ -21,8 +19,11 @@ function ServiceCardHorizontal(props: Props) {
       </div>
       <div className="flex justify-end w-1/4 bg-base-100">
         <img
-          className="object-cover rounded-lg h-[125px] w-[125px]"
-          src={imageUrl}
+          className="object-cover rounded-r-lg h-[125px] w-[125px]"
+          src={
+            imageUrl ||
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
+          }
           alt={''}
         />
       </div>

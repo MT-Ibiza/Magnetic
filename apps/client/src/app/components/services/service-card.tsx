@@ -13,7 +13,14 @@ function ServiceCard(props: Props) {
   return (
     <div className="relative flex flex-col justify-between bg-base-100 border border-gray-300 rounded-lg overflow-hidden shadow-sm group hover:shadow-md transition duration-200 ease-in-out">
       <div className="w-full h-48 bg-gray-100">
-        <img src={imageUrl} alt={name} className="object-cover h-full" />
+        <img
+          src={
+            imageUrl ||
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
+          }
+          alt={name}
+          className="object-cover h-full w-full"
+        />
       </div>
       <div className="p-4 space-y-3">
         <h2 className="text-xl font-medium">{name}</h2>
