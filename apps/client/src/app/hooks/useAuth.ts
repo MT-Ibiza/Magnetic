@@ -10,6 +10,8 @@ export function useAuth() {
     currentUser,
     setCurrentUser,
     getCurrentUser,
+    sessionExpired,
+    showSessionExpiredError,
   } = useAppStore();
 
   return {
@@ -21,5 +23,7 @@ export function useAuth() {
     setCurrentUser,
     getCurrentUser,
     currentUser,
+    sessionExpired,
+    showSessionExpiredError,
   };
 }

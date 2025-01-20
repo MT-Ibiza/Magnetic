@@ -13,10 +13,13 @@ import { useCartStore } from '../../hooks/useCartStore';
 import { Button } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 export function CartShopping() {
-  const { isLoading, data, removeAllItemsCart } = useCart();
+  const { isLoading, data, removeAllItemsCart, isError, error } = useCart();
   const { cart, clearCart, removeItem, addItem } = useCartStore();
+  const { showSessionExpiredError } = useAuth();
+
   const total = cart.reduce(
     (sum, cartItem) => sum + cartItem.item.priceInCents * cartItem.quantity,
     0
@@ -46,6 +49,12 @@ export function CartShopping() {
       });
     }
   }, [data]);
+
+  useEffect(() => {
+    if (error) {
+      showSessionExpiredError(true);
+    }
+  }, [error]);
 
   if (isLoading) {
     return <h1>Loading....</h1>;

@@ -19,6 +19,8 @@ export type AuthSlice = {
   currentUser?: CurrentUser;
   setCurrentUser: (user: CurrentUser) => void;
   getCurrentUser: () => CurrentUser | undefined;
+  sessionExpired: boolean;
+  showSessionExpiredError: (show: boolean) => void;
 };
 
 export const createAuthSlice: StateCreator<StoreState, [], [], AuthSlice> = (
@@ -27,6 +29,7 @@ export const createAuthSlice: StateCreator<StoreState, [], [], AuthSlice> = (
 ) => ({
   token: '',
   currentUser: undefined,
+  sessionExpired: false,
   setCurrentUser: (user) => {
     const userString = JSON.stringify(user);
     localStorage.setItem(CURRENT_USER_KEY, userString);
@@ -51,5 +54,8 @@ export const createAuthSlice: StateCreator<StoreState, [], [], AuthSlice> = (
   },
   setLoggedIn: (isLogin) => {
     set({ loggedIn: isLogin });
+  },
+  showSessionExpiredError: (show) => {
+    set({ sessionExpired: show });
   },
 });
