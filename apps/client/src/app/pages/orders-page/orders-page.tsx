@@ -36,9 +36,7 @@ function OrdersPage(props: Props) {
 
   return (
     <div className="bg-base-100 listingSection__wrap">
-      <Text size="5" className="font-bold text-center mb-6">
-        My Orders
-      </Text>
+      <h1 className="text-center text-2xl lg:text-3xl font-semibold">My Orders</h1>
       <div className="flex flex-col gap-6">
         {orders.map((order) => (
           <div

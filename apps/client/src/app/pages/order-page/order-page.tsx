@@ -71,17 +71,17 @@ function OrderPage(props: Props) {
           Please fill this forms they are required to give a better service
         </Text>
         <div role="tablist" className="tabs tabs-lifted mt-8">
-          {forms.map((form, index) => (
-            <>
+          {forms.map((form) => (
+            <div key={form.id}>
               <input
                 type="radio"
                 name="my_tabs_2"
                 role="tab"
                 className="tab"
                 aria-label={`${form.service.name}`}
-                checked={index === currentTab}
+                defaultChecked={form.id === forms[currentTab]?.id}
                 onClick={() => {
-                  setCurrentTab(index);
+                  setCurrentTab(forms.findIndex((f) => f.id === form.id)); 
                 }}
               />
               <div
@@ -101,22 +101,7 @@ function OrderPage(props: Props) {
                   />
                 </div>
               </div>
-            </>
-            // <div key={index}>
-            //   <h1>{form.service.name}</h1>
-            //   <div className="border border-md p-5 my-3">
-            //     <RenderBookingForm
-            //       type={form.service.serviceType}
-            //       formData={form.formData}
-            //       onSubmit={async (data) => {
-            //         await editFormMutation.mutateAsync({
-            //           form: data,
-            //           formId: form.id,
-            //         });
-            //       }}
-            //     />
-            //   </div>
-            // </div>
+            </div>
           ))}
         </div>
       </CardWrapper>

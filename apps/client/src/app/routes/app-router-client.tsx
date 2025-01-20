@@ -13,6 +13,7 @@ import AccountPage from '../pages/account/account';
 import OrderPage from '../pages/order-page/order-page';
 import OrdersPage from '../pages/orders-page/orders-page';
 import ViewItemPage from '../pages/view-item-page/view-item-page';
+import BookingsPage from '../pages/bookings-page/bookings-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -30,6 +31,7 @@ export const AppRouter = () => {
           <Route path="cart" element={<CartPage />} />
           <Route path="account" element={<AccountPage />} />
           <Route path="services" element={<ServiceClientPage />} />
+          <Route path="bookings" element={<BookingsPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
           <Route path="services/:id" element={<ViewServicePage />} />
           <Route path="services/:serviceId/item/:itemId" element={<ViewItemPage />} />

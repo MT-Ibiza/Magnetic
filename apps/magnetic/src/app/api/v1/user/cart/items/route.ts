@@ -10,8 +10,6 @@ export async function POST(request: Request) {
     }
 
     const userId = decodedToken.id;
-
-    // Parsear el cuerpo de la solicitud
     const body = await request.json();
     const { itemId, quantity } = body;
 
@@ -27,7 +25,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Buscar o crear el carrito del usuario
     let cart = await db.cart.findUnique({
       where: { userId },
     });
@@ -40,7 +37,6 @@ export async function POST(request: Request) {
       });
     }
 
-    // Verificar si el ítem ya está en el carrito
     const existingCartItem = await db.cartItem.findFirst({
       where: {
         cartId: cart.id,
@@ -152,7 +148,7 @@ export async function DELETE(request: Request) {
 
     const userId = decodedToken.id;
 
-    // Parsear el cuerpo de la solicitud
+    
     const body = await request.json();
     const { itemId, quantity } = body;
 
@@ -166,7 +162,7 @@ export async function DELETE(request: Request) {
       );
     }
 
-    // Buscar o crear el carrito del usuario
+    
     let cart = await db.cart.findUnique({
       where: { userId },
     });
@@ -179,7 +175,7 @@ export async function DELETE(request: Request) {
       });
     }
 
-    // Verificar si el ítem ya está en el carrito
+    
     const existingCartItem = await db.cartItem.findFirst({
       where: {
         cartId: cart.id,
@@ -187,7 +183,7 @@ export async function DELETE(request: Request) {
       },
     });
 
-    // Actualizar o crear el ítem en el carrito
+    
     if (existingCartItem) {
       const updatedCartItem = await db.cartItem.update({
         where: { id: existingCartItem.id },

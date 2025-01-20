@@ -6,7 +6,7 @@ import {
 } from '@magnetic/ui';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { FaUserFriends, FaShoppingCart } from 'react-icons/fa';
+import { FaUserFriends, FaShoppingCart, FaBook } from 'react-icons/fa';
 import { SiTask } from 'react-icons/si';
 import { MdDashboardCustomize } from 'react-icons/md';
 import { useAuth } from './hooks/useAuth';
@@ -57,6 +57,12 @@ function Layout(props: Props) {
       icon: FaUserFriends,
     },
     {
+      text: 'Bookings',
+      key: 'bookings',
+      url: '/bookings',
+      icon: FaBook,
+    },
+    {
       text: 'My Orders',
       key: 'orders',
       url: '/orders',
@@ -66,7 +72,8 @@ function Layout(props: Props) {
 
   const navigationOptions = [
     { name: 'Account', href: '/account', icon: FiUser },
-    { name: 'Booking', href: '/', icon: FiBookOpen },
+    { name: 'Booking', href: '/bookings', icon: FiBookOpen },
+    { name: 'Orders', href: '/orders', icon: FiBookOpen },
   ];
 
   return (
@@ -89,6 +96,7 @@ function Layout(props: Props) {
       </HeaderApp>
       <div className="flex flex-1">
         <Sidebar
+          headerClassName="py-3 lg:py-[6.5px]"
           options={navigation}
           isVisible={isSidebarVisible}
           toggleSidebar={toggleSidebar}

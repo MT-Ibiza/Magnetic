@@ -190,6 +190,7 @@ function Layout(props: Props) {
       <div className="lg:flex lg:flex-1">
         <Sidebar
           options={navigationGroup}
+          headerClassName='py-3 lg:py-2'
           isVisible={isSidebarVisible}
           toggleSidebar={toggleSidebar}
         >

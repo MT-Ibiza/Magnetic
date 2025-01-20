@@ -34,5 +34,9 @@ export const URL_GET_ORDERS = `${API_URL}/orders`;
 export const URL_EDIT_FORM_ORDER = (id: number) =>
   `${API_URL}/orders/forms/${id}`;
 
+//Bookings
+export const URL_GET_BOOKINGS = `${API_URL}/bookings`;
+
 //TOKEN
 export const accessToken = localStorage.getItem('magnetic_auth');
+

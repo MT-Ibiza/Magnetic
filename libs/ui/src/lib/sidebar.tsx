@@ -22,6 +22,8 @@ interface SidebarProps {
   isVisible: boolean;
   toggleSidebar: () => void;
   children?: React.ReactElement;
+  overlayClassName?: string;  
+  headerClassName?: string;   
 }
 
 export function Sidebar({
@@ -29,13 +31,15 @@ export function Sidebar({
   isVisible,
   toggleSidebar,
   children,
+  overlayClassName,  
+  headerClassName,   
 }: SidebarProps) {
   return (
     <>
       <div
         className={`fixed lg:hidden inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${
           isVisible ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
+        } ${overlayClassName}`} 
         onClick={toggleSidebar}
       />
       <div
@@ -43,7 +47,9 @@ export function Sidebar({
           isVisible ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex justify-between items-center py-3 lg:py-2 px-6 border-b">
+        <div
+          className={`flex justify-between items-center px-6 border-b ${headerClassName}`} 
+        >
           <NavLink
             to="/dashboard"
             className="main-logo flex items-center shrink-0 gap-2"
