@@ -11,6 +11,7 @@ export interface ButtonProps {
   size?: 1 | 2 | 3 | 4;
   fontSize?: string;
   loading?: boolean;
+  loadingText?: string;
   disabled?: boolean;
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
   href?: LinkProps['to'] | '#';
@@ -35,6 +36,7 @@ export function Button({
   targetBlank,
   type,
   loading,
+  loadingText,
   onClick = () => {},
   radius = 'medium',
 }: ButtonProps) {
@@ -77,7 +79,8 @@ export function Button({
     full: 'rounded-full',
   };
 
-  const disabledClasses = disabled ? 'opacity-50 cursor-not-allowed' : '';
+  const disabledClasses =
+    disabled || loading ? 'opacity-50 cursor-not-allowed' : '';
 
   const twFocusClass = (hasRing = false) => {
     if (!hasRing) {
@@ -132,7 +135,7 @@ export function Button({
       onClick={onClick}
       type={type}
     >
-      {loading ? 'Loading...' : children || 'This is Button'}
+      {loading ? loadingText || 'Loading...' : children || 'This is Button'}
     </button>
   );
 }

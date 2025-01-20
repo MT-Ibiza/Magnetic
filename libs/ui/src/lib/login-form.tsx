@@ -8,10 +8,11 @@ import Text from './text';
 interface LoginFormProps {
   onSubmit: (data: { email: string; password: string }) => void;
   title?: string;
+  isSaving?: boolean;
 }
 
 export function LoginForm(props: LoginFormProps) {
-  const { onSubmit, title } = props;
+  const { onSubmit, title, isSaving } = props;
 
   const {
     register,
@@ -57,7 +58,12 @@ export function LoginForm(props: LoginFormProps) {
                 <Text.TextInputError text="Password is required" />
               )}
             </div>
-            <Button type="submit" size={2}>
+            <Button
+              type="submit"
+              size={2}
+              loading={isSaving}
+              loadingText="Login..."
+            >
               Login
             </Button>
           </form>

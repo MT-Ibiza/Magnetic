@@ -12,6 +12,7 @@ export function LoginPage() {
   const { setToken, setLoggedIn, setCurrentUser } = useAuth();
   const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const loginMutation = useMutation<LoginResponse, Error, Credentials>({
     mutationFn: (formData) => login(formData),
@@ -34,6 +35,7 @@ export function LoginPage() {
   }, []);
 
   async function onSubmitForm(data: Credentials) {
+    setIsSaving(true);
     try {
       const user = await loginMutation.mutateAsync(data);
       setCurrentUser({
@@ -43,11 +45,13 @@ export function LoginPage() {
         package: user.package,
         cartId: user.cartId,
       });
+      setIsSaving(false);
       setToken(user.accessToken);
       setLoggedIn(true);
       navigate('/');
     } catch (err: any) {
       setError('Password or email incorrect');
+      setIsSaving(false);
     }
   }
 
@@ -104,7 +108,7 @@ export function LoginPage() {
           }
           alt="Logo"
         />
-        <LoginForm onSubmit={onSubmitForm} />
+        <LoginForm onSubmit={onSubmitForm} isSaving={isSaving} />
       </div>
     </div>
   );
