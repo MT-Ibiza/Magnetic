@@ -11,7 +11,7 @@ import { SiTask } from 'react-icons/si';
 import { MdDashboardCustomize } from 'react-icons/md';
 import { useAuth } from './hooks/useAuth';
 import { User } from 'libs/interfaces/src/lib/users';
-import { FiBookOpen, FiUser } from 'react-icons/fi';
+import { FiBookOpen, FiShoppingCart, FiUser } from 'react-icons/fi';
 import CartShopping from './components/cart/cart-shopping';
 
 interface Props {}
@@ -72,8 +72,8 @@ function Layout(props: Props) {
 
   const navigationOptions = [
     { name: 'Account', href: '/account', icon: FiUser },
-    { name: 'Booking', href: '/bookings', icon: FiBookOpen },
-    { name: 'Orders', href: '/orders', icon: FiBookOpen },
+    { name: 'Bookings', href: '/bookings', icon: FiBookOpen },
+    { name: 'Orders', href: '/orders', icon: FiShoppingCart },
   ];
 
   return (

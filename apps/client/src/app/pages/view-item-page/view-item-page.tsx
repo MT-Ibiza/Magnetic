@@ -4,6 +4,7 @@ import { Button, ItemsGallery } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import { useState } from 'react';
+import { centsToEuros, cmToMeters, eurosToCents } from '@magnetic/utils';
 
 interface Props {}
 
@@ -63,13 +64,15 @@ export function ViewItemPage(props: Props) {
         <div className="col-span-2 space-y-6">
           <div className="bg-base-100 p-6 rounded-lg shadow">
             <h2 className="text-2xl uppercase font-semibold">{item?.name}</h2>
-            <p className='mt-[4px] text-primary-600'>{item?.boatAttributes?.boatType}</p>
+            <p className="mt-[4px] text-primary-600">
+              {item?.boatAttributes?.boatType}
+            </p>
             <p className="mt-[10px] text-neutral-600 dark:text-neutral-300">
               {item?.description}
             </p>
           </div>
           <div className="bg-base-100 p-6 rounded-lg shadow space-y-4">
-            <h3 className="text-xl font-semibold">Boat Attributes</h3>
+            <h3 className="text-xl font-semibold">Specifications</h3>
             <ul className="list-items-props space-y-2">
               <li>
                 <strong>Guests:</strong> {item?.boatAttributes?.guests || 'N/A'}
@@ -78,19 +81,28 @@ export function ViewItemPage(props: Props) {
                 <strong>Crew:</strong> {item?.boatAttributes?.crew || 'N/A'}
               </li>
               <li>
-                <strong>Size (cm):</strong>{' '}
-                {item?.boatAttributes?.sizeInCentimeters || 'N/A'}
+                <strong>Size:</strong>{' '}
+                {item?.boatAttributes?.sizeInCentimeters
+                  ? `${cmToMeters(
+                      item.boatAttributes.sizeInCentimeters
+                    )} m`
+                  : 'N/A'}
               </li>
               <li>
-                <strong>Beam (cm):</strong>{' '}
-                {item?.boatAttributes?.beamInCentimeters || 'N/A'}
+                <strong>Beam:</strong>{' '}
+                {item?.boatAttributes?.beamInCentimeters
+                  ? `${cmToMeters(
+                      item.boatAttributes.beamInCentimeters
+                    )} m` 
+                  : 'N/A'}
               </li>
+
               <li>
                 <strong>Cabins:</strong> {item?.boatAttributes?.cabins || 'N/A'}
               </li>
               <li>
-                <strong>Fuel Consumption (liters/hour):</strong>{' '}
-                {item?.boatAttributes?.fuelConsumption || 'N/A'}
+                <strong>Fuel Consumption:</strong>{' '}
+                {`${item?.boatAttributes?.fuelConsumption} L/H` || 'N/A'}
               </li>
             </ul>
           </div>
@@ -101,7 +113,7 @@ export function ViewItemPage(props: Props) {
               <h3 className="text-xl font-semibold">Price</h3>
               <p className="text-2xl font-bold text-primary mt-4">
                 {item?.priceInCents
-                  ? `${(item.priceInCents / 100).toFixed(2)} €`
+                  ? `${centsToEuros(item.priceInCents)} €`
                   : 'N/A'}
               </p>
             </div>

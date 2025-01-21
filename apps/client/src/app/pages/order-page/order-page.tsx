@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useOrder } from '../../hooks/useOrder';
-import { CardWrapper, Text } from '@magnetic/ui';
+import { CardWrapper, FormJsonDetails, Text } from '@magnetic/ui';
 import OrderItemsTable from '../../components/order/order-items-table';
 import OrderBookings from '../../components/services/order-bookings';
 import { useMutation } from '@tanstack/react-query';
@@ -33,7 +33,7 @@ function OrderPage(props: Props) {
       toast.success(`Form submitted!`);
     },
     onError: () => {
-      toast.error(`Cannot submitted form!`);
+      toast.error(`Cannot submit form!`);
     },
   });
 
@@ -49,7 +49,7 @@ function OrderPage(props: Props) {
   }
 
   if (isError) {
-    return <p>{error?.message || 'unknown error'} </p>;
+    return <p>{error?.message || 'Unknown error'} </p>;
   }
 
   if (!order) {
@@ -68,40 +68,42 @@ function OrderPage(props: Props) {
       <CardWrapper className="bg-base-100 ">
         <h1>Booking Forms</h1>
         <Text className="text-gray-500 mt-1" size="1">
-          Please fill this forms they are required to give a better service
+          Please fill these forms as they are required to give better service
         </Text>
         <div role="tablist" className="tabs tabs-lifted mt-8">
-          {forms.map((form) => (
-            <div key={form.id}>
+          {forms.map((form, index) => (
+            <>
               <input
                 type="radio"
                 name="my_tabs_2"
                 role="tab"
                 className="tab"
                 aria-label={`${form.service.name}`}
-                defaultChecked={form.id === forms[currentTab]?.id}
-                onClick={() => {
-                  setCurrentTab(forms.findIndex((f) => f.id === form.id)); 
-                }}
+                checked={index === currentTab}
+                onClick={() => setCurrentTab(index)}
               />
               <div
                 role="tabpanel"
                 className="tab-content bg-base-100 border-base-300 rounded-box p-6"
               >
                 <div className="p-5 my-3">
-                  <RenderBookingForm
-                    type={form.service.serviceType}
-                    formData={form.formData}
-                    onSubmit={async (data) => {
-                      await editFormMutation.mutateAsync({
-                        form: data,
-                        formId: form.id,
-                      });
-                    }}
-                  />
+                  {form.formData && Object.keys(form.formData).length > 0 ? (
+                    <FormJsonDetails formData={form.formData} />
+                  ) : (
+                    <RenderBookingForm
+                      type={form.service.serviceType}
+                      formData={form.formData}
+                      onSubmit={async (data) => {
+                        await editFormMutation.mutateAsync({
+                          form: data,
+                          formId: form.id,
+                        });
+                      }}
+                    />
+                  )}
                 </div>
               </div>
-            </div>
+            </>
           ))}
         </div>
       </CardWrapper>

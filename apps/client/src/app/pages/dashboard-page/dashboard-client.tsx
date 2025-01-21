@@ -69,12 +69,12 @@ export function DashboardClientPage() {
               </Link>
             ))}
             {filteredServices.length > 2 && (
-              <div className='flex justify-end'>
+              <div className="flex justify-end">
                 <Link
                   to="/services"
                   className="text-primary-600 font-semibold mt-4 hover:underline"
                 >
-                  View All
+                  View All Services
                 </Link>
               </div>
             )}
