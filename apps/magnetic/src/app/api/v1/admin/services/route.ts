@@ -12,6 +12,7 @@ export async function POST(request: Request) {
   const serviceType = data.get('serviceType') as string;
   const script = data.get('script') as string;
   const imageFile = data.get('imageFile') as File;
+  const termsAndConditions = data.get('termsAndConditions') as string;
   try {
     let imageUrl = null;
     if (imageFile) {
@@ -27,6 +28,7 @@ export async function POST(request: Request) {
         serviceType: serviceType as 'none',
         imageUrl,
         script,
+        termsAndConditions,
       },
     });
     return NextResponse.json(service);

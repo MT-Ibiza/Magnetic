@@ -63,9 +63,9 @@ export const UploadImage: React.FC<UploadImageProps> = ({
 
   return (
     <div className="flex flex-col gap-[10px]">
-      <span className="text-neutral-800 dark:text-neutral-200">
+      {/* <span className="text-neutral-800 dark:text-neutral-200">
         Upload Image
-      </span>
+      </span> */}
       <div
         className={`flex items-center rounded-[10px] justify-center w-full ${
           isDragging

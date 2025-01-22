@@ -43,20 +43,21 @@ model User {
 }
 
 model Service {
-  id          Int                @id @default(autoincrement())
-  createdAt   DateTime           @default(now())
-  updatedAt   DateTime           @updatedAt
-  name        String
-  description String?
-  serviceType ServiceType        @default(none)
-  items       Item[]
-  script      String?
-  packageId   Int
-  imageUrl    String?
-  package     Package            @relation(fields: [packageId], references: [id])
-  providerId  Int?
-  provider    Provider?          @relation(fields: [providerId], references: [id])
-  forms       OrderBookingForm[]
+  id                 Int                @id @default(autoincrement())
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  name               String
+  description        String?
+  serviceType        ServiceType        @default(none)
+  items              Item[]
+  script             String?
+  packageId          Int
+  imageUrl           String?
+  termsAndConditions String?
+  package            Package            @relation(fields: [packageId], references: [id])
+  providerId         Int?
+  provider           Provider?          @relation(fields: [providerId], references: [id])
+  forms              OrderBookingForm[]
 }
 
 model Category {

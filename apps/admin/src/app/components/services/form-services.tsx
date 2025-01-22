@@ -33,6 +33,7 @@ export interface FormServiceData {
   cover?: string;
   serviceType: string;
   script?: string;
+  termsAndConditions?: string;
 }
 
 export interface Props {
@@ -49,7 +50,11 @@ export function ServiceForm(props: Props) {
     setOpenDrawer((prevState) => !prevState);
   };
   const [imageFile, setImageFile] = useState<File>();
-
+  const [description, setDescription] = useState(service?.description);
+  const [termsAndConditions, setTermsAndConditions] = useState(
+    service?.termsAndConditions
+  );
+  const { isLoading, isError, data, error } = useNewServiceData();
   const {
     register,
     handleSubmit,
@@ -65,11 +70,10 @@ export function ServiceForm(props: Props) {
           cover: service.imageUrl,
           serviceType: service.serviceType,
           script: service.script,
+          termsAndConditions: service.termsAndConditions,
         }
       : undefined,
   });
-  const [description, setDescription] = useState(service?.description);
-  const { isLoading, isError, data, error } = useNewServiceData();
 
   const createService = useMutation<Service, Error, FormData>({
     mutationFn: (data: FormData) => {
@@ -120,6 +124,8 @@ export function ServiceForm(props: Props) {
     script && formData.append('script', script);
     providerId && formData.append('providerId', providerId.toString());
     imageFile && formData.append('imageFile', imageFile);
+    termsAndConditions &&
+      formData.append('termsAndConditions', termsAndConditions);
     if (service) {
       await updateService.mutateAsync(formData);
     } else {
@@ -139,7 +145,7 @@ export function ServiceForm(props: Props) {
                   className="select select-bordered w-full "
                   {...register('providerId')}
                 >
-                  <option value={0}>None</option>
+                  <option value="">None</option>
                   {data.providers.map((option, index) => (
                     <option value={option.id} key={index}>
                       {option.name}
@@ -172,7 +178,7 @@ export function ServiceForm(props: Props) {
                 )}
               </div>
               <div className="flex flex-col gap-[10px]">
-                <Text size="1">Service Type</Text>
+                <Text size="1">Form Type</Text>
                 <select
                   className="select select-bordered w-full"
                   {...register('serviceType')}
@@ -187,7 +193,7 @@ export function ServiceForm(props: Props) {
                 </select>
               </div>
               <div className="flex flex-col gap-[10px]">
-                <Text size="1">Available in subscription</Text>
+                <Text size="1">Available in package</Text>
                 <select
                   className="select select-bordered w-full "
                   {...register('packageId', {
@@ -223,14 +229,28 @@ export function ServiceForm(props: Props) {
                   onChange={setDescription}
                   className="h-[200px]"
                 />
+                <br />
               </div>
-              <UploadImage
-                imageUrl={service?.imageUrl}
-                onChange={(file) => {
-                  file && setImageFile(file);
-                }}
-                height="400px"
-              />
+              <div className="flex flex-col gap-[10px]">
+                <Text size="1">Terms and Conditions</Text>
+                <ReactQuill
+                  theme="snow"
+                  defaultValue={termsAndConditions}
+                  onChange={setTermsAndConditions}
+                  className="h-[200px]"
+                />
+                <br />
+              </div>
+              <div className="flex flex-col gap-[10px]">
+                <Text size="1">Service Image</Text>
+                <UploadImage
+                  imageUrl={service?.imageUrl}
+                  onChange={(file) => {
+                    file && setImageFile(file);
+                  }}
+                  height="400px"
+                />
+              </div>
             </div>
             <div className="flex gap-[10px] justify-end pt-[80px]">
               <Button variant="outline" href={'/services'} type="submit">
