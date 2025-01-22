@@ -11,6 +11,14 @@ import { ErrorText } from '../error-text';
 
 export interface FormUserData {
   name: string;
+  firstName: string;
+  lastName: string;
+  accommodation: string;
+  arrivalDate: string;
+  departureDate: string;
+  passportNumber: string;
+  passportAttachmentUrl: string;
+  billingAddress: string;
   email: string;
   phone?: string;
   password: string;
@@ -114,41 +122,137 @@ export function FormUser(props: Props) {
     <div className="bg-base-100 listingSection__wrap">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-[20px]">
-          <div className="flex flex-col gap-[10px]">
-            <Text>Client Name</Text>
-            <Input
-              type="text"
-              placeholder="Full Name"
-              {...register('name', { required: true })}
-            />
-
-            {errors.name && (
-              <p className="text-[12px] text-red-500">
-                Service name is required
-              </p>
-            )}
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-2 w-full">
+              <Text>First Name</Text>
+              <Input
+                type="text"
+                placeholder="First Name"
+                {...register('firstName', { required: true })}
+              />
+              {errors.name && (
+                <p className="text-[12px] text-red-500">
+                  First Name is required
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Last Name</Text>
+              <Input
+                type="text"
+                placeholder="Last Name"
+                {...register('lastName', { required: true })}
+              />
+              {errors.name && (
+                <p className="text-[12px] text-red-500">
+                  Last Name is required
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Email</Text>
+              <Input
+                type="email"
+                // placeholder="client email"
+                {...register('email', { required: true })}
+              />
+              {errors.email && (
+                <p className="text-[12px] text-red-500">Email is required</p>
+              )}
+            </div>
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Phone</Text>
+              <Input type="tel" {...register('phone')} />
+            </div>
+          </div>
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Accommodation</Text>
+              <Input
+                type="text"
+                placeholder="Accommodation"
+                {...register('accommodation', { required: true })}
+              />
+              {errors.name && (
+                <p className="text-[12px] text-red-500">
+                  Accommodation is required
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Billing Address</Text>
+              <Input
+                type="text"
+                placeholder="Billing Address"
+                {...register('billingAddress', { required: true })}
+              />
+              {errors.name && (
+                <p className="text-[12px] text-red-500">
+                  Billing Address is required
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Arrival Date</Text>
+              <Input
+                type="date"
+                placeholder="Arrival Date"
+                {...register('arrivalDate', { required: true })}
+              />
+              {errors.name && (
+                <p className="text-[12px] text-red-500">
+                  Arrival Date is required
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Departure Date</Text>
+              <Input
+                type="date"
+                placeholder="Departure Date"
+                {...register('departureDate', { required: true })}
+              />
+              {errors.name && (
+                <p className="text-[12px] text-red-500">
+                  Departure Date is required
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Passport Number</Text>
+              <Input
+                type="text"
+                placeholder="Passport Number"
+                {...register('passportNumber', { required: true })}
+              />
+              {errors.name && (
+                <p className="text-[12px] text-red-500">
+                  Passport Number is required
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Passport Document (pdf or image)</Text>
+              <Input
+                type="text"
+                placeholder="Passport Document"
+                {...register('passportAttachmentUrl', { required: true })}
+              />
+              {errors.name && (
+                <p className="text-[12px] text-red-500">
+                  Passport Document is required
+                </p>
+              )}
+            </div>
           </div>
           <div className="flex flex-col gap-[10px]">
-            <Text>Client Email</Text>
-            <Input
-              type="email"
-              // placeholder="client email"
-              {...register('email', { required: true })}
-            />
-            {errors.email && (
-              <p className="text-[12px] text-red-500">Email is required</p>
-            )}
-          </div>
-          <div className="flex flex-col gap-[10px]">
-            <Text>Client Phone</Text>
-            <Input
-              type="tel"
-              // placeholder="client phone"
-              {...register('phone')}
-            />
-          </div>
-          <div className="flex flex-col gap-[10px]">
-            <Text>Subscription</Text>
+            <Text>Package</Text>
             <select
               className="select select-bordered w-full "
               {...register('packageId', {
