@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import db from 'apps/magnetic/src/app/libs/db';
 import { uploadFile } from 'apps/magnetic/src/app/services/upload';
 import { EditUser } from '@magnetic/interfaces';
+import moment from 'moment';
 
 export async function GET(
   request: Request,
@@ -64,7 +65,19 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   const data: EditUser = await request.json();
-  const { email, name, packageId, phone } = data;
+  const {
+    email,
+    packageId,
+    phone,
+    firstName,
+    lastName,
+    accommodation,
+    arrivalDate,
+    departureDate,
+    passportNumber,
+    passportAttachmentUrl,
+    billingAddress,
+  } = data;
 
   const user = await db.user.findUnique({
     where: {
@@ -100,10 +113,18 @@ export async function PUT(
         id: Number(params.id),
       },
       data: {
-        name,
+        name: `${firstName} ${lastName}`,
         email,
         phone,
         packageId,
+        firstName,
+        lastName,
+        accommodation,
+        arrivalDate: moment(arrivalDate).toDate(),
+        departureDate: moment(departureDate).toDate(),
+        passportNumber,
+        passportAttachmentUrl,
+        billingAddress,
       },
     });
     return NextResponse.json({ message: 'ok' }, { status: 201 });

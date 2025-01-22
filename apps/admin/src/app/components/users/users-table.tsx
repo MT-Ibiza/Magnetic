@@ -5,6 +5,7 @@ import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { User } from '@magnetic/interfaces';
 import { Button, Text } from '@magnetic/ui';
 import { Link } from 'react-router-dom';
+import { formatDate } from '../../utils';
 
 interface Props {
   onClickEdit?: (user: User) => void;
@@ -39,28 +40,37 @@ function UsersTable(props: Props) {
     <div className="">
       <table className="table w-full">
         <thead>
+          {/* Name, Accommodation, Arrival Date, Package, Edit */}
           <tr>
-            <th>N</th>
             <th>Name</th>
-            <th>Contact</th>
-            <th>Subscription</th>
+            <th>Accommodation</th>
+            <th>Arrival Date</th>
+            <th>Package</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {users.map((user, index) => (
             <tr className="hover" key={index}>
-              <th>{index + 1}</th>
-              <td>
-                <Link to={`/clients/${user.id}`}>{user.name}</Link>
-              </td>
               <td>
                 <div className="flex flex-col gap-1">
-                  <Text size="1">{user.phone || 'N/A'}</Text>
+                  <Link to={`/clients/${user.id}`}>{user.name}</Link>
                   <Text size="1" className="text-gray-400">
                     {user.email}
                   </Text>
                 </div>
+              </td>
+              <td>
+                <Text size="1">{user.accommodation || 'N/A'}</Text>
+              </td>
+              <td>
+                <Text size="1">{formatDate(user.arrivalDate)}</Text>
+                {/* <div className="flex flex-col gap-1">
+                  <Text size="1">{user.phone || 'N/A'}</Text>
+                  <Text size="1" className="text-gray-400">
+                    {user.email}
+                  </Text>
+                </div> */}
               </td>
               <td>{user.package ? user.package.name : 'none'}</td>
               <td>
