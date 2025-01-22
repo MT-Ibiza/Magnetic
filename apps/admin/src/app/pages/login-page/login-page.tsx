@@ -1,5 +1,5 @@
 import { LoginForm } from '@magnetic/ui';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useMutation } from '@tanstack/react-query';
@@ -10,6 +10,8 @@ export function LoginPage() {
   const [error, setError] = useState('');
   const { setToken, setLoggedIn, setCurrentUser } = useAuth();
   const navigate = useNavigate();
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const mutation = useMutation<LoginResponse, Error, Credentials>({
     mutationFn: (formData) => {
@@ -17,7 +19,23 @@ export function LoginPage() {
     },
   });
 
+  useEffect(() => {
+    const darkModeMediaQuery = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    );
+    setIsDarkMode(darkModeMediaQuery.matches);
+    const handleChange = (e: MediaQueryListEvent) => {
+      setIsDarkMode(e.matches);
+    };
+    darkModeMediaQuery.addEventListener('change', handleChange);
+    return () => {
+      darkModeMediaQuery.removeEventListener('change', handleChange);
+    };
+  }, []);
+
   async function onSubmitForm(data: { email: string; password: string }) {
+    setIsSaving(true);
+
     try {
       const user = await mutation.mutateAsync(data);
       setCurrentUser({
@@ -27,18 +45,27 @@ export function LoginPage() {
       });
       setToken(user.accessToken);
       setLoggedIn(true);
+      setIsSaving(false);
       navigate('/');
     } catch (err: any) {
       setError('Password or email incorrect');
+      setIsSaving(false);
     }
   }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
-      {error.length > 0 && (
+      {error && (
         <p className="text-lg text-red-500 p-3 rounded mb-2">{error}</p>
       )}
-      <LoginForm title='Login' onSubmit={onSubmitForm} />
+      <img
+        className="w-[250px]"
+        src={
+          isDarkMode ? '/icons/logo-app-white.png' : '/icons/logo-app-black.png'
+        }
+        alt="Logo"
+      />
+      <LoginForm onSubmit={onSubmitForm} isSaving={isSaving} />
     </div>
   );
 }
