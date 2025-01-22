@@ -22,6 +22,9 @@ export async function sendEmail(params: {
   html: string;
 }) {
   const { to, subject, html } = params;
+  if (!process.env.SMTP_EMAIL) {
+    return;
+  }
   try {
     return await transporter.sendMail({
       from: `Magnetic Travel <${process.env.SMTP_EMAIL}>`,

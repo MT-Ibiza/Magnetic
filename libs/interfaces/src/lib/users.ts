@@ -10,10 +10,9 @@ export interface CurrentUser {
   cartId?: number;
 }
 
-export interface User {
-  id: number;
+export interface UserBase {
   email: string;
-  name: string;
+  name?: string;
   firstName: string;
   lastName: string;
   accommodation: string;
@@ -26,26 +25,27 @@ export interface User {
   phone?: string;
   countryCodePhone?: string;
   countryNamePhone?: string;
-  role: string;
-  active: boolean;
   package?: Package;
   packageId?: number;
 }
 
-export interface NewUser {
-  name: string;
-  email: string;
-  phone?: string;
+export interface User extends UserBase {
+  id: number;
+  active: boolean;
   role: string;
-  password: string;
-  packageId: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface EditUser {
-  name: string;
-  email: string;
+export interface NewUser extends UserBase {
   phone?: string;
-  role?: string;
+  password: string;
+  packageId: number;
+  role: string;
+}
+
+export interface EditUser extends UserBase {
+  phone?: string;
   packageId: number;
 }
 

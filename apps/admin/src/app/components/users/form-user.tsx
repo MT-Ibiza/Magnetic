@@ -10,7 +10,6 @@ import Loading from '../loading';
 import { ErrorText } from '../error-text';
 
 export interface FormUserData {
-  name: string;
   firstName: string;
   lastName: string;
   accommodation: string;
@@ -41,11 +40,18 @@ export function FormUser(props: Props) {
   } = useForm<FormUserData>({
     defaultValues: user
       ? {
-          name: user.name,
           email: user.email,
           phone: user.phone,
           password: undefined,
           packageId: user.packageId,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          accommodation: user.accommodation,
+          arrivalDate: user.arrivalDate,
+          departureDate: user.departureDate,
+          passportNumber: user.passportNumber,
+          passportAttachmentUrl: user.passportAttachmentUrl,
+          billingAddress: user.billingAddress,
         }
       : undefined,
   });
@@ -98,22 +104,49 @@ export function FormUser(props: Props) {
   }
 
   const onSubmit = async (data: FormUserData) => {
-    const { name, email, packageId, password, phone } = data;
+    const {
+      firstName,
+      lastName,
+      email,
+      packageId,
+      password,
+      phone,
+      accommodation,
+      arrivalDate,
+      departureDate,
+      passportNumber,
+      passportAttachmentUrl,
+      billingAddress,
+    } = data;
     if (editMode) {
       await updateUser.mutateAsync({
-        name,
+        packageId: Number(packageId),
         email,
         phone,
-        packageId: Number(packageId),
+        firstName,
+        lastName,
+        accommodation,
+        arrivalDate,
+        departureDate,
+        passportNumber,
+        passportAttachmentUrl,
+        billingAddress,
       });
     } else {
       await createUser.mutateAsync({
-        name,
-        email,
-        password,
-        phone,
-        packageId: Number(packageId),
         role: 'client',
+        password,
+        packageId: Number(packageId),
+        email,
+        phone,
+        firstName,
+        lastName,
+        accommodation,
+        arrivalDate,
+        departureDate,
+        passportNumber,
+        passportAttachmentUrl,
+        billingAddress,
       });
     }
   };
@@ -130,7 +163,7 @@ export function FormUser(props: Props) {
                 placeholder="First Name"
                 {...register('firstName', { required: true })}
               />
-              {errors.name && (
+              {errors.firstName && (
                 <p className="text-[12px] text-red-500">
                   First Name is required
                 </p>
@@ -143,7 +176,7 @@ export function FormUser(props: Props) {
                 placeholder="Last Name"
                 {...register('lastName', { required: true })}
               />
-              {errors.name && (
+              {errors.lastName && (
                 <p className="text-[12px] text-red-500">
                   Last Name is required
                 </p>
@@ -175,7 +208,7 @@ export function FormUser(props: Props) {
                 placeholder="Accommodation"
                 {...register('accommodation', { required: true })}
               />
-              {errors.name && (
+              {errors.accommodation && (
                 <p className="text-[12px] text-red-500">
                   Accommodation is required
                 </p>
@@ -188,7 +221,7 @@ export function FormUser(props: Props) {
                 placeholder="Billing Address"
                 {...register('billingAddress', { required: true })}
               />
-              {errors.name && (
+              {errors.billingAddress && (
                 <p className="text-[12px] text-red-500">
                   Billing Address is required
                 </p>
@@ -203,7 +236,7 @@ export function FormUser(props: Props) {
                 placeholder="Arrival Date"
                 {...register('arrivalDate', { required: true })}
               />
-              {errors.name && (
+              {errors.arrivalDate && (
                 <p className="text-[12px] text-red-500">
                   Arrival Date is required
                 </p>
@@ -216,7 +249,7 @@ export function FormUser(props: Props) {
                 placeholder="Departure Date"
                 {...register('departureDate', { required: true })}
               />
-              {errors.name && (
+              {errors.departureDate && (
                 <p className="text-[12px] text-red-500">
                   Departure Date is required
                 </p>
@@ -231,7 +264,7 @@ export function FormUser(props: Props) {
                 placeholder="Passport Number"
                 {...register('passportNumber', { required: true })}
               />
-              {errors.name && (
+              {errors.passportNumber && (
                 <p className="text-[12px] text-red-500">
                   Passport Number is required
                 </p>
@@ -244,7 +277,7 @@ export function FormUser(props: Props) {
                 placeholder="Passport Document"
                 {...register('passportAttachmentUrl', { required: true })}
               />
-              {errors.name && (
+              {errors.passportAttachmentUrl && (
                 <p className="text-[12px] text-red-500">
                   Passport Document is required
                 </p>
@@ -278,7 +311,7 @@ export function FormUser(props: Props) {
                 {...register('password', { required: true })}
               />
 
-              {errors.name && (
+              {errors.password && (
                 <p className="text-[12px] text-red-500">Password is required</p>
               )}
             </div>

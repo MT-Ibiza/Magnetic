@@ -24,6 +24,14 @@ export async function GET(
         countryNamePhone: true,
         image: true,
         packageId: true,
+        firstName: true,
+        lastName: true,
+        accommodation: true,
+        arrivalDate: true,
+        departureDate: true,
+        passportNumber: true,
+        passportAttachmentUrl: true,
+        billingAddress: true,
       },
     });
 

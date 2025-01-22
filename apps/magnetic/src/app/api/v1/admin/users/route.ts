@@ -10,18 +10,41 @@ import {
 import { NewUser } from '@magnetic/interfaces';
 import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
 import { newAccountTemplate } from 'apps/magnetic/src/app/emails/new-account';
+import moment from 'moment';
 
 export async function POST(request: Request) {
   try {
     const data: NewUser = await request.json();
-    const { email, name, password, packageId, phone, role } = data;
+    const {
+      email,
+      password,
+      packageId,
+      phone,
+      role,
+      firstName,
+      lastName,
+      accommodation,
+      arrivalDate,
+      departureDate,
+      passportNumber,
+      passportAttachmentUrl,
+      billingAddress,
+    } = data;
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await db.user.create({
       data: {
-        name: name,
-        email: email,
+        name: `${firstName} ${lastName}`,
+        firstName,
+        lastName,
+        email,
         role: role as 'client',
+        accommodation,
+        arrivalDate: moment(arrivalDate).toDate(),
+        departureDate: moment(departureDate).toDate(),
+        passportNumber,
+        passportAttachmentUrl,
+        billingAddress,
         packageId,
         phone: phone,
         // countryCodePhone: countryCodePhone,
