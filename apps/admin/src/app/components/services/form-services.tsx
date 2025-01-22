@@ -134,11 +134,12 @@ export function ServiceForm(props: Props) {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-[20px]">
               <div className="flex flex-col gap-[10px]">
-                <Text size="1">Provider</Text>
+                <Text size="1">Supplier</Text>
                 <select
                   className="select select-bordered w-full "
                   {...register('providerId')}
                 >
+                  <option value={0}>None</option>
                   {data.providers.map((option, index) => (
                     <option value={option.id} key={index}>
                       {option.name}
@@ -153,7 +154,7 @@ export function ServiceForm(props: Props) {
                     }}
                     className="text-primary-400"
                   >
-                    + New Provider
+                    + New Supplier
                   </button>
                 </div>
               </div>
@@ -243,7 +244,7 @@ export function ServiceForm(props: Props) {
         </div>
       </div>
       <DrawerContent
-        title={'Add Provider'}
+        title={'Add Supplier'}
         open={openDrawer}
         onClose={toggleDrawer}
       >

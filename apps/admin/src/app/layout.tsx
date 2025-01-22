@@ -20,7 +20,7 @@ interface Props {}
 const titles = {
   users: 'Users',
   dashboard: 'Dashboard',
-  providers: 'Providers',
+  suppliers: 'Suppliers',
   services: 'Services',
   packages: 'Packages',
   bookings: 'Bookings',
@@ -80,8 +80,8 @@ function Layout(props: Props) {
           icon: FaUserFriends,
         },
         {
-          text: 'Providers',
-          url: '/providers',
+          text: 'Suppliers',
+          url: '/suppliers',
           icon: FaUserFriends,
         },
         {
@@ -190,7 +190,7 @@ function Layout(props: Props) {
       <div className="lg:flex lg:flex-1">
         <Sidebar
           options={navigationGroup}
-          headerClassName='py-3 lg:py-2'
+          headerClassName="py-3 lg:py-2"
           isVisible={isSidebarVisible}
           toggleSidebar={toggleSidebar}
         >

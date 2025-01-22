@@ -63,7 +63,7 @@ export const AppRouter = () => {
             path="services/:serviceId/items/:itemId/edit"
             element={<EditItemPage />}
           />
-          <Route path="providers" element={<ProvidersPage />} />
+          <Route path="suppliers" element={<ProvidersPage />} />
           <Route path="clients" element={<UsersPage />} />
           <Route path="users" element={<AdminUsersPage />} />
           <Route path="clients/new" element={<NewUserPage />} />

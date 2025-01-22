@@ -37,9 +37,7 @@ function ProvidersTable(props: Props) {
           {providers.map((provider, index) => (
             <tr className="hover" key={index}>
               <th>{index + 1}</th>
-              <td>
-                <Link to={`/services/${provider.id}`}>{provider.name}</Link>
-              </td>
+              <td>{provider.name}</td>
               <td>{provider.email}</td>
               <td>{provider.website}</td>
               <td>

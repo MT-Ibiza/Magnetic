@@ -26,7 +26,7 @@ function ServicesTable(props: Props) {
           <tr>
             <th>N</th>
             <th>Name</th>
-            <th>Provider</th>
+            <th>Supplier</th>
             <th>Subscription</th>
             <th></th>
           </tr>

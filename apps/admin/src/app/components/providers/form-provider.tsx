@@ -45,10 +45,10 @@ function FormProvider(props: Props) {
       return editProvider(providerId, data);
     },
     onSuccess: () => {
-      toast.success(`Provider updated!`);
+      toast.success(`Supplier updated!`);
     },
     onError: () => {
-      toast.success(`Provider couldn't be update!`);
+      toast.success(`Supplier couldn't be update!`);
     },
   });
 
@@ -74,7 +74,7 @@ function FormProvider(props: Props) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-[20px]">
           <div className="flex flex-col gap-[10px]">
-            <Text>Provider Name</Text>
+            <Text>Name</Text>
             <Input
               type="text"
               placeholder="Business Name"
@@ -120,7 +120,7 @@ function FormProvider(props: Props) {
             Cancel
           </Button>
           <Button type="submit">
-            {provider?.id ? 'Update Provider' : 'Create Provider'}
+            {provider?.id ? 'Update Supplier' : 'Create Supplier'}
           </Button>
         </div>
       </form>
