@@ -12,10 +12,20 @@ export interface CurrentUser {
 
 export interface User {
   id: number;
-  name: string;
   email: string;
+  name: string;
+  firstName: string;
+  lastName: string;
+  accommodation: string;
+  arrivalDate: string;
+  departureDate: string;
+  passportNumber: string;
+  passportAttachmentUrl: string;
+  billingAddress: string;
   image?: string;
   phone?: string;
+  countryCodePhone?: string;
+  countryNamePhone?: string;
   role: string;
   active: boolean;
   package?: Package;
