@@ -3,12 +3,15 @@ import {
   CategoryBase,
   EditCategory,
   NewCategory,
+  Service,
 } from '@magnetic/interfaces';
 import { Button, Input, Text, TextArea } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { editCategory, newCategory } from '../apis/api-categories';
 import { toast } from 'sonner';
+import { useCategories } from '../hooks/useCategories';
+import { useServices } from '../hooks/useServices';
 
 interface Props {
   category?: Category;
@@ -25,6 +28,8 @@ function FormCategory(props: Props) {
   } = useForm<CategoryBase>({
     defaultValues: category ? category : undefined,
   });
+
+  const { services } = useServices();
 
   const createCategory = useMutation<Category, Error, NewCategory>({
     mutationFn: (data: NewCategory) => {
@@ -54,16 +59,18 @@ function FormCategory(props: Props) {
   });
 
   const onSubmit = async (data: CategoryBase) => {
-    const { name, description } = data;
+    const { name, description, serviceId } = data;
     if (category) {
       await updateCategory.mutateAsync({
         name,
         description,
+        serviceId: Number(serviceId),
       });
     } else {
       await createCategory.mutateAsync({
         name,
         description,
+        serviceId: Number(serviceId),
       });
     }
   };
@@ -71,6 +78,19 @@ function FormCategory(props: Props) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-[20px]">
+        <div className="flex flex-col gap-[10px]">
+          <Text>Service</Text>
+          <select
+            className="select select-bordered w-full "
+            {...register('serviceId')}
+          >
+            {services.map((service, index) => (
+              <option value={service.id} key={index}>
+                {service.name}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="flex flex-col gap-[10px]">
           <Text>Name</Text>
           <Input
@@ -98,7 +118,9 @@ function FormCategory(props: Props) {
         >
           Cancel
         </Button>
-        <Button type="submit"> {category ? 'Update' : 'Create'} Category</Button>
+        <Button type="submit">
+          {category ? 'Update Category' : 'Create Category'}
+        </Button>
       </div>
     </form>
   );

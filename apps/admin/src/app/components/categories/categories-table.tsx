@@ -29,7 +29,7 @@ export function CategoriesTable(props: Props) {
           <tr>
             <th>N</th>
             <th>Name</th>
-            <th>Date</th>
+            <th>Service</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -45,7 +45,7 @@ export function CategoriesTable(props: Props) {
               >
                 {category.name}
               </td>
-              <td> {moment(category.createdAt).format('DD MMM YYYY')}</td>
+              <td>{category.service?.name || 'N/A'}</td>
               <td>
                 <div className="dropdown dropdown-bottom dropdown-end">
                   <div tabIndex={0} role="button" className="m-1">

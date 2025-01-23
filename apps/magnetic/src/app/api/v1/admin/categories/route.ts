@@ -4,13 +4,14 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   const data: NewCategory = await request.json();
-  const { name, description } = data;
+  const { name, description, serviceId } = data;
 
   try {
     const category = await db.category.create({
       data: {
         name,
         description,
+        serviceId,
       },
     });
     return NextResponse.json(category);
@@ -31,6 +32,14 @@ export async function GET(request: Request) {
     const categories = await db.category.findMany({
       orderBy: {
         createdAt: 'desc',
+      },
+      include: {
+        service: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
     return NextResponse.json(categories);
