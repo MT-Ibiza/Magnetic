@@ -45,7 +45,6 @@ export interface Props {
 export function ServiceForm(props: Props) {
   const { className, service, onSaveSuccess } = props;
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [serviceType, setServiceType] = useState<string | undefined>(undefined);
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
   };
@@ -59,6 +58,7 @@ export function ServiceForm(props: Props) {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<FormServiceData>({
     defaultValues: service
@@ -66,7 +66,7 @@ export function ServiceForm(props: Props) {
           name: service.name,
           description: service.description,
           packageId: service.packageId,
-          providerId: service.packageId,
+          providerId: service.providerId,
           cover: service.imageUrl,
           serviceType: service.serviceType,
           script: service.script,
@@ -144,11 +144,12 @@ export function ServiceForm(props: Props) {
                 <select
                   className="select select-bordered w-full "
                   {...register('providerId')}
+                  defaultValue={watch().providerId}
                 >
                   <option value="">None</option>
-                  {data.providers.map((option, index) => (
-                    <option value={option.id} key={index}>
-                      {option.name}
+                  {data.providers.map((provider, index) => (
+                    <option value={provider.id} key={index}>
+                      {provider.name}
                     </option>
                   ))}
                 </select>
@@ -182,7 +183,6 @@ export function ServiceForm(props: Props) {
                 <select
                   className="select select-bordered w-full"
                   {...register('serviceType')}
-                  onChange={(e) => setServiceType(e.target.value)}
                 >
                   <option value="">-- Select a form --</option>
                   {ALL_SERVICES.map((service, index) => (

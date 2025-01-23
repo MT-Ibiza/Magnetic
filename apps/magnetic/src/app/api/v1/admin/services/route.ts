@@ -19,12 +19,13 @@ export async function POST(request: Request) {
       const images = await uploadBulkImages([imageFile], 'services');
       imageUrl = images[0];
     }
+    const providerNumberId = providerId ? Number(providerId) : null;
     const service = await db.service.create({
       data: {
         name: name,
         description: description,
         packageId: Number(packageId),
-        providerId: providerId ? Number(providerId) : null,
+        providerId: providerNumberId,
         serviceType: serviceType as 'none',
         imageUrl,
         script,

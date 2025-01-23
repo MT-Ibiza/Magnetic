@@ -90,7 +90,7 @@ export async function PUT(
       const images = await uploadBulkImages([imageFile], 'services');
       imageUrl = images[0];
     }
-
+    const providerNumberId = providerId ? Number(providerId) : null;
     const updatedService = await db.service.update({
       where: {
         id: serviceFound.id,
@@ -99,7 +99,7 @@ export async function PUT(
         name: name,
         description: description,
         packageId: Number(packageId),
-        providerId: providerId ? Number(providerId) : null,
+        providerId: providerNumberId,
         serviceType: serviceType as 'none',
         imageUrl: imageUrl,
         script,
