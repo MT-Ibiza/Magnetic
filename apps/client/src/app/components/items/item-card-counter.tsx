@@ -98,7 +98,7 @@ function ItemCardCounter(props: Props) {
                     handleRemoveItem(productCart?.quantity || 0);
                   } else {
                     //@ts-ignore
-                    document.getElementById('my_modal_1').showModal();
+                    document.getElementById('modal_upgrade').showModal();
                   }
                 }}
               >
@@ -113,7 +113,7 @@ function ItemCardCounter(props: Props) {
                     handleAddItem(productCart?.quantity || 0);
                   } else {
                     //@ts-ignore
-                    document.getElementById('my_modal_1').showModal();
+                    document.getElementById('modal_upgrade').showModal();
                   }
                 }}
                 className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
@@ -131,11 +131,10 @@ function ItemCardCounter(props: Props) {
           onClose={() => setAlert(null)}
         />
       )}
-      <dialog id="my_modal_1" className="modal">
+      <dialog id="modal_upgrade" className="modal">
         <div className="modal-box">
           <h3 className="text-lg font-bold">Upgrade your package</h3>
           <p className="mt-3">This service is not available in your package </p>
-          {/* <p className="">Upgrade your package and dont miss these services</p> */}
           <div className="modal-action">
             <form method="dialog">
               <div className="flex gap-3">

@@ -34,7 +34,10 @@ export const AppRouter = () => {
           <Route path="bookings" element={<BookingsPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
           <Route path="services/:id" element={<ViewServicePage />} />
-          <Route path="services/:serviceId/item/:itemId" element={<ViewItemPage />} />
+          <Route
+            path="services/:serviceId/item/:itemId"
+            element={<ViewItemPage />}
+          />
           <Route path="packages" element={<PackagePage />} />
           <Route path="packages/:id" element={<ViewPackagePage />} />
           <Route path="orders" element={<OrdersPage />} />

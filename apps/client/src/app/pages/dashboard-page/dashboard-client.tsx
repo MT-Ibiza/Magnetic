@@ -14,7 +14,9 @@ export function DashboardClientPage() {
   );
 
   const filteredServices = services
-    .filter((service) => service.packageId === user?.package?.id)
+    .filter((service) =>
+      service.packages.some((pkg) => pkg.id === user?.package?.id)
+    )
     .slice(0, 3);
 
   const videoUrl = {

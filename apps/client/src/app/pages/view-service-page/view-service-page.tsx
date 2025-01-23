@@ -104,12 +104,14 @@ function ViewServicePage(props: Props) {
     );
   });
 
+  const packageIds = service.packages.map((p) => p.id);
+
   return (
     <CardWrapper>
       <div>
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-xl lg:text-2xl font-semibold">{service.name}</h1>
-          <Badge size={3} color="yellow" name={service.package.name} />
+          <Badge size={3} color="yellow" name={service.packages[0].name} />
         </div>
         <div
           className="lg:text-[16px] text-[14px] editor-text"
@@ -192,7 +194,11 @@ function ViewServicePage(props: Props) {
                   ) : (
                     <ItemCardCounter
                       item={item}
-                      availableInPlan={user?.package?.id === service.packageId}
+                      availableInPlan={
+                        user?.packageId
+                          ? packageIds.includes(user.packageId)
+                          : false
+                      }
                     />
                   )}
                 </div>

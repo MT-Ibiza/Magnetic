@@ -8,27 +8,29 @@ interface Props {
 
 function ServiceCard(props: Props) {
   const { service } = props;
-  const { name, description, imageUrl, package: servicePackage } = service;
+  const { name, description, imageUrl, packages } = service;
 
   const getPackageLabelColor = (packageName: string) => {
     switch (packageName.toLowerCase()) {
       case 'gold':
         return 'bg-[#FFD700] text-black';
       case 'platinum':
-        return 'bg-[#cfc9c4] text-black'; 
+        return 'bg-[#cfc9c4] text-black';
       case 'diamond':
-        return 'bg-[#525052] text-white'; 
+        return 'bg-[#525052] text-white';
       default:
-        return 'bg-gray-300 text-black'; 
+        return 'bg-gray-300 text-black';
     }
   };
 
   return (
     <div className="relative flex flex-col justify-between bg-base-100 border border-gray-300 rounded-lg overflow-hidden shadow-sm group hover:shadow-md transition duration-200 ease-in-out">
       <div
-        className={`absolute top-2 left-2 px-3 py-1 text-xs font-semibold rounded-full ${getPackageLabelColor(servicePackage.name)}`}
+        className={`absolute top-2 left-2 px-3 py-1 text-xs font-semibold rounded-full ${getPackageLabelColor(
+          packages[0].name
+        )}`}
       >
-        {servicePackage.name}
+        {packages[0].name}
       </div>
 
       <div className="w-full h-48 bg-gray-100">
