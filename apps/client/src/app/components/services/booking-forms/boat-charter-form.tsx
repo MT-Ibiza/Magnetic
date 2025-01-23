@@ -1,4 +1,4 @@
-import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
+import { Button, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 
 export interface BoatCharterFormData {
@@ -7,7 +7,8 @@ export interface BoatCharterFormData {
   numberOfPeople: number;
   kidsAges: string;
   startTime: string;
-  lunchBooking: boolean;
+  lunchBooking: string;
+  comments: string;
   extras: string;
   depositPaid: boolean;
 }
@@ -32,8 +33,9 @@ export function BoatCharterBookingForm({ onSubmit, formData }: Props) {
           numberOfPeople: formData.numberOfPeople,
           kidsAges: formData.kidsAges,
           startTime: formData.startTime,
-          lunchBooking: false,
+          lunchBooking: formData.lunchBooking || '',
           extras: formData.extras,
+          comments: formData.comments || '',
         }
       : undefined,
   });
@@ -133,15 +135,21 @@ export function BoatCharterBookingForm({ onSubmit, formData }: Props) {
             />
           </div>
           <div>
-            {/* <Text className="mb-2">Lunch Booking</Text> */}
-            <Checkbox
-              name="lunchBooking"
-              label="I would like to book lunch"
-              className="mt-2"
-              defaultChecked={watch('lunchBooking')}
-              onChange={(checked) => setValue('lunchBooking', checked)}
+            <Text className="mb-2">Lunch Booking</Text>
+            <Input
+              type="text"
+              className="w-full"
+              placeholder="Describe lunch preferences"
+              {...register('lunchBooking')}
             />
           </div>
+        </div>
+        <div className="flex flex-col gap-[10px]">
+          <Text>Comments</Text>
+          <TextArea
+            placeholder="Add any additional comments"
+            {...register('comments')}
+          />
         </div>
         <div className="flex justify-end gap-3">
           <Button type="submit">Submit Booking</Button>

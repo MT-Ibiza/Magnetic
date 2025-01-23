@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { FC, SelectHTMLAttributes } from 'react';
 
@@ -15,7 +15,7 @@ export const Select: FC<SelectProps> = ({
 }) => {
   return (
     <select
-      className={`px-[10px] nc-Select ${sizeClass} ${className} block w-full text-sm rounded-2xl border-[1px] border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-600 dark:focus:ring-opacity-25 dark:bg-neutral-900`}
+      className={`px-[10px] nc-Select ${sizeClass} ${className} block w-full text-sm rounded-2xl border-[1px] border-neutral-200 focus:border-primary-300 bg-white dark:border-neutral-700 dark:focus:ring-primary-600 dark:focus:ring-opacity-25 dark:bg-neutral-900`}
       {...args}
     >
       {children}

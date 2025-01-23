@@ -11,6 +11,7 @@ export interface TransferFormData {
   contactNumber: string;
   flightNumber: string;
   luggageAmount: number;
+  childSeats: string;
   paymentConfirmed: boolean;
 }
 
@@ -38,6 +39,7 @@ export function TransferBookingForm({ onSubmit, formData }: Props) {
           contactNumber: formData.contactNumber,
           flightNumber: formData.flightNumber,
           luggageAmount: formData.luggageAmount,
+          childSeats: formData.childSeats || '',
         }
       : undefined,
   });
@@ -125,6 +127,15 @@ export function TransferBookingForm({ onSubmit, formData }: Props) {
                 {errors.numberOfPeople.message}
               </p>
             )}
+          </div>
+          <div>
+            <Text className="mb-2">Child Seats</Text>
+            <Input
+              type="text"
+              className="w-full"
+              placeholder="Enter number or type of child seats"
+              {...register('childSeats')}
+            />
           </div>
           <div>
             <Text className="mb-2">Contact Name</Text>

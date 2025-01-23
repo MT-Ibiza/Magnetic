@@ -7,14 +7,15 @@ import { useCart } from '../../hooks/useCart';
 
 export function CartPage() {
   const { addItemToCart } = useCart();
+  const { cart, addItem, removeItem, getGroupedItemsByService } = useCartStore();
+  const groupedCart = getGroupedItemsByService();
 
-  const { cart, addItem, removeItem } = useCartStore();
   const total = cart.reduce(
     (sum, item) => sum + item.item.priceInCents * item.quantity,
     0
   );
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   if (totalItems === 0) {
     return (
       <EmptyState title="Your cart is empty" description="Check our services">
@@ -36,11 +37,8 @@ export function CartPage() {
             item: item,
             quantity: newVal,
           });
-          // showAlert('Item added to the cart', 'success');
         },
-        onError: () => {
-          // showAlert('Failed to add item to the cart', 'error');
-        },
+        onError: () => {},
       }
     );
   };
@@ -53,11 +51,8 @@ export function CartPage() {
         {
           onSuccess: () => {
             removeItem(item.id);
-            // showAlert('Item removed to the cart', 'success');
           },
-          onError: () => {
-            // showAlert('Failed to remove item to the cart', 'error');
-          },
+          onError: () => {},
         }
       );
     }
@@ -70,60 +65,67 @@ export function CartPage() {
           <p className="text-center lg:text-start text-2xl font-semibold pb-[15px] lg:pb-[0px]">
             My Cart
           </p>
-          <div className="hidden lg:grid grid-cols-4 gap-4 text-center font-semibold border-b pb-2 mb-4 text-sm">
-            <span className="text-left">Item</span>
-            <span>Price</span>
-            <span>Quantity</span>
-            <span>Subtotal</span>
-          </div>
-          {cart.map((item, index) => (
-            <div
-              key={index}
-              className="grid grid-cols-4 gap-4 items-center border-b py-2 text-sm"
-            >
-              <div className="flex items-center justify-start">
-                <div className="w-5 h-5 lg:w-20 lg:h-20">
-                  <img
-                    className="w-[20px] h-[20px] lg:w-full lg:h-full object-cover"
-                    src={
-                      item.item.images && item.item.images.length > 0
-                        ? item.item.images[0].url
-                        : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
-                    }
-                    alt={item.item.name}
-                  />
+          {Object.entries(groupedCart).map(([serviceId, group]: any) => (
+            <div key={serviceId} className="border-b pb-4 mb-4">
+              <h3 className="text-lg font-semibold mb-2">
+                {group.service.name}
+              </h3>
+              <div className="hidden lg:grid grid-cols-4 gap-4 text-center font-semibold border-b pb-2 mb-4 text-sm">
+                <span className="text-left">Item</span>
+                <span>Price</span>
+                <span>Quantity</span>
+                <span>Subtotal</span>
+              </div>
+              {group.items.map((item: any, index: number) => (
+                <div
+                  key={index}
+                  className="grid grid-cols-4 gap-4 items-center last:border-b-0 border-b py-2 text-sm"
+                >
+                  <div className="flex items-center justify-start">
+                    <div className="w-5 h-5 lg:w-20 lg:h-20">
+                      <img
+                        className="w-[20px] h-[20px] rounded-[8px] lg:w-full lg:h-full object-cover"
+                        src={
+                          item.item.images && item.item.images.length > 0
+                            ? item.item.images[0].url
+                            : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
+                        }
+                        alt={item.item.name}
+                      />
+                    </div>
+                    <div className="ml-3">{item.item.name}</div>
+                  </div>
+                  <div className="text-center">
+                    {centsToEurosWithCurrency(item.item.priceInCents)}
+                  </div>
+                  <div className="flex justify-center items-center gap-2">
+                    <button
+                      className="w-6 h-6 flex items-center justify-center rounded-full border border-gray-300"
+                      onClick={() => handleRemoveItem(item, item.quantity)}
+                    >
+                      <FiMinus size={16} color="#6b7280" />
+                    </button>
+                    <input
+                      type="number"
+                      value={item.quantity}
+                      min="1"
+                      className="bg-base-100 w-10 h-6 text-center text-sm outline-none border border-gray-300 rounded-sm"
+                      readOnly
+                    />
+                    <button
+                      className="w-6 h-6 flex items-center justify-center rounded-full border border-gray-300"
+                      onClick={() => handleAddItem(item, item.quantity)}
+                    >
+                      <FiPlus size={16} color="#6b7280" />
+                    </button>
+                  </div>
+                  <div className="text-center">
+                    {centsToEurosWithCurrency(
+                      item.item.priceInCents * item.quantity
+                    )}
+                  </div>
                 </div>
-                <div className="ml-3 ">{item.item.name}</div>
-              </div>
-              <div className="text-center">
-                {centsToEurosWithCurrency(item.item.priceInCents)}
-              </div>
-              <div className="flex justify-center items-center gap-2">
-                <button
-                  className="w-6 h-6 flex items-center justify-center rounded-full border border-gray-300"
-                  onClick={() => handleRemoveItem(item, item.quantity)}
-                >
-                  <FiMinus size={16} color="#6b7280" />
-                </button>
-                <input
-                  type="number"
-                  value={item.quantity}
-                  min="1"
-                  className="bg-base-100 w-10 h-6 text-center text-sm outline-none border border-gray-300 rounded-sm"
-                  readOnly
-                />
-                <button
-                  className="w-6 h-6 flex items-center justify-center rounded-full border border-gray-300"
-                  onClick={() => handleAddItem(item, item.quantity)}
-                >
-                  <FiPlus size={16} color="#6b7280" />
-                </button>
-              </div>
-              <div className=" text-center">
-                {centsToEurosWithCurrency(
-                  item.item.priceInCents * item.quantity
-                )}
-              </div>
+              ))}
             </div>
           ))}
         </div>

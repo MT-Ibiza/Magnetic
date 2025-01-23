@@ -23,6 +23,9 @@ export type CartSlice = {
   removeItem: (id: number) => void;
   clearCart: () => void;
   calculateTotal: () => number;
+  getGroupedItemsByService: () => {
+    [serviceId: string]: { service: any; items: CartItem[] };
+  };
 };
 
 export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
@@ -84,5 +87,22 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
         total + cartItem.item.priceInCents * cartItem.quantity,
       0
     );
+  },
+
+  getGroupedItemsByService: () => {
+    const { cart } = get();
+    const grouped = cart.reduce((groups: any, cartItem: CartItem) => {
+      const service = cartItem.item?.service;
+      if (service && service.id) {
+        const serviceId = service.id;
+        if (!groups[serviceId]) {
+          groups[serviceId] = { service: service, items: [] };
+        }
+        groups[serviceId].items.push(cartItem);
+      }
+      return groups;
+    }, {});
+
+    return grouped;
   },
 });

@@ -1,10 +1,8 @@
-'use client';
-
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from './Input';
 import Button from './button';
-import { CurrentUser, User } from '@magnetic/interfaces';
+import { CurrentUser } from '@magnetic/interfaces';
 
 export interface Props {
   className?: string;
@@ -24,12 +22,18 @@ export function ProfileForm(props: Props) {
       email: user?.email || '',
       phone: '',
       date: '',
+      accommodation: '',
+      arrival_date: '',
+      departure_date: '',
+      passport_number: '',
+      billing_address: '',
     },
   });
 
   const [error, setError] = useState<any>(null);
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [passportFile, setPassportFile] = useState<File | null>(null);
 
   const onSubmit = async (data: any) => {
     console.log(data);
@@ -48,6 +52,13 @@ export function ProfileForm(props: Props) {
       }
       setImage(file);
       setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handlePassportChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null;
+    if (file) {
+      setPassportFile(file);
     }
   };
 
@@ -156,6 +167,72 @@ export function ProfileForm(props: Props) {
                   type="date"
                   defaultValue="1990-07-22"
                   {...register('date', { required: true })}
+                />
+              </label>
+              <label className="block flex flex-col">
+                <span className="text-neutral-800 dark:text-neutral-200">
+                  Accommodation
+                </span>
+                <Input
+                  type="text"
+                  placeholder="Enter accommodation details"
+                  className="mt-1"
+                  {...register('accommodation', { required: true })}
+                />
+              </label>
+              <label className="block flex flex-col">
+                <span className="text-neutral-800 dark:text-neutral-200">
+                  Arrival Date
+                </span>
+                <Input
+                  type="date"
+                  placeholder="Enter arrival date"
+                  className="mt-1"
+                  {...register('arrival_date', { required: true })}
+                />
+              </label>
+              <label className="block flex flex-col">
+                <span className="text-neutral-800 dark:text-neutral-200">
+                  Departure Date
+                </span>
+                <Input
+                  type="date"
+                  placeholder="Enter departure date"
+                  className="mt-1"
+                  {...register('departure_date', { required: true })}
+                />
+              </label>
+              <label className="block flex flex-col">
+                <span className="text-neutral-800 dark:text-neutral-200">
+                  Passport Number
+                </span>
+                <Input
+                  type="text"
+                  placeholder="Enter your passport number"
+                  className="mt-1"
+                  {...register('passport_number', { required: true })}
+                />
+              </label>
+              <label className="block flex flex-col">
+                <span className="text-neutral-800 dark:text-neutral-200">
+                  Upload Passport
+                </span>
+                <input
+                  type="file"
+                  accept=".pdf,.jpg,.png"
+                  className="mt-1"
+                  onChange={handlePassportChange}
+                />
+              </label>
+              <label className="block flex flex-col">
+                <span className="text-neutral-800 dark:text-neutral-200">
+                  Billing Address
+                </span>
+                <Input
+                  type="text"
+                  placeholder="Enter billing address"
+                  className="mt-1"
+                  {...register('billing_address', { required: true })}
                 />
               </label>
             </div>

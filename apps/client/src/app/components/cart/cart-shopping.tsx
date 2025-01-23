@@ -17,8 +17,9 @@ import { useAuth } from '../../hooks/useAuth';
 
 export function CartShopping() {
   const { isLoading, data, removeAllItemsCart, isError, error } = useCart();
-  const { cart, clearCart, removeItem, addItem } = useCartStore();
+  const { cart, clearCart, removeItem, addItem, getGroupedItemsByService } = useCartStore();
   const { showSessionExpiredError } = useAuth();
+  const groupedCart = getGroupedItemsByService();
 
   const total = cart.reduce(
     (sum, cartItem) => sum + cartItem.item.priceInCents * cartItem.quantity,
@@ -26,7 +27,6 @@ export function CartShopping() {
   );
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-
   const [isBouncing, setIsBouncing] = useState(false);
 
   useEffect(() => {
@@ -112,51 +112,47 @@ export function CartShopping() {
                       </button>
                     )}
                   </div>
-                  <ul className="mt-4 space-y-4">
-                    {cart.length > 0 ? (
-                      cart.map((cartItem, index) => (
-                        <li
-                          key={index}
-                          className="flex items-center gap-4 justify-between"
-                        >
-                          <div className="flex items-center gap-4">
-                            <img
-                              className="w-16 h-16 rounded object-cover"
-                              src={
-                                cartItem.item.images &&
-                                cartItem.item.images.length > 0
-                                  ? cartItem.item.images[0].url
-                                  : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
-                              }
-                              alt={cartItem.item.name}
-                            />
-                            {/* <img
-                              src={'https://via.placeholder.com/50'}
-                              alt={cartItem.item.name}
-                              className="w-16 h-16 rounded object-cover"
-                            /> */}
-                            <div className="flex flex-col">
-                              <h4 className="text-sm dark:text-gray-100">
-                                {cartItem.item.name}
-                              </h4>
-                              <p className="text-xs">
-                                Quantity: {cartItem.quantity}
-                              </p>
-                              <p className="text-xs">
-                                {centsToEurosWithCurrency(
-                                  cartItem.item.priceInCents
-                                )}{' '}
-                                x unit
-                              </p>
-                            </div>
-                          </div>
-                          {/* <button
-                            onClick={() => removeItem(item.id)}
-                            className="text-red-500 text-sm hover:underline"
-                          >
-                            Remove
-                          </button> */}
-                        </li>
+                  <ul className="mt-4 space-y-2">
+                    {Object.entries(groupedCart).length > 0 ? (
+                      Object.entries(groupedCart).map(([serviceId, group]: any) => (
+                        <div key={serviceId} className="mb-4 space-y-4">
+                          <h4 className="text-md font-bold text-gray-700 dark:text-gray-100">
+                            {group.service ? group.service.name : 'No Service'}
+                          </h4>
+                          {group.items.map((cartItem: any, index: number) => (
+                            <li
+                              key={index} 
+                              className="flex items-center gap-4 justify-between"
+                            >
+                              <div className="flex items-center gap-4">
+                                <img
+                                  className="w-16 h-16 rounded object-cover"
+                                  src={
+                                    cartItem.item.images &&
+                                    cartItem.item.images.length > 0
+                                      ? cartItem.item.images[0].url
+                                      : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
+                                  }
+                                  alt={cartItem.item.name}
+                                />
+                                <div className="flex flex-col">
+                                  <h4 className="text-sm dark:text-gray-100">
+                                    {cartItem.item.name}
+                                  </h4>
+                                  <p className="text-xs">
+                                    Quantity: {cartItem.quantity}
+                                  </p>
+                                  <p className="text-xs">
+                                    {centsToEurosWithCurrency(
+                                      cartItem.item.priceInCents
+                                    )}{' '}
+                                    x unit
+                                  </p>
+                                </div>
+                              </div>
+                            </li>
+                          ))}
+                        </div>
                       ))
                     ) : (
                       <div className="flex flex-col items-center text-gray-500 py-6">
@@ -165,6 +161,7 @@ export function CartShopping() {
                       </div>
                     )}
                   </ul>
+
                   {cart.length > 0 && (
                     <div className="mt-4 space-y-2">
                       <div className="flex justify-between">

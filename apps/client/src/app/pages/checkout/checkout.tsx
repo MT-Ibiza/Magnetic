@@ -54,7 +54,14 @@ export function CheckoutPage() {
   ];
 
   async function handleCreateOrder() {
-    await createOrderMutation.mutateAsync();
+    const allRequiredFormsCompleted = formsCheckout.every(
+      (formCheckout) => formCheckout.completed
+    );
+    if (allRequiredFormsCompleted) {
+      await createOrderMutation.mutateAsync();
+    } else {
+      toast.error('Please complete all required forms before proceeding.');
+    }
   }
 
   const total = cart.reduce(
@@ -156,30 +163,6 @@ export function CheckoutPage() {
                             </div>
                           ) : (
                             <>
-                              <div className="flex justify-between bg-sky-100 px-5 py-3 mb-3 items-center border-md">
-                                <Text size="1">
-                                  I would like complete this form later
-                                </Text>
-                                <Button
-                                  type="button"
-                                  variant="outline"
-                                  color="neutral"
-                                  onClick={() => {
-                                    const formsFilled = formsCheckout.map(
-                                      (f) => {
-                                        return f.form.serviceId ===
-                                          form.serviceId
-                                          ? { ...f, ...{ completed: true } }
-                                          : f;
-                                      }
-                                    );
-                                    setFormsCheckout(formsFilled);
-                                  }}
-                                >
-                                  Skip for now
-                                </Button>
-                              </div>
-
                               <RenderBookingForm
                                 type={form.serviceType}
                                 formData={form.data}
@@ -271,7 +254,12 @@ export function CheckoutPage() {
                     );
                   })}
                 </div>
-                <Button className="w-full" onClick={handleCreateOrder}>
+
+                <Button
+                  className="w-full"
+                  onClick={handleCreateOrder}
+                  disabled={formsCheckout.some((form) => !form.completed)}
+                >
                   Create Order
                 </Button>
               </CardWrapper>
