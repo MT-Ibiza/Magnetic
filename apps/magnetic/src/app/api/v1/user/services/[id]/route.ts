@@ -20,8 +20,9 @@ export async function GET(
             images: true,
           },
         },
-        package: {
+        packages: {
           select: {
+            id: true,
             name: true,
           },
         },
