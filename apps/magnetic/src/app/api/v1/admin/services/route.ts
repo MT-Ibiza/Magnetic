@@ -1,4 +1,3 @@
-import { NewService } from '@magnetic/interfaces';
 import db from 'apps/magnetic/src/app/libs/db';
 import { uploadBulkImages } from 'apps/magnetic/src/app/libs/s3';
 import { NextResponse } from 'next/server';
@@ -7,7 +6,7 @@ export async function POST(request: Request) {
   const data = await request.formData();
   const name = data.get('name') as string;
   const description = data.get('description') as string;
-  const packageId = data.get('packageId') as string;
+  const packageIds = data.getAll('packageIds[]') as string[];
   const providerId = data.get('providerId') as string;
   const serviceType = data.get('serviceType') as string;
   const script = data.get('script') as string;
@@ -24,7 +23,9 @@ export async function POST(request: Request) {
       data: {
         name: name,
         description: description,
-        packageId: Number(packageId),
+        packages: {
+          connect: packageIds.map((id) => ({ id: parseInt(id, 10) })),
+        },
         providerId: providerNumberId,
         serviceType: serviceType as 'none',
         imageUrl,
@@ -52,9 +53,9 @@ export async function GET(request: Request) {
         id: true,
         name: true,
         description: true,
-        packageId: true,
-        package: {
+        packages: {
           select: {
+            id: true,
             name: true,
           },
         },

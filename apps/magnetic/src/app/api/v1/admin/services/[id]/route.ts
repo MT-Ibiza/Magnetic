@@ -32,8 +32,9 @@ export async function GET(
             createdAt: 'desc',
           },
         },
-        package: {
+        packages: {
           select: {
+            id: true,
             name: true,
           },
         },
@@ -59,7 +60,7 @@ export async function PUT(
   const data = await request.formData();
   const name = data.get('name') as string;
   const description = data.get('description') as string;
-  const packageId = data.get('packageId') as string;
+  const packageIds = data.getAll('packageIds[]') as string[];
   const providerId = data.get('providerId') as string;
   const serviceType = data.get('serviceType') as string;
   const script = data.get('script') as string;
@@ -98,7 +99,9 @@ export async function PUT(
       data: {
         name: name,
         description: description,
-        packageId: Number(packageId),
+        packages: {
+          connect: packageIds.map((id) => ({ id: parseInt(id, 10) })),
+        },
         providerId: providerNumberId,
         serviceType: serviceType as 'none',
         imageUrl: imageUrl,

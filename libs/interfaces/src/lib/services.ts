@@ -5,7 +5,6 @@ import { NewProvider } from './providers';
 export interface ServiceBase {
   name: string;
   description: string;
-  packageId: number;
   providerId: number;
   serviceType: string;
   imageUrl?: string;
@@ -16,7 +15,7 @@ export interface Service extends ServiceBase {
   id: number;
   createdAt: Date;
   updatedAt: Date;
-  package: Package;
+  packages: { id: number; name: string }[];
   providerId: number;
   script?: string;
   items: Item[];
@@ -30,7 +29,7 @@ export interface NewService {
   name: string;
   description: string;
   items: NewItem[];
-  packageId: number;
+  packageIds: number[];
   provider?: NewProvider;
   providerId?: number;
   serviceType: string;

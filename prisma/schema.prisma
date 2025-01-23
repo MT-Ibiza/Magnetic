@@ -51,10 +51,9 @@ model Service {
   serviceType        ServiceType        @default(none)
   items              Item[]
   script             String?
-  packageId          Int
   imageUrl           String?
   termsAndConditions String?
-  package            Package            @relation(fields: [packageId], references: [id])
+  packages           Package[]          @relation("PackageServices")
   providerId         Int?
   provider           Provider?          @relation(fields: [providerId], references: [id])
   forms              OrderBookingForm[]
@@ -137,7 +136,7 @@ model Package {
   description  String?
   features     String?
   priceInCents Int       @default(1)
-  services     Service[]
+  services     Service[] @relation("PackageServices")
   users        User[]
 }
 

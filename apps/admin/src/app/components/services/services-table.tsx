@@ -39,7 +39,13 @@ function ServicesTable(props: Props) {
                 <Link to={`/services/${service.id}`}>{service.name}</Link>
               </td>
               <td>{service.providerId ? 'pending' : 'n/a'}</td>
-              <td>{service.package.name}</td>
+              <td>
+                <div className="flex gap-2">
+                  {service.packages.map((pack, index) => (
+                    <div className="">{pack.name}</div>
+                  ))}
+                </div>
+              </td>
               <td>
                 <div className="dropdown dropdown-bottom dropdown-end">
                   <div tabIndex={0} role="button" className="m-1">

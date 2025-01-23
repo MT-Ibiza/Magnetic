@@ -28,7 +28,7 @@ import { ALL_SERVICES } from '../../constants';
 export interface FormServiceData {
   name: string;
   description: string;
-  packageId: number;
+  packageIds: number[];
   providerId: number;
   cover?: string;
   serviceType: string;
@@ -65,7 +65,7 @@ export function ServiceForm(props: Props) {
       ? {
           name: service.name,
           description: service.description,
-          packageId: service.packageId,
+          packageIds: service.packages.map((pkg) => pkg.id),
           providerId: service.providerId,
           cover: service.imageUrl,
           serviceType: service.serviceType,
@@ -115,11 +115,11 @@ export function ServiceForm(props: Props) {
   }
 
   const onSubmit = async (data: FormServiceData) => {
-    const { name, packageId, serviceType, script, providerId } = data;
+    const { name, packageIds, serviceType, script, providerId } = data;
     const formData = new FormData();
     formData.append('name', name);
     formData.append('description', description || '');
-    formData.append('packageId', packageId.toString());
+    packageIds.forEach((id) => formData.append('packageIds[]', id.toString()));
     formData.append('serviceType', serviceType);
     script && formData.append('script', script);
     providerId && formData.append('providerId', providerId.toString());
@@ -195,11 +195,12 @@ export function ServiceForm(props: Props) {
               <div className="flex flex-col gap-[10px]">
                 <Text size="1">Available in package</Text>
                 <select
-                  className="select select-bordered w-full "
-                  {...register('packageId', {
+                  className="select select-bordered w-full"
+                  multiple
+                  {...register('packageIds', {
                     required: {
                       value: true,
-                      message: 'Package is required',
+                      message: 'At least one package is required',
                     },
                   })}
                 >
