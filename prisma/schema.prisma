@@ -58,6 +58,7 @@ model Service {
   providerId         Int?
   provider           Provider?          @relation(fields: [providerId], references: [id])
   forms              OrderBookingForm[]
+  categories         Category[]
 }
 
 model Category {
@@ -67,6 +68,8 @@ model Category {
   name        String   @unique
   description String?
   items       Item[]
+  service     Service? @relation(fields: [serviceId], references: [id])
+  serviceId   Int?
 }
 
 model BoatAttributes {
