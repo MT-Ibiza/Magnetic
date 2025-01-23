@@ -89,6 +89,13 @@ export function ProductsTable(props: Props) {
                     <HiOutlineDotsVertical />
                   </div>
                   <ul className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                    <li>
+                      <a
+                        href={`/services/${product.serviceId}/items/${product.id}/edit`}
+                      >
+                        Edit Product
+                      </a>
+                    </li>
                     <li onClick={() => {}}>
                       <a>Delete Product</a>
                     </li>

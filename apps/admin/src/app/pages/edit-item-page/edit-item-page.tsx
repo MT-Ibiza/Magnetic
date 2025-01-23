@@ -32,7 +32,7 @@ export function EditItemPage() {
   return (
     <div className="new-booking-page">
       <Text size="4" className="mb-3">
-        Edit Item
+        Edit Product
       </Text>
       <div className="breadcrumbs text-sm">
         <ul>
@@ -42,7 +42,7 @@ export function EditItemPage() {
           <li>
             <a href={`/services/${serviceId}`}>{item.service.name}</a>
           </li>
-          <li>Edit Item</li>
+          <li>Edit Product</li>
         </ul>
       </div>
       <div className="bg-base-100 listingSection__wrap">

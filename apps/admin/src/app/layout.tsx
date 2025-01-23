@@ -106,7 +106,7 @@ function Layout(props: Props) {
           icon: SiTask,
         },
         {
-          text: 'All Products',
+          text: 'Products',
           url: '/products',
           icon: SiTask,
         },
