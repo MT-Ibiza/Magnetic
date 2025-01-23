@@ -15,7 +15,7 @@ function OrderItemsTable(props: Props) {
       <table className="table">
         <thead>
           <tr>
-            <th>Item/Service</th>
+            <th>Product/Service</th>
             <th>Price</th>
             <th>Quantity</th>
             <th>Total</th>

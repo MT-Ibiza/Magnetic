@@ -39,10 +39,10 @@ function ItemBoatCard(props: Props) {
             item: item,
             quantity: newVal,
           });
-          showAlert('Item added to the cart', 'success');
+          showAlert('Product added to the cart', 'success');
         },
         onError: () => {
-          showAlert('Failed to add item to the cart', 'error');
+          showAlert('Failed to add product to the cart', 'error');
         },
       }
     );

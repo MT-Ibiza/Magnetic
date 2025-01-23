@@ -53,7 +53,7 @@ function ServicesTable(props: Props) {
                       <a href={`/services/edit/${service.id}`}>Edit Service</a>
                     </li>
                     <li>
-                      <a href={`/services/${service.id}`}>Add Item</a>
+                      <a href={`/services/${service.id}`}>Add Product</a>
                     </li>
                     <li
                       onClick={() => {

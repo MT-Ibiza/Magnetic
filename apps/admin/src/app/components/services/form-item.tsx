@@ -325,7 +325,7 @@ export function FormItem(props: Props) {
             Cancel
           </Button>
           <Button type="submit" className="px-8 py-2">
-            {item ? 'Update Item' : 'Create Item'}
+            {item ? 'Update Product' : 'Create Product'}
           </Button>
         </div>
       </form>

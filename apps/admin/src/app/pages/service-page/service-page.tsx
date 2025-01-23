@@ -83,7 +83,7 @@ function ServicePage(props: Props) {
               </Button>
               {!service.script && (
                 <Button href={`/services/${service.id}/items/new`}>
-                  + New Item
+                  + New Product
                 </Button>
               )}
             </div>
@@ -129,7 +129,7 @@ function ServicePage(props: Props) {
         </div>
       </CardWrapper>
       <DrawerContent
-        title={'Edit Item or Variant'}
+        title={'Edit Product or Variant'}
         open={openDrawer}
         onClose={toggleDrawer}
       >

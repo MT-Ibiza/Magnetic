@@ -32,7 +32,8 @@ export function FormProduct(props: Props) {
   });
 
   const createItem = useMutation<Item, Error, NewItem>({
-    mutationFn: (data: NewItem) => {
+    mutationFn: (data: any) => {
+      console.log(data);
       return newItem(serviceId, data);
     },
     onSuccess: (item) => {
@@ -45,7 +46,7 @@ export function FormProduct(props: Props) {
   });
 
   const updateItem = useMutation<Item, Error, EditItem>({
-    mutationFn: (data: EditItem) => {
+    mutationFn: (data: any) => {
       const itemId = item?.id || 0;
       return editItem(serviceId, itemId, data);
     },

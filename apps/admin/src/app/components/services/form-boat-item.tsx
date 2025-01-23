@@ -514,7 +514,7 @@ export function FormBoatItem(props: Props) {
             Cancel
           </Button>
           <Button type="submit" className="px-8 py-2">
-            {item ? 'Update Item' : 'Create Item'}
+            {item ? 'Update Boat' : 'Create Boat'}
           </Button>
         </div>
       </form>

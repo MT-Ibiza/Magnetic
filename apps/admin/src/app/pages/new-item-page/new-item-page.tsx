@@ -30,7 +30,7 @@ export function NewItemPage() {
   return (
     <div className="new-booking-page">
       <Text size="4" className="mb-3">
-        New Item
+        New Product
       </Text>
       <div className="breadcrumbs text-sm">
         <ul>

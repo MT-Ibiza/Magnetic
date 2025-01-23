@@ -7,7 +7,8 @@ import { useCart } from '../../hooks/useCart';
 
 export function CartPage() {
   const { addItemToCart } = useCart();
-  const { cart, addItem, removeItem, getGroupedItemsByService } = useCartStore();
+  const { cart, addItem, removeItem, getGroupedItemsByService } =
+    useCartStore();
   const groupedCart = getGroupedItemsByService();
 
   const total = cart.reduce(
