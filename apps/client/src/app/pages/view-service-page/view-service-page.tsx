@@ -105,6 +105,7 @@ function ViewServicePage(props: Props) {
   });
 
   const packageIds = service.packages.map((p) => p.id);
+  const availableInPlan = packageIds.includes(user?.package?.id || -1);
 
   return (
     <CardWrapper>
@@ -194,11 +195,7 @@ function ViewServicePage(props: Props) {
                   ) : (
                     <ItemCardCounter
                       item={item}
-                      availableInPlan={
-                        user?.packageId
-                          ? packageIds.includes(user.packageId)
-                          : false
-                      }
+                      availableInPlan={availableInPlan}
                     />
                   )}
                 </div>
@@ -206,13 +203,15 @@ function ViewServicePage(props: Props) {
             </div>
           </>
         )}
-        <div className="flex justify-end pt-[20px]">
-          <Link to="/checkout">
-            <Button className="py-[8px] text-[16px] w-full">
-              Checkout Now
-            </Button>
-          </Link>
-        </div>
+        {!service.script && (
+          <div className="flex justify-end pt-[20px]">
+            <Link to="/checkout">
+              <Button className="py-[8px] text-[16px] w-full">
+                Checkout Now
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </CardWrapper>
   );
