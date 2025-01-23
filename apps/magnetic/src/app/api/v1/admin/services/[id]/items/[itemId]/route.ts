@@ -44,20 +44,14 @@ export async function GET(
     });
 
     const categories = await db.category.findMany({
+      where: {
+        serviceId: item?.serviceId,
+      },
       select: {
         id: true,
         name: true,
         description: true,
       },
-      // where: {
-      //   items: {
-      //     some: {
-      //       service: {
-      //         name: item?.category?.name,
-      //       },
-      //     },
-      //   },
-      // },
     });
     const data = {
       item,
@@ -133,13 +127,9 @@ export async function PUT(
       );
       await Promise.all(imagePromises);
     }
-    
+
     return NextResponse.json(updatedItem);
   } catch (error: any) {
-    return NextResponse.json(
-      { message: error.message },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
-

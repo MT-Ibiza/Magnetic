@@ -15,12 +15,13 @@ import { useServices } from '../hooks/useServices';
 
 interface Props {
   category?: Category;
+  defaultServiceId?: number;
   onCancel?: () => void;
   onSave?: (category: Category) => void;
 }
 
 function FormCategory(props: Props) {
-  const { category, onCancel, onSave } = props;
+  const { category, defaultServiceId, onCancel, onSave } = props;
   const {
     register,
     handleSubmit,
@@ -64,13 +65,13 @@ function FormCategory(props: Props) {
       await updateCategory.mutateAsync({
         name,
         description,
-        serviceId: Number(serviceId),
+        serviceId: defaultServiceId || Number(serviceId),
       });
     } else {
       await createCategory.mutateAsync({
         name,
         description,
-        serviceId: Number(serviceId),
+        serviceId: defaultServiceId || Number(serviceId),
       });
     }
   };
@@ -83,6 +84,8 @@ function FormCategory(props: Props) {
           <select
             className="select select-bordered w-full "
             {...register('serviceId')}
+            defaultValue={defaultServiceId}
+            disabled={defaultServiceId !== undefined}
           >
             {services.map((service, index) => (
               <option value={service.id} key={index}>

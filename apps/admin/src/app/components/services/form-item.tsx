@@ -341,6 +341,7 @@ export function FormItem(props: Props) {
         <>
           {openForm === 'category' && (
             <FormCategory
+              defaultServiceId={serviceId}
               onCancel={toggleDrawer}
               onSave={(category) => {
                 toggleDrawer();

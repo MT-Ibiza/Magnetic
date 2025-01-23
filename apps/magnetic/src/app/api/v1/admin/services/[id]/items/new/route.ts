@@ -13,6 +13,9 @@ export async function GET(
     });
 
     const categories = await db.category.findMany({
+      where: {
+        serviceId: service?.id,
+      },
       select: {
         id: true,
         name: true,
