@@ -142,10 +142,6 @@ export function CartPage() {
                 <span>{totalItems} items</span>
                 <span>{centsToEurosWithCurrency(total)}</span>
               </div>
-              <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-                <span>Service charge</span>
-                <span>$0</span>
-              </div>
               <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
               <div className="flex justify-between font-semibold">
                 <span>Total</span>

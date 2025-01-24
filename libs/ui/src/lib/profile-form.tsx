@@ -17,16 +17,16 @@ export function ProfileForm(props: Props) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      first_name: user?.name || '',
-      last_name: '',
+      firstName: user?.name || '',
+      lastName: '',
       email: user?.email || '',
       phone: '',
       date: '',
       accommodation: '',
-      arrival_date: '',
-      departure_date: '',
-      passport_number: '',
-      billing_address: '',
+      arrivalDate: '',
+      departureDate: '',
+      passportNumber: '',
+      billingAddress: '',
     },
   });
 
@@ -36,7 +36,7 @@ export function ProfileForm(props: Props) {
   const [passportFile, setPassportFile] = useState<File | null>(null);
 
   const onSubmit = async (data: any) => {
-    console.log(data);
+    console.log(data); // Aquí se imprime el objeto enviado
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,7 +111,7 @@ export function ProfileForm(props: Props) {
                   type="text"
                   placeholder="Enter your first name"
                   className="mt-1"
-                  {...register('first_name', { required: false })}
+                  {...register('firstName', { required: false })}
                 />
               </label>
               <label className="block flex flex-col">
@@ -122,7 +122,7 @@ export function ProfileForm(props: Props) {
                   type="text"
                   placeholder="Enter your last name"
                   className="mt-1"
-                  {...register('last_name', { required: false })}
+                  {...register('lastName', { required: false })}
                 />
               </label>
               <label className="block flex flex-col">
@@ -165,7 +165,6 @@ export function ProfileForm(props: Props) {
                   placeholder="Enter your birthdate"
                   className="mt-1"
                   type="date"
-                  defaultValue="1990-07-22"
                   {...register('date', { required: true })}
                 />
               </label>
@@ -188,7 +187,7 @@ export function ProfileForm(props: Props) {
                   type="date"
                   placeholder="Enter arrival date"
                   className="mt-1"
-                  {...register('arrival_date', { required: true })}
+                  {...register('arrivalDate', { required: true })}
                 />
               </label>
               <label className="block flex flex-col">
@@ -199,7 +198,7 @@ export function ProfileForm(props: Props) {
                   type="date"
                   placeholder="Enter departure date"
                   className="mt-1"
-                  {...register('departure_date', { required: true })}
+                  {...register('departureDate', { required: true })}
                 />
               </label>
               <label className="block flex flex-col">
@@ -210,7 +209,7 @@ export function ProfileForm(props: Props) {
                   type="text"
                   placeholder="Enter your passport number"
                   className="mt-1"
-                  {...register('passport_number', { required: true })}
+                  {...register('passportNumber', { required: true })}
                 />
               </label>
               <label className="block flex flex-col">
@@ -232,7 +231,7 @@ export function ProfileForm(props: Props) {
                   type="text"
                   placeholder="Enter billing address"
                   className="mt-1"
-                  {...register('billing_address', { required: true })}
+                  {...register('billingAddress', { required: true })}
                 />
               </label>
             </div>

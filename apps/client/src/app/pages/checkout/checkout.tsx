@@ -18,8 +18,10 @@ interface FormOrderData {
   itemId?: number;
 }
 export function CheckoutPage() {
-  const { cart, addItem, removeItem, clearCart } = useCartStore();
+  const { cart, addItem, removeItem, clearCart, getGroupedItemsByService } =
+    useCartStore();
   const { isLoading, data, removeAllItemsCart } = useCart();
+  const groupedCart = getGroupedItemsByService();
 
   const [currentTab, setCurrentTab] = useState(0);
   const [createdOrderId, setCreatedOrderId] = useState<number>();
@@ -193,41 +195,59 @@ export function CheckoutPage() {
               <CardWrapper className="flex flex-col space-y-4">
                 <h3 className="text-2xl font-semibold mb-3">Summary order</h3>
                 <ul className="space-y-4 w-full">
-                  {cart.map((cartItem, index) => (
-                    <li
-                      key={index}
-                      className="grid grid-cols-8 items-center gap-2 w-full"
-                    >
-                      <img
-                        className="col-span-1 w-10 h-10 rounded object-cover"
-                        src={
-                          cartItem.item.images &&
-                          cartItem.item.images.length > 0
-                            ? cartItem.item.images[0].url
-                            : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
-                        }
-                        alt={cartItem.item.name}
-                      />
-                      <div className="col-span-6">
-                        <div className="flex flex-col w-full">
-                          <Text size="1" className="font-semibold line-clamp-2">
-                            {cartItem.item.name}
-                          </Text>
-                          <Text size="1" className="text-sm">
-                            {`Quantity: ${cartItem.quantity}`}
-                          </Text>
+                  {Object.entries(groupedCart).length > 0 ? (
+                    Object.entries(groupedCart).map(
+                      ([serviceId, group]: any) => (
+                        <div key={serviceId} className="mb-4 space-y-4">
+                          <h4 className="text-md font-bold text-gray-700 dark:text-gray-100">
+                            {group.service ? group.service.name : 'No Service'}
+                          </h4>
+                          {group.items.map((cartItem: any, index: number) => (
+                            <li
+                              key={index}
+                              className="grid grid-cols-8 items-center gap-2 w-full"
+                            >
+                              <img
+                                className="col-span-1 w-10 h-10 rounded object-cover"
+                                src={
+                                  cartItem.item.images &&
+                                  cartItem.item.images.length > 0
+                                    ? cartItem.item.images[0].url
+                                    : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
+                                }
+                                alt={cartItem.item.name}
+                              />
+                              <div className="col-span-6">
+                                <div className="flex flex-col w-full">
+                                  <Text
+                                    size="1"
+                                    className="font-semibold line-clamp-2"
+                                  >
+                                    {cartItem.item.name}
+                                  </Text>
+                                  <Text size="1" className="text-sm">
+                                    {`Quantity: ${cartItem.quantity}`}
+                                  </Text>
+                                </div>
+                              </div>
+                              <div className="col-span-1 flex justify-end w-full">
+                                <Text size="1" className="text-sm">
+                                  {centsToEurosWithCurrency(
+                                    cartItem.item.priceInCents *
+                                      cartItem.quantity
+                                  )}
+                                </Text>
+                              </div>
+                            </li>
+                          ))}
                         </div>
-                      </div>
-                      <div className="col-span-1 flex justify-end w-full">
-                        <Text size="1" className="text-sm">
-                          {centsToEurosWithCurrency(
-                            cartItem.item.priceInCents * cartItem.quantity
-                          )}
-                        </Text>
-                      </div>
-                    </li>
-                  ))}
+                      )
+                    )
+                  ) : (
+                    <Text>No items in cart</Text>
+                  )}
                 </ul>
+
                 <div className="border-b border-neutral-200 dark:border-neutral-700 my-2"></div>
                 <div className="flex justify-between mt-3">
                   <h1>Total</h1>
@@ -284,7 +304,7 @@ export function CheckoutPage() {
                 </Link>
               </div>
             </form>
-          </div>
+          </div> 
         </div>
       </dialog>
     </div>
