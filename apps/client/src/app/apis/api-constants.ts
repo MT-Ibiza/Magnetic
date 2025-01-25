@@ -7,6 +7,10 @@ export const WEBSITE_URL = import.meta.env.VITE_API_URL;
 //Auth
 export const URL_LOGIN = `${API_URL}/login`;
 
+//Client
+export const URL_GET_CLIENT = `${API_URL}/account`;
+export const URL_UPDATE_CLIENT = `${API_URL}/account`;
+
 //Services
 export const URL_GET_SERVICES = `${API_URL}/services`;
 export const URL_GET_SERVICE = (id: number) => `${API_URL}/services/${id}`;

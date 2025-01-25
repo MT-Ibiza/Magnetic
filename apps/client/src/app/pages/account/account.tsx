@@ -1,13 +1,9 @@
-import { ProfileForm } from '@magnetic/ui';
-import { useAuth } from '../../hooks/useAuth';
+import ProfileForm from '../../components/profile-form';
 
 export function AccountPage() {
-  const { getCurrentUser } = useAuth();
-  const user = getCurrentUser();
-
   return (
     <div className='bg-base-100 listingSection__wrap'>
-      <ProfileForm user={user} />
+      <ProfileForm />
     </div>
   );
 }
