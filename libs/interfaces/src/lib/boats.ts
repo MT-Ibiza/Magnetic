@@ -41,6 +41,7 @@ export interface BoatsSearchAttributes {
   boatType?: string;
   guests?: string;
   crew?: string;
+  size?: string;
   priceGreaterThan?: string;
   priceLessThan?: string;
 }

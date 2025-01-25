@@ -2,31 +2,22 @@ import { Select } from '@magnetic/ui';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { searchBoats } from '../../apis/api-boats';
-import { Item } from '@magnetic/interfaces';
+import { BoatsSearchAttributes, Item } from '@magnetic/interfaces';
 
-interface Props {}
+interface Props {
+  onChangeFilters: (filters: BoatsSearchAttributes) => void;
+}
 
 function FilterBoats(props: Props) {
-  const {} = props;
+  const { onChangeFilters } = props;
 
-  const [searchParams, setSearchParams] = useState({
+  const [searchParams, setSearchParams] = useState<BoatsSearchAttributes>({
     boatType: undefined,
     guests: undefined,
     size: undefined,
     crew: undefined,
     priceGreaterThan: undefined,
     priceLessThan: undefined,
-  });
-
-  const {
-    data: boats,
-    isLoading,
-    isError,
-  } = useQuery<Item[]>({
-    queryKey: ['boats', searchParams],
-    queryFn: async () => {
-      return searchBoats(searchParams);
-    },
   });
 
   const capacityOptions = [
@@ -61,22 +52,19 @@ function FilterBoats(props: Props) {
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => {
     const { name, value } = e.target;
-    setSearchParams((prev) => ({
-      ...prev,
+    const updatedFilters = {
+      ...searchParams,
       [name]: value,
-    }));
+    };
+    setSearchParams(updatedFilters);
+    onChangeFilters(updatedFilters);
   };
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
+
   return (
     <div>
       <div className="p-4">
         <h3 className="text-center pb-[30px]">Search</h3>
-        <form
-          onSubmit={handleSearchSubmit}
-          className="grid grid-cols-4 gap-x-[30px]"
-        >
+        <form className="grid grid-cols-4 gap-x-[30px]">
           {/* <div className="flex flex-col">
             <input
               type="date"

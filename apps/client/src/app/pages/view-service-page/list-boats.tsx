@@ -1,4 +1,4 @@
-import { Item } from '@magnetic/interfaces';
+import { BoatsSearchAttributes, Item } from '@magnetic/interfaces';
 import ItemBoatCard from '../../components/items/item-boat-card';
 import FilterBoats from './filter-boats';
 import { useQuery } from '@tanstack/react-query';
@@ -13,7 +13,7 @@ interface Props {
 function ListBoats(props: Props) {
   const { items, availableInPlan } = props;
 
-  const [searchParams, setSearchParams] = useState({
+  const [searchParams, setSearchParams] = useState<BoatsSearchAttributes>({
     boatType: undefined,
     guests: undefined,
     size: undefined,
@@ -33,11 +33,13 @@ function ListBoats(props: Props) {
     },
   });
 
-  const boatsFound = boats || [];
-
   return (
     <div>
-      <FilterBoats />
+      <FilterBoats
+        onChangeFilters={(filters) => {
+          setSearchParams(filters);
+        }}
+      />
       <div className="grid grid-cols-1 gap-4">
         {boats?.map((item, index) => (
           <div key={index}>
