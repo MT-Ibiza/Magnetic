@@ -36,3 +36,11 @@ export interface BoatAttributes {
   sizeInCentimeters: string;
   itemId: number;
 }
+
+export interface BoatsSearchAttributes {
+  boatType?: string;
+  guests?: string;
+  crew?: string;
+  priceGreaterThan?: string;
+  priceLessThan?: string;
+}
