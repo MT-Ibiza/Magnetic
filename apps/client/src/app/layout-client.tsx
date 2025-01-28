@@ -13,7 +13,6 @@ import { useAuth } from './hooks/useAuth';
 import { User } from 'libs/interfaces/src/lib/users';
 import { FiBookOpen, FiShoppingCart, FiUser } from 'react-icons/fi';
 import CartShopping from './components/cart/cart-shopping';
-import { FloatingWhatsApp } from '@carlos8a/react-whatsapp-floating-button';
 
 interface Props {}
 
@@ -108,18 +107,6 @@ function Layout(props: Props) {
           }`}
         >
           <Outlet />
-          <div>
-            <FloatingWhatsApp
-              phoneNumber="46728482437" // Required
-              accountName="Magnetic Travel" // Optional
-              initialMessageByServer="Hi there! How can I assist you?" // Optional
-              initialMessageByClient="Hello! I would like to chat with you" // Optional
-              statusMessage="Available" // Optional
-              startChatText="Start chat with us" // Optional
-              tooltipText="Need help? Click to chat!" // Optional
-              allowEsc={true} // Optional
-            />
-          </div>
         </div>
       </div>
     </div>
