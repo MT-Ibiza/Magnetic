@@ -11,10 +11,11 @@ interface Props {
   item: Item;
   service: Service;
   availableInPlan: boolean;
+  allowAddMultipleProducts: boolean;
 }
 
 function ItemCardCounter(props: Props) {
-  const { item, availableInPlan, service } = props;
+  const { item, availableInPlan, service, allowAddMultipleProducts } = props;
   const { addItemToCart } = useCart();
   const { addItem, removeItem, cart } = useCartStore();
   const productCart = cart.find((cartItem) => cartItem.item.id === item.id);
@@ -31,7 +32,7 @@ function ItemCardCounter(props: Props) {
     setTimeout(() => setAlert(null), 3000);
   };
 
-  const handleAddItem = (quantity: number) => {
+  const handleAddItem = (quantity: number, data?: any) => {
     const newVal = quantity + 1;
     addItemToCart.mutate(
       { itemId: item.id, quantity: newVal },
@@ -103,38 +104,65 @@ function ItemCardCounter(props: Props) {
               </h2>
             </div>
             <Text className="line-clamp-4">{item.description}</Text>
-            <div className="flex items-center justify-end gap-4 mt-4">
-              <button
-                className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
-                onClick={() => {
-                  if (availableInPlan) {
-                    handleRemoveItem(productCart?.quantity || 0);
-                  } else {
-                    //@ts-ignore
-                    document.getElementById('modal_upgrade').showModal();
-                  }
-                }}
-              >
-                -
-              </button>
-              <span className="text-md font-semibold">
-                {productCart?.quantity || 0}
-              </span>
-              <button
-                onClick={() => {
-                  if (availableInPlan) {
-                    handleAddItem(productCart?.quantity || 0);
-                    openForm();
-                  } else {
-                    //@ts-ignore
-                    document.getElementById('modal_upgrade').showModal();
-                  }
-                }}
-                className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
-              >
-                +
-              </button>
-            </div>
+
+            {allowAddMultipleProducts ? (
+              <div className="flex items-center justify-end gap-4 mt-4">
+                <button
+                  className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
+                  onClick={() => {
+                    if (availableInPlan) {
+                      handleRemoveItem(productCart?.quantity || 0);
+                    } else {
+                      //@ts-ignore
+                      document.getElementById('modal_upgrade').showModal();
+                    }
+                  }}
+                >
+                  -
+                </button>
+                <span className="text-md font-semibold">
+                  {productCart?.quantity || 0}
+                </span>
+                <button
+                  onClick={() => {
+                    if (availableInPlan) {
+                      // handleAddItem(productCart?.quantity || 0);
+                      openForm();
+                    } else {
+                      //@ts-ignore
+                      document.getElementById('modal_upgrade').showModal();
+                    }
+                  }}
+                  className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
+                >
+                  +
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center justify-end gap-4 mt-4">
+                {/* <Link to={`item/${item.id}`}>
+                  <Button variant="outline">View Details</Button>
+                </Link> */}
+                {productCart?.quantity === 1 ? (
+                  <Button
+                    onClick={() => {
+                      handleRemoveItem(productCart?.quantity || 0);
+                    }}
+                  >
+                    - Remove Cart
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      openForm();
+                      // handleAddItem(productCart?.quantity || 0);
+                    }}
+                  >
+                    Book Now
+                  </Button>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -172,7 +200,9 @@ function ItemCardCounter(props: Props) {
               serviceId: service.id,
               itemId: item.id,
             }}
-            onSubmit={(data) => {}}
+            onSubmit={(data) => {
+              handleAddItem(1, data);
+            }}
             onClose={closeForm}
           />
         </div>

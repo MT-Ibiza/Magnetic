@@ -19,6 +19,7 @@ function ListProducts(props: Props) {
               service={service}
               item={item}
               availableInPlan={availableInPlan}
+              allowAddMultipleProducts={false}
             />
           </div>
         ))}
