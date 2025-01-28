@@ -13,15 +13,22 @@ interface Props {
   itemId?: number;
   formData?: OrderBookingForm;
   onSubmit: (data: any) => void;
+  viewCol?: boolean;
+  onClose?: () => void;
 }
 
 function RenderBookingForm(props: Props) {
-  const { type, itemId, onSubmit, formData } = props;
+  const { type, itemId, onSubmit, formData, viewCol, onClose } = props;
   return (
     <div>
       {type === 'none' && <div></div>}
       {type === 'transfer' && (
-        <TransferBookingForm onSubmit={onSubmit} formData={formData} />
+        <TransferBookingForm
+          onSubmit={onSubmit}
+          formData={formData}
+          viewCol={viewCol}
+          onCancel={onClose}
+        />
       )}
       {type === 'drinks' && (
         <DrinksDeliveryBookingForm onSubmit={onSubmit} formData={formData} />

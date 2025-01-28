@@ -1,5 +1,5 @@
-import { Badge, Button, CardWrapper } from '@magnetic/ui';
-import { Link, useParams } from 'react-router-dom';
+import { Badge, CardWrapper } from '@magnetic/ui';
+import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
 import { useAuth } from '../../hooks/useAuth';
 import ListBoats from './list-boats';
@@ -35,35 +35,35 @@ function ViewServicePage(props: Props) {
 
   return (
     <CardWrapper>
-      <div>
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-xl lg:text-2xl font-semibold">{service.name}</h1>
-          <Badge size={3} color="yellow" name={service.packages[0].name} />
-        </div>
-        <div className="text-sm leading-relaxed editor-text">
-          <div
-            className="block"
-            dangerouslySetInnerHTML={{ __html: service.description }}
-          />
-        </div>
-        {service.script ? (
-          <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
-        ) : (
-          <>
-            {service.serviceType === 'boat_rental' ? (
-              <ListBoats
-                items={publishedItems}
-                availableInPlan={availableInPlan}
-              />
-            ) : (
-              <ListProducts
-                items={publishedItems}
-                availableInPlan={availableInPlan}
-              />
-            )}
-          </>
-        )}
-        {/* {!service.script && (
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-xl lg:text-2xl font-semibold">{service.name}</h1>
+        <Badge size={3} color="yellow" name={service.packages[0].name} />
+      </div>
+      <div className="text-sm leading-relaxed editor-text">
+        <div
+          className="block"
+          dangerouslySetInnerHTML={{ __html: service.description }}
+        />
+      </div>
+      {service.script ? (
+        <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
+      ) : (
+        <>
+          {service.serviceType === 'boat_rental' ? (
+            <ListBoats
+              items={publishedItems}
+              availableInPlan={availableInPlan}
+            />
+          ) : (
+            <ListProducts
+              service={service}
+              items={publishedItems}
+              availableInPlan={availableInPlan}
+            />
+          )}
+        </>
+      )}
+      {/* {!service.script && (
           <div className="flex justify-end pt-[20px]">
             <Link to="/checkout">
               <Button className="py-[8px] text-[16px] w-full">
@@ -72,7 +72,6 @@ function ViewServicePage(props: Props) {
             </Link>
           </div>
         )} */}
-      </div>
     </CardWrapper>
   );
 }

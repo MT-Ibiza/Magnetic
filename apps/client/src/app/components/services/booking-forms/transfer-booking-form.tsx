@@ -18,9 +18,16 @@ export interface TransferFormData {
 interface Props {
   onSubmit: (data: TransferFormData) => void;
   formData?: any;
+  viewCol?: boolean;
+  onCancel?: () => void;
 }
 
-export function TransferBookingForm({ onSubmit, formData }: Props) {
+export function TransferBookingForm({
+  onSubmit,
+  formData,
+  viewCol,
+  onCancel,
+}: Props) {
   const {
     register,
     handleSubmit,
@@ -48,11 +55,15 @@ export function TransferBookingForm({ onSubmit, formData }: Props) {
     onSubmit(data);
   };
 
+  const viewClasses = viewCol
+    ? 'flex flex-col gap-3'
+    : 'grid grid-cols-1 md:grid-cols-2 gap-6';
+
   return (
     <div className="">
       <h2 className="text-2xl font-bold text-center mb-6">Transfer Booking</h2>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className={viewClasses}>
           <div>
             <Text className="mb-2">Date</Text>
             <Input
@@ -195,6 +206,17 @@ export function TransferBookingForm({ onSubmit, formData }: Props) {
           </div>
         </div>
         <div className="flex justify-end gap-3">
+          {onCancel && (
+            <Button
+              className=""
+              variant="outline"
+              color="neutral"
+              type="button"
+              onClick={onCancel}
+            >
+              Cancel
+            </Button>
+          )}
           <Button type="submit">Submit Booking</Button>
         </div>
       </form>

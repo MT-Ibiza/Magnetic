@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { Item } from '@magnetic/interfaces';
+import { Item, Service } from '@magnetic/interfaces';
 import { Alert, Button, Text } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import { Link } from 'react-router-dom';
+import RenderBookingForm from '../services/booking-forms/render-booking-form';
 
 interface Props {
   item: Item;
+  service: Service;
   availableInPlan: boolean;
 }
 
 function ItemCardCounter(props: Props) {
-  const { item, availableInPlan } = props;
+  const { item, availableInPlan, service } = props;
   const { addItemToCart } = useCart();
   const { addItem, removeItem, cart } = useCartStore();
   const productCart = cart.find((cartItem) => cartItem.item.id === item.id);
@@ -68,6 +70,16 @@ function ItemCardCounter(props: Props) {
     }
   };
 
+  const openForm = () => {
+    //@ts-ignore
+    document.getElementById('modal_form').showModal();
+  };
+
+  const closeForm = () => {
+    //@ts-ignore
+    document.getElementById('modal_form').close();
+  };
+
   return (
     <>
       <div className="border rounded-xl border-neutral-200 p-4 space-y-4 shadow-sm hover:border-primary-700 transition-shadow">
@@ -112,6 +124,7 @@ function ItemCardCounter(props: Props) {
                 onClick={() => {
                   if (availableInPlan) {
                     handleAddItem(productCart?.quantity || 0);
+                    openForm();
                   } else {
                     //@ts-ignore
                     document.getElementById('modal_upgrade').showModal();
@@ -148,6 +161,20 @@ function ItemCardCounter(props: Props) {
               </div>
             </form>
           </div>
+        </div>
+      </dialog>
+      <dialog id="modal_form" className="modal">
+        <div className="modal-box p-8 w-full max-w-5xl">
+          <RenderBookingForm
+            type={service.serviceType}
+            formData={{
+              data: {},
+              serviceId: service.id,
+              itemId: item.id,
+            }}
+            onSubmit={(data) => {}}
+            onClose={closeForm}
+          />
         </div>
       </dialog>
     </>
