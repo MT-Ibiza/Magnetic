@@ -21,6 +21,7 @@ function FormRequestCall() {
     alert('¡Llamada agendada exitosamente!');
   };
 
+  const today = new Date().toISOString().split('T')[0];
   return (
     <div className="max-w-lg mx-auto rounded-lg p-3 bg-white">
       <h2 className="text-2xl font-bold mb-4">Schedule a call</h2>
@@ -68,6 +69,7 @@ function FormRequestCall() {
           <input
             id="date"
             type="date"
+            min={today}
             className="input input-bordered"
             {...register('date', { required: 'La fecha es obligatoria' })}
           />
