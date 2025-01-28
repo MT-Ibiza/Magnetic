@@ -37,16 +37,13 @@ export async function getUsers(
     ? `${URL_GET_USERS}?${queryString}`
     : `${URL_GET_USERS}`;
   const response = await fetch(url);
-  return await response.json();
+  return await response.json(); 
 }
 
-export async function newUser(params: NewUser): Promise<User> {
+export async function newUser(params: FormData): Promise<User> {
   const response = await fetch(URL_NEW_USER, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(params),
+    body: params,
   });
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);
@@ -55,15 +52,12 @@ export async function newUser(params: NewUser): Promise<User> {
 
 export async function editUser(
   userId: number,
-  params: EditUser
+  params: FormData
 ): Promise<User> {
   const url = URL_UPDATE_USER(userId);
   const response = await fetch(url, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(params),
+    body:params,
   });
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);

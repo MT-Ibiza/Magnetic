@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-
 import { useClient } from '../hooks/useClient';
 import { Button, Input } from '@magnetic/ui';
 import { editClient } from '../apis/api-client';
@@ -84,22 +83,6 @@ export function ProfileForm(props: Props) {
     } catch (err: any) {
       console.error('Error updating user:', err);
       setError(err.message || 'An error occurred while updating the profile');
-    }
-  };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
-    if (file) {
-      if (!file.type.startsWith('image/')) {
-        alert('Please select a valid image file');
-        return;
-      }
-      if (file.size > 5 * 1024 * 1024) {
-        alert('File size must be less than 5MB');
-        return;
-      }
-      setImage(file);
-      setImagePreview(URL.createObjectURL(file));
     }
   };
 

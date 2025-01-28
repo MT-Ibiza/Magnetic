@@ -11,25 +11,36 @@ import { NewUser } from '@magnetic/interfaces';
 import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
 import { newAccountTemplate } from 'apps/magnetic/src/app/emails/new-account';
 import moment from 'moment';
+import { uploadBulkImages } from 'apps/magnetic/src/app/libs/s3';
 
 export async function POST(request: Request) {
   try {
-    const data: NewUser = await request.json();
-    const {
-      email,
-      password,
-      packageId,
-      phone,
-      role,
-      firstName,
-      lastName,
-      accommodation,
-      arrivalDate,
-      departureDate,
-      passportNumber,
-      passportAttachmentUrl,
-      billingAddress,
-    } = data;
+    const formData = await request.formData();
+
+    const firstName = formData.get('firstName') as string;
+    const lastName = formData.get('lastName') as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    const phone = formData.get('phone') as string;
+    const packageId = formData.get('packageId')
+      ? Number(formData.get('packageId'))
+      : null;
+    const role = (formData.get('role') as string) || 'client';    
+    const accommodation = formData.get('accommodation') as string;
+    const arrivalDate = formData.get('arrivalDate') as string;
+    const departureDate = formData.get('departureDate') as string;
+    const passportNumber = formData.get('passportNumber') as string;
+    const billingAddress = formData.get('billingAddress') as string;
+    const passportFile = formData.get('passportAttachmentUrl') as File;
+
+    let passportAttachmentUrl = null;
+    if (passportFile) {
+      const uploadedFiles = await uploadBulkImages(
+        [passportFile],
+        'user-documents'
+      );
+      passportAttachmentUrl = uploadedFiles[0];
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await db.user.create({
@@ -40,15 +51,13 @@ export async function POST(request: Request) {
         email,
         role: role as 'client',
         accommodation,
-        arrivalDate: moment(arrivalDate).toDate(),
-        departureDate: moment(departureDate).toDate(),
+        arrivalDate: arrivalDate ? moment(arrivalDate).toDate() : null,
+        departureDate: departureDate ? moment(departureDate).toDate() : null,
         passportNumber,
         passportAttachmentUrl,
         billingAddress,
         packageId,
         phone: phone,
-        // countryCodePhone: countryCodePhone,
-        // countryNamePhone: countryNamePhone,
         password: hashedPassword,
       },
       include: {
