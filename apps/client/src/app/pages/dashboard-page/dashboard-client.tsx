@@ -1,21 +1,20 @@
-import { PlanCard } from '@magnetic/ui';
+import { PlanCard, Text } from '@magnetic/ui';
 import ServiceCardHorizontal from '../../components/services/service-card-horizontal';
 import { useDashboard } from '../../hooks/useDashboard';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import moment from 'moment';
 
 export function DashboardClientPage() {
-  const { isLoading, packages, services, error, isError } = useDashboard();
-  const { getCurrentUser } = useAuth();
-  const user = getCurrentUser();
+  const { isLoading, packages, services, error, isError, userAccount } =
+    useDashboard();
 
   const filteredPackages = packages.filter(
-    (item) => item.id !== user?.package?.id
+    (item) => item.id !== userAccount.package?.id
   );
 
   const filteredServices = services
     .filter((service) =>
-      service.packages.some((pkg) => pkg.id === user?.package?.id)
+      service.packages.some((pkg) => pkg.id === userAccount.package?.id)
     )
     .slice(0, 3);
 
@@ -26,20 +25,52 @@ export function DashboardClientPage() {
       'https://images.pexels.com/photos/131423/pexels-photo-131423.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
   };
 
+  if (isLoading) {
+    return <h1>Loading....</h1>;
+  }
+
+  if (isError) {
+    return <h1>Please try again</h1>;
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex flex-col lg:grid lg:grid-cols-2 gap-[20px]">
         <div className="bg-base-100 py-10 px-6">
           <div className="container mx-auto text-center">
             <h1 className="text-2xl lg:text-3xl font-bold">
-              Welcome, {user?.name}
+              Welcome, {userAccount.name}
             </h1>
             <p className="mt-2">Explore your services and packages below.</p>
-            {user?.package?.name && (
+            {userAccount.package?.name && (
               <p className="text-base lg:text-lg font-bold text-primary-600 mt-4">
-                {user?.package?.name}
+                Package: {userAccount.package?.name}
               </p>
             )}
+            <div className="mt-6 flex gap-3 justify-around">
+              <div className="text-sm lg:text-base">
+                <Text size="1" className="text-gray-500">
+                  Accommodation
+                </Text>
+                <Text>{userAccount.accommodation}</Text>
+              </div>
+              <div className="text-sm lg:text-base">
+                <Text size="1" className="text-gray-500">
+                  Arrival Date
+                </Text>
+                <Text>
+                  {moment(userAccount.arrivalDate).format('MMMM DD, YYYY')}
+                </Text>
+              </div>
+              <div className="text-sm lg:text-base">
+                <Text size="1" className="text-gray-500">
+                  Departure Date
+                </Text>
+                <Text>
+                  {moment(userAccount.departureDate).format('MMMM DD, YYYY')}
+                </Text>
+              </div>
+            </div>
           </div>
         </div>
         <div className="">
@@ -47,7 +78,7 @@ export function DashboardClientPage() {
             <div className="rounded-lg overflow-hidden shadow-lg">
               <video
                 controls
-                className="h-[350px] lg:h-[400px] w-full  object-cover"
+                className="h-[350px] lg:h-[400px] w-full object-cover"
                 src={videoUrl.thumbnail}
                 poster={videoUrl.thumbnail}
               ></video>
