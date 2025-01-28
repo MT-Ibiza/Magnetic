@@ -47,8 +47,12 @@ export function ProfileForm(props: Props) {
         phone: client.phone || '',
         // date: client.dateOfBirth || '',
         accommodation: client.accommodation || '',
-        arrivalDate: client.arrivalDate ? new Date(client.arrivalDate).toISOString().split('T')[0] : '',
-        departureDate: client.departureDate ? new Date(client.departureDate).toISOString().split('T')[0] : '',
+        arrivalDate: client.arrivalDate
+          ? new Date(client.arrivalDate).toISOString().split('T')[0]
+          : '',
+        departureDate: client.departureDate
+          ? new Date(client.departureDate).toISOString().split('T')[0]
+          : '',
         passportNumber: client.passportNumber || '',
         billingAddress: client.billingAddress || '',
         passportAttachmentUrl: client.passportAttachmentUrl || '',
@@ -134,16 +138,6 @@ export function ProfileForm(props: Props) {
             className="grid grid-cols-1 gap-[50px]"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="text-center">
-              <div className="mt-2">
-                  <img
-                    src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'}
-                    alt="Imagen de perfil"
-                    className="object-cover w-[120px] h-[120px] m-auto rounded-full shadow"
-                    onClick={() => document.getElementById('photo')?.click()}
-                  />
-              </div>
-            </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-[25px] gap-x-[40px]">
               <label className="block flex flex-col">
                 <span className="text-neutral-800 dark:text-neutral-200">
@@ -199,17 +193,6 @@ export function ProfileForm(props: Props) {
                     Phone is required
                   </p>
                 )}
-              </label>
-              <label className="block flex flex-col">
-                <span className="text-neutral-800 dark:text-neutral-200">
-                  Date of Birth
-                </span>
-                <Input
-                  placeholder="Enter your birthdate"
-                  className="mt-1"
-                  type="date"
-                  {...register('date', { required: true })}
-                />
               </label>
               <label className="block flex flex-col">
                 <span className="text-neutral-800 dark:text-neutral-200">
