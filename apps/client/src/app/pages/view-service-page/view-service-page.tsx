@@ -4,6 +4,7 @@ import { useService } from '../../hooks/useService';
 import { useAuth } from '../../hooks/useAuth';
 import ListBoats from './list-boats';
 import ListProducts from './list-products';
+import './styles.scss';
 
 interface Props {}
 
@@ -39,10 +40,12 @@ function ViewServicePage(props: Props) {
           <h1 className="text-xl lg:text-2xl font-semibold">{service.name}</h1>
           <Badge size={3} color="yellow" name={service.packages[0].name} />
         </div>
-        <div
-          className="lg:text-[16px] text-[14px] editor-text"
-          dangerouslySetInnerHTML={{ __html: service.description }}
-        />
+        <div className="text-sm leading-relaxed editor-text">
+          <div
+            className="block"
+            dangerouslySetInnerHTML={{ __html: service.description }}
+          />
+        </div>
         {service.script ? (
           <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
         ) : (

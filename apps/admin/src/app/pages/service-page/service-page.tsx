@@ -90,7 +90,7 @@ function ServicePage(props: Props) {
           </div>
           <div className="flex flex-col gap-[15px]">
             <span className="text-lg font-semibold text-gray-700">
-              {service.package?.name}
+              {/* {service.package?.name} */}
             </span>
             <div className="text-sm text-gray-500 leading-relaxed editor-text">
               <div
