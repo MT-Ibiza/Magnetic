@@ -11,9 +11,9 @@ export async function POST(request: Request) {
 
     const userId = decodedToken.id;
     const body = await request.json();
-    const { itemId, quantity } = body;
+    const { itemId, quantity, formData } = body;
 
-    console.log('quantity: ', quantity);
+    console.log('formData: ', formData);
 
     if (!itemId || quantity < 0) {
       return NextResponse.json(
@@ -70,6 +70,7 @@ export async function POST(request: Request) {
           cartId: cart.id,
           itemId: itemId,
           quantity: quantity,
+          formData: formData,
         },
       });
       return NextResponse.json({
@@ -148,7 +149,6 @@ export async function DELETE(request: Request) {
 
     const userId = decodedToken.id;
 
-    
     const body = await request.json();
     const { itemId, quantity } = body;
 
@@ -162,7 +162,6 @@ export async function DELETE(request: Request) {
       );
     }
 
-    
     let cart = await db.cart.findUnique({
       where: { userId },
     });
@@ -175,7 +174,6 @@ export async function DELETE(request: Request) {
       });
     }
 
-    
     const existingCartItem = await db.cartItem.findFirst({
       where: {
         cartId: cart.id,
@@ -183,7 +181,6 @@ export async function DELETE(request: Request) {
       },
     });
 
-    
     if (existingCartItem) {
       const updatedCartItem = await db.cartItem.update({
         where: { id: existingCartItem.id },

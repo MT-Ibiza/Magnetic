@@ -32,12 +32,13 @@ function ItemCardCounter(props: Props) {
     setTimeout(() => setAlert(null), 3000);
   };
 
-  const handleAddItem = (quantity: number, data?: any) => {
+  const handleAddItem = (quantity: number, formData?: any) => {
     const newVal = quantity + 1;
     addItemToCart.mutate(
-      { itemId: item.id, quantity: newVal },
+      { itemId: item.id, quantity: newVal, formData },
       {
         onSuccess: () => {
+          closeForm();
           addItem({
             id: item.id,
             item: item,
@@ -140,9 +141,9 @@ function ItemCardCounter(props: Props) {
               </div>
             ) : (
               <div className="flex items-center justify-end gap-4 mt-4">
-                {/* <Link to={`item/${item.id}`}>
+                <Link to={`item/${item.id}`}>
                   <Button variant="outline">View Details</Button>
-                </Link> */}
+                </Link>
                 {productCart?.quantity === 1 ? (
                   <Button
                     onClick={() => {
@@ -201,7 +202,7 @@ function ItemCardCounter(props: Props) {
               itemId: item.id,
             }}
             onSubmit={(data) => {
-              handleAddItem(1, data);
+              handleAddItem(0, data);
             }}
             onClose={closeForm}
           />

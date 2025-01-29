@@ -19,7 +19,8 @@ export async function getCart(): Promise<Cart> {
 
 export async function addToCart(
   itemId: number,
-  quantity: number
+  quantity: number,
+  formData?: any
 ): Promise<CartItem> {
   const url = URL_ADD_TO_CART;
   const accessToken = localStorage.getItem('magnetic_auth');
@@ -29,7 +30,7 @@ export async function addToCart(
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({ itemId, quantity }),
+    body: JSON.stringify({ itemId, quantity, formData }),
   });
 
   const dataJson = await response.json();

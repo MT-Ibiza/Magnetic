@@ -78,6 +78,7 @@ export interface CartItem {
   id: number;
   item: Item;
   quantity: number;
+  formData?: any;
 }
 
 export interface ItemWithServiceCategories {

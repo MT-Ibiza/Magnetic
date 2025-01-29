@@ -13,8 +13,15 @@ export const useCart = () => {
     });
 
   const addItemToCart = useMutation({
-    mutationFn: ({ itemId, quantity }: { itemId: number; quantity: number }) =>
-      addToCart(itemId, quantity),
+    mutationFn: ({
+      itemId,
+      quantity,
+      formData,
+    }: {
+      itemId: number;
+      quantity: number;
+      formData?: any;
+    }) => addToCart(itemId, quantity, formData),
     onSuccess: () => {
       // refetch();
     },
