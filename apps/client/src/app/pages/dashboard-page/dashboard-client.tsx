@@ -4,6 +4,7 @@ import { useDashboard } from '../../hooks/useDashboard';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { FloatingWhatsApp } from '@carlos8a/react-whatsapp-floating-button';
+import { maxDateToBooking } from '../../utils';
 
 export function DashboardClientPage() {
   const { isLoading, packages, services, error, isError, userAccount } =
@@ -72,6 +73,17 @@ export function DashboardClientPage() {
                     {moment(userAccount.departureDate).format('MMMM DD, YYYY')}
                   </Text>
                 </div>
+              </div>
+              <div className="mt-3 flex flex-col gap-3 p-5 border-md bg-yellow-100">
+                <Text>
+                  You can make a booking up to 7 days prior to your arrival at
+                  the destination.
+                </Text>
+                <Text>
+                  <div>
+                    Until Date: {maxDateToBooking(userAccount.arrivalDate)}
+                  </div>
+                </Text>
               </div>
             </div>
           </div>
