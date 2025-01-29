@@ -38,10 +38,10 @@ export function AvatarDropdown({
               className={`inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
               <div className="flex gap-3 items-center">
-                <Avatar sizeClass="w-8 h-8 sm:w-9 sm:h-9" />
+                <Avatar userName={user.name} size="sm" />
                 {showInformation && (
                   <div className="hidden lg:flex flex-col items-start">
-                    <Text size="1">{user.name}</Text>
+                    <Text size="1">{user.name ?? 'N/A'}</Text>
                     <Text size="1" className="text-gray-500">
                       {user.email}
                     </Text>

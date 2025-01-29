@@ -37,8 +37,12 @@ export function UserLayout() {
             <div className="lg:sticky lg:top-20 relative">
               <div className="bg-base-100 w-full flex flex-col items-center text-center rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-6 sm:space-y-7 px-0 p-6 xl:p-8">
                 <Avatar
+                  userName={
+                    `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim() ||
+                    user.name
+                  }
                   hasCheckedClass="w-6 h-6 -top-0.5 right-2"
-                  sizeClass="w-28 h-28"
+                  size="xl"
                 />
                 <div className="space-y-3 text-center flex flex-col items-center">
                   <h2 className="text-2xl lg:text-2xl font-semibold">

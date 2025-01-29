@@ -3,7 +3,7 @@ import { ErrorText } from '../error-text';
 import { useUsers } from '../../hooks/useUsers';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { User } from '@magnetic/interfaces';
-import { Button, Text } from '@magnetic/ui';
+import { Avatar, Button, Text } from '@magnetic/ui';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../../utils';
 
@@ -53,11 +53,16 @@ function UsersTable(props: Props) {
           {users.map((user, index) => (
             <tr className="hover" key={index}>
               <td>
-                <div className="flex flex-col gap-1">
-                  <Link to={`/clients/${user.id}`}>{user.name}</Link>
-                  <Text size="1" className="text-gray-400">
-                    {user.email}
-                  </Text>
+                <div className="flex gap-3">
+                  <Link to={`/clients/${user.id}`}>
+                    <Avatar size="sm" userName={user.name} />
+                  </Link>
+                  <div className="flex flex-col gap-1">
+                    <Link to={`/clients/${user.id}`}>{user.name}</Link>
+                    <Text size="1" className="text-gray-400">
+                      {user.email}
+                    </Text>
+                  </div>
                 </div>
               </td>
               <td>
