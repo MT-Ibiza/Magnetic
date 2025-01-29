@@ -3,12 +3,14 @@ import ProvidersTable from '../../components/providers/providers-table';
 import { useState } from 'react';
 import FormProvider from '../../components/providers/form-provider';
 import { Provider } from '@magnetic/interfaces';
+import { useProviders } from '../../hooks/useProviders';
 
 export function ProvidersPage() {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState<
     Provider | undefined
   >();
+  const [refetch, setRefetch] = useState<() => void>(() => () => {});
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -17,6 +19,10 @@ export function ProvidersPage() {
   const handleAddProvider = () => {
     setSelectedProvider(undefined);
     toggleDrawer();
+  };
+
+  const handleSetRefetch = (refetchFn: () => void) => {
+    setRefetch(() => refetchFn);
   };
 
   return (
@@ -43,6 +49,7 @@ export function ProvidersPage() {
             setSelectedProvider(provider);
             toggleDrawer();
           }}
+          onRefetch={handleSetRefetch}
         />
       </CardWrapper>
       <DrawerContent
@@ -50,7 +57,14 @@ export function ProvidersPage() {
         open={openDrawer}
         onClose={toggleDrawer}
       >
-        <FormProvider onCancel={toggleDrawer} provider={selectedProvider} />
+        <FormProvider
+          onSaveSuccess={() => {
+            refetch();
+            toggleDrawer();
+          }}
+          onCancel={toggleDrawer}
+          provider={selectedProvider}
+        />
       </DrawerContent>
     </>
   );

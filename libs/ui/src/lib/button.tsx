@@ -105,7 +105,6 @@ export function Button({
 
   if (!!href && href !== '#') {
     if (disabled) {
-      // Para enlaces deshabilitados, evita el click y cambia el estilo.
       return (
         <span
           className={`${CLASSES} cursor-not-allowed opacity-50`}
@@ -135,7 +134,7 @@ export function Button({
       onClick={onClick}
       type={type}
     >
-      {loading ? loadingText || 'Loading...' : children || 'This is Button'}
+      {loading ? loadingText || 'Saving...' : children || 'This is Button'}
     </button>
   );
 }

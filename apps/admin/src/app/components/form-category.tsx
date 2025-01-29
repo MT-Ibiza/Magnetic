@@ -121,7 +121,10 @@ function FormCategory(props: Props) {
         >
           Cancel
         </Button>
-        <Button type="submit">
+        <Button
+          loading={createCategory.isPending || updateCategory.isPending}
+          type="submit"
+        >
           {category ? 'Update Category' : 'Create Category'}
         </Button>
       </div>

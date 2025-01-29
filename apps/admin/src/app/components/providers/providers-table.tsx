@@ -7,11 +7,12 @@ import { Provider } from '@magnetic/interfaces';
 
 interface Props {
   onClickEdit?: (provider: Provider) => void;
+  onRefetch?: (refetchFn: () => void) => void;
 }
 
 function ProvidersTable(props: Props) {
-  const { onClickEdit } = props;
-  const { isLoading, providers, error, isError } = useProviders();
+  const { onClickEdit, onRefetch } = props;
+  const { isLoading, providers, error, isError, refetch } = useProviders();
 
   if (isLoading) {
     return <Loading />;
@@ -21,6 +22,10 @@ function ProvidersTable(props: Props) {
     return <ErrorText text={error?.message || ''} />;
   }
 
+  if (onRefetch) {
+    onRefetch(refetch);
+  }
+  
   return (
     <div className="">
       <table className="table w-full">

@@ -13,12 +13,13 @@ import { editProvider, newProvider } from '../../apis/api-providers';
 interface Props {
   provider?: Provider;
   onCancel: () => void;
+  onSaveSuccess?: () => void;
 }
 
 export interface FormProviderData extends NewProvider {}
 
 function FormProvider(props: Props) {
-  const { provider, onCancel } = props;
+  const { provider, onCancel, onSaveSuccess } = props;
   const {
     register,
     handleSubmit,
@@ -33,6 +34,7 @@ function FormProvider(props: Props) {
     },
     onSuccess: () => {
       toast.success(`Service created!`);
+      if (onSaveSuccess) onSaveSuccess();
     },
     onError: () => {
       toast.success(`Service couldn't be created!`);
@@ -44,8 +46,9 @@ function FormProvider(props: Props) {
       const providerId = provider?.id || 0;
       return editProvider(providerId, data);
     },
-    onSuccess: () => {
+    onSuccess: () => { 
       toast.success(`Supplier updated!`);
+      if (onSaveSuccess) onSaveSuccess();
     },
     onError: () => {
       toast.success(`Supplier couldn't be update!`);
@@ -119,7 +122,10 @@ function FormProvider(props: Props) {
           >
             Cancel
           </Button>
-          <Button type="submit">
+          <Button
+            loading={createProvider.isPending || updateProvider.isPending}
+            type="submit"
+          >
             {provider?.id ? 'Update Supplier' : 'Create Supplier'}
           </Button>
         </div>

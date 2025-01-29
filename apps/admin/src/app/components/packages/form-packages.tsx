@@ -147,7 +147,10 @@ export function PackagesForm(props: Props) {
               <Button variant="outline" href={'/packages'} type="submit">
                 Cancel
               </Button>
-              <Button type="submit">
+              <Button
+                loading={createPackage.isPending || updatePackages.isPending}
+                type="submit"
+              >
                 {plan ? 'Update Package' : 'Create Package'}
               </Button>
             </div>
