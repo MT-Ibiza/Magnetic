@@ -257,85 +257,85 @@ export function FormUser(props: Props) {
               <Input type="tel" placeholder="Phone" {...register('phone')} />
             </div>
             <div>
-            <label className="flex flex-col">
-              <div className='flex gap-[10px] items-center'>
-              <span className="text-neutral-800 dark:text-neutral-200">
-                Upload Passport
-              </span>
-              <p className="text-sm text-neutral-500">
-                (Maximum file size: 5MB)
-              </p>
-              </div>
-              <div className="mt-3 cursor-pointer p-4 border border-neutral-300 rounded-lg shadow-sm flex justify-between gap-4">
-                {user?.passportAttachmentUrl && !passportFile && (
-                  <div className="flex items-center gap-3">
-                    {user.passportAttachmentUrl.endsWith('.pdf') ? (
-                      <div className="flex items-center gap-2 border border-neutral-300 rounded-lg p-3 bg-gray-50 shadow-sm">
-                        <i className="fas fa-file-pdf text-red-500"></i>
-                        <a
-                          href={user.passportAttachmentUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-500 underline text-sm"
-                        >
-                          View Passport (PDF)
-                        </a>
-                      </div>
-                    ) : (
-                      <div className="relative">
-                        <img
-                          src={user.passportAttachmentUrl}
-                          alt="Uploaded Passport"
-                          className="object-cover w-[100px] h-[100px] rounded-lg shadow-sm border"
-                        />
-                        <span className="absolute top-0 right-0 text-white bg-black rounded-full p-1 text-xs">
-                          Image
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                )}
-                {passportFile && (
-                  <div className="flex items-center gap-3">
-                    {passportFile.type === 'application/pdf' ? (
-                      <div className="flex items-center gap-2 border border-neutral-300 rounded-lg p-3 bg-gray-50 shadow-sm">
-                        <i className="fas fa-file-pdf text-red-500"></i>
-                        <span className="text-sm">{passportFile.name}</span>
-                      </div>
-                    ) : (
-                      <div className="relative">
-                        <img
-                          src={URL.createObjectURL(passportFile)}
-                          alt="New Passport"
-                          className="object-cover w-[100px] h-[100px] rounded-lg shadow-sm border"
-                        />
-                        <span className="absolute top-0 right-0 text-white bg-black rounded-full p-1 text-xs">
-                          Image
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                )}
-                <div className="mt-2 flex items-center gap-3">
-                  <input
-                    type="file"
-                    accept=".pdf,.jpg,.png"
-                    className="hidden"
-                    id="passport-file"
-                    onChange={handlePassportChange}
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() =>
-                      document.getElementById('passport-file')?.click()
-                    }
-                  >
-                    Upload New Passport
-                  </Button>
+              <label className="flex flex-col">
+                <div className="flex gap-[10px] items-center">
+                  <span className="text-neutral-800 dark:text-neutral-200">
+                    Upload Passport
+                  </span>
+                  <p className="text-sm text-neutral-500">
+                    (Maximum file size: 5MB)
+                  </p>
                 </div>
-              </div>
-            </label>
+                <div className="mt-3 cursor-pointer p-4 border border-neutral-300 rounded-lg shadow-sm flex justify-between gap-4">
+                  {user?.passportAttachmentUrl && !passportFile && (
+                    <div className="flex items-center gap-3">
+                      {user.passportAttachmentUrl.endsWith('.pdf') ? (
+                        <div className="flex items-center gap-2 border border-neutral-300 rounded-lg p-3 bg-gray-50 shadow-sm">
+                          <i className="fas fa-file-pdf text-red-500"></i>
+                          <a
+                            href={user.passportAttachmentUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 underline text-sm"
+                          >
+                            View Passport (PDF)
+                          </a>
+                        </div>
+                      ) : (
+                        <div className="relative">
+                          <img
+                            src={user.passportAttachmentUrl}
+                            alt="Uploaded Passport"
+                            className="object-cover w-[100px] h-[100px] rounded-lg shadow-sm border"
+                          />
+                          <span className="absolute top-0 right-0 text-white bg-black rounded-full p-1 text-xs">
+                            Image
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {passportFile && (
+                    <div className="flex items-center gap-3">
+                      {passportFile.type === 'application/pdf' ? (
+                        <div className="flex items-center gap-2 border border-neutral-300 rounded-lg p-3 bg-gray-50 shadow-sm">
+                          <i className="fas fa-file-pdf text-red-500"></i>
+                          <span className="text-sm">{passportFile.name}</span>
+                        </div>
+                      ) : (
+                        <div className="relative">
+                          <img
+                            src={URL.createObjectURL(passportFile)}
+                            alt="New Passport"
+                            className="object-cover w-[100px] h-[100px] rounded-lg shadow-sm border"
+                          />
+                          <span className="absolute top-0 right-0 text-white bg-black rounded-full p-1 text-xs">
+                            Image
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  <div className="mt-2 flex items-center gap-3">
+                    <input
+                      type="file"
+                      accept=".pdf,.jpg,.png"
+                      className="hidden"
+                      id="passport-file"
+                      onChange={handlePassportChange}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() =>
+                        document.getElementById('passport-file')?.click()
+                      }
+                    >
+                      Upload New Passport
+                    </Button>
+                  </div>
+                </div>
+              </label>
             </div>
           </div>
           <div className="flex flex-col gap-[10px]">
@@ -379,7 +379,10 @@ export function FormUser(props: Props) {
           >
             Cancel
           </Button>
-          <Button type="submit">
+          <Button
+            loading={createUser.isPending || updateUser.isPending}
+            type="submit"
+          >
             {editMode ? 'Update User' : 'Create Account'}
           </Button>
         </div>

@@ -3,13 +3,24 @@ import AdminUsersTable from '../../components/users/admin-users-table';
 import { useState } from 'react';
 import FormAdminUser from '../../components/users/form-admin-user';
 import { User } from '@magnetic/interfaces';
+import { useUsers } from '../../hooks/useUsers';
 interface Props {}
 
 export function AdminUsersPage(props: Props) {
   const {} = props;
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User>();
-  const toggleDrawer = () => {
+
+  const {
+    refetch,
+  } = useUsers({
+    searchText: undefined,
+    itemsPerPage: 10,
+    role: 'admin',
+  });
+  
+  const toggleDrawer = (user?: User) => {
+    setSelectedUser(user);
     setOpenDrawer((prevState) => !prevState);
   };
 
@@ -25,7 +36,7 @@ export function AdminUsersPage(props: Props) {
           </div>
           <div className="flex justify-end lg:w-auto w-full">
             <Button
-              onClick={toggleDrawer}
+              onClick={() => toggleDrawer()}
               className="px-6 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600"
             >
               + New User
@@ -34,8 +45,7 @@ export function AdminUsersPage(props: Props) {
         </div>
         <AdminUsersTable
           onClickEdit={(user) => {
-            setSelectedUser(user);
-            toggleDrawer();
+            toggleDrawer(user);
           }}
           onClickRemove={(user) => {
             setSelectedUser(user);
@@ -57,6 +67,7 @@ export function AdminUsersPage(props: Props) {
           user={selectedUser}
           onSaveSuccess={() => {
             toggleDrawer();
+            refetch();
           }}
         />
       </DrawerContent>

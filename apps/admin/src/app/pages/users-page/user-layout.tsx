@@ -19,8 +19,9 @@ export function UserLayout() {
   let path = location.pathname;
   const currentRoute = path.split('/').pop();
   const index = routes.indexOf(currentRoute || '');
-  const [selectedIndexTab, setSelectedIndexTab] = useState(index);
-
+  const [selectedIndexTab, setSelectedIndexTab] = useState(
+    index >= 0 ? index : 0
+  );
   if (isLoading) {
     return <Loading />;
   }

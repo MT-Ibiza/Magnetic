@@ -36,7 +36,9 @@ export const InformationProfile = ({ user }: InformationProfileProps) => {
               Arrival Date:
             </strong>
             <span className="text-neutral-600 text-sm">
-              {moment(user.arrivalDate).format('DD MMM YYYY')}
+              {user.arrivalDate
+                ? moment(user.arrivalDate).format('DD MMM YYYY')
+                : 'N/A'}
             </span>
           </li>
           <li className="flex justify-between">
@@ -44,7 +46,9 @@ export const InformationProfile = ({ user }: InformationProfileProps) => {
               Departure Date:
             </strong>
             <span className="text-neutral-600 text-sm">
-              {moment(user.departureDate).format('DD MMM YYYY')}
+              {user.departureDate
+                ? moment(user.departureDate).format('DD MMM YYYY')
+                : 'N/A'}
             </span>
           </li>
           <li className="flex justify-between">

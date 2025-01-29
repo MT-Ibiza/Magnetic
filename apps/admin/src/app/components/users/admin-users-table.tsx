@@ -1,6 +1,6 @@
 import Loading from '../loading';
 import { ErrorText } from '../error-text';
-import { useUsers } from '../../hooks/useUsers';
+import { useUsers } from '../../hooks/useUsers'; 
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { User } from '@magnetic/interfaces';
 import { Button, Text } from '@magnetic/ui';
@@ -50,7 +50,7 @@ function AdminUsersTable(props: Props) {
           {users.map((user, index) => (
             <tr className="hover" key={index}>
               <th>{index + 1}</th>
-              <td>{user.name}</td>
+              <td>{user.firstName} {user.lastName}</td>
               <td>
                 <div className="flex flex-col gap-1">
                   <Text size="1">{user.phone || 'N/A'}</Text>

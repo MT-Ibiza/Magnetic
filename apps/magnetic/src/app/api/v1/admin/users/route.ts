@@ -1,13 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Role } from '@prisma/client';
 import bcrypt from 'bcrypt';
-import { uploadFile } from 'apps/magnetic/src/app/services/upload';
 import db from 'apps/magnetic/src/app/libs/db';
 import {
   getParamsFromUrl,
   searchUsers,
 } from 'apps/magnetic/src/app/services/users';
-import { NewUser } from '@magnetic/interfaces';
 import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
 import { newAccountTemplate } from 'apps/magnetic/src/app/emails/new-account';
 import moment from 'moment';
@@ -22,34 +19,44 @@ export async function POST(request: Request) {
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
     const phone = formData.get('phone') as string;
-    const packageId = formData.get('packageId')
-      ? Number(formData.get('packageId'))
-      : null;
     const role = (formData.get('role') as string) || 'client';    
-    const accommodation = formData.get('accommodation') as string;
-    const arrivalDate = formData.get('arrivalDate') as string;
-    const departureDate = formData.get('departureDate') as string;
-    const passportNumber = formData.get('passportNumber') as string;
-    const billingAddress = formData.get('billingAddress') as string;
-    const passportFile = formData.get('passportAttachmentUrl') as File;
 
-    let passportAttachmentUrl = null;
-    if (passportFile) {
-      const uploadedFiles = await uploadBulkImages(
-        [passportFile],
-        'user-documents'
-      );
-      passportAttachmentUrl = uploadedFiles[0];
+    if (!['client', 'admin'].includes(role)) {
+      return NextResponse.json({ message: 'Invalid role' }, { status: 400 });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await db.user.create({
-      data: {
-        name: `${firstName} ${lastName}`,
-        firstName,
-        lastName,
-        email,
-        role: role as 'client',
+    let userData: any = {
+      name: `${firstName} ${lastName}`,
+      firstName,
+      lastName,
+      email,
+      phone,
+      password: await bcrypt.hash(password, 10),
+      role: role as 'client' | 'admin',
+    };
+
+    if (role === 'client') {
+      const accommodation = formData.get('accommodation') as string;
+      const arrivalDate = formData.get('arrivalDate') as string;
+      const departureDate = formData.get('departureDate') as string;
+      const passportNumber = formData.get('passportNumber') as string;
+      const billingAddress = formData.get('billingAddress') as string;
+      const packageId = formData.get('packageId')
+        ? Number(formData.get('packageId'))
+        : null;
+      const passportFile = formData.get('passportAttachmentUrl') as File;
+
+      let passportAttachmentUrl = null;
+      if (passportFile) {
+        const uploadedFiles = await uploadBulkImages(
+          [passportFile],
+          'user-documents'
+        );
+        passportAttachmentUrl = uploadedFiles[0];
+      }
+
+      userData = {
+        ...userData,
         accommodation,
         arrivalDate: arrivalDate ? moment(arrivalDate).toDate() : null,
         departureDate: departureDate ? moment(departureDate).toDate() : null,
@@ -57,9 +64,11 @@ export async function POST(request: Request) {
         passportAttachmentUrl,
         billingAddress,
         packageId,
-        phone: phone,
-        password: hashedPassword,
-      },
+      };
+    }
+
+    const newUser = await db.user.create({
+      data: userData,
       include: {
         package: {
           select: {
