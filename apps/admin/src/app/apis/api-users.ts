@@ -1,11 +1,14 @@
 import {
+  BookingForm,
   EditUser,
   NewUser,
+  OrderBookingForm,
   SearchUsersParams,
   User,
   UserResponse,
 } from '@magnetic/interfaces';
 import {
+  URL_GET_BOOKINGS_USER,
   URL_GET_USER,
   URL_GET_USERS,
   URL_NEW_USER,
@@ -66,6 +69,14 @@ export async function editUser(
 
 export async function getUser(userId: number): Promise<User> {
   const url = URL_GET_USER(userId);
+  const response = await fetch(url);
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
+  return dataJson;
+}
+
+export async function getBookings(userId: number): Promise<BookingForm[]> {
+  const url = URL_GET_BOOKINGS_USER(userId);
   const response = await fetch(url);
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);

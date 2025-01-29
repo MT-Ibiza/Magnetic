@@ -1,0 +1,55 @@
+import { NextResponse } from 'next/server';
+import db from 'apps/magnetic/src/app/libs/db';
+
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const bookings = await db.orderBookingForm.findMany({
+      where: {
+        order: {
+          userId: Number(params.id),
+        },
+      },
+      include: {
+        order: {
+          select: {
+            id: true,
+            status: true,
+            totalInCents: true,
+            user: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        service: {
+          select: {
+            name: true,
+            serviceType: true,
+            id: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    if (bookings.length === 0) {
+      return NextResponse.json(
+        { message: 'No bookings found for this user' },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(bookings);
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: error.message || 'An unexpected error occurred' },
+      { status: 500 }
+    );
+  }
+}

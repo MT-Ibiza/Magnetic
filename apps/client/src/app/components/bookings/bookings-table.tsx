@@ -1,8 +1,4 @@
 import { Link } from 'react-router-dom';
-import { HiOutlineDotsVertical } from 'react-icons/hi';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import { useOrders } from '../../hooks/useOrders';
 import moment from 'moment';
 import { Text } from '@magnetic/ui';
 import { useBookings } from '../../hooks/userBookings';
