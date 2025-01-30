@@ -1,16 +1,9 @@
-import { Button, CardWrapper } from '@magnetic/ui';
+import { Button } from '@magnetic/ui';
 import { PlanCard } from '@magnetic/ui';
 import { usePackages } from '../../hooks/usePackages';
 import { useAuth } from '../../hooks/useAuth';
-import { Link } from 'react-router-dom';
 import FormRequestCall from '../../components/form-request-call';
-
-interface Package {
-  id: number;
-  name: string;
-  priceInCents: number;
-  features: string;
-}
+import { toast } from 'sonner';
 
 export function PackagePage() {
   const { isLoading, packages, error, isError } = usePackages();
@@ -36,7 +29,7 @@ export function PackagePage() {
             className="mt-3"
             onClick={() => {
               //@ts-ignore
-              document.getElementById('modal_form_call').showModal();
+              document.getElementById('modal-form-call').showModal();
             }}
           >
             Request a call
@@ -59,16 +52,19 @@ export function PackagePage() {
           ))}
         </div>
       </div>
-      <dialog id="modal_form_call" className="modal">
+      <dialog id="modal-form-call" className="modal">
         <div className="modal-box">
-          <FormRequestCall />
-          <form method="dialog">
-            <div className="flex px-3">
-              <Button className="w-full" variant="outline" color="neutral">
-                Close
-              </Button>
-            </div>
-          </form>
+          <FormRequestCall
+            onSave={() => {
+              //@ts-ignore
+              document.getElementById('modal-form-call').close();
+              toast.success('Your call has been successfully scheduled! 🎉');
+            }}
+            onCancel={() => {
+              //@ts-ignore
+              document.getElementById('modal-form-call').close();
+            }}
+          />
         </div>
       </dialog>
     </>

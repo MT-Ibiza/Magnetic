@@ -4,7 +4,11 @@ import { useForm } from 'react-hook-form';
 import { requestACall } from '../apis/api-request-call';
 import { useState } from 'react';
 
-function FormRequestCall() {
+function FormRequestCall(props: {
+  onSave?: () => void;
+  onCancel?: () => void;
+}) {
+  const { onCancel, onSave } = props;
   const [isSaving, setIsSaving] = useState(false);
 
   const {
@@ -25,14 +29,12 @@ function FormRequestCall() {
     mutationFn: (data: any) => {
       return requestACall(data);
     },
-    onSuccess: (category) => {
-      // onSave && onSave(category);
-      // toast.success(`Category updated!`);
+    onSuccess: () => {
       setIsSaving(false);
+      onSave && onSave();
     },
     onError: () => {
       setIsSaving(false);
-      // toast.success(`Category couldn't be update!`);
     },
   });
 
@@ -123,14 +125,22 @@ function FormRequestCall() {
             {...register('notes')}
           />
         </div>
-        <Button
-          loading={isSaving}
-          className=" w-full"
-          type="submit"
-          loadingText="Scheduling..."
-        >
-          Schedule Call
-        </Button>
+        <div className="flex justify-end gap-3">
+          {onCancel && (
+            <Button
+              className=""
+              variant="outline"
+              color="neutral"
+              type="button"
+              onClick={onCancel}
+            >
+              Cancel
+            </Button>
+          )}
+          <Button loading={isSaving} type="submit" loadingText="Scheduling...">
+            Schedule Call
+          </Button>
+        </div>
       </form>
     </div>
   );

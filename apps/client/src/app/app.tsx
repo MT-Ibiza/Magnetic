@@ -4,6 +4,7 @@ const queryClient = new QueryClient();
 import '../styles/index.scss';
 import { useAuth } from './hooks/useAuth';
 import { Button } from '@magnetic/ui';
+import { Toaster } from 'sonner';
 
 export function App() {
   const { logoutClient, sessionExpired, showSessionExpiredError } = useAuth();
@@ -34,6 +35,7 @@ export function App() {
           </div>
         </div>
       </dialog>
+      <Toaster />
     </QueryClientProvider>
   );
 }
