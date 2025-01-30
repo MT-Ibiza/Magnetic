@@ -11,15 +11,12 @@ interface Props {
   item: Item;
   service: Service;
   availableInPlan: boolean;
-  allowAddMultipleProducts: boolean;
+  noFillForm: boolean;
   children?: React.ReactNode;
 }
 
 function ItemCounter(props: Props) {
-  const { item, availableInPlan, service, allowAddMultipleProducts, children } =
-    props;
-
-  console.log(children);
+  const { item, availableInPlan, service, noFillForm, children } = props;
   const { addItemToCart } = useCart();
   const { addItem, removeItem, cart } = useCartStore();
   const productCart = cart.find((cartItem) => cartItem.item.id === item.id);
@@ -113,7 +110,7 @@ function ItemCounter(props: Props) {
           <h2 className="text-lg font-semibold text-secondary">
             {centsToEurosWithCurrency(item.priceInCents)}
           </h2>
-          {allowAddMultipleProducts ? (
+          {noFillForm ? (
             <div className="flex items-center justify-end gap-4 mt-4">
               <button
                 className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
@@ -121,21 +118,23 @@ function ItemCounter(props: Props) {
                   if (availableInPlan) {
                     handleRemoveItem(productCart?.quantity || 0);
                   } else {
-                    //@ts-ignore
-                    document.getElementById('modal_upgrade').showModal();
+                    handleAddItem(0, undefined);
                   }
                 }}
               >
                 -
               </button>
-              <span className="text-md font-semibold">
+              <p
+                className={`text-md font-semibold ${
+                  !!productCart?.quantity && 'text-green-600'
+                }`}
+              >
                 {productCart?.quantity || 0}
-              </span>
+              </p>
               <button
                 onClick={() => {
                   if (availableInPlan) {
-                    // handleAddItem(productCart?.quantity || 0);
-                    openForm();
+                    handleAddItem(0, undefined);
                   } else {
                     //@ts-ignore
                     document.getElementById('modal_upgrade').showModal();

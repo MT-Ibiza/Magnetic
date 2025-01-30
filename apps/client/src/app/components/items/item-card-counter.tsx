@@ -11,11 +11,11 @@ interface Props {
   item: Item;
   service: Service;
   availableInPlan: boolean;
-  allowAddMultipleProducts: boolean;
+  noFillForm: boolean;
 }
 
 function ItemCardCounter(props: Props) {
-  const { item, availableInPlan, service, allowAddMultipleProducts } = props;
+  const { item, availableInPlan, service, noFillForm } = props;
   const { addItemToCart } = useCart();
   const { addItem, removeItem, cart } = useCartStore();
   const productCart = cart.find((cartItem) => cartItem.item.id === item.id);
@@ -106,7 +106,7 @@ function ItemCardCounter(props: Props) {
             </div>
             <Text className="line-clamp-4">{item.description}</Text>
 
-            {allowAddMultipleProducts ? (
+            {noFillForm ? (
               <div className="flex items-center justify-end gap-4 mt-4">
                 <button
                   className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"

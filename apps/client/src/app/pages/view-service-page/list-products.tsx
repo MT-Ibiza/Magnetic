@@ -11,6 +11,8 @@ interface Props {
 function ListProducts(props: Props) {
   const { items, availableInPlan, service } = props;
 
+  const servicesMultiple = ['drinks'];
+
   return (
     <>
       <div className="grid grid-cols-1 gap-4">
@@ -20,7 +22,7 @@ function ListProducts(props: Props) {
               service={service}
               item={item}
               availableInPlan={availableInPlan}
-              allowAddMultipleProducts={false}
+              noFillForm={servicesMultiple.includes(service.serviceType)}
             >
               {service.serviceType === 'boat_rental' && (
                 <BoatInfo
