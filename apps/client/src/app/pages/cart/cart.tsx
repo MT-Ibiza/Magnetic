@@ -46,7 +46,7 @@ export function CartPage() {
 
   const handleRemoveItem = (item: any, quantity: number) => {
     const newVal = quantity - 1;
-    if (newVal > 0) {
+    if (newVal >= 0) {
       addItemToCart.mutate(
         { itemId: item.id, quantity: newVal },
         {

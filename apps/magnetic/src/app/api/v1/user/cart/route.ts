@@ -16,6 +16,7 @@ export async function GET(request: Request) {
           select: {
             id: true,
             quantity: true,
+            formData: true,
             item: {
               select: {
                 id: true,

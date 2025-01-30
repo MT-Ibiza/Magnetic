@@ -48,20 +48,11 @@ function ViewServicePage(props: Props) {
       {service.script ? (
         <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
       ) : (
-        <>
-          {service.serviceType === 'boat_rental' ? (
-            <ListBoats
-              items={publishedItems}
-              availableInPlan={availableInPlan}
-            />
-          ) : (
-            <ListProducts
-              service={service}
-              items={publishedItems}
-              availableInPlan={availableInPlan}
-            />
-          )}
-        </>
+        <ListProducts
+          service={service}
+          items={publishedItems}
+          availableInPlan={availableInPlan}
+        />
       )}
       {/* {!service.script && (
           <div className="flex justify-end pt-[20px]">

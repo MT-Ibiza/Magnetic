@@ -129,7 +129,7 @@ export function CheckoutPage() {
                 {formsCheckout.map((formCheckout, index) => {
                   const { form } = formCheckout;
                   return (
-                    <>
+                    <div key={index}>
                       <input
                         type="radio"
                         name="my_tabs_2"
@@ -184,7 +184,7 @@ export function CheckoutPage() {
                           )}
                         </div>
                       </div>
-                    </>
+                    </div>
                   );
                 })}
               </div>
@@ -304,7 +304,7 @@ export function CheckoutPage() {
                 </Link>
               </div>
             </form>
-          </div> 
+          </div>
         </div>
       </dialog>
     </div>
