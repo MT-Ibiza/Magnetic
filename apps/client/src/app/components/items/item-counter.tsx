@@ -75,12 +75,12 @@ function ItemCounter(props: Props) {
 
   const openForm = () => {
     //@ts-ignore
-    document.getElementById('modal_form').showModal();
+    document.getElementById(`modal-form-${item.id}`).showModal();
   };
 
   const closeForm = () => {
     //@ts-ignore
-    document.getElementById('modal_form').close();
+    document.getElementById(`modal-form-${item.id}`).close();
   };
 
   return (
@@ -200,14 +200,13 @@ function ItemCounter(props: Props) {
           </div>
         </div>
       </dialog>
-      <dialog id="modal_form" className="modal">
+      <dialog id={`modal-form-${item.id}`} className="modal">
         <div className="modal-box p-8 w-full max-w-5xl">
           <RenderBookingForm
             type={service.serviceType}
             formData={{
               data: {},
               serviceId: service.id,
-              itemId: item.id,
             }}
             onSubmit={(data) => {
               handleAddItem(0, data);

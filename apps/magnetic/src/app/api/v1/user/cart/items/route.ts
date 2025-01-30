@@ -13,8 +13,6 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { itemId, quantity, formData } = body;
 
-    console.log('formData: ', formData);
-
     if (!itemId || quantity < 0) {
       return NextResponse.json(
         {
