@@ -13,10 +13,11 @@ export interface DrinksDeliveryFormData {
 interface Props {
   onSubmit: (data: DrinksDeliveryFormData) => void;
   formData?: any;
+  onCancel?: () => void;
 }
 
 export function DrinksDeliveryBookingForm(props: Props) {
-  const { onSubmit, formData } = props;
+  const { onSubmit, formData, onCancel } = props;
   const {
     register,
     handleSubmit,
@@ -94,6 +95,17 @@ export function DrinksDeliveryBookingForm(props: Props) {
           onChange={(checked) => setValue('acceptSubstitutes', checked)}
         />
         <div className="flex justify-end gap-3">
+          {onCancel && (
+            <Button
+              className=""
+              variant="outline"
+              color="neutral"
+              type="button"
+              onClick={onCancel}
+            >
+              Cancel
+            </Button>
+          )}
           <Button type="submit" disabled={!watch('acceptSubstitutes')}>
             Submit Booking
           </Button>

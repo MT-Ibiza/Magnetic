@@ -16,9 +16,14 @@ export interface BoatCharterFormData {
 interface Props {
   onSubmit: (data: BoatCharterFormData) => void;
   formData?: any;
+  onCancel?: () => void;
 }
 
-export function BoatCharterBookingForm({ onSubmit, formData }: Props) {
+export function BoatCharterBookingForm({
+  onSubmit,
+  formData,
+  onCancel,
+}: Props) {
   const {
     register,
     handleSubmit,
@@ -152,6 +157,17 @@ export function BoatCharterBookingForm({ onSubmit, formData }: Props) {
           />
         </div>
         <div className="flex justify-end gap-3">
+          {onCancel && (
+            <Button
+              className=""
+              variant="outline"
+              color="neutral"
+              type="button"
+              onClick={onCancel}
+            >
+              Cancel
+            </Button>
+          )}
           <Button type="submit">Submit Booking</Button>
         </div>
       </form>

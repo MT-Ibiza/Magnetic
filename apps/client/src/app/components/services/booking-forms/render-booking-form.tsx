@@ -31,14 +31,26 @@ function RenderBookingForm(props: Props) {
         />
       )}
       {type === 'drinks' && (
-        <DrinksDeliveryBookingForm onSubmit={onSubmit} formData={formData} />
+        <DrinksDeliveryBookingForm
+          onSubmit={onSubmit}
+          formData={formData}
+          onCancel={onClose}
+        />
       )}
       {type === 'food' && <div></div>}
       {type === 'chefs' && (
-        <WeeklyChefServiceForm onSubmit={onSubmit} formData={formData} />
+        <WeeklyChefServiceForm
+          onSubmit={onSubmit}
+          formData={formData}
+          onCancel={onClose}
+        />
       )}
       {type === 'boat_rental' && (
-        <BoatCharterBookingForm onSubmit={onSubmit} formData={formData} />
+        <BoatCharterBookingForm
+          onSubmit={onSubmit}
+          formData={formData}
+          onCancel={onClose}
+        />
       )}
       {type === 'spa' && <SpaBeautyBookingForm onSubmit={onSubmit} />}
       {type === 'security' && <SecurityBookingForm onSubmit={onSubmit} />}
