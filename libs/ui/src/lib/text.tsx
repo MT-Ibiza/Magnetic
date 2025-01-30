@@ -29,7 +29,7 @@ export function Text(props: Props) {
 }
 
 const TextError = ({ text }: { text: string }) => (
-  <Text size="1" className="mt-1 text-red-500">
+  <Text size="1" className="mt-2 text-red-500">
     {text}
   </Text>
 );

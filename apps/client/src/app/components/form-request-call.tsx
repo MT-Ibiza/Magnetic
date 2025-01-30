@@ -1,4 +1,4 @@
-import { Button } from '@magnetic/ui';
+import { Button, Text } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { requestACall } from '../apis/api-request-call';
@@ -61,10 +61,10 @@ function FormRequestCall(props: {
             type="text"
             placeholder="Fullname"
             className="input input-bordered"
-            {...register('name', { required: 'El nombre es obligatorio' })}
+            {...register('name', { required: 'Name is required' })}
           />
           {errors.name && (
-            <p className="text-red-500 text-sm">{errors.name.message}</p>
+            <Text.TextInputError text={errors.name.message || ''} />
           )}
         </div>
 
@@ -82,22 +82,22 @@ function FormRequestCall(props: {
             })}
           />
           {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email.message}</p>
+            <Text.TextInputError text={errors.email.message || ''} />
           )}
         </div>
         <div className="form-control">
           <label htmlFor="date" className="label">
-            <span className="label-text">Fecha</span>
+            <span className="label-text">Date</span>
           </label>
           <input
             id="date"
             type="date"
             min={today}
             className="input input-bordered"
-            {...register('date', { required: 'La fecha es obligatoria' })}
+            {...register('date', { required: 'Date is required' })}
           />
           {errors.date && (
-            <p className="text-red-500 text-sm">{errors.date.message}</p>
+            <Text.TextInputError text={errors.date.message || ''} />
           )}
         </div>
         <div className="form-control">
@@ -111,7 +111,7 @@ function FormRequestCall(props: {
             {...register('time', { required: 'Time is required' })}
           />
           {errors.time && (
-            <p className="text-red-500 text-sm">{errors.time.message}</p>
+            <Text.TextInputError text={errors.time.message || ''} />
           )}
         </div>
         <div className="form-control">
@@ -120,7 +120,6 @@ function FormRequestCall(props: {
           </label>
           <textarea
             id="notes"
-            placeholder="Adicional details"
             className="textarea textarea-bordered"
             {...register('notes')}
           />
