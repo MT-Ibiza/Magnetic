@@ -1,7 +1,12 @@
 import { Button } from '@magnetic/ui';
+import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { requestACall } from '../apis/api-request-call';
+import { useState } from 'react';
 
 function FormRequestCall() {
+  const [isSaving, setIsSaving] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -16,12 +21,28 @@ function FormRequestCall() {
     },
   });
 
-  const onSubmit = (data: any) => {
-    console.log('Form Data:', data);
-    alert('¡Llamada agendada exitosamente!');
+  const sendRequestCall = useMutation({
+    mutationFn: (data: any) => {
+      return requestACall(data);
+    },
+    onSuccess: (category) => {
+      // onSave && onSave(category);
+      // toast.success(`Category updated!`);
+      setIsSaving(false);
+    },
+    onError: () => {
+      setIsSaving(false);
+      // toast.success(`Category couldn't be update!`);
+    },
+  });
+
+  const onSubmit = async (data: any) => {
+    setIsSaving(true);
+    await sendRequestCall.mutateAsync(data);
   };
 
   const today = new Date().toISOString().split('T')[0];
+
   return (
     <div className="max-w-lg mx-auto rounded-lg p-3 bg-white">
       <h2 className="text-2xl font-bold mb-4">Schedule a call</h2>
@@ -102,7 +123,12 @@ function FormRequestCall() {
             {...register('notes')}
           />
         </div>
-        <Button type="submit" className=" w-full">
+        <Button
+          loading={isSaving}
+          className=" w-full"
+          type="submit"
+          loadingText="Scheduling..."
+        >
           Schedule Call
         </Button>
       </form>

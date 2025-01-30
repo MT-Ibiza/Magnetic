@@ -45,5 +45,5 @@ export const URL_GET_BOOKINGS = `${API_URL}/bookings`;
 export const URL_SEARCH_BOATS = (query: string) =>
   `${API_URL}/boats/search?${query}`;
 
-//TOKEN
-export const accessToken = localStorage.getItem('magnetic_auth');
+//Request a call
+export const URL_REQUEST_CALL = `${API_URL}/call`;

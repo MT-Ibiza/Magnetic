@@ -33,6 +33,7 @@ export async function sendEmail(params: {
       html,
     });
   } catch (err) {
+    console.log('error sending email: ', err);
     throw new Error(err as string);
   }
 }

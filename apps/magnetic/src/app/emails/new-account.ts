@@ -1,5 +1,3 @@
-import { User } from '@magnetic/interfaces';
-
 export function newAccountTemplate(username: string, plan: string) {
   return `
   <!DOCTYPE html>
