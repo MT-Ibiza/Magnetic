@@ -1,5 +1,6 @@
 import { Button, Checkbox, Input, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
+import { useAuth } from '../../../hooks/useAuth';
 
 export interface TransferFormData {
   date: string;
@@ -28,6 +29,8 @@ export function TransferBookingForm({
   viewCol,
   onCancel,
 }: Props) {
+  const { getCurrentUser } = useAuth();
+  const user = getCurrentUser();
   const {
     register,
     handleSubmit,
@@ -42,13 +45,15 @@ export function TransferBookingForm({
           pickUpLocation: formData.pickUpLocation,
           dropOffLocation: formData.dropOffLocation,
           numberOfPeople: formData.numberOfPeople,
-          contactName: formData.contactName,
+          contactName: formData.contactName || user?.name,
           contactNumber: formData.contactNumber,
           flightNumber: formData.flightNumber,
           luggageAmount: formData.luggageAmount,
           childSeats: formData.childSeats || '',
         }
-      : undefined,
+      : {
+          contactName: user?.name,
+        },
   });
 
   const handleFormSubmit = async (data: TransferFormData) => {
@@ -127,6 +132,7 @@ export function TransferBookingForm({
             <Input
               type="number"
               min="1"
+              max={20}
               className="w-full"
               {...register('numberOfPeople', {
                 required: 'Number of people is required',

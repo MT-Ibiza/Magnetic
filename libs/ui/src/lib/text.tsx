@@ -4,7 +4,7 @@ import React from 'react';
 
 interface Props extends React.HTMLAttributes<HTMLParagraphElement> {
   size?: '1' | '2' | '3' | '4' | '5';
-  children: React.ReactElement | string;
+  children: React.ReactNode | string;
   className?: string;
 }
 
