@@ -54,9 +54,15 @@ export const URL_DELETE_PACKAGE = (id: number) => `${API_URL}/packages/${id}`;
 //Users
 export const URL_GET_USERS = `${API_URL}/users`;
 export const URL_GET_USER = (id: number) => `${API_URL}/users/${id}`;
-export const URL_GET_BOOKINGS_USER = (id: number) => `${API_URL}/users/${id}/bookings`;
+export const URL_GET_BOOKINGS_USER = (id: number) =>
+  `${API_URL}/users/${id}/bookings`;
 export const URL_UPDATE_USER = (id: number) => `${API_URL}/users/${id}`;
+export const URL_UPDATE_CLIENT = (id: number) =>
+  `${API_URL}/users/client/${id}`;
+export const URL_UPDATE_ADMIN = (id: number) => `${API_URL}/users/admin/${id}`;
 export const URL_NEW_USER = `${API_URL}/users`;
+export const URL_NEW_ADMIN = `${API_URL}/users/admin`;
+export const URL_NEW_CLIENT = `${API_URL}/users/client`;
 export const URL_REMOVE_USER = (id: number) => `${API_URL}/users/${id}`;
 
 //Providers

@@ -11,14 +11,12 @@ export function AdminUsersPage(props: Props) {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User>();
 
-  const {
-    refetch,
-  } = useUsers({
+  const { refetch } = useUsers({
     searchText: undefined,
     itemsPerPage: 10,
     role: 'admin',
   });
-  
+
   const toggleDrawer = (user?: User) => {
     setSelectedUser(user);
     setOpenDrawer((prevState) => !prevState);

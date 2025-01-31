@@ -1,9 +1,9 @@
-import { EditUser, NewUser, User } from '@magnetic/interfaces';
+import { User } from '@magnetic/interfaces';
 import { Button, Input, Text } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import 'react-quill/dist/quill.snow.css';
-import { editUser, newUser } from '../../apis/api-users';
+import { editAdmin, newAdmin } from '../../apis/api-users';
 import { toast } from 'sonner';
 import { usePackages } from '../../hooks/usePackages';
 import Loading from '../loading';
@@ -48,12 +48,12 @@ export function FormAdminUser(props: Props) {
 
   const { isLoading, isError, error, packagesOptions } = usePackages();
 
-  const createUser = useMutation<User, Error, FormData>({
+  const createAdmin = useMutation<User, Error, FormData>({
     mutationFn: (data: FormData) => {
-      return newUser(data);
+      return newAdmin(data);
     },
     onSuccess: () => {
-      toast.success('New Account Created!');
+      toast.success('New Admin Account Created!');
       onSaveSuccess();
     },
     onError: () => {
@@ -61,10 +61,10 @@ export function FormAdminUser(props: Props) {
     },
   });
 
-  const updateUser = useMutation<User, Error, FormData>({
+  const updateAdmin = useMutation<User, Error, FormData>({
     mutationFn: (data: FormData) => {
       const id = user?.id || 0;
-      return editUser(id, data);
+      return editAdmin(id, data);
     },
     onSuccess: () => {
       toast.success('Account Updated!');
@@ -91,12 +91,11 @@ export function FormAdminUser(props: Props) {
     formData.append('email', data.email);
     formData.append('phone', data.phone || '');
     formData.append('password', data.password);
-    formData.append('role', 'admin');
 
     if (editMode) {
-      await updateUser.mutateAsync(formData);
+      await updateAdmin.mutateAsync(formData);
     } else {
-      await createUser.mutateAsync(formData);
+      await createAdmin.mutateAsync(formData);
     }
   };
 
@@ -158,7 +157,7 @@ export function FormAdminUser(props: Props) {
           Cancel
         </Button>
         <Button
-          loading={createUser.isPending || updateUser.isPending}
+          loading={createAdmin.isPending || updateAdmin.isPending}
           type="submit"
         >
           {editMode ? 'Update User' : 'Create Account'}

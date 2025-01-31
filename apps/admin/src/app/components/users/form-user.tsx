@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { Button, Input, Text } from '@magnetic/ui';
 import { toast } from 'sonner';
-import { editUser, newUser } from '../../apis/api-users';
+import { editClient, newClient } from '../../apis/api-users';
 import { usePackages } from '../../hooks/usePackages';
 import Loading from '../loading';
 import { ErrorText } from '../error-text';
@@ -64,8 +64,8 @@ export function FormUser(props: Props) {
 
   const { isLoading, isError, error, packagesOptions } = usePackages();
 
-  const createUser = useMutation<User, Error, FormData>({
-    mutationFn: (data: FormData) => newUser(data),
+  const createClient = useMutation<User, Error, FormData>({
+    mutationFn: (data: FormData) => newClient(data),
     onSuccess: (user) => {
       toast.success('New Account Created!');
       onSaveSuccess();
@@ -75,10 +75,10 @@ export function FormUser(props: Props) {
     },
   });
 
-  const updateUser = useMutation<User, Error, FormData>({
+  const updateClient = useMutation<User, Error, FormData>({
     mutationFn: (data: FormData) => {
       const id = user?.id || 0;
-      return editUser(id, data);
+      return editClient(id, data);
     },
     onSuccess: (user) => {
       toast.success('Account Updated!');
@@ -118,9 +118,9 @@ export function FormUser(props: Props) {
     formData.append('packageId', String(data.packageId));
 
     if (editMode) {
-      await updateUser.mutateAsync(formData);
+      await updateClient.mutateAsync(formData);
     } else {
-      await createUser.mutateAsync(formData);
+      await createClient.mutateAsync(formData);
     }
   };
 
@@ -380,7 +380,7 @@ export function FormUser(props: Props) {
             Cancel
           </Button>
           <Button
-            loading={createUser.isPending || updateUser.isPending}
+            loading={createClient.isPending || updateClient.isPending}
             type="submit"
           >
             {editMode ? 'Update User' : 'Create Account'}
