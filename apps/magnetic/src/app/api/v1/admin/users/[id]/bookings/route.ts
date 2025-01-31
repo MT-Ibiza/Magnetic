@@ -38,13 +38,6 @@ export async function GET(
       },
     });
 
-    if (bookings.length === 0) {
-      return NextResponse.json(
-        { message: 'No bookings found for this user' },
-        { status: 404 }
-      );
-    }
-
     return NextResponse.json(bookings);
   } catch (error: any) {
     return NextResponse.json(

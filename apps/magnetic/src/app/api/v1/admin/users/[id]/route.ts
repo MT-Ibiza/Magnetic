@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import db from 'apps/magnetic/src/app/libs/db';
-import { uploadFile } from 'apps/magnetic/src/app/services/upload';
 import moment from 'moment';
 import { uploadBulkImages } from 'apps/magnetic/src/app/libs/s3';
 import bcrypt from 'bcrypt';
@@ -58,6 +57,7 @@ export async function PUT(
     const password = formData.get('password') as string | undefined;
     const role = formData.get('role') as string | undefined;
     const userId = Number(params.id);
+
     if (isNaN(userId)) {
       return NextResponse.json({ message: 'Invalid user ID' }, { status: 400 });
     }
@@ -78,6 +78,7 @@ export async function PUT(
       firstName,
       lastName,
       phone,
+      email,
     };
 
     if (password) {
