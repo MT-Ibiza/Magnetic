@@ -122,10 +122,10 @@ export function ProfileForm(props: Props) {
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-[25px] gap-x-[40px]">
-              <label className="block flex flex-col">
-                <span className="text-neutral-800 dark:text-neutral-200">
+              <div className="flex flex-col">
+                <div className="text-neutral-800 dark:text-neutral-200">
                   First Name
-                </span>
+                </div>
                 <Input
                   type="text"
                   placeholder="Enter your first name"
@@ -137,22 +137,22 @@ export function ProfileForm(props: Props) {
                     First name is required
                   </p>
                 )}
-              </label>
-              <label className="block flex flex-col">
-                <span className="text-neutral-800 dark:text-neutral-200">
+              </div>
+              <div className="flex flex-col">
+                <label className="text-neutral-800 dark:text-neutral-200">
                   Last Name
-                </span>
+                </label>
                 <Input
                   type="text"
                   placeholder="Enter your last name"
                   className="mt-1"
                   {...register('lastName', { required: false })}
                 />
-              </label>
-              <label className="block flex flex-col">
-                <span className="text-neutral-800 dark:text-neutral-200">
-                  Your email
-                </span>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-neutral-800 dark:text-neutral-200">
+                  Email
+                </label>
                 <Input
                   type="email"
                   placeholder="Enter your email"
@@ -160,11 +160,11 @@ export function ProfileForm(props: Props) {
                   {...register('email', { required: true })}
                   readOnly
                 />
-              </label>
-              <label className="block flex flex-col">
-                <span className="text-neutral-800 dark:text-neutral-200">
+              </div>
+              <div className="flex flex-col">
+                <label className="text-neutral-800 dark:text-neutral-200">
                   Phone Number
-                </span>
+                </label>
                 <Input
                   type="number"
                   placeholder="Enter your phone number"
@@ -176,68 +176,68 @@ export function ProfileForm(props: Props) {
                     Phone is required
                   </p>
                 )}
-              </label>
-              <label className="block flex flex-col">
-                <span className="text-neutral-800 dark:text-neutral-200">
-                  Accommodation
-                </span>
-                <Input
-                  type="text"
-                  placeholder="Enter accommodation details"
-                  className="mt-1"
-                  {...register('accommodation', { required: true })}
-                />
-              </label>
-              <label className="block flex flex-col">
-                <span className="text-neutral-800 dark:text-neutral-200">
-                  Arrival Date
-                </span>
-                <Input
-                  type="date"
-                  placeholder="Enter arrival date"
-                  className="mt-1"
-                  {...register('arrivalDate', { required: true })}
-                />
-              </label>
-              <label className="block flex flex-col">
-                <span className="text-neutral-800 dark:text-neutral-200">
-                  Departure Date
-                </span>
-                <Input
-                  type="date"
-                  placeholder="Enter departure date"
-                  className="mt-1"
-                  {...register('departureDate', { required: true })}
-                />
-              </label>
-              <label className="block flex flex-col">
-                <span className="text-neutral-800 dark:text-neutral-200">
-                  Passport Number
-                </span>
-                <Input
-                  type="text"
-                  placeholder="Enter your passport number"
-                  className="mt-1"
-                  {...register('passportNumber', { required: true })}
-                />
-              </label>
-              <label className="block flex flex-col">
-                <span className="text-neutral-800 dark:text-neutral-200">
+              </div>
+              <div className="flex flex-col">
+                <label className="text-neutral-800 dark:text-neutral-200">
                   Billing Address
-                </span>
+                </label>
                 <Input
                   type="text"
                   placeholder="Enter billing address"
                   className="mt-1"
                   {...register('billingAddress', { required: true })}
                 />
-              </label>
-              <label className="block flex flex-col">
-                <span className="text-neutral-800 dark:text-neutral-200">
+              </div>
+              <div className="flex flex-col">
+                <label className="text-neutral-800 dark:text-neutral-200">
+                  Accommodation
+                </label>
+                <Input
+                  type="text"
+                  placeholder="Enter accommodation details"
+                  className="mt-1"
+                  {...register('accommodation', { required: true })}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-neutral-800 dark:text-neutral-200">
+                  Arrival Date
+                </label>
+                <Input
+                  type="date"
+                  placeholder="Enter arrival date"
+                  className="mt-1"
+                  {...register('arrivalDate', { required: true })}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-neutral-800 dark:text-neutral-200">
+                  Departure Date
+                </label>
+                <Input
+                  type="date"
+                  placeholder="Enter departure date"
+                  className="mt-1"
+                  {...register('departureDate', { required: true })}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-neutral-800 dark:text-neutral-200">
+                  Passport Number
+                </label>
+                <Input
+                  type="text"
+                  placeholder="Enter your passport number"
+                  className="mt-1"
+                  {...register('passportNumber', { required: true })}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-neutral-800 dark:text-neutral-200">
                   Upload Passport
-                </span>
+                </label>
                 <p className="text-sm text-neutral-500 mt-2">
-                  Maximum file size: 5MB
+                  PDF and images are allow, maximum file size: 5MB
                 </p>
                 <div className="mt-3 cursor-pointer p-4 border border-neutral-300 rounded-lg shadow-sm flex justify-between gap-4">
                   {client?.passportAttachmentUrl && !passportFile && (
@@ -304,15 +304,15 @@ export function ProfileForm(props: Props) {
                         document.getElementById('passport-file')?.click()
                       }
                     >
-                      Upload New Passport
+                      Select Passport Document
                     </Button>
                   </div>
                 </div>
-              </label>
+              </div>
             </div>
             <div className="flex justify-end">
               <Button size={2} type="submit">
-                Save changes
+                Update Profile
               </Button>
             </div>
           </form>
