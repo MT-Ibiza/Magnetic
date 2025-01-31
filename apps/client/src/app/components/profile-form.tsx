@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useClient } from '../hooks/useClient';
 import { Button, Input } from '@magnetic/ui';
 import { editClient } from '../apis/api-client';
+import { useNavigate } from 'react-router-dom';
 
 export interface Props {
   className?: string;
@@ -15,6 +16,8 @@ export function ProfileForm(props: Props) {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [passportFile, setPassportFile] = useState<File | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -60,6 +63,7 @@ export function ProfileForm(props: Props) {
   }, [client, reset]);
 
   const onSubmit = async (data: any) => {
+    setIsSaving(true);
     try {
       const formData = new FormData();
       formData.append('firstName', data.firstName);
@@ -79,9 +83,12 @@ export function ProfileForm(props: Props) {
         formData.append('passportAttachmentUrl', passportFile);
       }
       const updatedUser = await editClient(formData);
+      setIsSaving(false);
+      navigate(`/dashboard`);
       console.log('Updated User:', updatedUser);
     } catch (err: any) {
       console.error('Error updating user:', err);
+      setIsSaving(false);
       setError(err.message || 'An error occurred while updating the profile');
     }
   };
@@ -311,7 +318,7 @@ export function ProfileForm(props: Props) {
               </div>
             </div>
             <div className="flex justify-end">
-              <Button size={2} type="submit">
+              <Button type="submit" loading={isSaving} loadingText="Saving...">
                 Update Profile
               </Button>
             </div>

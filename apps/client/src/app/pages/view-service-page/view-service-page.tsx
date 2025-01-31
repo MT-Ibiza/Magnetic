@@ -31,8 +31,7 @@ function ViewServicePage(props: Props) {
   const publishedItems = service.items.filter((item) => item.published);
   const packageIds = service.packages.map((p) => p.id);
   const availableInPlan = packageIds.includes(user?.package?.id || -1);
-  console.log('id: ', user?.package?.id);
-  console.log(availableInPlan);
+
   return (
     <CardWrapper>
       <NoticeBookingUnavailable arrivalDate={user?.arrivalDate} />
