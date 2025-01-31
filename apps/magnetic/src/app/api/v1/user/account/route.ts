@@ -2,6 +2,7 @@ import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 import { getTokenFromRequest } from '../../util';
 import { uploadBulkImages } from 'apps/magnetic/src/app/libs/s3';
+import moment from 'moment';
 
 export async function GET(request: Request) {
   try {
@@ -88,8 +89,8 @@ export async function PUT(request: Request) {
         email,
         phone,
         accommodation,
-        arrivalDate: arrivalDate ? new Date(arrivalDate) : null,
-        departureDate: departureDate ? new Date(departureDate) : null,
+        arrivalDate: arrivalDate ? moment(arrivalDate).toDate() : null,
+        departureDate: departureDate ? moment(departureDate).toDate() : null,
         passportNumber,
         billingAddress,
         passportAttachmentUrl,
