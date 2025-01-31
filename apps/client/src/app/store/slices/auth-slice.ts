@@ -1,6 +1,8 @@
 import { StateCreator } from 'zustand';
 import { StoreState } from '../store';
 import { CurrentUser } from '@magnetic/interfaces';
+import { maxDateToBooking } from '../../utils';
+import moment from 'moment';
 
 const LOCAL_LOGIN_KEY = 'magnetic_auth';
 const CURRENT_USER_KEY = 'magnetic_user';

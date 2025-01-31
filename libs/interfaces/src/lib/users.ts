@@ -1,9 +1,9 @@
 import { Package } from './packages';
 
 export interface CurrentUser {
-  id: number;
   name: string;
   email: string;
+  arrivalDate: string;
   image?: string;
   packageId?: number;
   package?: Package;
@@ -55,8 +55,8 @@ export interface Credentials {
 }
 
 export interface LoginResponse {
-  id: number;
   name: string;
+  arrivalDate: string;
   email: string;
   role: string;
   accessToken: string;

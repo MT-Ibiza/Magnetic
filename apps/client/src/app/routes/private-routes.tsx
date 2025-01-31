@@ -4,7 +4,6 @@ import { useAuth } from '../hooks/useAuth';
 const PrivateRoutes = () => {
   const { getCurrentUser } = useAuth();
   const user = getCurrentUser();
-
   if (user) {
     return <Outlet />;
   } else {

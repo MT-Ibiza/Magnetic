@@ -164,8 +164,12 @@ function ItemCounter(props: Props) {
               ) : (
                 <Button
                   onClick={() => {
-                    openForm();
-                    // handleAddItem(productCart?.quantity || 0);
+                    if (availableInPlan) {
+                      openForm();
+                    } else {
+                      //@ts-ignore
+                      document.getElementById('modal_upgrade').showModal();
+                    }
                   }}
                 >
                   Book Now

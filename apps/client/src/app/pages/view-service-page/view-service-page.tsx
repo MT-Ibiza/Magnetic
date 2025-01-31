@@ -2,9 +2,9 @@ import { Badge, CardWrapper } from '@magnetic/ui';
 import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
 import { useAuth } from '../../hooks/useAuth';
-import ListBoats from './list-boats';
 import ListProducts from './list-products';
 import './styles.scss';
+import NoticeBookingUnavailable from '../../components/notice-booking-unavailable';
 
 interface Props {}
 
@@ -14,7 +14,6 @@ function ViewServicePage(props: Props) {
   const serviceId = parseInt(params.id || '');
   const { getCurrentUser } = useAuth();
   const user = getCurrentUser();
-
   const { isLoading, isError, service, error } = useService(serviceId);
 
   if (isLoading) {
@@ -32,9 +31,11 @@ function ViewServicePage(props: Props) {
   const publishedItems = service.items.filter((item) => item.published);
   const packageIds = service.packages.map((p) => p.id);
   const availableInPlan = packageIds.includes(user?.package?.id || -1);
-
+  console.log('id: ', user?.package?.id);
+  console.log(availableInPlan);
   return (
     <CardWrapper>
+      <NoticeBookingUnavailable arrivalDate={user?.arrivalDate} />
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-xl lg:text-2xl font-semibold">{service.name}</h1>
         <Badge size={3} color="yellow" name={service.packages[0].name} />

@@ -54,9 +54,9 @@ export async function POST(request: Request) {
   });
 
   return NextResponse.json({
-    id: client.id,
     name: client.name,
     email: client.email,
+    arrivalDate: client.arrivalDate,
     image: client.image,
     package: client.package,
     cartId: cart?.id,

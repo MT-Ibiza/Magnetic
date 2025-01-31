@@ -41,7 +41,7 @@ export function LoginPage() {
       setCurrentUser({
         name: user.name,
         email: user.email,
-        id: user.id,
+        arrivalDate: user.arrivalDate,
         package: user.package,
         cartId: user.cartId,
       });
