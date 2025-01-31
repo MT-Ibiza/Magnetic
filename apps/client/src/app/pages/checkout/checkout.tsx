@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import RenderBookingForm from '../../components/services/booking-forms/render-booking-form';
 import { useCart } from '../../hooks/useCart';
 import { toast } from 'sonner';
+import PaymentButton from '../../components/payment-button';
 
 interface FormOrderData {
   data: any;
@@ -282,6 +283,7 @@ export function CheckoutPage() {
                 >
                   Create Order
                 </Button>
+                <PaymentButton />
               </CardWrapper>
             </div>
           </div>

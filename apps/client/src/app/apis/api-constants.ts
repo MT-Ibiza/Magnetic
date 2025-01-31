@@ -47,3 +47,8 @@ export const URL_SEARCH_BOATS = (query: string) =>
 
 //Request a call
 export const URL_REQUEST_CALL = `${API_URL}/call`;
+
+//Payments
+export const URL_REQUEST_PAYMENT = `${API_URL}/payment`;
+export const URL_REQUEST_PAYMENT_SUCCESS = `${API_URL}/payment/success`;
+export const URL_REQUEST_PAYMENT_FAILURE = `${API_URL}/payment/failure`;
