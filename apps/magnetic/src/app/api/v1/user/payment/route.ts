@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
+const Redsys = require('node-redsys-api').Redsys;
 
 const REDSYS_URL = 'https://sis-t.redsys.es:25443/sis/realizarPago'; // URL de pruebas
 const SECRET_KEY = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; // Clave secreta de encriptación de pruebas
 const MERCHANT_CODE = '263100000'; // Número de comercio de prueba
-const TERMINAL = '3'; // Terminal de pruebas para pagos en EUROS (protocolo CES)
+const TERMINAL = '1'; // Terminal de pruebas para pagos en EUROS (protocolo CES)
 const CURRENCY = '978'; // Código ISO para Euros
 
 interface InitPaymentRequest {
@@ -36,6 +37,8 @@ export async function POST(request: Request) {
       );
     }
 
+    const redsys = new Redsys();
+
     const merchantParams = {
       DS_MERCHANT_AMOUNT: `${Math.round(amount)}`, // Convertir a entero en caso de decimales
       DS_MERCHANT_ORDER: `${orderId}`,
@@ -43,28 +46,15 @@ export async function POST(request: Request) {
       DS_MERCHANT_CURRENCY: CURRENCY,
       DS_MERCHANT_TRANSACTIONTYPE: '0', // Compra normal
       DS_MERCHANT_TERMINAL: TERMINAL,
-      DS_MERCHANT_MERCHANTURL: `${process.env.BASE_URL}/api/payment-notification`, // Webhook de notificación
-      DS_MERCHANT_URLOK: urlOk,
-      DS_MERCHANT_URLKO: urlKo,
+      DS_MERCHANT_MERCHANTURL: `https://localhost:4200/api/payment-notification`, // Webhook de notificación
+      DS_MERCHANT_URLOK: 'https://www.google.com',
+      DS_MERCHANT_URLKO: 'https://www.google.com',
     };
-
-    // Convertir los parámetros a Base64
-    const merchantParamsBase64 = Buffer.from(
-      JSON.stringify(merchantParams)
-    ).toString('base64');
-
-    // Generar la clave de firma
-    const keyBuffer = Buffer.from(SECRET_KEY, 'base64');
-    const key = crypto.createHmac('sha256', keyBuffer).update(orderId).digest();
-    const signature = crypto
-      .createHmac('sha256', key)
-      .update(merchantParamsBase64)
-      .digest('base64');
 
     return NextResponse.json({
       redsysUrl: REDSYS_URL,
-      merchantParams: merchantParamsBase64,
-      signature,
+      signature: redsys.createMerchantSignature(SECRET_KEY, merchantParams),
+      merchantParams: redsys.createMerchantParameters(merchantParams),
     });
   } catch (error: any) {
     console.error('Error al crear el pago:', error);
