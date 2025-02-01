@@ -121,17 +121,20 @@ export function CheckoutPage() {
       <div className={`nc-CheckOutPagePageMain`}>
         <main className="container mt-11 flex flex-col gap-[15px] lg:grid lg:grid-cols-12 lg:gap-x-[20px]">
           <div className="col-span-8 w-full ">
-            <div className="bg-base-100 w-full flex flex-col rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 p-6 xl:p-8">
+            <CardWrapper>
               <h2 className="text-lg lg:text-2xl font-semibold">
                 Confirm and payment
               </h2>
-              <div className="">
-                <Text>Some servicies require fill some forms</Text>
-              </div>
-              <div>
+              <Text className="text-gray-500 mt-2">
+                Please ensure all details, especially the dates, are accurate to
+                prevent any inconveniences
+              </Text>
+              <div className="mt-5">
                 <ProductsSummary />
               </div>
-              {/* <div role="tablist" className="tabs tabs-lifted mt-8">
+            </CardWrapper>
+            {/* <div className="bg-base-100 w-full flex flex-col rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 p-6 xl:p-8"> */}
+            {/* <div role="tablist" className="tabs tabs-lifted mt-8">
                 {formsCheckout.map((formCheckout, index) => {
                   const { form } = formCheckout;
                   return (
@@ -194,7 +197,7 @@ export function CheckoutPage() {
                   );
                 })}
               </div> */}
-            </div>
+            {/* </div> */}
           </div>
           <div className="col-span-4">
             <div className="sticky top-[60px] w-full flex flex-col gap-3">
