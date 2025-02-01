@@ -44,6 +44,7 @@ function ItemCounter(props: Props) {
             id: item.id,
             item: item,
             quantity: newVal,
+            formData,
           });
           showAlert('Product added to the cart', 'success');
         },

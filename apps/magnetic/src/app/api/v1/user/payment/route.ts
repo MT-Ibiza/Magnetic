@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import crypto from 'crypto';
 const Redsys = require('node-redsys-api').Redsys;
 
 const REDSYS_URL = 'https://sis-t.redsys.es:25443/sis/realizarPago'; // URL de pruebas

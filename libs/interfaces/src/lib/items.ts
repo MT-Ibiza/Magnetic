@@ -17,7 +17,7 @@ export interface ItemBase {
   categoryId?: number | null;
   category?: Category;
   boatAttributes?: BoatBase;
-  images?: Image[];
+  images: Image[];
 }
 
 export interface ItemResponse {

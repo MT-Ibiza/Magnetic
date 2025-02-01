@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import { URL_REQUEST_PAYMENT } from '../apis/api-constants';
 
-const PaymentButton: React.FC = () => {
+export function PaymentButton(props: {
+  amountInCents: number;
+  orderId: number;
+}) {
+  const { amountInCents, orderId } = props;
   const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {
     setLoading(true);
-
     try {
       const response = await fetch(URL_REQUEST_PAYMENT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          amount: 1000, // Monto en céntimos (10.00€)
-          orderId: 'ORDER123', // Identificador único del pedido
+          amount: amountInCents, // Monto en céntimos (10.00€)
+          orderId: `${orderId}`, // Identificador único del pedido
           urlOk: `${window.location.origin}/success`, // URL en caso de éxito
           urlKo: `${window.location.origin}/failure`, // URL en caso de error
         }),
@@ -73,6 +76,6 @@ const PaymentButton: React.FC = () => {
       {loading ? 'Cargando...' : 'Pagar'}
     </button>
   );
-};
+}
 
 export default PaymentButton;

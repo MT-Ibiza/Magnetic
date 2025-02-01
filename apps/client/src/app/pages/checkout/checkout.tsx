@@ -10,6 +10,7 @@ import RenderBookingForm from '../../components/services/booking-forms/render-bo
 import { useCart } from '../../hooks/useCart';
 import { toast } from 'sonner';
 import PaymentButton from '../../components/payment-button';
+import ProductsSummary from './products-summary';
 
 interface FormOrderData {
   data: any;
@@ -26,19 +27,19 @@ export function CheckoutPage() {
 
   const [currentTab, setCurrentTab] = useState(0);
   const [createdOrderId, setCreatedOrderId] = useState<number>();
-  const [forms, setForms] = useState<FormOrderData[]>([]);
-  const [formsCheckout, setFormsCheckout] = useState<
-    {
-      formIndex: number;
-      form: FormOrderData;
-      completed: boolean;
-    }[]
-  >([]);
+  // const [forms, setForms] = useState<FormOrderData[]>([]);
+  // const [formsCheckout, setFormsCheckout] = useState<
+  //   {
+  //     formIndex: number;
+  //     form: FormOrderData;
+  //     completed: boolean;
+  //   }[]
+  // >([]);
 
   const navigate = useNavigate();
 
   const createOrderMutation = useMutation({
-    mutationFn: () => createOrder(forms),
+    mutationFn: () => createOrder([]),
     onSuccess: (order: Order) => {
       clearCart();
       setCreatedOrderId(order.id);
@@ -57,14 +58,14 @@ export function CheckoutPage() {
   ];
 
   async function handleCreateOrder() {
-    const allRequiredFormsCompleted = formsCheckout.every(
-      (formCheckout) => formCheckout.completed
-    );
-    if (allRequiredFormsCompleted) {
-      await createOrderMutation.mutateAsync();
-    } else {
-      toast.error('Please complete all required forms before proceeding.');
-    }
+    // const allRequiredFormsCompleted = formsCheckout.every(
+    //   (formCheckout) => formCheckout.completed
+    // );
+    // if (allRequiredFormsCompleted) {
+    await createOrderMutation.mutateAsync();
+    // } else {
+    //   toast.error('Please complete all required forms before proceeding.');
+    // }
   }
 
   const total = cart.reduce(
@@ -80,6 +81,7 @@ export function CheckoutPage() {
           id: item.item.id,
           item: item.item,
           quantity: item.quantity,
+          formData: item.formData,
         });
       });
 
@@ -101,16 +103,16 @@ export function CheckoutPage() {
         };
       });
 
-      setForms(forms);
-      setFormsCheckout(
-        forms.map((form, index) => {
-          return {
-            formIndex: 0,
-            form: form,
-            completed: false,
-          };
-        })
-      );
+      // setForms(forms);
+      // setFormsCheckout(
+      //   forms.map((form, index) => {
+      //     return {
+      //       formIndex: 0,
+      //       form: form,
+      //       completed: false,
+      //     };
+      //   })
+      // );
     }
   }, [data]);
 
@@ -126,7 +128,10 @@ export function CheckoutPage() {
               <div className="">
                 <Text>Some servicies require fill some forms</Text>
               </div>
-              <div role="tablist" className="tabs tabs-lifted mt-8">
+              <div>
+                <ProductsSummary />
+              </div>
+              {/* <div role="tablist" className="tabs tabs-lifted mt-8">
                 {formsCheckout.map((formCheckout, index) => {
                   const { form } = formCheckout;
                   return (
@@ -188,7 +193,7 @@ export function CheckoutPage() {
                     </div>
                   );
                 })}
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="col-span-4">
@@ -275,15 +280,14 @@ export function CheckoutPage() {
                     );
                   })}
                 </div>
-
                 <Button
                   className="w-full"
                   onClick={handleCreateOrder}
-                  disabled={formsCheckout.some((form) => !form.completed)}
+                  // disabled={formsCheckout.some((form) => !form.completed)}
                 >
                   Create Order
                 </Button>
-                <PaymentButton />
+                <PaymentButton amountInCents={0} orderId={0} />
               </CardWrapper>
             </div>
           </div>
