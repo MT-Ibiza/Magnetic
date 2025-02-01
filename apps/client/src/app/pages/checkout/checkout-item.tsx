@@ -2,6 +2,9 @@ import { CartItem } from '@magnetic/interfaces';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { Text } from '@magnetic/ui';
 import { formatDate } from '../../utils';
+import CheckoutItemButtons from './checkout-item-edit';
+import CheckoutItemEdit from './checkout-item-edit';
+import CheckoutItemRemove from './checkout-item-remove';
 
 interface Props {
   cartItem: CartItem;
@@ -30,13 +33,15 @@ function CheckoutItem(props: Props) {
           {serviceType === 'boat_rental' && <BoatsInfo cartItem={cartItem} />}
           {serviceType === 'transfer' && <TransferInfo cartItem={cartItem} />}
           {serviceType === 'chefs' && <ChefsInfo cartItem={cartItem} />}
+          <CheckoutItemEdit />
         </div>
       </div>
-      <div>
+      <div className="flex items-end flex-col">
         <Text>Total</Text>
-        <div className="text-center">
+        <Text className="mb-2">
           {centsToEurosWithCurrency(item.priceInCents)}
-        </div>
+        </Text>
+        <CheckoutItemRemove item={item} />
       </div>
     </div>
   );

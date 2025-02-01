@@ -129,7 +129,7 @@ export function CheckoutPage() {
                 Please ensure all details, especially the dates, are accurate to
                 prevent any inconveniences
               </Text>
-              <div className="mt-5">
+              <div className="mt-8">
                 <ProductsSummary />
               </div>
             </CardWrapper>
