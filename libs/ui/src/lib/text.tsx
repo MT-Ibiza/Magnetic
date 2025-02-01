@@ -39,7 +39,7 @@ const TextNumeric = ({
   children,
 }: {
   className?: string;
-  children?: React.ReactElement | string;
+  children?: React.ReactNode | string;
 }) => (
   <Text
     size="1"

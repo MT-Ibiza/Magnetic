@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { URL_REQUEST_PAYMENT } from '../apis/api-constants';
+import { Button } from '@magnetic/ui';
 
 export function PaymentButton(props: {
   amountInCents: number;
   orderId: number;
+  disable?: boolean;
 }) {
-  const { amountInCents, orderId } = props;
+  const { amountInCents, orderId, disable } = props;
   const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {
@@ -68,13 +70,13 @@ export function PaymentButton(props: {
   };
 
   return (
-    <button
+    <Button
       onClick={handlePayment}
-      disabled={loading}
-      className="p-4 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400"
+      disabled={loading || disable}
+      className="p-4 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 w-full"
     >
-      {loading ? 'Cargando...' : 'Pagar'}
-    </button>
+      {loading ? 'Cargando...' : 'Pay Now'}
+    </Button>
   );
 }
 

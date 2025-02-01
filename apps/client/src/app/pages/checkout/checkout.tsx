@@ -11,6 +11,8 @@ import { useCart } from '../../hooks/useCart';
 import { toast } from 'sonner';
 import PaymentButton from '../../components/payment-button';
 import ProductsSummary from './products-summary';
+import CheckoutSummary from './checkout-summary';
+import CheckoutPayment from './checkout-payment';
 
 interface FormOrderData {
   data: any;
@@ -133,165 +135,11 @@ export function CheckoutPage() {
                 <ProductsSummary />
               </div>
             </CardWrapper>
-            {/* <div className="bg-base-100 w-full flex flex-col rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 p-6 xl:p-8"> */}
-            {/* <div role="tablist" className="tabs tabs-lifted mt-8">
-                {formsCheckout.map((formCheckout, index) => {
-                  const { form } = formCheckout;
-                  return (
-                    <div key={index}>
-                      <input
-                        type="radio"
-                        name="my_tabs_2"
-                        role="tab"
-                        className={`tab`}
-                        aria-label={`${form.serviceName}`}
-                        checked={index === currentTab}
-                        onChange={() => {
-                          setCurrentTab(index);
-                        }}
-                      />
-                      <div
-                        role="tabpanel"
-                        className="tab-content bg-base-100 border-base-300 rounded-box p-6"
-                      >
-                        <div className="p-3 my-3">
-                          {formCheckout.completed ? (
-                            <div className="flex flex-col gap-3 ">
-                              <FormJsonDetails formData={form.data} />
-                              <Button
-                                className="w-[10rem]"
-                                onClick={() => {
-                                  const formsFilled = formsCheckout.map((f) => {
-                                    return f.form.serviceId === form.serviceId
-                                      ? { ...f, ...{ completed: false } }
-                                      : f;
-                                  });
-                                  setFormsCheckout(formsFilled);
-                                }}
-                              >
-                                Edit Again
-                              </Button>
-                            </div>
-                          ) : (
-                            <>
-                              <RenderBookingForm
-                                type={form.serviceType}
-                                formData={form.data}
-                                onSubmit={(data) => {
-                                  form.data = data;
-                                  setForms(forms);
-                                  formCheckout.completed = true;
-                                  const formsFilled = formsCheckout.map((f) => {
-                                    return f.form.serviceId === form.serviceId
-                                      ? { ...f, ...{ completed: true } }
-                                      : f;
-                                  });
-                                  setFormsCheckout(formsFilled);
-                                }}
-                              />
-                            </>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div> */}
-            {/* </div> */}
           </div>
           <div className="col-span-4">
             <div className="sticky top-[60px] w-full flex flex-col gap-3">
-              <CardWrapper className="flex flex-col space-y-4">
-                <h3 className="text-2xl font-semibold mb-3">Summary order</h3>
-                <ul className="space-y-4 w-full">
-                  {Object.entries(groupedCart).length > 0 ? (
-                    Object.entries(groupedCart).map(
-                      ([serviceId, group]: any) => (
-                        <div key={serviceId} className="mb-4 space-y-4">
-                          <h4 className="text-md font-bold text-gray-700 dark:text-gray-100">
-                            {group.service ? group.service.name : 'No Service'}
-                          </h4>
-                          {group.items.map((cartItem: any, index: number) => (
-                            <li
-                              key={index}
-                              className="grid grid-cols-8 items-center gap-2 w-full"
-                            >
-                              <img
-                                className="col-span-1 w-10 h-10 rounded object-cover"
-                                src={
-                                  cartItem.item.images &&
-                                  cartItem.item.images.length > 0
-                                    ? cartItem.item.images[0].url
-                                    : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
-                                }
-                                alt={cartItem.item.name}
-                              />
-                              <div className="col-span-6">
-                                <div className="flex flex-col w-full">
-                                  <Text
-                                    size="1"
-                                    className="font-semibold line-clamp-2"
-                                  >
-                                    {cartItem.item.name}
-                                  </Text>
-                                  <Text size="1" className="text-sm">
-                                    {`Quantity: ${cartItem.quantity}`}
-                                  </Text>
-                                </div>
-                              </div>
-                              <div className="col-span-1 flex justify-end w-full">
-                                <Text size="1" className="text-sm">
-                                  {centsToEurosWithCurrency(
-                                    cartItem.item.priceInCents *
-                                      cartItem.quantity
-                                  )}
-                                </Text>
-                              </div>
-                            </li>
-                          ))}
-                        </div>
-                      )
-                    )
-                  ) : (
-                    <Text>No items in cart</Text>
-                  )}
-                </ul>
-
-                <div className="border-b border-neutral-200 dark:border-neutral-700 my-2"></div>
-                <div className="flex justify-between mt-3">
-                  <h1>Total</h1>
-                  <Text.TextNumeric>
-                    {centsToEurosWithCurrency(total)}
-                  </Text.TextNumeric>
-                </div>
-              </CardWrapper>
-              <CardWrapper>
-                <Text>Payment Methods</Text>
-                <div className="join join-vertical w-full my-5">
-                  {paymentMethods.map((method, index) => {
-                    return (
-                      <div
-                        className="collapse collapse-arrow join-item border-base-300 border"
-                        key={index}
-                      >
-                        <input type="radio" name="my-accordion-4" />
-                        <Text className="collapse-title">{method.gateway}</Text>
-                        <div className="collapse-content">
-                          <Text size="1">Pending integration</Text>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-                <Button
-                  className="w-full"
-                  onClick={handleCreateOrder}
-                  // disabled={formsCheckout.some((form) => !form.completed)}
-                >
-                  Create Order
-                </Button>
-                <PaymentButton amountInCents={0} orderId={0} />
-              </CardWrapper>
+              <CheckoutSummary />
+              <CheckoutPayment total={1000} orderId={123123} />
             </div>
           </div>
         </main>

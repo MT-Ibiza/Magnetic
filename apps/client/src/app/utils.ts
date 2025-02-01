@@ -6,6 +6,11 @@ type GroupedCategory = {
   items: CartItem[];
 };
 
+type ServiceTotal = {
+  service: string;
+  total: number;
+};
+
 export function formatDate(date: string | Date) {
   return moment(date).format('MMMM DD, YYYY');
 }
@@ -28,6 +33,20 @@ export function groupCartItemsByCategory(data: CartItem[]): GroupedCategory[] {
       result.push(category);
     }
     category.items.push(currentItem);
+    return result;
+  }, []);
+}
+
+export function calculateTotalsByService(data: CartItem[]): ServiceTotal[] {
+  return data.reduce<ServiceTotal[]>((result, currentItem) => {
+    const serviceName = currentItem.item.service.name;
+    const itemTotal = currentItem.item.priceInCents * currentItem.quantity;
+    let serviceGroup = result.find((group) => group.service === serviceName);
+    if (!serviceGroup) {
+      serviceGroup = { service: serviceName, total: 0 };
+      result.push(serviceGroup);
+    }
+    serviceGroup.total += itemTotal;
     return result;
   }, []);
 }

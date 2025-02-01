@@ -10,8 +10,7 @@ function ProductsSummary(props: Props) {
   const {} = props;
   const { cart } = useCartStore();
   const itemsByCategory = groupCartItemsByCategory(cart);
-  console.log('cart: ', cart);
-  console.log('itemsByCategory: ', itemsByCategory);
+
   return (
     <div>
       {itemsByCategory.map((category, index) => (
