@@ -33,7 +33,11 @@ function CheckoutItem(props: Props) {
           {serviceType === 'boat_rental' && <BoatsInfo cartItem={cartItem} />}
           {serviceType === 'transfer' && <TransferInfo cartItem={cartItem} />}
           {serviceType === 'chefs' && <ChefsInfo cartItem={cartItem} />}
-          <CheckoutItemEdit />
+          <CheckoutItemEdit
+            formData={cartItem.formData}
+            serviceType={serviceType}
+            item={item}
+          />
         </div>
       </div>
       <div className="flex items-end flex-col">

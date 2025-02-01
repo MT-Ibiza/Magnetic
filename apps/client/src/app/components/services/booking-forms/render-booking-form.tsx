@@ -11,7 +11,7 @@ import { OrderBookingForm } from '@magnetic/interfaces';
 interface Props {
   type: string;
   itemId?: number;
-  formData?: OrderBookingForm;
+  formData?: any;
   onSubmit: (data: any) => void;
   viewCol?: boolean;
   onClose?: () => void;
