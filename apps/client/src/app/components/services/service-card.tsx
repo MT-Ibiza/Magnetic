@@ -27,10 +27,10 @@ function ServiceCard(props: Props) {
     <div className="relative flex flex-col justify-between bg-base-100 border border-gray-300 rounded-lg overflow-hidden shadow-sm group hover:shadow-md transition duration-200 ease-in-out">
       <div
         className={`absolute top-2 left-2 px-3 py-1 text-xs font-semibold rounded-full ${getPackageLabelColor(
-          packages[0].name
+          service.packages[0].name
         )}`}
       >
-        {packages[0].name}
+        {service.packages[0].name}
       </div>
 
       <div className="w-full h-48 bg-gray-100">
