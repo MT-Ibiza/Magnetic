@@ -33,6 +33,8 @@ export const AppRouter = () => {
           <Route path="services" element={<ServiceClientPage />} />
           <Route path="bookings" element={<BookingsPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
+          <Route path="checkout/success" element={<PendingPage />} />
+          <Route path="checkout/failure" element={<PendingPage />} />
           <Route path="services/:id" element={<ViewServicePage />} />
           <Route
             path="services/:serviceId/item/:itemId"

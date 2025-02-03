@@ -32,8 +32,8 @@ export function PaymentButton(props: {
         body: JSON.stringify({
           amount: amountInCents,
           orderId: `${orderId}`,
-          urlOk: `${window.location.origin}/success`, // URL en caso de éxito
-          urlKo: `${window.location.origin}/failure`, // URL en caso de error
+          urlOk: `${window.location.origin}/orders/${orderId}`, // URL en caso de éxito
+          urlKo: `${window.location.origin}/checkout/failure`, // URL en caso de error
         }),
       });
 
