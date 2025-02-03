@@ -1,4 +1,10 @@
-import { Button, CardWrapper, FormJsonDetails, Text } from '@magnetic/ui';
+import {
+  Button,
+  CardWrapper,
+  EmptyState,
+  FormJsonDetails,
+  Text,
+} from '@magnetic/ui';
 import { useCartStore } from '../../hooks/useCartStore';
 import { useMutation } from '@tanstack/react-query';
 import { createOrder } from '../../apis/api-order';
@@ -26,26 +32,6 @@ export function CheckoutPage() {
     useCartStore();
   const { isLoading, data, removeAllItemsCart } = useCart();
   const [createdOrderId, setCreatedOrderId] = useState<number>();
-  const navigate = useNavigate();
-
-  const createOrderMutation = useMutation({
-    mutationFn: () => createOrder([]),
-    onSuccess: (order: Order) => {
-      clearCart();
-      setCreatedOrderId(order.id);
-      //@ts-ignore
-      document.getElementById('order_success_modal').showModal();
-      // toast.success('Order Created!');
-      // navigate(`/orders/${order.id}`);
-      // refetch();
-    },
-  });
-
-  const paymentMethods = [
-    { gateway: 'Stripe' },
-    { gateway: 'Bank Transfer' },
-    { gateway: 'Paypal' },
-  ];
 
   useEffect(() => {
     if (data) {
@@ -95,8 +81,18 @@ export function CheckoutPage() {
   }
 
   return (
-    <div>
-      <div className={`nc-CheckOutPagePageMain`}>
+    <>
+      {cart.length === 0 ? (
+        <EmptyState
+          title="Your cart is empty"
+          icon="camera"
+          description="Search in our services and start to planning your trip"
+        >
+          <Link to={`/services`}>
+            <Button>View Services</Button>
+          </Link>
+        </EmptyState>
+      ) : (
         <main className="container mt-11 flex flex-col gap-[15px] lg:grid lg:grid-cols-12 lg:gap-x-[20px]">
           <div className="col-span-8 w-full ">
             <CardWrapper>
@@ -119,7 +115,8 @@ export function CheckoutPage() {
             </div>
           </div>
         </main>
-      </div>
+      )}
+
       <dialog id="order_success_modal" className="modal">
         <div className="modal-box">
           <h3 className="text-lg font-bold">Order Created</h3>
@@ -140,7 +137,7 @@ export function CheckoutPage() {
           </div>
         </div>
       </dialog>
-    </div>
+    </>
   );
 }
 
