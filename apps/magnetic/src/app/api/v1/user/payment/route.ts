@@ -45,7 +45,7 @@ export async function POST(request: Request) {
       DS_MERCHANT_CURRENCY: CURRENCY,
       DS_MERCHANT_TRANSACTIONTYPE: '0', // Compra normal
       DS_MERCHANT_TERMINAL: TERMINAL,
-      DS_MERCHANT_MERCHANTURL: `http://localhost:3000/api/v1/user/payment/notification`,
+      DS_MERCHANT_MERCHANTURL: `${process.env.NEXTAUTH_URL}/api/v1/user/payment/notification`,
       DS_MERCHANT_URLOK: urlOk,
       DS_MERCHANT_URLKO: urlKo,
     };
