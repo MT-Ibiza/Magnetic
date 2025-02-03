@@ -39,7 +39,7 @@ export function groupCartItemsByCategory(data: CartItem[]): GroupedCategory[] {
 
 export function calculateTotalsByService(data: CartItem[]): ServiceTotal[] {
   return data.reduce<ServiceTotal[]>((result, currentItem) => {
-    const serviceName = currentItem.item.service.name;
+    const serviceName = currentItem.item.service?.name;
     const itemTotal = currentItem.item.priceInCents * currentItem.quantity;
     let serviceGroup = result.find((group) => group.service === serviceName);
     if (!serviceGroup) {

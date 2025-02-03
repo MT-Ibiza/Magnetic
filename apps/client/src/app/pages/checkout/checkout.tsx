@@ -25,19 +25,7 @@ export function CheckoutPage() {
   const { cart, addItem, removeItem, clearCart, getGroupedItemsByService } =
     useCartStore();
   const { isLoading, data, removeAllItemsCart } = useCart();
-  const groupedCart = getGroupedItemsByService();
-
-  const [currentTab, setCurrentTab] = useState(0);
   const [createdOrderId, setCreatedOrderId] = useState<number>();
-  // const [forms, setForms] = useState<FormOrderData[]>([]);
-  // const [formsCheckout, setFormsCheckout] = useState<
-  //   {
-  //     formIndex: number;
-  //     form: FormOrderData;
-  //     completed: boolean;
-  //   }[]
-  // >([]);
-
   const navigate = useNavigate();
 
   const createOrderMutation = useMutation({
@@ -58,22 +46,6 @@ export function CheckoutPage() {
     { gateway: 'Bank Transfer' },
     { gateway: 'Paypal' },
   ];
-
-  async function handleCreateOrder() {
-    // const allRequiredFormsCompleted = formsCheckout.every(
-    //   (formCheckout) => formCheckout.completed
-    // );
-    // if (allRequiredFormsCompleted) {
-    await createOrderMutation.mutateAsync();
-    // } else {
-    //   toast.error('Please complete all required forms before proceeding.');
-    // }
-  }
-
-  const total = cart.reduce(
-    (sum, cartItem) => sum + cartItem.item.priceInCents * cartItem.quantity,
-    0
-  );
 
   useEffect(() => {
     if (data) {
@@ -117,6 +89,10 @@ export function CheckoutPage() {
       // );
     }
   }, [data]);
+
+  if (isLoading) {
+    return <h1>Loading....</h1>;
+  }
 
   return (
     <div>

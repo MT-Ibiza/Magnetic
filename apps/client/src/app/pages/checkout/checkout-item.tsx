@@ -17,7 +17,7 @@ function CheckoutItem(props: Props) {
   const { cartItem } = props;
   const { item } = cartItem;
   const image = item.images.length > 0 ? item.images[0].url : defaultImage;
-  const serviceType = item.service.serviceType;
+  const serviceType = item.service?.serviceType;
 
   return (
     <div className="flex justify-between w-full">

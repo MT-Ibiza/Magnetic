@@ -36,7 +36,7 @@ export function DashboardClientPage() {
   }
 
   const arrivalDate = maxDateToBooking(userAccount.arrivalDate);
-  const isExpired = userCanMakeBookings(userAccount.arrivalDate);
+  const canMakeBookings = userCanMakeBookings(userAccount.arrivalDate);
 
   return (
     <>
@@ -77,21 +77,21 @@ export function DashboardClientPage() {
                   </Text>
                 </div>
               </div>
-              {isExpired ? (
-                <div className="mt-5 flex flex-col gap-3 p-5 border-md bg-red-100">
-                  <Text>
-                    The booking services has closed as the date has already
-                    passed. However, feel free to contact us via WhatsApp for
-                    assistance or further inquiries.
-                  </Text>
-                </div>
-              ) : (
+              {canMakeBookings ? (
                 <div className="mt-5 flex flex-col gap-3 p-5 border-md bg-yellow-100">
                   <Text>
                     You can make a booking up to 7 days prior to your arrival at
                     the destination.
                   </Text>
                   <Text>Until Date: {arrivalDate.format('MMMM DD, YYYY')}</Text>
+                </div>
+              ) : (
+                <div className="mt-5 flex flex-col gap-3 p-5 border-md bg-red-100">
+                  <Text>
+                    The booking services has closed as the date has already
+                    passed. However, feel free to contact us via WhatsApp for
+                    assistance or further inquiries.
+                  </Text>
                 </div>
               )}
             </div>
