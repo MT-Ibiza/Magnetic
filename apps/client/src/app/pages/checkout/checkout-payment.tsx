@@ -1,15 +1,19 @@
 import { CardWrapper, Checkbox } from '@magnetic/ui';
 import React, { useState } from 'react';
 import PaymentButton from '../../components/payment-button';
+import { useCartStore } from '../../hooks/useCartStore';
+import { calculateTotalsByService } from '../../utils';
 
-interface Props {
-  total: number;
-  orderId: number;
-}
+interface Props {}
 
 function CheckoutPayment(props: Props) {
-  const { total, orderId } = props;
   const [accepted, setAccepted] = useState(false);
+  const { cart } = useCartStore();
+  const services = calculateTotalsByService(cart);
+
+  const total = services.reduce((a, b) => {
+    return b.total + a;
+  }, 0);
 
   return (
     <CardWrapper>
@@ -22,11 +26,7 @@ function CheckoutPayment(props: Props) {
         }}
         className="mb-3"
       />
-      <PaymentButton
-        amountInCents={total}
-        orderId={orderId}
-        disable={!accepted}
-      />
+      <PaymentButton amountInCents={total} disable={!accepted} />
     </CardWrapper>
   );
 }

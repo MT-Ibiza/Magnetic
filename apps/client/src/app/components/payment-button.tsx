@@ -1,24 +1,37 @@
 import React, { useState } from 'react';
 import { URL_REQUEST_PAYMENT } from '../apis/api-constants';
 import { Button } from '@magnetic/ui';
+import { useMutation } from '@tanstack/react-query';
+import { createOrder } from '../apis/api-order';
+import { Order } from '@magnetic/interfaces';
 
 export function PaymentButton(props: {
   amountInCents: number;
-  orderId: number;
   disable?: boolean;
 }) {
-  const { amountInCents, orderId, disable } = props;
+  const { amountInCents, disable } = props;
   const [loading, setLoading] = useState(false);
 
-  const handlePayment = async () => {
+  const createOrderMutation = useMutation({
+    mutationFn: () => createOrder([]),
+    onSuccess: (order: Order) => {
+      // clearCart();
+      handlePayment(order.id);
+      // setCreatedOrderId(order.id);
+      //@ts-ignore
+      // document.getElementById('processing-order-modal').close();
+    },
+  });
+
+  const handlePayment = async (orderId: number) => {
     setLoading(true);
     try {
       const response = await fetch(URL_REQUEST_PAYMENT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          amount: amountInCents, // Monto en céntimos (10.00€)
-          orderId: `${orderId}`, // Identificador único del pedido
+          amount: amountInCents,
+          orderId: `${orderId}`,
           urlOk: `${window.location.origin}/success`, // URL en caso de éxito
           urlKo: `${window.location.origin}/failure`, // URL en caso de error
         }),
@@ -69,15 +82,51 @@ export function PaymentButton(props: {
     }
   };
 
+  async function createOrderAndPay() {
+    //@ts-ignore
+    document.getElementById('processing-order-modal').showModal();
+    await createOrderMutation.mutateAsync();
+  }
+
   return (
-    <Button
-      onClick={handlePayment}
-      disabled={loading || disable}
-      className="p-4 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 w-full"
-    >
-      {loading ? 'Cargando...' : 'Pay Now'}
-    </Button>
+    <>
+      <Button
+        onClick={createOrderAndPay}
+        disabled={loading || disable}
+        className="p-4 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 w-full"
+      >
+        {loading ? 'Processing...' : 'Pay Now'}
+      </Button>
+
+      <dialog id="processing-order-modal" className="modal">
+        <div className="modal-box text-center">
+          <span className="loading loading-spinner loading-lg"></span>
+          <h3 className="text-lg font-bold">Processing Your Order</h3>
+          <p className="py-4">
+            Please do not refresh or leave this page. You will be redirected to
+            the payment page shortly.
+          </p>
+          {/* <div className="modal-action">
+            <form method="dialog">
+              <div className="flex gap-3">
+                <Link to={`/services`}>
+                  <Button className="" variant="outline" color="neutral">
+                    Check other services
+                  </Button>
+                </Link>
+                <Link to={`/orders/${createdOrderId}`}>
+                  <Button className="">View Order</Button>
+                </Link>
+              </div>
+            </form>
+          </div> */}
+        </div>
+      </dialog>
+    </>
   );
 }
 
 export default PaymentButton;
+function clearCart() {
+  throw new Error('Function not implemented.');
+}

@@ -40,16 +40,16 @@ export async function POST(request: Request) {
 
     const merchantParams = {
       DS_MERCHANT_AMOUNT: `${Math.round(amount)}`, // Convertir a entero en caso de decimales
-      DS_MERCHANT_ORDER: `${orderId}`,
+      DS_MERCHANT_ORDER: `MAGNETIC-${orderId}`,
       DS_MERCHANT_MERCHANTCODE: MERCHANT_CODE,
       DS_MERCHANT_CURRENCY: CURRENCY,
       DS_MERCHANT_TRANSACTIONTYPE: '0', // Compra normal
       DS_MERCHANT_TERMINAL: TERMINAL,
       DS_MERCHANT_MERCHANTURL: `https://localhost:4200/api/payment-notification`, // Webhook de notificación
-      DS_MERCHANT_URLOK: 'https://www.google.com',
-      DS_MERCHANT_URLKO: 'https://www.google.com',
+      DS_MERCHANT_URLOK: urlOk,
+      DS_MERCHANT_URLKO: urlKo,
     };
-
+    console.log(merchantParams);
     return NextResponse.json({
       redsysUrl: REDSYS_URL,
       signature: redsys.createMerchantSignature(SECRET_KEY, merchantParams),
