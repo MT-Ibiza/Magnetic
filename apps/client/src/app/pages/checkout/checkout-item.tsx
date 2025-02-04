@@ -5,6 +5,7 @@ import { formatDate } from '../../utils';
 import CheckoutItemButtons from './checkout-item-edit';
 import CheckoutItemEdit from './checkout-item-edit';
 import CheckoutItemRemove from './checkout-item-remove';
+import ItemCounter from '../../components/items/item-counter';
 
 interface Props {
   cartItem: CartItem;
@@ -38,8 +39,8 @@ function CheckoutItem(props: Props) {
       </div>
       <div className="flex items-end flex-col">
         <Text>Total</Text>
-        <Text className="mb-2">
-          {centsToEurosWithCurrency(item.priceInCents)}
+        <Text className="mb-2 text-green-800">
+          {centsToEurosWithCurrency(cartItem.quantity * item.priceInCents)}
         </Text>
         <CheckoutItemRemove item={item} />
       </div>
@@ -105,6 +106,10 @@ const ChefsInfo = ({ cartItem }: { cartItem: CartItem }) => (
 const DrinkInfo = ({ cartItem }: { cartItem: CartItem }) => (
   <div className="flex flex-col gap-1">
     <h1>{cartItem.item.name}</h1>
+    <Text size="1">
+      {cartItem.quantity} x{' '}
+      {centsToEurosWithCurrency(cartItem.item.priceInCents)}
+    </Text>
   </div>
 );
 

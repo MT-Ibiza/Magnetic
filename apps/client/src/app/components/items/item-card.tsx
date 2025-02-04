@@ -36,7 +36,8 @@ function ItemCard(props: Props) {
   const customDetailsServices = ['drinks', 'chefs', 'transfer', 'boat_rental'];
 
   const handleAddItem = (quantity: number, formData?: any) => {
-    const newVal = quantity + 1;
+    const newVal = quantity;
+    debugger;
     addItemToCart.mutate(
       { itemId: item.id, quantity: newVal, formData },
       {
@@ -127,24 +128,26 @@ function ItemCard(props: Props) {
             {centsToEurosWithCurrency(item.priceInCents)}
           </h2>
           {noFillForm ? (
-            <ItemCounter
-              currentAmount={productCart?.quantity || 0}
-              onClickAdd={(amount) => {
-                if (availableInPlan) {
-                  handleAddItem(0, undefined);
-                } else {
-                  //@ts-ignore
-                  document.getElementById('modal_upgrade').showModal();
-                }
-              }}
-              onClickRemove={(amount) => {
-                if (availableInPlan) {
-                  handleRemoveItem(amount);
-                } else {
-                  handleAddItem(0, undefined);
-                }
-              }}
-            />
+            <div className="mt-4">
+              <ItemCounter
+                currentAmount={productCart?.quantity || 0}
+                onClickAdd={(amount) => {
+                  if (availableInPlan) {
+                    handleAddItem(amount, undefined);
+                  } else {
+                    //@ts-ignore
+                    document.getElementById('modal_upgrade').showModal();
+                  }
+                }}
+                onClickRemove={(amount) => {
+                  if (availableInPlan) {
+                    handleRemoveItem(amount);
+                  } else {
+                    handleRemoveItem(amount);
+                  }
+                }}
+              />
+            </div>
           ) : (
             <div className="flex items-center justify-end gap-4 mt-4">
               <Link to={`item/${item.id}`}>

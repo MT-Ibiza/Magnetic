@@ -10,7 +10,7 @@ function ItemCounter(props: Props) {
   const { currentAmount, onClickAdd, onClickRemove } = props;
 
   return (
-    <div className="flex items-center justify-end gap-4 mt-4">
+    <div className="flex items-center gap-4">
       <button
         className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
         onClick={() => {
