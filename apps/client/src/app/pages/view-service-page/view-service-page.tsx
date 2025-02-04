@@ -5,6 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 import ListProducts from './list-products';
 import './styles.scss';
 import NoticeBookingUnavailable from '../../components/notice-booking-unavailable';
+import ListBoats from './list-boats';
 
 interface Props {}
 
@@ -48,11 +49,21 @@ function ViewServicePage(props: Props) {
       {service.script ? (
         <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
       ) : (
-        <ListProducts
-          service={service}
-          items={publishedItems}
-          availableInPlan={availableInPlan}
-        />
+        <>
+          {service.serviceType === 'boat_rental' ? (
+            <ListBoats
+              items={publishedItems}
+              availableInPlan={true}
+              service={service}
+            />
+          ) : (
+            <ListProducts
+              service={service}
+              items={publishedItems}
+              availableInPlan={availableInPlan}
+            />
+          )}
+        </>
       )}
       {/* {!service.script && (
           <div className="flex justify-end pt-[20px]">

@@ -27,6 +27,7 @@ function ListProducts(props: Props) {
               {service.serviceType === 'boat_rental' && (
                 <BoatInfo
                   name={item.name}
+                  secondName={item.boatAttributes?.secondName}
                   guests={item.boatAttributes?.guests || 0}
                 />
               )}
@@ -38,9 +39,22 @@ function ListProducts(props: Props) {
   );
 }
 
-const BoatInfo = ({ name, guests }: { name: string; guests: number }) => (
+const BoatInfo = ({
+  name,
+  guests,
+  secondName,
+}: {
+  name: string;
+  guests: number;
+  secondName?: string;
+}) => (
   <div>
     <h2 className="text-lg font-semibold text-primary">{name}</h2>
+    {secondName && (
+      <Text size="1" className="mb-2">
+        {secondName}
+      </Text>
+    )}
     <Text size="1">{`Max Pax: ${guests}`}</Text>
   </div>
 );
