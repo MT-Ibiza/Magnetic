@@ -2,6 +2,7 @@ import React from 'react';
 import { OrderItem } from '@magnetic/interfaces';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { Text } from '@magnetic/ui';
+import { placeholderItem } from '../../constants';
 
 interface Props {
   items: OrderItem[];
@@ -33,7 +34,7 @@ function OrderItemsTable(props: Props) {
         </thead>
         <tbody>
           {Object.entries(groupedItems).map(([serviceId, serviceItems]) => (
-            <React.Fragment key={serviceId}>         
+            <React.Fragment key={serviceId}>
               <tr>
                 <td colSpan={4} className="py-4">
                   <h2 className="text-lg font-bold">
@@ -50,7 +51,7 @@ function OrderItemsTable(props: Props) {
                         src={
                           item.item.images && item.item.images.length > 0
                             ? item.item.images[0].url
-                            : 'https://via.placeholder.com/64'
+                            : placeholderItem
                         }
                         alt={item.item.name}
                       />
@@ -67,13 +68,15 @@ function OrderItemsTable(props: Props) {
                   <td className="text-center">{item.quantity}</td>
                   <td className="text-center">
                     <Text.TextNumeric>
-                      {centsToEurosWithCurrency(item.quantity * item.priceInCents)}
+                      {centsToEurosWithCurrency(
+                        item.quantity * item.priceInCents
+                      )}
                     </Text.TextNumeric>
                   </td>
                 </tr>
               ))}
             </React.Fragment>
-          ))}   
+          ))}
           <tr>
             <td colSpan={2}></td>
             <td className="text-right font-bold">TOTAL:</td>

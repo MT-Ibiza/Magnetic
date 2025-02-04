@@ -4,18 +4,16 @@ import { Text } from '@magnetic/ui';
 import { formatDate } from '../../utils';
 import CheckoutItemEdit from './checkout-item-edit';
 import CheckoutItemRemove from './checkout-item-remove';
+import { placeholderItem } from '../../constants';
 
 interface Props {
   cartItem: CartItem;
 }
 
-const defaultImage =
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU';
-
 function CheckoutItem(props: Props) {
   const { cartItem } = props;
   const { item } = cartItem;
-  const image = item.images.length > 0 ? item.images[0].url : defaultImage;
+  const image = item.images.length > 0 ? item.images[0].url : placeholderItem;
   const serviceType = item.service?.serviceType;
 
   return (
