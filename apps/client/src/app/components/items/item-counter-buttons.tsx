@@ -6,7 +6,7 @@ interface Props {
   onClickRemove: (amount: number) => void;
 }
 
-function ItemCounter(props: Props) {
+function ItemCounterButtons(props: Props) {
   const { currentAmount, onClickAdd, onClickRemove } = props;
 
   return (
@@ -38,4 +38,4 @@ function ItemCounter(props: Props) {
   );
 }
 
-export default ItemCounter;
+export default ItemCounterButtons;

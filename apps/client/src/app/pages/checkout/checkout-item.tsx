@@ -2,10 +2,8 @@ import { CartItem } from '@magnetic/interfaces';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { Text } from '@magnetic/ui';
 import { formatDate } from '../../utils';
-import CheckoutItemButtons from './checkout-item-edit';
 import CheckoutItemEdit from './checkout-item-edit';
 import CheckoutItemRemove from './checkout-item-remove';
-import ItemCounter from '../../components/items/item-counter';
 
 interface Props {
   cartItem: CartItem;

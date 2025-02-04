@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Item, Service } from '@magnetic/interfaces';
 import { Alert, Button, Text } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
@@ -6,8 +6,8 @@ import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import { Link } from 'react-router-dom';
 import RenderBookingForm from '../services/booking-forms/render-booking-form';
-import { MdCancel } from 'react-icons/md';
-import ItemCounter from './item-counter';
+import ItemCounterButtons from './item-counter-buttons';
+import ItemHandleBookButtons from './item-handle-book-buttons';
 interface Props {
   item: Item;
   service: Service;
@@ -37,7 +37,6 @@ function ItemCard(props: Props) {
 
   const handleAddItem = (quantity: number, formData?: any) => {
     const newVal = quantity;
-    debugger;
     addItemToCart.mutate(
       { itemId: item.id, quantity: newVal, formData },
       {
@@ -129,7 +128,7 @@ function ItemCard(props: Props) {
           </h2>
           {noFillForm ? (
             <div className="mt-4">
-              <ItemCounter
+              <ItemCounterButtons
                 currentAmount={productCart?.quantity || 0}
                 onClickAdd={(amount) => {
                   if (availableInPlan) {
@@ -149,35 +148,22 @@ function ItemCard(props: Props) {
               />
             </div>
           ) : (
-            <div className="flex items-center justify-end gap-4 mt-4">
-              <Link to={`item/${item.id}`}>
-                <Button variant="outline">View Details</Button>
-              </Link>
-              {productCart?.quantity === 1 ? (
-                <Button
-                  className="flex gap-1"
-                  color="neutral"
-                  onClick={() => {
-                    handleRemoveItem(productCart?.quantity || 0);
-                  }}
-                >
-                  <MdCancel />
-                  Cancel Booking
-                </Button>
-              ) : (
-                <Button
-                  onClick={() => {
-                    if (availableInPlan) {
-                      openForm();
-                    } else {
-                      //@ts-ignore
-                      document.getElementById('modal_upgrade').showModal();
-                    }
-                  }}
-                >
-                  Book Now
-                </Button>
-              )}
+            <div className="mt-4">
+              <ItemHandleBookButtons
+                item={item}
+                currentAmount={productCart?.quantity || 0}
+                onClickAdd={() => {
+                  if (availableInPlan) {
+                    openForm();
+                  } else {
+                    //@ts-ignore
+                    document.getElementById('modal_upgrade').showModal();
+                  }
+                }}
+                onClickRemove={(amount) => {
+                  handleRemoveItem(amount);
+                }}
+              />
             </div>
           )}
         </div>
@@ -216,7 +202,7 @@ function ItemCard(props: Props) {
               serviceId: service.id,
             }}
             onSubmit={(data) => {
-              handleAddItem(0, data);
+              handleAddItem(1, data);
             }}
             onClose={closeForm}
           />
