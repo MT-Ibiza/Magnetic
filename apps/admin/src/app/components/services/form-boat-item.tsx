@@ -87,6 +87,7 @@ export function FormBoatItem(props: Props) {
       description: item?.description,
       categoryId: item?.categoryId,
       boatAttributes: {
+        secondName: item?.boatAttributes?.secondName,
         boatType: item?.boatAttributes?.boatType,
         berth: item?.boatAttributes?.berth,
         guests: item?.boatAttributes?.guests,
@@ -144,6 +145,7 @@ export function FormBoatItem(props: Props) {
     formData.append(
       'boatAttributes',
       JSON.stringify({
+        secondName: boatAttributes.secondName,
         boatType: boatAttributes.boatType,
         berth: boatAttributes.berth,
         guests: Number(boatAttributes.guests),
@@ -189,6 +191,21 @@ export function FormBoatItem(props: Props) {
               {errors.name && (
                 <p className="text-xs text-red-500 mt-1">Name is required</p>
               )}
+            </div>
+
+            <div className="flex flex-col">
+              <label
+                htmlFor="secondName"
+                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+              >
+                Boat Second Name
+              </label>
+              <Input
+                id="secondName"
+                type="text"
+                {...register('boatAttributes.secondName')}
+                className="mt-2"
+              />
             </div>
 
             <div className="flex flex-col">

@@ -11,6 +11,7 @@ export interface BoatBase {
   longitude?: string;
   sizeInCentimeters: number;
   itemId: number;
+  secondName?: string;
 }
 
 export interface Boat extends BoatBase {
