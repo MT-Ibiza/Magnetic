@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
 import { useAuth } from '../../hooks/useAuth';
 import ListProducts from './list-products';
-import './styles.scss';
 import NoticeBookingUnavailable from '../../components/notice-booking-unavailable';
 import ListBoats from './list-boats';
+import './styles.scss';
 
 interface Props {}
 
@@ -51,11 +51,7 @@ function ViewServicePage(props: Props) {
       ) : (
         <>
           {service.serviceType === 'boat_rental' ? (
-            <ListBoats
-              items={publishedItems}
-              availableInPlan={true}
-              service={service}
-            />
+            <ListBoats availableInPlan={true} service={service} />
           ) : (
             <ListProducts
               service={service}

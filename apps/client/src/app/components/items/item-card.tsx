@@ -12,11 +12,10 @@ interface Props {
   service: Service;
   availableInPlan: boolean;
   noFillForm: boolean;
-  children?: React.ReactNode;
 }
 
-function ItemCounter(props: Props) {
-  const { item, availableInPlan, service, noFillForm, children } = props;
+function ItemCard(props: Props) {
+  const { item, availableInPlan, service, noFillForm } = props;
   const { addItemToCart } = useCart();
   const { addItem, removeItem, cart } = useCartStore();
   const productCart = cart.find((cartItem) => cartItem.item.id === item.id);
@@ -32,6 +31,8 @@ function ItemCounter(props: Props) {
     setAlert({ message, type });
     setTimeout(() => setAlert(null), 3000);
   };
+
+  const customDetailsServices = ['drinks', 'chefs', 'transfer', 'boat_rental'];
 
   const handleAddItem = (quantity: number, formData?: any) => {
     const newVal = quantity + 1;
@@ -97,12 +98,26 @@ function ItemCounter(props: Props) {
             }
             alt={item.name}
           />
-          {children ? (
-            <div>{children}</div>
+          {customDetailsServices.includes(service.serviceType) ? (
+            <>
+              {service.serviceType === 'drinks' && (
+                <DrinkInfo name={item.name} />
+              )}
+              {service.serviceType === 'chefs' && <ChefInfo name={item.name} />}
+              {service.serviceType === 'transfer' && (
+                <TransferInfo name={item.name} />
+              )}
+              {service.serviceType === 'boat_rental' && (
+                <BoatInfo
+                  name={item.name}
+                  secondName={item.boatAttributes?.secondName}
+                  guests={item.boatAttributes?.guests || 0}
+                />
+              )}
+            </>
           ) : (
             <DefaultProductInfo
               name={item.name}
-              priceInCents={item.priceInCents}
               description={item.description}
             />
           )}
@@ -226,11 +241,9 @@ function ItemCounter(props: Props) {
 
 const DefaultProductInfo = ({
   name,
-  priceInCents,
   description,
 }: {
   name: string;
-  priceInCents: number;
   description: string;
 }) => (
   <div className="w-full pb-2 flex flex-col gap-3">
@@ -239,4 +252,42 @@ const DefaultProductInfo = ({
   </div>
 );
 
-export default ItemCounter;
+const DrinkInfo = ({ name }: { name: string }) => (
+  <div>
+    <h2 className="text-lg font-semibold text-primary">{name}</h2>
+  </div>
+);
+
+const ChefInfo = ({ name }: { name: string }) => (
+  <div>
+    <h2 className="text-lg font-semibold text-primary">{name}</h2>
+  </div>
+);
+
+const TransferInfo = ({ name }: { name: string }) => (
+  <div>
+    <h2 className="text-lg font-semibold text-primary">{name}</h2>
+  </div>
+);
+
+const BoatInfo = ({
+  name,
+  guests,
+  secondName,
+}: {
+  name: string;
+  guests: number;
+  secondName?: string;
+}) => (
+  <div>
+    <h2 className="text-lg font-semibold text-primary">{name}</h2>
+    {secondName && (
+      <Text size="1" className="mb-2">
+        {secondName}
+      </Text>
+    )}
+    <Text size="1">{`Max Pax: ${guests}`}</Text>
+  </div>
+);
+
+export default ItemCard;

@@ -33,11 +33,7 @@ function CheckoutItem(props: Props) {
           {serviceType === 'boat_rental' && <BoatsInfo cartItem={cartItem} />}
           {serviceType === 'transfer' && <TransferInfo cartItem={cartItem} />}
           {serviceType === 'chefs' && <ChefsInfo cartItem={cartItem} />}
-          <CheckoutItemEdit
-            formData={cartItem.formData}
-            serviceType={serviceType}
-            item={item}
-          />
+          {serviceType === 'drinks' && <DrinkInfo cartItem={cartItem} />}
         </div>
       </div>
       <div className="flex items-end flex-col">
@@ -64,6 +60,11 @@ const TransferInfo = ({ cartItem }: { cartItem: CartItem }) => (
         </div>
       </>
     )}
+    <CheckoutItemEdit
+      formData={cartItem.formData}
+      serviceType={cartItem.item.service.serviceType}
+      item={cartItem.item}
+    />
   </div>
 );
 
@@ -76,6 +77,11 @@ const BoatsInfo = ({ cartItem }: { cartItem: CartItem }) => (
         <Text size="1">Time: {cartItem.formData.startTime}</Text>
       </>
     )}
+    <CheckoutItemEdit
+      formData={cartItem.formData}
+      serviceType={cartItem.item.service.serviceType}
+      item={cartItem.item}
+    />
   </div>
 );
 
@@ -88,6 +94,17 @@ const ChefsInfo = ({ cartItem }: { cartItem: CartItem }) => (
         <Text size="1">Location: {cartItem.formData.location}</Text>
       </>
     )}
+    <CheckoutItemEdit
+      formData={cartItem.formData}
+      serviceType={cartItem.item.service.serviceType}
+      item={cartItem.item}
+    />
+  </div>
+);
+
+const DrinkInfo = ({ cartItem }: { cartItem: CartItem }) => (
+  <div className="flex flex-col gap-1">
+    <h1>{cartItem.item.name}</h1>
   </div>
 );
 
