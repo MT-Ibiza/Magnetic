@@ -7,7 +7,7 @@ import { newOrderTemplate } from 'apps/magnetic/src/app/emails/new-order';
 export async function POST(request: Request) {
   try {
     const body: { forms: any[] } = await request.json();
-    const { forms } = body;
+    // const { forms } = body;
     const decodedToken = getTokenFromRequest(request);
     if (!decodedToken) {
       return NextResponse.json({ message: 'Invalid Token' }, { status: 403 });
@@ -20,11 +20,13 @@ export async function POST(request: Request) {
           select: {
             id: true,
             quantity: true,
+            formData: true,
             item: {
               select: {
                 id: true,
                 name: true,
                 priceInCents: true,
+                serviceId: true,
               },
             },
           },
@@ -38,8 +40,9 @@ export async function POST(request: Request) {
     });
 
     if (cart) {
-      const items =
-        cart?.items.map((cartItem) => {
+      const { items } = cart;
+      const orderItems =
+        items.map((cartItem) => {
           const { item, quantity } = cartItem;
           return {
             quantity,
@@ -48,7 +51,16 @@ export async function POST(request: Request) {
           };
         }) || [];
 
-      const totalOrder = items.reduce(
+      const forms = items
+        .filter((item) => {
+          return item.formData !== null;
+        })
+        .map((item) => {
+          return { data: item.formData, serviceId: item.item.serviceId };
+        });
+      console.log('items: ', items);
+      console.log('forms: ', forms);
+      const totalOrder = orderItems.reduce(
         (sum, item) => sum + item.priceInCents * item.quantity,
         0
       );
@@ -59,14 +71,14 @@ export async function POST(request: Request) {
           totalInCents: totalOrder,
           items: {
             createMany: {
-              data: items,
+              data: orderItems,
             },
           },
           forms: {
             createMany: {
               data: forms.map((form) => {
                 return {
-                  formData: form.data,
+                  formData: form.data as any,
                   serviceId: form.serviceId,
                 };
               }),
@@ -142,6 +154,9 @@ export async function GET(request: Request) {
             },
           },
         },
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     });
     return NextResponse.json(orders);
