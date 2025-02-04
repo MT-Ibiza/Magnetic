@@ -7,6 +7,7 @@ import { useCartStore } from '../../hooks/useCartStore';
 import { Link } from 'react-router-dom';
 import RenderBookingForm from '../services/booking-forms/render-booking-form';
 import { MdCancel } from 'react-icons/md';
+import ItemCounter from './item-counter';
 interface Props {
   item: Item;
   service: Service;
@@ -57,8 +58,7 @@ function ItemCard(props: Props) {
   };
 
   const handleRemoveItem = (quantity: number) => {
-    const newVal = quantity - 1;
-
+    const newVal = quantity;
     if (newVal >= 0) {
       addItemToCart.mutate(
         { itemId: item.id, quantity: newVal },
@@ -127,40 +127,24 @@ function ItemCard(props: Props) {
             {centsToEurosWithCurrency(item.priceInCents)}
           </h2>
           {noFillForm ? (
-            <div className="flex items-center justify-end gap-4 mt-4">
-              <button
-                className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
-                onClick={() => {
-                  if (availableInPlan) {
-                    handleRemoveItem(productCart?.quantity || 0);
-                  } else {
-                    handleAddItem(0, undefined);
-                  }
-                }}
-              >
-                -
-              </button>
-              <p
-                className={`text-md font-semibold ${
-                  !!productCart?.quantity && 'text-green-600'
-                }`}
-              >
-                {productCart?.quantity || 0}
-              </p>
-              <button
-                onClick={() => {
-                  if (availableInPlan) {
-                    handleAddItem(0, undefined);
-                  } else {
-                    //@ts-ignore
-                    document.getElementById('modal_upgrade').showModal();
-                  }
-                }}
-                className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
-              >
-                +
-              </button>
-            </div>
+            <ItemCounter
+              currentAmount={productCart?.quantity || 0}
+              onClickAdd={(amount) => {
+                if (availableInPlan) {
+                  handleAddItem(0, undefined);
+                } else {
+                  //@ts-ignore
+                  document.getElementById('modal_upgrade').showModal();
+                }
+              }}
+              onClickRemove={(amount) => {
+                if (availableInPlan) {
+                  handleRemoveItem(amount);
+                } else {
+                  handleAddItem(0, undefined);
+                }
+              }}
+            />
           ) : (
             <div className="flex items-center justify-end gap-4 mt-4">
               <Link to={`item/${item.id}`}>
