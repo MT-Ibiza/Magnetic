@@ -8,3 +8,4 @@ export * from './lib/variants';
 export * from './lib/dashboard';
 export * from './lib/boats';
 export * from './lib/orders';
+export * from './lib/book-event';

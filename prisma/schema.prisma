@@ -220,6 +220,17 @@ model OrderItem {
   updatedAt    DateTime @updatedAt
 }
 
+model BookEvent {
+  id        Int      @id @default(autoincrement())
+  from      DateTime
+  to        DateTime
+  text      String?
+  type      String   @default("boat-rent")
+  taken     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum Role {
   client
   admin
