@@ -90,23 +90,34 @@ model BoatAttributes {
   item              Item     @relation(fields: [itemId], references: [id])
 }
 
+model DrinkAttributes {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  units     Int      @default(0)
+  size      String?
+  itemId    Int      @unique
+  item      Item     @relation(fields: [itemId], references: [id])
+}
+
 model Item {
-  id             Int             @id @default(autoincrement())
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  name           String
-  description    String
-  published      Boolean         @default(false)
-  priceInCents   Int
-  serviceId      Int
-  service        Service         @relation(fields: [serviceId], references: [id])
-  cartItems      CartItem[]
-  ordenItems     OrderItem[]
-  variants       ItemVariant[]
-  categoryId     Int?
-  category       Category?       @relation(fields: [categoryId], references: [id])
-  boatAttributes BoatAttributes?
-  images         Image[]
+  id              Int              @id @default(autoincrement())
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  name            String
+  description     String
+  published       Boolean          @default(false)
+  priceInCents    Int
+  serviceId       Int
+  service         Service          @relation(fields: [serviceId], references: [id])
+  cartItems       CartItem[]
+  ordenItems      OrderItem[]
+  variants        ItemVariant[]
+  categoryId      Int?
+  category        Category?        @relation(fields: [categoryId], references: [id])
+  boatAttributes  BoatAttributes?
+  drinkAttributes DrinkAttributes?
+  images          Image[]
 }
 
 model Image {

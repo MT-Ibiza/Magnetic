@@ -5,12 +5,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import FormItem from '../../components/services/form-item';
 import { useItem } from '../../hooks/useItem';
 import FormBoatItem from '../../components/services/form-boat-item';
+import FormDrinkItem from '../../components/services/form-drink-item';
 
 export function EditItemPage() {
   const params = useParams();
   const serviceId = Number(params.serviceId);
   const itemId = Number(params.itemId);
   const navigate = useNavigate();
+  const otherForms = ['drinks', 'boat_rental'];
 
   const { isLoading, isError, item, serviceCategories, error } = useItem(
     serviceId,
@@ -46,7 +48,7 @@ export function EditItemPage() {
         </ul>
       </div>
       <div className="bg-base-100 listingSection__wrap">
-        {item.service.serviceType === 'boat_rental' ? (
+        {item.service.serviceType === 'boat_rental' && (
           <FormBoatItem
             item={item}
             serviceId={serviceId}
@@ -55,7 +57,18 @@ export function EditItemPage() {
             }}
             serviceCategories={serviceCategories}
           />
-        ) : (
+        )}
+        {item.service.serviceType === 'drinks' && (
+          <FormDrinkItem
+            item={item}
+            serviceId={serviceId}
+            onSave={() => {
+              navigate(`/services/${serviceId}`, { replace: true });
+            }}
+            serviceCategories={serviceCategories}
+          />
+        )}
+        {!otherForms.includes(item.service.serviceType) && (
           <FormItem
             serviceCategories={serviceCategories}
             serviceId={serviceId}

@@ -29,6 +29,7 @@ export async function GET(
           },
         },
         boatAttributes: true,
+        drinkAttributes: true,
         variants: {
           select: {
             id: true,
@@ -82,6 +83,9 @@ export async function PUT(
   const boatAttributes = data.get('boatAttributes')
     ? JSON.parse(data.get('boatAttributes') as string)
     : null;
+  const drinkAttributes = data.get('drinkAttributes')
+    ? JSON.parse(data.get('drinkAttributes') as string)
+    : null;
   const imageFiles = data.getAll('imageFiles') as File[];
 
   try {
@@ -109,6 +113,18 @@ export async function PUT(
               },
               update: {
                 ...boatAttributes,
+              },
+            },
+          },
+        }),
+        ...(drinkAttributes && {
+          drinkAttributes: {
+            upsert: {
+              create: {
+                ...drinkAttributes,
+              },
+              update: {
+                ...drinkAttributes,
               },
             },
           },

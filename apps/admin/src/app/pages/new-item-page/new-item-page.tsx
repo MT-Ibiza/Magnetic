@@ -6,11 +6,14 @@ import FormItem from '../../components/services/form-item';
 import { useNewItem } from '../../hooks/useNewItem';
 import FormBoat from '../../components/form-boat';
 import FormBoatItem from '../../components/services/form-boat-item';
+import FormDrinkItem from '../../components/services/form-drink-item';
 
 export function NewItemPage() {
   const params = useParams();
   const serviceId = Number(params.serviceId);
   const navigate = useNavigate();
+
+  const otherForms = ['drinks', 'boat_rental'];
 
   const { isLoading, isError, service, categories, error } =
     useNewItem(serviceId);
@@ -44,7 +47,7 @@ export function NewItemPage() {
         </ul>
       </div>
       <div className="bg-base-100 listingSection__wrap">
-        {service.serviceType === 'boat_rental' ? (
+        {service.serviceType === 'boat_rental' && (
           <FormBoatItem
             serviceId={serviceId}
             onSave={() => {
@@ -52,7 +55,17 @@ export function NewItemPage() {
             }}
             serviceCategories={categories}
           />
-        ) : (
+        )}
+        {service.serviceType === 'drinks' && (
+          <FormDrinkItem
+            serviceId={serviceId}
+            onSave={() => {
+              navigate(`/services/${serviceId}`, { replace: true });
+            }}
+            serviceCategories={categories}
+          />
+        )}
+        {!otherForms.includes(service.serviceType) && (
           <FormItem
             serviceId={serviceId}
             serviceCategories={categories}
