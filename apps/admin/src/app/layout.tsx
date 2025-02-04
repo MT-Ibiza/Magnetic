@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from './hooks/useAuth';
 import { FaUserFriends, FaBook, FaCog } from 'react-icons/fa';
 import { MdDashboardCustomize } from 'react-icons/md';
-import { SiTask } from 'react-icons/si';
+import { SiAirtable, SiTask } from 'react-icons/si';
 import { User } from '@magnetic/interfaces';
 import { FiBookOpen, FiUser } from 'react-icons/fi';
 import { usePathname } from 'next/navigation';
@@ -67,6 +67,12 @@ function Layout(props: Props) {
           key: 'bookings',
           url: '/bookings',
           icon: FaBook,
+        },
+        {
+          text: 'Airtable',
+          key: 'airtable',
+          url: '/airtable',
+          icon: SiAirtable,
         },
       ],
     },

@@ -28,6 +28,7 @@ import ProductsPage from '../pages/products/products-page';
 import OrdersPage from '../pages/orders-page/orders-page';
 import ViewOrderPage from '../pages/view-order-page/view-order-page';
 import CategoriesPage from '../pages/categories-page/categories-page';
+import AirtablePage from '../pages/airtable-page/airtable-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -79,6 +80,7 @@ export const AppRouter = () => {
             <Route path="products" element={<ProductsViewPage />} />
             <Route path="overview" element={<OverviewPage />} />
           </Route>
+          <Route path="airtable" element={<AirtablePage />} />
         </Route>
       </Route>
     </Routes>
