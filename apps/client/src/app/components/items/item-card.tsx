@@ -87,10 +87,12 @@ function ItemCard(props: Props) {
 
   return (
     <>
-      <div className="flex justify-between border rounded-xl border-neutral-200 p-4 space-y-4 shadow-sm hover:border-primary-700 transition-shadow">
-        <div className="flex gap-5">
+      <div
+        className={`nc-CarCard group relative border border-neutral-200 dark:border-neutral-700 rounded-3xl overflow-hidden hover:shadow-xl transition-shadow bg-white dark:bg-neutral-900 will-change-transform`}
+      >
+        <div className="relative w-full rounded-2xl overflow-hidden">
           <img
-            className="object-cover rounded-lg h-[125px] w-[125px]"
+            className="object-cover h-[180px] w-full"
             src={
               item.images && item.images.length > 0
                 ? item.images[0].url
@@ -98,74 +100,82 @@ function ItemCard(props: Props) {
             }
             alt={item.name}
           />
-          {customDetailsServices.includes(service.serviceType) ? (
-            <>
-              {service.serviceType === 'drinks' && (
-                <DrinkInfo name={item.name} />
-              )}
-              {service.serviceType === 'chefs' && <ChefInfo name={item.name} />}
-              {service.serviceType === 'transfer' && (
-                <TransferInfo name={item.name} />
-              )}
-              {service.serviceType === 'boat_rental' && (
-                <BoatInfo
-                  name={item.name}
-                  secondName={item.boatAttributes?.secondName}
-                  guests={item.boatAttributes?.guests || 0}
-                />
-              )}
-            </>
-          ) : (
-            <DefaultProductInfo
-              name={item.name}
-              description={item.description}
-            />
-          )}
-        </div>
-        <div className="flex flex-col items-end">
-          <h2 className="text-lg font-semibold text-secondary">
-            {centsToEurosWithCurrency(item.priceInCents)}
-          </h2>
-          {noFillForm ? (
-            <div className="mt-4">
-              <ItemCounterButtons
-                currentAmount={productCart?.quantity || 0}
-                onClickAdd={(amount) => {
-                  if (availableInPlan) {
-                    handleAddItem(amount, undefined);
-                  } else {
-                    //@ts-ignore
-                    document.getElementById('modal_upgrade').showModal();
-                  }
-                }}
-                onClickRemove={(amount) => {
-                  if (availableInPlan) {
-                    handleRemoveItem(amount);
-                  } else {
-                    handleRemoveItem(amount);
-                  }
-                }}
-              />
+          <div className={'p-5  space-y-4'}>
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2">
+                {customDetailsServices.includes(service.serviceType) ? (
+                  <>
+                    {service.serviceType === 'drinks' && (
+                      <DrinkInfo name={item.name} />
+                    )}
+                    {service.serviceType === 'chefs' && (
+                      <ChefInfo name={item.name} />
+                    )}
+                    {service.serviceType === 'transfer' && (
+                      <TransferInfo name={item.name} />
+                    )}
+                    {service.serviceType === 'boat_rental' && (
+                      <BoatInfo
+                        name={item.name}
+                        secondName={item.boatAttributes?.secondName}
+                        guests={item.boatAttributes?.guests || 0}
+                      />
+                    )}
+                  </>
+                ) : (
+                  <DefaultProductInfo
+                    name={item.name}
+                    description={item.description}
+                  />
+                )}
+              </div>
             </div>
-          ) : (
-            <div className="mt-4">
-              <ItemHandleBookButtons
-                item={item}
-                currentAmount={productCart?.quantity || 0}
-                onClickAdd={() => {
-                  if (availableInPlan) {
-                    openForm();
-                  } else {
-                    //@ts-ignore
-                    document.getElementById('modal_upgrade').showModal();
-                  }
-                }}
-                onClickRemove={(amount) => {
-                  handleRemoveItem(amount);
-                }}
-              />
+            <div className="flex flex-col items-end">
+              <h2 className="text-lg font-semibold text-secondary">
+                {centsToEurosWithCurrency(item.priceInCents)}
+              </h2>
+              {noFillForm ? (
+                <div className="mt-4">
+                  <ItemCounterButtons
+                    currentAmount={productCart?.quantity || 0}
+                    onClickAdd={(amount) => {
+                      if (availableInPlan) {
+                        handleAddItem(amount, undefined);
+                      } else {
+                        //@ts-ignore
+                        document.getElementById('modal_upgrade').showModal();
+                      }
+                    }}
+                    onClickRemove={(amount) => {
+                      if (availableInPlan) {
+                        handleRemoveItem(amount);
+                      } else {
+                        handleRemoveItem(amount);
+                      }
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="mt-4">
+                  <ItemHandleBookButtons
+                    item={item}
+                    currentAmount={productCart?.quantity || 0}
+                    onClickAdd={() => {
+                      if (availableInPlan) {
+                        openForm();
+                      } else {
+                        //@ts-ignore
+                        document.getElementById('modal_upgrade').showModal();
+                      }
+                    }}
+                    onClickRemove={(amount) => {
+                      handleRemoveItem(amount);
+                    }}
+                  />
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
       {alert && (
@@ -220,26 +230,36 @@ const DefaultProductInfo = ({
   description: string;
 }) => (
   <div className="w-full pb-2 flex flex-col gap-3">
-    <h2 className="text-lg font-semibold text-primary">{name}</h2>
-    <Text className="line-clamp-4">{description}</Text>
+    <h2 className="line-clamp-1 capitalize text-lg font-semibold text-primary">
+      {name}
+    </h2>
+    <Text className="line-clamp-4 flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
+      {description}
+    </Text>
   </div>
 );
 
 const DrinkInfo = ({ name }: { name: string }) => (
   <div>
-    <h2 className="text-lg font-semibold text-primary">{name}</h2>
+    <h2 className="line-clamp-1 capitalize text-lg font-semibold text-primary">
+      {name}
+    </h2>
   </div>
 );
 
 const ChefInfo = ({ name }: { name: string }) => (
   <div>
-    <h2 className="text-lg font-semibold text-primary">{name}</h2>
+    <h2 className="line-clamp-1 capitalize text-lg font-semibold text-primary">
+      {name}
+    </h2>
   </div>
 );
 
 const TransferInfo = ({ name }: { name: string }) => (
   <div>
-    <h2 className="text-lg font-semibold text-primary">{name}</h2>
+    <h2 className="line-clamp-1 capitalize text-lg font-semibold text-primary">
+      {name}
+    </h2>
   </div>
 );
 
@@ -253,7 +273,9 @@ const BoatInfo = ({
   secondName?: string;
 }) => (
   <div>
-    <h2 className="text-lg font-semibold text-primary">{name}</h2>
+    <h2 className="line-clamp-1 capitalize text-lg font-semibold text-primary">
+      {name}
+    </h2>
     {secondName && (
       <Text size="1" className="mb-2">
         {secondName}

@@ -1,8 +1,8 @@
-import { Select } from '@magnetic/ui';
+import { CustomInput, RentalCarDatesRangeInput } from '@magnetic/ui';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { searchBoats } from '../../apis/api-boats';
-import { BoatsSearchAttributes, Item } from '@magnetic/interfaces';
+import { BoatsSearchAttributes } from '@magnetic/interfaces';
 
 interface Props {
   onChangeFilters: (filters: BoatsSearchAttributes) => void;
@@ -48,10 +48,7 @@ function FilterBoats(props: Props) {
     { value: '10000', label: '$5,000+' },
   ];
 
-  const handleSearchChange = (
-    e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
-  ) => {
-    const { name, value } = e.target;
+  const handleSearchChange = (name: string, value: string) => {
     const updatedFilters = {
       ...searchParams,
       [name]: value,
@@ -61,64 +58,38 @@ function FilterBoats(props: Props) {
   };
 
   return (
-    <div>
-      <div className="p-4">
-        <h3 className="text-center pb-[30px]">Search</h3>
-        <form className="grid grid-cols-4 gap-x-[30px]">
-          {/* <div className="flex flex-col">
-            <input
+    <div className="w-full relative mt-8 rounded-[40px] xl:rounded-[49px] rounded-t-2xl xl:rounded-t-3xl shadow-xl dark:shadow-2xl bg-white dark:bg-neutral-800">
+      <form className="grid grid-cols-4 gap-x-[30px]">
+        {/* <input
               type="date"
               name="date"
               value={searchParams.date}
               onChange={handleSearchChange}
               className="input w-full px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-            />
-          </div> */}
-          <div className="flex flex-col">
-            <Select
-              name="guests"
-              value={searchParams.guests}
-              onChange={handleSearchChange}
-              className="w-[150px]"
-            >
-              {capacityOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </Select>
-          </div>
-          <div className="flex flex-col">
-            <Select
-              name="size"
-              value={searchParams.size}
-              onChange={handleSearchChange}
-              className="w-[150px]"
-            >
-              {sizeOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </Select>
-          </div>
-          <div className="flex flex-col">
-            <Select
-              name="budget"
-              value={searchParams.priceGreaterThan}
-              onChange={handleSearchChange}
-              className="w-[150px]"
-            >
-              {budgetOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </Select>
-          </div>
-        </form>
-      </div>
-      <hr className="mt-4 mb-8 border-t border-gray-300" />
+            /> */}
+        <CustomInput
+          name="guests"
+          desc="capacity"
+          options={capacityOptions}
+          value={searchParams.guests || ''}
+          onChange={handleSearchChange}
+        />
+        <CustomInput
+          name="size"
+          desc="size"
+          options={sizeOptions}
+          value={searchParams.size || ''}
+          onChange={handleSearchChange}
+        />
+        <RentalCarDatesRangeInput />
+        <CustomInput
+          name="priceGreaterThan"
+          desc="budget"
+          options={budgetOptions}
+          value={searchParams.priceGreaterThan || ''}
+          onChange={handleSearchChange}
+        />
+      </form>
     </div>
   );
 }
