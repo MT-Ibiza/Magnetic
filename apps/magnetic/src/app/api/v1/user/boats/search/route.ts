@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
       filters.push({ boatType: { equals: boatType, mode: 'insensitive' } });
     }
     if (guests) {
-      filters.push({ guests: { gte: parseInt(guests) } });
+      filters.push({ capacity: { gte: parseInt(guests) } });
     }
     if (crew) {
       filters.push({ crew: { gte: parseInt(crew) } });

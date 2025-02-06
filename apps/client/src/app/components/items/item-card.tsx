@@ -111,7 +111,7 @@ function ItemCard(props: Props) {
                 <BoatInfo
                   name={item.name}
                   secondName={item.boatAttributes?.secondName}
-                  guests={item.boatAttributes?.guests || 0}
+                  capacity={item.boatAttributes?.capacity || 0}
                 />
               )}
             </>
@@ -245,11 +245,11 @@ const TransferInfo = ({ name }: { name: string }) => (
 
 const BoatInfo = ({
   name,
-  guests,
+  capacity,
   secondName,
 }: {
   name: string;
-  guests: number;
+  capacity: number;
   secondName?: string;
 }) => (
   <div>
@@ -259,7 +259,7 @@ const BoatInfo = ({
         {secondName}
       </Text>
     )}
-    <Text size="1">{`Max Pax: ${guests}`}</Text>
+    <Text size="1">{`Max Pax: ${capacity}`}</Text>
   </div>
 );
 

@@ -83,7 +83,7 @@ function ItemBoatCard(props: Props) {
                   {item.name}
                 </h2>
                 <Text size="1">{`Max Pax: ${
-                  item.boatAttributes?.guests || '-'
+                  item.boatAttributes?.capacity || '-'
                 }`}</Text>
               </div>
               <div className="flex flex-col gap-3 items-end">
