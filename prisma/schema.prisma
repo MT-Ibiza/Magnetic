@@ -72,24 +72,25 @@ model Category {
 }
 
 model BoatAttributes {
-  id                Int      @id @default(autoincrement())
-  airtableId        String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  secondName        String?
-  boatType          String
-  berth             String
-  guests            Int
-  crew              Int
-  beamInCentimeters Int
-  cabins            Int
-  fuelConsumption   Int
-  description       String?
-  latitude          String?
-  longitude         String?
-  sizeInCentimeters Int      @default(100)
-  itemId            Int      @unique
-  item              Item     @relation(fields: [itemId], references: [id])
+  id              Int      @id @default(autoincrement())
+  airtableId      String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  boatType        String
+  capacity        Int      @default(1)
+  beamInMeters    Int      @default(1)
+  sizeInMeters    Int      @default(1)
+  crew            Int
+  cabins          Int
+  fuelConsumption Int
+  port            String?
+  secondName      String?
+  description     String?
+  latitude        String?
+  longitude       String?
+  iCal            String?
+  itemId          Int      @unique
+  item            Item     @relation(fields: [itemId], references: [id])
 }
 
 model DrinkAttributes {

@@ -13,16 +13,21 @@ export async function GET(req: NextRequest) {
   const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
 
   try {
-    const boatsDdIds = await db.boatAttributes.findMany({
+    const importedBoats = await db.boatAttributes.findMany({
+      where: {
+        airtableId: {
+          not: null,
+        },
+      },
       select: {
         airtableId: true,
+        id: true,
       },
     });
-    const ids = boatsDdIds.map((b) => b.airtableId || '');
     const boats = await getBoatsAirtable({
       offset,
       pageSize,
-      importedBoatsIds: ids,
+      importedBoats,
     });
 
     return NextResponse.json(boats, {
@@ -43,7 +48,7 @@ export async function GET(req: NextRequest) {
 async function getBoatsAirtable({
   offset,
   pageSize,
-  importedBoatsIds,
+  importedBoats,
 }: AirtableParams): Promise<AirtableBoatResponse> {
   const url = new URL(
     `https://api.airtable.com/v0/${process.env.AIRTABLE_BOATS_ID}/Boats`
@@ -69,8 +74,14 @@ async function getBoatsAirtable({
 
   return {
     records: parsedResponse.records.map((record: AirtableBoatField) => {
+      const importedBoat = importedBoats.find(
+        (boat) => boat.airtableId === record.id
+      );
       const boat = getFieldsBoats(record);
-      return { ...boat, ...{ imported: importedBoatsIds.includes(boat.id) } };
+      return {
+        ...boat,
+        ...{ imported: !!importedBoat, itemId: importedBoat?.id },
+      };
     }),
     ...(parsedResponse.offset && { offset: parsedResponse.offset }),
   };
@@ -80,10 +91,18 @@ function getFieldsBoats(record: AirtableBoatField) {
   const { fields } = record;
   return {
     id: record.id,
+    boat: fields.Boat,
     name: fields.Name,
     port: fields.Port,
-    length: fields['Length (F)'],
-    capacity: fields.Capacity,
+    lengthInMeters: fields['Length (M)'],
+    beamInMeters: fields['Beam (M)'],
+    capacity: fields.Capacity, //guests
     price: fields.Pricing,
+    cabins: Number(fields.Cabins),
+    type: fields.Type,
+    crew: fields.Crew,
+    fuelConsumption: fields['Fuel Consuption (L/H)'],
+    included: fields.Included,
+    iCal: fields.iCal,
   };
 }

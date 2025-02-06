@@ -4,7 +4,22 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   const data: AirtableBoat = await request.json();
-  const { capacity, id, length, name, port, price } = data;
+  const {
+    capacity,
+    id,
+    lengthInMeters,
+    beamInMeters,
+    boat,
+    iCal,
+    fuelConsumption,
+    name,
+    port,
+    price,
+    included,
+    cabins,
+    crew,
+    type,
+  } = data;
   try {
     const service = await db.service.findMany({
       where: {
@@ -12,27 +27,30 @@ export async function POST(request: NextRequest) {
       },
     });
     const serviceId = service[0].id;
-    const boat = await db.item.create({
+    const newBoat = await db.item.create({
       data: {
-        name,
+        name: boat,
         priceInCents: 1000,
         serviceId: serviceId,
-        description: 'boat imported',
+        description: included,
         boatAttributes: {
           create: {
+            crew,
+            cabins,
+            port,
+            capacity,
+            iCal,
+            beamInMeters,
+            fuelConsumption,
+            boatType: type,
+            secondName: name,
             airtableId: id,
-            guests: capacity,
-            crew: capacity,
-            beamInCentimeters: length,
-            cabins: capacity,
-            fuelConsumption: capacity,
-            boatType: 'any',
-            berth: port,
+            sizeInMeters: lengthInMeters,
           },
         },
       },
     });
-    return NextResponse.json(boat);
+    return NextResponse.json(newBoat);
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(

@@ -1,7 +1,10 @@
 export interface AirtableParams {
   offset?: string;
   pageSize: number;
-  importedBoatsIds: string[];
+  importedBoats: {
+    airtableId: string | null;
+    id: number;
+  }[];
 }
 
 export interface AirtableBoatResponse {
@@ -48,11 +51,20 @@ export interface AirtableBoatField {
 }
 
 export interface AirtableBoat {
-  capacity: number;
   id: string;
-  length: number;
+  capacity: number;
   name: string;
   port: string;
   price: string;
   imported: boolean;
+  itemId?: number;
+  beamInMeters: number;
+  lengthInMeters: number;
+  cabins: number;
+  type: string;
+  crew: number;
+  fuelConsumption: number;
+  included: string;
+  iCal: string;
+  boat: string;
 }

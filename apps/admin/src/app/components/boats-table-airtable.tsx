@@ -1,8 +1,7 @@
-import React from 'react';
 import { useAirtableBoats } from '../hooks/useAirtableBoats';
 import Loading from './loading';
 import { ErrorText } from './error-text';
-import { Button } from '@magnetic/ui';
+import { Button, Text } from '@magnetic/ui';
 import ImportBoatButton from './import-boat-button';
 
 interface Props {}
@@ -28,9 +27,9 @@ function BoatsTableAirtable(props: Props) {
             <th>#</th>
             <th>Name</th>
             <th>Port</th>
-            <th>Length (F)</th>
+            <th>Length (Mt)</th>
             <th>Capacity</th>
-            <th>Price</th>
+            {/* <th>Price</th> */}
             <th>Actions</th>
           </tr>
         </thead>
@@ -38,18 +37,25 @@ function BoatsTableAirtable(props: Props) {
           {boats.map((boat, index) => (
             <tr className="hover" key={index}>
               <td>{index + 1}</td>
-              <td>{boat.name}</td>
-              <td>{boat.port}</td>
-              <td>{boat.length} ft</td>
-              <td>{boat.capacity}</td>
               <td>
-                {boat.price.split('\n')}
-                {/* <div>
+                <div className="flex flex-col gap-1">
+                  <Text>{boat.boat}</Text>
+                  <Text size="1" className="text-gray-500">
+                    {boat.name}
+                  </Text>
+                </div>
+              </td>
+              <td>{boat.port}</td>
+              <td>{boat.lengthInMeters} mt</td>
+              <td>{boat.capacity}</td>
+              {/* <td> */}
+              {/* {boat.price.split('\n')} */}
+              {/* <div>
                   {boat.price.split('\n').map((price, index) => (
                     <div key={index}>{price}</div>
                   ))}
                 </div> */}
-              </td>
+              {/* </td> */}
               <td>
                 <ImportBoatButton boat={boat} />
               </td>
