@@ -3,6 +3,7 @@ import Loading from './loading';
 import { ErrorText } from './error-text';
 import { Button, Text } from '@magnetic/ui';
 import ImportBoatButton from './import-boat-button';
+import { Link } from 'react-router-dom';
 
 interface Props {}
 
@@ -58,6 +59,13 @@ function BoatsTableAirtable(props: Props) {
               {/* </td> */}
               <td>
                 <ImportBoatButton boat={boat} />
+                {boat.item && (
+                  <Link
+                    to={`/services/${boat.item.serviceId}/items/${boat.item.id}/edit`}
+                  >
+                    <Button>View Boat</Button>
+                  </Link>
+                )}
               </td>
             </tr>
           ))}

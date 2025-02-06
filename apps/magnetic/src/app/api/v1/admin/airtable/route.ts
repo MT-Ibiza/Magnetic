@@ -21,16 +21,28 @@ export async function GET(req: NextRequest) {
       },
       select: {
         airtableId: true,
-        id: true,
+        item: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
-    const boats = await getBoatsAirtable({
-      offset,
-      pageSize,
-      importedBoats,
+
+    const boats = importedBoats.map((ib) => {
+      return {
+        airtableId: ib.airtableId,
+        itemId: ib.item.id,
+      };
     });
 
-    return NextResponse.json(boats, {
+    const airtableBoats = await getBoatsAirtable({
+      offset,
+      pageSize,
+      importedBoats: boats,
+    });
+
+    return NextResponse.json(airtableBoats, {
       status: 200,
     });
   } catch (error: any) {
@@ -72,6 +84,13 @@ async function getBoatsAirtable({
 
   const parsedResponse = await response.json();
 
+  const service = await db.service.findMany({
+    where: {
+      serviceType: 'boat_rental' as 'boat_rental',
+    },
+  });
+  const serviceId = service[0].id;
+
   return {
     records: parsedResponse.records.map((record: AirtableBoatField) => {
       const importedBoat = importedBoats.find(
@@ -80,7 +99,15 @@ async function getBoatsAirtable({
       const boat = getFieldsBoats(record);
       return {
         ...boat,
-        ...{ imported: !!importedBoat, itemId: importedBoat?.id },
+        ...{
+          imported: !!importedBoat,
+          item: importedBoat?.itemId
+            ? {
+                id: importedBoat.itemId,
+                serviceId,
+              }
+            : undefined,
+        },
       };
     }),
     ...(parsedResponse.offset && { offset: parsedResponse.offset }),

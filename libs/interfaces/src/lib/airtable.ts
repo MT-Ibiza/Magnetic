@@ -3,7 +3,7 @@ export interface AirtableParams {
   pageSize: number;
   importedBoats: {
     airtableId: string | null;
-    id: number;
+    itemId: number;
   }[];
 }
 
@@ -57,7 +57,10 @@ export interface AirtableBoat {
   port: string;
   price: string;
   imported: boolean;
-  itemId?: number;
+  item?: {
+    id: number;
+    serviceId: number;
+  };
   beamInMeters: number;
   lengthInMeters: number;
   cabins: number;
