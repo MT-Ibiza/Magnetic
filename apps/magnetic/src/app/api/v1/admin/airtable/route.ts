@@ -3,6 +3,7 @@ import {
   AirtableBoatResponse,
   AirtableParams,
 } from '@magnetic/interfaces';
+import db from 'apps/magnetic/src/app/libs/db';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
@@ -12,7 +13,18 @@ export async function GET(req: NextRequest) {
   const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
 
   try {
-    const boats = await getBoatsAirtable({ offset, pageSize });
+    const boatsDdIds = await db.boatAttributes.findMany({
+      select: {
+        airtableId: true,
+      },
+    });
+    const ids = boatsDdIds.map((b) => b.airtableId || '');
+    const boats = await getBoatsAirtable({
+      offset,
+      pageSize,
+      importedBoatsIds: ids,
+    });
+
     return NextResponse.json(boats, {
       status: 200,
     });
@@ -31,6 +43,7 @@ export async function GET(req: NextRequest) {
 async function getBoatsAirtable({
   offset,
   pageSize,
+  importedBoatsIds,
 }: AirtableParams): Promise<AirtableBoatResponse> {
   const url = new URL(
     `https://api.airtable.com/v0/${process.env.AIRTABLE_BOATS_ID}/Boats`
@@ -56,7 +69,8 @@ async function getBoatsAirtable({
 
   return {
     records: parsedResponse.records.map((record: AirtableBoatField) => {
-      return getFieldsBoats(record);
+      const boat = getFieldsBoats(record);
+      return { ...boat, ...{ imported: importedBoatsIds.includes(boat.id) } };
     }),
     ...(parsedResponse.offset && { offset: parsedResponse.offset }),
   };

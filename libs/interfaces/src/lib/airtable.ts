@@ -1,6 +1,7 @@
 export interface AirtableParams {
   offset?: string;
   pageSize: number;
+  importedBoatsIds: string[];
 }
 
 export interface AirtableBoatResponse {
@@ -53,4 +54,5 @@ export interface AirtableBoat {
   name: string;
   port: string;
   price: string;
+  imported: boolean;
 }

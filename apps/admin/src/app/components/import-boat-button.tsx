@@ -10,7 +10,7 @@ interface Props {
 
 export function ImportBoatButton(props: Props) {
   const { boat } = props;
-  const [imported, setImported] = useState(false);
+  const [imported, setImported] = useState(boat.imported);
   const [isSaving, setIsSaving] = useState(false);
 
   const mutation = useMutation<Item, Error, AirtableBoat>({
@@ -21,18 +21,11 @@ export function ImportBoatButton(props: Props) {
 
   async function saveBoat() {
     setIsSaving(true);
-    await mutation.mutateAsync(boat),
-      {
-        loading: 'Importing Boat..',
-        success: () => {
-          setImported(true);
-          setIsSaving(false);
-        },
-        error: (data: any) => {
-          setIsSaving(false);
-        },
-      };
-    setIsSaving(false);
+    await mutation.mutateAsync(boat);
+    setTimeout(() => {
+      setIsSaving(false);
+      setImported(true);
+    }, 500);
   }
   return (
     <>
