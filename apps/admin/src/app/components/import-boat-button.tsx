@@ -1,5 +1,5 @@
 import { AirtableBoat, Item } from '@magnetic/interfaces';
-import { importBoat } from '../apis/api-airtable';
+import { importBoat, reImportBoat } from '../apis/api-airtable';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Button } from '@magnetic/ui';
@@ -13,15 +13,25 @@ export function ImportBoatButton(props: Props) {
   const [imported, setImported] = useState(boat.imported);
   const [isSaving, setIsSaving] = useState(false);
 
-  const mutation = useMutation<Item, Error, AirtableBoat>({
+  const importMutation = useMutation<Item, Error, AirtableBoat>({
     mutationFn: (boat) => {
       return importBoat(boat);
     },
   });
 
+  const reImportMutation = useMutation<Item, Error, AirtableBoat>({
+    mutationFn: (boat) => {
+      return reImportBoat(boat);
+    },
+  });
+
   async function saveBoat() {
     setIsSaving(true);
-    await mutation.mutateAsync(boat);
+    if (imported) {
+      await reImportMutation.mutateAsync(boat);
+    } else {
+      await importMutation.mutateAsync(boat);
+    }
     setTimeout(() => {
       setIsSaving(false);
       setImported(true);
@@ -30,7 +40,17 @@ export function ImportBoatButton(props: Props) {
   return (
     <>
       {imported ? (
-        <span>Imported</span>
+        <Button
+          variant="outline"
+          size={1}
+          loading={isSaving}
+          loadingText="Sync..."
+          onClick={() => {
+            saveBoat();
+          }}
+        >
+          Sync
+        </Button>
       ) : (
         <Button
           loading={isSaving}
@@ -43,7 +63,7 @@ export function ImportBoatButton(props: Props) {
         </Button>
       )}
       <br />
-      {mutation.isError && <span>Server Error</span>}
+      {importMutation.isError && <span>Server Error</span>}
     </>
   );
 }

@@ -1,20 +1,16 @@
 import {
   Category,
-  EditItem,
   Item,
   ItemBase,
   ItemVariant,
-  NewItem,
   Service,
 } from '@magnetic/interfaces';
 import {
   Button,
-  CardWrapper,
   DrawerContent,
   Input,
   Text,
   TextArea,
-  UploadImage,
   UploadMultipleImages,
 } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
@@ -89,15 +85,15 @@ export function FormBoatItem(props: Props) {
       boatAttributes: {
         secondName: item?.boatAttributes?.secondName,
         boatType: item?.boatAttributes?.boatType,
-        berth: item?.boatAttributes?.berth,
-        guests: item?.boatAttributes?.guests,
+        port: item?.boatAttributes?.port,
+        capacity: item?.boatAttributes?.capacity,
         crew: item?.boatAttributes?.crew,
-        beamInCentimeters: item?.boatAttributes?.beamInCentimeters,
+        beamInMeters: item?.boatAttributes?.beamInMeters,
         cabins: item?.boatAttributes?.cabins,
         fuelConsumption: item?.boatAttributes?.fuelConsumption,
         latitude: item?.boatAttributes?.latitude,
         longitude: item?.boatAttributes?.longitude,
-        sizeInCentimeters: item?.boatAttributes?.sizeInCentimeters,
+        sizeInMeters: item?.boatAttributes?.sizeInMeters,
       },
     },
   });
@@ -147,13 +143,13 @@ export function FormBoatItem(props: Props) {
       JSON.stringify({
         secondName: boatAttributes.secondName,
         boatType: boatAttributes.boatType,
-        berth: boatAttributes.berth,
-        guests: Number(boatAttributes.guests),
+        port: boatAttributes.port,
+        capacity: Number(boatAttributes.capacity),
         crew: Number(boatAttributes.crew),
-        beamInCentimeters: Number(boatAttributes.beamInCentimeters),
+        beamInMeters: Number(boatAttributes.beamInMeters),
         cabins: Number(boatAttributes.cabins),
         fuelConsumption: Number(boatAttributes.fuelConsumption),
-        sizeInCentimeters: Number(boatAttributes.sizeInCentimeters),
+        sizeInMeters: Number(boatAttributes.sizeInMeters),
         latitude: boatAttributes.latitude.toString(),
         longitude: boatAttributes.longitude.toString(),
       })
@@ -280,37 +276,37 @@ export function FormBoatItem(props: Props) {
               </div>
               <div>
                 <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Berth
+                  Port
                 </Text>
                 <Input
                   type="text"
                   className="mt-2 w-full"
-                  placeholder="Enter the berth"
-                  {...register('boatAttributes.berth', {
-                    required: 'Berth is required',
+                  placeholder="Enter the port"
+                  {...register('boatAttributes.port', {
+                    required: 'Port is required',
                   })}
                 />
-                {errors.boatAttributes?.berth && (
+                {errors.boatAttributes?.port && (
                   <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.berth.message}
+                    {errors.boatAttributes?.port.message}
                   </p>
                 )}
               </div>
               <div>
                 <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Guests
+                  Capacity
                 </Text>
                 <Input
                   type="number"
                   className="mt-2 w-full"
                   placeholder="Number of guests"
-                  {...register('boatAttributes.guests', {
-                    required: 'Guests is required',
+                  {...register('boatAttributes.capacity', {
+                    required: 'Capacity is required',
                   })}
                 />
-                {errors.boatAttributes?.guests && (
+                {errors.boatAttributes?.capacity && (
                   <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.guests.message}
+                    {errors.boatAttributes?.capacity.message}
                   </p>
                 )}
               </div>
@@ -334,19 +330,19 @@ export function FormBoatItem(props: Props) {
               </div>
               <div>
                 <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Beam (in cm)
+                  Beam (mt)
                 </Text>
                 <Input
                   type="number"
                   className="mt-2 w-full"
                   placeholder="Enter the beam size in centimeters"
-                  {...register('boatAttributes.beamInCentimeters', {
+                  {...register('boatAttributes.beamInMeters', {
                     required: 'Beam is required',
                   })}
                 />
-                {errors.boatAttributes?.beamInCentimeters && (
+                {errors.boatAttributes?.beamInMeters && (
                   <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.beamInCentimeters.message}
+                    {errors.boatAttributes?.beamInMeters.message}
                   </p>
                 )}
               </div>
@@ -388,19 +384,19 @@ export function FormBoatItem(props: Props) {
               </div>
               <div>
                 <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Boat Size (ft)
+                  Boat Size (mt)
                 </Text>
                 <Input
                   type="number"
                   className="mt-2 w-full"
                   placeholder="Enter the boat size in centimeters"
-                  {...register('boatAttributes.sizeInCentimeters', {
+                  {...register('boatAttributes.sizeInMeters', {
                     required: 'Boat size is required',
                   })}
                 />
-                {errors.boatAttributes?.sizeInCentimeters && (
+                {errors.boatAttributes?.sizeInMeters && (
                   <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.sizeInCentimeters.message}
+                    {errors.boatAttributes?.sizeInMeters.message}
                   </p>
                 )}
               </div>

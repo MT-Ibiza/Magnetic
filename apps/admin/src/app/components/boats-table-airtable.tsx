@@ -40,7 +40,16 @@ function BoatsTableAirtable(props: Props) {
               <td>{index + 1}</td>
               <td>
                 <div className="flex flex-col gap-1">
-                  <Text>{boat.boat}</Text>
+                  {boat.item ? (
+                    <Link
+                      to={`/services/${boat.item.serviceId}/items/${boat.item.id}/edit`}
+                      className="underline"
+                    >
+                      <Text size="1">{boat.boat}</Text>
+                    </Link>
+                  ) : (
+                    <Text size="1">{boat.boat}</Text>
+                  )}
                   <Text size="1" className="text-gray-500">
                     {boat.name}
                   </Text>
@@ -58,14 +67,9 @@ function BoatsTableAirtable(props: Props) {
                 </div> */}
               {/* </td> */}
               <td>
-                <ImportBoatButton boat={boat} />
-                {boat.item && (
-                  <Link
-                    to={`/services/${boat.item.serviceId}/items/${boat.item.id}/edit`}
-                  >
-                    <Button>View Boat</Button>
-                  </Link>
-                )}
+                <div className="flex gap-2">
+                  <ImportBoatButton boat={boat} />
+                </div>
               </td>
             </tr>
           ))}

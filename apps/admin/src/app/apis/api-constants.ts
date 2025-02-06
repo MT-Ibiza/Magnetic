@@ -92,3 +92,6 @@ export const URL_GET_ORDER = (id: number) => `${API_URL}/orders/${id}`;
 //airtable
 export const URL_GET_AIRTABLE_BOATS = `${API_URL}/airtable`;
 export const URL_IMPORT_AIRTABLE_BOAT = `${API_URL}/airtable/boat/import`;
+export const URL_REIMPORT_AIRTABLE_BOAT = `${API_URL}/airtable/boat/import`;
+// export const URL_REIMPORT_AIRTABLE_BOAT = (airtableId: string) =>
+//   `${API_URL}/airtable/boat/${airtableId}import`;

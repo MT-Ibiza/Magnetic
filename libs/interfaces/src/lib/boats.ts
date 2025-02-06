@@ -1,15 +1,15 @@
 export interface BoatBase {
   boatType: string;
-  berth: string;
-  guests: number;
+  port: string;
+  capacity: number;
   crew: number;
-  beamInCentimeters: number;
+  beamInMeters: number;
+  sizeInMeters: number;
   cabins: number;
   fuelConsumption: number;
   description?: string;
   latitude?: string;
   longitude?: string;
-  sizeInCentimeters: number;
   itemId: number;
   secondName?: string;
 }
