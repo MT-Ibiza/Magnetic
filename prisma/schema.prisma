@@ -73,6 +73,7 @@ model Category {
 
 model BoatAttributes {
   id                Int      @id @default(autoincrement())
+  airtableId        String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   secondName        String?

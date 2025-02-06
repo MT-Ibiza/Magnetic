@@ -22,6 +22,7 @@ export interface Boat extends BoatBase {
 
 export interface BoatAttributes {
   id?: number;
+  airtableId?: number;
   createdAt?: Date;
   updatedAt?: Date;
   boatType: string;

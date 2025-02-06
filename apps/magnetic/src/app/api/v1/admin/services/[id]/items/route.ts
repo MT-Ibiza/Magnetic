@@ -28,7 +28,6 @@ export async function POST(
         description,
         priceInCents,
         serviceId: Number(params.id),
-
         boatAttributes: boatAttributes
           ? {
               create: {
