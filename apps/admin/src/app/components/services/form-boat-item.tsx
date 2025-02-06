@@ -388,7 +388,7 @@ export function FormBoatItem(props: Props) {
               </div>
               <div>
                 <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Boat Size (in cm)
+                  Boat Size (ft)
                 </Text>
                 <Input
                   type="number"

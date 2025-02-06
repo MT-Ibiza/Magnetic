@@ -3,6 +3,7 @@ import { useAirtableBoats } from '../hooks/useAirtableBoats';
 import Loading from './loading';
 import { ErrorText } from './error-text';
 import { Button } from '@magnetic/ui';
+import ImportBoatButton from './import-boat-button';
 
 interface Props {}
 
@@ -50,7 +51,7 @@ function BoatsTableAirtable(props: Props) {
                 </div> */}
               </td>
               <td>
-                <Button variant="outline">Import</Button>
+                <ImportBoatButton boat={boat} />
               </td>
             </tr>
           ))}
