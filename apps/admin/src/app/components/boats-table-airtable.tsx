@@ -27,7 +27,7 @@ function BoatsTableAirtable(props: Props) {
             <th>#</th>
             <th>Name</th>
             <th>Port</th>
-            <th>Length</th>
+            <th>Length (F)</th>
             <th>Capacity</th>
             <th>Price</th>
             <th>Actions</th>
@@ -39,16 +39,25 @@ function BoatsTableAirtable(props: Props) {
               <td>{index + 1}</td>
               <td>{boat.name}</td>
               <td>{boat.port}</td>
-              <td>{boat.length}</td>
+              <td>{boat.length} ft</td>
               <td>{boat.capacity}</td>
-              <td>s</td>
-              <td>s</td>
+              <td>
+                {boat.price.split('\n')}
+                {/* <div>
+                  {boat.price.split('\n').map((price, index) => (
+                    <div key={index}>{price}</div>
+                  ))}
+                </div> */}
+              </td>
+              <td>
+                <Button variant="outline">Import</Button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
       {hasNextPage && (
-        <div className="text-center">
+        <div className="text-center mt-3">
           <Button
             variant="solid"
             onClick={() => {
