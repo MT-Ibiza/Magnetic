@@ -25,5 +25,7 @@ export { Select } from './lib/select';
 export { FormJsonDetails } from './lib/form-json-details';
 export { UploadMultipleImages } from './lib/multiple-images';
 export { ItemsGallery } from './lib/items-gallery';
+export { CustomInput }from './lib/custom-input';
+export { RentalCarDatesRangeInput }from './lib/calendar-range';
 
 

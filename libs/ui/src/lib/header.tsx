@@ -26,7 +26,7 @@ export function HeaderApp(props: HeaderProps) {
 
   return (
     <div
-      className={`bg-base-100 sticky top-0 left-0 right-0 z-10 shadow-sm  transition-all duration-300 ${
+      className={`bg-base-100 sticky top-0 left-0 right-0 z-20 shadow-sm  transition-all duration-300 ${
         isSidebarVisible
           ? 'lg:ml-[260px] lg:w-[calc(100%-260px)]'
           : 'lg:ml-0 w-full'
