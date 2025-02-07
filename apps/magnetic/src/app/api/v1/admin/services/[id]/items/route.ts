@@ -32,16 +32,16 @@ export async function POST(
           ? {
               create: {
                 boatType: boatAttributes.boatType,
-                berth: boatAttributes.berth,
-                guests: boatAttributes.guests,
+                port: boatAttributes.port,
+                capacity: boatAttributes.capacity,
                 crew: boatAttributes.crew,
-                beamInCentimeters: boatAttributes.beamInCentimeters,
+                beamInMeters: boatAttributes.beamInMeters,
                 cabins: boatAttributes.cabins,
                 fuelConsumption: boatAttributes.fuelConsumption,
                 description: boatAttributes.description,
                 latitude: boatAttributes.latitude,
                 longitude: boatAttributes.longitude,
-                sizeInCentimeters: boatAttributes.sizeInCentimeters,
+                sizeInMeters: boatAttributes.sizeInMeters,
               },
             }
           : {},

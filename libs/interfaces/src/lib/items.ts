@@ -1,4 +1,4 @@
-import { BoatAttributes, BoatBase } from './boats';
+import { BoatBase } from './boats';
 import { Category } from './categories';
 import { DrinkBase } from './drinks';
 import { Service } from './services';
