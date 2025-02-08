@@ -96,6 +96,7 @@ async function getBoatsAirtable({
       const importedBoat = importedBoats.find(
         (boat) => boat.airtableId === record.id
       );
+      console.log(record);
       const boat = getFieldsBoats(record);
       return {
         ...boat,

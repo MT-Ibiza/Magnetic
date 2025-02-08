@@ -72,14 +72,14 @@ model Category {
 }
 
 model BoatAttributes {
-  id              Int      @id @default(autoincrement())
-  airtableId      String?  @unique
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id              Int                @id @default(autoincrement())
+  airtableId      String?            @unique
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
   boatType        String
-  capacity        Int      @default(1)
-  beamInMeters    Int      @default(1)
-  sizeInMeters    Int      @default(1)
+  capacity        Int                @default(1)
+  beamInMeters    Int                @default(1)
+  sizeInMeters    Int                @default(1)
   crew            Int
   cabins          Int
   fuelConsumption Int
@@ -89,8 +89,19 @@ model BoatAttributes {
   latitude        String?
   longitude       String?
   iCal            String?
-  itemId          Int      @unique
-  item            Item     @relation(fields: [itemId], references: [id])
+  itemId          Int                @unique
+  item            Item               @relation(fields: [itemId], references: [id])
+  availability    BoatAvailability[]
+}
+
+model BoatAvailability {
+  id        Int            @id @default(autoincrement())
+  startDate DateTime
+  endDate   DateTime
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  boatId    Int
+  boat      BoatAttributes @relation(fields: [boatId], references: [id], onDelete: Cascade)
 }
 
 model DrinkAttributes {

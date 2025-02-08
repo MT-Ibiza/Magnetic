@@ -16,6 +16,7 @@ import FormProduct from '../../components/services/form-product';
 import { Item } from '@magnetic/interfaces';
 import FormVariant from '../../components/form-variant';
 import './styles.scss';
+import { BoatsTable } from '../../components/boats/boats-table';
 
 interface Props {}
 
@@ -110,20 +111,24 @@ function ServicePage(props: Props) {
             <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
           ) : (
             <div className="mt-6">
-              <ItemsTable
-                items={service.items || []}
-                onClickEdit={(item) => {
-                  toggleDrawer();
-                  setSelectedItem(item);
-                  setOpenForm('product');
-                }}
-                onClickVariant={(item) => {
-                  toggleDrawer();
-                  setSelectedItem(item);
-                  setOpenForm('variant');
-                }}
-                onTogglePublish={handlePublishToggle}
-              />
+              {service.serviceType === 'boat_rental' ? (
+                <BoatsTable />
+              ) : (
+                <ItemsTable
+                  items={service.items || []}
+                  onClickEdit={(item) => {
+                    toggleDrawer();
+                    setSelectedItem(item);
+                    setOpenForm('product');
+                  }}
+                  onClickVariant={(item) => {
+                    toggleDrawer();
+                    setSelectedItem(item);
+                    setOpenForm('variant');
+                  }}
+                  onTogglePublish={handlePublishToggle}
+                />
+              )}
             </div>
           )}
         </div>

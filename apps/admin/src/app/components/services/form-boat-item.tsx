@@ -171,39 +171,77 @@ export function FormBoatItem(props: Props) {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="main-info flex-1 space-y-6">
-            <div className="flex flex-col">
-              <label
-                htmlFor="name"
-                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
-              >
-                Boat Name
-              </label>
-              <Input
-                id="name"
-                type="text"
-                {...register('name', { required: true })}
-                className="mt-2"
-              />
-              {errors.name && (
-                <p className="text-xs text-red-500 mt-1">Name is required</p>
-              )}
+            <div className="flex gap-5">
+              <div className="flex flex-col w-full">
+                <label
+                  htmlFor="name"
+                  className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+                >
+                  Boat Name
+                </label>
+                <Input
+                  id="name"
+                  type="text"
+                  {...register('name', { required: true })}
+                  className="mt-2"
+                />
+                {errors.name && (
+                  <p className="text-xs text-red-500 mt-1">Name is required</p>
+                )}
+              </div>
+              <div className="flex flex-col w-full">
+                <label
+                  htmlFor="secondName"
+                  className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+                >
+                  Boat Second Name
+                </label>
+                <Input
+                  id="secondName"
+                  type="text"
+                  {...register('boatAttributes.secondName')}
+                  className="mt-2"
+                />
+              </div>
             </div>
-
-            <div className="flex flex-col">
-              <label
-                htmlFor="secondName"
-                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
-              >
-                Boat Second Name
-              </label>
-              <Input
-                id="secondName"
-                type="text"
-                {...register('boatAttributes.secondName')}
-                className="mt-2"
-              />
+            <div className="flex gap-5">
+              <div className="w-full">
+                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                  Boat Type
+                </Text>
+                <Input
+                  className="mt-2 w-full"
+                  type="text"
+                  placeholder="Enter the type of boat"
+                  {...register('boatAttributes.boatType', {
+                    required: 'Boat Type is required',
+                  })}
+                />
+                {errors.boatAttributes?.boatType && (
+                  <p className="text-[12px] text-red-500 pt-2">
+                    {errors.boatAttributes?.boatType.message}
+                  </p>
+                )}
+              </div>
+              <div className="w-full">
+                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                  Port
+                </Text>
+                <Input
+                  type="text"
+                  className="mt-2 w-full"
+                  placeholder="Enter the port"
+                  {...register('boatAttributes.port', {
+                    required: 'Port is required',
+                  })}
+                />
+                {errors.boatAttributes?.port && (
+                  <p className="text-[12px] text-red-500 pt-2">
+                    {errors.boatAttributes?.port.message}
+                  </p>
+                )}
+              </div>
             </div>
-
             <div className="flex flex-col">
               <label
                 htmlFor="priceInCents"
@@ -226,107 +264,44 @@ export function FormBoatItem(props: Props) {
                 </p>
               )}
             </div>
-            <div className="flex flex-col">
-              <label
-                htmlFor="description"
-                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
-              >
-                Description
-              </label>
-              <TextArea
-                id="description"
-                placeholder="Describe your product here"
-                {...register('description', { required: true })}
-                className="mt-2"
-              />
-              {errors.description && (
-                <p className="text-xs text-red-500 mt-1">
-                  Description is required
-                </p>
-              )}
-            </div>
-
-            <div className="media mt-6">
-              <UploadMultipleImages
-                images={imagesFiles}
-                onChange={handleImageChange}
-                height="250px"
-                existingImages={item?.images}
-              />
-            </div>
-
             <div className="boat-attributes-form space-y-6">
-              <div>
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Boat Type
-                </Text>
-                <Input
-                  className="mt-2 w-full"
-                  type="text"
-                  placeholder="Enter the type of boat"
-                  {...register('boatAttributes.boatType', {
-                    required: 'Boat Type is required',
-                  })}
-                />
-                {errors.boatAttributes?.boatType && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.boatType.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Port
-                </Text>
-                <Input
-                  type="text"
-                  className="mt-2 w-full"
-                  placeholder="Enter the port"
-                  {...register('boatAttributes.port', {
-                    required: 'Port is required',
-                  })}
-                />
-                {errors.boatAttributes?.port && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.port.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Capacity
-                </Text>
-                <Input
-                  type="number"
-                  className="mt-2 w-full"
-                  placeholder="Number of guests"
-                  {...register('boatAttributes.capacity', {
-                    required: 'Capacity is required',
-                  })}
-                />
-                {errors.boatAttributes?.capacity && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.capacity.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Crew
-                </Text>
-                <Input
-                  type="number"
-                  className="mt-2 w-full"
-                  placeholder="Number of crew members"
-                  {...register('boatAttributes.crew', {
-                    required: 'Crew is required',
-                  })}
-                />
-                {errors.boatAttributes?.crew && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.crew.message}
-                  </p>
-                )}
+              <div className="flex gap-5">
+                <div className="w-full">
+                  <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                    Capacity
+                  </Text>
+                  <Input
+                    type="number"
+                    className="mt-2 w-full"
+                    placeholder="Number of guests"
+                    {...register('boatAttributes.capacity', {
+                      required: 'Capacity is required',
+                    })}
+                  />
+                  {errors.boatAttributes?.capacity && (
+                    <p className="text-[12px] text-red-500 pt-2">
+                      {errors.boatAttributes?.capacity.message}
+                    </p>
+                  )}
+                </div>
+                <div className="w-full">
+                  <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                    Crew
+                  </Text>
+                  <Input
+                    type="number"
+                    className="mt-2 w-full"
+                    placeholder="Number of crew members"
+                    {...register('boatAttributes.crew', {
+                      required: 'Crew is required',
+                    })}
+                  />
+                  {errors.boatAttributes?.crew && (
+                    <p className="text-[12px] text-red-500 pt-2">
+                      {errors.boatAttributes?.crew.message}
+                    </p>
+                  )}
+                </div>
               </div>
               <div>
                 <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
@@ -425,9 +400,35 @@ export function FormBoatItem(props: Props) {
                 </div>
               </div>
             </div>
+            <div className="flex flex-col">
+              <label
+                htmlFor="description"
+                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+              >
+                Description
+              </label>
+              <TextArea
+                id="description"
+                placeholder="Describe your product here"
+                {...register('description', { required: true })}
+                className="mt-2"
+              />
+              {errors.description && (
+                <p className="text-xs text-red-500 mt-1">
+                  Description is required
+                </p>
+              )}
+            </div>
+            <div className="media mt-6">
+              <UploadMultipleImages
+                images={imagesFiles}
+                onChange={handleImageChange}
+                height="250px"
+                existingImages={item?.images}
+              />
+            </div>
           </div>
-
-          <div className="adicional-info flex-1 space-y-6">
+          {/* <div className="adicional-info flex-1 space-y-6">
             <div className="category bg-base-100 border rounded-lg p-6">
               <div className="flex justify-between items-center border-b pb-2">
                 <Text className="font-semibold text-lg">Category</Text>
@@ -512,7 +513,7 @@ export function FormBoatItem(props: Props) {
                 )}
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex justify-end gap-6 mt-8">
