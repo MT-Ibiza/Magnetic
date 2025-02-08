@@ -3,24 +3,26 @@ import { getProducts, updatePublishStatus } from '../apis/api-products';
 import { Item, SearchItemParams } from '@magnetic/interfaces';
 
 export const useProducts = (params: SearchItemParams) => {
-  const { searchText, categoryId, itemsPerPage } = params;
-
+  const { searchText, categoryId, itemsPerPage, serviceId } = params;
   const fetchProducts = async ({
     search,
     page,
     pageSize,
     categoryId,
+    serviceId,
   }: {
     search?: string;
     page?: number;
     pageSize?: number;
     categoryId?: number;
+    serviceId?: number;
   }) => {
     const data = await getProducts({
       searchText: search,
       page: page || 1,
       itemsPerPage: itemsPerPage || pageSize || 20,
       categoryId,
+      serviceId,
     });
     return data;
   };
@@ -44,13 +46,14 @@ export const useProducts = (params: SearchItemParams) => {
     hasNextPage,
     refetch,
   } = useInfiniteQuery({
-    queryKey: [`products`, searchText, categoryId],
+    queryKey: [`products`, searchText, categoryId, serviceId],
     queryFn: async ({ pageParam = 1 }) => {
       return fetchProducts({
         search: searchText,
         page: pageParam,
         pageSize: 10,
         categoryId,
+        serviceId,
       });
     },
     initialPageParam: 1,

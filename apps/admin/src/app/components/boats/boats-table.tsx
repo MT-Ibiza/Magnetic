@@ -5,17 +5,16 @@ import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { useProducts } from '../../hooks/useProducts';
 import { Button, Text } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
-import { useMutation } from '@tanstack/react-query';
-import { importCalendarEvents } from '../../apis/api-calendars';
 import ImportBoatCalendarButton from './import-boat-calendar-button';
 
-interface Props {}
+interface Props {
+  serviceId: number;
+}
 
 export function BoatsTable(props: Props) {
-  const {} = props;
+  const { serviceId } = props;
   const params = {
-    searchText: '',
-    categoryId: undefined,
+    serviceId: serviceId,
     page: 1,
     itemsPerPage: 10,
   };
@@ -30,13 +29,6 @@ export function BoatsTable(props: Props) {
     publishOrUnpublishItemApi,
   } = useProducts(params);
 
-  const mutationSynCalendar = useMutation<any, Error, any>({
-    mutationFn: (id: number) => {
-      return importCalendarEvents(id);
-    },
-    onSuccess: () => {},
-    onError: () => {},
-  });
   if (isLoading) {
     return <Loading />;
   }
@@ -56,10 +48,6 @@ export function BoatsTable(props: Props) {
     });
     refetch();
   };
-
-  async function importCalendar(boatId: number) {
-    await mutationSynCalendar.mutateAsync(boatId);
-  }
 
   return (
     <div className="">

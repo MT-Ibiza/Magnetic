@@ -5,12 +5,12 @@ type SearchParams = {
   page: number;
   pageSize: number;
   categoryId?: number;
+  serviceId?: number;
 };
 
 export async function searchProducts(params: SearchParams) {
-  const { searchText, page, pageSize, categoryId } = params;
+  const { searchText, page, pageSize, categoryId, serviceId } = params;
   const offset = (page - 1) * pageSize;
-
   let products = await db.item.findMany({
     skip: offset,
     take: pageSize,
@@ -19,6 +19,7 @@ export async function searchProducts(params: SearchParams) {
         contains: searchText,
         mode: 'insensitive',
       },
+      ...(serviceId && { serviceId }),
       ...(categoryId && { categoryId }),
     },
     orderBy: {
@@ -51,6 +52,7 @@ export async function searchProducts(params: SearchParams) {
         contains: searchText,
         mode: 'insensitive',
       },
+      ...(serviceId && { serviceId }),
       ...(categoryId && { categoryId }),
     },
   });
@@ -75,11 +77,14 @@ export function getParamsFromUrl(searchParams: URLSearchParams) {
   const categoryId = searchParams.get('categoryId')
     ? Number(searchParams.get('categoryId'))
     : undefined;
-
+  const serviceId = searchParams.get('serviceId')
+    ? Number(searchParams.get('serviceId'))
+    : undefined;
   return {
     searchText,
     page,
     pageSize,
     categoryId,
+    serviceId,
   };
 }

@@ -1,4 +1,3 @@
-import { AirtableBoat, Item } from '@magnetic/interfaces';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Button } from '@magnetic/ui';
@@ -37,7 +36,7 @@ export function ImportBoatCalendarButton(props: Props) {
       loadingText="Sync..."
       onClick={importCalendar}
     >
-      Sync
+      Sync Calendar
     </Button>
   );
 }

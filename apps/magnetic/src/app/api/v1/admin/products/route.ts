@@ -6,14 +6,14 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   try {
-    const { searchText, page, pageSize, categoryId } = getParamsFromUrl(
-      req.nextUrl.searchParams
-    );
+    const { searchText, page, pageSize, categoryId, serviceId } =
+      getParamsFromUrl(req.nextUrl.searchParams);
     const products = await searchProducts({
       searchText,
       page,
       pageSize,
       categoryId,
+      serviceId,
     });
 
     return NextResponse.json(products);

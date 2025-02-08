@@ -111,7 +111,7 @@ function ServicePage(props: Props) {
           ) : (
             <div className="mt-6">
               {service.serviceType === 'boat_rental' ? (
-                <BoatsTable />
+                <BoatsTable serviceId={service.id} />
               ) : (
                 <ItemsTable
                   items={service.items || []}

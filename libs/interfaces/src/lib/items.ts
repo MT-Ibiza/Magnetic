@@ -9,6 +9,7 @@ export interface SearchItemParams {
   page?: number;
   itemsPerPage?: number;
   categoryId?: number;
+  serviceId?: number;
 }
 
 export interface ItemBase {

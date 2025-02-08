@@ -4,7 +4,7 @@ import { URL_GET_PRODUCTS, URL_PUBLISH_PRODUCT } from './api-constants';
 export async function getProducts(
   params: SearchItemParams
 ): Promise<ItemResponse> {
-  const { itemsPerPage, searchText, categoryId, page } = params;
+  const { itemsPerPage, searchText, categoryId, page, serviceId } = params;
   const searchPage = page || 1;
   const pageSize = itemsPerPage || 20;
   const queryParams: Record<string, string> = {
@@ -18,6 +18,10 @@ export async function getProducts(
 
   if (categoryId) {
     queryParams.categoryId = categoryId.toString();
+  }
+
+  if (serviceId) {
+    queryParams.serviceId = serviceId.toString();
   }
 
   const queryString = new URLSearchParams(queryParams).toString();
