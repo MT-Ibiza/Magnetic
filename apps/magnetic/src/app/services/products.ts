@@ -41,6 +41,7 @@ export async function searchProducts(params: SearchParams) {
       },
       variants: true,
       published: true,
+      boatAttributes: true,
     },
   });
 

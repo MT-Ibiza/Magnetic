@@ -101,7 +101,11 @@ model BoatAvailability {
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt
   boatId    Int
+  source    String         @default("app")
+  text      String         @default("Reservation")
   boat      BoatAttributes @relation(fields: [boatId], references: [id], onDelete: Cascade)
+
+  @@index([boatId, startDate, endDate])
 }
 
 model DrinkAttributes {

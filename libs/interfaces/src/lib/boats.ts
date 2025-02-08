@@ -1,4 +1,5 @@
 export interface BoatBase {
+  id: number;
   boatType: string;
   port: string;
   capacity: number;
@@ -27,4 +28,15 @@ export interface BoatsSearchAttributes {
   size?: string;
   priceGreaterThan?: string;
   priceLessThan?: string;
+}
+
+export interface BoatAvailability {
+  id: number;
+  startDate: Date;
+  endDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  boatId: number;
+  source: string;
+  text: string;
 }

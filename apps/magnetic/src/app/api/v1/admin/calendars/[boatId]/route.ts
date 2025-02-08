@@ -25,7 +25,7 @@ export async function POST(
     }
 
     if (!boat.iCal) {
-      return new Response('No iCal found', {
+      return new Response('No iCal URL found', {
         status: 404,
       });
     }
@@ -45,23 +45,53 @@ export async function POST(
       .map((event) => {
         if (!event.start || !event.end) {
           throw new Error(
-            `Invalid event: missing start or end for boatId iCal ${boat.id}`
+            `Invalid event: missing start or end for boatId ${boat.id}`
           );
         }
         return {
           boatId: boat.id,
           startDate: new Date(event.start),
           endDate: new Date(event.end),
+          text: `${event.summary}`,
+          source: 'ical',
         };
       });
 
-    // await db.boatAvailability.deleteMany({
-    //   where: { boatId: boat.id },
-    // });
-
-    await db.boatAvailability.createMany({
-      data: availability,
+    await db.boatAvailability.deleteMany({
+      where: {
+        boatId: boat.id,
+        source: 'ical',
+      },
     });
+
+    for (const event of availability) {
+      const conflicts = await db.boatAvailability.findMany({
+        where: {
+          boatId: boat.id,
+          source: 'app',
+          OR: [
+            {
+              startDate: {
+                lte: event.endDate,
+              },
+              endDate: {
+                gte: event.startDate,
+              },
+            },
+          ],
+        },
+      });
+
+      if (conflicts.length === 0) {
+        await db.boatAvailability.create({
+          data: event,
+        });
+      } else {
+        console.warn(
+          `Conflict detected for boat ${boat.id} between ${event.startDate} and ${event.endDate}`
+        );
+      }
+    }
 
     return NextResponse.json({ message: 'Availability imported successfully' });
   } catch (error) {

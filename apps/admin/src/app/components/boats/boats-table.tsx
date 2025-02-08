@@ -5,6 +5,8 @@ import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { useProducts } from '../../hooks/useProducts';
 import { Button } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
+import { useMutation } from '@tanstack/react-query';
+import { importCalendarEvents } from '../../apis/api-calendars';
 
 interface Props {}
 
@@ -27,6 +29,13 @@ export function BoatsTable(props: Props) {
     publishOrUnpublishItemApi,
   } = useProducts(params);
 
+  const mutationSynCalendar = useMutation<any, Error, any>({
+    mutationFn: (id: number) => {
+      return importCalendarEvents(id);
+    },
+    onSuccess: () => {},
+    onError: () => {},
+  });
   if (isLoading) {
     return <Loading />;
   }
@@ -46,6 +55,10 @@ export function BoatsTable(props: Props) {
     });
     refetch();
   };
+
+  async function importCalendar(boatId: number) {
+    await mutationSynCalendar.mutateAsync(boatId);
+  }
 
   return (
     <div className="">
@@ -94,9 +107,15 @@ export function BoatsTable(props: Props) {
                         Edit Product
                       </a>
                     </li>
-                    <li onClick={() => {}}>
+                    <Button
+                      onClick={() => {
+                        if (product.boatAttributes) {
+                          importCalendar(product.boatAttributes?.id);
+                        }
+                      }}
+                    >
                       <a>Sync Calendar</a>
-                    </li>
+                    </Button>
                   </ul>
                 </div>
               </td>

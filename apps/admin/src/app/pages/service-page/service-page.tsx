@@ -36,7 +36,6 @@ function ServicePage(props: Props) {
     publishOrUnpublishItemApi,
     refetch,
   } = useService(serviceId);
-  console.log(service);
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);

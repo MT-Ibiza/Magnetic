@@ -95,3 +95,6 @@ export const URL_IMPORT_AIRTABLE_BOAT = `${API_URL}/airtable/boat/import`;
 export const URL_REIMPORT_AIRTABLE_BOAT = `${API_URL}/airtable/boat/import`;
 // export const URL_REIMPORT_AIRTABLE_BOAT = (airtableId: string) =>
 //   `${API_URL}/airtable/boat/${airtableId}import`;
+
+export const URL_IMPORT_CALENDAR = (boatId: number) =>
+  `${API_URL}/calendars/${boatId}`;
