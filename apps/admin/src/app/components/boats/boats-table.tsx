@@ -3,10 +3,11 @@ import { ErrorText } from '../error-text';
 import { Link } from 'react-router-dom';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { useProducts } from '../../hooks/useProducts';
-import { Button } from '@magnetic/ui';
+import { Button, Text } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useMutation } from '@tanstack/react-query';
 import { importCalendarEvents } from '../../apis/api-calendars';
+import ImportBoatCalendarButton from './import-boat-calendar-button';
 
 interface Props {}
 
@@ -69,6 +70,7 @@ export function BoatsTable(props: Props) {
             <th>Name</th>
             <th>Price</th>
             <th>Published</th>
+            <th>Calendar</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -95,6 +97,15 @@ export function BoatsTable(props: Props) {
                 />
               </td>
               <td>
+                {product.boatAttributes ? (
+                  <ImportBoatCalendarButton
+                    boatId={product.boatAttributes.id}
+                  />
+                ) : (
+                  <Text size="1">No ical</Text>
+                )}
+              </td>
+              <td>
                 <div className="dropdown dropdown-bottom dropdown-end">
                   <div tabIndex={0} role="button" className="m-1">
                     <HiOutlineDotsVertical />
@@ -107,15 +118,6 @@ export function BoatsTable(props: Props) {
                         Edit Product
                       </a>
                     </li>
-                    <Button
-                      onClick={() => {
-                        if (product.boatAttributes) {
-                          importCalendar(product.boatAttributes?.id);
-                        }
-                      }}
-                    >
-                      <a>Sync Calendar</a>
-                    </Button>
                   </ul>
                 </div>
               </td>
