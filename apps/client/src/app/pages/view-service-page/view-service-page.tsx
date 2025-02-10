@@ -46,6 +46,15 @@ function ViewServicePage(props: Props) {
           dangerouslySetInnerHTML={{ __html: service.description }}
         />
       </div>
+      {service.instructions && (
+        <div className="text-sm leading-relaxed editor-text mt-5">
+          <h1>Instructions</h1>
+          <div
+            className="block mt-3"
+            dangerouslySetInnerHTML={{ __html: service.instructions }}
+          />
+        </div>
+      )}
       {service.script ? (
         <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
       ) : (

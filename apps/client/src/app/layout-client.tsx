@@ -62,12 +62,12 @@ function Layout(props: Props) {
       url: '/bookings',
       icon: FaBook,
     },
-    {
-      text: 'My Orders',
-      key: 'orders',
-      url: '/orders',
-      icon: FaShoppingCart,
-    },
+    // {
+    //   text: 'My Orders',
+    //   key: 'orders',
+    //   url: '/orders',
+    //   icon: FaShoppingCart,
+    // },
   ];
 
   const navigationOptions = [
