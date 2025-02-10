@@ -4,11 +4,6 @@ import { CartItem, Item } from '@magnetic/interfaces';
 
 const CART_STORAGE_KEY = 'cart_state';
 
-const getInitialCart = () => {
-  const storedCart = localStorage.getItem(CART_STORAGE_KEY);
-  return storedCart ? JSON.parse(storedCart) : [];
-};
-
 // export type CartItem = {
 //   id: number;
 //   name: string;

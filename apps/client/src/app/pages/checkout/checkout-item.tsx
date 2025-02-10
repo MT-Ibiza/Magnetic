@@ -13,7 +13,7 @@ interface Props {
 function CheckoutItem(props: Props) {
   const { cartItem } = props;
   const { item } = cartItem;
-  const image = item.images.length > 0 ? item.images[0].url : placeholderItem;
+  const image = item.images?.length > 0 ? item.images[0].url : placeholderItem;
   const serviceType = item.service?.serviceType;
 
   return (

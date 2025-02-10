@@ -53,9 +53,9 @@ export async function PUT(
       packageId: fields.packageId ? Number(fields.packageId) : null,
     };
 
-    if (fields.password) {
-      updateData.password = await bcrypt.hash(fields.password, 10);
-    }
+    // if (fields.password) {
+    //   updateData.password = await bcrypt.hash(fields.password, 10);
+    // }
 
     if (fields.arrivalDate) {
       updateData.arrivalDate = moment(fields.arrivalDate).isValid()
