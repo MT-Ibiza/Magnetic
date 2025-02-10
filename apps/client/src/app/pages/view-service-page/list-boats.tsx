@@ -15,7 +15,7 @@ function ListBoats(props: Props) {
 
   const [searchParams, setSearchParams] = useState<BoatsSearchAttributes>({
     boatType: undefined,
-    guests: undefined,
+    capacity: undefined,
     size: undefined,
     crew: undefined,
     priceGreaterThan: undefined,
@@ -34,7 +34,7 @@ function ListBoats(props: Props) {
   });
 
   return (
-    <div className='flex flex-col gap-[40px]'>
+    <div className="flex flex-col gap-[40px]">
       <FilterBoats
         onChangeFilters={(filters) => {
           setSearchParams(filters);

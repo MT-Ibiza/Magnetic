@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { searchBoats } from '../../apis/api-boats';
 import { BoatsSearchAttributes } from '@magnetic/interfaces';
+import moment from 'moment';
 
 interface Props {
   onChangeFilters: (filters: BoatsSearchAttributes) => void;
@@ -13,7 +14,7 @@ function FilterBoats(props: Props) {
 
   const [searchParams, setSearchParams] = useState<BoatsSearchAttributes>({
     boatType: undefined,
-    guests: undefined,
+    capacity: undefined,
     size: undefined,
     crew: undefined,
     priceGreaterThan: undefined,
@@ -57,6 +58,17 @@ function FilterBoats(props: Props) {
     onChangeFilters(updatedFilters);
   };
 
+  const handleDatesChange = (range: { start: Date; end: Date }) => {
+    const updatedFilters = {
+      ...searchParams,
+      from: moment(range.start).format('YYYY-MM-DD'),
+      to: moment(range.end).format('YYYY-MM-DD'),
+    };
+    console.log('updatedFilters: ', updatedFilters);
+    setSearchParams(updatedFilters);
+    onChangeFilters(updatedFilters);
+  };
+
   return (
     <div className="w-full relative mt-8 rounded-[40px] xl:rounded-[49px] rounded-t-2xl xl:rounded-t-3xl shadow-xl dark:shadow-2xl bg-white dark:bg-neutral-800">
       <form className="grid grid-cols-4 gap-x-[30px]">
@@ -68,10 +80,10 @@ function FilterBoats(props: Props) {
               className="input w-full px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
             /> */}
         <CustomInput
-          name="guests"
+          name="capacity"
           desc="capacity"
           options={capacityOptions}
-          value={searchParams.guests || ''}
+          value={searchParams.capacity || ''}
           onChange={handleSearchChange}
         />
         <CustomInput
@@ -81,7 +93,7 @@ function FilterBoats(props: Props) {
           value={searchParams.size || ''}
           onChange={handleSearchChange}
         />
-        <RentalCarDatesRangeInput />
+        <RentalCarDatesRangeInput onSelectRange={handleDatesChange} />
         <CustomInput
           name="priceGreaterThan"
           desc="budget"

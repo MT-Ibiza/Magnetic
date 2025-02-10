@@ -4,17 +4,21 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const boatType = searchParams.get('boatType');
-  const guests = searchParams.get('guests');
+  const capacity = searchParams.get('capacity');
   const crew = searchParams.get('crew');
   const priceGreaterThan = searchParams.get('price_gt');
   const priceLessThan = searchParams.get('price_lt');
+  const startDate = searchParams.get('from');
+  const endDate = searchParams.get('to');
+
   try {
     const filters: any[] = [];
+
     if (boatType) {
       filters.push({ boatType: { equals: boatType, mode: 'insensitive' } });
     }
-    if (guests) {
-      filters.push({ capacity: { gte: parseInt(guests) } });
+    if (capacity) {
+      filters.push({ capacity: { gte: parseInt(capacity) } });
     }
     if (crew) {
       filters.push({ crew: { gte: parseInt(crew) } });
@@ -32,6 +36,32 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const unavailableBoats = await db.boatAvailability.findMany({
+        where: {
+          OR: [
+            {
+              startDate: { lte: end },
+              endDate: { gte: start },
+            },
+          ],
+        },
+        select: {
+          boatId: true,
+        },
+      });
+
+      const unavailableBoatIds = unavailableBoats.map((b) => b.boatId);
+
+      filters.push({
+        id: {
+          notIn: unavailableBoatIds,
+        },
+      });
+    }
+
     const boats = await db.boatAttributes.findMany({
       where: {
         AND: filters.length > 0 ? filters : undefined,
@@ -40,6 +70,7 @@ export async function GET(request: NextRequest) {
 
     const items = await db.item.findMany({
       where: {
+        published: true,
         id: {
           in: boats.map((boat) => boat.itemId),
         },
@@ -51,6 +82,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(items);
   } catch (error: any) {
+    console.error(error);
     return NextResponse.json(
       {
         message: error.message || 'An unexpected error occurred',

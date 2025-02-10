@@ -17,12 +17,14 @@ interface RentalCarDatesRangeInputProps {
   className?: string;
   fieldClassName?: string;
   hasButtonSubmit?: boolean;
+  onSelectRange: (range: { start: Date; end: Date }) => void;
 }
 
 export const RentalCarDatesRangeInput: FC<RentalCarDatesRangeInputProps> = ({
   className = '',
   fieldClassName = '[ nc-hero-field-padding ]',
   hasButtonSubmit = false,
+  onSelectRange,
 }) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -31,6 +33,9 @@ export const RentalCarDatesRangeInput: FC<RentalCarDatesRangeInputProps> = ({
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
+    if (start && end) {
+      onSelectRange({ start, end });
+    }
   };
 
   const renderInput = () => {
@@ -54,7 +59,7 @@ export const RentalCarDatesRangeInput: FC<RentalCarDatesRangeInputProps> = ({
               : ''}
           </span>
           <span className="block mt-1 text-sm text-neutral-400 leading-none font-light">
-            {'Pick up - Drop off'}
+            {'From - To'}
           </span>
         </div>
       </>

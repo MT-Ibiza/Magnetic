@@ -23,11 +23,13 @@ export interface Boat extends BoatBase {
 
 export interface BoatsSearchAttributes {
   boatType?: string;
-  guests?: string;
+  capacity?: string;
   crew?: string;
   size?: string;
   priceGreaterThan?: string;
   priceLessThan?: string;
+  from?: string;
+  to?: string;
 }
 
 export interface BoatAvailability {

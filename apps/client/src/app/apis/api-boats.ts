@@ -7,7 +7,7 @@ export async function searchBoats(
   const fields = Object.keys(filters);
   const selectedFilters: { [key: string]: any } = {};
   for (const field of fields) {
-    const value = filters[field as 'guests'];
+    const value = filters[field as 'capacity'];
     if (value) {
       selectedFilters[field] = value;
     }
