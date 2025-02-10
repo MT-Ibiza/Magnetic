@@ -3,8 +3,8 @@ import { NextResponse } from 'next/server';
 import { getTokenFromRequest } from '../../util';
 import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
 import { newOrderTemplate } from 'apps/magnetic/src/app/emails/new-order';
-import { BoatCharterFormData } from '@magnetic/interfaces';
-import moment from 'moment';
+import { Boat, BoatCharterFormData, Item } from '@magnetic/interfaces';
+import moment from 'moment-timezone';
 
 export async function POST(request: Request) {
   try {
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
           return { data: item.formData, serviceId: item.item.serviceId };
         });
 
-      const boatForms: { data: BoatCharterFormData; boatId: number }[] = items
+      const boatForms: { data: BoatCharterFormData; item: Item }[] = items
         .filter((item) => {
           return (
             item.formData !== null &&
@@ -76,7 +76,7 @@ export async function POST(request: Request) {
           );
         })
         .map((item: any) => {
-          return { data: item.formData, boatId: item.item.boatAttributes.id };
+          return { data: item.formData, item: item.item };
         });
 
       const totalOrder = orderItems.reduce(
@@ -119,10 +119,22 @@ export async function POST(request: Request) {
           data: boatForms.map((bf) => {
             const date = moment(bf.data.date);
             return {
-              boatId: bf.boatId,
-              startDate: date.startOf('day').toDate(),
-              endDate: date.endOf('day').toDate(),
-              text: `Boat reservation: ${bf.data.boat}`,
+              boatId: bf.item.boatAttributes?.id || 0,
+              startDate: date
+                .tz('UTC')
+                .hour(10)
+                .minute(0)
+                .second(0)
+                .millisecond(0)
+                .toDate(),
+              endDate: date
+                .tz('UTC')
+                .hour(18)
+                .minute(0)
+                .second(0)
+                .millisecond(0)
+                .toDate(),
+              text: `Boat reservation: ${bf.item.name}`,
               source: 'app',
             };
           }),
