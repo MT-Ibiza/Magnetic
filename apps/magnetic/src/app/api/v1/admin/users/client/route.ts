@@ -77,11 +77,15 @@ export async function POST(request: Request) {
       },
     });
 
-    await sendEmail({
-      to: newUser.email,
-      subject: `Welcome to Magnetic Travel`,
-      html: newAccountTemplate(newUser.name, newUser.package?.name || ''),
-    });
+    try {
+      await sendEmail({
+        to: newUser.email,
+        subject: `Welcome to Magnetic Travel`,
+        html: newAccountTemplate(newUser.name, newUser.package?.name || ''),
+      });
+    } catch (emailError) {
+      console.error('Error sending email:', emailError);
+    }
 
     return NextResponse.json(newUser);
   } catch (error: any) {

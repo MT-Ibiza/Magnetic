@@ -8,7 +8,7 @@ import { login } from '../../apis/api-auth';
 import { FaTwitter, FaFacebook, FaInstagram } from 'react-icons/fa';
 
 export function LoginPage() {
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string>();
   const { setToken, setLoggedIn, setCurrentUser } = useAuth();
   const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -36,6 +36,7 @@ export function LoginPage() {
 
   async function onSubmitForm(data: Credentials) {
     setIsSaving(true);
+    setError(undefined);
     try {
       const user = await loginMutation.mutateAsync(data);
       setCurrentUser({
@@ -44,6 +45,7 @@ export function LoginPage() {
         arrivalDate: user.arrivalDate,
         package: user.package,
         cartId: user.cartId,
+        id: user.id,
       });
       setIsSaving(false);
       setToken(user.accessToken);

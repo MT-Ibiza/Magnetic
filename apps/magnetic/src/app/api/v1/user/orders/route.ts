@@ -95,17 +95,21 @@ export async function POST(request: Request) {
         },
       });
 
-      await sendEmail({
-        to: cart.user.email,
-        subject: `New Order ${order.id}`,
-        html: newOrderTemplate(order as any),
-      });
-
       await db.cart.delete({
         where: {
           id: cart.id,
         },
       });
+
+      try {
+        await sendEmail({
+          to: cart.user.email,
+          subject: `New Order ${order.id}`,
+          html: newOrderTemplate(order as any),
+        });
+      } catch (emailError) {
+        console.error('Error sending email:', emailError);
+      }
 
       return NextResponse.json(order);
     } else {

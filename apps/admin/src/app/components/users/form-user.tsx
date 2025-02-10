@@ -101,7 +101,6 @@ export function FormUser(props: Props) {
     const formData = new FormData();
     formData.append('firstName', data.firstName);
     formData.append('lastName', data.lastName);
-    formData.append('password', data.password);
     formData.append('email', data.email);
     formData.append('phone', data.phone || '');
     formData.append('accommodation', data.accommodation);
@@ -112,6 +111,7 @@ export function FormUser(props: Props) {
     );
     formData.append('passportNumber', data.passportNumber);
     formData.append('billingAddress', data.billingAddress);
+    data.password && formData.append('password', data.password);
     if (passportFile) {
       formData.append('passportAttachmentUrl', passportFile);
     }
