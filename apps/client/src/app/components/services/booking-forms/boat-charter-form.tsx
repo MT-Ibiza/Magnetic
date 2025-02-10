@@ -1,17 +1,6 @@
+import { BoatCharterFormData } from '@magnetic/interfaces';
 import { Button, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
-
-export interface BoatCharterFormData {
-  date: string;
-  boat: string;
-  numberOfPeople: number;
-  kidsAges: string;
-  startTime: string;
-  lunchBooking: string;
-  comments: string;
-  extras: string;
-  depositPaid: boolean;
-}
 
 interface Props {
   onSubmit: (data: BoatCharterFormData) => void;

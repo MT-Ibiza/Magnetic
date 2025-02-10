@@ -40,3 +40,16 @@ export interface BoatAvailability {
   source: string;
   text: string;
 }
+
+//FORM
+export interface BoatCharterFormData {
+  date: string;
+  boat: string;
+  numberOfPeople: number;
+  kidsAges: string;
+  startTime: string;
+  lunchBooking: string;
+  comments: string;
+  extras: string;
+  depositPaid: boolean;
+}

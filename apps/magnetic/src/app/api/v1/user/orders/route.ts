@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 import { getTokenFromRequest } from '../../util';
 import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
 import { newOrderTemplate } from 'apps/magnetic/src/app/emails/new-order';
+import { BoatCharterFormData } from '@magnetic/interfaces';
+import moment from 'moment';
 
 export async function POST(request: Request) {
   try {
@@ -27,6 +29,13 @@ export async function POST(request: Request) {
                 name: true,
                 priceInCents: true,
                 serviceId: true,
+                boatAttributes: true,
+                service: {
+                  select: {
+                    id: true,
+                    serviceType: true,
+                  },
+                },
               },
             },
           },
@@ -58,8 +67,18 @@ export async function POST(request: Request) {
         .map((item) => {
           return { data: item.formData, serviceId: item.item.serviceId };
         });
-      console.log('items: ', items);
-      console.log('forms: ', forms);
+
+      const boatForms: { data: BoatCharterFormData; boatId: number }[] = items
+        .filter((item) => {
+          return (
+            item.formData !== null &&
+            item.item.service.serviceType === 'boat_rental'
+          );
+        })
+        .map((item: any) => {
+          return { data: item.formData, boatId: item.item.boatAttributes.id };
+        });
+
       const totalOrder = orderItems.reduce(
         (sum, item) => sum + item.priceInCents * item.quantity,
         0
@@ -94,6 +113,23 @@ export async function POST(request: Request) {
           user: true,
         },
       });
+
+      try {
+        await db.boatAvailability.createMany({
+          data: boatForms.map((bf) => {
+            const date = moment(bf.data.date);
+            return {
+              boatId: bf.boatId,
+              startDate: date.startOf('day').toDate(),
+              endDate: date.endOf('day').toDate(),
+              text: `Boat reservation: ${bf.data.boat}`,
+              source: 'app',
+            };
+          }),
+        });
+      } catch (error) {
+        console.error('Error creating boatAvailability');
+      }
 
       await db.cart.delete({
         where: {
