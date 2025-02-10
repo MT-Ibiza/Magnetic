@@ -9,6 +9,7 @@ export interface ServiceBase {
   serviceType: string;
   imageUrl?: string;
   termsAndConditions?: string;
+  instructions?: string;
 }
 
 export interface Service extends ServiceBase {

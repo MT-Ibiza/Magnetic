@@ -66,6 +66,7 @@ export async function PUT(
   const script = data.get('script') as string;
   const imageFile = data.get('imageFile') as File;
   const termsAndConditions = data.get('termsAndConditions') as string;
+  const instructions = data.get('instructions') as string;
 
   const serviceFound = await db.service.findUnique({
     where: {
@@ -107,6 +108,7 @@ export async function PUT(
         imageUrl: imageUrl,
         script,
         termsAndConditions,
+        instructions,
       },
     });
 

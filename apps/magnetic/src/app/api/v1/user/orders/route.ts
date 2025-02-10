@@ -4,7 +4,7 @@ import { getTokenFromRequest } from '../../util';
 import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
 import { newOrderTemplate } from 'apps/magnetic/src/app/emails/new-order';
 import { Boat, BoatCharterFormData, Item } from '@magnetic/interfaces';
-import moment from 'moment-timezone';
+import moment from 'moment';
 
 export async function POST(request: Request) {
   try {
@@ -121,14 +121,12 @@ export async function POST(request: Request) {
             return {
               boatId: bf.item.boatAttributes?.id || 0,
               startDate: date
-                .tz('UTC')
                 .hour(10)
                 .minute(0)
                 .second(0)
                 .millisecond(0)
                 .toDate(),
               endDate: date
-                .tz('UTC')
                 .hour(18)
                 .minute(0)
                 .second(0)

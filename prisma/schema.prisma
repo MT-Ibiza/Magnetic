@@ -53,6 +53,7 @@ model Service {
   script             String?
   imageUrl           String?
   termsAndConditions String?
+  instructions       String?
   packages           Package[]          @relation("PackageServices")
   providerId         Int?
   provider           Provider?          @relation(fields: [providerId], references: [id])

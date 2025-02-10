@@ -34,6 +34,7 @@ export interface FormServiceData {
   serviceType: string;
   script?: string;
   termsAndConditions?: string;
+  instructions?: string;
 }
 
 export interface Props {
@@ -50,6 +51,7 @@ export function ServiceForm(props: Props) {
   };
   const [imageFile, setImageFile] = useState<File>();
   const [description, setDescription] = useState(service?.description);
+  const [instructions, setInstructions] = useState(service?.instructions);
   const [termsAndConditions, setTermsAndConditions] = useState(
     service?.termsAndConditions
   );
@@ -71,6 +73,7 @@ export function ServiceForm(props: Props) {
           serviceType: service.serviceType,
           script: service.script,
           termsAndConditions: service.termsAndConditions,
+          instructions: service.instructions,
         }
       : undefined,
   });
@@ -126,6 +129,7 @@ export function ServiceForm(props: Props) {
     imageFile && formData.append('imageFile', imageFile);
     termsAndConditions &&
       formData.append('termsAndConditions', termsAndConditions);
+    instructions && formData.append('instructions', instructions);
     if (service) {
       await updateService.mutateAsync(formData);
     } else {
@@ -228,6 +232,16 @@ export function ServiceForm(props: Props) {
                   theme="snow"
                   defaultValue={description}
                   onChange={setDescription}
+                  className="h-[200px]"
+                />
+                <br />
+              </div>
+              <div className="flex flex-col gap-[10px]">
+                <Text size="1">Service Instructions</Text>
+                <ReactQuill
+                  theme="snow"
+                  defaultValue={instructions}
+                  onChange={setInstructions}
                   className="h-[200px]"
                 />
                 <br />
