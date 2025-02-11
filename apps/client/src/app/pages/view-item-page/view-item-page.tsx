@@ -1,10 +1,18 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useItem } from '../../hooks/useItem';
-import { Button, GalleryModal, ItemsGallery } from '@magnetic/ui';
+import { Badge, Button, GalleryModal, ItemsGallery } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import { useState } from 'react';
 import { centsToEuros, cmToMeters, eurosToCents } from '@magnetic/utils';
+import {
+  FaUsers,
+  FaUserTie,
+  FaRulerCombined,
+  FaShip,
+  FaBed,
+  FaGasPump,
+} from 'react-icons/fa';
 
 interface Props {}
 
@@ -55,6 +63,39 @@ export function ViewItemPage(props: Props) {
     );
   };
 
+  const BoatAttributes = [
+    {
+      name: 'Capacity',
+      icon: <FaUsers className="text-lg" />,
+      value: item?.boatAttributes?.capacity,
+    },
+    {
+      name: 'Crew',
+      icon: <FaUserTie className="text-lg" />,
+      value: item?.boatAttributes?.crew,
+    },
+    {
+      name: 'Size',
+      icon: <FaRulerCombined className="text-lg" />,
+      value: item?.boatAttributes?.sizeInMeters + ' m',
+    },
+    {
+      name: 'Beam',
+      icon: <FaShip className="text-lg" />,
+      value: item?.boatAttributes?.beamInMeters + ' m',
+    },
+    {
+      name: 'Cabins',
+      icon: <FaBed className="text-lg" />,
+      value: item?.boatAttributes?.cabins,
+    },
+    {
+      name: 'Fuel Consumption',
+      icon: <FaGasPump className="text-lg" />,
+      value: item?.boatAttributes?.fuelConsumption + ' L/H',
+    },
+  ];
+
   return (
     <div className={`container nc-ListingCarDetailPage `}>
       <div className="flex flex-col gap-6 p-6">
@@ -63,67 +104,73 @@ export function ViewItemPage(props: Props) {
         )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="col-span-2 space-y-6">
-            <div className="bg-base-100 p-6 rounded-lg shadow">
-              <h2 className="text-2xl uppercase font-semibold">{item?.name}</h2>
-              <p className="mt-[4px] text-primary-600">
-                {item?.boatAttributes?.boatType}
-              </p>
-              <p className="mt-[10px] text-neutral-600 dark:text-neutral-300">
-                {item?.description}
-              </p>
+            <div className="listingSection__wrap bg-base-100 !space-y-6">
+              {item?.boatAttributes?.boatType && (
+                <div className="flex justify-between items-center">
+                  <Badge name={item?.boatAttributes?.boatType} />
+                </div>
+              )}
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
+                {item?.name}
+              </h2>
+              {item?.boatAttributes && (
+                <>
+                  <div className="w-full border-b border-neutral-100 dark:border-neutral-700" />
+                  <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 text-sm text-neutral-700 dark:text-neutral-300 ">
+                    {BoatAttributes.map((amenity, index) => (
+                      <div key={index} className="flex items-center space-x-3">
+                        {amenity.icon}
+                        <span>
+                          {amenity.name}:{' '}
+                          {item?.boatAttributes?.[amenity.name.toLowerCase()] ||
+                            amenity.value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
-            <div className="bg-base-100 p-6 rounded-lg shadow space-y-4">
-              <h3 className="text-xl font-semibold">Specifications</h3>
-              <ul className="list-items-props space-y-2">
-                <li>
-                  <strong>Capacity:</strong>{' '}
-                  {item?.boatAttributes?.capacity || 'N/A'}
-                </li>
-                <li>
-                  <strong>Crew:</strong> {item?.boatAttributes?.crew || 'N/A'}
-                </li>
-                <li>
-                  <strong>Size:</strong>{' '}
-                  {item?.boatAttributes?.sizeInMeters
-                    ? `${item.boatAttributes.sizeInMeters} m`
-                    : 'N/A'}
-                </li>
-                <li>
-                  <strong>Beam:</strong>{' '}
-                  {item?.boatAttributes?.beamInMeters
-                    ? `${item.boatAttributes.beamInMeters} m`
-                    : 'N/A'}
-                </li>
-
-                <li>
-                  <strong>Cabins:</strong>{' '}
-                  {item?.boatAttributes?.cabins || 'N/A'}
-                </li>
-                <li>
-                  <strong>Fuel Consumption:</strong>{' '}
-                  {`${item?.boatAttributes?.fuelConsumption} L/H` || 'N/A'}
-                </li>
-              </ul>
+            <div className="bg-base-100 listingSection__wrap">
+              <h2 className="text-2xl font-semibold">Description</h2>
+              <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
+              <div className="text-neutral-6000 dark:text-neutral-300">
+                <span>{item?.description}</span>
+              </div>
             </div>
           </div>
           <div className="col-span-1">
-            <div className="sticky bg-base-100 top-[60px] listingSectionSidebar__wrap">
-              <div>
-                <h3 className="text-xl font-semibold">Price</h3>
-                <p className="text-2xl font-bold text-primary mt-4">
+            <div className="sticky bg-base-100 top-[60px] listingSectionSidebar__wrap shadow-xl">
+              <div className="flex justify-between">
+                <span className="text-3xl font-semibold">
                   {item?.priceInCents
-                    ? `${centsToEuros(item.priceInCents)} €`
+                    ? `€ ${centsToEuros(item.priceInCents)}`
                     : 'N/A'}
-                </p>
+                </span>
               </div>
-              <div className="mt-6">
-                <Button
-                  onClick={() => console.log('Add to Cart')}
-                  className="w-full"
-                >
-                  Add to Cart
-                </Button>
+              <div className="flex flex-col space-y-4">
+                {/* <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
+                  <span>$119 x 3 night</span>
+                  <span>$357</span>
+                </div>
+                <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
+                  <span>Service charge</span>
+                  <span>$0</span>
+                </div> */}
+                <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
+                <div className="flex justify-between font-semibold">
+                  <span>Total</span>
+                  <span>
+                    {' '}
+                    {item?.priceInCents
+                      ? `€ ${centsToEuros(item.priceInCents)}`
+                      : 'N/A'}
+                  </span>
+                </div>
               </div>
+              <Button size={2} radius="full" href={'/checkout'}>
+                Add to Cart
+              </Button>
             </div>
           </div>
         </div>
