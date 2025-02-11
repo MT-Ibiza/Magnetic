@@ -10,8 +10,6 @@ export interface CardProps {
   autoplay?: boolean;
   className?: string;
   slidesToShow?: number;
-  ratio1?: number;
-  ratio2?: number;
 }
 
 function SampleNextArrow(props: any) {
@@ -46,14 +44,7 @@ function SamplePrevArrow(props: any) {
 }
 
 export function CarouselImages(props: CardProps) {
-  const {
-    images = [],
-    autoplay,
-    className,
-    slidesToShow,
-    ratio1 = 9,
-    ratio2 = 6,
-  } = props;
+  const { images = [], autoplay, className, slidesToShow } = props;
 
   const settings = {
     dots: false,
@@ -67,35 +58,39 @@ export function CarouselImages(props: CardProps) {
     prevArrow: <SamplePrevArrow />,
   };
 
-  const ratio = ratio1 / ratio2;
+  const defaultImage =
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU';
 
-  return images.length === 1 ? (
-      <img
-        style={{
-          objectFit: 'cover',
-          width: '100%',
-          height: '250px',
-          // borderRadius: '1rem',
-        }}
-        className={className}
-        loading="lazy"
-        src={images[0].url}
-      />
+  const imagesToDisplay =
+    images.length === 0 ? [{ url: defaultImage }] : images;
+
+  return imagesToDisplay.length === 1 ? (
+    <img
+      style={{
+        objectFit: 'cover',
+        width: '100%',
+        height: '250px',
+        // borderRadius: '1rem',
+      }}
+      className={className}
+      loading="lazy"
+      src={imagesToDisplay[0].url}
+    />
   ) : (
     <Slider {...settings}>
-      {images.map((image, index) => (
+      {imagesToDisplay.map((image, index) => (
         <div key={index}>
-            <img
-              style={{
-                objectFit: 'cover',
-                width: '100%',
-                height: '250px',
-                // borderRadius: '1rem',
-              }}
-              className={className}
-              loading="lazy"
-              src={image.url}
-            />
+          <img
+            style={{
+              objectFit: 'cover',
+              width: '100%',
+              height: '250px',
+              // borderRadius: '1rem',
+            }}
+            className={className}
+            loading="lazy"
+            src={image.url}
+          />
         </div>
       ))}
     </Slider>

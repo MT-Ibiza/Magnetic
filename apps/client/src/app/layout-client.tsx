@@ -63,12 +63,6 @@ function Layout(props: Props) {
     //   icon: FaShoppingCart,
     // },
     {
-      text: 'My Orders',
-      key: 'orders',
-      url: '/orders',
-      icon: FaShoppingCart,
-    },
-    {
       text: 'Packages',
       key: 'packages',
       url: '/packages',
