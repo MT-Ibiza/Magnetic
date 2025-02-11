@@ -77,6 +77,7 @@ export async function GET(request: NextRequest) {
       },
       include: {
         boatAttributes: true,
+        images: true,
       },
     });
 

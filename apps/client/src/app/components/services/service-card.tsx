@@ -24,36 +24,38 @@ function ServiceCard(props: Props) {
   };
 
   return (
-    <div className="relative flex flex-col justify-between bg-base-100 border border-gray-300 rounded-lg overflow-hidden shadow-sm group hover:shadow-md transition duration-200 ease-in-out">
-      <div
+    <div className="flow-root nc-CardCategory4 flex flex-col">
+      {/* <div
         className={`absolute top-2 left-2 px-3 py-1 text-xs font-semibold rounded-full ${getPackageLabelColor(
           service.packages[0].name
         )}`}
       >
         {service.packages[0].name}
-      </div>
-
-      <div className="w-full h-48 bg-gray-100">
+      </div> */}
+      <div
+        className={`flex-shrink-0 relative w-full rounded-2xl overflow-hidden group`}
+      >
         <img
           src={
             imageUrl ||
             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
           }
           alt={name}
-          className="object-cover h-full w-full"
+          className="object-cover h-[350px] w-full"
         />
+        <span className="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-15 transition-opacity"></span>
       </div>
-      <div className="p-4 space-y-3">
-        <h2 className="text-xl font-medium">{name}</h2>
-        <div
-          className="text-sm text-gray-500 line-clamp-3"
-          dangerouslySetInnerHTML={{ __html: description }}
-        />
-      </div>
-      <div className="p-4 pt-0">
-        <button className="w-full py-2 bg-primary-600 text-white rounded-lg text-sm font-semibold hover:bg-primary-700 focus:outline-none transition duration-150 ease-in-out">
-          See more
-        </button>
+      <div className="mt-4 px-2 text-center">
+        <h2
+          className={`text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate`}
+        >
+          {name}
+        </h2>
+        <span
+          className={`block mt-2 text-sm text-neutral-6000 dark:text-neutral-400`}
+        >
+          {service.items.length} services
+        </span>
       </div>
     </div>
   );

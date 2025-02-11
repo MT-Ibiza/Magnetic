@@ -27,5 +27,8 @@ export { UploadMultipleImages } from './lib/multiple-images';
 export { ItemsGallery } from './lib/items-gallery';
 export { CustomInput }from './lib/custom-input';
 export { RentalCarDatesRangeInput }from './lib/calendar-range';
+export { CarouselImages }from './lib/carousel-images';
+export { GalleryModal }from './lib/gallery-modal';
+
 
 

@@ -10,6 +10,14 @@ export async function GET(request: Request) {
         name: true,
         description: true,
         imageUrl: true,
+        items: {
+          select: {
+            id: true,
+          },
+          where: {
+            published: true
+          }
+        },
         packages: {
           select: {
             id: true,

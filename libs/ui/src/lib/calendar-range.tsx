@@ -90,11 +90,9 @@ export const RentalCarDatesRangeInput: FC<RentalCarDatesRangeInputProps> = ({
                 </div>
               )}
             </div>
-
             {open && (
               <div className="h-8 absolute self-center top-1/2 -translate-y-1/2 z-0 -left-0.5 right-1 bg-white dark:bg-neutral-800"></div>
             )}
-
             <Transition
               as={Fragment}
               enter="transition ease-out duration-200"

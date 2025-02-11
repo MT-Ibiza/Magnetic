@@ -51,12 +51,6 @@ function Layout(props: Props) {
       icon: SiTask,
     },
     {
-      text: 'Packages',
-      key: 'packages',
-      url: '/packages',
-      icon: FaUserFriends,
-    },
-    {
       text: 'Bookings',
       key: 'bookings',
       url: '/bookings',
@@ -68,6 +62,18 @@ function Layout(props: Props) {
     //   url: '/orders',
     //   icon: FaShoppingCart,
     // },
+    {
+      text: 'My Orders',
+      key: 'orders',
+      url: '/orders',
+      icon: FaShoppingCart,
+    },
+    {
+      text: 'Packages',
+      key: 'packages',
+      url: '/packages',
+      icon: FaUserFriends,
+    },
   ];
 
   const navigationOptions = [
