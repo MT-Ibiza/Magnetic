@@ -40,7 +40,6 @@ function FormCategory(props: Props) {
         (service) => service.serviceType === 'chefs'
       );
       chefService && setChefServiceId(chefService.id);
-      console.log('chefService: ', chefService);
     }
   }, [services]);
 
@@ -72,18 +71,20 @@ function FormCategory(props: Props) {
   });
 
   const onSubmit = async (data: CategoryBase) => {
-    const { name, description, serviceId } = data;
+    const { name, description, serviceId, formType } = data;
     if (category) {
       await updateCategory.mutateAsync({
         name,
         description,
         serviceId: defaultServiceId || Number(serviceId),
+        formType,
       });
     } else {
       await createCategory.mutateAsync({
         name,
         description,
         serviceId: defaultServiceId || Number(serviceId),
+        formType,
       });
     }
   };

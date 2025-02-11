@@ -30,7 +30,7 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   const data: EditCategory = await request.json();
-  const { name, description, serviceId } = data;
+  const { name, description, serviceId, formType } = data;
   try {
     const category = await db.category.update({
       where: {
@@ -40,6 +40,7 @@ export async function PUT(
         name,
         description,
         serviceId,
+        formType,
       },
     });
     return NextResponse.json(category, { status: 201 });
