@@ -5,6 +5,7 @@ import {
   Button,
   CarouselImages,
   GallerySlider,
+  SaleOffBadge,
   Text,
 } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
@@ -14,6 +15,8 @@ import { Link } from 'react-router-dom';
 import RenderBookingForm from '../services/booking-forms/render-booking-form';
 import ItemCounterButtons from './item-counter-buttons';
 import ItemHandleBookButtons from './item-handle-book-buttons';
+import { FaUsers } from 'react-icons/fa';
+
 interface Props {
   item: Item;
   service: Service;
@@ -104,9 +107,15 @@ function ItemCard(props: Props) {
             galleryImgs={item.images}
             uniqueID={`ExperiencesCard_${item.id}`}
           />
-          <div className={'p-5  space-y-4'}>
+          {item.priceInCents && (
+            <SaleOffBadge
+              className="absolute right-3 top-3"
+              price={`from ${centsToEurosWithCurrency(item.priceInCents)}`}
+              />
+          )}
+          <div className={'p-4 space-y-4'}>
             <div className="space-y-2">
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center">
                 {customDetailsServices.includes(service.serviceType) ? (
                   <>
                     {service.serviceType === 'drinks' && (
@@ -135,9 +144,9 @@ function ItemCard(props: Props) {
               </div>
             </div>
             <div className="flex flex-col items-end">
-              <h2 className="text-lg font-semibold text-secondary">
+              {/* <h2 className="text-lg font-semibold text-secondary">
                 {centsToEurosWithCurrency(item.priceInCents)}
-              </h2>
+              </h2> */}
               {noFillForm ? (
                 <div className="mt-4">
                   <ItemCounterButtons
@@ -276,16 +285,18 @@ const BoatInfo = ({
   capacity: number;
   secondName?: string;
 }) => (
-  <div>
-    <h2 className="line-clamp-1 capitalize text-lg font-semibold text-primary">
-      {name}
+  <div className="space-y-2 flex flex-col">
+    <h2 className={`capitalize ${'text-base font-medium'}`}>
+      <span className="line-clamp-1">{name}</span>
     </h2>
     {secondName && (
-      <Text size="1" className="mb-2">
+      <span className="text-sm text-neutral-500 dark:text-neutral-400">
         {secondName}
-      </Text>
+      </span>
     )}
-    <Text size="1">{`Max Pax: ${capacity}`}</Text>
+     <span className="text-sm text-neutral-500 dark:text-neutral-400 flex items-center gap-2">
+    <FaUsers className="text-neutral-500 text-lg" /> {capacity}
+  </span>
   </div>
 );
 

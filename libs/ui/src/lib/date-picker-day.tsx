@@ -5,7 +5,7 @@ interface Props {
   date?: Date | undefined;
 }
 
-const DatePickerCustomDay: FC<Props> = ({ dayOfMonth, date }) => {
+export const DatePickerCustomDay: FC<Props> = ({ dayOfMonth, date }) => {
   return <span className="react-datepicker__day_span">{dayOfMonth}</span>;
 };
 

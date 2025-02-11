@@ -30,6 +30,11 @@ export { RentalCarDatesRangeInput }from './lib/calendar-range';
 export { CarouselImages }from './lib/carousel-images';
 export { GalleryModal }from './lib/gallery-modal';
 export { GallerySlider }from './lib/GallerySlider';
+export { SaleOffBadge }from './lib/SaleOffBadge';
+export { DatePickerCustomHeaderTwoMonth }from './lib/date-picker-custom-header';
+export { DatePickerCustomDay }from './lib/date-picker-day';
+
+
 
 
 

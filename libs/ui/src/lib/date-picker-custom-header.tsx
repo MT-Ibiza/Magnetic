@@ -1,7 +1,7 @@
 import { ReactDatePickerCustomHeaderProps } from 'react-datepicker';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
-const DatePickerCustomHeaderTwoMonth = ({
+export const DatePickerCustomHeaderTwoMonth = ({
   monthDate,
   customHeaderCount,
   decreaseMonth,

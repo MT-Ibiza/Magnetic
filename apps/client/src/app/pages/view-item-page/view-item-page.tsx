@@ -1,6 +1,13 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useItem } from '../../hooks/useItem';
-import { Badge, Button, GalleryModal, ItemsGallery } from '@magnetic/ui';
+import {
+  Badge,
+  Button,
+  DatePickerCustomDay,
+  DatePickerCustomHeaderTwoMonth,
+  GalleryModal,
+  ItemsGallery,
+} from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import { useState } from 'react';
@@ -13,6 +20,7 @@ import {
   FaBed,
   FaGasPump,
 } from 'react-icons/fa';
+import DatePicker from 'react-datepicker';
 
 interface Props {}
 
@@ -23,6 +31,8 @@ export function ViewItemPage(props: Props) {
   const navigate = useNavigate();
   const { addItemToCart } = useCart();
   const { cart, addItem, removeItem } = useCartStore();
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
   const { isLoading, isError, item, serviceCategories, error } = useItem(
     serviceId,
     itemId
@@ -61,6 +71,15 @@ export function ViewItemPage(props: Props) {
         },
       }
     );
+  };
+
+  const onChangeDate = (dates: [Date | null, Date | null]) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+    // if (start && end) {
+    //   onSelectRange({ start, end });
+    // }
   };
 
   const BoatAttributes = [
@@ -138,6 +157,35 @@ export function ViewItemPage(props: Props) {
                 <span>{item?.description}</span>
               </div>
             </div>
+            {item?.boatAttributes && (
+              <div className="bg-base-100 listingSection__wrap overflow-hidden">
+                <div>
+                  <h2 className="text-2xl font-semibold">Availability</h2>
+                  <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
+                    Prices may increase on weekends or holidays
+                  </span>
+                </div>
+                <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
+                <div className="">
+                  <DatePicker
+                    selected={startDate}
+                    onChange={onChangeDate}
+                    startDate={startDate}
+                    endDate={endDate}
+                    selectsRange
+                    monthsShown={2}
+                    showPopperArrow={false}
+                    inline
+                    renderCustomHeader={(p) => (
+                      <DatePickerCustomHeaderTwoMonth {...p} />
+                    )}
+                    renderDayContents={(day, date) => (
+                      <DatePickerCustomDay dayOfMonth={day} date={date} />
+                    )}
+                  />
+                </div>
+              </div>
+            )}
           </div>
           <div className="col-span-1">
             <div className="sticky bg-base-100 top-[60px] listingSectionSidebar__wrap shadow-xl">
