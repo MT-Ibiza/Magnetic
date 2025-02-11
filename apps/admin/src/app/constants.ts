@@ -63,3 +63,18 @@ export const ALL_SERVICES = [
     key: 'reservations',
   },
 ];
+
+export const ALL_FORMS_CHEFS = [
+  {
+    name: 'Single Chef Service',
+    key: 'single',
+  },
+  {
+    name: 'Weekly Chef Service',
+    key: 'weekly',
+  },
+  {
+    name: 'Weekly Butler / Waiter Service',
+    key: 'weekly-waiter',
+  },
+];

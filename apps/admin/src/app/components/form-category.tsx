@@ -3,15 +3,15 @@ import {
   CategoryBase,
   EditCategory,
   NewCategory,
-  Service,
 } from '@magnetic/interfaces';
 import { Button, Input, Text, TextArea } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { editCategory, newCategory } from '../apis/api-categories';
 import { toast } from 'sonner';
-import { useCategories } from '../hooks/useCategories';
 import { useServices } from '../hooks/useServices';
+import { useEffect, useState } from 'react';
+import { ALL_FORMS_CHEFS } from '../constants';
 
 interface Props {
   category?: Category;
@@ -22,15 +22,27 @@ interface Props {
 
 function FormCategory(props: Props) {
   const { category, defaultServiceId, onCancel, onSave } = props;
+  const [chefServiceId, setChefServiceId] = useState<number>();
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<CategoryBase>({
     defaultValues: category ? category : undefined,
   });
 
   const { services } = useServices();
+
+  useEffect(() => {
+    if (services.length > 0) {
+      const chefService = services.find(
+        (service) => service.serviceType === 'chefs'
+      );
+      chefService && setChefServiceId(chefService.id);
+      console.log('chefService: ', chefService);
+    }
+  }, [services]);
 
   const createCategory = useMutation<Category, Error, NewCategory>({
     mutationFn: (data: NewCategory) => {
@@ -94,6 +106,23 @@ function FormCategory(props: Props) {
             ))}
           </select>
         </div>
+        {watch('serviceId') == chefServiceId && (
+          <div className="flex flex-col gap-[10px]">
+            <Text size="1">Form Type</Text>
+            <select
+              className="select select-bordered w-full"
+              {...register('formType')}
+            >
+              <option value="">-- Select a form --</option>
+              {ALL_FORMS_CHEFS.map((service, index) => (
+                <option value={service.key} key={index}>
+                  {service.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
         <div className="flex flex-col gap-[10px]">
           <Text>Name</Text>
           <Input

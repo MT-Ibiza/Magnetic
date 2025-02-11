@@ -4,6 +4,7 @@ export interface CategoryBase {
   name: string;
   description: string;
   serviceId?: number;
+  formType?: string;
   service?: {
     id: number;
     name: string;

@@ -67,6 +67,7 @@ model Category {
   updatedAt   DateTime @updatedAt
   name        String   @unique
   description String?
+  formType    String?
   items       Item[]
   service     Service? @relation(fields: [serviceId], references: [id])
   serviceId   Int?
@@ -236,17 +237,6 @@ model OrderItem {
   order        Order    @relation(fields: [orderId], references: [id])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-}
-
-model BookEvent {
-  id        Int      @id @default(autoincrement())
-  from      DateTime
-  to        DateTime
-  text      String?
-  type      String   @default("boat-rent")
-  taken     Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 enum Role {
