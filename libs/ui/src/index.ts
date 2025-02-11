@@ -29,6 +29,8 @@ export { CustomInput }from './lib/custom-input';
 export { RentalCarDatesRangeInput }from './lib/calendar-range';
 export { CarouselImages }from './lib/carousel-images';
 export { GalleryModal }from './lib/gallery-modal';
+export { GallerySlider }from './lib/GallerySlider';
+
 
 
 

@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { Item, Service } from '@magnetic/interfaces';
-import { Alert, Button, CarouselImages, Text } from '@magnetic/ui';
+import {
+  Alert,
+  Button,
+  CarouselImages,
+  GallerySlider,
+  Text,
+} from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
@@ -84,8 +90,8 @@ function ItemCard(props: Props) {
     //@ts-ignore
     document.getElementById(`modal-form-${item.id}`).close();
   };
-  console.log(item)
-  console.log(item.images)
+  console.log(item);
+  console.log(item.images);
 
   return (
     <>
@@ -93,18 +99,11 @@ function ItemCard(props: Props) {
         className={`nc-CarCard group relative border border-neutral-200 dark:border-neutral-700 rounded-3xl overflow-hidden hover:shadow-xl transition-shadow bg-white dark:bg-neutral-900 will-change-transform`}
       >
         <div className="relative w-full rounded-2xl overflow-hidden">
-          <Link to={`/services/${item.serviceId}/item/${item.id}`}>
-            <CarouselImages images={item.images}/>
-          </Link>
-          {/* <img
-            className="object-cover h-[180px] w-full"
-            src={
-              item.images && item.images.length > 0
-                ? item.images[0].url
-                : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
-            }
-            alt={item.name}
-          /> */}
+          <GallerySlider
+            href={`/services/${item.serviceId}/item/${item.id}`}
+            galleryImgs={item.images}
+            uniqueID={`ExperiencesCard_${item.id}`}
+          />
           <div className={'p-5  space-y-4'}>
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
