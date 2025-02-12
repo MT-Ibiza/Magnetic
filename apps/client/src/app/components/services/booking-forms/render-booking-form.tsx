@@ -7,6 +7,7 @@ import SpaBeautyBookingForm from './spa-beauty-form';
 import SecurityBookingForm from './security-form';
 import ChildcareBookingForm from './childcare-booking-form';
 import { OrderBookingForm } from '@magnetic/interfaces';
+import WeeklyButlerServiceForm from './weekly-butler-form';
 
 interface Props {
   type: string;
@@ -38,8 +39,29 @@ function RenderBookingForm(props: Props) {
         />
       )}
       {type === 'food' && <div></div>}
-      {type === 'chefs' && (
+      {/* {type === 'chefs' && (
         <WeeklyChefServiceForm
+          onSubmit={onSubmit}
+          formData={formData}
+          onCancel={onClose}
+        />
+      )} */}
+      {type === 'chef-single' && (
+        <WeeklyChefServiceForm
+          onSubmit={onSubmit}
+          formData={formData}
+          onCancel={onClose}
+        />
+      )}
+      {type === 'chef-weekly' && (
+        <WeeklyChefServiceForm
+          onSubmit={onSubmit}
+          formData={formData}
+          onCancel={onClose}
+        />
+      )}
+      {type === 'chef-weekly-waiter' && (
+        <WeeklyButlerServiceForm
           onSubmit={onSubmit}
           formData={formData}
           onCancel={onClose}

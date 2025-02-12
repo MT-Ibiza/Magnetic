@@ -43,7 +43,7 @@ function ItemCard(props: Props) {
   };
 
   const customDetailsServices = ['drinks', 'chefs', 'transfer', 'boat_rental'];
-
+  const formType = item.category?.formType || service.serviceType;
   const handleAddItem = (quantity: number, formData?: any) => {
     const newVal = quantity;
     addItemToCart.mutate(
@@ -93,8 +93,6 @@ function ItemCard(props: Props) {
     //@ts-ignore
     document.getElementById(`modal-form-${item.id}`).close();
   };
-  console.log(item);
-  console.log(item.images);
 
   return (
     <>
@@ -111,7 +109,7 @@ function ItemCard(props: Props) {
             <SaleOffBadge
               className="absolute right-3 top-3"
               price={`from ${centsToEurosWithCurrency(item.priceInCents)}`}
-              />
+            />
           )}
           <div className={'p-4 space-y-4'}>
             <div className="space-y-2">
@@ -219,7 +217,7 @@ function ItemCard(props: Props) {
       <dialog id={`modal-form-${item.id}`} className="modal">
         <div className="modal-box p-8 w-full max-w-5xl">
           <RenderBookingForm
-            type={service.serviceType}
+            type={formType}
             formData={{
               data: {},
               serviceId: service.id,
@@ -294,9 +292,9 @@ const BoatInfo = ({
         {secondName}
       </span>
     )}
-     <span className="text-sm text-neutral-500 dark:text-neutral-400 flex items-center gap-2">
-    <FaUsers className="text-neutral-500 text-lg" /> {capacity}
-  </span>
+    <span className="text-sm text-neutral-500 dark:text-neutral-400 flex items-center gap-2">
+      <FaUsers className="text-neutral-500 text-lg" /> {capacity}
+    </span>
   </div>
 );
 

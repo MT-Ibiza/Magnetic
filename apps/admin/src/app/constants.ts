@@ -67,14 +67,14 @@ export const ALL_SERVICES = [
 export const ALL_FORMS_CHEFS = [
   {
     name: 'Single Chef Service',
-    key: 'single',
+    key: 'chef-single',
   },
   {
     name: 'Weekly Chef Service',
-    key: 'weekly',
+    key: 'chef-weekly',
   },
   {
     name: 'Weekly Butler / Waiter Service',
-    key: 'weekly-waiter',
+    key: 'chef-weekly-waiter',
   },
 ];

@@ -11,32 +11,39 @@ export interface WeeklyButlerServiceFormData {
 
 interface Props {
   onSubmit: (data: WeeklyButlerServiceFormData) => void;
+  formData?: any;
+  onCancel?: () => void;
 }
 
-export function WeeklyButlerServiceForm({ onSubmit }: Props) {
+export function WeeklyButlerServiceForm({
+  onSubmit,
+  onCancel,
+  formData,
+}: Props) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<WeeklyButlerServiceFormData>({
-    defaultValues: {
-      service: '',
-      date: '',
-      startTime: '',
-      numberOfPeople: 1,
-      location: '',
-    },
+    defaultValues: formData
+      ? {
+          service: '',
+          date: '',
+          startTime: '',
+          numberOfPeople: 1,
+          location: '',
+        }
+      : undefined,
   });
 
   const handleFormSubmit = async (data: WeeklyButlerServiceFormData) => {
-    console.log(data);
     onSubmit(data);
   };
 
   return (
-    <div className="weekly-butler-waiter-service-form max-w-5xl mx-auto p-6 bg-base-100 shadow-md rounded-md">
+    <div className="">
       <h2 className="text-2xl font-bold text-center mb-6">
-        Weekly Butler/Waiter Service Booking
+        Weekly Butler/Waiter Service
       </h2>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -113,6 +120,17 @@ export function WeeklyButlerServiceForm({ onSubmit }: Props) {
           </div>
         </div>
         <div className="flex justify-end gap-3">
+          {onCancel && (
+            <Button
+              className=""
+              variant="outline"
+              color="neutral"
+              type="button"
+              onClick={onCancel}
+            >
+              Cancel
+            </Button>
+          )}
           <Button type="submit">Submit Booking</Button>
         </div>
       </form>

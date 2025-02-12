@@ -49,7 +49,7 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
   return (
     <div className="">
       <h2 className="text-2xl font-bold text-center mb-6">
-        Weekly Chef Service Booking
+        Weekly Chef Service
       </h2>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

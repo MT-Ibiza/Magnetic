@@ -18,6 +18,7 @@ export async function GET(
         script: true,
         termsAndConditions: true,
         imageUrl: true,
+        serviceType: true,
         packages: {
           select: {
             id: true,
