@@ -14,6 +14,7 @@ export async function POST(
   const priceInCents = Number(data.get('priceInCents') as string);
   const boatAttributes = JSON.parse(data.get('boatAttributes') as string);
   const imageFiles = data.getAll('imageFiles') as File[];
+  const categoryId = data.get('categoryId') as string;
 
   try {
     let imageUrls: string[] = [];
@@ -27,6 +28,7 @@ export async function POST(
         name,
         description,
         priceInCents,
+        categoryId: categoryId ? Number(categoryId) : undefined,
         serviceId: Number(params.id),
         boatAttributes: boatAttributes
           ? {

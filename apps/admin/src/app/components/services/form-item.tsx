@@ -45,6 +45,7 @@ export interface Props {
 
 export function FormItem(props: Props) {
   const { item, serviceId, onSave, serviceCategories } = props;
+  const [isSaving, setIsSaving] = useState(false);
   const editMode = !!item;
   const navigate = useNavigate();
   const categories = serviceCategories.map((category) => {
@@ -87,28 +88,34 @@ export function FormItem(props: Props) {
 
   const createItem = useMutation<Item, Error, FormData>({
     mutationFn: (data: FormData) => {
+      setIsSaving(true);
       return newItem(serviceId, data);
     },
     onSuccess: (item) => {
       toast.success(`${item.name} created!`);
       onSave();
+      setIsSaving(false);
     },
     onError: (error) => {
       toast.error('The product could not be created');
+      setIsSaving(false);
     },
   });
 
   const updateItem = useMutation<Item, Error, FormData>({
     mutationFn: (data: FormData) => {
+      setIsSaving(true);
       const itemId = item?.id || 0;
       return editItem(serviceId, itemId, data);
     },
     onSuccess: () => {
       toast.success(`${item?.name} updated!`);
       onSave();
+      setIsSaving(false);
     },
     onError: (error) => {
       toast.error('The product could not be updated');
+      setIsSaving(false);
     },
   });
 
@@ -324,7 +331,12 @@ export function FormItem(props: Props) {
           >
             Cancel
           </Button>
-          <Button type="submit" className="px-8 py-2">
+          <Button
+            type="submit"
+            className="px-8 py-2"
+            loading={isSaving}
+            loadingText="Saving..."
+          >
             {item ? 'Update Product' : 'Create Product'}
           </Button>
         </div>

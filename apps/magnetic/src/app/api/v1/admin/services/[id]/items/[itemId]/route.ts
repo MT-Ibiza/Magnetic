@@ -87,6 +87,7 @@ export async function PUT(
     ? JSON.parse(data.get('drinkAttributes') as string)
     : null;
   const imageFiles = data.getAll('imageFiles') as File[];
+  const categoryId = data.get('categoryId') as string;
 
   try {
     let imageUrls: string[] = [];
@@ -104,6 +105,7 @@ export async function PUT(
         name,
         description,
         priceInCents,
+        categoryId: categoryId ? Number(categoryId) : undefined,
         serviceId: Number(params.id),
         ...(boatAttributes && {
           boatAttributes: {
