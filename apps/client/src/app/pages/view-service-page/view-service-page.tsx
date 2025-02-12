@@ -29,7 +29,7 @@ function ViewServicePage(props: Props) {
     return <p>Service Not Found</p>;
   }
 
-  const publishedItems = service.items.filter((item) => item.published);
+  const publishedItems = service.items;
   const packageIds = service.packages.map((p) => p.id);
   const availableInPlan = packageIds.includes(user?.package?.id || -1);
 

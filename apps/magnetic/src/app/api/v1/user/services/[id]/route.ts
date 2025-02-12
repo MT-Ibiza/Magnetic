@@ -10,20 +10,44 @@ export async function GET(
       where: {
         id: Number(params.id),
       },
-      include: {
-        items: {
-          orderBy: {
-            createdAt: 'desc',
-          },
-          include: {
-            boatAttributes: true,
-            images: true,
-          },
-        },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        instructions: true,
+        script: true,
+        termsAndConditions: true,
+        imageUrl: true,
         packages: {
           select: {
             id: true,
             name: true,
+          },
+        },
+        items: {
+          where: {
+            published: true,
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
+          select: {
+            id: true,
+            name: true,
+            priceInCents: true,
+            description: true,
+            images: true,
+            boatAttributes: true,
+            category: {
+              select: {
+                id: true,
+                name: true,
+                formType: true,
+                serviceId: true,
+              },
+            },
+            categoryId: true,
+            serviceId: true,
           },
         },
       },
