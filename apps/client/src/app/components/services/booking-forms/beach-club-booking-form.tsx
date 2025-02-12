@@ -78,7 +78,9 @@ export function BeachClubBookingForm({ onSubmit }: Props) {
             <Input
               type="time"
               className="w-full"
-              {...register('arrivalTime', { required: 'Arrival time is required' })}
+              {...register('arrivalTime', {
+                required: 'Arrival time is required',
+              })}
             />
             {errors.arrivalTime && (
               <p className="text-[12px] text-red-500 pt-2">
@@ -87,7 +89,7 @@ export function BeachClubBookingForm({ onSubmit }: Props) {
             )}
           </div>
           <div>
-            <Text className="mb-2">Number of People</Text>
+            <Text className="mb-2">Number of people</Text>
             <Input
               type="number"
               min="1"
@@ -118,7 +120,9 @@ export function BeachClubBookingForm({ onSubmit }: Props) {
               type="text"
               className="w-full"
               placeholder="Specify amount/type of beach beds"
-              {...register('beachBedType', { required: 'Beach bed type is required' })}
+              {...register('beachBedType', {
+                required: 'Beach bed type is required',
+              })}
             />
             {errors.beachBedType && (
               <p className="text-[12px] text-red-500 pt-2">
@@ -127,7 +131,9 @@ export function BeachClubBookingForm({ onSubmit }: Props) {
             )}
           </div>
           <div>
-            <Text className="mb-2">Restaurant Reservation Time (if applicable)</Text>
+            <Text className="mb-2">
+              Restaurant Reservation Time (if applicable)
+            </Text>
             <Input
               type="time"
               className="w-full"

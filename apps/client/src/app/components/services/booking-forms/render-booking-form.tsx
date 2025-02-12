@@ -1,4 +1,3 @@
-import React from 'react';
 import TransferBookingForm from './transfer-booking-form';
 import DrinksDeliveryBookingForm from './drinks-delivery-form';
 import WeeklyChefServiceForm from './weekly-chef-service';
@@ -6,8 +5,8 @@ import BoatCharterBookingForm from './boat-charter-form';
 import SpaBeautyBookingForm from './spa-beauty-form';
 import SecurityBookingForm from './security-form';
 import ChildcareBookingForm from './childcare-booking-form';
-import { OrderBookingForm } from '@magnetic/interfaces';
 import WeeklyButlerServiceForm from './weekly-butler-form';
+import SingleChefServiceForm from './single-chef-service';
 
 interface Props {
   type: string;
@@ -47,7 +46,7 @@ function RenderBookingForm(props: Props) {
         />
       )} */}
       {type === 'chef-single' && (
-        <WeeklyChefServiceForm
+        <SingleChefServiceForm
           onSubmit={onSubmit}
           formData={formData}
           onCancel={onClose}

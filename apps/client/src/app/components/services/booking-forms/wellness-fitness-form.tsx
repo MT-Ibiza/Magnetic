@@ -88,7 +88,7 @@ export function WellnessFitnessBookingForm({ onSubmit }: Props) {
             )}
           </div>
           <div>
-            <Text className="mb-2">Number of People</Text>
+            <Text className="mb-2">Number of people</Text>
             <Input
               type="number"
               min="1"
