@@ -24,8 +24,6 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
-    watch,
   } = useForm<WeeklyChefServiceFormData>({
     defaultValues: formData
       ? {

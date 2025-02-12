@@ -27,11 +27,11 @@ export function WeeklyButlerServiceForm({
   } = useForm<WeeklyButlerServiceFormData>({
     defaultValues: formData
       ? {
-          service: '',
-          date: '',
-          startTime: '',
-          numberOfPeople: 1,
-          location: '',
+          service: formData.service,
+          date: formData.date,
+          startTime: formData.startTime,
+          numberOfPeople: formData.numberOfPeople,
+          location: formData.location,
         }
       : undefined,
   });

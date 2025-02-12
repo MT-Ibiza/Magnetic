@@ -30,6 +30,13 @@ export async function GET(request: Request) {
                     id: true,
                   },
                 },
+                category: {
+                  select: {
+                    id: true,
+                    name: true,
+                    formType: true,
+                  },
+                },
               },
             },
           },

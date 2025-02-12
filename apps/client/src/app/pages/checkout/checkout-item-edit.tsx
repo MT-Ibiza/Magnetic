@@ -5,14 +5,13 @@ import RenderBookingForm from '../../components/services/booking-forms/render-bo
 import { Item } from '@magnetic/interfaces';
 
 interface Props {
-  serviceType: string;
+  formType: string;
   item: Item;
   formData?: any;
 }
 
 function CheckoutItemEdit(props: Props) {
-  const { serviceType, item, formData } = props;
-
+  const { formType, item, formData } = props;
   const closeForm = () => {
     //@ts-ignore
     document.getElementById(`modal-form-${item.id}`).close();
@@ -36,7 +35,7 @@ function CheckoutItemEdit(props: Props) {
       <dialog id={`modal-form-${item.id}`} className="modal">
         <div className="modal-box p-8 w-full max-w-5xl">
           <RenderBookingForm
-            type={serviceType}
+            type={formType}
             formData={formData}
             onSubmit={(data) => {
               // handleAddItem(0, data);

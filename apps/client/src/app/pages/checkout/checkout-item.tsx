@@ -15,6 +15,7 @@ function CheckoutItem(props: Props) {
   const { item } = cartItem;
   const image = item.images?.length > 0 ? item.images[0].url : placeholderItem;
   const serviceType = item.service?.serviceType;
+  const formType = item.category?.formType || item.service?.serviceType;
 
   return (
     <div className="flex justify-between w-full">
@@ -27,10 +28,18 @@ function CheckoutItem(props: Props) {
           />
         </div>
         <div>
-          {serviceType === 'boat_rental' && <BoatsInfo cartItem={cartItem} />}
-          {serviceType === 'transfer' && <TransferInfo cartItem={cartItem} />}
-          {serviceType === 'chefs' && <ChefsInfo cartItem={cartItem} />}
-          {serviceType === 'drinks' && <DrinkInfo cartItem={cartItem} />}
+          {serviceType === 'boat_rental' && (
+            <BoatsInfo cartItem={cartItem} formType={formType} />
+          )}
+          {serviceType === 'transfer' && (
+            <TransferInfo cartItem={cartItem} formType={formType} />
+          )}
+          {serviceType === 'chefs' && (
+            <ChefsInfo cartItem={cartItem} formType={formType} />
+          )}
+          {serviceType === 'drinks' && (
+            <DrinkInfo cartItem={cartItem} formType={formType} />
+          )}
         </div>
       </div>
       <div className="flex items-end flex-col">
@@ -44,7 +53,13 @@ function CheckoutItem(props: Props) {
   );
 }
 
-const TransferInfo = ({ cartItem }: { cartItem: CartItem }) => (
+const TransferInfo = ({
+  cartItem,
+  formType,
+}: {
+  cartItem: CartItem;
+  formType: string;
+}) => (
   <div className="flex flex-col gap-1">
     <h1>{cartItem.item.name}</h1>
     {cartItem.formData && (
@@ -59,13 +74,19 @@ const TransferInfo = ({ cartItem }: { cartItem: CartItem }) => (
     )}
     <CheckoutItemEdit
       formData={cartItem.formData}
-      serviceType={cartItem.item.service.serviceType}
+      formType={formType}
       item={cartItem.item}
     />
   </div>
 );
 
-const BoatsInfo = ({ cartItem }: { cartItem: CartItem }) => (
+const BoatsInfo = ({
+  cartItem,
+  formType,
+}: {
+  cartItem: CartItem;
+  formType: string;
+}) => (
   <div className="flex flex-col gap-1">
     <h1>{cartItem.item.name}</h1>
     {cartItem.formData && (
@@ -76,13 +97,19 @@ const BoatsInfo = ({ cartItem }: { cartItem: CartItem }) => (
     )}
     <CheckoutItemEdit
       formData={cartItem.formData}
-      serviceType={cartItem.item.service.serviceType}
+      formType={formType}
       item={cartItem.item}
     />
   </div>
 );
 
-const ChefsInfo = ({ cartItem }: { cartItem: CartItem }) => (
+const ChefsInfo = ({
+  cartItem,
+  formType,
+}: {
+  cartItem: CartItem;
+  formType: string;
+}) => (
   <div className="flex flex-col gap-1">
     <h1>{cartItem.item.name}</h1>
     {cartItem.formData && (
@@ -93,13 +120,19 @@ const ChefsInfo = ({ cartItem }: { cartItem: CartItem }) => (
     )}
     <CheckoutItemEdit
       formData={cartItem.formData}
-      serviceType={cartItem.item.service.serviceType}
+      formType={formType}
       item={cartItem.item}
     />
   </div>
 );
 
-const DrinkInfo = ({ cartItem }: { cartItem: CartItem }) => (
+const DrinkInfo = ({
+  cartItem,
+  formType,
+}: {
+  cartItem: CartItem;
+  formType: string;
+}) => (
   <div className="flex flex-col gap-1">
     <h1>{cartItem.item.name}</h1>
     <Text size="1">
