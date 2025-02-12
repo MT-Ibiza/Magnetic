@@ -36,8 +36,30 @@ function ViewServicePage(props: Props) {
   return (
     <CardWrapper>
       <NoticeBookingUnavailable arrivalDate={user?.arrivalDate} />
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-xl lg:text-2xl font-semibold">{service.name}</h1>
+      <div className="listingSection__wrap">
+        <h2 className="text-2xl font-semibold">{service.name}</h2>
+        <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+        <div className="leading-relaxed editor-text">
+          <div
+            className="text-neutral-6000 dark:text-neutral-300"
+            dangerouslySetInnerHTML={{ __html: service.description }}
+          />
+        </div>
+        {service.instructions && (
+          <>
+            <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+            <div className="leading-relaxed editor-text">
+              <h4 className="text-lg font-semibold">Instructions</h4>
+              <div
+                className="mt-3 text-neutral-6000 dark:text-neutral-300"
+                dangerouslySetInnerHTML={{ __html: service.instructions }}
+              />
+            </div>
+          </>
+        )}
+      </div>
+      {/* <div className="flex items-center justify-between mb-8">
+        <h2 className="text-2xl font-semibold">{service.name}</h2>
         <Badge size={3} color="yellow" name={service.packages[0].name} />
       </div>
       <div className="text-sm leading-relaxed editor-text">
@@ -54,7 +76,7 @@ function ViewServicePage(props: Props) {
             dangerouslySetInnerHTML={{ __html: service.instructions }}
           />
         </div>
-      )}
+      )} */}
       {service.script ? (
         <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
       ) : (
