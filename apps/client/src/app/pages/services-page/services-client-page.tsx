@@ -35,15 +35,15 @@ export function ServiceClientPage() {
     <div className="bg-base-100 listingSection__wrap">
       <div className="container mx-auto px-6">
         <div className="text-center mb-8 lg:mb-12">
-          <h1 className="text-2xl lg:text-3xl font-semibold">
+          <h2 className="text-3xl md:text-4xl font-semibold">
             Explore Our Services
-          </h1>
-          <p className="lg:text-[16px] text-[14px] text-gray-500 mt-2 max-w-2xl mx-auto">
+          </h2>
+          <span className="mt-2 md:mt-3 font-normal block text-base sm:text-xl text-neutral-500 dark:text-neutral-400">
             Browse through our wide range of services designed to make your life
             easier and more efficient.
-          </p>
+          </span>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
           {services.map((service) => (
             <Link
               key={service.id}
