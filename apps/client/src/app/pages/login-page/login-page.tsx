@@ -44,6 +44,7 @@ export function LoginPage() {
         email: user.email,
         arrivalDate: user.arrivalDate,
         package: user.package,
+        phone: user.phone,
         cartId: user.cartId,
         id: user.id,
       });

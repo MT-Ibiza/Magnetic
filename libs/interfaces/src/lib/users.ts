@@ -9,6 +9,7 @@ export interface CurrentUser {
   packageId?: number;
   package?: Package;
   cartId?: number;
+  phone?: string;
 }
 
 export interface UserBase {
@@ -64,6 +65,7 @@ export interface LoginResponse {
   accessToken: string;
   package: Package;
   cartId?: number;
+  phone?: string;
 }
 
 export interface SearchUsersParams {

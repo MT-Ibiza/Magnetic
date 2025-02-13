@@ -46,7 +46,7 @@ export function TransferBookingForm({
           dropOffLocation: formData.dropOffLocation,
           numberOfPeople: formData.numberOfPeople,
           contactName: formData.contactName || user?.name,
-          contactNumber: formData.contactNumber,
+          contactNumber: formData.contactNumber || user?.phone,
           flightNumber: formData.flightNumber,
           luggageAmount: formData.luggageAmount,
           childSeats: formData.childSeats || '',
@@ -191,15 +191,8 @@ export function TransferBookingForm({
               type="text"
               className="w-full"
               placeholder="Optional"
-              {...register('flightNumber', {
-                required: 'Flight Number is required',
-              })}
+              {...register('flightNumber')}
             />
-            {errors.flightNumber && (
-              <p className="text-[12px] text-red-500 pt-2">
-                {errors.flightNumber.message}
-              </p>
-            )}
           </div>
           <div>
             <Text className="mb-2">Luggage Amount</Text>
