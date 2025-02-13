@@ -1,10 +1,9 @@
 import Loading from '../loading';
 import { ErrorText } from '../error-text';
-import { useUsers } from '../../hooks/useUsers'; 
+import { useUsers } from '../../hooks/useUsers';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { User } from '@magnetic/interfaces';
 import { Button, Text } from '@magnetic/ui';
-import { Link } from 'react-router-dom';
 
 interface Props {
   onClickEdit?: (user: User) => void;
@@ -13,19 +12,11 @@ interface Props {
 
 function AdminUsersTable(props: Props) {
   const { onClickEdit, onClickRemove } = props;
-  const {
-    isLoading,
-    isError,
-    users,
-    error,
-    hasNextPage,
-    fetchNextPage,
-    refetch,
-  } = useUsers({
-    searchText: undefined,
-    itemsPerPage: 10,
-    role: 'admin',
-  });
+  const { isLoading, isError, users, error, hasNextPage, fetchNextPage } =
+    useUsers({
+      itemsPerPage: 10,
+      role: 'admin',
+    });
 
   if (isLoading) {
     return <Loading />;
@@ -50,7 +41,9 @@ function AdminUsersTable(props: Props) {
           {users.map((user, index) => (
             <tr className="hover" key={index}>
               <th>{index + 1}</th>
-              <td>{user.firstName} {user.lastName}</td>
+              <td>
+                {user.firstName} {user.lastName}
+              </td>
               <td>
                 <div className="flex flex-col gap-1">
                   <Text size="1">{user.phone || 'N/A'}</Text>

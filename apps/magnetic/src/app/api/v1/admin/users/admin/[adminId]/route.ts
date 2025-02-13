@@ -58,3 +58,30 @@ export async function PUT(
     );
   }
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { adminId: string } }
+) {
+  try {
+    const userId = Number(params.adminId);
+    if (isNaN(userId)) {
+      return NextResponse.json({ message: 'Invalid user ID' }, { status: 400 });
+    }
+
+    await db.user.delete({
+      where: { id: userId },
+    });
+
+    return NextResponse.json(
+      { message: 'User deleted successfully' },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error('Error deleting user:', error);
+    return NextResponse.json(
+      { message: 'Internal Server Error', error: error.message },
+      { status: 500 }
+    );
+  }
+}

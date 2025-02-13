@@ -4,18 +4,39 @@ import { useState } from 'react';
 import FormAdminUser from '../../components/users/form-admin-user';
 import { User } from '@magnetic/interfaces';
 import { useUsers } from '../../hooks/useUsers';
+import ConfirmAlert from '../../components/confirm-alert';
+import { useMutation } from '@tanstack/react-query';
+import { removeAdmin } from '../../apis/api-users';
 interface Props {}
 
 export function AdminUsersPage(props: Props) {
   const {} = props;
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User>();
+  const [showAlert, setShowAlert] = useState(false);
 
   const { refetch } = useUsers({
     searchText: undefined,
     itemsPerPage: 10,
     role: 'admin',
   });
+
+  const removeAdminUser = useMutation<User, Error, any>({
+    mutationFn: (userId: number) => {
+      return removeAdmin(userId);
+    },
+    onSuccess: () => {
+      toggleAlert();
+      refetch();
+    },
+    onError: (error) => {
+      console.log('error: ', error);
+    },
+  });
+
+  const toggleAlert = () => {
+    setShowAlert((prevState) => !prevState);
+  };
 
   const toggleDrawer = (user?: User) => {
     setSelectedUser(user);
@@ -47,9 +68,23 @@ export function AdminUsersPage(props: Props) {
           }}
           onClickRemove={(user) => {
             setSelectedUser(user);
+            toggleAlert();
           }}
         />
       </CardWrapper>
+      <ConfirmAlert
+        title={'Remove User'}
+        message={'Are you sure you want to remove this user?'}
+        show={showAlert}
+        onClickConfirm={async () => {
+          if (selectedUser) {
+            await removeAdminUser.mutateAsync(selectedUser.id);
+          }
+        }}
+        onClickCancel={() => {
+          setShowAlert(false);
+        }}
+      />
       <DrawerContent
         title={selectedUser ? 'Edit Admin User' : 'New Admin User'}
         open={openDrawer}
