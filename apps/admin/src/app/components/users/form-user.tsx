@@ -216,13 +216,8 @@ export function FormUser(props: Props) {
               <Input
                 type="text"
                 placeholder="Passport Number"
-                {...register('passportNumber', { required: true })}
+                {...register('passportNumber')}
               />
-              {errors.passportNumber && (
-                <p className="text-[12px] text-red-500">
-                  Passport Number is required
-                </p>
-              )}
             </div>
           </div>
           <div className="flex gap-5">
@@ -231,13 +226,8 @@ export function FormUser(props: Props) {
               <Input
                 type="text"
                 placeholder="Billing Address"
-                {...register('billingAddress', { required: true })}
+                {...register('billingAddress')}
               />
-              {errors.billingAddress && (
-                <p className="text-[12px] text-red-500">
-                  Billing Address is required
-                </p>
-              )}
             </div>
             <div className="flex flex-col gap-2 w-full">
               <Text>Email</Text>
