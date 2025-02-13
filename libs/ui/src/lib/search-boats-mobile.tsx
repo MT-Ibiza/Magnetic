@@ -33,24 +33,16 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
   const [capacity, setCapacity] = useState(searchParams.capacity || '');
   const [size, setSize] = useState(searchParams.size || '');
   const [budget, setBudget] = useState(searchParams.priceGreaterThan || '');
-  const [startDate, setStartDate] = useState<Date | null>(
-    searchParams.from ? new Date(searchParams.from) : null
-  );
-  const [endDate, setEndDate] = useState<Date | null>(
-    searchParams.to ? new Date(searchParams.to) : null
-  );
-
   const handleCapacityChange = (name: string, value: string) =>
     setCapacity(value);
   const handleSizeChange = (name: string, value: string) => setSize(value);
   const handleBudgetChange = (name: string, value: string) => setBudget(value);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
+    searchParams.from ? new Date(searchParams.from) : null
+  );
 
-  const handleDatesChange = (range: {
-    start: Date | null;
-    end: Date | null;
-  }) => {
-    setStartDate(range.start);
-    setEndDate(range.end);
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
   };
 
   const handleSearch = () => {
@@ -59,8 +51,9 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
       capacity,
       size,
       budget,
-      from: startDate ? moment(startDate).format('YYYY-MM-DD') : undefined,
-      to: endDate ? moment(endDate).format('YYYY-MM-DD') : undefined,
+      from: selectedDate
+        ? moment(selectedDate).format('YYYY-MM-DD')
+        : undefined,
     };
 
     onChangeFilters(updatedFilters);
@@ -177,16 +170,15 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
           >
             <span className="text-neutral-400">When</span>
             <span>
-              {startDate
-                ? convertSelectedDateToString([startDate, endDate])
+              {selectedDate
+                ? convertSelectedDateToString(selectedDate)
                 : 'Add date'}
             </span>
           </button>
         ) : (
           <DatesRangeInput
-            onSelectRange={handleDatesChange}
-            startDate={startDate}
-            endDate={endDate}
+            onSelectDate={handleDateChange}
+            selectedDate={selectedDate}
           />
         )}
       </div>
@@ -219,18 +211,11 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
 
 export default SearchBoatsMobile;
 
-const convertSelectedDateToString = ([startDate, endDate]: DateRage) => {
-  const dateString =
-    (startDate?.toLocaleDateString('en-US', {
-      month: 'short',
-      day: '2-digit',
-    }) || '') +
-    (endDate
-      ? ' - ' +
-        endDate?.toLocaleDateString('en-US', {
-          month: 'short',
-          day: '2-digit',
-        })
-      : '');
-  return dateString;
+const convertSelectedDateToString = (selectedDate: Date | null) => {
+  return selectedDate
+    ? selectedDate.toLocaleDateString('en-US', {
+        month: 'short',
+        day: '2-digit',
+      })
+    : 'Add date';
 };

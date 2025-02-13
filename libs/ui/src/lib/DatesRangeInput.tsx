@@ -5,31 +5,27 @@ import DatePickerCustomDay from './date-picker-day';
 
 export interface StayDatesRangeInputProps {
   className?: string;
-  onSelectRange: (range: { start: Date; end: Date }) => void;
-  startDate: Date | null;
-  endDate: Date | null;
+  onSelectDate: (date: Date) => void;
+  selectedDate: Date | null;
 }
 
 const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
   className = '',
-  onSelectRange,
-  startDate: initialStartDate,
-  endDate: initialEndDate,
+  onSelectDate,
+  selectedDate: initialSelectedDate,
 }) => {
-  const [startDate, setStartDate] = useState<Date | null>(initialStartDate);
-  const [endDate, setEndDate] = useState<Date | null>(initialEndDate);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
+    initialSelectedDate
+  );
 
   useEffect(() => {
-    setStartDate(initialStartDate);
-    setEndDate(initialEndDate);
-  }, [initialStartDate, initialEndDate]);
+    setSelectedDate(initialSelectedDate);
+  }, [initialSelectedDate]);
 
-  const onChangeDate = (dates: [Date | null, Date | null]) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
-    if (start && end) {
-      onSelectRange({ start, end });
+  const onChangeDate = (date: Date | null) => {
+    if (date) {
+      setSelectedDate(date);
+      onSelectDate(date);
     }
   };
 
@@ -44,12 +40,9 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
         className={`relative flex-shrink-0 flex justify-center z-10 py-5 ${className} `}
       >
         <DatePicker
-          selected={startDate}
+          selected={selectedDate}
           onChange={onChangeDate}
-          startDate={startDate}
-          endDate={endDate}
-          selectsRange
-          monthsShown={2}
+          monthsShown={1}
           showPopperArrow={false}
           inline
           renderCustomHeader={(p) => <DatePickerCustomHeaderTwoMonth {...p} />}
