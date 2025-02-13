@@ -61,7 +61,7 @@ export const SearchBoatInput: FC<Props> = ({
           <input
             className="block w-full bg-transparent border px-4 py-3 pr-12 border-neutral-900 dark:border-neutral-200 rounded-xl focus:ring-0 focus:outline-none text-base leading-none placeholder-neutral-500 dark:placeholder-neutral-300 truncate font-bold placeholder:truncate"
             placeholder="Search options"
-            value={value}
+            value={options.find((opt) => opt.value === value)?.label || ''}
             onChange={(e) => setValue(e.currentTarget.value)}
             ref={inputRef}
           />

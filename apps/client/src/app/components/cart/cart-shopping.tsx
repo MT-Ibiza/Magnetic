@@ -112,7 +112,7 @@ export function CartShopping() {
                       </button>
                     )}
                   </div>
-                  <ul className="mt-4 space-y-2">
+                  <ul className="mt-4 space-y-2 max-h-[600px] overflow-y-auto">
                     {Object.entries(groupedCart).length > 0 ? (
                       Object.entries(groupedCart).map(
                         ([serviceId, group]: any) => (
