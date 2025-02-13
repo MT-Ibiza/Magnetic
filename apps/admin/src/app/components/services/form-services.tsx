@@ -24,6 +24,7 @@ import FormProvider from '../providers/form-provider';
 import { useNewServiceData } from '../../hooks/useNewServiceData';
 import { toast } from 'sonner';
 import { ALL_SERVICES } from '../../constants';
+import MultiselectPackages from './multiselect-packages';
 
 export interface FormServiceData {
   name: string;
@@ -120,6 +121,7 @@ export function ServiceForm(props: Props) {
   const onSubmit = async (data: FormServiceData) => {
     const { name, packageIds, serviceType, script, providerId } = data;
     const formData = new FormData();
+    console.log('packageIds: ', packageIds);
     formData.append('name', name);
     formData.append('description', description || '');
     packageIds.forEach((id) => formData.append('packageIds[]', id.toString()));
@@ -198,22 +200,14 @@ export function ServiceForm(props: Props) {
               </div>
               <div className="flex flex-col gap-[10px]">
                 <Text size="1">Available in package</Text>
-                <select
-                  className="select select-bordered w-full"
-                  multiple
-                  {...register('packageIds', {
-                    required: {
-                      value: true,
-                      message: 'At least one package is required',
-                    },
-                  })}
-                >
-                  {data.packages.map((option, index) => (
-                    <option value={option.id} key={index}>
-                      {option.name}
-                    </option>
-                  ))}
-                </select>
+                <MultiselectPackages
+                  packages={data.packages}
+                  selected={service?.packages.map((p) => p.id) || []}
+                  onSelect={(ids) => {
+                    console.log(ids);
+                    setValue('packageIds', ids);
+                  }}
+                />
               </div>
               <div className="flex flex-col gap-[10px]">
                 <Text size="1">Script</Text>

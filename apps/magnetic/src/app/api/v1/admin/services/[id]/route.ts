@@ -93,19 +93,19 @@ export async function PUT(
       imageUrl = images[0];
     }
     const providerNumberId = providerId ? Number(providerId) : null;
+    const newPackageIds = packageIds.map((id) => ({ id: parseInt(id, 10) }));
     const updatedService = await db.service.update({
-      where: {
-        id: serviceFound.id,
-      },
+      where: { id: serviceFound.id },
       data: {
-        name: name,
-        description: description,
+        name,
+        description,
         packages: {
-          connect: packageIds.map((id) => ({ id: parseInt(id, 10) })),
+          set: [],
+          connect: newPackageIds,
         },
         providerId: providerNumberId,
         serviceType: serviceType as 'none',
-        imageUrl: imageUrl,
+        imageUrl,
         script,
         termsAndConditions,
         instructions,

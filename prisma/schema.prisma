@@ -47,7 +47,7 @@ model Service {
   id                 Int                @id @default(autoincrement())
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
-  name               String
+  name               String             @unique
   description        String?
   serviceType        ServiceType        @default(none)
   items              Item[]

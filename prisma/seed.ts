@@ -5,17 +5,18 @@ const prisma = new PrismaClient();
 
 async function main() {
   try {
+    // Crear Admin si no existe
     const admin = await prisma.user.findUnique({
-      where: {
-        email: 'admin@admin.com',
-      },
+      where: { email: 'admin@magnetic.com' },
     });
     if (!admin) {
-      const adminPassword = await bcrypt.hash('admin', 10);
+      const adminPassword = await bcrypt.hash('magnetic2025', 10);
       await prisma.user.create({
         data: {
-          name: 'Admin User',
-          email: 'admin@admin.com',
+          name: 'Admin Magnetic',
+          firstName: 'Admin',
+          lastName: 'Magnetic',
+          email: 'admin@magnetic.com',
           role: 'admin',
           password: adminPassword,
         },
@@ -23,53 +24,56 @@ async function main() {
       console.log('Admin Created!');
     }
 
-    const packages = ['Gold', 'Platinum'];
+    // Crear Packages si no existen
+    const packages = ['Gold', 'Platinum', 'Diamond'];
     for (const packageName of packages) {
       await prisma.package.upsert({
         where: { name: packageName },
         update: {},
-        create: {
-          name: packageName,
-        },
+        create: { name: packageName },
       });
     }
     console.log('Packages verified/created successfully!');
 
-    const categories = [
-      {
-        name: 'Airport & Resort Transfers',
-        description: 'Transfers to/from airports and resorts',
-      },
-      {
-        name: 'Private Driver & Vehicle On-Call',
-        description: 'On-call private driver services',
-      },
-      { name: 'Cocktails', description: 'Signature and classic cocktails' },
-      { name: 'Appetizers', description: 'Delicious starters for your meals' },
+    // Crear Services con los nombres de la imagen
+    const services = [
+      'Reservations',
+      'Childcare',
+      'Security',
+      'Food Delivery',
+      'Car Rentals',
+      'Wellness & Fitness',
+      'Spa & Beauty',
+      'Boat Charters',
+      'Chefs & Assistants',
+      'Drinks Delivery',
+      'Transfers & Drivers',
     ];
 
-    for (const category of categories) {
-      await prisma.category.upsert({
-        where: { name: category.name },
+    for (const serviceName of services) {
+      await prisma.service.upsert({
+        where: { name: serviceName }, // Asegurar que 'name' sea único en el modelo Prisma
         update: {},
         create: {
-          name: category.name,
-          description: category.description,
+          name: serviceName,
+          description: `Description for ${serviceName}`,
+          serviceType: 'none',
+          script: null,
+          imageUrl: null,
+          termsAndConditions: null,
+          instructions: null,
         },
       });
     }
-    console.log('Categories verified/created successfully!');
+    console.log('Services verified/created successfully!');
   } catch (error) {
     console.error('Error seeding the database:', error);
+  } finally {
+    await prisma.$disconnect();
   }
 }
 
-main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
