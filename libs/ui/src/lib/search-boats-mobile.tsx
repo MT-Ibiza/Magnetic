@@ -178,12 +178,16 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
             <span className="text-neutral-400">When</span>
             <span>
               {startDate
-                ? converSelectedDateToString([startDate, endDate])
-                : "Add date"}
+                ? convertSelectedDateToString([startDate, endDate])
+                : 'Add date'}
             </span>
           </button>
         ) : (
-          <DatesRangeInput onSelectRange={handleDatesChange} />
+          <DatesRangeInput
+            onSelectRange={handleDatesChange}
+            startDate={startDate}
+            endDate={endDate}
+          />
         )}
       </div>
     );
@@ -198,7 +202,13 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
         {renderInputDates()}
       </div>
       <div className="absolute bottom-0 z-30  w-full p-4 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-700 flex justify-end">
-        <Button radius='full' className='flex gap-[10px]' size={2} type="submit" onClick={handleSearch}>
+        <Button
+          radius="full"
+          className="flex gap-[10px]"
+          size={2}
+          type="submit"
+          onClick={handleSearch}
+        >
           <AiOutlineSearch className="flex-shrink-0 w-5 h-5" />
           Search
         </Button>
@@ -209,18 +219,18 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
 
 export default SearchBoatsMobile;
 
-const converSelectedDateToString = ([startDate, endDate]: DateRage) => {
+const convertSelectedDateToString = ([startDate, endDate]: DateRage) => {
   const dateString =
-    (startDate?.toLocaleDateString("en-US", {
-      month: "short",
-      day: "2-digit",
-    }) || "") +
+    (startDate?.toLocaleDateString('en-US', {
+      month: 'short',
+      day: '2-digit',
+    }) || '') +
     (endDate
-      ? " - " +
-        endDate?.toLocaleDateString("en-US", {
-          month: "short",
-          day: "2-digit",
+      ? ' - ' +
+        endDate?.toLocaleDateString('en-US', {
+          month: 'short',
+          day: '2-digit',
         })
-      : "");
+      : '');
   return dateString;
 };

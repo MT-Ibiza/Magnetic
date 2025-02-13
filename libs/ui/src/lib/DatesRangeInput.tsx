@@ -1,19 +1,28 @@
 import DatePicker from 'react-datepicker';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import DatePickerCustomHeaderTwoMonth from './date-picker-custom-header';
 import DatePickerCustomDay from './date-picker-day';
 
 export interface StayDatesRangeInputProps {
   className?: string;
   onSelectRange: (range: { start: Date; end: Date }) => void;
+  startDate: Date | null;
+  endDate: Date | null;
 }
 
 const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
   className = '',
   onSelectRange,
+  startDate: initialStartDate,
+  endDate: initialEndDate,
 }) => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(initialStartDate);
+  const [endDate, setEndDate] = useState<Date | null>(initialEndDate);
+
+  useEffect(() => {
+    setStartDate(initialStartDate);
+    setEndDate(initialEndDate);
+  }, [initialStartDate, initialEndDate]);
 
   const onChangeDate = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
@@ -28,7 +37,7 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
     <div>
       <div className="p-5">
         <span className="block font-semibold text-xl sm:text-2xl">
-          {` When's your trip?`}
+          {`Add Date`}
         </span>
       </div>
       <div

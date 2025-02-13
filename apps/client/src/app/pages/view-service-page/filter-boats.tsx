@@ -4,9 +4,7 @@ import {
   FilterSearchMobile,
   RentalCarDatesRangeInput,
 } from '@magnetic/ui';
-import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { searchBoats } from '../../apis/api-boats';
 import { BoatsSearchAttributes } from '@magnetic/interfaces';
 import moment from 'moment';
 
