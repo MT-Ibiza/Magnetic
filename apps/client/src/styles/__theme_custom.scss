@@ -193,7 +193,7 @@ button.gm-control-active.gm-fullscreen-control {
 // LISTING PAGE DETAIL
 .listingSection__wrap {
   @apply w-full flex flex-col rounded-2xl border-b sm:border-t sm:border-l sm:border-r border-neutral-200 dark:border-neutral-700 space-y-6 sm:space-y-8 pb-10 p-4 xl:p-8;
-}
+} 
 
 // LISTING PAGE DETAIL
 .listingSectionSidebar__wrap {
@@ -290,4 +290,10 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .ql-editor {
   background-color: white !important;
+}
+
+@media (max-width: 768px) {
+  .listingSection__wrap {
+    @apply w-full flex pb-6;
+  }
 }

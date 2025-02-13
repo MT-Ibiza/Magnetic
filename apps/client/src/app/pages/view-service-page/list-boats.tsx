@@ -34,7 +34,7 @@ function ListBoats(props: Props) {
   });
 
   return (
-    <div className="flex flex-col gap-[40px]">
+    <div className="flex flex-col gap-[15px] lg:gap-[40px]">
       <FilterBoats
         onChangeFilters={(filters) => {
           setSearchParams(filters);

@@ -1,4 +1,9 @@
-import { CustomInput, RentalCarDatesRangeInput } from '@magnetic/ui';
+import {
+  SearchBoatsMobile,
+  CustomInput,
+  FilterSearchMobile,
+  RentalCarDatesRangeInput,
+} from '@magnetic/ui';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { searchBoats } from '../../apis/api-boats';
@@ -70,39 +75,49 @@ function FilterBoats(props: Props) {
   };
 
   return (
-    <div className="sticky z-10 top-[48px] w-full relative mt-8 rounded-[40px] xl:rounded-[49px] rounded-t-2xl xl:rounded-t-3xl shadow-xl dark:shadow-2xl bg-white dark:bg-neutral-800">
-      <form className="grid grid-cols-4 gap-x-[30px]">
-        {/* <input
-              type="date"
-              name="date"
-              value={searchParams.date}
-              onChange={handleSearchChange}
-              className="input w-full px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-            /> */}
-        <CustomInput
-          name="capacity"
-          desc="capacity"
-          options={capacityOptions}
-          value={searchParams.capacity || ''}
-          onChange={handleSearchChange}
-        />
-        <CustomInput
-          name="size"
-          desc="size"
-          options={sizeOptions}
-          value={searchParams.size || ''}
-          onChange={handleSearchChange}
-        />
-        <RentalCarDatesRangeInput onSelectRange={handleDatesChange} />
-        <CustomInput
-          name="priceGreaterThan"
-          desc="budget"
-          options={budgetOptions}
-          value={searchParams.priceGreaterThan || ''}
-          onChange={handleSearchChange}
-        />
-      </form>
-    </div>
+    <>
+      <div className="bg-white w-full sticky z-10 top-[63px] lg:hidden flex-[3] max-w-lg !mx-auto md:px-3">
+        <div className="py-5 nc-header-bg flex-[3] max-w-lg !mx-auto md:px-3">
+          <FilterSearchMobile>
+            <SearchBoatsMobile
+              capacityOptions={capacityOptions}
+              sizeOptions={sizeOptions}
+              onChangeFilters={onChangeFilters}
+              searchParams={searchParams}
+              budgetOptions={budgetOptions}
+              onClose={() => console.log('Modal cerrado')}
+            />
+          </FilterSearchMobile>
+        </div>
+      </div>
+
+      <div className="hidden lg:block sticky z-10 top-[48px] w-full relative mt-8 rounded-[40px] xl:rounded-[49px] rounded-t-2xl xl:rounded-t-3xl shadow-xl dark:shadow-2xl bg-white dark:bg-neutral-800">
+        <form className="lg:grid grid-cols-4 gap-x-[30px]">
+          <CustomInput
+            name="capacity"
+            desc="capacity"
+            options={capacityOptions}
+            value={searchParams.capacity || ''}
+            onChange={handleSearchChange}
+          />
+          <CustomInput
+            name="size"
+            desc="size"
+            options={sizeOptions}
+            value={searchParams.size || ''}
+            onChange={handleSearchChange}
+          />
+          <RentalCarDatesRangeInput onSelectRange={handleDatesChange} />
+          <CustomInput
+            name="priceGreaterThan"
+            desc="budget"
+            options={budgetOptions}
+            value={searchParams.priceGreaterThan || ''}
+            onChange={handleSearchChange}
+          />
+        </form>
+      </div>
+    </>
   );
 }
 

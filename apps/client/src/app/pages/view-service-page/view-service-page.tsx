@@ -58,25 +58,6 @@ function ViewServicePage(props: Props) {
           </>
         )}
       </div>
-      {/* <div className="flex items-center justify-between mb-8">
-        <h2 className="text-2xl font-semibold">{service.name}</h2>
-        <Badge size={3} color="yellow" name={service.packages[0].name} />
-      </div>
-      <div className="text-sm leading-relaxed editor-text">
-        <div
-          className="block"
-          dangerouslySetInnerHTML={{ __html: service.description }}
-        />
-      </div>
-      {service.instructions && (
-        <div className="text-sm leading-relaxed editor-text mt-5">
-          <h1>Instructions</h1>
-          <div
-            className="block mt-3"
-            dangerouslySetInnerHTML={{ __html: service.instructions }}
-          />
-        </div>
-      )} */}
       {service.script ? (
         <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
       ) : (

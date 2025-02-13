@@ -73,7 +73,7 @@ function Layout(props: Props) {
   const navigationOptions = [
     { name: 'Account', href: '/account', icon: FiUser },
     { name: 'Bookings', href: '/bookings', icon: FiBookOpen },
-    { name: 'Orders', href: '/orders', icon: FiShoppingCart },
+    // { name: 'Orders', href: '/orders', icon: FiShoppingCart },
   ];
 
   return (

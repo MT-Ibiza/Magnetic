@@ -33,6 +33,11 @@ export { GallerySlider }from './lib/GallerySlider';
 export { SaleOffBadge }from './lib/SaleOffBadge';
 export { DatePickerCustomHeaderTwoMonth }from './lib/date-picker-custom-header';
 export { DatePickerCustomDay }from './lib/date-picker-day';
+export { FilterSearchMobile }from './lib/filter-search-mobile';
+export { SearchBoatInput }from './lib/search-boat-input';
+export { SearchBoatsMobile }from './lib/search-boats-mobile';
+
+
 
 
 
