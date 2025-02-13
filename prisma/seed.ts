@@ -33,17 +33,17 @@ async function main() {
     }
     console.log('Packages verified/created successfully!');
     const services = [
-      { name: 'Reservations', type: 'reservations' },
-      { name: 'Childcare', type: 'childcare' },
-      { name: 'Security', type: 'security' },
-      { name: 'Food Delivery', type: 'food' },
       { name: 'Car Rentals', type: 'cart_rental' },
-      { name: 'Wellness & Fitness', type: 'wellness' },
-      { name: 'Spa & Beauty', type: 'spa' },
-      { name: 'Boat Charters', type: 'boat_rental' },
-      { name: 'Chefs & Assistants', type: 'chefs' },
-      { name: 'Drinks Delivery', type: 'drinks' },
       { name: 'Transfers & Drivers', type: 'transfer' },
+      { name: 'Drinks Delivery', type: 'drinks' },
+      { name: 'Food Delivery', type: 'food' },
+      { name: 'Chefs & Assistants', type: 'chefs' },
+      { name: 'Boat Charters', type: 'boat_rental' },
+      { name: 'Spa & Beauty', type: 'spa' },
+      { name: 'Wellness & Fitness', type: 'wellness' },
+      { name: 'Security', type: 'security' },
+      { name: 'Childcare', type: 'childcare' },
+      { name: 'Reservations', type: 'reservations' },
     ];
 
     for (const service of services) {
