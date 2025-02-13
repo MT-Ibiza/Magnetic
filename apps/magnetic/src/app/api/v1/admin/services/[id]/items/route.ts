@@ -1,4 +1,3 @@
-import { NewItem } from '@magnetic/interfaces';
 import db from 'apps/magnetic/src/app/libs/db';
 import { uploadBulkImages } from 'apps/magnetic/src/app/libs/s3';
 import { NextResponse } from 'next/server';
@@ -10,11 +9,16 @@ export async function POST(
   const data = await request.formData();
 
   const name = data.get('name') as string;
-  const description = data.get('description') as string;
+  const description = (data.get('description') as string) || '';
   const priceInCents = Number(data.get('priceInCents') as string);
-  const boatAttributes = JSON.parse(data.get('boatAttributes') as string);
   const imageFiles = data.getAll('imageFiles') as File[];
   const categoryId = data.get('categoryId') as string;
+  const boatAttributes = data.get('boatAttributes')
+    ? JSON.parse(data.get('boatAttributes') as string)
+    : null;
+  const drinkAttributes = data.get('drinkAttributes')
+    ? JSON.parse(data.get('drinkAttributes') as string)
+    : null;
 
   try {
     let imageUrls: string[] = [];
@@ -30,6 +34,14 @@ export async function POST(
         priceInCents,
         categoryId: categoryId ? Number(categoryId) : undefined,
         serviceId: Number(params.id),
+        drinkAttributes: drinkAttributes
+          ? {
+              create: {
+                units: drinkAttributes.units,
+                size: drinkAttributes.size,
+              },
+            }
+          : {},
         boatAttributes: boatAttributes
           ? {
               create: {

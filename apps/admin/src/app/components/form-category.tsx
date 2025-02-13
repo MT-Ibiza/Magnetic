@@ -32,7 +32,7 @@ function FormCategory(props: Props) {
     defaultValues: category ? category : undefined,
   });
 
-  const { services } = useServices();
+  const { services, isLoading } = useServices();
 
   useEffect(() => {
     if (services.length > 0) {
@@ -88,6 +88,10 @@ function FormCategory(props: Props) {
       });
     }
   };
+
+  if (isLoading) {
+    return <p>Loading....</p>;
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

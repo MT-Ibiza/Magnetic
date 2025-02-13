@@ -1,20 +1,10 @@
-import {
-  Category,
-  EditItem,
-  Item,
-  ItemBase,
-  ItemVariant,
-  NewItem,
-  Service,
-} from '@magnetic/interfaces';
+import { Category, Item, ItemBase, ItemVariant } from '@magnetic/interfaces';
 import {
   Button,
-  CardWrapper,
   DrawerContent,
   Input,
   Text,
   TextArea,
-  UploadImage,
   UploadMultipleImages,
 } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
@@ -47,6 +37,7 @@ export function FormDrinkItem(props: Props) {
   const { item, serviceId, onSave, serviceCategories } = props;
   const editMode = !!item;
   const navigate = useNavigate();
+  const [isSaving, setIsSaving] = useState(false);
   const categories = serviceCategories.map((category) => {
     return {
       label: category.name,
@@ -94,27 +85,33 @@ export function FormDrinkItem(props: Props) {
 
   const createItem = useMutation<Item, Error, FormData>({
     mutationFn: (data: FormData) => {
+      setIsSaving(true);
       return newItem(serviceId, data);
     },
     onSuccess: (item) => {
+      setIsSaving(false);
       toast.success(`${item.name} created!`);
       onSave();
     },
     onError: (error) => {
+      setIsSaving(false);
       toast.error('The product could not be created');
     },
   });
 
   const updateItem = useMutation<Item, Error, FormData>({
     mutationFn: (data: FormData) => {
+      setIsSaving(true);
       const itemId = item?.id || 0;
       return editItem(serviceId, itemId, data);
     },
     onSuccess: () => {
+      setIsSaving(false);
       toast.success(`${item?.name} updated!`);
       onSave();
     },
     onError: (error) => {
+      setIsSaving(false);
       toast.error('The product could not be updated');
     },
   });
@@ -240,14 +237,9 @@ export function FormDrinkItem(props: Props) {
               <TextArea
                 id="description"
                 placeholder="Describe your product here"
-                {...register('description', { required: true })}
+                {...register('description')}
                 className="mt-2"
               />
-              {errors.description && (
-                <p className="text-xs text-red-500 mt-1">
-                  Description is required
-                </p>
-              )}
             </div>
 
             <div className="media mt-6">
@@ -280,6 +272,7 @@ export function FormDrinkItem(props: Props) {
                 value={selectedCategory}
                 onChange={(category) => {
                   setSelectedCategory(category ? category : undefined);
+                  category && setValue('categoryId', category.value);
                 }}
                 className="mt-2"
               />
@@ -359,8 +352,8 @@ export function FormDrinkItem(props: Props) {
           >
             Cancel
           </Button>
-          <Button type="submit" className="px-8 py-2">
-            {item ? 'Update Boat' : 'Create Boat'}
+          <Button type="submit" className="px-8 py-2" loading={isSaving}>
+            {item ? 'Update Drink' : 'Create Drink'}
           </Button>
         </div>
       </form>
@@ -376,16 +369,17 @@ export function FormDrinkItem(props: Props) {
         <>
           {openForm === 'category' && (
             <FormCategory
+              defaultServiceId={serviceId}
               onCancel={toggleDrawer}
               onSave={(category) => {
                 toggleDrawer();
-
                 const newCategory = {
                   label: category.name,
                   value: category.id,
                 };
                 setSelectedCategory(newCategory);
                 setItemCategories(itemCategories.concat(newCategory));
+                setValue('categoryId', category.id);
               }}
             />
           )}
