@@ -7,6 +7,7 @@ import { useUsers } from '../../hooks/useUsers';
 import ConfirmAlert from '../../components/confirm-alert';
 import { useMutation } from '@tanstack/react-query';
 import { removeAdmin } from '../../apis/api-users';
+import { useAuth } from '../../hooks/useAuth';
 interface Props {}
 
 export function AdminUsersPage(props: Props) {
@@ -14,6 +15,8 @@ export function AdminUsersPage(props: Props) {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User>();
   const [showAlert, setShowAlert] = useState(false);
+  const { getCurrentUser, logout } = useAuth();
+  const currentUser = getCurrentUser();
 
   const { refetch } = useUsers({
     searchText: undefined,
@@ -26,8 +29,13 @@ export function AdminUsersPage(props: Props) {
       return removeAdmin(userId);
     },
     onSuccess: () => {
-      toggleAlert();
-      refetch();
+      if (currentUser?.id === selectedUser?.id) {
+        toggleAlert();
+        logout();
+      } else {
+        toggleAlert();
+        refetch();
+      }
     },
     onError: (error) => {
       console.log('error: ', error);
@@ -73,8 +81,16 @@ export function AdminUsersPage(props: Props) {
         />
       </CardWrapper>
       <ConfirmAlert
-        title={'Remove User'}
-        message={'Are you sure you want to remove this user?'}
+        title={
+          currentUser?.id === selectedUser?.id
+            ? 'Remove my account'
+            : 'Remove User'
+        }
+        message={
+          currentUser?.id === selectedUser?.id
+            ? 'Are you sure you want to remove your account, your session will be closed.'
+            : 'Are you sure you want to remove this user?'
+        }
         show={showAlert}
         onClickConfirm={async () => {
           if (selectedUser) {
