@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 async function main() {
   try {
-    // Crear Admin si no existe
     const admin = await prisma.user.findUnique({
       where: { email: 'admin@magnetic.com' },
     });
@@ -24,7 +23,6 @@ async function main() {
       console.log('Admin Created!');
     }
 
-    // Crear Packages si no existen
     const packages = ['Gold', 'Platinum', 'Diamond'];
     for (const packageName of packages) {
       await prisma.package.upsert({
@@ -34,30 +32,28 @@ async function main() {
       });
     }
     console.log('Packages verified/created successfully!');
-
-    // Crear Services con los nombres de la imagen
     const services = [
-      'Reservations',
-      'Childcare',
-      'Security',
-      'Food Delivery',
-      'Car Rentals',
-      'Wellness & Fitness',
-      'Spa & Beauty',
-      'Boat Charters',
-      'Chefs & Assistants',
-      'Drinks Delivery',
-      'Transfers & Drivers',
+      { name: 'Reservations', type: 'reservations' },
+      { name: 'Childcare', type: 'childcare' },
+      { name: 'Security', type: 'security' },
+      { name: 'Food Delivery', type: 'food' },
+      { name: 'Car Rentals', type: 'cart_rental' },
+      { name: 'Wellness & Fitness', type: 'wellness' },
+      { name: 'Spa & Beauty', type: 'spa' },
+      { name: 'Boat Charters', type: 'boat_rental' },
+      { name: 'Chefs & Assistants', type: 'chefs' },
+      { name: 'Drinks Delivery', type: 'drinks' },
+      { name: 'Transfers & Drivers', type: 'transfer' },
     ];
 
-    for (const serviceName of services) {
+    for (const service of services) {
       await prisma.service.upsert({
-        where: { name: serviceName }, // Asegurar que 'name' sea único en el modelo Prisma
+        where: { name: service.name },
         update: {},
         create: {
-          name: serviceName,
-          description: `Description for ${serviceName}`,
-          serviceType: 'none',
+          name: service.name,
+          description: `Description for ${service.name}`,
+          serviceType: service.type as 'none',
           script: null,
           imageUrl: null,
           termsAndConditions: null,
