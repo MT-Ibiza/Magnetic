@@ -206,7 +206,7 @@ export function FormDrinkItem(props: Props) {
                   type="number"
                   min={0}
                   max={10000}
-                  placeholder="Enter the type of boat"
+                  placeholder=""
                   {...register('drinkAttributes.units', {
                     required: 'Units is required',
                   })}
@@ -224,7 +224,7 @@ export function FormDrinkItem(props: Props) {
                 <Input
                   className="mt-2 w-full"
                   type="text"
-                  placeholder="Enter the type of boat"
+                  placeholder=""
                   {...register('drinkAttributes.size')}
                 />
               </div>
