@@ -292,6 +292,11 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   background-color: white !important;
 }
 
+.react-datepicker {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+}
+
 @media (max-width: 768px) {
   .listingSection__wrap {
     @apply w-full flex pb-6;

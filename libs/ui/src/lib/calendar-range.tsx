@@ -17,24 +17,21 @@ interface RentalCarDatesRangeInputProps {
   className?: string;
   fieldClassName?: string;
   hasButtonSubmit?: boolean;
-  onSelectRange: (range: { start: Date; end: Date }) => void;
+  onSelectDate: (date: Date) => void;
 }
 
 export const RentalCarDatesRangeInput: FC<RentalCarDatesRangeInputProps> = ({
   className = '',
   fieldClassName = '[ nc-hero-field-padding ]',
   hasButtonSubmit = false,
-  onSelectRange,
+  onSelectDate,
 }) => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
-  const onChangeDate = (dates: [Date | null, Date | null]) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
-    if (start && end) {
-      onSelectRange({ start, end });
+  const onChangeDate = (date: Date | null) => {
+    setSelectedDate(date);
+    if (date) {
+      onSelectDate(date);
     }
   };
 
@@ -46,17 +43,12 @@ export const RentalCarDatesRangeInput: FC<RentalCarDatesRangeInputProps> = ({
         </div>
         <div className="flex-grow text-left">
           <span className="block xl:text-lg font-semibold">
-            {startDate?.toLocaleDateString('en-US', {
-              month: 'short',
-              day: '2-digit',
-            }) || 'Add dates'}
-            {endDate
-              ? ' - ' +
-                endDate?.toLocaleDateString('en-US', {
+            {selectedDate
+              ? selectedDate.toLocaleDateString('en-US', {
                   month: 'short',
                   day: '2-digit',
                 })
-              : ''}
+              : 'Select a date'}
           </span>
           <span className="block mt-1 text-sm text-neutral-400 leading-none font-light">
             {'From - To'}
@@ -102,16 +94,13 @@ export const RentalCarDatesRangeInput: FC<RentalCarDatesRangeInputProps> = ({
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <PopoverPanel className="absolute left-1/2 z-10 mt-3 top-full w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
+              <PopoverPanel className="absolute left-1/2 z-10 mt-3 top-full w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-[26rem]">
                 <div className="overflow-hidden rounded-3xl shadow-lg ring-1 ring-black ring-opacity-5 bg-white dark:bg-neutral-800 p-8">
                   <DatePicker
-                    selected={startDate}
+                    selected={selectedDate}
                     onChange={onChangeDate}
-                    startDate={startDate}
-                    endDate={endDate}
-                    selectsRange
-                    monthsShown={2}
-                    showPopperArrow={false}
+                    monthsShown={1}
+                    showPopperArrow={true}
                     inline
                     renderCustomHeader={(p) => (
                       <DatePickerCustomHeaderTwoMonth {...p} />

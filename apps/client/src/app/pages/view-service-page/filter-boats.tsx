@@ -61,13 +61,11 @@ function FilterBoats(props: Props) {
     onChangeFilters(updatedFilters);
   };
 
-  const handleDatesChange = (range: { start: Date; end: Date }) => {
+  const handleDateChange = (date: Date) => {
     const updatedFilters = {
       ...searchParams,
-      from: moment(range.start).format('YYYY-MM-DD'),
-      to: moment(range.end).format('YYYY-MM-DD'),
+      date: moment(date).format('YYYY-MM-DD'),
     };
-    console.log('updatedFilters: ', updatedFilters);
     setSearchParams(updatedFilters);
     onChangeFilters(updatedFilters);
   };
@@ -105,7 +103,7 @@ function FilterBoats(props: Props) {
             value={searchParams.size || ''}
             onChange={handleSearchChange}
           />
-          <RentalCarDatesRangeInput onSelectRange={handleDatesChange} />
+          <RentalCarDatesRangeInput onSelectDate={handleDateChange} />
           <CustomInput
             name="priceGreaterThan"
             desc="budget"

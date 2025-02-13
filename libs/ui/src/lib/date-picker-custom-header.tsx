@@ -2,42 +2,43 @@ import { ReactDatePickerCustomHeaderProps } from 'react-datepicker';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
 export const DatePickerCustomHeaderTwoMonth = ({
-  monthDate,
-  customHeaderCount,
+  date,
   decreaseMonth,
   increaseMonth,
+  prevMonthButtonDisabled,
+  nextMonthButtonDisabled,
 }: ReactDatePickerCustomHeaderProps) => {
   return (
-    <div>
+    <div className="flex justify-between items-center px-4 py-2 bg-white dark:bg-gray-800 rounded-t-lg">
       <button
         aria-label="Previous Month"
-        className="react-datepicker__navigation react-datepicker__navigation--previous absolute -top-1 left-0 flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
-        style={customHeaderCount === 1 ? { visibility: 'hidden' } : {}}
-        onClick={decreaseMonth}
+        className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50"
+        onClick={(e) => {
+          e.preventDefault();
+          decreaseMonth();
+        }}
+        disabled={prevMonthButtonDisabled}
         type="button"
       >
-        <span className="react-datepicker__navigation-icon react-datepicker__navigation-icon--previous">
-          <BsChevronLeft className="w-5 h-5" />
-        </span>
+        <BsChevronLeft className="w-5 h-5" />
       </button>
-
-      <span className="react-datepicker__current-month">
-        {monthDate.toLocaleString('en-US', {
+      <span className="text-lg font-semibold">
+        {date.toLocaleString('en-US', {
           month: 'long',
           year: 'numeric',
         })}
       </span>
-
       <button
         aria-label="Next Month"
-        className="react-datepicker__navigation react-datepicker__navigation--next absolute -top-1 -right-0 flex items-center justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
-        style={customHeaderCount === 0 ? { visibility: 'hidden' } : {}}
+        className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50"
+        onClick={(e) => {
+          e.preventDefault();
+          increaseMonth();
+        }}
+        disabled={nextMonthButtonDisabled}
         type="button"
-        onClick={increaseMonth}
       >
-        <span className="react-datepicker__navigation-icon react-datepicker__navigation-icon--next">
-          <BsChevronRight className="w-5 h-5" />
-        </span>
+        <BsChevronRight className="w-5 h-5" />
       </button>
     </div>
   );
