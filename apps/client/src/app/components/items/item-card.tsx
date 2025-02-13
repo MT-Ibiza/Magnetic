@@ -16,6 +16,7 @@ import RenderBookingForm from '../services/booking-forms/render-booking-form';
 import ItemCounterButtons from './item-counter-buttons';
 import ItemHandleBookButtons from './item-handle-book-buttons';
 import { FaUsers } from 'react-icons/fa';
+import { useApp } from '../../hooks/useApp';
 
 interface Props {
   item: Item;
@@ -28,6 +29,7 @@ function ItemCard(props: Props) {
   const { item, availableInPlan, service, noFillForm } = props;
   const { addItemToCart } = useCart();
   const { addItem, removeItem, cart } = useCartStore();
+  const { setSelectedItem } = useApp();
   const productCart = cart.find((cartItem) => cartItem.item.id === item.id);
   const [alert, setAlert] = useState<{
     message: string;
@@ -174,6 +176,7 @@ function ItemCard(props: Props) {
                     onClickAdd={() => {
                       if (availableInPlan) {
                         openForm();
+                        setSelectedItem(item);
                       } else {
                         //@ts-ignore
                         document.getElementById('modal_upgrade').showModal();

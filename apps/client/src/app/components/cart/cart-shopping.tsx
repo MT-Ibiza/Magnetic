@@ -16,8 +16,8 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 export function CartShopping() {
-  const { isLoading, data, removeAllItemsCart, isError, error } = useCart();
-  const { cart, clearCart, removeItem, addItem, getGroupedItemsByService } = useCartStore();
+  const { isLoading, data, removeAllItemsCart, error } = useCart();
+  const { cart, clearCart, addItem, getGroupedItemsByService } = useCartStore();
   const { showSessionExpiredError } = useAuth();
   const groupedCart = getGroupedItemsByService();
 
@@ -114,46 +114,50 @@ export function CartShopping() {
                   </div>
                   <ul className="mt-4 space-y-2">
                     {Object.entries(groupedCart).length > 0 ? (
-                      Object.entries(groupedCart).map(([serviceId, group]: any) => (
-                        <div key={serviceId} className="mb-4 space-y-4">
-                          <h4 className="text-md font-bold text-gray-700 dark:text-gray-100">
-                            {group.service ? group.service.name : 'No Service'}
-                          </h4>
-                          {group.items.map((cartItem: any, index: number) => (
-                            <li
-                              key={index} 
-                              className="flex items-center gap-4 justify-between"
-                            >
-                              <div className="flex items-center gap-4">
-                                <img
-                                  className="w-16 h-16 rounded object-cover"
-                                  src={
-                                    cartItem.item.images &&
-                                    cartItem.item.images.length > 0
-                                      ? cartItem.item.images[0].url
-                                      : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
-                                  }
-                                  alt={cartItem.item.name}
-                                />
-                                <div className="flex flex-col">
-                                  <h4 className="text-sm dark:text-gray-100">
-                                    {cartItem.item.name}
-                                  </h4>
-                                  <p className="text-xs">
-                                    Quantity: {cartItem.quantity}
-                                  </p>
-                                  <p className="text-xs">
-                                    {centsToEurosWithCurrency(
-                                      cartItem.item.priceInCents
-                                    )}{' '}
-                                    x unit
-                                  </p>
+                      Object.entries(groupedCart).map(
+                        ([serviceId, group]: any) => (
+                          <div key={serviceId} className="mb-4 space-y-4">
+                            <h4 className="text-md font-bold text-gray-700 dark:text-gray-100">
+                              {group.service
+                                ? group.service.name
+                                : 'No Service'}
+                            </h4>
+                            {group.items.map((cartItem: any, index: number) => (
+                              <li
+                                key={index}
+                                className="flex items-center gap-4 justify-between"
+                              >
+                                <div className="flex items-center gap-4">
+                                  <img
+                                    className="w-16 h-16 rounded object-cover"
+                                    src={
+                                      cartItem.item.images &&
+                                      cartItem.item.images.length > 0
+                                        ? cartItem.item.images[0].url
+                                        : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
+                                    }
+                                    alt={cartItem.item.name}
+                                  />
+                                  <div className="flex flex-col">
+                                    <h4 className="text-sm dark:text-gray-100">
+                                      {cartItem.item.name}
+                                    </h4>
+                                    <p className="text-xs">
+                                      Quantity: {cartItem.quantity}
+                                    </p>
+                                    <p className="text-xs">
+                                      {centsToEurosWithCurrency(
+                                        cartItem.item.priceInCents
+                                      )}{' '}
+                                      x unit
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
-                            </li>
-                          ))}
-                        </div>
-                      ))
+                              </li>
+                            ))}
+                          </div>
+                        )
+                      )
                     ) : (
                       <div className="flex flex-col items-center text-gray-500 py-6">
                         <FaCartArrowDown size={48} className="mb-4" />
@@ -171,14 +175,14 @@ export function CartShopping() {
                         </p>
                       </div>
                       <div className="flex flex-col gap-2">
-                        <Link to="/cart">
+                        {/* <Link to="/cart">
                           <Button
                             variant="outline"
                             className="py-[8px] text-[16px] w-full"
                           >
                             View My Cart
                           </Button>
-                        </Link>
+                        </Link> */}
                         <Link to="/checkout">
                           <Button className="py-[8px] text-[16px] w-full">
                             Checkout

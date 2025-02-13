@@ -1,6 +1,7 @@
 import { BoatCharterFormData } from '@magnetic/interfaces';
 import { Button, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
+import { useApp } from '../../../hooks/useApp';
 
 interface Props {
   onSubmit: (data: BoatCharterFormData) => void;
@@ -13,12 +14,11 @@ export function BoatCharterBookingForm({
   formData,
   onCancel,
 }: Props) {
+  const { currentSelectItem } = useApp();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
-    watch,
   } = useForm<BoatCharterFormData>({
     defaultValues: formData
       ? {
@@ -35,21 +35,23 @@ export function BoatCharterBookingForm({
   });
 
   const handleFormSubmit = async (data: BoatCharterFormData) => {
-    console.log(data);
-    onSubmit(data);
+    const formData = { ...data, ...{ boat: currentSelectItem?.name || '' } };
+    onSubmit(formData);
   };
 
   return (
     <div className="">
-      <h2 className="text-2xl font-bold text-center mb-6">
-        Boat Charter Booking (Gold)
-      </h2>
+      <div className="text-center mb-6">
+        <h2 className="text-2xl font-bold ">Boat Charter Booking</h2>
+        <h1 className="mt-2">Boat: {currentSelectItem?.name}</h1>
+      </div>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <Text className="mb-2">Date</Text>
             <Input
               type="date"
+              min={new Date().toISOString().split('T')[0]}
               className="w-full"
               {...register('date', { required: 'Date is required' })}
             />
@@ -60,16 +62,15 @@ export function BoatCharterBookingForm({
             )}
           </div>
           <div>
-            <Text className="mb-2">Boat</Text>
+            <Text className="mb-2">Start Time</Text>
             <Input
-              type="text"
+              type="time"
               className="w-full"
-              placeholder="Select or describe the boat"
-              {...register('boat', { required: 'Boat is required' })}
+              {...register('startTime', { required: 'Start time is required' })}
             />
-            {errors.boat && (
+            {errors.startTime && (
               <p className="text-[12px] text-red-500 pt-2">
-                {errors.boat.message}
+                {errors.startTime.message}
               </p>
             )}
           </div>
@@ -106,19 +107,7 @@ export function BoatCharterBookingForm({
               </p>
             )}
           </div>
-          <div>
-            <Text className="mb-2">Start Time</Text>
-            <Input
-              type="time"
-              className="w-full"
-              {...register('startTime', { required: 'Start time is required' })}
-            />
-            {errors.startTime && (
-              <p className="text-[12px] text-red-500 pt-2">
-                {errors.startTime.message}
-              </p>
-            )}
-          </div>
+
           <div>
             <Text className="mb-2">Extras (e.g., Seabob)</Text>
             <Input
