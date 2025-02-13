@@ -72,6 +72,7 @@ export function TransferBookingForm({
           <div>
             <Text className="mb-2">Date</Text>
             <Input
+              min={new Date().toISOString().split('T')[0]}
               type="date"
               className="w-full"
               {...register('date', { required: 'Date is required' })}
