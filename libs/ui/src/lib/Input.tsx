@@ -1,6 +1,7 @@
 'use client';
 
-import React, { forwardRef, InputHTMLAttributes } from 'react';
+import React, { forwardRef, InputHTMLAttributes, useState } from 'react';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   sizeClass?: string;
@@ -28,17 +29,48 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       full: 'rounded-full',
     };
 
+    const [visiblePassword, setVisiblePassword] = useState(false);
+
     return (
-      <input
-        ref={ref}
-        type={type}
-        className={`input input-bordered
+      <>
+        {type === 'password' ? (
+          <div className="input input-bordered flex items-center gap-2">
+            <input
+              ref={ref}
+              type={visiblePassword ? 'text' : 'password'}
+              className="grow"
+              placeholder="********"
+              {...args}
+            />
+            {visiblePassword ? (
+              <FiEye
+                className="cursor-pointer"
+                onClick={() => {
+                  setVisiblePassword((prevState) => !prevState);
+                }}
+              />
+            ) : (
+              <FiEyeOff
+                className="cursor-pointer"
+                onClick={() => {
+                  setVisiblePassword((prevState) => !prevState);
+                }}
+              />
+            )}
+          </div>
+        ) : (
+          <input
+            ref={ref}
+            type={type}
+            className={`input input-bordered
           ${radiusClasses[radius]}
           ${fontClass}
           ${sizeClass}
           ${className}`}
-        {...args}
-      />
+            {...args}
+          />
+        )}
+      </>
     );
   }
 );

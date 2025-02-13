@@ -165,8 +165,8 @@ function Layout(props: Props) {
   ];
 
   const navigationOptions = [
-    { name: 'Account', href: '/', icon: FiUser },
-    { name: 'Booking', href: '/', icon: FiBookOpen },
+    { name: 'Account', href: '/users', icon: FiUser },
+    { name: 'Booking', href: '/bookings', icon: FiBookOpen },
   ];
 
   function getPageTitle() {

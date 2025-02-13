@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { usePackages } from '../../hooks/usePackages';
 import Loading from '../loading';
 import { ErrorText } from '../error-text';
+import { useAuth } from '../../hooks/useAuth';
 
 export interface FormAdminUserData {
   firstName: string;
@@ -27,7 +28,8 @@ export interface Props {
 
 export function FormAdminUser(props: Props) {
   const { user, onSaveSuccess, onCancel } = props;
-
+  const { getCurrentUser, logout } = useAuth();
+  const currentUser = getCurrentUser();
   const editMode = !!user;
 
   const {
@@ -46,7 +48,7 @@ export function FormAdminUser(props: Props) {
       : undefined,
   });
 
-  const { isLoading, isError, error, packagesOptions } = usePackages();
+  const { isLoading, isError, error } = usePackages();
 
   const createAdmin = useMutation<User, Error, FormData>({
     mutationFn: (data: FormData) => {
@@ -68,7 +70,11 @@ export function FormAdminUser(props: Props) {
     },
     onSuccess: () => {
       toast.success('Account Updated!');
-      onSaveSuccess();
+      if (currentUser?.id === user?.id) {
+        logout();
+      } else {
+        onSaveSuccess();
+      }
     },
     onError: () => {
       toast.error('The account could not be updated');
@@ -142,6 +148,14 @@ export function FormAdminUser(props: Props) {
           />
           {errors.password && (
             <Text.TextInputError text="Password is required" />
+          )}
+          {currentUser?.id === user?.id && (
+            <div className="mt-3 p-5 bg-sky-100">
+              <Text size="1">
+                If you change your password, your session will be closed, and
+                you'll need to log in again.
+              </Text>
+            </div>
           )}
         </div>
       </div>
