@@ -14,13 +14,14 @@ export function CheckoutPage() {
   useEffect(() => {
     if (data) {
       clearCart();
-      data.items.map((item) => {
-        return addItem({
-          id: item.item.id,
-          item: item.item,
-          quantity: item.quantity,
-          formData: item.formData,
+      data.items.map((cartItem) => {
+        addItem({
+          id: cartItem.id,
+          item: cartItem.item,
+          quantity: cartItem.quantity,
+          formData: cartItem.formData,
         });
+        return cartItem;
       });
     }
   }, [data]);

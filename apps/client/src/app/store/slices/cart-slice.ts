@@ -1,15 +1,8 @@
 import { StateCreator } from 'zustand';
 import { StoreState } from '../store';
-import { CartItem, Item } from '@magnetic/interfaces';
+import { CartItem } from '@magnetic/interfaces';
 
 const CART_STORAGE_KEY = 'cart_state';
-
-// export type CartItem = {
-//   id: number;
-//   name: string;
-//   price: number;
-//   quantity: number;
-// };
 
 export type CartSlice = {
   cart: CartItem[];
@@ -36,18 +29,18 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
       );
       let updatedCart;
 
-      if (existingItem) {
-        updatedCart = state.cart.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
-        );
-      } else {
-        updatedCart = [
-          ...state.cart,
-          { ...item, quantity: item.quantity, id: item.id },
-        ];
-      }
+      // if (existingItem) {
+      //   updatedCart = state.cart.map((cartItem) =>
+      //     cartItem.id === item.id
+      //       ? { ...cartItem, quantity: cartItem.quantity + 1 }
+      //       : cartItem
+      //   );
+      // } else {
+      updatedCart = [
+        ...state.cart,
+        { ...item, quantity: item.quantity, id: item.id },
+      ];
+      // }
       // localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
       return {
         cart: updatedCart,

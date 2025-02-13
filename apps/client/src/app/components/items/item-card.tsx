@@ -49,10 +49,10 @@ function ItemCard(props: Props) {
     addItemToCart.mutate(
       { itemId: item.id, quantity: newVal, formData },
       {
-        onSuccess: () => {
+        onSuccess: (cartItem) => {
           closeForm();
           addItem({
-            id: item.id,
+            id: cartItem.id,
             item: item,
             quantity: newVal,
             formData,

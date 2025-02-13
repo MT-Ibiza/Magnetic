@@ -17,11 +17,12 @@ export async function getCart(): Promise<Cart> {
   return dataJson;
 }
 
-export async function addToCart(
-  itemId: number,
-  quantity: number,
-  formData?: any
-): Promise<CartItem> {
+export async function addToCart(params: {
+  itemId: number;
+  cartItemId?: number;
+  quantity: number;
+  formData?: any;
+}): Promise<CartItem> {
   const url = URL_ADD_TO_CART;
   const accessToken = localStorage.getItem('magnetic_auth');
   const response = await fetch(url, {
@@ -30,7 +31,7 @@ export async function addToCart(
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({ itemId, quantity, formData }),
+    body: JSON.stringify(params),
   });
 
   const dataJson = await response.json();

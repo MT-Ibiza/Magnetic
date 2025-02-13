@@ -3,24 +3,25 @@ import { Text } from '@magnetic/ui';
 import React from 'react';
 import { GoTrash } from 'react-icons/go';
 import { useCart } from '../../hooks/useCart';
-import { Item } from '@magnetic/interfaces';
+import { CartItem, Item } from '@magnetic/interfaces';
 import { useCartStore } from '../../hooks/useCartStore';
 
 interface Props {
-  item: Item;
+  cartItem: CartItem;
 }
 
 function CheckoutItemRemove(props: Props) {
-  const { item } = props;
+  const { cartItem } = props;
+  const { item } = cartItem;
   const { addItemToCart } = useCart();
   const { removeItem } = useCartStore();
 
   const handleRemoveItem = () => {
     addItemToCart.mutate(
-      { itemId: item.id, quantity: 0 },
+      { cartItemId: cartItem.id, itemId: item.id, quantity: 0 },
       {
         onSuccess: () => {
-          removeItem(item.id);
+          removeItem(cartItem.id);
           // showAlert('Item removed to the cart', 'success');
         },
         onError: () => {

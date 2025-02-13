@@ -47,7 +47,7 @@ function CheckoutItem(props: Props) {
         <Text className="mb-2 text-green-800">
           {centsToEurosWithCurrency(cartItem.quantity * item.priceInCents)}
         </Text>
-        <CheckoutItemRemove item={item} />
+        <CheckoutItemRemove cartItem={cartItem} />
       </div>
     </div>
   );

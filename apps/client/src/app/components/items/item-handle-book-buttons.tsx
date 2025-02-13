@@ -18,26 +18,13 @@ function ItemHandleBookButtons(props: Props) {
       <Link to={`item/${item.id}`}>
         <Button variant="outline">View Details</Button>
       </Link>
-      {currentAmount === 1 ? (
-        <Button
-          className="flex gap-1"
-          color="neutral"
-          onClick={() => {
-            onClickRemove(currentAmount - 1);
-          }}
-        >
-          <MdCancel />
-          Cancel Booking
-        </Button>
-      ) : (
-        <Button
-          onClick={() => {
-            onClickAdd(currentAmount + 1);
-          }}
-        >
-          Book Now
-        </Button>
-      )}
+      <Button
+        onClick={() => {
+          onClickAdd(currentAmount + 1);
+        }}
+      >
+        Book Now
+      </Button>
     </div>
   );
 }

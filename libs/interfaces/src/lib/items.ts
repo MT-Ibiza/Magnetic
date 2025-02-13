@@ -40,8 +40,6 @@ export interface Item extends ItemBase {
   variants: ItemVariant[];
   published: boolean;
   priceInCents: number;
-  // cartItems: number;
-  // ordenItems: number;
 }
 
 export interface ItemWithCount extends Item {

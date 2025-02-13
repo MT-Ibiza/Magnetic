@@ -1,13 +1,11 @@
 import React from 'react';
 import { useCartStore } from '../../hooks/useCartStore';
 import { groupCartItemsByCategory } from '../../utils';
-import { centsToEurosWithCurrency } from '@magnetic/utils';
 import CheckoutItem from './checkout-item';
 
 interface Props {}
 
 function ProductsSummary(props: Props) {
-  const {} = props;
   const { cart } = useCartStore();
   const itemsByCategory = groupCartItemsByCategory(cart);
 
