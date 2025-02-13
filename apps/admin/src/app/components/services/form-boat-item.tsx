@@ -150,8 +150,12 @@ export function FormBoatItem(props: Props) {
         cabins: Number(boatAttributes.cabins),
         fuelConsumption: Number(boatAttributes.fuelConsumption),
         sizeInMeters: Number(boatAttributes.sizeInMeters),
-        latitude: boatAttributes.latitude.toString(),
-        longitude: boatAttributes.longitude.toString(),
+        latitude: boatAttributes.latitude
+          ? boatAttributes.latitude.toString()
+          : '',
+        longitude: boatAttributes.longitude
+          ? boatAttributes.longitude.toString()
+          : '',
       })
     );
 
