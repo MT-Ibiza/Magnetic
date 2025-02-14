@@ -22,7 +22,7 @@ export async function addToCart(params: {
   cartItemId?: number;
   quantity: number;
   formData?: any;
-}): Promise<CartItem> {
+}): Promise<{ message: string; cartItem: CartItem }> {
   const url = URL_ADD_TO_CART;
   const accessToken = localStorage.getItem('magnetic_auth');
   const response = await fetch(url, {
