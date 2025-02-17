@@ -22,7 +22,7 @@ export const DatePickerCustomHeaderTwoMonth = ({
       >
         <BsChevronLeft className="w-5 h-5" />
       </button>
-      <span className="text-lg font-semibold">
+      <span className="react-datepicker__current-month">
         {date.toLocaleString('en-US', {
           month: 'long',
           year: 'numeric',

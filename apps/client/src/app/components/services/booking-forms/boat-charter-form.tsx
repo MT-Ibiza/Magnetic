@@ -1,6 +1,12 @@
 import { BoatCharterFormData } from '@magnetic/interfaces';
-import { Button, Input, Text, TextArea } from '@magnetic/ui';
-import { useForm } from 'react-hook-form';
+import {
+  Button,
+  CalendarCustomInput,
+  Input,
+  Text,
+  TextArea,
+} from '@magnetic/ui';
+import { Controller, useForm } from 'react-hook-form';
 import { useApp } from '../../../hooks/useApp';
 
 interface Props {
@@ -17,26 +23,25 @@ export function BoatCharterBookingForm({
   const { currentSelectItem } = useApp();
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<BoatCharterFormData>({
     defaultValues: formData
       ? {
-          date: formData.date,
-          boat: formData.boat,
-          numberOfPeople: formData.numberOfPeople,
-          kidsAges: formData.kidsAges,
-          startTime: formData.startTime,
-          lunchBooking: formData.lunchBooking || '',
-          extras: formData.extras,
-          comments: formData.comments || '',
+          ...formData,
+          date: formData.date ? new Date(formData.date).toISOString() : '',
         }
       : undefined,
   });
 
   const handleFormSubmit = async (data: BoatCharterFormData) => {
-    const formData = { ...data, ...{ boat: currentSelectItem?.name || '' } };
-    onSubmit(formData);
+    const formattedData = {
+      ...data,
+      boat: currentSelectItem?.name || '',
+      date: new Date(data.date).toISOString(),
+    };
+    onSubmit(formattedData);
   };
 
   return (
@@ -49,11 +54,22 @@ export function BoatCharterBookingForm({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <Text className="mb-2">Date</Text>
-            <Input
-              type="date"
-              min={new Date().toISOString().split('T')[0]}
-              className="w-full"
-              {...register('date', { required: 'Date is required' })}
+            <Controller
+              name="date"
+              control={control}
+              rules={{ required: 'Date is required' }}
+              render={({ field }) => (
+                <CalendarCustomInput
+                  selectedDate={field.value ? new Date(field.value) : null}
+                  onSelectDate={field.onChange}
+                  className="w-full"
+                  disabledDates={[
+                    new Date('2025-02-20'),
+                    new Date('2025-02-25'),
+                    new Date('2025-03-01'),
+                  ]}
+                />
+              )}
             />
             {errors.date && (
               <p className="text-[12px] text-red-500 pt-2">
@@ -107,7 +123,6 @@ export function BoatCharterBookingForm({
               </p>
             )}
           </div>
-
           <div>
             <Text className="mb-2">Extras (e.g., Seabob)</Text>
             <Input
