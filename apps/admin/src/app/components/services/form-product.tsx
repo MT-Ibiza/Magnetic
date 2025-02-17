@@ -67,6 +67,7 @@ export function FormProduct(props: Props) {
         description,
         priceInCents: eurosToCents(Number(priceInCents)),
         serviceId,
+        images: [],
       });
     } else {
       await createItem.mutateAsync({
@@ -74,6 +75,7 @@ export function FormProduct(props: Props) {
         description,
         priceInCents: eurosToCents(Number(priceInCents)),
         serviceId,
+        images: [],
       });
     }
   };

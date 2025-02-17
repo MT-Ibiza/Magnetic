@@ -70,6 +70,8 @@ export function ProductsTable(props: Props) {
       itemId: productId,
       isPublished: newStatus,
     });
+    toast.success(`Product ${newStatus ? 'published' : 'unpublished'}`);
+
     refetch();
   };
 
