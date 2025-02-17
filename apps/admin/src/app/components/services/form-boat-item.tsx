@@ -19,16 +19,10 @@ import 'react-quill/dist/quill.snow.css';
 import { toast } from 'sonner';
 import { editItem, newItem } from '../../apis/api-items';
 import { useNavigate } from 'react-router-dom';
-import {
-  centsToEuros,
-  centsToEurosWithCurrency,
-  eurosToCents,
-} from '@magnetic/utils';
-import Select from 'react-select';
+import { centsToEuros, eurosToCents } from '@magnetic/utils';
 import { useState } from 'react';
 import FormCategory from '../form-category';
 import FormVariant from '../form-variant';
-import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import ReactQuill from 'react-quill';
 
 export interface Props {
@@ -64,6 +58,7 @@ export function FormBoatItem(props: Props) {
   const [selectedCategory, setSelectedCategory] = useState(categoryFound);
   const [imagesFiles, setImagesFiles] = useState<File[]>([]);
   const [description, setDescription] = useState(item?.description);
+  const [isSaving, setIsSaving] = useState(false);
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -102,27 +97,33 @@ export function FormBoatItem(props: Props) {
 
   const createItem = useMutation<Item, Error, FormData>({
     mutationFn: (data: FormData) => {
+      setIsSaving(true);
       return newItem(serviceId, data);
     },
     onSuccess: (item) => {
+      setIsSaving(false);
       toast.success(`${item.name} created!`);
       onSave();
     },
     onError: (error) => {
+      setIsSaving(false);
       toast.error('The product could not be created');
     },
   });
 
   const updateItem = useMutation<Item, Error, FormData>({
     mutationFn: (data: FormData) => {
+      setIsSaving(true);
       const itemId = item?.id || 0;
       return editItem(serviceId, itemId, data);
     },
     onSuccess: () => {
+      setIsSaving(false);
       toast.success(`${item?.name} updated!`);
       onSave();
     },
     onError: (error) => {
+      setIsSaving(false);
       toast.error('The product could not be updated');
     },
   });
@@ -439,92 +440,6 @@ export function FormBoatItem(props: Props) {
               />
             </div>
           </div>
-          {/* <div className="adicional-info flex-1 space-y-6">
-            <div className="category bg-base-100 border rounded-lg p-6">
-              <div className="flex justify-between items-center border-b pb-2">
-                <Text className="font-semibold text-lg">Category</Text>
-                <Text
-                  className="text-primary-500 mt-2 cursor-pointer"
-                  onClick={() => {
-                    toggleDrawer();
-                    setOpenForm('category');
-                  }}
-                >
-                  + New Category
-                </Text>
-              </div>
-              <Select
-                isClearable
-                options={itemCategories}
-                value={selectedCategory}
-                onChange={(category) => {
-                  setSelectedCategory(category ? category : undefined);
-                }}
-                className="mt-2"
-              />
-            </div>
-
-            <div className="variants bg-base-100 border rounded-lg p-6">
-              <div className="flex justify-between items-center pb-2">
-                <Text className="font-semibold text-lg">Product Variants</Text>
-                <Text
-                  className="text-primary-500 text-md font-medium cursor-pointer"
-                  onClick={() => {
-                    toggleDrawer();
-                    setOpenForm('variant');
-                  }}
-                >
-                  + New Variant
-                </Text>
-              </div>
-              <div className="space-y-3">
-                {itemVariants.length ? (
-                  itemVariants.map((variant, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-between items-center border p-3 rounded-md"
-                    >
-                      <div className="flex gap-4">
-                        <Text className="font-medium text-gray-800">
-                          <div>
-                            {item?.name} - {variant.name}
-                          </div>
-                        </Text>
-                        <Text className="text-gray-500">
-                          {`${centsToEurosWithCurrency(variant.priceInCents)}`}
-                        </Text>
-                      </div>
-                      <div className="flex gap-4">
-                        <FaEdit
-                          onClick={() => {
-                            setSelectedVariant(variant);
-                            setOpenForm('variant');
-                            toggleDrawer();
-                          }}
-                          className="cursor-pointer hover:scale-110 transition-transform"
-                          size={18}
-                        />
-                        <FaTrashAlt
-                          onClick={() => {}}
-                          className="cursor-pointer hover:scale-110 transition-transform"
-                          size={18}
-                        />
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <div className="bg-zinc-50 dark:bg-zinc-500 p-5 text-center">
-                    <Text className="text-gray-500" size="1">
-                      Variables are similar products
-                    </Text>
-                    <Text className="text-gray-500" size="1">
-                      but with different price
-                    </Text>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div> */}
         </div>
 
         <div className="flex justify-end gap-6 mt-8">
@@ -538,7 +453,7 @@ export function FormBoatItem(props: Props) {
           >
             Cancel
           </Button>
-          <Button type="submit" className="px-8 py-2">
+          <Button type="submit" className="px-8 py-2" loading={isSaving}>
             {item ? 'Update Boat' : 'Create Boat'}
           </Button>
         </div>

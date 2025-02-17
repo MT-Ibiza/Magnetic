@@ -66,7 +66,7 @@ export const UploadMultipleImages = ({
             <img
               src={image.url}
               alt={`Existing ${index}`}
-              className="object-cover w-full h-[200px] rounded-md"
+              className="object-cover w-full h-[200px] rounded-md bg-gray-50"
             />
             <button
               type="button"
@@ -83,7 +83,7 @@ export const UploadMultipleImages = ({
             <img
               src={URL.createObjectURL(file)}
               alt={`Uploaded ${index}`}
-              className="object-cover w-full h-[200px] rounded-md"
+              className="object-cover w-full h-[200px] rounded-md bg-gray-50"
             />
             <button
               type="button"
