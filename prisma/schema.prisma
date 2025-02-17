@@ -93,7 +93,7 @@ model BoatAttributes {
   longitude       String?
   iCal            String?
   itemId          Int                @unique
-  item            Item               @relation(fields: [itemId], references: [id])
+  item            Item               @relation(fields: [itemId], references: [id], onDelete: Cascade)
   availability    BoatAvailability[]
 }
 
@@ -118,7 +118,7 @@ model DrinkAttributes {
   units     Int      @default(0)
   size      String?
   itemId    Int      @unique
-  item      Item     @relation(fields: [itemId], references: [id])
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
 }
 
 model Item {
