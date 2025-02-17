@@ -10,3 +10,4 @@ export * from './lib/boats';
 export * from './lib/orders';
 export * from './lib/book-event';
 export * from './lib/airtable';
+export * from './lib/app';

@@ -6,7 +6,7 @@ import { Button, CardWrapper, DrawerContent, Text } from '@magnetic/ui';
 import ItemsTable from '../../components/services/items-table';
 import { useState } from 'react';
 import FormProduct from '../../components/services/form-product';
-import { Item } from '@magnetic/interfaces';
+import { ApiResponse, Item } from '@magnetic/interfaces';
 import FormVariant from '../../components/form-variant';
 import './styles.scss';
 import { BoatsTable } from '../../components/boats/boats-table';
@@ -34,7 +34,7 @@ function ServicePage(props: Props) {
     refetch,
   } = useService(serviceId);
 
-  const removeItem = useMutation<any, Error, any>({
+  const removeItem = useMutation<ApiResponse, Error, any>({
     mutationFn: (itemId: number) => {
       return deleteItem(serviceId, itemId);
     },

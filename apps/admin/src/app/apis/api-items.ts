@@ -1,4 +1,5 @@
 import {
+  ApiResponse,
   Category,
   EditItem,
   Item,
@@ -91,7 +92,10 @@ export async function getNewItem(
   return dataJson;
 }
 
-export async function deleteItem(serviceId: number, id: number) {
+export async function deleteItem(
+  serviceId: number,
+  id: number
+): Promise<ApiResponse> {
   const url = URL_REMOVE_ITEM(serviceId, id);
   const response = await fetch(url, {
     method: 'DELETE',
