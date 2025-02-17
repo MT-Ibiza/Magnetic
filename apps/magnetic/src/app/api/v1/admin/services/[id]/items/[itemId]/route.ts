@@ -151,3 +151,30 @@ export async function PUT(
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: number; itemId: number } }
+) {
+  try {
+    await db.item.delete({
+      where: {
+        id: Number(params.itemId),
+        serviceId: Number(params.id),
+      },
+    });
+    return NextResponse.json(
+      { message: 'Product deleted successfully' },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        message: error.message,
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}

@@ -17,6 +17,9 @@ import { Item } from '@magnetic/interfaces';
 import FormVariant from '../../components/form-variant';
 import './styles.scss';
 import { BoatsTable } from '../../components/boats/boats-table';
+import { useMutation } from '@tanstack/react-query';
+import { deleteItem } from '../../apis/api-items';
+import { toast } from 'sonner';
 
 interface Props {}
 
@@ -32,10 +35,22 @@ function ServicePage(props: Props) {
     isError,
     service,
     error,
-    isSuccess,
     publishOrUnpublishItemApi,
     refetch,
   } = useService(serviceId);
+
+  const removeItem = useMutation<any, Error, any>({
+    mutationFn: (itemId: number) => {
+      return deleteItem(serviceId, itemId);
+    },
+    onSuccess: () => {
+      toast.success(`Item removed!`);
+      refetch();
+    },
+    onError: () => {
+      console.log('Item cannot remove');
+    },
+  });
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -124,6 +139,9 @@ function ServicePage(props: Props) {
                     toggleDrawer();
                     setSelectedItem(item);
                     setOpenForm('variant');
+                  }}
+                  onClickRemove={async (item) => {
+                    await removeItem.mutateAsync(item.id);
                   }}
                   onTogglePublish={handlePublishToggle}
                 />

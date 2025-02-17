@@ -8,21 +8,14 @@ import { useState } from 'react';
 interface Props {
   items: ItemWithCount[];
   onClickEdit?: (item: Item) => void;
+  onClickRemove?: (item: Item) => void;
   onClickVariant?: (item: Item) => void;
   onTogglePublish?: (itemId: number, isPublished: boolean) => void;
 }
 
 function ItemsTable(props: Props) {
-  const { items, onClickEdit, onClickVariant, onTogglePublish } = props;
-  // const { isLoading, services, error, isError } = useServices();
-
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
-
-  // if (isError) {
-  //   return <ErrorText text={error?.message || ''} />;
-  // }
+  const { items, onClickEdit, onClickVariant, onTogglePublish, onClickRemove } =
+    props;
 
   return (
     <div className="">
@@ -90,7 +83,7 @@ function ItemsTable(props: Props) {
 
                     <li
                       onClick={() => {
-                        // onClickRemove && onClickRemove(user);
+                        onClickRemove && onClickRemove(item);
                       }}
                     >
                       <a>Delete</a>

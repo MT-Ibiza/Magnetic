@@ -12,6 +12,7 @@ import {
   URL_GET_ITEM,
   URL_GET_ITEMS,
   URL_NEW_ITEM,
+  URL_REMOVE_ITEM,
   URL_UPDATE_ITEM,
 } from './api-constants';
 
@@ -81,6 +82,19 @@ export async function getNewItem(
   const url = URL_NEW_ITEM(serviceId);
   const response = await fetch(url, {
     method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
+  return dataJson;
+}
+
+export async function deleteItem(serviceId: number, id: number) {
+  const url = URL_REMOVE_ITEM(serviceId, id);
+  const response = await fetch(url, {
+    method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
