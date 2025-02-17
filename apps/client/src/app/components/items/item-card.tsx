@@ -27,7 +27,7 @@ interface Props {
 
 function ItemCard(props: Props) {
   const { item, availableInPlan, service, noFillForm } = props;
-  const { addProductToCart } = useCart();
+  const { addProductToCart, addServiceToCart } = useCart();
   const { addItem, removeItem, cart } = useCartStore();
   const { setSelectedItem } = useApp();
   const productCart = cart.find((cartItem) => cartItem.item.id === item.id);
@@ -46,7 +46,7 @@ function ItemCard(props: Props) {
 
   const customDetailsServices = ['drinks', 'chefs', 'transfer', 'boat_rental'];
   const formType = item.category?.formType || service.serviceType;
-  const handleAddItem = (quantity: number, formData?: any) => {
+  const handleAddProduct = (quantity: number, formData?: any) => {
     const newVal = quantity;
     addProductToCart.mutate(
       { itemId: item.id, quantity: newVal, formData },
@@ -69,7 +69,7 @@ function ItemCard(props: Props) {
     );
   };
 
-  const handleRemoveItem = (quantity: number) => {
+  const handleRemoveProduct = (quantity: number) => {
     const newVal = quantity;
     if (newVal >= 0) {
       addProductToCart.mutate(
@@ -85,6 +85,29 @@ function ItemCard(props: Props) {
         }
       );
     }
+  };
+
+  const handleAddService = (quantity: number, formData?: any) => {
+    const newVal = quantity;
+    addServiceToCart.mutate(
+      { itemId: item.id, quantity: newVal, formData },
+      {
+        onSuccess: (response) => {
+          const { cartItem } = response;
+          closeForm();
+          addItem({
+            id: cartItem.id,
+            item: item,
+            quantity: newVal,
+            formData,
+          });
+          showAlert('Product added to the cart', 'success');
+        },
+        onError: () => {
+          showAlert('Failed to add product to the cart', 'error');
+        },
+      }
+    );
   };
 
   const openForm = () => {
@@ -154,7 +177,7 @@ function ItemCard(props: Props) {
                     currentAmount={productCart?.quantity || 0}
                     onClickAdd={(amount) => {
                       if (availableInPlan) {
-                        handleAddItem(amount, undefined);
+                        handleAddProduct(amount, undefined);
                       } else {
                         //@ts-ignore
                         document.getElementById('modal_upgrade').showModal();
@@ -162,9 +185,10 @@ function ItemCard(props: Props) {
                     }}
                     onClickRemove={(amount) => {
                       if (availableInPlan) {
-                        handleRemoveItem(amount);
+                        handleRemoveProduct(amount);
                       } else {
-                        handleRemoveItem(amount);
+                        //@ts-ignore
+                        document.getElementById('modal_upgrade').showModal();
                       }
                     }}
                   />
@@ -184,7 +208,7 @@ function ItemCard(props: Props) {
                       }
                     }}
                     onClickRemove={(amount) => {
-                      handleRemoveItem(amount);
+                      handleRemoveProduct(amount);
                     }}
                   />
                 </div>
@@ -227,7 +251,7 @@ function ItemCard(props: Props) {
               serviceId: service.id,
             }}
             onSubmit={(data) => {
-              handleAddItem(1, data);
+              handleAddService(1, data);
             }}
             onClose={closeForm}
           />

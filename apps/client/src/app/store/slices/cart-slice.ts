@@ -29,18 +29,18 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
       );
       let updatedCart;
 
-      // if (existingItem) {
-      //   updatedCart = state.cart.map((cartItem) =>
-      //     cartItem.id === item.id
-      //       ? { ...cartItem, quantity: cartItem.quantity + 1 }
-      //       : cartItem
-      //   );
-      // } else {
-      updatedCart = [
-        ...state.cart,
-        { ...item, quantity: item.quantity, id: item.id },
-      ];
-      // }
+      if (existingItem && item.quantity > 1) {
+        updatedCart = state.cart.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        );
+      } else {
+        updatedCart = [
+          ...state.cart,
+          { ...item, quantity: item.quantity, id: item.id },
+        ];
+      }
       // localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
       return {
         cart: updatedCart,
