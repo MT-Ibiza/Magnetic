@@ -22,7 +22,7 @@ export async function getCart(): Promise<Cart> {
   return dataJson;
 }
 
-export async function addServiceToCart(params: {
+export async function createItemCartService(params: {
   itemId: number;
   cartItemId?: number;
   quantity: number;
@@ -62,7 +62,7 @@ export async function removeServiceCart(): Promise<null> {
   return dataJson;
 }
 
-export async function addProductToCart(params: {
+export async function createItemCartProduct(params: {
   itemId: number;
   cartItemId?: number;
   quantity: number;

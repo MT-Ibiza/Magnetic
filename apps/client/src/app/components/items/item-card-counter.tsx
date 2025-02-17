@@ -16,7 +16,7 @@ interface Props {
 
 function ItemCardCounter(props: Props) {
   const { item, availableInPlan, service, noFillForm } = props;
-  const { addItemToCart } = useCart();
+  const { addServiceToCart } = useCart();
   const { addItem, removeItem, cart } = useCartStore();
   const productCart = cart.find((cartItem) => cartItem.item.id === item.id);
   const [alert, setAlert] = useState<{
@@ -34,7 +34,7 @@ function ItemCardCounter(props: Props) {
 
   const handleAddItem = (quantity: number, formData?: any) => {
     const newVal = quantity + 1;
-    addItemToCart.mutate(
+    addServiceToCart.mutate(
       { itemId: item.id, quantity: newVal, formData },
       {
         onSuccess: () => {
@@ -57,7 +57,7 @@ function ItemCardCounter(props: Props) {
     const newVal = quantity - 1;
 
     if (newVal >= 0) {
-      addItemToCart.mutate(
+      addServiceToCart.mutate(
         { itemId: item.id, quantity: newVal },
         {
           onSuccess: () => {

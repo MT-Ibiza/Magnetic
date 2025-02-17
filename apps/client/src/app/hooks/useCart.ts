@@ -1,6 +1,11 @@
 import { Cart } from '@magnetic/interfaces';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { getCart, addServiceToCart, removeServiceCart } from '../apis/api-cart';
+import {
+  getCart,
+  createItemCartService,
+  removeServiceCart,
+  createItemCartProduct,
+} from '../apis/api-cart';
 
 export const useCart = () => {
   const { isLoading, isError, data, error, refetch, isSuccess } =
@@ -12,7 +17,7 @@ export const useCart = () => {
       enabled: true,
     });
 
-  const addItemToCart = useMutation({
+  const addServiceToCart = useMutation({
     mutationFn: ({
       itemId,
       cartItemId,
@@ -23,7 +28,24 @@ export const useCart = () => {
       cartItemId?: number;
       quantity: number;
       formData?: any;
-    }) => addServiceToCart({ itemId, cartItemId, quantity, formData }),
+    }) => createItemCartService({ itemId, cartItemId, quantity, formData }),
+    onSuccess: () => {
+      // refetch();
+    },
+  });
+
+  const addProductToCart = useMutation({
+    mutationFn: ({
+      itemId,
+      cartItemId,
+      quantity,
+      formData,
+    }: {
+      itemId: number;
+      cartItemId?: number;
+      quantity: number;
+      formData?: any;
+    }) => createItemCartProduct({ itemId, cartItemId, quantity, formData }),
     onSuccess: () => {
       // refetch();
     },
@@ -43,7 +65,8 @@ export const useCart = () => {
     cart: data,
     error,
     refetch,
-    addItemToCart,
+    addServiceToCart,
+    addProductToCart,
     removeAllItemsCart,
     data,
   };

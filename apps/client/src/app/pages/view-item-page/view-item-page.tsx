@@ -28,7 +28,7 @@ export function ViewItemPage(props: Props) {
   const serviceId = Number(params.serviceId);
   const itemId = Number(params.itemId);
   const navigate = useNavigate();
-  const { addItemToCart } = useCart();
+  const { addServiceToCart } = useCart();
   const { cart, addItem, removeItem } = useCartStore();
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -54,7 +54,7 @@ export function ViewItemPage(props: Props) {
     return <div>Error: {error?.message || 'Something went wrong'}</div>;
   const handleAddItem = (item: any, quantity: number) => {
     const newVal = quantity + 1;
-    addItemToCart.mutate(
+    addServiceToCart.mutate(
       { itemId: item.id, quantity: newVal },
       {
         onSuccess: () => {

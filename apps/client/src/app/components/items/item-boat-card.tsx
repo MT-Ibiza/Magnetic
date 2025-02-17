@@ -12,7 +12,7 @@ interface Props {
 
 function ItemBoatCard(props: Props) {
   const { item } = props;
-  const { addItemToCart } = useCart();
+  const { addServiceToCart } = useCart();
   const { addItem, removeItem, cart } = useCartStore();
   const productCart = cart.find((cartItem) => cartItem.item.id === item.id);
   const [alert, setAlert] = useState<{
@@ -30,7 +30,7 @@ function ItemBoatCard(props: Props) {
 
   const handleAddItem = (quantity: number) => {
     const newVal = quantity + 1;
-    addItemToCart.mutate(
+    addServiceToCart.mutate(
       { itemId: item.id, quantity: newVal },
       {
         onSuccess: () => {
@@ -50,7 +50,7 @@ function ItemBoatCard(props: Props) {
 
   const handleRemoveItem = (quantity: number) => {
     const newVal = quantity - 1;
-    addItemToCart.mutate(
+    addServiceToCart.mutate(
       { itemId: item.id, quantity: newVal },
       {
         onSuccess: () => {

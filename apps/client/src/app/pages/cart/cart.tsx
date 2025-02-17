@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../../hooks/useCart';
 
 export function CartPage() {
-  const { addItemToCart } = useCart();
+  const { addServiceToCart } = useCart();
   const { cart, addItem, removeItem, getGroupedItemsByService } =
     useCartStore();
   const groupedCart = getGroupedItemsByService();
@@ -29,7 +29,7 @@ export function CartPage() {
 
   const handleAddItem = (item: any, quantity: number) => {
     const newVal = quantity + 1;
-    addItemToCart.mutate(
+    addServiceToCart.mutate(
       { itemId: item.id, quantity: newVal },
       {
         onSuccess: () => {
@@ -47,7 +47,7 @@ export function CartPage() {
   const handleRemoveItem = (item: any, quantity: number) => {
     const newVal = quantity - 1;
     if (newVal >= 0) {
-      addItemToCart.mutate(
+      addServiceToCart.mutate(
         { itemId: item.id, quantity: newVal },
         {
           onSuccess: () => {

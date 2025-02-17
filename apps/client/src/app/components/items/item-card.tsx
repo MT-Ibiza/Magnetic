@@ -27,7 +27,7 @@ interface Props {
 
 function ItemCard(props: Props) {
   const { item, availableInPlan, service, noFillForm } = props;
-  const { addItemToCart } = useCart();
+  const { addServiceToCart } = useCart();
   const { addItem, removeItem, cart } = useCartStore();
   const { setSelectedItem } = useApp();
   const productCart = cart.find((cartItem) => cartItem.item.id === item.id);
@@ -48,7 +48,7 @@ function ItemCard(props: Props) {
   const formType = item.category?.formType || service.serviceType;
   const handleAddItem = (quantity: number, formData?: any) => {
     const newVal = quantity;
-    addItemToCart.mutate(
+    addServiceToCart.mutate(
       { itemId: item.id, quantity: newVal, formData },
       {
         onSuccess: (response) => {
@@ -72,7 +72,7 @@ function ItemCard(props: Props) {
   const handleRemoveItem = (quantity: number) => {
     const newVal = quantity;
     if (newVal >= 0) {
-      addItemToCart.mutate(
+      addServiceToCart.mutate(
         { itemId: item.id, quantity: newVal },
         {
           onSuccess: () => {

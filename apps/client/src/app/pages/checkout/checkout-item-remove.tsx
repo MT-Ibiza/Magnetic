@@ -13,11 +13,11 @@ interface Props {
 function CheckoutItemRemove(props: Props) {
   const { cartItem } = props;
   const { item } = cartItem;
-  const { addItemToCart } = useCart();
+  const { addServiceToCart } = useCart();
   const { removeItem } = useCartStore();
 
   const handleRemoveItem = () => {
-    addItemToCart.mutate(
+    addServiceToCart.mutate(
       { cartItemId: cartItem.id, itemId: item.id, quantity: 0 },
       {
         onSuccess: () => {
