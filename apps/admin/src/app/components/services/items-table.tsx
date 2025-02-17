@@ -80,13 +80,12 @@ function ItemsTable(props: Props) {
                     >
                       <a>Edit Service</a>
                     </li>
-
                     <li
                       onClick={() => {
                         onClickRemove && onClickRemove(item);
                       }}
                     >
-                      <a>Delete</a>
+                      <a className="text-red-500">Delete</a>
                     </li>
                   </ul>
                 </div>

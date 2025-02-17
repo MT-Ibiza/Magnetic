@@ -1,15 +1,8 @@
 import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
-import {
-  Button,
-  CardWrapper,
-  DrawerContent,
-  Input,
-  Text,
-  UploadImage,
-} from '@magnetic/ui';
+import { Button, CardWrapper, DrawerContent, Text } from '@magnetic/ui';
 import ItemsTable from '../../components/services/items-table';
 import { useState } from 'react';
 import FormProduct from '../../components/services/form-product';
@@ -20,6 +13,7 @@ import { BoatsTable } from '../../components/boats/boats-table';
 import { useMutation } from '@tanstack/react-query';
 import { deleteItem } from '../../apis/api-items';
 import { toast } from 'sonner';
+import ConfirmAlert from '../../components/confirm-alert';
 
 interface Props {}
 
@@ -29,7 +23,8 @@ function ServicePage(props: Props) {
   const serviceId = parseInt(params.id || '');
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openForm, setOpenForm] = useState('');
-  const [selectedItem, setSelectedItem] = useState<Item | undefined>();
+  const [selectedItem, setSelectedItem] = useState<Item>();
+  const [showAlert, setShowAlert] = useState(false);
   const {
     isLoading,
     isError,
@@ -44,11 +39,14 @@ function ServicePage(props: Props) {
       return deleteItem(serviceId, itemId);
     },
     onSuccess: () => {
-      toast.success(`Item removed!`);
+      setShowAlert(false);
+      toast.success(`Product removed!`);
       refetch();
     },
     onError: () => {
-      console.log('Item cannot remove');
+      setShowAlert(false);
+      toast.error(`Product cannot remove!`);
+      console.log('Product cannot remove');
     },
   });
 
@@ -77,6 +75,8 @@ function ServicePage(props: Props) {
       itemId: productId,
       isPublished: newStatus,
     });
+    toast.success(`Product ${newStatus ? 'published' : 'unpublished'}`);
+
     refetch();
   };
 
@@ -126,7 +126,13 @@ function ServicePage(props: Props) {
           ) : (
             <div className="mt-6">
               {service.serviceType === 'boat_rental' ? (
-                <BoatsTable serviceId={service.id} />
+                <BoatsTable
+                  serviceId={service.id}
+                  onClickRemove={(item) => {
+                    setSelectedItem(item);
+                    setShowAlert(true);
+                  }}
+                />
               ) : (
                 <ItemsTable
                   items={service.items || []}
@@ -140,8 +146,9 @@ function ServicePage(props: Props) {
                     setSelectedItem(item);
                     setOpenForm('variant');
                   }}
-                  onClickRemove={async (item) => {
-                    await removeItem.mutateAsync(item.id);
+                  onClickRemove={(item) => {
+                    setSelectedItem(item);
+                    setShowAlert(true);
                   }}
                   onTogglePublish={handlePublishToggle}
                 />
@@ -172,6 +179,22 @@ function ServicePage(props: Props) {
           />
         )}
       </DrawerContent>
+      <ConfirmAlert
+        title={'Remove product'}
+        message={
+          selectedItem?.published
+            ? 'This product is published, Are you sure you want to remove this product?'
+            : 'Are you sure you want to remove this product?'
+        }
+        show={showAlert}
+        onClickConfirm={async () => {
+          const itemId = selectedItem?.id || 0;
+          await removeItem.mutateAsync(itemId);
+        }}
+        onClickCancel={() => {
+          setShowAlert(false);
+        }}
+      />
     </>
   );
 }

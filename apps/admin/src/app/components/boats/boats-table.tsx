@@ -6,13 +6,15 @@ import { useProducts } from '../../hooks/useProducts';
 import { Button, Text } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import ImportBoatCalendarButton from './import-boat-calendar-button';
+import { Item } from '@magnetic/interfaces';
 
 interface Props {
   serviceId: number;
+  onClickRemove?: (item: Item) => void;
 }
 
 export function BoatsTable(props: Props) {
-  const { serviceId } = props;
+  const { serviceId, onClickRemove } = props;
   const params = {
     serviceId: serviceId,
     page: 1,
@@ -98,13 +100,23 @@ export function BoatsTable(props: Props) {
                   <div tabIndex={0} role="button" className="m-1">
                     <HiOutlineDotsVertical />
                   </div>
-                  <ul className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                  >
                     <li>
                       <a
                         href={`/services/${product.serviceId}/items/${product.id}/edit`}
                       >
                         Edit Product
                       </a>
+                    </li>
+                    <li
+                      onClick={() => {
+                        onClickRemove && onClickRemove(product);
+                      }}
+                    >
+                      <a className="text-red-500">Delete</a>
                     </li>
                   </ul>
                 </div>
