@@ -28,7 +28,8 @@ export const URL_GET_DASHBOARD = `${API_URL}/dashboard`;
 
 // Cart
 export const URL_GET_CART = `${API_URL}/cart`;
-export const URL_ADD_TO_CART = `${API_URL}/cart/items`;
+export const URL_ADD_SERVICE_TO_CART = `${API_URL}/cart/services`;
+export const URL_ADD_PRODUCT_TO_CART = `${API_URL}/cart/products`;
 export const REMOVE_CART = `${API_URL}/cart`;
 
 // Order
