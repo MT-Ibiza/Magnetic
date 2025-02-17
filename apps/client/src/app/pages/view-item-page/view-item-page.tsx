@@ -6,7 +6,6 @@ import {
   DatePickerCustomDay,
   DatePickerCustomHeaderTwoMonth,
   GalleryModal,
-  ItemsGallery,
 } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
@@ -86,32 +85,38 @@ export function ViewItemPage(props: Props) {
     {
       name: 'Capacity',
       icon: <FaUsers className="text-lg" />,
-      value: item?.boatAttributes?.capacity,
+      value: item?.boatAttributes?.capacity || 'n/a',
     },
     {
       name: 'Crew',
       icon: <FaUserTie className="text-lg" />,
-      value: item?.boatAttributes?.crew,
+      value: item?.boatAttributes?.crew || 'n/a',
     },
     {
       name: 'Size',
       icon: <FaRulerCombined className="text-lg" />,
-      value: item?.boatAttributes?.sizeInMeters + ' m',
+      value: item?.boatAttributes?.sizeInMeters
+        ? item?.boatAttributes?.sizeInMeters + ' m'
+        : 'n/a',
     },
     {
       name: 'Beam',
       icon: <FaShip className="text-lg" />,
-      value: item?.boatAttributes?.beamInMeters + ' m',
+      value: item?.boatAttributes?.beamInMeters
+        ? item?.boatAttributes?.beamInMeters + ' m'
+        : 'n/a',
     },
     {
       name: 'Cabins',
       icon: <FaBed className="text-lg" />,
-      value: item?.boatAttributes?.cabins,
+      value: item?.boatAttributes?.cabins || 'n/a',
     },
     {
       name: 'Fuel Consumption',
       icon: <FaGasPump className="text-lg" />,
-      value: item?.boatAttributes?.fuelConsumption + ' L/H',
+      value: item?.boatAttributes?.fuelConsumption
+        ? item?.boatAttributes?.beamInMeters + ' L/H'
+        : 'n/a',
     },
   ];
 
@@ -140,9 +145,7 @@ export function ViewItemPage(props: Props) {
                       <div key={index} className="flex items-center space-x-3">
                         {amenity.icon}
                         <span>
-                          {amenity.name}:{' '}
-                          {item?.boatAttributes?.[amenity.name.toLowerCase()] ||
-                            amenity.value}
+                          {amenity.name}: {amenity.value}
                         </span>
                       </div>
                     ))}
@@ -152,9 +155,11 @@ export function ViewItemPage(props: Props) {
             </div>
             <div className="bg-base-100 listingSection__wrap">
               <h2 className="text-2xl font-semibold">Description</h2>
-              <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
-              <div className="text-neutral-6000 dark:text-neutral-300">
-                <span>{item?.description}</span>
+              <div className="text-neutral-6000 dark:text-neutral-300 editor-text">
+                <div
+                  className="block"
+                  dangerouslySetInnerHTML={{ __html: item?.description || '' }}
+                />
               </div>
             </div>
             {item?.boatAttributes && (
@@ -197,14 +202,6 @@ export function ViewItemPage(props: Props) {
                 </span>
               </div>
               <div className="flex flex-col space-y-4">
-                {/* <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-                  <span>$119 x 3 night</span>
-                  <span>$357</span>
-                </div>
-                <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-                  <span>Service charge</span>
-                  <span>$0</span>
-                </div> */}
                 <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
                 <div className="flex justify-between font-semibold">
                   <span>Total</span>
