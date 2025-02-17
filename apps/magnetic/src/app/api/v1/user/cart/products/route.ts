@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 
     const userId = decodedToken.id;
     const body = await request.json();
-    const { itemId, cartItemId, quantity, formData } = body;
+    const { itemId, quantity, formData } = body;
 
     if (!itemId || quantity < 0) {
       return NextResponse.json(
@@ -35,44 +35,32 @@ export async function POST(request: Request) {
       });
     }
 
-    if (cartItemId) {
-      const existingCartItem = await db.cartItem.findFirst({
-        where: {
-          cartId: cart.id,
-          id: cartItemId,
-        },
-      });
+    const existingCartItem = await db.cartItem.findFirst({
+      where: {
+        cartId: cart.id,
+        itemId: itemId,
+      },
+    });
 
-      if (!existingCartItem) {
-        return NextResponse.json(
-          {
-            message: 'Item cart not found',
-          },
-          { status: 400 }
-        );
-      }
-
-      if (quantity === 0) {
-        const updatedCartItem = await db.cartItem.delete({
-          where: { id: cartItemId },
-        });
-        return NextResponse.json({
-          message: 'Cart item removed successfully',
-          cartItem: updatedCartItem,
-        });
-      }
-
-      const newCartItem = await db.cartItem.create({
-        data: {
-          cartId: cart.id,
-          itemId: itemId,
-          quantity: quantity,
-          formData: formData,
-        },
+    if (quantity === 0 && existingCartItem) {
+      const updatedCartItem = await db.cartItem.delete({
+        where: { id: existingCartItem.id },
       });
       return NextResponse.json({
-        message: 'Item added to cart successfully',
-        cartItem: newCartItem,
+        message: 'Cart item removed successfully',
+        cartItem: updatedCartItem,
+      });
+    } else if (quantity > 0 && existingCartItem) {
+      const updatedCartItem = await db.cartItem.update({
+        where: { id: existingCartItem.id },
+        data: {
+          quantity: quantity,
+        },
+      });
+
+      return NextResponse.json({
+        message: 'Cart item updated successfully',
+        cartItem: updatedCartItem,
       });
     } else {
       const newCartItem = await db.cartItem.create({
@@ -84,7 +72,7 @@ export async function POST(request: Request) {
         },
       });
       return NextResponse.json({
-        message: 'Item added to cart successfully',
+        message: 'Product added to cart successfully',
         cartItem: newCartItem,
       });
     }
