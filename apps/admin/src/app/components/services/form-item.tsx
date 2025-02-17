@@ -32,6 +32,7 @@ import { useState } from 'react';
 import FormCategory from '../form-category';
 import FormVariant from '../form-variant';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import ReactQuill from 'react-quill';
 
 export interface Props {
   className?: string;
@@ -66,6 +67,7 @@ export function FormItem(props: Props) {
   const [itemCategories, setItemCategories] = useState(categories);
   const [selectedCategory, setSelectedCategory] = useState(categoryFound);
   const [imagesFiles, setImagesFiles] = useState<File[]>([]);
+  const [description, setDescription] = useState(item?.description);
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -120,11 +122,10 @@ export function FormItem(props: Props) {
   });
 
   const onSubmit = async (data: ItemBase) => {
-    const { name, description, priceInCents, categoryId } = data;
+    const { name, priceInCents, categoryId } = data;
     const formData: FormData = new FormData();
-
     formData.append('name', name);
-    formData.append('description', description);
+    formData.append('description', description || '');
     formData.append(
       'priceInCents',
       eurosToCents(Number(priceInCents)).toString()
@@ -203,12 +204,13 @@ export function FormItem(props: Props) {
               >
                 Description
               </label>
-              <TextArea
-                id="description"
-                placeholder="Describe your product here"
-                {...register('description', { required: true })}
-                className="mt-2"
+              <ReactQuill
+                theme="snow"
+                defaultValue={description}
+                onChange={setDescription}
+                className="h-[200px]"
               />
+
               {errors.description && (
                 <p className="text-xs text-red-500 mt-1">
                   Description is required

@@ -29,6 +29,7 @@ import { useState } from 'react';
 import FormCategory from '../form-category';
 import FormVariant from '../form-variant';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import ReactQuill from 'react-quill';
 
 export interface Props {
   className?: string;
@@ -62,6 +63,7 @@ export function FormBoatItem(props: Props) {
   const [itemCategories, setItemCategories] = useState(categories);
   const [selectedCategory, setSelectedCategory] = useState(categoryFound);
   const [imagesFiles, setImagesFiles] = useState<File[]>([]);
+  const [description, setDescription] = useState(item?.description);
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -126,12 +128,11 @@ export function FormBoatItem(props: Props) {
   });
 
   const onSubmit = async (data: any) => {
-    const { name, description, priceInCents, categoryId, boatAttributes } =
-      data;
-
+    const { name, priceInCents, categoryId, boatAttributes } = data;
+    console.log(description);
     const formData: FormData = new FormData();
     formData.append('name', name);
-    formData.append('description', description);
+    formData.append('description', description || '');
     formData.append(
       'priceInCents',
       eurosToCents(Number(priceInCents)).toString()
@@ -411,11 +412,11 @@ export function FormBoatItem(props: Props) {
               >
                 Description
               </label>
-              <TextArea
-                id="description"
-                placeholder="Describe your product here"
-                {...register('description', { required: true })}
-                className="mt-2"
+              <ReactQuill
+                theme="snow"
+                defaultValue={description}
+                onChange={setDescription}
+                className="mb-3"
               />
               {errors.description && (
                 <p className="text-xs text-red-500 mt-1">
@@ -424,6 +425,12 @@ export function FormBoatItem(props: Props) {
               )}
             </div>
             <div className="media mt-6">
+              <label
+                htmlFor="description"
+                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+              >
+                Images
+              </label>
               <UploadMultipleImages
                 images={imagesFiles}
                 onChange={handleImageChange}
