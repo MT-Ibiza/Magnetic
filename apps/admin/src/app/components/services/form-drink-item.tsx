@@ -71,16 +71,9 @@ export function FormDrinkItem(props: Props) {
     setValue,
     formState: { errors },
   } = useForm<ItemBase>({
-    defaultValues: {
-      name: item?.name,
-      priceInCents: centsToEuros(item?.priceInCents || 100),
-      description: item?.description,
-      categoryId: item?.categoryId,
-      drinkAttributes: {
-        size: item?.drinkAttributes?.size,
-        units: item?.drinkAttributes?.units,
-      },
-    },
+    defaultValues: item
+      ? { ...item, ...{ priceInCents: centsToEuros(item.priceInCents) } }
+      : undefined,
   });
 
   const createItem = useMutation<Item, Error, FormData>({
@@ -116,9 +109,15 @@ export function FormDrinkItem(props: Props) {
     },
   });
 
-  const onSubmit = async (data: any) => {
-    const { name, description, priceInCents, categoryId, drinkAttributes } =
-      data;
+  const onSubmit = async (data: ItemBase) => {
+    const {
+      name,
+      description,
+      priceInCents,
+      categoryId,
+      drinkAttributes,
+      removeImagesIds,
+    } = data;
     const formData: FormData = new FormData();
     formData.append('name', name);
     formData.append('description', description);
@@ -128,16 +127,20 @@ export function FormDrinkItem(props: Props) {
     );
     formData.append('serviceId', serviceId.toString());
     formData.append('categoryId', categoryId ? categoryId.toString() : '');
-    formData.append(
-      'drinkAttributes',
-      JSON.stringify({
-        size: drinkAttributes.size,
-        units: Number(drinkAttributes.units),
-      })
-    );
-
+    if (drinkAttributes) {
+      formData.append(
+        'drinkAttributes',
+        JSON.stringify({
+          size: drinkAttributes.size,
+          units: Number(drinkAttributes.units),
+        })
+      );
+    }
     imagesFiles.forEach((file) => {
       formData.append('imageFiles', file);
+    });
+    removeImagesIds?.forEach((id) => {
+      formData.append('removeImagesIds', `${id}`);
     });
 
     if (editMode) {
@@ -248,6 +251,9 @@ export function FormDrinkItem(props: Props) {
                 onChange={handleImageChange}
                 height="250px"
                 existingImages={item?.images}
+                onRemoveExistingImage={(imageIds) => {
+                  setValue('removeImagesIds', imageIds);
+                }}
               />
             </div>
           </div>

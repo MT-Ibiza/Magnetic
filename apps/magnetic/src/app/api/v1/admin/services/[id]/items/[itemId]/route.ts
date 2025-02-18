@@ -88,8 +88,19 @@ export async function PUT(
     : null;
   const imageFiles = data.getAll('imageFiles') as File[];
   const categoryId = data.get('categoryId') as string;
+  const removeImagesIds = data.getAll('removeImagesIds') as string[];
 
   try {
+    if (removeImagesIds.length > 0) {
+      const ids = removeImagesIds.map((id) => Number(id));
+      await db.image.deleteMany({
+        where: {
+          id: { in: ids },
+          itemId: Number(params.itemId),
+        },
+      });
+    }
+
     let imageUrls: string[] = [];
     if (imageFiles.length > 0) {
       const uploadedImages = await uploadBulkImages(imageFiles, 'items');

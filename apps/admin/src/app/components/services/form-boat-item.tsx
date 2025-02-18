@@ -10,7 +10,6 @@ import {
   DrawerContent,
   Input,
   Text,
-  TextArea,
   UploadMultipleImages,
 } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
@@ -74,25 +73,9 @@ export function FormBoatItem(props: Props) {
     setValue,
     formState: { errors },
   } = useForm<ItemBase>({
-    defaultValues: {
-      name: item?.name,
-      priceInCents: centsToEuros(item?.priceInCents || 100),
-      description: item?.description,
-      categoryId: item?.categoryId,
-      boatAttributes: {
-        secondName: item?.boatAttributes?.secondName,
-        boatType: item?.boatAttributes?.boatType,
-        port: item?.boatAttributes?.port,
-        capacity: item?.boatAttributes?.capacity,
-        crew: item?.boatAttributes?.crew,
-        beamInMeters: item?.boatAttributes?.beamInMeters,
-        cabins: item?.boatAttributes?.cabins,
-        fuelConsumption: item?.boatAttributes?.fuelConsumption,
-        latitude: item?.boatAttributes?.latitude,
-        longitude: item?.boatAttributes?.longitude,
-        sizeInMeters: item?.boatAttributes?.sizeInMeters,
-      },
-    },
+    defaultValues: item
+      ? { ...item, ...{ priceInCents: centsToEuros(item.priceInCents) } }
+      : undefined,
   });
 
   const createItem = useMutation<Item, Error, FormData>({
@@ -128,8 +111,9 @@ export function FormBoatItem(props: Props) {
     },
   });
 
-  const onSubmit = async (data: any) => {
-    const { name, priceInCents, categoryId, boatAttributes } = data;
+  const onSubmit = async (data: ItemBase) => {
+    const { name, priceInCents, categoryId, boatAttributes, removeImagesIds } =
+      data;
     console.log(description);
     const formData: FormData = new FormData();
     formData.append('name', name);
@@ -140,29 +124,36 @@ export function FormBoatItem(props: Props) {
     );
     formData.append('serviceId', serviceId.toString());
     formData.append('categoryId', categoryId ? categoryId.toString() : '');
-    formData.append(
-      'boatAttributes',
-      JSON.stringify({
-        secondName: boatAttributes.secondName,
-        boatType: boatAttributes.boatType,
-        port: boatAttributes.port,
-        capacity: Number(boatAttributes.capacity),
-        crew: Number(boatAttributes.crew),
-        beamInMeters: Number(boatAttributes.beamInMeters),
-        cabins: Number(boatAttributes.cabins),
-        fuelConsumption: Number(boatAttributes.fuelConsumption),
-        sizeInMeters: Number(boatAttributes.sizeInMeters),
-        latitude: boatAttributes.latitude
-          ? boatAttributes.latitude.toString()
-          : '',
-        longitude: boatAttributes.longitude
-          ? boatAttributes.longitude.toString()
-          : '',
-      })
-    );
+
+    if (boatAttributes) {
+      formData.append(
+        'boatAttributes',
+        JSON.stringify({
+          secondName: boatAttributes.secondName,
+          boatType: boatAttributes.boatType,
+          port: boatAttributes.port,
+          capacity: Number(boatAttributes.capacity),
+          crew: Number(boatAttributes.crew),
+          beamInMeters: Number(boatAttributes.beamInMeters),
+          cabins: Number(boatAttributes.cabins),
+          fuelConsumption: Number(boatAttributes.fuelConsumption),
+          sizeInMeters: Number(boatAttributes.sizeInMeters),
+          latitude: boatAttributes.latitude
+            ? boatAttributes.latitude.toString()
+            : '',
+          longitude: boatAttributes.longitude
+            ? boatAttributes.longitude.toString()
+            : '',
+        })
+      );
+    }
 
     imagesFiles.forEach((file) => {
       formData.append('imageFiles', file);
+    });
+
+    removeImagesIds?.forEach((id) => {
+      formData.append('removeImagesIds', `${id}`);
     });
 
     if (editMode) {
@@ -437,6 +428,9 @@ export function FormBoatItem(props: Props) {
                 onChange={handleImageChange}
                 height="250px"
                 existingImages={item?.images}
+                onRemoveExistingImage={(imageIds) => {
+                  setValue('removeImagesIds', imageIds);
+                }}
               />
             </div>
           </div>

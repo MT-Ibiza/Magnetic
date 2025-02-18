@@ -122,7 +122,7 @@ export function FormItem(props: Props) {
   });
 
   const onSubmit = async (data: ItemBase) => {
-    const { name, priceInCents, categoryId } = data;
+    const { name, priceInCents, categoryId, removeImagesIds } = data;
     const formData: FormData = new FormData();
     formData.append('name', name);
     formData.append('description', description || '');
@@ -134,6 +134,10 @@ export function FormItem(props: Props) {
     formData.append('categoryId', categoryId ? categoryId.toString() : '');
     imagesFiles.forEach((file) => {
       formData.append('imageFiles', file);
+    });
+
+    removeImagesIds?.forEach((id) => {
+      formData.append('removeImagesIds', `${id}`);
     });
 
     formData.forEach((value, key) => {
@@ -230,6 +234,9 @@ export function FormItem(props: Props) {
                 onChange={handleImageChange}
                 height="250px"
                 existingImages={item?.images}
+                onRemoveExistingImage={(imageIds) => {
+                  setValue('removeImagesIds', imageIds);
+                }}
               />
             </div>
           </div>

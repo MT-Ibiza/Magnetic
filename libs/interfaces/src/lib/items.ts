@@ -21,6 +21,7 @@ export interface ItemBase {
   boatAttributes?: BoatBase;
   drinkAttributes?: DrinkBase;
   images: Image[];
+  removeImagesIds?: number[];
 }
 
 export interface ItemResponse {
