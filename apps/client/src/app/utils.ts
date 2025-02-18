@@ -1,4 +1,4 @@
-import { CartItem } from '@magnetic/interfaces';
+import { CartItem, Item } from '@magnetic/interfaces';
 import moment from 'moment';
 
 type GroupedCategory = {
@@ -49,4 +49,29 @@ export function calculateTotalsByService(data: CartItem[]): ServiceTotal[] {
     serviceGroup.total += itemTotal;
     return result;
   }, []);
+}
+
+export function groupItemsByCategory(
+  items: Item[]
+): { category: string; items: any[] }[] {
+  const categoryMap: { [key: string]: any[] } = {};
+
+  items.forEach((item) => {
+    const categoryName: string = item.category?.name || 'unknown';
+
+    if (!categoryMap[categoryName]) {
+      categoryMap[categoryName] = [];
+    }
+
+    categoryMap[categoryName].push(item);
+  });
+
+  const groupedItems: { category: string; items: any[] }[] = Object.keys(
+    categoryMap
+  ).map((category) => ({
+    category,
+    items: categoryMap[category],
+  }));
+
+  return groupedItems;
 }
