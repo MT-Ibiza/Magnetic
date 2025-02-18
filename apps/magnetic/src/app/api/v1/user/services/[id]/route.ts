@@ -40,6 +40,12 @@ export async function GET(
             images: true,
             boatAttributes: true,
             drinkAttributes: true,
+            variants: {
+              select: {
+                priceInCents: true,
+                name: true,
+              },
+            },
             category: {
               select: {
                 id: true,

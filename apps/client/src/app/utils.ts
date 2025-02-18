@@ -1,4 +1,4 @@
-import { CartItem, Item } from '@magnetic/interfaces';
+import { CartItem, Item, ItemVariant } from '@magnetic/interfaces';
 import moment from 'moment';
 
 type GroupedCategory = {

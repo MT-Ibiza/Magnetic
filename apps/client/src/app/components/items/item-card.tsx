@@ -132,10 +132,7 @@ function ItemCard(props: Props) {
             uniqueID={`ExperiencesCard_${item.id}`}
           />
           {item.priceInCents && (
-            <SaleOffBadge
-              className="absolute right-3 top-3"
-              price={`From ${centsToEurosWithCurrency(item.priceInCents)}`}
-            />
+            <SaleOffBadge className="absolute right-3 top-3" item={item} />
           )}
           <div className={'p-4 space-y-4'}>
             <div className="space-y-2">
