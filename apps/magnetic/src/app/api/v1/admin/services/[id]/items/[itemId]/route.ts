@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server';
 import { EditItem } from '@magnetic/interfaces';
 import db from 'apps/magnetic/src/app/libs/db';
-import { uploadBulkImages } from 'apps/magnetic/src/app/libs/s3';
+import {
+  deleteImageFromSpaces,
+  uploadBulkImages,
+} from 'apps/magnetic/src/app/libs/s3';
 
 export async function GET(
   request: Request,
@@ -93,6 +96,14 @@ export async function PUT(
   try {
     if (removeImagesIds.length > 0) {
       const ids = removeImagesIds.map((id) => Number(id));
+      const imagesToRemove = await db.image.findMany({
+        where: { id: { in: ids }, itemId: Number(params.itemId) },
+      });
+
+      await Promise.all(
+        imagesToRemove.map((image) => deleteImageFromSpaces(image.url))
+      );
+
       await db.image.deleteMany({
         where: {
           id: { in: ids },

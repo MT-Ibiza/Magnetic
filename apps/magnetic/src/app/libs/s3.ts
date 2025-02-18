@@ -1,4 +1,4 @@
-import { PutObjectCommand, S3 } from '@aws-sdk/client-s3';
+import { PutObjectCommand, S3, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { v4 as uuid } from 'uuid';
 
 export const s3Client = new S3({
@@ -37,4 +37,15 @@ export async function uploadFile(file: File, folder: string) {
   };
 }
 
-// https://magnetic-travel-storage.nyc3.digitaloceanspaces.com/services/ee051eaf-42a7-4084-9398-987d2e6c79e9.png
+export const deleteImageFromSpaces = async (url: string) => {
+  const key = url.replace(
+    `${process.env.DIGITAL_OCEAN_BUCKET_URL_ENDPOINT}/`,
+    ''
+  );
+  await s3Client.send(
+    new DeleteObjectCommand({
+      Bucket: process.env.DIGITAL_OCEAN_BUCKET_NAME,
+      Key: key,
+    })
+  );
+};
