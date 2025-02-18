@@ -73,12 +73,12 @@ function ItemsTable(props: Props) {
                     >
                       <a>New Variant</a>
                     </li>
-                    <li
-                      onClick={() => {
-                        onClickEdit && onClickEdit(item);
-                      }}
-                    >
-                      <a>Edit Service</a>
+                    <li>
+                      <a
+                        href={`/services/${item.serviceId}/items/${item.id}/edit`}
+                      >
+                        Edit Product
+                      </a>
                     </li>
                     <li
                       onClick={() => {

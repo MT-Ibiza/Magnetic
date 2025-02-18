@@ -158,7 +158,7 @@ function ServicePage(props: Props) {
         </div>
       </CardWrapper>
       <DrawerContent
-        title={'Edit Product or Variant'}
+        title={openForm === 'product' ? 'Edit Product' : 'Edit Variant'}
         open={openDrawer}
         onClose={toggleDrawer}
       >
