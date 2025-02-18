@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { EditItem } from '@magnetic/interfaces';
 import db from 'apps/magnetic/src/app/libs/db';
 import {
   deleteImageFromSpaces,

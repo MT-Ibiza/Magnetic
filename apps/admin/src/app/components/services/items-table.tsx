@@ -4,6 +4,7 @@ import { Text } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { placeholderItemImage } from '../../constants';
 
 interface Props {
   items: ItemWithCount[];
@@ -36,9 +37,19 @@ function ItemsTable(props: Props) {
             <tr className="hover" key={index}>
               <th>{index + 1}</th>
               <td>
-                <Link to={`/services/${item.serviceId}/items/${item.id}/edit`}>
-                  {item.name}
-                </Link>
+                <div className="flex gap-3">
+                  <img
+                    className="w-[35px] bg-gray-50"
+                    src={
+                      item.images[0] ? item.images[0].url : placeholderItemImage
+                    }
+                  />
+                  <Link
+                    to={`/services/${item.serviceId}/items/${item.id}/edit`}
+                  >
+                    {item.name}
+                  </Link>
+                </div>
               </td>
               <td>
                 <Text.TextNumeric>

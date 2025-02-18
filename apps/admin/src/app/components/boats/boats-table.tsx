@@ -7,6 +7,7 @@ import { Button, Text } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import ImportBoatCalendarButton from './import-boat-calendar-button';
 import { Item } from '@magnetic/interfaces';
+import { placeholderItemImage } from '../../constants';
 
 interface Props {
   serviceId: number;
@@ -69,11 +70,21 @@ export function BoatsTable(props: Props) {
             <tr className="hover" key={product.id}>
               <th>{index + 1}</th>
               <td>
-                <Link
-                  to={`/services/${product.serviceId}/items/${product.id}/edit`}
-                >
-                  {product.name}
-                </Link>
+                <div className="flex gap-3">
+                  <img
+                    className="w-[35px] bg-gray-50"
+                    src={
+                      product.images[0]
+                        ? product.images[0].url
+                        : placeholderItemImage
+                    }
+                  />
+                  <Link
+                    to={`/services/${product.serviceId}/items/${product.id}/edit`}
+                  >
+                    {product.name}
+                  </Link>
+                </div>
               </td>
               <td>{centsToEurosWithCurrency(product.priceInCents)}</td>
               <td>

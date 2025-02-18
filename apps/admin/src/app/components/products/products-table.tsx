@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import ConfirmAlert from '../confirm-alert';
 import { useState } from 'react';
 import { ApiResponse, Item } from '@magnetic/interfaces';
+import { placeholderItemImage } from '../../constants';
 
 interface Props {}
 
@@ -94,11 +95,21 @@ export function ProductsTable(props: Props) {
               <tr className="hover" key={product.id}>
                 <th>{index + 1}</th>
                 <td>
-                  <Link
-                    to={`/services/${product.serviceId}/items/${product.id}/edit`}
-                  >
-                    {product.name}
-                  </Link>
+                  <div className="flex gap-3">
+                    <img
+                      className="w-[35px] bg-gray-50"
+                      src={
+                        product.images[0]
+                          ? product.images[0].url
+                          : placeholderItemImage
+                      }
+                    />
+                    <Link
+                      to={`/services/${product.serviceId}/items/${product.id}/edit`}
+                    >
+                      {product.name}
+                    </Link>
+                  </div>
                 </td>
                 <td>{product.service.name}</td>
                 <td>{centsToEurosWithCurrency(product.priceInCents)}</td>

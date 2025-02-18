@@ -34,6 +34,7 @@ export async function searchProducts(params: SearchParams) {
       createdAt: true,
       updatedAt: true,
       serviceId: true,
+      images: true,
       service: {
         select: {
           id: true,
