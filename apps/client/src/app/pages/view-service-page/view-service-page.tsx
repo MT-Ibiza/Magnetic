@@ -77,11 +77,13 @@ function ViewServicePage(props: Props) {
           {service.serviceType === 'boat_rental' ? (
             <ListBoats availableInPlan={true} service={service} />
           ) : (
-            <ListProducts
-              service={service}
-              items={publishedItems}
-              availableInPlan={availableInPlan}
-            />
+            <div className="bg-gray-50 py-5 px-10 rounded-md">
+              <ListProducts
+                service={service}
+                items={publishedItems}
+                availableInPlan={availableInPlan}
+              />
+            </div>
           )}
         </>
       )}

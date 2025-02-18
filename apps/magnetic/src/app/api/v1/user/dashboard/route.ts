@@ -32,6 +32,7 @@ export async function GET(request: Request) {
       where: { id: userId },
       select: {
         name: true,
+        firstName: true,
         lastName: true,
         email: true,
         phone: true,
