@@ -134,7 +134,7 @@ function ItemCard(props: Props) {
           {item.priceInCents && (
             <SaleOffBadge
               className="absolute right-3 top-3"
-              price={`from ${centsToEurosWithCurrency(item.priceInCents)}`}
+              price={`From ${centsToEurosWithCurrency(item.priceInCents)}`}
             />
           )}
           <div className={'p-4 space-y-4'}>
@@ -171,50 +171,43 @@ function ItemCard(props: Props) {
               </div>
             </div>
             <div className="flex flex-col items-end">
-              {/* <h2 className="text-lg font-semibold text-secondary">
-                {centsToEurosWithCurrency(item.priceInCents)}
-              </h2> */}
               {noFillForm ? (
-                <div className="mt-4">
-                  <ItemCounterButtons
-                    currentAmount={productCart?.quantity || 0}
-                    onClickAdd={(amount) => {
-                      if (availableInPlan) {
-                        handleAddProduct(amount, undefined);
-                      } else {
-                        //@ts-ignore
-                        document.getElementById('modal_upgrade').showModal();
-                      }
-                    }}
-                    onClickRemove={(amount) => {
-                      if (availableInPlan) {
-                        handleRemoveProduct(amount);
-                      } else {
-                        //@ts-ignore
-                        document.getElementById('modal_upgrade').showModal();
-                      }
-                    }}
-                  />
-                </div>
-              ) : (
-                <div className="mt-4">
-                  <ItemHandleBookButtons
-                    item={item}
-                    currentAmount={productCart?.quantity || 0}
-                    onClickAdd={() => {
-                      if (availableInPlan) {
-                        openForm();
-                        setSelectedItem(item);
-                      } else {
-                        //@ts-ignore
-                        document.getElementById('modal_upgrade').showModal();
-                      }
-                    }}
-                    onClickRemove={(amount) => {
+                <ItemCounterButtons
+                  currentAmount={productCart?.quantity || 0}
+                  onClickAdd={(amount) => {
+                    if (availableInPlan) {
+                      handleAddProduct(amount, undefined);
+                    } else {
+                      //@ts-ignore
+                      document.getElementById('modal_upgrade').showModal();
+                    }
+                  }}
+                  onClickRemove={(amount) => {
+                    if (availableInPlan) {
                       handleRemoveProduct(amount);
-                    }}
-                  />
-                </div>
+                    } else {
+                      //@ts-ignore
+                      document.getElementById('modal_upgrade').showModal();
+                    }
+                  }}
+                />
+              ) : (
+                <ItemHandleBookButtons
+                  item={item}
+                  currentAmount={productCart?.quantity || 0}
+                  onClickAdd={() => {
+                    if (availableInPlan) {
+                      openForm();
+                      setSelectedItem(item);
+                    } else {
+                      //@ts-ignore
+                      document.getElementById('modal_upgrade').showModal();
+                    }
+                  }}
+                  onClickRemove={(amount) => {
+                    handleRemoveProduct(amount);
+                  }}
+                />
               )}
             </div>
           </div>
@@ -272,9 +265,9 @@ const DefaultProductInfo = ({
   description: string;
 }) => (
   <div className="w-full pb-2 flex flex-col gap-3">
-    <h2 className="line-clamp-1 capitalize text-lg font-semibold text-primary">
+    <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
       {name}
-    </h2>
+    </p>
     <Text className="line-clamp-4 flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
       {description}
     </Text>
@@ -283,26 +276,26 @@ const DefaultProductInfo = ({
 
 const DrinkInfo = ({ name, size }: { name: string; size?: string }) => (
   <div>
-    <h2 className="line-clamp-1 capitalize text-lg font-semibold text-primary">
+    <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
       {name}
-    </h2>
+    </p>
     <p className="text-gray-500">{size}</p>
   </div>
 );
 
 const ChefInfo = ({ name }: { name: string }) => (
   <div>
-    <h2 className="line-clamp-1 capitalize text-lg font-semibold text-primary">
+    <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
       {name}
-    </h2>
+    </p>
   </div>
 );
 
 const TransferInfo = ({ name }: { name: string }) => (
   <div>
-    <h2 className="line-clamp-1 capitalize text-lg font-semibold text-primary">
+    <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
       {name}
-    </h2>
+    </p>
   </div>
 );
 

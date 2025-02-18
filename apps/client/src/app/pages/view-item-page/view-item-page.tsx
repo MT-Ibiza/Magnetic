@@ -214,7 +214,7 @@ export function ViewItemPage(props: Props) {
                 </div>
               </div>
               <Button size={2} radius="full" href={'/checkout'}>
-                Add to Cart
+                Book Now
               </Button>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import { Item } from '@magnetic/interfaces';
-import { Button } from '@magnetic/ui';
+import { Button, Text } from '@magnetic/ui';
+import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { MdCancel } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
@@ -14,11 +15,13 @@ function ItemHandleBookButtons(props: Props) {
   const { item, currentAmount, onClickAdd, onClickRemove } = props;
 
   return (
-    <div className="flex items-center justify-end gap-4 ">
-      <Link to={`item/${item.id}`}>
+    <div className="flex items-center justify-between gap-4 w-full">
+      {/* <Link to={`item/${item.id}`}>
         <Button variant="outline">View Details</Button>
-      </Link>
+      </Link> */}
+      {/* <Text>{`From ${centsToEurosWithCurrency(item.priceInCents)}`}</Text> */}
       <Button
+        className="w-full"
         onClick={() => {
           onClickAdd(currentAmount + 1);
         }}
