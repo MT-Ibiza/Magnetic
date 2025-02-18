@@ -23,7 +23,7 @@ export const SaleOffBadge: FC<SaleOffBadgeProps> = ({
           priceInCents
         )} - ${centsToEurosWithCurrency(hightPrice)}`}</Text>
       ) : (
-        <Text size="1">{`From ${centsToEurosWithCurrency(priceInCents)}`}</Text>
+        <Text size="1">{`${centsToEurosWithCurrency(priceInCents)}`}</Text>
       )}
     </div>
   );
