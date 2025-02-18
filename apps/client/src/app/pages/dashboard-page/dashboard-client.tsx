@@ -98,11 +98,23 @@ export function DashboardClientPage() {
                     </Text>
                   </div>
                 </div>
-                <div className="text-[14px] leading-[18px] lg:text-[14px] lg:leading-[24px] rounded-[15px] border border-primary-500 bg-primary-50 text-primary-700 mb-5 flex flex-col gap-3 px-4 py-4 lg:px-8 lg:py-2 bg-red-100">
-                  The booking services has closed as the date has already
-                  passed. However, feel free to contact us via WhatsApp for
-                  assistance or further inquiries.
-                </div>
+                {canMakeBookings ? (
+                  <div className="text-[14px] leading-[18px] lg:text-[14px] lg:leading-[24px] rounded-[15px] border border-green-500 bg-green-50 text-green-700 mb-5 flex flex-col gap-3 px-4 py-4 lg:px-8 lg:py-2">
+                    <Text>
+                      You can make a booking up to 7 days prior to your arrival
+                      at the destination.
+                    </Text>
+                    <Text>
+                      Until Date: {arrivalDate.format('MMMM DD, YYYY')}
+                    </Text>
+                  </div>
+                ) : (
+                  <div className="text-[14px] leading-[18px] lg:text-[14px] lg:leading-[24px] rounded-[15px] border border-primary-500 text-primary-700 mb-5 flex flex-col gap-3 px-4 py-4 lg:px-8 lg:py-2 bg-red-100">
+                    The booking services has closed as the date has already
+                    passed. However, feel free to contact us via WhatsApp for
+                    assistance or further inquiries.
+                  </div>
+                )}
               </div>
               <div className="flex-grow">
                 <div className="">
