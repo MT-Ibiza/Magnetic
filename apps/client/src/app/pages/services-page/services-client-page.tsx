@@ -32,7 +32,7 @@ export function ServiceClientPage() {
   }
 
   return (
-    <div className="bg-base-100 listingSection__wrap">
+    <div className="bg-base-100">
       <div className="container mx-auto px-6">
         <div className="text-center mb-8 lg:mb-12">
           <h2 className="text-3xl md:text-4xl font-semibold">

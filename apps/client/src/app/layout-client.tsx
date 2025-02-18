@@ -1,5 +1,5 @@
 import {
-  HeaderApp,
+  HeaderClient,
   Sidebar,
   AvatarDropdown,
   ThemeSelector,
@@ -78,7 +78,7 @@ function Layout(props: Props) {
 
   return (
     <div className="app flex flex-col min-h-screen">
-      <HeaderApp
+      <HeaderClient
         toggleSidebar={toggleSidebar}
         isSidebarVisible={isSidebarVisible}
       >
@@ -93,19 +93,9 @@ function Layout(props: Props) {
             />
           )}
         </div>
-      </HeaderApp>
+      </HeaderClient>
       <div className="flex flex-1">
-        <Sidebar
-          headerClassName="py-3 lg:py-[6.5px]"
-          options={navigation}
-          isVisible={isSidebarVisible}
-          toggleSidebar={toggleSidebar}
-        />
-        <div
-          className={`bg-base-200 flex-1 p-4 transition-all duration-300 ${
-            isSidebarVisible ? 'lg:ml-[260px]' : 'lg:ml-0'
-          }`}
-        >
+        <div className="container mt-8">
           <Outlet />
         </div>
       </div>
