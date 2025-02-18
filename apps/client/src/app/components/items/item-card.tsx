@@ -143,7 +143,10 @@ function ItemCard(props: Props) {
                 {customDetailsServices.includes(service.serviceType) ? (
                   <>
                     {service.serviceType === 'drinks' && (
-                      <DrinkInfo name={item.name} />
+                      <DrinkInfo
+                        name={item.name}
+                        size={item.drinkAttributes?.size}
+                      />
                     )}
                     {service.serviceType === 'chefs' && (
                       <ChefInfo name={item.name} />
@@ -278,11 +281,12 @@ const DefaultProductInfo = ({
   </div>
 );
 
-const DrinkInfo = ({ name }: { name: string }) => (
+const DrinkInfo = ({ name, size }: { name: string; size?: string }) => (
   <div>
     <h2 className="line-clamp-1 capitalize text-lg font-semibold text-primary">
       {name}
     </h2>
+    <p className="text-gray-500">{size}</p>
   </div>
 );
 
