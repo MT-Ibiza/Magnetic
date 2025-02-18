@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-
+import { Text } from '@magnetic/ui';
 export interface SaleOffBadgeProps {
   className?: string;
   price?: string;
@@ -11,9 +11,9 @@ export const SaleOffBadge: FC<SaleOffBadgeProps> = ({
 }) => {
   return (
     <div
-      className={`nc-SaleOffBadge flex items-center justify-center text-sm py-0.5 px-3 bg-red-700 text-red-50 rounded-full ${className}`}
+      className={`nc-SaleOffBadge flex items-center justify-center text-sm py-1 px-4 bg-slate-600 text-red-50 rounded-full ${className}`}
     >
-      {price}
+      <Text size="1">{price}</Text>
     </div>
   );
 };

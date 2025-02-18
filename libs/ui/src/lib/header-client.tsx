@@ -1,9 +1,7 @@
 'use client';
 
 import React from 'react';
-import MenuBar from './menu-bar';
-import { Link, NavLink } from 'react-router-dom';
-import { MdMenu } from 'react-icons/md';
+import { NavLink } from 'react-router-dom';
 import { Text } from '@magnetic/ui';
 import { FaUserFriends, FaBook } from 'react-icons/fa';
 import { SiTask } from 'react-icons/si';
@@ -45,13 +43,7 @@ const navigation = [
 ];
 
 export function HeaderClient(props: HeaderProps) {
-  const {
-    className,
-    children,
-    isSidebarVisible = true,
-    toggleSidebar,
-    pageTitle,
-  } = props;
+  const { className, children } = props;
 
   return (
     <div
@@ -104,8 +96,3 @@ export function HeaderClient(props: HeaderProps) {
 }
 
 export default HeaderClient;
-
-const renderIcon = (IconComponent: React.ElementType | undefined) => {
-  if (!IconComponent) return null;
-  return <IconComponent size={18} />;
-};

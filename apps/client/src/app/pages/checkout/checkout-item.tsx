@@ -4,7 +4,7 @@ import { Text } from '@magnetic/ui';
 import { formatDate } from '../../utils';
 import CheckoutItemEdit from './checkout-item-edit';
 import CheckoutItemRemove from './checkout-item-remove';
-import { placeholderItem } from '../../constants';
+import { placeholderItemImage } from '../../constants';
 
 interface Props {
   cartItem: CartItem;
@@ -13,7 +13,8 @@ interface Props {
 function CheckoutItem(props: Props) {
   const { cartItem } = props;
   const { item } = cartItem;
-  const image = item.images?.length > 0 ? item.images[0].url : placeholderItem;
+  const image =
+    item.images?.length > 0 ? item.images[0].url : placeholderItemImage;
   const serviceType = item.service?.serviceType;
   const formType = item.category?.formType || item.service?.serviceType;
 

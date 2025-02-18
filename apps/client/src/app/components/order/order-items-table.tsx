@@ -2,7 +2,7 @@ import React from 'react';
 import { OrderItem } from '@magnetic/interfaces';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { Text } from '@magnetic/ui';
-import { placeholderItem } from '../../constants';
+import { placeholderItemImage } from '../../constants';
 
 interface Props {
   items: OrderItem[];
@@ -51,7 +51,7 @@ function OrderItemsTable(props: Props) {
                         src={
                           item.item.images && item.item.images.length > 0
                             ? item.item.images[0].url
-                            : placeholderItem
+                            : placeholderItemImage
                         }
                         alt={item.item.name}
                       />
