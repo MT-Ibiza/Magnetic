@@ -148,12 +148,12 @@ export function FormUser(props: Props) {
               <Text>First Name</Text>
               <Input
                 type="text"
-                placeholder="First Name"
+                placeholder="First Name/Company Name"
                 {...register('firstName', { required: true })}
               />
               {errors.firstName && (
                 <p className="text-[12px] text-red-500">
-                  First Name is required
+                  First Name/Company Name is required
                 </p>
               )}
             </div>
@@ -212,7 +212,7 @@ export function FormUser(props: Props) {
               )}
             </div>
             <div className="flex flex-col gap-2 w-full">
-              <Text>Passport Number</Text>
+              <Text>Passport/Company Number</Text>
               <Input
                 type="text"
                 placeholder="Passport Number"

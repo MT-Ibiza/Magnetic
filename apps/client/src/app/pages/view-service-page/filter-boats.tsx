@@ -26,30 +26,31 @@ function FilterBoats(props: Props) {
 
   const capacityOptions = [
     { value: '', label: 'Select Capacity' },
-    { value: '1', label: '1 person' },
-    { value: '2', label: '2 persons' },
-    { value: '4', label: '3-4 persons' },
-    { value: '6', label: '5-6 persons' },
-    { value: '10', label: '7-10 persons' },
-    { value: '15', label: '10+ persons' },
+    { value: '1', label: '1-7 people' },
+    { value: '8', label: '8 people' },
+    { value: '9', label: '9 people' },
+    { value: '10', label: '10 people' },
+    { value: '11', label: '11 people' },
+    { value: '12', label: '12 people' },
   ];
 
   const sizeOptions = [
     { value: '', label: 'Select Size' },
-    { value: '500', label: '500 cm' },
-    { value: '1000', label: '1000 cm' },
-    { value: '1500', label: '1500 cm' },
-    { value: '2000', label: '2000 cm' },
-    { value: '2500', label: '2500+ cm' },
+    { value: '500', label: '20-40ft' },
+    { value: '1000', label: '40-60ft' },
+    { value: '1500', label: '60-80ft' },
+    { value: '2000', label: '80-100ft' },
+    { value: '2500', label: '100ft +' },
   ];
 
   const budgetOptions = [
     { value: '', label: 'Select Budget' },
-    { value: '500', label: 'Up to $500' },
-    { value: '1000', label: '$500 - $1,000' },
-    { value: '2000', label: '$1,000 - $2,000' },
-    { value: '5000', label: '$2,000 - $5,000' },
-    { value: '10000', label: '$5,000+' },
+    { value: '500', label: '0 - €2000' },
+    { value: '1000', label: '€2000 - €4000' },
+    { value: '2000', label: '€4000 - €6000' },
+    { value: '5000', label: '€6000 - €8000' },
+    { value: '10000', label: '€8000 - €10000' },
+    { value: '10000', label: '€10000 +' },
   ];
 
   const handleSearchChange = (name: string, value: string) => {
