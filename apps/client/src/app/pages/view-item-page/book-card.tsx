@@ -34,26 +34,30 @@ function BookCard(props: Props) {
           <span>{centsToEurosWithCurrency(priceSelected)}</span>
         </div> */}
       </div>
-      <Text>Look another options</Text>
-      <select
-        className="select select-bordered w-full"
-        onChange={(e) => {
-          const value = e.target.value;
-          const variant = variants.find((v) => v.id === Number(value));
-          if (variant) {
-            setPriceSelected(variant.priceInCents);
-          } else {
-            setPriceSelected(item.priceInCents);
-          }
-        }}
-      >
-        <option value="">{item.name}</option>
-        {variantOptions.map((option, index) => (
-          <option value={option.value} key={index}>
-            {option.text}
-          </option>
-        ))}
-      </select>
+      {variantOptions.length > 0 && (
+        <>
+          <Text>Look another options</Text>
+          <select
+            className="select select-bordered w-full"
+            onChange={(e) => {
+              const value = e.target.value;
+              const variant = variants.find((v) => v.id === Number(value));
+              if (variant) {
+                setPriceSelected(variant.priceInCents);
+              } else {
+                setPriceSelected(item.priceInCents);
+              }
+            }}
+          >
+            <option value="">{item.name}</option>
+            {variantOptions.map((option, index) => (
+              <option value={option.value} key={index}>
+                {option.text}
+              </option>
+            ))}
+          </select>
+        </>
+      )}
       <Button size={2} radius="full" href={'/checkout'}>
         Book Now
       </Button>
