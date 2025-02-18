@@ -26,10 +26,14 @@ module.exports = {
   theme: {
     container: {
       center: true,
-      // padding: {
-      //   DEFAULT: "1rem",
-      //   "2xl": "1rem",
-      // },
+      padding: {
+        DEFAULT: "1rem",
+        "2xl": "80px",
+      },
+    },
+    fontFamily: {
+      // display: ["var(--font-display)", ...defaultTheme.fontFamily.sans],
+      // body: ["var(--font-body)", ...defaultTheme.fontFamily.sans],
     },
     extend: {
       colors: {

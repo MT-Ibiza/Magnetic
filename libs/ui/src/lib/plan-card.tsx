@@ -37,9 +37,9 @@ export function PlanCard(props: Props) {
 
   return (
     <div
-      className={`bg-base-100 relative px-6 py-8 rounded-3xl border-[1px] flex flex-col overflow-hidden border-primary-500 ${className}`}
+      className={`h-full relative px-6 py-8 rounded-3xl border-2 flex flex-col overflow-hidden ${className}`}
     >
-      <span className="bg-primary-500 text-white px-3 py-1 tracking-widest text-xs absolute right-3 top-3 rounded-full z-5">
+      <span className="bg-primary-500 text-white px-3 py-1 tracking-widest text-xs absolute right-3 top-3 rounded-full z-10">
         PLAN
       </span>
       <div className="mb-8">

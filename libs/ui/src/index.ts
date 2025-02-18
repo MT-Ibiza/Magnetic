@@ -37,6 +37,10 @@ export { FilterSearchMobile }from './lib/filter-search-mobile';
 export { SearchBoatInput }from './lib/search-boat-input';
 export { SearchBoatsMobile }from './lib/search-boats-mobile';
 export { CalendarCustomInput }from './lib/calendar-custom-input';
+export { BgGlassmorphism }from './lib/BgGlassmorphism';
+export { Card3Small }from './lib/Card3Small';
+
+
 
 
 
