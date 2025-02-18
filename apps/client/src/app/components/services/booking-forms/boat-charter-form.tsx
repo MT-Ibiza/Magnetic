@@ -63,11 +63,7 @@ export function BoatCharterBookingForm({
                   selectedDate={field.value ? new Date(field.value) : null}
                   onSelectDate={field.onChange}
                   className="w-full"
-                  disabledDates={[
-                    new Date('2025-02-20'),
-                    new Date('2025-02-25'),
-                    new Date('2025-03-01'),
-                  ]}
+                  disabledDates={[]}
                 />
               )}
             />
