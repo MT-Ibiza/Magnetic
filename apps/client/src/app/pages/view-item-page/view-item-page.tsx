@@ -20,6 +20,7 @@ import {
   FaGasPump,
 } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
+import BookCard from './book-card';
 
 interface Props {}
 
@@ -192,32 +193,7 @@ export function ViewItemPage(props: Props) {
               </div>
             )}
           </div>
-          <div className="col-span-1">
-            <div className="sticky bg-base-100 top-[60px] listingSectionSidebar__wrap shadow-xl">
-              <div className="flex justify-between">
-                <span className="text-3xl font-semibold">
-                  {item?.priceInCents
-                    ? `€ ${centsToEuros(item.priceInCents)}`
-                    : 'N/A'}
-                </span>
-              </div>
-              <div className="flex flex-col space-y-4">
-                <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
-                <div className="flex justify-between font-semibold">
-                  <span>Total</span>
-                  <span>
-                    {' '}
-                    {item?.priceInCents
-                      ? `€ ${centsToEuros(item.priceInCents)}`
-                      : 'N/A'}
-                  </span>
-                </div>
-              </div>
-              <Button size={2} radius="full" href={'/checkout'}>
-                Book Now
-              </Button>
-            </div>
-          </div>
+          <div className="col-span-1">{item && <BookCard item={item} />}</div>
         </div>
       </div>
     </div>
