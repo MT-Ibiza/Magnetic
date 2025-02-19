@@ -79,7 +79,7 @@ model BoatAttributes {
   airtableId      String?            @unique
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
-  boatType        String
+  boatType        String?
   capacity        Int                @default(1)
   beamInMeters    Int                @default(1)
   sizeInFeet      Int                @default(1)

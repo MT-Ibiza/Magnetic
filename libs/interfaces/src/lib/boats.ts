@@ -1,6 +1,6 @@
 export interface BoatBase {
   id: number;
-  boatType: string;
+  boatType?: string;
   port: string;
   capacity: number;
   crew: number;
