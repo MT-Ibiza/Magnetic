@@ -34,14 +34,12 @@ export function ServiceClientPage() {
   return (
     <div className="bg-base-100">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-8 lg:mb-12">
-          <h2 className="text-3xl md:text-4xl font-semibold">
-            Services
-          </h2>
+        <header className="text-center max-w-2xl mx-auto mt-12 mb-20">
+          <h2 className="text-3xl md:text-4xl font-semibold">Services</h2>
           <span className="mt-2 md:mt-3 font-normal block text-base sm:text-xl text-neutral-500 dark:text-neutral-400">
             Browse and book premium services to enhance your stay.
           </span>
-        </div>
+        </header>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[32px]">
           {services.map((service) => (
             <Link

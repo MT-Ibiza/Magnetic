@@ -164,33 +164,80 @@ export function ViewItemPage(props: Props) {
               </div>
             </div>
             {item?.boatAttributes && (
-              <div className="bg-base-100 listingSection__wrap overflow-hidden">
-                <div>
-                  <h2 className="text-2xl font-semibold">Availability</h2>
-                  <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
-                    Prices may increase on weekends or holidays
-                  </span>
+              <>
+                <div className="bg-base-100 listingSection__wrap overflow-hidden">
+                  <div>
+                    <h2 className="text-2xl font-semibold">Calendar</h2>
+                    <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
+                      Prices may increase on weekends or holidays
+                    </span>
+                  </div>
+                  <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
+                  <div className="addListingDatePickerExclude">
+                    <DatePicker
+                      selected={startDate}
+                      onChange={onChangeDate}
+                      minDate={new Date()}
+                      excludeDates={[]}
+                      selectsRange
+                      monthsShown={1}
+                      inline
+                      renderCustomHeader={(p) => (
+                        <DatePickerCustomHeaderTwoMonth {...p} />
+                      )}
+                      renderDayContents={(day, date) => (
+                        <DatePickerCustomDay dayOfMonth={day} date={date} />
+                      )}
+                    />
+                  </div>
                 </div>
-                <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
-                <div className="">
-                  <DatePicker
-                    selected={startDate}
-                    onChange={onChangeDate}
-                    startDate={startDate}
-                    endDate={endDate}
-                    selectsRange
-                    monthsShown={2}
-                    showPopperArrow={false}
-                    inline
-                    renderCustomHeader={(p) => (
-                      <DatePickerCustomHeaderTwoMonth {...p} />
-                    )}
-                    renderDayContents={(day, date) => (
-                      <DatePickerCustomDay dayOfMonth={day} date={date} />
-                    )}
-                  />
+                <div className="listingSection__wrap">
+                  <div>
+                    <h2 className="text-2xl font-semibold">Location</h2>
+                    <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
+                      San Diego, CA, United States of America (SAN-San Diego
+                      Intl.)
+                    </span>
+                  </div>
+                  <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+                  <div className="aspect-w-5 aspect-h-5 sm:aspect-h-3 ring-1 ring-black/10 rounded-xl z-0">
+                    <div className="rounded-xl overflow-hidden z-0">
+                      <iframe
+                        title="Mapa de la Torre Eiffel"
+                        width="100%"
+                        height="450px"
+                        loading="lazy"
+                        allowFullScreen
+                        referrerPolicy="no-referrer-when-downgrade"
+                        src="https://maps.google.com/maps?q=48.8584,2.2945&z=14&output=embed"
+                      ></iframe>
+                    </div>
+                  </div>
                 </div>
-              </div>
+                <div className="listingSection__wrap">
+                  <h2 className="text-2xl font-semibold">Things to know</h2>
+                  <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+                  <div>
+                    <h4 className="text-lg font-semibold">
+                      Cancellation policy
+                    </h4>
+                    <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+                      Lock in this fantastic price today, cancel free of charge
+                      anytime. Reserve now and pay at pick-up.
+                    </span>
+                  </div>
+                  <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+                  <div>
+                    <h4 className="text-lg font-semibold">Special Note</h4>
+                    <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+                      We asked ourselves, “How can we make the dash not only
+                      look better, but also give the driver a better look
+                      outside?” The unexpected answer is having no hood above
+                      the available 10.25-inch digital instrument cluster...
+                    </span>
+                  </div>
+                </div>
+              </>
             )}
           </div>
           <div className="col-span-1">{item && <BookCard item={item} />}</div>

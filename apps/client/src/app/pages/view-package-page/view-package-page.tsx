@@ -80,9 +80,11 @@ function ViewPackagePage(props: Props) {
               Package benefits.
             </p>
             <div className="space-y-4">
-              <Button variant="outline" className="w-full">
-                Upgrade Now
-              </Button>
+              {plan.name !== 'Diamond' && 
+                <Button variant="outline" className="w-full">
+                  Upgrade Now
+                </Button>
+              }
               <Button
                 variant="outline"
                 href="tel:+123456789"

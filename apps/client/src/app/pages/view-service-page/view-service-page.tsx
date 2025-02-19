@@ -1,4 +1,9 @@
-import { Badge, CardWrapper } from '@magnetic/ui';
+import {
+  AccordionSection,
+  Badge,
+  CardWrapper,
+  SectionCard,
+} from '@magnetic/ui';
 import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
 import { useAuth } from '../../hooks/useAuth';
@@ -37,56 +42,41 @@ function ViewServicePage(props: Props) {
   return (
     <CardWrapper>
       <NoticeBookingUnavailable arrivalDate={user?.arrivalDate} />
-      <div className="listingSection__wrap mb-3">
-        <div>
-          <h2 className="text-2xl font-semibold">{service.name}</h2>
-          <div className="leading-relaxed editor-text">
-            <div
-              className="text-neutral-6000 dark:text-neutral-300"
-              dangerouslySetInnerHTML={{ __html: service.description }}
-            />
-          </div>
-        </div>
-        <div className="flex gap-5">
-          <div className="w-[450px]">
-            <img
-              className="object-cover rounded-md w-full  max-h-[300px]"
-              src={service.imageUrl ? service.imageUrl : placeholderItemImage}
-              alt={service.name}
-            />
-          </div>
-          <div>
-            {service.instructions && (
-              <>
-                <div className="leading-relaxed editor-text">
-                  <h4 className="text-lg font-semibold">Instructions</h4>
-                  <div
-                    className="mt-3 text-neutral-6000 dark:text-neutral-300"
-                    dangerouslySetInnerHTML={{ __html: service.instructions }}
-                  />
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-      {service.script ? (
-        <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
-      ) : (
-        <>
-          {service.serviceType === 'boat_rental' ? (
-            <ListBoats availableInPlan={true} service={service} />
-          ) : (
-            <div className="bg-gray-50 py-5 px-10 rounded-md">
-              <ListProducts
-                service={service}
-                items={publishedItems}
-                availableInPlan={availableInPlan}
+      <div className="space-y-8">
+        <SectionCard title={service.name}>
+          <div
+            className="text-neutral-6000 dark:text-neutral-300"
+            dangerouslySetInnerHTML={{ __html: service.description }}
+          />
+        </SectionCard>
+        {service.instructions && (
+          <AccordionSection title="Instructions">
+            <div className="leading-relaxed editor-text">
+              <div
+                className="leading-relaxed mt-3 text-neutral-6000 dark:text-neutral-300"
+                dangerouslySetInnerHTML={{ __html: service.instructions }}
               />
             </div>
-          )}
-        </>
-      )}
+          </AccordionSection>
+        )}
+        {service.script ? (
+          <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
+        ) : (
+          <>
+            {service.serviceType === 'boat_rental' ? (
+              <ListBoats availableInPlan={true} service={service} />
+            ) : (
+              <div className="bg-gray-50 py-5 px-10 rounded-md">
+                <ListProducts
+                  service={service}
+                  items={publishedItems}
+                  availableInPlan={availableInPlan}
+                />
+              </div>
+            )}
+          </>
+        )}
+      </div>
       {/* {!service.script && (
           <div className="flex justify-end pt-[20px]">
             <Link to="/checkout">

@@ -16,24 +16,26 @@ export function PackagePage() {
 
   return (
     <>
-      <div className="bg-base-100 listingSection__wrap">
+      <div className="nc-PageSubcription container pb-24 lg:pb-32 ${className}">
         <div className="text-center mb-10">
-          <h1 className="text-2xl lg:text-3xl font-semibold">
-            Explore Our Packages
-          </h1>
-          <p className="text-base lg:text-lg mt-2">
-            Find the perfect package for your needs. Choose the one that best
-            fits your goals.
-          </p>
-          <Button
-            className="mt-3"
-            onClick={() => {
-              //@ts-ignore
-              document.getElementById('modal-form-call').showModal();
-            }}
-          >
-            Request a call
-          </Button>
+          <header className="text-center max-w-2xl mx-auto mt-12 mb-20">
+            <h2 className="flex items-center text-3xl leading-[115%] md:text-5xl md:leading-[115%] font-semibold text-neutral-900 dark:text-neutral-100 justify-center">
+              Explore Our Packages
+            </h2>
+            <span className="block text-sm mt-2 text-neutral-700 sm:text-base dark:text-neutral-200">
+              Find the perfect package for your needs. Choose the one that best
+              fits your goals.
+            </span>
+            <Button
+              className="mt-[15px]"
+              onClick={() => {
+                //@ts-ignore
+                document.getElementById('modal-form-call').showModal();
+              }}
+            >
+              Request a call
+            </Button>
+          </header>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -46,8 +48,10 @@ export function PackagePage() {
               price={pkg.priceInCents}
               features={pkg.features}
               className={`${
-                pkg.id === user?.package?.id ? 'opacity-50' : ''
-              } transition-opacity duration-300`}
+                pkg.id === user?.package?.id
+                  ? 'border-primary-500'
+                  : 'border-neutral-100 dark:border-neutral-700'
+              }`}
             />
           ))}
         </div>
