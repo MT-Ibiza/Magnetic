@@ -174,7 +174,7 @@ export function FormBoatItem(props: Props) {
                   htmlFor="name"
                   className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
                 >
-                  Boat Name
+                  Boat
                 </label>
                 <Input
                   id="name"
@@ -183,7 +183,7 @@ export function FormBoatItem(props: Props) {
                   className="mt-2"
                 />
                 {errors.name && (
-                  <p className="text-xs text-red-500 mt-1">Name is required</p>
+                  <p className="text-xs text-red-500 mt-1">Boat is required</p>
                 )}
               </div>
               <div className="flex flex-col w-full">
@@ -191,7 +191,7 @@ export function FormBoatItem(props: Props) {
                   htmlFor="secondName"
                   className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
                 >
-                  Boat Second Name
+                  Boat Name
                 </label>
                 <Input
                   id="secondName"
@@ -204,14 +204,14 @@ export function FormBoatItem(props: Props) {
             <div className="flex gap-5">
               <div className="w-full">
                 <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Boat Type
+                  Type
                 </Text>
                 <Input
                   className="mt-2 w-full"
                   type="text"
                   placeholder="Enter the type of boat"
                   {...register('boatAttributes.boatType', {
-                    required: 'Boat Type is required',
+                    required: 'Type is required',
                   })}
                 />
                 {errors.boatAttributes?.boatType && (
@@ -222,84 +222,62 @@ export function FormBoatItem(props: Props) {
               </div>
               <div className="w-full">
                 <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Port
+                  Price
                 </Text>
                 <Input
-                  type="text"
+                  type="number"
+                  min={1}
+                  step={0.01}
+                  placeholder="Enter the price product"
+                  {...register('priceInCents', { required: true })}
                   className="mt-2 w-full"
-                  placeholder="Enter the port"
-                  {...register('boatAttributes.port', {
-                    required: 'Port is required',
-                  })}
                 />
-                {errors.boatAttributes?.port && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.port.message}
+                {errors.priceInCents && (
+                  <p className="text-xs text-red-500 mt-1">
+                    Product price is required
                   </p>
                 )}
               </div>
             </div>
-            <div className="flex flex-col">
-              <label
-                htmlFor="priceInCents"
-                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
-              >
-                Price
-              </label>
-              <Input
-                id="priceInCents"
-                type="number"
-                min={1}
-                step={0.01}
-                placeholder="Enter the price product"
-                {...register('priceInCents', { required: true })}
-                className="mt-2"
-              />
-              {errors.priceInCents && (
-                <p className="text-xs text-red-500 mt-1">
-                  Product price is required
-                </p>
-              )}
-            </div>
-            <div className="boat-attributes-form space-y-6">
-              <div className="flex gap-5">
-                <div className="w-full">
-                  <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                    Capacity
-                  </Text>
-                  <Input
-                    type="number"
-                    className="mt-2 w-full"
-                    placeholder="Number of guests"
-                    {...register('boatAttributes.capacity', {
-                      required: 'Capacity is required',
-                    })}
-                  />
-                  {errors.boatAttributes?.capacity && (
-                    <p className="text-[12px] text-red-500 pt-2">
-                      {errors.boatAttributes?.capacity.message}
-                    </p>
-                  )}
-                </div>
-                <div className="w-full">
-                  <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                    Crew
-                  </Text>
-                  <Input
-                    type="number"
-                    className="mt-2 w-full"
-                    placeholder="Number of crew members"
-                    {...register('boatAttributes.crew', {
-                      required: 'Crew is required',
-                    })}
-                  />
-                  {errors.boatAttributes?.crew && (
-                    <p className="text-[12px] text-red-500 pt-2">
-                      {errors.boatAttributes?.crew.message}
-                    </p>
-                  )}
-                </div>
+            <div className="flex gap-5">
+              <div className="w-full">
+                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                  Capacity
+                </Text>
+                <Input
+                  type="number"
+                  className="mt-2 w-full"
+                  placeholder="Number of guests"
+                  {...register('boatAttributes.capacity', {
+                    required: 'Capacity is required',
+                  })}
+                />
+                {errors.boatAttributes?.capacity && (
+                  <p className="text-[12px] text-red-500 pt-2">
+                    {errors.boatAttributes?.capacity.message}
+                  </p>
+                )}
               </div>
+              <div className="w-full">
+                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                  Crew
+                </Text>
+                <Input
+                  type="number"
+                  className="mt-2 w-full"
+                  placeholder="Number of crew members"
+                  {...register('boatAttributes.crew', {
+                    required: 'Crew is required',
+                  })}
+                />
+                {errors.boatAttributes?.crew && (
+                  <p className="text-[12px] text-red-500 pt-2">
+                    {errors.boatAttributes?.crew.message}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="flex gap-5">
               <div>
                 <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
                   Beam (mt)
@@ -315,42 +293,6 @@ export function FormBoatItem(props: Props) {
                 {errors.boatAttributes?.beamInMeters && (
                   <p className="text-[12px] text-red-500 pt-2">
                     {errors.boatAttributes?.beamInMeters.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Cabins
-                </Text>
-                <Input
-                  type="number"
-                  className="mt-2 w-full"
-                  placeholder="Number of cabins"
-                  {...register('boatAttributes.cabins', {
-                    required: 'Cabins is required',
-                  })}
-                />
-                {errors.boatAttributes?.cabins && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.cabins.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Fuel Consumption (liters/hour)
-                </Text>
-                <Input
-                  type="number"
-                  className="mt-2 w-full"
-                  placeholder="Fuel consumption in liters/hour"
-                  {...register('boatAttributes.fuelConsumption', {
-                    required: 'Fuel consumption is required',
-                  })}
-                />
-                {errors.boatAttributes?.fuelConsumption && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.fuelConsumption.message}
                   </p>
                 )}
               </div>
@@ -372,6 +314,65 @@ export function FormBoatItem(props: Props) {
                   </p>
                 )}
               </div>
+            </div>
+            <div className="flex gap-5">
+              <div className="w-full">
+                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                  Fuel Consumption (liters/hour)
+                </Text>
+                <Input
+                  type="number"
+                  className="mt-2 w-full"
+                  placeholder="Fuel consumption in liters/hour"
+                  {...register('boatAttributes.fuelConsumption', {
+                    required: 'Fuel consumption is required',
+                  })}
+                />
+                {errors.boatAttributes?.fuelConsumption && (
+                  <p className="text-[12px] text-red-500 pt-2">
+                    {errors.boatAttributes?.fuelConsumption.message}
+                  </p>
+                )}
+              </div>
+              <div className="w-full">
+                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                  Bert
+                </Text>
+                <Input
+                  type="text"
+                  className="mt-2 w-full"
+                  placeholder="Enter the port"
+                  {...register('boatAttributes.port', {
+                    required: 'Port is required',
+                  })}
+                />
+                {errors.boatAttributes?.port && (
+                  <p className="text-[12px] text-red-500 pt-2">
+                    {errors.boatAttributes?.port.message}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="boat-attributes-form space-y-6">
+              <div>
+                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                  Cabins
+                </Text>
+                <Input
+                  type="number"
+                  className="mt-2 w-full"
+                  placeholder="Number of cabins"
+                  {...register('boatAttributes.cabins', {
+                    required: 'Cabins is required',
+                  })}
+                />
+                {errors.boatAttributes?.cabins && (
+                  <p className="text-[12px] text-red-500 pt-2">
+                    {errors.boatAttributes?.cabins.message}
+                  </p>
+                )}
+              </div>
+
               <div className="flex gap-5">
                 <div className="w-full">
                   <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
