@@ -131,10 +131,10 @@ function ItemCard(props: Props) {
             galleryImgs={item.images}
             uniqueID={`ExperiencesCard_${item.id}`}
           />
-          {item.priceInCents && (
+          {/* {item.priceInCents && (
             <SaleOffBadge className="absolute right-3 top-3" item={item} />
-          )}
-          <div className={'p-4 space-y-4'}>
+          )} */}
+          <div className={'p-5 space-y-4'}>
             <div className="space-y-2">
               <div className="flex items-center">
                 {customDetailsServices.includes(service.serviceType) ? (
@@ -154,6 +154,7 @@ function ItemCard(props: Props) {
                     {service.serviceType === 'boat_rental' && (
                       <BoatInfo
                         name={item.name}
+                        price={centsToEurosWithCurrency(item.priceInCents)}
                         secondName={item.boatAttributes?.secondName}
                         capacity={item.boatAttributes?.capacity || 0}
                       />
@@ -167,6 +168,7 @@ function ItemCard(props: Props) {
                 )}
               </div>
             </div>
+            <div className="w-14 border-b border-neutral-100 dark:border-neutral-800"></div>
             <div className="flex flex-col items-end">
               {noFillForm ? (
                 <ItemCounterButtons
@@ -204,7 +206,20 @@ function ItemCard(props: Props) {
                   onClickRemove={(amount) => {
                     handleRemoveProduct(amount);
                   }}
-                />
+                >
+                  {service.serviceType === 'boat_rental' ? (
+                    <span className="text-base font-semibold">
+                      {centsToEurosWithCurrency(item.priceInCents)}
+                      <span className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
+                        /day
+                      </span>
+                    </span>
+                  ) : (
+                    <span className="text-base font-semibold">
+                      {centsToEurosWithCurrency(item.priceInCents)}
+                    </span>
+                  )}
+                </ItemHandleBookButtons>
               )}
             </div>
           </div>
@@ -300,23 +315,34 @@ const BoatInfo = ({
   name,
   capacity,
   secondName,
+  price,
 }: {
   name: string;
   capacity: number;
   secondName?: string;
+  price?: string;
 }) => (
   <div className="space-y-2 flex flex-col">
     <h2 className={`capitalize ${'text-base font-medium'}`}>
       <span className="line-clamp-1">{name}</span>
     </h2>
-    {secondName && (
+    {/* {secondName && (
       <span className="text-sm text-neutral-500 dark:text-neutral-400">
         {secondName}
       </span>
-    )}
-    <span className="text-sm text-neutral-500 dark:text-neutral-400 flex items-center gap-2">
+    )} */}
+    {/* <span className="text-sm text-neutral-500 dark:text-neutral-400 flex items-center gap-2">
       <FaUsers className="text-neutral-500 text-lg" /> {capacity}
-    </span>
+    </span> */}
+    <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
+      {secondName && (
+        <>
+          <span className="">{secondName}</span>
+          <span>-</span>
+        </>
+      )}
+      <span className="">{capacity} capacity </span>
+    </div>
   </div>
 );
 

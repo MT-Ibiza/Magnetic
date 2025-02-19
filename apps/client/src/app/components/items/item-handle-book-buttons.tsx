@@ -9,25 +9,31 @@ interface Props {
   currentAmount: number;
   onClickAdd: (amount: number) => void;
   onClickRemove: (amount: number) => void;
+  children?: React.ReactElement;
 }
 
 function ItemHandleBookButtons(props: Props) {
-  const { item, currentAmount, onClickAdd, onClickRemove } = props;
+  const { item, currentAmount, onClickAdd, onClickRemove, children } = props;
 
   return (
-    <div className="flex items-center justify-between gap-4 w-full">
-      {/* <Link to={`item/${item.id}`}>
-        <Button variant="outline">View Details</Button>
-      </Link> */}
-      {/* <Text>{`From ${centsToEurosWithCurrency(item.priceInCents)}`}</Text> */}
-      <Button
-        className="w-full"
-        onClick={() => {
-          onClickAdd(currentAmount + 1);
-        }}
-      >
-        Book Now
-      </Button>
+    <div className="flex justify-between w-full">
+      <div className='flex flex-col justify-end'>
+        {children}
+      </div>
+      <div className="flex items-center justify-end gap-3 w-full">
+        <div>
+          <Link to={`item/${item.id}`}>
+            <Button variant="outline">View Details</Button>
+          </Link>
+        </div>
+        <Button
+          onClick={() => {
+            onClickAdd(currentAmount + 1);
+          }}
+        >
+          Book Now
+        </Button>
+      </div>
     </div>
   );
 }

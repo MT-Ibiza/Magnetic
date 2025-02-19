@@ -1,5 +1,6 @@
 const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
 const { join } = require('path');
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 function customColors(cssVar) {
   return ({ opacityVariable, opacityValue }) => {
@@ -32,8 +33,8 @@ module.exports = {
       },
     },
     fontFamily: {
-      // display: ["var(--font-display)", ...defaultTheme.fontFamily.sans],
-      // body: ["var(--font-body)", ...defaultTheme.fontFamily.sans],
+      display: ["var(--font-display)", ...defaultTheme.fontFamily.sans],
+      body: ["var(--font-body)", ...defaultTheme.fontFamily.sans],
     },
     extend: {
       colors: {
@@ -62,16 +63,16 @@ module.exports = {
           900: customColors('--c-secondary-900'),
         },
         neutral: {
-          50: customColors('--c-neutral-50'),
-          100: customColors('--c-neutral-100'),
-          200: customColors('#0000'),
-          300: customColors('--c-neutral-300'),
-          400: customColors('--c-neutral-400'),
-          500: customColors('--c-neutral-500'),
-          600: customColors('--c-neutral-600'),
-          700: customColors('--c-neutral-700'),
-          800: customColors('--c-neutral-800'),
-          900: customColors('--c-neutral-900'),
+          50: customColors("--c-neutral-50"),
+          100: customColors("--c-neutral-100"),
+          200: customColors("--c-neutral-200"),
+          300: customColors("--c-neutral-300"),
+          400: customColors("--c-neutral-400"),
+          500: customColors("--c-neutral-500"),
+          6000: customColors("--c-neutral-600"),
+          700: customColors("--c-neutral-700"),
+          800: customColors("--c-neutral-800"),
+          900: customColors("--c-neutral-900"),
         },
       },
       fontFamily: {
