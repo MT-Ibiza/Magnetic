@@ -139,6 +139,7 @@ model Item {
   boatAttributes  BoatAttributes?
   drinkAttributes DrinkAttributes?
   images          Image[]
+  seasonPrices    SeasonPrice[]
 }
 
 model Image {
@@ -238,6 +239,17 @@ model OrderItem {
   order        Order    @relation(fields: [orderId], references: [id])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+model SeasonPrice {
+  id           Int  @id @default(autoincrement())
+  itemId       Int
+  item         Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  startMonth   Int // 1 - 12 (January - December)
+  startDay     Int // 1 - 31
+  endMonth     Int // 1 - 12
+  endDay       Int // 1 - 31
+  priceInCents Int
 }
 
 enum Role {
