@@ -167,272 +167,281 @@ export function FormBoatItem(props: Props) {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="flex flex-col lg:flex-row gap-6">
-          <div className="main-info flex-1 space-y-6">
-            <div className="flex gap-5">
-              <div className="flex flex-col w-full">
-                <label
-                  htmlFor="name"
-                  className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
-                >
-                  Boat
-                </label>
-                <Input
-                  id="name"
-                  type="text"
-                  {...register('name', { required: true })}
-                  className="mt-2"
-                />
-                {errors.name && (
-                  <p className="text-xs text-red-500 mt-1">Boat is required</p>
-                )}
+          <div className="flex-1">
+            <div className="main-info flex-1 space-y-6">
+              <div className="flex gap-5">
+                <div className="flex flex-col w-full">
+                  <label
+                    htmlFor="name"
+                    className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+                  >
+                    Boat
+                  </label>
+                  <Input
+                    id="name"
+                    type="text"
+                    {...register('name', { required: true })}
+                    className="mt-2"
+                  />
+                  {errors.name && (
+                    <p className="text-xs text-red-500 mt-1">
+                      Boat is required
+                    </p>
+                  )}
+                </div>
+                <div className="flex flex-col w-full">
+                  <label
+                    htmlFor="secondName"
+                    className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+                  >
+                    Boat Name
+                  </label>
+                  <Input
+                    id="secondName"
+                    type="text"
+                    {...register('boatAttributes.secondName')}
+                    className="mt-2"
+                  />
+                </div>
               </div>
-              <div className="flex flex-col w-full">
-                <label
-                  htmlFor="secondName"
-                  className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
-                >
-                  Boat Name
-                </label>
-                <Input
-                  id="secondName"
-                  type="text"
-                  {...register('boatAttributes.secondName')}
-                  className="mt-2"
-                />
-              </div>
-            </div>
-            <div className="flex gap-5">
-              <div className="w-full">
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Type
-                </Text>
-                <Input
-                  className="mt-2 w-full"
-                  type="text"
-                  placeholder="Enter the type of boat"
-                  {...register('boatAttributes.boatType', {
-                    required: 'Type is required',
-                  })}
-                />
-                {errors.boatAttributes?.boatType && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.boatType.message}
-                  </p>
-                )}
-              </div>
-              <div className="w-full">
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Price
-                </Text>
-                <Input
-                  type="number"
-                  min={1}
-                  step={0.01}
-                  placeholder="Enter the price product"
-                  {...register('priceInCents', { required: true })}
-                  className="mt-2 w-full"
-                />
-                {errors.priceInCents && (
-                  <p className="text-xs text-red-500 mt-1">
-                    Product price is required
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="flex gap-5">
-              <div className="w-full">
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Capacity
-                </Text>
-                <Input
-                  type="number"
-                  className="mt-2 w-full"
-                  placeholder="Number of guests"
-                  {...register('boatAttributes.capacity', {
-                    required: 'Capacity is required',
-                  })}
-                />
-                {errors.boatAttributes?.capacity && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.capacity.message}
-                  </p>
-                )}
-              </div>
-              <div className="w-full">
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Crew
-                </Text>
-                <Input
-                  type="number"
-                  className="mt-2 w-full"
-                  placeholder="Number of crew members"
-                  {...register('boatAttributes.crew', {
-                    required: 'Crew is required',
-                  })}
-                />
-                {errors.boatAttributes?.crew && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.crew.message}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="flex gap-5">
-              <div>
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Beam (mt)
-                </Text>
-                <Input
-                  type="number"
-                  className="mt-2 w-full"
-                  placeholder="Enter the beam size in centimeters"
-                  {...register('boatAttributes.beamInMeters', {
-                    required: 'Beam is required',
-                  })}
-                />
-                {errors.boatAttributes?.beamInMeters && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.beamInMeters.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Boat Size (mt)
-                </Text>
-                <Input
-                  type="number"
-                  className="mt-2 w-full"
-                  placeholder="Enter the boat size in centimeters"
-                  {...register('boatAttributes.sizeInMeters', {
-                    required: 'Boat size is required',
-                  })}
-                />
-                {errors.boatAttributes?.sizeInMeters && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.sizeInMeters.message}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="flex gap-5">
-              <div className="w-full">
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Fuel Consumption (liters/hour)
-                </Text>
-                <Input
-                  type="number"
-                  className="mt-2 w-full"
-                  placeholder="Fuel consumption in liters/hour"
-                  {...register('boatAttributes.fuelConsumption', {
-                    required: 'Fuel consumption is required',
-                  })}
-                />
-                {errors.boatAttributes?.fuelConsumption && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.fuelConsumption.message}
-                  </p>
-                )}
-              </div>
-              <div className="w-full">
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Bert
-                </Text>
-                <Input
-                  type="text"
-                  className="mt-2 w-full"
-                  placeholder="Enter the port"
-                  {...register('boatAttributes.port', {
-                    required: 'Port is required',
-                  })}
-                />
-                {errors.boatAttributes?.port && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.port.message}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="boat-attributes-form space-y-6">
-              <div>
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Cabins
-                </Text>
-                <Input
-                  type="number"
-                  className="mt-2 w-full"
-                  placeholder="Number of cabins"
-                  {...register('boatAttributes.cabins', {
-                    required: 'Cabins is required',
-                  })}
-                />
-                {errors.boatAttributes?.cabins && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.boatAttributes?.cabins.message}
-                  </p>
-                )}
-              </div>
-
               <div className="flex gap-5">
                 <div className="w-full">
                   <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                    Latitude
+                    Type
                   </Text>
                   <Input
-                    type="text"
                     className="mt-2 w-full"
-                    placeholder="Enter the latitude"
-                    {...register('boatAttributes.latitude')}
+                    type="text"
+                    placeholder="Enter the type of boat"
+                    {...register('boatAttributes.boatType', {
+                      required: 'Type is required',
+                    })}
                   />
+                  {errors.boatAttributes?.boatType && (
+                    <p className="text-[12px] text-red-500 pt-2">
+                      {errors.boatAttributes?.boatType.message}
+                    </p>
+                  )}
                 </div>
                 <div className="w-full">
                   <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                    Longitude
+                    Price
+                  </Text>
+                  <Input
+                    type="number"
+                    min={1}
+                    step={0.01}
+                    placeholder="Enter the price product"
+                    {...register('priceInCents', { required: true })}
+                    className="mt-2 w-full"
+                  />
+                  {errors.priceInCents && (
+                    <p className="text-xs text-red-500 mt-1">
+                      Product price is required
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="flex gap-5">
+                <div className="w-full">
+                  <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                    Capacity
+                  </Text>
+                  <Input
+                    type="number"
+                    className="mt-2 w-full"
+                    placeholder="Number of guests"
+                    {...register('boatAttributes.capacity', {
+                      required: 'Capacity is required',
+                    })}
+                  />
+                  {errors.boatAttributes?.capacity && (
+                    <p className="text-[12px] text-red-500 pt-2">
+                      {errors.boatAttributes?.capacity.message}
+                    </p>
+                  )}
+                </div>
+                <div className="w-full">
+                  <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                    Crew
+                  </Text>
+                  <Input
+                    type="number"
+                    className="mt-2 w-full"
+                    placeholder="Number of crew members"
+                    {...register('boatAttributes.crew', {
+                      required: 'Crew is required',
+                    })}
+                  />
+                  {errors.boatAttributes?.crew && (
+                    <p className="text-[12px] text-red-500 pt-2">
+                      {errors.boatAttributes?.crew.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="flex gap-5">
+                <div>
+                  <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                    Beam (mt)
+                  </Text>
+                  <Input
+                    type="number"
+                    className="mt-2 w-full"
+                    placeholder="Enter the beam size in centimeters"
+                    {...register('boatAttributes.beamInMeters', {
+                      required: 'Beam is required',
+                    })}
+                  />
+                  {errors.boatAttributes?.beamInMeters && (
+                    <p className="text-[12px] text-red-500 pt-2">
+                      {errors.boatAttributes?.beamInMeters.message}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                    Boat Size (mt)
+                  </Text>
+                  <Input
+                    type="number"
+                    className="mt-2 w-full"
+                    placeholder="Enter the boat size in centimeters"
+                    {...register('boatAttributes.sizeInMeters', {
+                      required: 'Boat size is required',
+                    })}
+                  />
+                  {errors.boatAttributes?.sizeInMeters && (
+                    <p className="text-[12px] text-red-500 pt-2">
+                      {errors.boatAttributes?.sizeInMeters.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="flex gap-5">
+                <div className="w-full">
+                  <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                    Fuel Consumption (liters/hour)
+                  </Text>
+                  <Input
+                    type="number"
+                    className="mt-2 w-full"
+                    placeholder="Fuel consumption in liters/hour"
+                    {...register('boatAttributes.fuelConsumption', {
+                      required: 'Fuel consumption is required',
+                    })}
+                  />
+                  {errors.boatAttributes?.fuelConsumption && (
+                    <p className="text-[12px] text-red-500 pt-2">
+                      {errors.boatAttributes?.fuelConsumption.message}
+                    </p>
+                  )}
+                </div>
+                <div className="w-full">
+                  <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                    Bert
                   </Text>
                   <Input
                     type="text"
                     className="mt-2 w-full"
-                    placeholder="Enter the longitude"
-                    {...register('boatAttributes.longitude')}
+                    placeholder="Enter the port"
+                    {...register('boatAttributes.port', {
+                      required: 'Port is required',
+                    })}
                   />
+                  {errors.boatAttributes?.port && (
+                    <p className="text-[12px] text-red-500 pt-2">
+                      {errors.boatAttributes?.port.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="boat-attributes-form space-y-6">
+                <div>
+                  <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                    Cabins
+                  </Text>
+                  <Input
+                    type="number"
+                    className="mt-2 w-full"
+                    placeholder="Number of cabins"
+                    {...register('boatAttributes.cabins', {
+                      required: 'Cabins is required',
+                    })}
+                  />
+                  {errors.boatAttributes?.cabins && (
+                    <p className="text-[12px] text-red-500 pt-2">
+                      {errors.boatAttributes?.cabins.message}
+                    </p>
+                  )}
+                </div>
+                <div className="flex gap-5">
+                  <div className="w-full">
+                    <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                      Latitude
+                    </Text>
+                    <Input
+                      type="text"
+                      className="mt-2 w-full"
+                      placeholder="Enter the latitude"
+                      {...register('boatAttributes.latitude')}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                      Longitude
+                    </Text>
+                    <Input
+                      type="text"
+                      className="mt-2 w-full"
+                      placeholder="Enter the longitude"
+                      {...register('boatAttributes.longitude')}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="description"
+                  className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+                >
+                  Description
+                </label>
+                <div className="mt-2">
+                  <ReactQuill
+                    theme="snow"
+                    defaultValue={description}
+                    onChange={setDescription}
+                    className="mb-3"
+                  />
+                  {errors.description && (
+                    <p className="text-xs text-red-500 mt-1">
+                      Description is required
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
-            <div className="flex flex-col">
-              <label
-                htmlFor="description"
-                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
-              >
-                Description
-              </label>
-              <ReactQuill
-                theme="snow"
-                defaultValue={description}
-                onChange={setDescription}
-                className="mb-3"
-              />
-              {errors.description && (
-                <p className="text-xs text-red-500 mt-1">
-                  Description is required
-                </p>
-              )}
-            </div>
-            <div className="media mt-6">
+          </div>
+          <div className="flex-1">
+            <div className="media">
               <label
                 htmlFor="description"
                 className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
               >
                 Images
               </label>
-              <UploadMultipleImages
-                images={imagesFiles}
-                onChange={handleImageChange}
-                height="250px"
-                existingImages={item?.images}
-                onRemoveExistingImage={(imageIds) => {
-                  setValue('removeImagesIds', imageIds);
-                }}
-              />
+              <div className="mt-2">
+                <UploadMultipleImages
+                  images={imagesFiles}
+                  onChange={handleImageChange}
+                  height="250px"
+                  existingImages={item?.images}
+                  onRemoveExistingImage={(imageIds) => {
+                    setValue('removeImagesIds', imageIds);
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -66,6 +66,36 @@ export const UploadMultipleImages = ({
 
   return (
     <div className="space-y-6">
+      <div
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        className={`flex flex-col items-center justify-center border-2 rounded-md transition-all ${
+          isDragging
+            ? 'border-blue-500 bg-blue-50'
+            : 'border-dashed border-gray-300'
+        }`}
+        style={{ height }}
+      >
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleFileChange}
+          className="hidden"
+          id="upload-input"
+        />
+        <label
+          htmlFor="upload-input"
+          className="text-gray-500 hover:text-gray-700 cursor-pointer"
+        >
+          <div className="flex flex-col items-center space-y-2">
+            <FaCloudUploadAlt className="text-4xl text-gray-400" />
+            <span>Click to upload images</span>
+            <span className="text-sm text-gray-400">or drag them here</span>
+          </div>
+        </label>
+      </div>
       <div className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-3">
         {existingImages
           .filter((image) => !idsToRemove.includes(image.id))
@@ -103,36 +133,6 @@ export const UploadMultipleImages = ({
             </button>
           </div>
         ))}
-      </div>
-      <div
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        className={`flex flex-col items-center justify-center border-2 rounded-md transition-all ${
-          isDragging
-            ? 'border-blue-500 bg-blue-50'
-            : 'border-dashed border-gray-300'
-        }`}
-        style={{ height }}
-      >
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={handleFileChange}
-          className="hidden"
-          id="upload-input"
-        />
-        <label
-          htmlFor="upload-input"
-          className="text-gray-500 hover:text-gray-700 cursor-pointer"
-        >
-          <div className="flex flex-col items-center space-y-2">
-            <FaCloudUploadAlt className="text-4xl text-gray-400" />
-            <span>Click to upload images</span>
-            <span className="text-sm text-gray-400">or drag them here</span>
-          </div>
-        </label>
       </div>
     </div>
   );
