@@ -122,6 +122,7 @@ function getFieldsBoats(record: AirtableBoatField) {
     name: fields.Name,
     port: fields.Port,
     lengthInMeters: fields['Length (M)'],
+    sizeInFeet: fields['Length (F)'],
     beamInMeters: fields['Beam (M)'],
     capacity: fields.Capacity, //guests
     price: fields.Pricing,

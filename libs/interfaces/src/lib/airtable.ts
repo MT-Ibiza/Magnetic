@@ -63,6 +63,7 @@ export interface AirtableBoat {
   };
   beamInMeters: number;
   lengthInMeters: number;
+  sizeInFeet: number;
   cabins: number;
   type: string;
   crew: number;

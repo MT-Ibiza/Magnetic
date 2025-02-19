@@ -28,7 +28,7 @@ function BoatsTableAirtable(props: Props) {
             <th>#</th>
             <th>Name</th>
             <th>Port</th>
-            <th>Length (Mt)</th>
+            <th>Length (Ft)</th>
             <th>Capacity</th>
             {/* <th>Price</th> */}
             <th>Actions</th>
@@ -56,7 +56,7 @@ function BoatsTableAirtable(props: Props) {
                 </div>
               </td>
               <td>{boat.port}</td>
-              <td>{boat.lengthInMeters} mt</td>
+              <td>{boat.sizeInFeet} ft</td>
               <td>{boat.capacity}</td>
               {/* <td> */}
               {/* {boat.price.split('\n')} */}
