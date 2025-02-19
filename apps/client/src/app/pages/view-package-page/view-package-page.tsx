@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Text, Button } from '@magnetic/ui';
+import { Text, Button, SectionCard } from '@magnetic/ui';
 import { FaCircleCheck } from 'react-icons/fa6';
 import { usePackage } from '../../hooks/usePackage';
 
@@ -44,22 +44,17 @@ function ViewPackagePage(props: Props) {
     <>
       <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4">
         <div className="col-span-8 flex flex-col gap-[20px]">
-          <div className="bg-base-100 listingSection__wrap">
-            <h2 className="text-xl lg:text-2xl font-semibold">{plan.name}</h2>
-            <div className="w-14 border-b border-primary-700 dark:border-neutral-700"></div>
-            {plan.description && (
-              <div
-                className="lg:text-[16px] text-[14px]"
-                dangerouslySetInnerHTML={{ __html: plan.description }}
-              />
-            )}
-          </div>
-          <div className="bg-base-100 listingSection__wrap">
-            <div>
-              <h2 className="text-xl lg:text-2xl font-semibold">Include </h2>
-              <span className="block mt-2">Included in the price</span>
-            </div>
-            <div className="w-14 border-b border-primary-700 dark:border-neutral-700"></div>
+          <SectionCard title={plan.name}>
+            <>
+              {plan.description && (
+                <div
+                  className="lg:text-[16px] text-[14px]"
+                  dangerouslySetInnerHTML={{ __html: plan.description }}
+                />
+              )}
+            </>
+          </SectionCard>
+          <SectionCard title="Include" subTitle="Included in the price">
             <div className="grid grid-cols-1 gap-4 lg:text-[16px] text-[14px]">
               {parsedFeatures.map((feature, index) => (
                 <li className="flex items-center" key={index}>
@@ -70,7 +65,7 @@ function ViewPackagePage(props: Props) {
                 </li>
               ))}
             </div>
-          </div>
+          </SectionCard>
         </div>
         <div className="col-span-4">
           <div className="sticky bg-base-100 top-[60px] listingSection__wrap">
@@ -80,11 +75,11 @@ function ViewPackagePage(props: Props) {
               Package benefits.
             </p>
             <div className="space-y-4">
-              {plan.name !== 'Diamond' && 
+              {plan.name !== 'Diamond' && (
                 <Button variant="outline" className="w-full">
                   Upgrade Now
                 </Button>
-              }
+              )}
               <Button
                 variant="outline"
                 href="tel:+123456789"

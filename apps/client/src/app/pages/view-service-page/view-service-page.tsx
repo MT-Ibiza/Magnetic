@@ -53,7 +53,7 @@ function ViewServicePage(props: Props) {
           <AccordionSection title="Instructions">
             <div className="leading-relaxed editor-text">
               <div
-                className="leading-relaxed mt-3 text-neutral-6000 dark:text-neutral-300"
+                className="leading-relaxed text-neutral-6000 dark:text-neutral-300"
                 dangerouslySetInnerHTML={{ __html: service.instructions }}
               />
             </div>

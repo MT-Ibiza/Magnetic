@@ -6,6 +6,7 @@ import {
   DatePickerCustomDay,
   DatePickerCustomHeaderTwoMonth,
   GalleryModal,
+  SectionCard,
 } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
@@ -154,25 +155,20 @@ export function ViewItemPage(props: Props) {
                 </>
               )}
             </div>
-            <div className="bg-base-100 listingSection__wrap">
-              <h2 className="text-2xl font-semibold">Description</h2>
+            <SectionCard title="Description">
               <div className="text-neutral-6000 dark:text-neutral-300 editor-text">
                 <div
                   className="block"
                   dangerouslySetInnerHTML={{ __html: item?.description || '' }}
                 />
               </div>
-            </div>
+            </SectionCard>
             {item?.boatAttributes && (
               <>
-                <div className="bg-base-100 listingSection__wrap overflow-hidden">
-                  <div>
-                    <h2 className="text-2xl font-semibold">Calendar</h2>
-                    <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
-                      Prices may increase on weekends or holidays
-                    </span>
-                  </div>
-                  <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
+                <SectionCard
+                  title="Calendar"
+                  subTitle="Prices may increase on weekends or holidays"
+                >
                   <div className="addListingDatePickerExclude">
                     <DatePicker
                       selected={startDate}
@@ -190,16 +186,8 @@ export function ViewItemPage(props: Props) {
                       )}
                     />
                   </div>
-                </div>
-                <div className="listingSection__wrap">
-                  <div>
-                    <h2 className="text-2xl font-semibold">Location</h2>
-                    <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
-                      San Diego, CA, United States of America (SAN-San Diego
-                      Intl.)
-                    </span>
-                  </div>
-                  <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+                </SectionCard>
+                <SectionCard title="Location" subTitle="Description Location">
                   <div className="aspect-w-5 aspect-h-5 sm:aspect-h-3 ring-1 ring-black/10 rounded-xl z-0">
                     <div className="rounded-xl overflow-hidden z-0">
                       <iframe
@@ -213,7 +201,7 @@ export function ViewItemPage(props: Props) {
                       ></iframe>
                     </div>
                   </div>
-                </div>
+                </SectionCard>
                 <div className="listingSection__wrap">
                   <h2 className="text-2xl font-semibold">Things to know</h2>
                   <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
