@@ -97,8 +97,8 @@ export function ViewItemPage(props: Props) {
     {
       name: 'Size',
       icon: <FaRulerCombined className="text-lg" />,
-      value: item?.boatAttributes?.sizeInMeters
-        ? item?.boatAttributes?.sizeInMeters + ' m'
+      value: item?.boatAttributes?.lengthInMeters
+        ? item?.boatAttributes?.lengthInMeters + ' m'
         : 'n/a',
     },
     {

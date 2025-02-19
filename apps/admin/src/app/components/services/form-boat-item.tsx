@@ -137,7 +137,8 @@ export function FormBoatItem(props: Props) {
           beamInMeters: Number(boatAttributes.beamInMeters),
           cabins: Number(boatAttributes.cabins),
           fuelConsumption: Number(boatAttributes.fuelConsumption),
-          sizeInMeters: Number(boatAttributes.sizeInMeters),
+          sizeInFeet: Number(boatAttributes.sizeInFeet),
+          lengthInMeters: Number(boatAttributes.lengthInMeters),
           latitude: boatAttributes.latitude
             ? boatAttributes.latitude.toString()
             : '',
@@ -281,9 +282,9 @@ export function FormBoatItem(props: Props) {
                 </div>
               </div>
               <div className="flex gap-5">
-                <div>
+                <div className="w-full">
                   <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                    Beam (mt)
+                    Beam (m)
                   </Text>
                   <Input
                     type="number"
@@ -299,21 +300,39 @@ export function FormBoatItem(props: Props) {
                     </p>
                   )}
                 </div>
-                <div>
+                <div className="w-full">
                   <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                    Boat Size (mt)
+                    Length (m)
                   </Text>
                   <Input
                     type="number"
                     className="mt-2 w-full"
                     placeholder="Enter the boat size in centimeters"
-                    {...register('boatAttributes.sizeInMeters', {
+                    {...register('boatAttributes.lengthInMeters', {
+                      required: 'Boat length is required',
+                    })}
+                  />
+                  {errors.boatAttributes?.lengthInMeters && (
+                    <p className="text-[12px] text-red-500 pt-2">
+                      {errors.boatAttributes?.lengthInMeters.message}
+                    </p>
+                  )}
+                </div>
+                <div className="w-full">
+                  <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                    Size (ft)
+                  </Text>
+                  <Input
+                    type="number"
+                    className="mt-2 w-full"
+                    placeholder="Enter the boat size in centimeters"
+                    {...register('boatAttributes.sizeInFeet', {
                       required: 'Boat size is required',
                     })}
                   />
-                  {errors.boatAttributes?.sizeInMeters && (
+                  {errors.boatAttributes?.sizeInFeet && (
                     <p className="text-[12px] text-red-500 pt-2">
-                      {errors.boatAttributes?.sizeInMeters.message}
+                      {errors.boatAttributes?.sizeInFeet.message}
                     </p>
                   )}
                 </div>

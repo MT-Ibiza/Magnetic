@@ -5,7 +5,8 @@ export interface BoatBase {
   capacity: number;
   crew: number;
   beamInMeters: number;
-  sizeInMeters: number;
+  sizeInFeet: number;
+  lengthInMeters: number;
   cabins: number;
   fuelConsumption: number;
   description?: string;

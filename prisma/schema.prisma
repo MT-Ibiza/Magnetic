@@ -82,7 +82,8 @@ model BoatAttributes {
   boatType        String
   capacity        Int                @default(1)
   beamInMeters    Int                @default(1)
-  sizeInMeters    Int                @default(1)
+  sizeInFeet      Int                @default(1)
+  lengthInMeters  Int                @default(1)
   crew            Int
   cabins          Int
   fuelConsumption Int
