@@ -62,44 +62,46 @@ async function getBoatsAirtable({
   pageSize,
   importedBoats,
 }: AirtableParams): Promise<AirtableBoatResponse> {
-  const url = new URL(
-    `https://api.airtable.com/v0/${process.env.AIRTABLE_BOATS_ID}/Boats`
-  );
-  url.searchParams.append('view', 'App Example');
-  url.searchParams.append('pageSize', pageSize.toString());
-  if (offset) {
-    url.searchParams.append('offset', offset);
-  }
-  const response = await fetch(url.toString(), {
-    headers: {
-      Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(
-      `Failed to fetch data from Airtable: ${response.statusText}`
+  try {
+    const url = new URL(
+      `https://api.airtable.com/v0/${process.env.AIRTABLE_BOATS_ID}/Boats`
     );
-  }
+    url.searchParams.append('view', 'App Example');
+    url.searchParams.append('pageSize', pageSize.toString());
+    if (offset) {
+      url.searchParams.append('offset', offset);
+    }
 
-  const parsedResponse = await response.json();
+    const response = await fetch(url.toString(), {
+      headers: {
+        Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
+      },
+    });
+    console.log('response: ', response);
 
-  const service = await db.service.findMany({
-    where: {
-      serviceType: 'boat_rental' as 'boat_rental',
-    },
-  });
-  const serviceId = service[0].id;
-
-  return {
-    records: parsedResponse.records.map((record: AirtableBoatField) => {
-      const importedBoat = importedBoats.find(
-        (boat) => boat.airtableId === record.id
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch data from Airtable: ${response.status} - ${response.statusText}`
       );
-      const boat = getFieldsBoats(record);
-      return {
-        ...boat,
-        ...{
+    }
+
+    const parsedResponse = await response.json();
+
+    const service = await db.service.findMany({
+      where: {
+        serviceType: 'boat_rental' as 'boat_rental',
+      },
+    });
+    const serviceId = service[0]?.id;
+
+    return {
+      records: parsedResponse.records.map((record: AirtableBoatField) => {
+        const importedBoat = importedBoats.find(
+          (boat) => boat.airtableId === record.id
+        );
+        const boat = getFieldsBoats(record);
+        return {
+          ...boat,
           imported: !!importedBoat,
           item: importedBoat?.itemId
             ? {
@@ -107,11 +109,14 @@ async function getBoatsAirtable({
                 serviceId,
               }
             : undefined,
-        },
-      };
-    }),
-    ...(parsedResponse.offset && { offset: parsedResponse.offset }),
-  };
+        };
+      }),
+      ...(parsedResponse.offset && { offset: parsedResponse.offset }),
+    };
+  } catch (error) {
+    console.error('Error fetching data from Airtable:', error);
+    throw new Error('Could not retrieve boats data from Airtable.');
+  }
 }
 
 function getFieldsBoats(record: AirtableBoatField) {
