@@ -6,11 +6,14 @@ export interface SeasonPriceBase {
   endMonth: number;
   endDay: number;
   priceInCents: number;
+  itemId: number;
 }
 
 export interface SeasonPrice {
   id: number;
   createdAt: Date;
   updatedAt: Date;
-  itemId: number;
 }
+
+export interface NewSeasonPrice extends SeasonPriceBase {}
+export interface EditSeasonPrice extends SeasonPriceBase {}

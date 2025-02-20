@@ -100,3 +100,13 @@ export const URL_REIMPORT_AIRTABLE_BOAT = `${API_URL}/airtable/boat/import`;
 
 export const URL_IMPORT_CALENDAR = (boatId: number) =>
   `${API_URL}/calendars/${boatId}`;
+
+//Season Prices
+export const URL_GET_SEASON_PRICES = `${API_URL}/season-prices`;
+export const URL_GET_SEASON_PRICE = (id: number) =>
+  `${API_URL}/season-prices/${id}`;
+export const URL_UPDATE_SEASON_PRICE = (id: number) =>
+  `${API_URL}/season-prices/${id}`;
+export const URL_NEW_SEASON_PRICE = `${API_URL}/season-prices`;
+export const URL_REMOVE_SEASON_PRICE = (id: number) =>
+  `${API_URL}/season-prices/${id}`;
