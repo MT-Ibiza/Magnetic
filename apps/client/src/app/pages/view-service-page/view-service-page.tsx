@@ -40,7 +40,7 @@ function ViewServicePage(props: Props) {
   const availableInPlan = packageIds.includes(user?.package?.id || -1);
 
   return (
-    <CardWrapper>
+    <div>
       <NoticeBookingUnavailable arrivalDate={user?.arrivalDate} />
       <div className="space-y-6">
         <SectionCard title={service.name}>
@@ -86,7 +86,7 @@ function ViewServicePage(props: Props) {
             </Link>
           </div>
         )} */}
-    </CardWrapper>
+    </div>
   );
 }
 

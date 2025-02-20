@@ -143,13 +143,17 @@ function ItemCard(props: Props) {
                       <DrinkInfo
                         name={item.name}
                         size={item.drinkAttributes?.size}
+                        quantity={item.drinkAttributes?.units || 0}
                       />
                     )}
                     {service.serviceType === 'chefs' && (
                       <ChefInfo name={item.name} />
                     )}
                     {service.serviceType === 'transfer' && (
-                      <TransferInfo name={item.name} />
+                      <TransferInfo
+                        capacity={item.boatAttributes?.capacity || 0}
+                        name={item.name}
+                      />
                     )}
                     {service.serviceType === 'boat_rental' && (
                       <BoatInfo
@@ -189,7 +193,20 @@ function ItemCard(props: Props) {
                       document.getElementById('modal_upgrade').showModal();
                     }
                   }}
-                />
+                >
+                  {service.serviceType === 'drink' ? (
+                    <span className="text-base font-semibold">
+                      {centsToEurosWithCurrency(item.priceInCents)}
+                      <span className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
+                        /day
+                      </span>
+                    </span>
+                  ) : (
+                    <span className="text-base font-semibold">
+                      {centsToEurosWithCurrency(item.priceInCents)}
+                    </span>
+                  )}
+                </ItemCounterButtons>
               ) : (
                 <ItemHandleBookButtons
                   item={item}
@@ -286,12 +303,20 @@ const DefaultProductInfo = ({
   </div>
 );
 
-const DrinkInfo = ({ name, size }: { name: string; size?: string }) => (
-  <div>
+const DrinkInfo = ({ name, size, quantity }: { name: string; size?: string, quantity?: number }) => (
+  <div className="space-y-2 flex flex-col">
     <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
       {name}
     </p>
-    <p className="text-gray-500">{size}</p>
+    <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
+    {quantity && (
+        <>
+          <span className="">{quantity} units</span>
+          <span>-</span>
+        </>
+      )}
+      <span className="">{size} size </span>
+      </div>
   </div>
 );
 
@@ -303,11 +328,20 @@ const ChefInfo = ({ name }: { name: string }) => (
   </div>
 );
 
-const TransferInfo = ({ name }: { name: string }) => (
-  <div>
+const TransferInfo = ({
+  name,
+  capacity,
+}: {
+  name: string;
+  capacity: number;
+}) => (
+  <div className="space-y-2 flex flex-col">
     <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
       {name}
     </p>
+    <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
+      <span className="">{capacity} capacity </span>
+    </div>
   </div>
 );
 

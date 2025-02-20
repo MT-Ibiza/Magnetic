@@ -43,7 +43,7 @@ export function CheckoutPage() {
           </Link>
         </EmptyState>
       ) : (
-        <main className="container mt-11 flex flex-col gap-[15px] lg:grid lg:grid-cols-12 lg:gap-x-[20px]">
+        <main className="mt-11 flex flex-col gap-[15px] lg:grid lg:grid-cols-12 lg:gap-x-[20px]">
           <div className="col-span-8 w-full ">
             <CardWrapper>
               <h2 className="text-lg lg:text-2xl font-semibold">

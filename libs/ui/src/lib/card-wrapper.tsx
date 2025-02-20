@@ -13,7 +13,7 @@ export function CardWrapper(props: Props) {
 
   return (
     <div
-      className={`bg-base-100 shadow-sm rounded-lg${
+      className={`bg-base-100 shadow-sm rounded-lg py-4 lg:p-8 ${
         className || ''
       }`}
     >

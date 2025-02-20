@@ -23,11 +23,13 @@ export function AvatarDropdown({
   user,
   options = [],
   showInformation,
+  bgAvatar
 }: {
   logout?: () => void;
   user: User;
   options: DropdownOption[];
   showInformation?: true;
+  bgAvatar?: string;
 }) {
   return (
     <div className="AvatarDropdown">
@@ -38,7 +40,7 @@ export function AvatarDropdown({
               className={`inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
               <div className="flex gap-3 items-center">
-                <Avatar userName={user.name} size="sm" />
+                <Avatar bgColor={bgAvatar} userName={user.name} size="sm" />
                 {showInformation && (
                   <div className="hidden lg:flex flex-col items-start">
                     <Text size="1">{user.name ?? 'N/A'}</Text>

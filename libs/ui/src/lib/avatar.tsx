@@ -52,7 +52,7 @@ export function Avatar({
   userName,
   hasChecked,
   hasCheckedClass = 'w-4 h-4 -top-0.5 -right-0.5',
-  bgColor = '#5046e5',
+  bgColor = '#ad023b',
 }: AvatarProps) {
   const url = imgUrl || '';
   const name = userName || 'John Doe';

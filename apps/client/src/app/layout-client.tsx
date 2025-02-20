@@ -87,6 +87,7 @@ function Layout(props: Props) {
           <CartShopping />
           {user && (
             <AvatarDropdown
+              bgAvatar='#5046e5'
               logout={logoutClient}
               user={user as User}
               options={navigationOptions}
