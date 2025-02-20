@@ -4,9 +4,9 @@ import React, { useState, useRef, useEffect, FC } from 'react';
 
 export interface CustomInputProps {
   name: string;
-  options: { value: string; label: string }[];
+  options: { value: string; label: string; data?: any }[];
   value: string;
-  onChange: (name: string, value: string) => void;
+  onChange: (name: string, value: string, data?: any) => void;
   placeHolder?: string;
   desc?: string;
   className?: string;
@@ -27,7 +27,6 @@ export const CustomInput: FC<CustomInputProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [showPopover, setShowPopover] = useState(autoFocus);
-
   useEffect(() => {
     if (showPopover) {
       document.addEventListener('click', handleClickOutside);
@@ -40,13 +39,16 @@ export const CustomInput: FC<CustomInputProps> = ({
   }, [showPopover]);
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(event.target as Node)
+    ) {
       setShowPopover(false);
     }
   };
 
-  const handleSelectOption = (optionValue: string) => {
-    onChange(name, optionValue);
+  const handleSelectOption = (option: any) => {
+    onChange(name, option.value, option.data);
     setShowPopover(false);
   };
 
@@ -72,7 +74,9 @@ export const CustomInput: FC<CustomInputProps> = ({
       </div>
 
       {showPopover && (
-        <div className={`h-8 absolute self-center top-1/2 -translate-y-1/2 z-0 bg-white dark:bg-neutral-800 ${divHideVerticalLineClass}`}></div>
+        <div
+          className={`h-8 absolute self-center top-1/2 -translate-y-1/2 z-0 bg-white dark:bg-neutral-800 ${divHideVerticalLineClass}`}
+        ></div>
       )}
 
       {showPopover && (
@@ -80,7 +84,7 @@ export const CustomInput: FC<CustomInputProps> = ({
           {options.map((option) => (
             <span
               key={option.value}
-              onClick={() => handleSelectOption(option.value)}
+              onClick={() => handleSelectOption(option)}
               className="flex px-4 sm:px-8 items-center space-x-3 sm:space-x-4 py-4 hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer"
             >
               <span className="block font-medium text-neutral-700 dark:text-neutral-200">

@@ -23,15 +23,26 @@ export interface Boat extends BoatBase {
 }
 
 export interface BoatsSearchAttributes {
-  boatType?: string;
-  capacity?: string;
-  crew?: string;
-  size?: string;
-  priceGreaterThan?: string;
-  priceLessThan?: string;
+  price_gt?: string;
+  price_lt?: string;
+  capacity_gt?: string;
+  capacity_lt?: string;
+  size_gt?: string;
+  size_lt?: string;
   from?: string;
   to?: string;
 }
+
+// export interface BoatsSearchAttributes {
+//   priceGreaterThan?: string;
+//   priceLessThan?: string;
+//   capacityGreaterThan?: string;
+//   capacityLessThan?: string;
+//   sizeGreaterThan?: string;
+//   sizeLessThan?: string;
+//   from?: string;
+//   to?: string;
+// }
 
 export interface BoatAvailability {
   id: number;

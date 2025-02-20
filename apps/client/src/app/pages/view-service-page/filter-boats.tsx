@@ -1,12 +1,17 @@
+import React, { useState } from 'react';
 import {
   SearchBoatsMobile,
   CustomInput,
   FilterSearchMobile,
   RentalCarDatesRangeInput,
 } from '@magnetic/ui';
-import React, { useState } from 'react';
 import { BoatsSearchAttributes } from '@magnetic/interfaces';
 import moment from 'moment';
+import {
+  budgetFilterOptions,
+  capacityFilterOptions,
+  sizeFilterOptions,
+} from '../../constants';
 
 interface Props {
   onChangeFilters: (filters: BoatsSearchAttributes) => void;
@@ -16,50 +21,38 @@ function FilterBoats(props: Props) {
   const { onChangeFilters } = props;
 
   const [searchParams, setSearchParams] = useState<BoatsSearchAttributes>({
-    boatType: undefined,
-    capacity: undefined,
-    size: undefined,
-    crew: undefined,
-    priceGreaterThan: undefined,
-    priceLessThan: undefined,
+    price_gt: undefined,
+    price_lt: undefined,
+    capacity_gt: undefined,
+    capacity_lt: undefined,
+    size_gt: undefined,
+    size_lt: undefined,
+    from: undefined,
+    to: undefined,
   });
 
-  const capacityOptions = [
-    { value: '', label: 'Select Capacity' },
-    { value: '1', label: '1-7 people' },
-    { value: '8', label: '8 people' },
-    { value: '9', label: '9 people' },
-    { value: '10', label: '10 people' },
-    { value: '11', label: '11 people' },
-    { value: '12', label: '12 people' },
-  ];
-
-  const sizeOptions = [
-    { value: '', label: 'Select Size' },
-    { value: '500', label: '20-40ft' },
-    { value: '1000', label: '40-60ft' },
-    { value: '1500', label: '60-80ft' },
-    { value: '2000', label: '80-100ft' },
-    { value: '2500', label: '100ft +' },
-  ];
-
-  const budgetOptions = [
-    { value: '', label: 'Select Budget' },
-    { value: '500', label: '0 - €2000' },
-    { value: '1000', label: '€2000 - €4000' },
-    { value: '2000', label: '€4000 - €6000' },
-    { value: '5000', label: '€6000 - €8000' },
-    { value: '10000', label: '€8000 - €10000' },
-    { value: '10000', label: '€10000 +' },
-  ];
-
-  const handleSearchChange = (name: string, value: string) => {
-    const updatedFilters = {
-      ...searchParams,
-      [name]: value,
+  const handleSearchChange = (name: string, value: string, data?: any) => {
+    const filterName = name as 'capacity';
+    const allFilters = {
+      capacity: { greater: 'capacity_gt', less: 'capacity_lt' },
+      size: { greater: 'size_gt', less: 'size_lt' },
+      budget: { greater: 'price_gt', less: 'price_lt' },
     };
-    setSearchParams(updatedFilters);
-    onChangeFilters(updatedFilters);
+
+    if (data) {
+      const updatedFilters = { ...searchParams, ...data };
+      console.log(updatedFilters);
+      setSearchParams(updatedFilters);
+      onChangeFilters(updatedFilters);
+    } else {
+      const updatedFilters = {
+        ...searchParams,
+        [allFilters[filterName].greater]: '',
+        [allFilters[filterName].less]: '',
+      };
+      setSearchParams(updatedFilters);
+      onChangeFilters(updatedFilters);
+    }
   };
 
   const handleDateChange = (date: Date) => {
@@ -77,12 +70,12 @@ function FilterBoats(props: Props) {
         <div className="py-5 nc-header-bg flex-[3] max-w-lg !mx-auto md:px-3">
           <FilterSearchMobile>
             <SearchBoatsMobile
-              capacityOptions={capacityOptions}
-              sizeOptions={sizeOptions}
+              capacityOptions={capacityFilterOptions}
+              sizeOptions={sizeFilterOptions}
               onChangeFilters={onChangeFilters}
               searchParams={searchParams}
-              budgetOptions={budgetOptions}
-              onClose={() => console.log('Modal cerrado')}
+              budgetOptions={budgetFilterOptions}
+              onClose={() => console.log('Modal closed')}
             />
           </FilterSearchMobile>
         </div>
@@ -93,23 +86,23 @@ function FilterBoats(props: Props) {
           <CustomInput
             name="capacity"
             desc="capacity"
-            options={capacityOptions}
-            value={searchParams.capacity || ''}
+            options={capacityFilterOptions}
+            value={searchParams.capacity_gt || ''}
             onChange={handleSearchChange}
           />
           <CustomInput
             name="size"
             desc="size"
-            options={sizeOptions}
-            value={searchParams.size || ''}
+            options={sizeFilterOptions}
+            value={searchParams.size_gt || ''}
             onChange={handleSearchChange}
           />
           <RentalCarDatesRangeInput onSelectDate={handleDateChange} />
           <CustomInput
-            name="priceGreaterThan"
+            name="budget"
             desc="budget"
-            options={budgetOptions}
-            value={searchParams.priceGreaterThan || ''}
+            options={budgetFilterOptions}
+            value={searchParams.price_gt || ''}
             onChange={handleSearchChange}
           />
         </form>
