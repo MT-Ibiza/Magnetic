@@ -16,7 +16,7 @@ export function PackagePage() {
 
   return (
     <>
-      <div className="nc-PageSubcription container pb-24 lg:pb-32 ${className}">
+      <div className="nc-PageSubcription pb-24 lg:pb-32 ${className}">
         <div className="text-center mb-10">
           <header className="text-center max-w-2xl mx-auto mt-12 mb-20">
             <h2 className="flex items-center text-3xl leading-[115%] md:text-5xl md:leading-[115%] font-semibold text-neutral-900 dark:text-neutral-100 justify-center">

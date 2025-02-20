@@ -50,7 +50,7 @@ export function HeaderClient(props: HeaderProps) {
       className={`bg-base-100 sticky top-0 left-0 right-0 z-20 shadow-sm lg:ml-0 w-full ${className}`}
     >
       <div className={`nc-MainNav1 relative z-10 ${className}`}>
-        <div className="px-6 py-4 lg:py-2 relative flex items-center">
+        <div className="px-4 lg:container py-4 lg:py-5 relative flex justify-between items-center">
           <div className="flex gap-3">
             <NavLink
               to="/dashboard"
@@ -68,21 +68,19 @@ export function HeaderClient(props: HeaderProps) {
               {navigation.map((option, index) => (
                 <li
                   key={index}
-                  className="cursor-pointer flex items-center w-full rounded-md hover:bg-base-200 "
+                  className="cursor-pointer flex items-center w-full"
                 >
                   <NavLink
                     to={option.url || ''}
                     className={({ isActive }) =>
-                      `w-full group flex items-center px-3 py-2 gap-3 ${
+                      `inline-flex items-center text-sm xl:text-base font-normal text-neutral-700 dark:text-neutral-300 py-2 px-4 xl:px-5 rounded-full hover:text-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-neutral-200 ${
                         isActive
-                          ? 'text-primary-500 bg-base-100 rounded-md'
-                          : ''
+                          ? "!font-semibold !text-neutral-900 bg-neutral-100 dark:bg-neutral-800 dark:!text-neutral-100"
+                          : ""
                       }`
                     }
                   >
-                    <Text className="font-light" size="1">
                       {option.text}
-                    </Text>
                   </NavLink>
                 </li>
               ))}

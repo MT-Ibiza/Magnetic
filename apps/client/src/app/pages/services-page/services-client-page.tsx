@@ -33,7 +33,7 @@ export function ServiceClientPage() {
 
   return (
     <div className="bg-base-100">
-      <div className="container mx-auto px-6">
+      <div className="mx-auto">
         <header className="text-center max-w-2xl mx-auto mt-12 mb-20">
           <h2 className="text-3xl md:text-4xl font-semibold">Services</h2>
           <span className="mt-2 md:mt-3 font-normal block text-base sm:text-xl text-neutral-500 dark:text-neutral-400">

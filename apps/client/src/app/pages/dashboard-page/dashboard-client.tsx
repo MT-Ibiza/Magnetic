@@ -55,7 +55,7 @@ export function DashboardClientPage() {
   return (
     <>
       <div className="nc-PageHome relative overflow-hidden">
-        <div className="container relative mb-24 lg:mb-28">
+        <div className="relative mb-24 lg:mb-28">
           <div
             className={`nc-SectionHero flex flex-col-reverse lg:flex-col relative pt-10 lg:pt-16`}
             data-nc-id="SectionHero"
