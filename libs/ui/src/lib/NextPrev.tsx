@@ -12,7 +12,7 @@ export interface NextPrevProps {
   onlyPrev?: boolean;
 }
 
-const NextPrev: FC<NextPrevProps> = ({
+export const NextPrev: FC<NextPrevProps> = ({
   className = '',
   onClickNext = () => {},
   onClickPrev = () => {},

@@ -42,5 +42,8 @@ export { BgGlassmorphism } from './lib/BgGlassmorphism';
 export { Card3Small } from './lib/Card3Small';
 export { AccordionSection } from './lib/accordion-section';
 export { SectionCard } from './lib/section-card';
+export { NextPrev } from './lib/NextPrev';
+export { Heading } from './lib/Heading';
+
 
 
