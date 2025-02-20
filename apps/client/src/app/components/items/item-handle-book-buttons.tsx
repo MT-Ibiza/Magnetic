@@ -17,15 +17,8 @@ function ItemHandleBookButtons(props: Props) {
 
   return (
     <div className="flex justify-between w-full">
-      <div className='flex flex-col justify-end'>
-        {children}
-      </div>
+      <div className="flex flex-col justify-end">{children}</div>
       <div className="flex items-center justify-end gap-3 w-full">
-        <div>
-          <Link to={`item/${item.id}`}>
-            <Button variant="outline">View Details</Button>
-          </Link>
-        </div>
         <Button
           onClick={() => {
             onClickAdd(currentAmount + 1);

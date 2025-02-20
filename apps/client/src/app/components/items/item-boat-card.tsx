@@ -91,9 +91,6 @@ function ItemBoatCard(props: Props) {
                   {centsToEurosWithCurrency(item.priceInCents)}
                 </h2>
                 <div className="flex gap-5">
-                  <Link to={`item/${item.id}`}>
-                    <Button variant="outline">View Details</Button>
-                  </Link>
                   {productCart?.quantity === 1 ? (
                     <Button
                       onClick={() => {
