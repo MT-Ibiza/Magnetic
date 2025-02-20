@@ -100,6 +100,7 @@ export const RentalCarDatesRangeInput: FC<RentalCarDatesRangeInputProps> = ({
                     selected={selectedDate}
                     onChange={onChangeDate}
                     monthsShown={1}
+                    minDate={new Date()}
                     showPopperArrow={true}
                     inline
                     renderCustomHeader={(p) => (

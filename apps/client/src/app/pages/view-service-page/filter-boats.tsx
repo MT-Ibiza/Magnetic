@@ -58,7 +58,7 @@ function FilterBoats(props: Props) {
   const handleDateChange = (date: Date) => {
     const updatedFilters = {
       ...searchParams,
-      date: moment(date).format('YYYY-MM-DD'),
+      from: moment(date).format('YYYY-MM-DD'),
     };
     setSearchParams(updatedFilters);
     onChangeFilters(updatedFilters);
