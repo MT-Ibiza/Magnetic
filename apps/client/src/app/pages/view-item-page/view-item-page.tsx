@@ -123,8 +123,8 @@ export function ViewItemPage(props: Props) {
   ];
 
   return (
-    <div className={`container nc-ListingCarDetailPage `}>
-      <div className="flex flex-col gap-6 p-6">
+    <div className={`nc-ListingCarDetailPage `}>
+      <div className="flex flex-col gap-6">
         {item?.images && item.images.length > 0 && (
           <GalleryModal images={item?.images} />
         )}
@@ -228,7 +228,11 @@ export function ViewItemPage(props: Props) {
               </>
             )}
           </div>
-          <div className="col-span-1">{item && <BookCard item={item} />}</div>
+          <div className="col-span-1">
+            {item && (
+              <BookCard startDate={startDate} endDate={endDate} item={item} />
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -57,7 +57,7 @@ export function PlanCard(props: Props) {
         {truncatedFeatures.map((item, index) => (
           <li className="flex items-center" key={index}>
             <span className="mr-4 inline-flex flex-shrink-0">
-              <FaCheck />
+              <FaCheck className='text-[#5046e5]' />
             </span>
             <span className="text-[14px] lg:text-[16px]">{item}</span>
           </li>

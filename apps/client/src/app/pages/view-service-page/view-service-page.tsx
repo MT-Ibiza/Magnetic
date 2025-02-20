@@ -42,7 +42,7 @@ function ViewServicePage(props: Props) {
   return (
     <CardWrapper>
       <NoticeBookingUnavailable arrivalDate={user?.arrivalDate} />
-      <div className="space-y-8">
+      <div className="space-y-6">
         <SectionCard title={service.name}>
           <div
             className="text-neutral-6000 dark:text-neutral-300"

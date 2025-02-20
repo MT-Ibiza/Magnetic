@@ -68,7 +68,7 @@ function ViewPackagePage(props: Props) {
           </SectionCard>
         </div>
         <div className="col-span-4">
-          <div className="sticky bg-base-100 top-[60px] listingSection__wrap">
+          <div className="sticky bg-base-100 top-[90px] listingSection__wrap">
             <h3 className="text-xl font-semibold">Need Assistance?</h3>
             <p className="lg:text-[16px] text-[14px]">
               Speak with our team to discuss your needs and discover Platinum
