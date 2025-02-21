@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   centsToEuros,
   eurosToCents,
+  formatSeasonPrice,
   formatSeasonPrices,
 } from '@magnetic/utils';
 import { useState } from 'react';
@@ -48,8 +49,11 @@ export function FormBoatItem(props: Props) {
   const [imagesFiles, setImagesFiles] = useState<File[]>([]);
   const [description, setDescription] = useState(item?.description);
   const [isSaving, setIsSaving] = useState(false);
-  const prices = formatSeasonPrices(item?.seasonPrices || []);
   const [selectedSeason, setSelectedSeason] = useState<SeasonPrice>();
+  const [itemSeasonPrices, setItemSeasonPrices] = useState<SeasonPrice[]>(
+    item?.seasonPrices || []
+  );
+  const prices = formatSeasonPrices(item?.seasonPrices || []);
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -106,7 +110,6 @@ export function FormBoatItem(props: Props) {
   const onSubmit = async (data: ItemBase) => {
     const { name, priceInCents, categoryId, boatAttributes, removeImagesIds } =
       data;
-    console.log(description);
     const formData: FormData = new FormData();
     formData.append('name', name);
     formData.append('description', description || '');
@@ -449,42 +452,45 @@ export function FormBoatItem(props: Props) {
                 </Text>
               </div>
               <div className="space-y-3">
-                {prices.length ? (
-                  prices.map((priceSeason, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-between items-center border p-3 rounded-md"
-                    >
-                      <div className="flex gap-4">
-                        <Text className="font-medium text-gray-800">
-                          <div>{priceSeason.range}</div>
-                        </Text>
-                        <Text className="text-gray-500">
-                          {priceSeason.price}
-                        </Text>
+                {itemSeasonPrices.length ? (
+                  itemSeasonPrices.map((season, index) => {
+                    const seasonFormatted = formatSeasonPrice(season);
+                    return (
+                      <div
+                        key={index}
+                        className="flex justify-between items-center border p-3 rounded-md"
+                      >
+                        <div className="flex gap-4">
+                          <Text className="font-medium text-gray-800">
+                            <div>{seasonFormatted.range}</div>
+                          </Text>
+                          <Text className="text-gray-500">
+                            {seasonFormatted.price}
+                          </Text>
+                        </div>
+                        <div className="flex gap-4">
+                          <FaEdit
+                            onClick={() => {
+                              if (item) {
+                                const season = item.seasonPrices.find(
+                                  (season) => season.id === seasonFormatted.id
+                                );
+                                season && setSelectedSeason(season);
+                              }
+                              toggleDrawer();
+                            }}
+                            className="cursor-pointer hover:scale-110 transition-transform"
+                            size={18}
+                          />
+                          <FaTrashAlt
+                            onClick={() => {}}
+                            className="cursor-pointer hover:scale-110 transition-transform"
+                            size={18}
+                          />
+                        </div>
                       </div>
-                      <div className="flex gap-4">
-                        <FaEdit
-                          onClick={() => {
-                            if (item) {
-                              const season = item.seasonPrices.find(
-                                (season) => season.id === priceSeason.id
-                              );
-                              season && setSelectedSeason(season);
-                            }
-                            toggleDrawer();
-                          }}
-                          className="cursor-pointer hover:scale-110 transition-transform"
-                          size={18}
-                        />
-                        <FaTrashAlt
-                          onClick={() => {}}
-                          className="cursor-pointer hover:scale-110 transition-transform"
-                          size={18}
-                        />
-                      </div>
-                    </div>
-                  ))
+                    );
+                  })
                 ) : (
                   <div className="bg-zinc-50 dark:bg-zinc-500 p-5 text-center">
                     <Text className="text-gray-500" size="1">
@@ -541,7 +547,18 @@ export function FormBoatItem(props: Props) {
           <FormSeasonPrice
             season={selectedSeason}
             itemId={item.id}
-            onSave={toggleDrawer}
+            onSave={(season) => {
+              toggleDrawer();
+              if (selectedSeason) {
+                const seasons = itemSeasonPrices.map((seasonPrice) => {
+                  return seasonPrice.id === season.id ? season : seasonPrice;
+                });
+                setItemSeasonPrices(seasons);
+              } else {
+                const seasons = itemSeasonPrices.concat(season);
+                setItemSeasonPrices(seasons);
+              }
+            }}
           />
         )}
       </DrawerContent>

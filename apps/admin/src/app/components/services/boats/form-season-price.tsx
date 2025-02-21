@@ -26,7 +26,7 @@ function FormSeasonPrice({
   season,
 }: {
   itemId: number;
-  onSave: () => void;
+  onSave: (season: SeasonPrice) => void;
   season?: SeasonPrice;
 }) {
   const [isSaving, setIsSaving] = useState(false);
@@ -50,14 +50,30 @@ function FormSeasonPrice({
       setIsSaving(true);
       return newSeasonPrice(data);
     },
-    onSuccess: () => {
+    onSuccess: (season) => {
       setIsSaving(false);
       toast.success(`Season Price created!`);
-      onSave();
+      onSave(season);
     },
     onError: (error) => {
       setIsSaving(false);
       toast.error('Season Price could not be created');
+    },
+  });
+
+  const updateSeasonPrice = useMutation<SeasonPrice, Error, EditSeasonPrice>({
+    mutationFn: (data) => {
+      setIsSaving(true);
+      return editSeasonPrice(season?.id || 0, data);
+    },
+    onSuccess: (season) => {
+      setIsSaving(false);
+      toast.success(`Season Price updated!`);
+      onSave(season);
+    },
+    onError: (error) => {
+      setIsSaving(false);
+      toast.error('Season Price could not be updated');
     },
   });
 
@@ -90,8 +106,12 @@ function FormSeasonPrice({
         itemId,
       },
     };
-    console.log('Form Data:', formData);
-    await createSeasonPrice.mutateAsync(formData);
+
+    if (season) {
+      await updateSeasonPrice.mutateAsync(formData);
+    } else {
+      await createSeasonPrice.mutateAsync(formData);
+    }
   };
 
   return (
