@@ -9,10 +9,8 @@ export interface SeasonPriceBase {
   itemId: number;
 }
 
-export interface SeasonPrice {
+export interface SeasonPrice extends SeasonPriceBase {
   id: number;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface NewSeasonPrice extends SeasonPriceBase {}

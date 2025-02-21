@@ -18,7 +18,11 @@ import 'react-quill/dist/quill.snow.css';
 import { toast } from 'sonner';
 import { editItem, newItem } from '../../apis/api-items';
 import { useNavigate } from 'react-router-dom';
-import { centsToEuros, eurosToCents } from '@magnetic/utils';
+import {
+  centsToEuros,
+  eurosToCents,
+  formatSeasonPrices,
+} from '@magnetic/utils';
 import { useState } from 'react';
 import ReactQuill from 'react-quill';
 import FormSeasonPrice from './boats/form-season-price';
@@ -42,6 +46,7 @@ export function FormBoatItem(props: Props) {
   const [imagesFiles, setImagesFiles] = useState<File[]>([]);
   const [description, setDescription] = useState(item?.description);
   const [isSaving, setIsSaving] = useState(false);
+  const prices = formatSeasonPrices(item?.seasonPrices || []);
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -212,14 +217,6 @@ export function FormBoatItem(props: Props) {
                   <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
                     Price
                   </Text>
-                  {/* <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      toggleDrawer();
-                    }}
-                  >
-                    + New Price
-                  </button> */}
                   <Input
                     type="number"
                     min={1}
@@ -435,6 +432,30 @@ export function FormBoatItem(props: Props) {
             </div>
           </div>
           <div className="flex-1">
+            <div>
+              <label className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                Season Prices
+              </label>
+              <div className="border p-5 border-gray-300 rounded-md">
+                <div className="flex flex-col gap-3">
+                  {prices.map((price, index) => (
+                    <div key={index} className="flex justify-between">
+                      <Text>{price.range}</Text>
+                      <Text>{price.price}</Text>
+                    </div>
+                  ))}
+                </div>
+                <Text
+                  className="text-primary-500 text-md font-medium cursor-pointer mt-3"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    toggleDrawer();
+                  }}
+                >
+                  + New Price
+                </Text>
+              </div>
+            </div>
             <div className="media">
               <label
                 htmlFor="description"

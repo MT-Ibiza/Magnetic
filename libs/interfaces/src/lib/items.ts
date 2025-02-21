@@ -1,6 +1,7 @@
 import { BoatBase } from './boats';
 import { Category } from './categories';
 import { DrinkBase } from './drinks';
+import { SeasonPrice } from './season-prices';
 import { Service } from './services';
 import { ItemVariant } from './variants';
 
@@ -41,6 +42,7 @@ export interface Item extends ItemBase {
   variants: ItemVariant[];
   published: boolean;
   priceInCents: number;
+  seasonPrices: SeasonPrice[];
 }
 
 export interface ItemWithCount extends Item {

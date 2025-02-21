@@ -32,6 +32,7 @@ export async function GET(
         },
         boatAttributes: true,
         drinkAttributes: true,
+        seasonPrices: true,
         variants: {
           select: {
             id: true,

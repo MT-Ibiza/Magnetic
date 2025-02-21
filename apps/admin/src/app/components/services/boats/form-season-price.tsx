@@ -13,6 +13,7 @@ import {
   newSeasonPrice,
 } from '../../../apis/api-season-price';
 import { toast } from 'sonner';
+import { eurosToCents } from '@magnetic/utils';
 
 const months = moment.months().map((month, index) => ({
   value: index + 1,
@@ -51,38 +52,37 @@ function FormSeasonPrice({
     },
   });
 
-  const updateSeasonPrice = useMutation<SeasonPrice, Error, EditSeasonPrice>({
-    mutationFn: (data) => {
-      setIsSaving(true);
-      return editSeasonPrice(itemId, data);
-    },
-    onSuccess: () => {
-      setIsSaving(false);
-      toast.success(`Season Price updated!`);
-      // onSave();
-    },
-    onError: (error) => {
-      setIsSaving(false);
-      toast.error('Season Price could not be updated');
-    },
-  });
-
   const [fullMonth, setFullMonth] = useState(true);
 
   const startMonth = watch('startMonth');
-  const endMonth = watch('endMonth');
 
   const handleFullMonthChange = (checked: boolean) => {
     setFullMonth(checked);
-    if (checked && startMonth && endMonth) {
+    if (checked && startMonth) {
       setValue('startDay', 1);
+      setValue('endMonth', startMonth);
       setValue('endDay', moment(startMonth, 'M').daysInMonth());
     }
   };
 
   const onSubmit = async (data: SeasonPriceBase) => {
-    console.log('Form Data:', data);
-    await createSeasonPrice.mutateAsync(data);
+    if (fullMonth) {
+      data.startDay = 1;
+      data.endMonth = data.startMonth;
+      data.endDay = moment(data.startMonth, 'M').daysInMonth();
+    }
+    const formData = {
+      ...data,
+      ...{
+        endDay: Number(data.endDay),
+        startMonth: Number(data.startMonth),
+        endMonth: Number(data.endMonth),
+        priceInCents: eurosToCents(data.priceInCents),
+        itemId,
+      },
+    };
+    console.log('Form Data:', formData);
+    await createSeasonPrice.mutateAsync(formData);
   };
 
   return (
@@ -134,7 +134,12 @@ function FormSeasonPrice({
             <label>Start Day:</label>
             <input
               type="number"
-              {...register('startDay', { required: true, min: 1, max: 31 })}
+              {...register('startDay', {
+                required: true,
+                min: 1,
+                max: 31,
+                valueAsNumber: true,
+              })}
               className="border p-2 rounded w-full"
             />
             {errors.startDay && (
@@ -145,7 +150,7 @@ function FormSeasonPrice({
           <div>
             <label>End Month:</label>
             <select
-              {...register('endMonth', { required: true })}
+              {...register('endMonth', { required: true, valueAsNumber: true })}
               className="border p-2 rounded w-full"
             >
               {months.map((month) => (
@@ -163,7 +168,12 @@ function FormSeasonPrice({
             <label>End Day:</label>
             <input
               type="number"
-              {...register('endDay', { required: true, min: 1, max: 31 })}
+              {...register('endDay', {
+                required: true,
+                min: 1,
+                max: 31,
+                valueAsNumber: true,
+              })}
               className="border p-2 rounded w-full"
             />
             {errors.endDay && (
@@ -174,10 +184,14 @@ function FormSeasonPrice({
       )}
 
       <div>
-        <label>Price in Cents:</label>
+        <label>Price:</label>
         <input
           type="number"
-          {...register('priceInCents', { required: true, min: 1 })}
+          {...register('priceInCents', {
+            required: true,
+            min: 1,
+            valueAsNumber: true,
+          })}
           className="border p-2 rounded w-full"
         />
         {errors.priceInCents && (
