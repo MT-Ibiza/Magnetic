@@ -1,7 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Button } from '@magnetic/ui';
+import { Button, Text } from '@magnetic/ui';
 import { importCalendarEvents } from '../../apis/api-calendars';
+import { FaCalendarAlt } from 'react-icons/fa';
 
 interface Props {
   boatId: number;
@@ -36,7 +37,10 @@ export function ImportBoatCalendarButton(props: Props) {
       loadingText="Sync..."
       onClick={importCalendar}
     >
-      Sync Calendar
+      <div className="flex gap-3 items-center w-full">
+        <FaCalendarAlt />
+        <Text size="1">Sync </Text>
+      </div>
     </Button>
   );
 }
