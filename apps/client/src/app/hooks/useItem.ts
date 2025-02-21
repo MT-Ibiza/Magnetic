@@ -10,11 +10,13 @@ export const useItem = (serviceId: number, itemId: number) => {
         return getItem(serviceId, itemId);
       },
     });
+  console.log('Data from API:', data);
 
   return {
-    isLoading, 
+    isLoading,
     isError,
     item: data?.item,
+    service: data?.item.service,
     serviceCategories: data?.categories || [],
     error,
     refetch,

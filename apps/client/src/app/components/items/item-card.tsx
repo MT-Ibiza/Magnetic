@@ -46,6 +46,7 @@ function ItemCard(props: Props) {
 
   const customDetailsServices = ['drinks', 'chefs', 'transfer', 'boat_rental'];
   const formType = item.category?.formType || service.serviceType;
+  const isDrinksService = service.serviceType === 'drinks';
   const handleAddProduct = (quantity: number, formData?: any) => {
     const newVal = quantity;
     addProductToCart.mutate(
@@ -129,6 +130,7 @@ function ItemCard(props: Props) {
           <GallerySlider
             href={`/services/${item.serviceId}/item/${item.id}`}
             galleryImgs={item.images}
+            classImage={`${isDrinksService ? 'h-[200px]' : 'h-[250px]'}   `}
             uniqueID={`ExperiencesCard_${item.id}`}
           />
           {/* {item.priceInCents && (
@@ -303,20 +305,28 @@ const DefaultProductInfo = ({
   </div>
 );
 
-const DrinkInfo = ({ name, size, quantity }: { name: string; size?: string, quantity?: number }) => (
+const DrinkInfo = ({
+  name,
+  size,
+  quantity,
+}: {
+  name: string;
+  size?: string;
+  quantity?: number;
+}) => (
   <div className="space-y-2 flex flex-col">
     <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
       {name}
     </p>
     <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
-    {quantity && (
+      {quantity && (
         <>
-          <span className="">{quantity} units</span>
-          <span>-</span>
+          <span className="">{size}</span>
+          <span>x</span>
         </>
       )}
-      <span className="">{size} size </span>
-      </div>
+      <span className="">{quantity}</span>
+    </div>
   </div>
 );
 

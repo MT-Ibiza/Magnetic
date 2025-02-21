@@ -32,9 +32,7 @@ export function Checkbox({
           htmlFor={name}
           className="cursor-pointer ml-3.5 flex flex-col flex-1 justify-center"
         >
-          <span className="dark:text-neutral-100">
-            {label}
-          </span>
+          <span className="dark:text-neutral-100">{label}</span>
           {subLabel && (
             <p className="mt-1 text-neutral-500 dark:text-neutral-400 text-sm font-light">
               {subLabel}

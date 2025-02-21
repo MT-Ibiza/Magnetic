@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useItem } from '../../hooks/useItem';
 import {
+  AccordionSection,
   Badge,
   Button,
   DatePickerCustomDay,
@@ -34,15 +35,13 @@ export function ViewItemPage(props: Props) {
   const { cart, addItem, removeItem } = useCartStore();
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const { isLoading, isError, item, serviceCategories, error } = useItem(
-    serviceId,
-    itemId
-  );
+  const { isLoading, isError, item, serviceCategories, error, service } =
+    useItem(serviceId, itemId);
   const [alert, setAlert] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning';
   } | null>(null);
-
+  console.log(service);
   const showAlert = (
     message: string,
     type: 'success' | 'error' | 'warning'
@@ -155,7 +154,7 @@ export function ViewItemPage(props: Props) {
                 </>
               )}
             </div>
-            <SectionCard title="Description">
+            <SectionCard title="Included">
               <div className="text-neutral-6000 dark:text-neutral-300 editor-text">
                 <div
                   className="block"
@@ -202,29 +201,41 @@ export function ViewItemPage(props: Props) {
                     </div>
                   </div>
                 </SectionCard>
-                <div className="listingSection__wrap">
-                  <h2 className="text-2xl font-semibold">Things to know</h2>
-                  <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-                  <div>
-                    <h4 className="text-lg font-semibold">
-                      Cancellation policy
-                    </h4>
-                    <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-                      Lock in this fantastic price today, cancel free of charge
-                      anytime. Reserve now and pay at pick-up.
-                    </span>
-                  </div>
-                  <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-                  <div>
-                    <h4 className="text-lg font-semibold">Special Note</h4>
-                    <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-                      We asked ourselves, “How can we make the dash not only
-                      look better, but also give the driver a better look
-                      outside?” The unexpected answer is having no hood above
-                      the available 10.25-inch digital instrument cluster...
-                    </span>
-                  </div>
-                </div>
+                {(service?.instructions || service?.termsAndConditions) && (
+                  <SectionCard title="Things to know">
+                    <div>
+                      {service.instructions && (
+                        <>
+                          <h4 className="text-lg font-semibold">
+                            Instructions
+                          </h4>
+                          <div
+                            className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
+                            dangerouslySetInnerHTML={{
+                              __html: service.instructions,
+                            }}
+                          />
+                        </>
+                      )}
+                      {service.instructions && service.termsAndConditions && (
+                        <div className="w-14 my-[32px] border-b border-neutral-200 dark:border-neutral-700"></div>
+                      )}
+                      {service.termsAndConditions && (
+                        <>
+                          <h4 className="text-lg font-semibold">
+                            Cancellation policy
+                          </h4>
+                          <div
+                            className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
+                            dangerouslySetInnerHTML={{
+                              __html: service.termsAndConditions,
+                            }}
+                          />
+                        </>
+                      )}
+                    </div>
+                  </SectionCard>
+                )}
               </>
             )}
           </div>

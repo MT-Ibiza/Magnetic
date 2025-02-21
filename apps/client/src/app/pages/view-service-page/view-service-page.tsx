@@ -49,13 +49,34 @@ function ViewServicePage(props: Props) {
             dangerouslySetInnerHTML={{ __html: service.description }}
           />
         </SectionCard>
-        {service.instructions && (
-          <AccordionSection title="Instructions">
-            <div className="leading-relaxed editor-text">
-              <div
-                className="leading-relaxed text-neutral-6000 dark:text-neutral-300"
-                dangerouslySetInnerHTML={{ __html: service.instructions }}
-              />
+        {(service.instructions || service.termsAndConditions) && (
+          <AccordionSection title="Things to know">
+            <div>
+              {service.instructions && (
+                <>
+                  <h4 className="text-lg font-semibold">Instructions</h4>
+                  <div
+                    className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
+                    dangerouslySetInnerHTML={{ __html: service.instructions }}
+                  />
+                </>
+              )}
+
+              {service.instructions && service.termsAndConditions && (
+                <div className="w-14 my-[32px] border-b border-neutral-200 dark:border-neutral-700"></div>
+              )}
+
+              {service.termsAndConditions && (
+                <>
+                  <h4 className="text-lg font-semibold">Cancellation policy</h4>
+                  <div
+                    className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
+                    dangerouslySetInnerHTML={{
+                      __html: service.termsAndConditions,
+                    }}
+                  />
+                </>
+              )}
             </div>
           </AccordionSection>
         )}

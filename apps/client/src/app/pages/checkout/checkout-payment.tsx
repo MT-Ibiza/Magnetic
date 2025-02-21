@@ -16,7 +16,7 @@ function CheckoutPayment(props: Props) {
   }, 0);
 
   return (
-    <CardWrapper>
+    <div>
       <Checkbox
         name="paymentConfirmed"
         label="By continuing, you confirm your acceptance of the Terms and Conditions."
@@ -27,7 +27,7 @@ function CheckoutPayment(props: Props) {
         className="mb-3"
       />
       <PaymentButton amountInCents={total} disable={!accepted} />
-    </CardWrapper>
+    </div>
   );
 }
 

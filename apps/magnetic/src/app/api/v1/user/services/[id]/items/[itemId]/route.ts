@@ -24,6 +24,8 @@ export async function GET(
             id: true,
             name: true,
             serviceType: true,
+            instructions: true,
+            termsAndConditions: true
           },
         },
         boatAttributes: true,

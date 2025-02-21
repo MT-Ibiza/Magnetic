@@ -45,8 +45,8 @@ export function CheckoutPage() {
       ) : (
         <main className="mt-11 flex flex-col gap-[15px] lg:grid lg:grid-cols-12 lg:gap-x-[20px]">
           <div className="col-span-8 w-full ">
-            <CardWrapper>
-              <h2 className="text-lg lg:text-2xl font-semibold">
+            <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 px-0 sm:p-6 xl:p-8">
+              <h2 className="text-3xl lg:text-4xl font-semibold">
                 Confirm and payment
               </h2>
               <Text className="text-gray-500 mt-2">
@@ -56,10 +56,10 @@ export function CheckoutPage() {
               <div className="mt-8">
                 <ProductsSummary />
               </div>
-            </CardWrapper>
+            </div>
           </div>
           <div className="col-span-4">
-            <div className="sticky top-[60px] w-full flex flex-col gap-3">
+            <div className="sticky top-[90px] w-full flex flex-col sm:rounded-2xl lg:border border-neutral-200 dark:border-neutral-700 space-y-6 sm:space-y-8 px-0 sm:p-6 xl:p-8">
               <CheckoutSummary />
               <CheckoutPayment />
             </div>

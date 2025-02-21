@@ -86,6 +86,7 @@ export interface CartItem {
 export interface ItemWithServiceCategories {
   item: Item;
   categories: Category[];
+  service: Service;
 }
 
 export interface NewItemFromCategory {

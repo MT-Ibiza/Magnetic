@@ -4,12 +4,13 @@ import { FaAngleDown } from 'react-icons/fa';
 interface Props {
   title: string;
   children?: React.ReactElement;
+  defaultOpen?: boolean;
 }
 
 export function AccordionSection(props: Props) {
-  const { title, children } = props;
+  const { title, children, defaultOpen = false } = props;
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
@@ -24,17 +25,21 @@ export function AccordionSection(props: Props) {
         >
           {title}
           <FaAngleDown
-            className={`text-xl transform transition-transform ${
+            className={`text-xl transform transition-transform duration-300 ${
               isOpen ? 'rotate-180' : ''
             }`}
           />
         </h2>
       </div>
-      {isOpen && (
-        <div className="leading-relaxed mt-3 text-neutral-6000 dark:text-neutral-300">
-          {children}
-        </div>
-      )}
+      <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
+      <div
+        className="overflow-hidden transition-all duration-500 ease-in-out"
+        style={{
+          maxHeight: isOpen ? '500px' : '0',
+        }}
+      >
+        <div className="mt-3">{children}</div>
+      </div>
     </div>
   );
 }

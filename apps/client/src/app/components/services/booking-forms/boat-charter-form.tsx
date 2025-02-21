@@ -48,7 +48,8 @@ export function BoatCharterBookingForm({
     <div className="">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold ">Boat Charter Booking</h2>
-        <h1 className="mt-2">Boat: {currentSelectItem?.name}</h1>
+        <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
+        Boat: {currentSelectItem?.name}</span>
       </div>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

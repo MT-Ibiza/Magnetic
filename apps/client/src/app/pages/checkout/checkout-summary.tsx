@@ -16,7 +16,7 @@ function CheckoutSummary(props: Props) {
   }, 0);
 
   return (
-    <CardWrapper className="flex flex-col space-y-4">
+    <div className="flex flex-col space-y-4">
       <h3 className="text-2xl font-semibold mb-3">Summary order</h3>
       <div className="flex flex-col gap-2">
         {services.map((service, index) => (
@@ -28,14 +28,14 @@ function CheckoutSummary(props: Props) {
           </div>
         ))}
       </div>
-      <div className="border-b border-neutral-200 dark:border-neutral-700 my-2"></div>
-      <div className="flex justify-between mt-3">
+      <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
+      <div className="flex justify-between font-semibold mt-3">
         <h1>Total</h1>
         <Text.TextNumeric className="text-green-700">
           {centsToEurosWithCurrency(total)}
         </Text.TextNumeric>
       </div>
-    </CardWrapper>
+    </div>
   );
 }
 

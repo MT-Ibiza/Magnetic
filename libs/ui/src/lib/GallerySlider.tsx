@@ -12,6 +12,7 @@ export interface GallerySliderProps {
   ratioClass?: string;
   uniqueID: string;
   href?: string;
+  classImage?: string;
 }
 
 export const GallerySlider: FC<GallerySliderProps> = ({
@@ -20,6 +21,7 @@ export const GallerySlider: FC<GallerySliderProps> = ({
   ratioClass = 'aspect-w-4 aspect-h-3',
   uniqueID = 'uniqueID',
   href,
+  classImage,
 }) => {
   function useNcId(pre = 'nc'): string {
     const id = useId();
@@ -75,7 +77,7 @@ export const GallerySlider: FC<GallerySliderProps> = ({
                 <li key={index} className="glide__slide">
                   <Link to={href || ''} className={`block ${ratioClass}`}>
                     <img
-                      className="w-full h-[250px] object-cover"
+                      className={`w-full object-cover ${classImage}`}
                       src={item.url}
                       alt={`Image ${index}`}
                     />
@@ -86,7 +88,7 @@ export const GallerySlider: FC<GallerySliderProps> = ({
               <li className="glide__slide">
                 <Link to={href || ''} className={`block ${ratioClass}`}>
                   <img
-                    className="w-full h-[250px] object-cover"
+                    className={`w-full object-cover ${classImage}`}
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU"
                     alt="Default Image"
                   />
