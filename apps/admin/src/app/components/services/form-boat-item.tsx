@@ -446,6 +446,7 @@ export function FormBoatItem(props: Props) {
                   onClick={(e) => {
                     e.preventDefault();
                     toggleDrawer();
+                    setSelectedSeason(undefined);
                   }}
                 >
                   + New Price
@@ -503,23 +504,22 @@ export function FormBoatItem(props: Props) {
                 )}
               </div>
             </div>
-            <div className="media">
-              <label
-                htmlFor="description"
-                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
-              >
-                Images
-              </label>
-              <div className="mt-2">
-                <UploadMultipleImages
-                  images={imagesFiles}
-                  onChange={handleImageChange}
-                  height="250px"
-                  existingImages={item?.images}
-                  onRemoveExistingImage={(imageIds) => {
-                    setValue('removeImagesIds', imageIds);
-                  }}
-                />
+
+            <div className="variants bg-base-100 border rounded-lg p-6">
+              <div className="space-y-3">
+                <div className="media">
+                  <div className="mt-2">
+                    <UploadMultipleImages
+                      images={imagesFiles}
+                      onChange={handleImageChange}
+                      height="250px"
+                      existingImages={item?.images}
+                      onRemoveExistingImage={(imageIds) => {
+                        setValue('removeImagesIds', imageIds);
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
