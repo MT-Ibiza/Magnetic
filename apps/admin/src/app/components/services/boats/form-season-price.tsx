@@ -13,7 +13,7 @@ import {
   newSeasonPrice,
 } from '../../../apis/api-season-price';
 import { toast } from 'sonner';
-import { eurosToCents } from '@magnetic/utils';
+import { centsToEuros, eurosToCents } from '@magnetic/utils';
 
 const months = moment.months().map((month, index) => ({
   value: index + 1,
@@ -23,9 +23,11 @@ const months = moment.months().map((month, index) => ({
 function FormSeasonPrice({
   itemId,
   onSave,
+  season,
 }: {
   itemId: number;
   onSave: () => void;
+  season?: SeasonPrice;
 }) {
   const [isSaving, setIsSaving] = useState(false);
   const {
@@ -34,7 +36,14 @@ function FormSeasonPrice({
     setValue,
     watch,
     formState: { errors },
-  } = useForm<SeasonPriceBase>();
+  } = useForm<SeasonPriceBase>({
+    defaultValues: season
+      ? {
+          ...season,
+          ...{ priceInCents: centsToEuros(season.priceInCents) },
+        }
+      : undefined,
+  });
 
   const createSeasonPrice = useMutation<SeasonPrice, Error, NewSeasonPrice>({
     mutationFn: (data) => {
@@ -90,16 +99,6 @@ function FormSeasonPrice({
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-4 p-4 border rounded-lg"
     >
-      <div>
-        <label>Item ID:</label>
-        <input
-          type="number"
-          value={itemId}
-          readOnly
-          className="border p-2 rounded w-full bg-gray-200 cursor-not-allowed"
-        />
-      </div>
-
       <div>
         <label>
           <input

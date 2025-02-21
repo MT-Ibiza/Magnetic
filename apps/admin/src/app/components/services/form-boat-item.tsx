@@ -3,6 +3,7 @@ import {
   Item,
   ItemBase,
   ItemVariant,
+  SeasonPrice,
   Service,
 } from '@magnetic/interfaces';
 import {
@@ -26,6 +27,7 @@ import {
 import { useState } from 'react';
 import ReactQuill from 'react-quill';
 import FormSeasonPrice from './boats/form-season-price';
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 export interface Props {
   className?: string;
@@ -47,6 +49,7 @@ export function FormBoatItem(props: Props) {
   const [description, setDescription] = useState(item?.description);
   const [isSaving, setIsSaving] = useState(false);
   const prices = formatSeasonPrices(item?.seasonPrices || []);
+  const [selectedSeason, setSelectedSeason] = useState<SeasonPrice>();
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -432,21 +435,11 @@ export function FormBoatItem(props: Props) {
             </div>
           </div>
           <div className="flex-1">
-            <div>
-              <label className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                Season Prices
-              </label>
-              <div className="border p-5 border-gray-300 rounded-md">
-                <div className="flex flex-col gap-3">
-                  {prices.map((price, index) => (
-                    <div key={index} className="flex justify-between">
-                      <Text>{price.range}</Text>
-                      <Text>{price.price}</Text>
-                    </div>
-                  ))}
-                </div>
+            <div className="variants bg-base-100 border rounded-lg p-6">
+              <div className="flex justify-between items-center pb-2">
+                <Text className="font-semibold text-lg">Season Prices</Text>
                 <Text
-                  className="text-primary-500 text-md font-medium cursor-pointer mt-3"
+                  className="text-primary-500 text-md font-medium cursor-pointer"
                   onClick={(e) => {
                     e.preventDefault();
                     toggleDrawer();
@@ -454,6 +447,54 @@ export function FormBoatItem(props: Props) {
                 >
                   + New Price
                 </Text>
+              </div>
+              <div className="space-y-3">
+                {prices.length ? (
+                  prices.map((priceSeason, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center border p-3 rounded-md"
+                    >
+                      <div className="flex gap-4">
+                        <Text className="font-medium text-gray-800">
+                          <div>{priceSeason.range}</div>
+                        </Text>
+                        <Text className="text-gray-500">
+                          {priceSeason.price}
+                        </Text>
+                      </div>
+                      <div className="flex gap-4">
+                        <FaEdit
+                          onClick={() => {
+                            if (item) {
+                              const season = item.seasonPrices.find(
+                                (season) => season.id === priceSeason.id
+                              );
+                              season && setSelectedSeason(season);
+                            }
+                            toggleDrawer();
+                          }}
+                          className="cursor-pointer hover:scale-110 transition-transform"
+                          size={18}
+                        />
+                        <FaTrashAlt
+                          onClick={() => {}}
+                          className="cursor-pointer hover:scale-110 transition-transform"
+                          size={18}
+                        />
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="bg-zinc-50 dark:bg-zinc-500 p-5 text-center">
+                    <Text className="text-gray-500" size="1">
+                      Variables are similar products
+                    </Text>
+                    <Text className="text-gray-500" size="1">
+                      but with different price
+                    </Text>
+                  </div>
+                )}
               </div>
             </div>
             <div className="media">
@@ -496,7 +537,13 @@ export function FormBoatItem(props: Props) {
       </form>
 
       <DrawerContent title={'Prices'} open={openDrawer} onClose={toggleDrawer}>
-        {item?.id && <FormSeasonPrice itemId={item.id} onSave={toggleDrawer} />}
+        {item?.id && (
+          <FormSeasonPrice
+            season={selectedSeason}
+            itemId={item.id}
+            onSave={toggleDrawer}
+          />
+        )}
       </DrawerContent>
     </>
   );
