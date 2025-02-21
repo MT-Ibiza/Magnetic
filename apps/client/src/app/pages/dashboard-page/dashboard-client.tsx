@@ -82,7 +82,7 @@ export function DashboardClientPage() {
                 </span>
                 <ul className="space-y-4 mt-10">
                   <li className="flex items-center space-x-4">
-                    <FaMapMarkerAlt className="text-red-700 dark:text-neutral-300" />
+                    <FaMapMarkerAlt className="text-neutral-700 dark:text-neutral-300" />
                     <span className="text-neutral-700 dark:text-neutral-300">
                       {userAccount.accommodation}
                     </span>

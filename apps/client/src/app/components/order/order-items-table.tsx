@@ -26,10 +26,10 @@ function OrderItemsTable(props: Props) {
       <table className="table w-full border-collapse">
         <thead>
           <tr>
-            <th>Product/Service</th>
-            <th className="text-center">Price</th>
-            <th className="text-center">Quantity</th>
-            <th className="text-center">Total</th>
+            <th className='text-[14px] font-bold'>Product/Service</th>
+            <th className="text-center font-bold text-[14px]">Price</th>
+            <th className="text-center font-bold text-[14px]">Quantity</th>
+            <th className="text-center font-bold text-[14px]">Total</th>
           </tr>
         </thead>
         <tbody>
@@ -45,7 +45,7 @@ function OrderItemsTable(props: Props) {
               {serviceItems.map((item, index) => (
                 <tr className="hover" key={index}>
                   <td>
-                    <div className="flex gap-3 items-center">
+                    <div className="flex gap-3 items-center text-neutral-6000 dark:text-neutral-300">
                       <img
                         className="w-16 h-16 object-cover rounded-md"
                         src={

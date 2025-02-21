@@ -39,8 +39,8 @@ export function FormJsonDetails(props: Props) {
     <div className="flex flex-col gap-3">
       {keys.map((key) => (
         <div className="flex gap-2">
-          <h1>{dictionary[key as 'date'] || key}:</h1>
-          <div>{formData[key]}</div>
+          <h1 className='font-medium'>{dictionary[key as 'date'] || key}:</h1>
+          <div className='text-neutral-6000 dark:text-neutral-300'>{formData[key]}</div>
         </div>
       ))}
     </div>

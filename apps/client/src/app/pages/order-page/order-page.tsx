@@ -59,7 +59,10 @@ function OrderPage(props: Props) {
   return (
     <div className="flex flex-col gap-5">
       <CardWrapper className="bg-base-100">
-        <h1>{`Order #${order.id}`}</h1>
+      <h4 className="text-lg font-semibold mb-3">
+      {`Order #${order.id}`}
+                          </h4>
+        {/* <h1>{`Order #${order.id}`}</h1> */}
         <OrderItemsTable
           items={order.items}
           totalInCents={order.totalInCents}
