@@ -162,7 +162,7 @@ export function FormBoatItem(props: Props) {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="flex flex-col lg:flex-row gap-6">
+        <div className="flex flex-col lg:flex-row gap-10">
           <div className="flex-1">
             <div className="main-info flex-1 space-y-6">
               <div className="flex gap-5">
@@ -437,7 +437,7 @@ export function FormBoatItem(props: Props) {
               </div>
             </div>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 flex flex-col gap-5">
             <div className="variants bg-base-100 border rounded-lg p-6">
               <div className="flex justify-between items-center pb-2">
                 <Text className="font-semibold text-lg">Season Prices</Text>
@@ -504,7 +504,6 @@ export function FormBoatItem(props: Props) {
                 )}
               </div>
             </div>
-
             <div className="variants bg-base-100 border rounded-lg p-6">
               <div className="space-y-3">
                 <div className="media">

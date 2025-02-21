@@ -7,6 +7,7 @@ import {
   URL_GET_SEASON_PRICE,
   URL_GET_SEASON_PRICES,
   URL_NEW_SEASON_PRICE,
+  URL_REMOVE_SEASON_PRICE,
   URL_UPDATE_SEASON_PRICE,
 } from './api-constants';
 
@@ -52,6 +53,19 @@ export async function editSeasonPrice(
 export async function getSeasonPrice(userId: number): Promise<SeasonPrice> {
   const url = URL_GET_SEASON_PRICE(userId);
   const response = await fetch(url);
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
+  return dataJson;
+}
+
+export async function deleteSeasonPrice(seasonId: number): Promise<string> {
+  const url = URL_REMOVE_SEASON_PRICE(seasonId);
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);
   return dataJson;
