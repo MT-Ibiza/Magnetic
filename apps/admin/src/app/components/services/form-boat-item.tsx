@@ -20,9 +20,8 @@ import { editItem, newItem } from '../../apis/api-items';
 import { useNavigate } from 'react-router-dom';
 import { centsToEuros, eurosToCents } from '@magnetic/utils';
 import { useState } from 'react';
-import FormCategory from '../form-category';
-import FormVariant from '../form-variant';
 import ReactQuill from 'react-quill';
+import FormSeasonPrice from './boats/form-season-price';
 
 export interface Props {
   className?: string;
@@ -35,26 +34,11 @@ export interface Props {
 }
 
 export function FormBoatItem(props: Props) {
-  const { item, serviceId, onSave, serviceCategories, service } = props;
+  const { item, serviceId, onSave } = props;
   const editMode = !!item;
   const navigate = useNavigate();
-  const categories = serviceCategories.map((category) => {
-    return {
-      label: category.name,
-      value: category.id,
-    };
-  });
-  const categoryFound = categories.find(
-    (category) => category.value == item?.categoryId
-  );
+
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [openForm, setOpenForm] = useState('');
-  const [selectedVariant, setSelectedVariant] = useState<ItemVariant>();
-  const [itemVariants, setItemVariants] = useState<ItemVariant[]>(
-    item?.variants || []
-  );
-  const [itemCategories, setItemCategories] = useState(categories);
-  const [selectedCategory, setSelectedCategory] = useState(categoryFound);
   const [imagesFiles, setImagesFiles] = useState<File[]>([]);
   const [description, setDescription] = useState(item?.description);
   const [isSaving, setIsSaving] = useState(false);
@@ -228,6 +212,14 @@ export function FormBoatItem(props: Props) {
                   <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
                     Price
                   </Text>
+                  {/* <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleDrawer();
+                    }}
+                  >
+                    + New Price
+                  </button> */}
                   <Input
                     type="number"
                     min={1}
@@ -482,54 +474,8 @@ export function FormBoatItem(props: Props) {
         </div>
       </form>
 
-      <DrawerContent
-        title={openForm === 'category' ? 'New Category' : 'New Variant'}
-        open={openDrawer}
-        onClose={() => {
-          toggleDrawer();
-          setSelectedVariant(undefined);
-        }}
-      >
-        <>
-          {openForm === 'category' && (
-            <FormCategory
-              onCancel={toggleDrawer}
-              onSave={(category) => {
-                toggleDrawer();
-
-                const newCategory = {
-                  label: category.name,
-                  value: category.id,
-                };
-                setSelectedCategory(newCategory);
-                setItemCategories(itemCategories.concat(newCategory));
-              }}
-            />
-          )}
-          {openForm === 'variant' && item && (
-            <FormVariant
-              itemName={item.name}
-              onCancel={toggleDrawer}
-              itemId={item.id}
-              variant={selectedVariant}
-              onSave={(variantUpdated) => {
-                if (selectedVariant) {
-                  const allVariants = itemVariants.map((variant) => {
-                    return variantUpdated.id === variant.id
-                      ? variantUpdated
-                      : variant;
-                  });
-                  setItemVariants(allVariants);
-                } else {
-                  const allVariants = [variantUpdated].concat(itemVariants);
-                  setItemVariants(allVariants);
-                }
-                setSelectedVariant(undefined);
-                toggleDrawer();
-              }}
-            />
-          )}
-        </>
+      <DrawerContent title={'Prices'} open={openDrawer} onClose={toggleDrawer}>
+        {item?.id && <FormSeasonPrice itemId={item.id} onSave={toggleDrawer} />}
       </DrawerContent>
     </>
   );
