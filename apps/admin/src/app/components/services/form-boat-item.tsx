@@ -29,6 +29,7 @@ import { useState } from 'react';
 import ReactQuill from 'react-quill';
 import FormSeasonPrice from './boats/form-season-price';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { deleteSeasonPrice } from '../../apis/api-season-price';
 
 export interface Props {
   className?: string;
@@ -53,7 +54,6 @@ export function FormBoatItem(props: Props) {
   const [itemSeasonPrices, setItemSeasonPrices] = useState<SeasonPrice[]>(
     item?.seasonPrices || []
   );
-  const prices = formatSeasonPrices(item?.seasonPrices || []);
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -104,6 +104,23 @@ export function FormBoatItem(props: Props) {
     onError: (error) => {
       setIsSaving(false);
       toast.error('The product could not be updated');
+    },
+  });
+
+  const removeSeasonPrice = useMutation<string, Error, number>({
+    mutationFn: (id) => {
+      return deleteSeasonPrice(id);
+    },
+    onSuccess: () => {
+      const seasons = itemSeasonPrices.filter((season) => {
+        return season.id !== selectedSeason?.id;
+      });
+      setItemSeasonPrices(seasons);
+      setSelectedSeason(undefined);
+      toast.success(`Season Price removed!`);
+    },
+    onError: (error) => {
+      toast.error('Season Price could not be removed');
     },
   });
 
@@ -158,6 +175,10 @@ export function FormBoatItem(props: Props) {
       await createItem.mutateAsync(formData);
     }
   };
+
+  async function handleRemoveSeasonPrice(id: number) {
+    await removeSeasonPrice.mutateAsync(id);
+  }
 
   return (
     <>
@@ -484,7 +505,10 @@ export function FormBoatItem(props: Props) {
                             size={18}
                           />
                           <FaTrashAlt
-                            onClick={() => {}}
+                            onClick={() => {
+                              setSelectedSeason(season);
+                              handleRemoveSeasonPrice(season.id);
+                            }}
                             className="cursor-pointer hover:scale-110 transition-transform"
                             size={18}
                           />
@@ -495,10 +519,10 @@ export function FormBoatItem(props: Props) {
                 ) : (
                   <div className="bg-zinc-50 dark:bg-zinc-500 p-5 text-center">
                     <Text className="text-gray-500" size="1">
-                      Variables are similar products
+                      Season Prices for boats
                     </Text>
                     <Text className="text-gray-500" size="1">
-                      but with different price
+                      the prices will be apply based on date range
                     </Text>
                   </div>
                 )}
