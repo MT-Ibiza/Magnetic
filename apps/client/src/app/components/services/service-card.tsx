@@ -22,7 +22,7 @@ function ServiceCard(props: Props) {
             imageUrl ||
             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
           }
-          className="object-cover w-full h-[250px] lg:h-[325px] rounded-2xl"
+          className="object-cover w-full h-[250px] lg:h-[300px] rounded-2xl"
         />
         <span className="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity"></span>
       </div>

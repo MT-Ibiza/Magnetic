@@ -1,5 +1,5 @@
-import React, { HTMLAttributes, ReactNode } from "react";
-import NextPrev from "./NextPrev";
+import React, { HTMLAttributes, ReactNode } from 'react';
+import NextPrev from './NextPrev';
 
 export interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   fontClass?: string;
@@ -11,7 +11,7 @@ export interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
 export const Heading: React.FC<HeadingProps> = ({
   children,
   desc,
-  className = "mb-12 lg:mb-16 text-neutral-900 dark:text-neutral-50",
+  className = 'mb-12 lg:mb-12 text-neutral-900 dark:text-neutral-50',
   isCenter = false,
   hasNextPrev = false,
   ...args
@@ -22,12 +22,15 @@ export const Heading: React.FC<HeadingProps> = ({
     >
       <div
         className={
-          isCenter ? "text-center w-full max-w-2xl mx-auto" : "max-w-2xl"
+          isCenter ? 'text-center w-full max-w-2xl mx-auto' : 'max-w-2xl'
         }
       >
-        <h2 className={`text-3xl md:text-4xl font-semibold`} {...args}>
+        <h1
+          className={`text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-3xl dark:text-neutral-100 max-w-4xl `}
+          {...args}
+        >
           {children || `Section Heading`}
-        </h2>
+        </h1>
         {desc && (
           <span className="mt-2 md:mt-3 font-normal block text-base sm:text-xl text-neutral-500 dark:text-neutral-400">
             {desc}
