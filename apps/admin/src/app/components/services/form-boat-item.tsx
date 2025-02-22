@@ -570,6 +570,7 @@ export function FormBoatItem(props: Props) {
           <FormSeasonPrice
             season={selectedSeason}
             itemId={item.id}
+            onCancel={toggleDrawer}
             onSave={(season) => {
               toggleDrawer();
               if (selectedSeason) {

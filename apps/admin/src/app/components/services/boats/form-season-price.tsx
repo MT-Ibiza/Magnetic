@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import moment from 'moment';
 import {
@@ -14,6 +14,7 @@ import {
 } from '../../../apis/api-season-price';
 import { toast } from 'sonner';
 import { centsToEuros, eurosToCents } from '@magnetic/utils';
+import { Button, Input } from '@magnetic/ui';
 
 const months = moment.months().map((month, index) => ({
   value: index + 1,
@@ -23,9 +24,11 @@ const months = moment.months().map((month, index) => ({
 function FormSeasonPrice({
   itemId,
   onSave,
+  onCancel,
   season,
 }: {
   itemId: number;
+  onCancel: () => void;
   onSave: (season: SeasonPrice) => void;
   season?: SeasonPrice;
 }) {
@@ -115,21 +118,7 @@ function FormSeasonPrice({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4 p-4 border rounded-lg"
-    >
-      <div>
-        <label>
-          <input
-            type="checkbox"
-            checked={fullMonth}
-            onChange={(e) => handleFullMonthChange(e.target.checked)}
-          />
-          Month
-        </label>
-      </div>
-
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
       <div>
         <label>Start Month:</label>
         <select
@@ -146,12 +135,21 @@ function FormSeasonPrice({
           <p className="text-red-500">Seleccione un mes válido</p>
         )}
       </div>
-
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            checked={fullMonth}
+            onChange={(e) => handleFullMonthChange(e.target.checked)}
+          />
+          {` Select by month`}
+        </label>
+      </div>
       {!fullMonth && (
         <>
           <div>
             <label>Start Day:</label>
-            <input
+            <Input
               type="number"
               {...register('startDay', {
                 required: true,
@@ -204,7 +202,7 @@ function FormSeasonPrice({
 
       <div>
         <label>Price:</label>
-        <input
+        <Input
           type="number"
           {...register('priceInCents', {
             required: true,
@@ -217,13 +215,14 @@ function FormSeasonPrice({
           <p className="text-red-500">El precio debe ser mayor a 0</p>
         )}
       </div>
-
-      <button
-        type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Guardar
-      </button>
+      <div className="buttons flex justify-end gap-3 p-4 w-full absolute bottom-0 right-0">
+        <Button onClick={onCancel} variant="outline" type="button">
+          Cancel
+        </Button>
+        <Button type="submit">
+          {season ? 'Update Season Price' : 'Create Season Price'}
+        </Button>
+      </div>
     </form>
   );
 }
