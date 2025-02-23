@@ -35,6 +35,12 @@ export async function searchProducts(params: SearchParams) {
       updatedAt: true,
       serviceId: true,
       images: true,
+      category: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
       service: {
         select: {
           id: true,
