@@ -3,20 +3,24 @@ import { ErrorText } from '../error-text';
 import { Link } from 'react-router-dom';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { useProducts } from '../../hooks/useProducts';
-import { Button, Text } from '@magnetic/ui';
+import { Button, DrawerContent, Text } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import ImportBoatCalendarButton from './import-boat-calendar-button';
 import { Item } from '@magnetic/interfaces';
 import { placeholderItemImage } from '../../constants';
+import { useState } from 'react';
+import FormSortImages from '../services/form-sort-images';
 
 interface Props {
   serviceId: number;
   onClickRemove?: (item: Item) => void;
-  onClickOrderImages?: (item: Item) => void;
 }
 
 export function BoatsTable(props: Props) {
-  const { serviceId, onClickRemove, onClickOrderImages } = props;
+  const { serviceId, onClickRemove } = props;
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<Item>();
+
   const params = {
     serviceId: serviceId,
     page: 1,
@@ -32,6 +36,10 @@ export function BoatsTable(props: Props) {
     fetchNextPage,
     publishOrUnpublishItemApi,
   } = useProducts(params);
+
+  const toggleDrawer = () => {
+    setOpenDrawer((prevState) => !prevState);
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -54,7 +62,7 @@ export function BoatsTable(props: Props) {
   };
 
   return (
-    <div className="">
+    <>
       <table className="table w-full">
         <thead>
           <tr>
@@ -125,7 +133,8 @@ export function BoatsTable(props: Props) {
                     </li>
                     <li
                       onClick={() => {
-                        onClickOrderImages && onClickOrderImages(product);
+                        toggleDrawer();
+                        setSelectedItem(product);
                       }}
                     >
                       <a className="">Order Images</a>
@@ -157,6 +166,24 @@ export function BoatsTable(props: Props) {
           </Button>
         </div>
       )}
-    </div>
+
+      <DrawerContent
+        title="Sort Images"
+        open={openDrawer}
+        onClose={toggleDrawer}
+      >
+        {selectedItem && (
+          <FormSortImages
+            itemId={selectedItem.id}
+            images={selectedItem.images}
+            onSave={() => {
+              toggleDrawer();
+              refetch();
+            }}
+            onCancel={toggleDrawer}
+          />
+        )}
+      </DrawerContent>
+    </>
   );
 }

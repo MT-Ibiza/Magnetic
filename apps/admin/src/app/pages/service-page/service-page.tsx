@@ -8,13 +8,13 @@ import { useState } from 'react';
 import FormProduct from '../../components/services/form-product';
 import { ApiResponse, Item } from '@magnetic/interfaces';
 import FormVariant from '../../components/form-variant';
-import './styles.scss';
 import { BoatsTable } from '../../components/boats/boats-table';
 import { useMutation } from '@tanstack/react-query';
 import { deleteItem } from '../../apis/api-items';
 import { toast } from 'sonner';
 import ConfirmAlert from '../../components/confirm-alert';
 import FormSortImages from '../../components/services/form-sort-images';
+import './styles.scss';
 
 interface Props {}
 
@@ -115,13 +115,6 @@ function ServicePage(props: Props) {
               />
             </div>
           </div>
-          {/* <div className="w-full">
-            <img
-              src={service.imageUrl}
-              alt={service.name}
-              className="object-cover w-full"
-            />
-          </div> */}
           {service.script ? (
             <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
           ) : (
@@ -132,11 +125,6 @@ function ServicePage(props: Props) {
                   onClickRemove={(item) => {
                     setSelectedItem(item);
                     setShowAlert(true);
-                  }}
-                  onClickOrderImages={(item) => {
-                    setSelectedItem(item);
-                    setOpenForm('images');
-                    toggleDrawer();
                   }}
                 />
               ) : (
@@ -188,7 +176,9 @@ function ServicePage(props: Props) {
           <FormSortImages
             itemId={selectedItem.id}
             images={selectedItem.images}
-            onSave={toggleDrawer}
+            onSave={() => {
+              toggleDrawer();
+            }}
             onCancel={toggleDrawer}
           />
         )}
