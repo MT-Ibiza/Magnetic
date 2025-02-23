@@ -120,13 +120,7 @@ function ServicePage(props: Props) {
           ) : (
             <div className="mt-6">
               {service.serviceType === 'boat_rental' ? (
-                <BoatsTable
-                  serviceId={service.id}
-                  onClickRemove={(item) => {
-                    setSelectedItem(item);
-                    setShowAlert(true);
-                  }}
-                />
+                <BoatsTable serviceId={service.id} />
               ) : (
                 <ItemsTable
                   items={service.items || []}

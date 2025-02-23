@@ -6,20 +6,24 @@ import { useProducts } from '../../hooks/useProducts';
 import { Button, DrawerContent, Text } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import ImportBoatCalendarButton from './import-boat-calendar-button';
-import { Item } from '@magnetic/interfaces';
+import { ApiResponse, Item } from '@magnetic/interfaces';
 import { placeholderItemImage } from '../../constants';
 import { useState } from 'react';
 import FormSortImages from '../services/form-sort-images';
+import ConfirmAlert from '../confirm-alert';
+import { useMutation } from '@tanstack/react-query';
+import { deleteItem } from '../../apis/api-items';
+import { toast } from 'sonner';
 
 interface Props {
   serviceId: number;
-  onClickRemove?: (item: Item) => void;
 }
 
 export function BoatsTable(props: Props) {
-  const { serviceId, onClickRemove } = props;
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const { serviceId } = props;
   const [selectedItem, setSelectedItem] = useState<Item>();
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const params = {
     serviceId: serviceId,
@@ -41,13 +45,20 @@ export function BoatsTable(props: Props) {
     setOpenDrawer((prevState) => !prevState);
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <ErrorText text={error?.message || ''} />;
-  }
+  const removeItem = useMutation<ApiResponse, Error, any>({
+    mutationFn: (itemId: number) => {
+      return deleteItem(serviceId, itemId);
+    },
+    onSuccess: () => {
+      setShowAlert(false);
+      toast.success(`Product removed!`);
+      refetch();
+    },
+    onError: () => {
+      setShowAlert(false);
+      toast.error(`Product cannot remove!`);
+    },
+  });
 
   const handlePublishToggle = async (
     productId: number,
@@ -60,6 +71,14 @@ export function BoatsTable(props: Props) {
     });
     refetch();
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <ErrorText text={error?.message || ''} />;
+  }
 
   return (
     <>
@@ -141,7 +160,8 @@ export function BoatsTable(props: Props) {
                     </li>
                     <li
                       onClick={() => {
-                        onClickRemove && onClickRemove(product);
+                        setSelectedItem(product);
+                        setShowAlert(true);
                       }}
                     >
                       <a className="text-red-500">Delete</a>
@@ -184,6 +204,23 @@ export function BoatsTable(props: Props) {
           />
         )}
       </DrawerContent>
+
+      <ConfirmAlert
+        title="Remove Boat"
+        message={
+          selectedItem?.published
+            ? 'This product is published, Are you sure you want to remove this product?'
+            : 'Are you sure you want to remove this product?'
+        }
+        show={showAlert}
+        onClickConfirm={async () => {
+          const itemId = selectedItem?.id || 0;
+          await removeItem.mutateAsync(itemId);
+        }}
+        onClickCancel={() => {
+          setShowAlert(false);
+        }}
+      />
     </>
   );
 }
