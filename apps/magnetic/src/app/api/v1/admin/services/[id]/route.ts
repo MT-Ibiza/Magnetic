@@ -13,29 +13,6 @@ export async function GET(
         id: Number(params.id),
       },
       include: {
-        items: {
-          include: {
-            category: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
-            images: {
-              orderBy: {
-                position: 'asc',
-              },
-            },
-            _count: {
-              select: {
-                variants: true,
-              },
-            },
-          },
-          orderBy: {
-            createdAt: 'desc',
-          },
-        },
         packages: {
           select: {
             id: true,
