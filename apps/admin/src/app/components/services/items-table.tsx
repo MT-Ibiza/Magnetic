@@ -14,6 +14,7 @@ import { deleteItem } from '../../apis/api-items';
 import ConfirmAlert from '../confirm-alert';
 import FormSortImages from './form-sort-images';
 import FormVariant from '../form-variant';
+import { FaCoins, FaEdit, FaSortAmountUpAlt, FaTrashAlt } from 'react-icons/fa';
 
 interface Props {
   serviceId: number;
@@ -151,13 +152,15 @@ function ItemsTable(props: Props) {
                         toggleDrawer();
                       }}
                     >
-                      <a>New Variant</a>
+                      <a>
+                        <FaCoins /> New Variant
+                      </a>
                     </li>
                     <li>
                       <a
                         href={`/services/${item.serviceId}/items/${item.id}/edit`}
                       >
-                        Edit Product
+                        <FaEdit /> Edit Product
                       </a>
                     </li>
                     <li
@@ -167,7 +170,9 @@ function ItemsTable(props: Props) {
                         setSelectedItem(item);
                       }}
                     >
-                      <a className="">Order Images</a>
+                      <a className="">
+                        <FaSortAmountUpAlt /> Sort Images
+                      </a>
                     </li>
                     <li
                       onClick={() => {
@@ -175,7 +180,9 @@ function ItemsTable(props: Props) {
                         setShowAlert(true);
                       }}
                     >
-                      <a className="text-red-500">Delete</a>
+                      <a className="text-red-500">
+                        <FaTrashAlt /> Delete
+                      </a>
                     </li>
                   </ul>
                 </div>

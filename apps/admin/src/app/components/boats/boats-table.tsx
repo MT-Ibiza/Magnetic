@@ -14,6 +14,7 @@ import ConfirmAlert from '../confirm-alert';
 import { useMutation } from '@tanstack/react-query';
 import { deleteItem } from '../../apis/api-items';
 import { toast } from 'sonner';
+import { FaEdit, FaSortAmountUpAlt, FaTrashAlt } from 'react-icons/fa';
 
 interface Props {
   serviceId: number;
@@ -148,7 +149,7 @@ export function BoatsTable(props: Props) {
                       <a
                         href={`/services/${product.serviceId}/items/${product.id}/edit`}
                       >
-                        Edit Product
+                        <FaEdit /> Edit Boat
                       </a>
                     </li>
                     <li
@@ -157,7 +158,9 @@ export function BoatsTable(props: Props) {
                         setSelectedItem(product);
                       }}
                     >
-                      <a className="">Order Images</a>
+                      <a className="">
+                        <FaSortAmountUpAlt /> Sort Images
+                      </a>
                     </li>
                     <li
                       onClick={() => {
@@ -165,7 +168,9 @@ export function BoatsTable(props: Props) {
                         setShowAlert(true);
                       }}
                     >
-                      <a className="text-red-500">Delete</a>
+                      <a className="text-red-500">
+                        <FaTrashAlt /> Delete
+                      </a>
                     </li>
                   </ul>
                 </div>

@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { ApiResponse, Item } from '@magnetic/interfaces';
 import { placeholderItemImage } from '../../constants';
 import FormSortImages from '../services/form-sort-images';
+import { FaEdit, FaSortAmountUpAlt, FaTrashAlt } from 'react-icons/fa';
 
 interface Props {}
 
@@ -143,7 +144,7 @@ export function ProductsTable(props: Props) {
                         <a
                           href={`/services/${product.serviceId}/items/${product.id}/edit`}
                         >
-                          Edit Product
+                          <FaEdit /> Edit Product
                         </a>
                       </li>
                       <li
@@ -152,7 +153,9 @@ export function ProductsTable(props: Props) {
                           setSelectedItem(product);
                         }}
                       >
-                        <a className="">Order Images</a>
+                        <a className="">
+                          <FaSortAmountUpAlt /> Sort Images
+                        </a>
                       </li>
                       <li
                         onClick={() => {
@@ -160,7 +163,9 @@ export function ProductsTable(props: Props) {
                           setShowAlert(true);
                         }}
                       >
-                        <a className="text-red-500">Delete</a>
+                        <a className="text-red-500">
+                          <FaTrashAlt /> Delete
+                        </a>
                       </li>
                     </ul>
                   </div>
