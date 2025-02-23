@@ -110,3 +110,6 @@ export const URL_UPDATE_SEASON_PRICE = (id: number) =>
 export const URL_NEW_SEASON_PRICE = `${API_URL}/season-prices`;
 export const URL_REMOVE_SEASON_PRICE = (id: number) =>
   `${API_URL}/season-prices/${id}`;
+
+//images
+export const URL_SORT_IMAGES = `${API_URL}/images/sort`;

@@ -67,10 +67,15 @@ export interface NewItem extends ItemBase {
   boatAttributes?: BoatBase;
 }
 
-export interface Image {
+export interface ImageBase {
   id: number;
   url: string;
+  position: number;
   itemId: number;
+}
+
+export interface Image extends ImageBase {
+  updatedAt: Date;
   createdAt: Date;
 }
 
@@ -94,4 +99,9 @@ export interface ItemWithServiceCategories {
 export interface NewItemFromCategory {
   service: Service;
   categories: Category[];
+}
+
+export interface SortImages {
+  itemId: number;
+  positions: { imageId: number; position: number }[];
 }

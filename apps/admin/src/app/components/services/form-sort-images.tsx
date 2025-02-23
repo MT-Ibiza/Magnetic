@@ -1,27 +1,52 @@
-import { FC, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { ReactSortable } from 'react-sortablejs';
-import { Image } from '@magnetic/interfaces';
+import { Image, ImageBase, SortImages } from '@magnetic/interfaces';
 import { Button } from '@magnetic/ui';
+import { useMutation } from '@tanstack/react-query';
+import { sortImages } from '../../apis/api-images';
+import { toast } from 'sonner';
 
 interface FormSortImagesProps {
+  itemId: number;
   images: Image[];
-  // onChangePosition: (
-  //   positions: { imageId: number; position: number }[]
-  // ) => void;
   onSave: () => void;
   onCancel: () => void;
 }
 
 const FormSortImages: FC<FormSortImagesProps> = ({
+  itemId,
   images,
-  // onChangePosition,
   onSave,
   onCancel,
 }) => {
-  const [state, setState] = useState<Image[]>(images);
+  const initialImagesSorted = useMemo(() => {
+    return [...images].sort((a, b) => a.position - b.position);
+  }, [images]);
 
-  function handleSubmitImages() {
-    onSave();
+  const [sortedImages, setSortedImages] =
+    useState<ImageBase[]>(initialImagesSorted);
+  const sortImagesPosition = useMutation<any, Error, SortImages>({
+    mutationFn: (data) => {
+      return sortImages(data);
+    },
+    onSuccess: () => {
+      onSave();
+      toast.success(`Images sorted!`);
+    },
+    onError: () => {
+      toast.success(`Images couldn't be sorted!`);
+    },
+  });
+
+  async function handleSubmitImages() {
+    const positions = sortedImages.map((image, index) => ({
+      imageId: image.id,
+      position: index,
+    }));
+    await sortImagesPosition.mutateAsync({
+      itemId,
+      positions,
+    });
   }
 
   function handleCancel() {
@@ -31,19 +56,13 @@ const FormSortImages: FC<FormSortImagesProps> = ({
   return (
     <div>
       <ReactSortable
-        list={state}
+        list={sortedImages}
         setList={(newState) => {
-          setState(newState);
-          // onChangePosition(
-          //   newState.map((image, index) => ({
-          //     imageId: image.id,
-          //     position: index,
-          //   }))
-          // );
+          setSortedImages(newState);
         }}
         className="grid grid-cols-2 gap-3"
       >
-        {state.map((image, index) => (
+        {sortedImages.map((image, index) => (
           <div
             key={image.id}
             className="relative p-2 bg-gray-100 rounded-lg overflow-hidden"

@@ -1,4 +1,3 @@
-import { BoatAvailability } from '@magnetic/interfaces';
 import { URL_IMPORT_CALENDAR } from './api-constants';
 
 export async function importCalendarEvents(boatId: number): Promise<any> {

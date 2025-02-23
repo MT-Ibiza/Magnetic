@@ -184,9 +184,10 @@ function ServicePage(props: Props) {
             onSave={toggleDrawer}
           />
         )}
-        {openForm === 'images' && (
+        {openForm === 'images' && selectedItem && (
           <FormSortImages
-            images={selectedItem?.images || []}
+            itemId={selectedItem.id}
+            images={selectedItem.images}
             onSave={toggleDrawer}
             onCancel={toggleDrawer}
           />

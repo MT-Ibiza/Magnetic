@@ -21,7 +21,11 @@ export async function GET(
                 name: true,
               },
             },
-            images: true,
+            images: {
+              orderBy: {
+                position: 'asc',
+              },
+            },
             _count: {
               select: {
                 variants: true,
