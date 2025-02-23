@@ -70,6 +70,7 @@ model Category {
   description String?
   formType    String?
   items       Item[]
+  position    Int      @default(1)
   service     Service? @relation(fields: [serviceId], references: [id])
   serviceId   Int?
 }

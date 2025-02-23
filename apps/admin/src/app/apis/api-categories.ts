@@ -1,7 +1,13 @@
-import { Category, EditCategory, NewCategory } from '@magnetic/interfaces';
+import {
+  Category,
+  EditCategory,
+  NewCategory,
+  SortCategories,
+} from '@magnetic/interfaces';
 import {
   URL_GET_CATEGORIES,
   URL_NEW_CATEGORY,
+  URL_SORT_CATEGORIES,
   URL_UPDATE_CATEGORY,
 } from './api-constants';
 
@@ -39,6 +45,21 @@ export async function editCategory(
   const url = URL_UPDATE_CATEGORY(categoryId);
   const response = await fetch(url, {
     method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  });
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
+  return dataJson;
+}
+
+export async function sortCategories(
+  params: SortCategories
+): Promise<{ message: string }> {
+  const response = await fetch(URL_SORT_CATEGORIES, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },

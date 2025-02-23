@@ -20,6 +20,11 @@ export interface Service extends ServiceBase {
   providerId: number;
   script?: string;
   items: Item[];
+  categories: {
+    id: number;
+    name: string;
+    position: number;
+  }[];
 }
 
 export interface ServiceInTable extends Service {

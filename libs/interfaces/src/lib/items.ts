@@ -105,3 +105,8 @@ export interface SortImages {
   itemId: number;
   positions: { imageId: number; position: number }[];
 }
+
+export interface SortCategories {
+  serviceId: number;
+  positions: { categoryId: number; position: number }[];
+}

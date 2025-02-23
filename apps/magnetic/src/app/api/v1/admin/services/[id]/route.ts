@@ -13,6 +13,13 @@ export async function GET(
         id: Number(params.id),
       },
       include: {
+        categories: {
+          select: {
+            id: true,
+            name: true,
+            position: true,
+          },
+        },
         packages: {
           select: {
             id: true,

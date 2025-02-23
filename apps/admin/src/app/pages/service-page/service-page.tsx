@@ -2,10 +2,12 @@ import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
 import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
-import { Button, CardWrapper, Text } from '@magnetic/ui';
+import { Button, CardWrapper, DrawerContent, Text } from '@magnetic/ui';
 import { BoatsTable } from '../../components/boats/boats-table';
 import ItemsTable from '../../components/services/items-table';
 import './styles.scss';
+import FormSortCategories from '../../components/services/form-sort-categories';
+import { useState } from 'react';
 
 interface Props {}
 
@@ -13,7 +15,11 @@ function ServicePage(props: Props) {
   const {} = props;
   const params = useParams();
   const serviceId = parseInt(params.id || '');
-  const { isLoading, isError, service, error } = useService(serviceId);
+  const { isLoading, isError, service, error, refetch } = useService(serviceId);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const toggleDrawer = () => {
+    setOpenDrawer((prevState) => !prevState);
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -36,11 +42,12 @@ function ServicePage(props: Props) {
               {service.name}
             </h2>
             <div className="gap-3 flex justify-end lg:w-auto w-full">
-              <Button
-                href={`/services/edit/${service.id}`}
-                variant="outline"
-                className="px-6 py-2 text-primary-500 border-primary-500 hover:bg-primary-50"
-              >
+              {service.categories.length > 0 && (
+                <Button variant="outline" onClick={toggleDrawer}>
+                  Sort Categories
+                </Button>
+              )}
+              <Button href={`/services/edit/${service.id}`} variant="outline">
                 Edit Service
               </Button>
               {!service.script && (
@@ -74,6 +81,21 @@ function ServicePage(props: Props) {
           )}
         </div>
       </CardWrapper>
+      <DrawerContent
+        title="Sort Categories"
+        open={openDrawer}
+        onClose={toggleDrawer}
+      >
+        <FormSortCategories
+          categories={service.categories}
+          serviceId={service.id}
+          onSave={() => {
+            toggleDrawer();
+            refetch();
+          }}
+          onCancel={toggleDrawer}
+        />
+      </DrawerContent>
     </>
   );
 }

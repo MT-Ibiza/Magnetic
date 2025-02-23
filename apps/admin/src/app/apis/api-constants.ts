@@ -44,6 +44,8 @@ export const URL_GET_CATEGORIES = `${API_URL}/categories`;
 export const URL_NEW_CATEGORY = `${API_URL}/categories`;
 export const URL_UPDATE_CATEGORY = (id: number) =>
   `${API_URL}/categories/${id}`;
+export const URL_SORT_CATEGORIES = `${API_URL}/categories/sort`;
+
 //Packages
 export const URL_GET_PACKAGES = `${API_URL}/packages`;
 export const URL_NEW_PACKAGE = `${API_URL}/packages`;

@@ -16,6 +16,7 @@ export interface Category extends CategoryBase {
   createdAt: Date;
   updatedAt: Date;
   items: Item[];
+  position: number;
 }
 
 export interface NewCategory extends CategoryBase {}
