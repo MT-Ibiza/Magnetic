@@ -3,7 +3,6 @@ import { ErrorText } from '../../components/error-text';
 import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
 import { Button, CardWrapper, DrawerContent, Text } from '@magnetic/ui';
-import ItemsTable from '../../components/services/items-table';
 import { useState } from 'react';
 import FormProduct from '../../components/services/form-product';
 import { ApiResponse, Item } from '@magnetic/interfaces';
@@ -14,6 +13,7 @@ import { deleteItem } from '../../apis/api-items';
 import { toast } from 'sonner';
 import ConfirmAlert from '../../components/confirm-alert';
 import FormSortImages from '../../components/services/form-sort-images';
+import ItemsTable from '../../components/services/items-table';
 import './styles.scss';
 
 interface Props {}
@@ -122,24 +122,7 @@ function ServicePage(props: Props) {
               {service.serviceType === 'boat_rental' ? (
                 <BoatsTable serviceId={service.id} />
               ) : (
-                <ItemsTable
-                  items={service.items || []}
-                  onClickEdit={(item) => {
-                    toggleDrawer();
-                    setSelectedItem(item);
-                    setOpenForm('product');
-                  }}
-                  onClickVariant={(item) => {
-                    toggleDrawer();
-                    setSelectedItem(item);
-                    setOpenForm('variant');
-                  }}
-                  onClickRemove={(item) => {
-                    setSelectedItem(item);
-                    setShowAlert(true);
-                  }}
-                  onTogglePublish={handlePublishToggle}
-                />
+                <ItemsTable serviceId={service.id} />
               )}
             </div>
           )}
