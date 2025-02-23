@@ -69,6 +69,7 @@ export function BoatsTable(props: Props) {
       itemId: productId,
       isPublished: newStatus,
     });
+    toast.success('Boat updated!');
     refetch();
   };
 
@@ -182,7 +183,7 @@ export function BoatsTable(props: Props) {
               fetchNextPage();
             }}
           >
-            Load More Results
+            Load More Boats
           </Button>
         </div>
       )}
@@ -209,8 +210,8 @@ export function BoatsTable(props: Props) {
         title="Remove Boat"
         message={
           selectedItem?.published
-            ? 'This product is published, Are you sure you want to remove this product?'
-            : 'Are you sure you want to remove this product?'
+            ? 'This boat is published, Are you sure you want to remove this boat?'
+            : 'Are you sure you want to remove this boat?'
         }
         show={showAlert}
         onClickConfirm={async () => {
