@@ -14,6 +14,7 @@ import { useMutation } from '@tanstack/react-query';
 import { deleteItem } from '../../apis/api-items';
 import { toast } from 'sonner';
 import ConfirmAlert from '../../components/confirm-alert';
+import FormSortImages from '../../components/services/form-sort-images';
 
 interface Props {}
 
@@ -132,6 +133,11 @@ function ServicePage(props: Props) {
                     setSelectedItem(item);
                     setShowAlert(true);
                   }}
+                  onClickOrderImages={(item) => {
+                    setSelectedItem(item);
+                    setOpenForm('images');
+                    toggleDrawer();
+                  }}
                 />
               ) : (
                 <ItemsTable
@@ -176,6 +182,13 @@ function ServicePage(props: Props) {
             onCancel={toggleDrawer}
             itemId={selectedItem.id}
             onSave={toggleDrawer}
+          />
+        )}
+        {openForm === 'images' && (
+          <FormSortImages
+            images={selectedItem?.images || []}
+            onSave={toggleDrawer}
+            onCancel={toggleDrawer}
           />
         )}
       </DrawerContent>

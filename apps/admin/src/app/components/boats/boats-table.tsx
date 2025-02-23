@@ -12,10 +12,11 @@ import { placeholderItemImage } from '../../constants';
 interface Props {
   serviceId: number;
   onClickRemove?: (item: Item) => void;
+  onClickOrderImages?: (item: Item) => void;
 }
 
 export function BoatsTable(props: Props) {
-  const { serviceId, onClickRemove } = props;
+  const { serviceId, onClickRemove, onClickOrderImages } = props;
   const params = {
     serviceId: serviceId,
     page: 1,
@@ -121,6 +122,13 @@ export function BoatsTable(props: Props) {
                       >
                         Edit Product
                       </a>
+                    </li>
+                    <li
+                      onClick={() => {
+                        onClickOrderImages && onClickOrderImages(product);
+                      }}
+                    >
+                      <a className="">Order Images</a>
                     </li>
                     <li
                       onClick={() => {
