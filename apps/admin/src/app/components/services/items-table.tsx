@@ -13,6 +13,7 @@ import { useMutation } from '@tanstack/react-query';
 import { deleteItem } from '../../apis/api-items';
 import ConfirmAlert from '../confirm-alert';
 import FormSortImages from './form-sort-images';
+import FormVariant from '../form-variant';
 
 interface Props {
   serviceId: number;
@@ -23,6 +24,12 @@ function ItemsTable(props: Props) {
   const [selectedItem, setSelectedItem] = useState<Item>();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [openForm, setOpenForm] = useState<string>();
+
+  const drawerTitles = {
+    variant: 'New Variant',
+    images: 'Sort Images',
+  };
 
   const params = {
     serviceId: serviceId,
@@ -139,7 +146,9 @@ function ItemsTable(props: Props) {
                   >
                     <li
                       onClick={() => {
-                        // onClickVariant && onClickVariant(item);
+                        setOpenForm('variant');
+                        setSelectedItem(item);
+                        toggleDrawer();
                       }}
                     >
                       <a>New Variant</a>
@@ -150,6 +159,15 @@ function ItemsTable(props: Props) {
                       >
                         Edit Product
                       </a>
+                    </li>
+                    <li
+                      onClick={() => {
+                        setOpenForm('images');
+                        toggleDrawer();
+                        setSelectedItem(item);
+                      }}
+                    >
+                      <a className="">Order Images</a>
                     </li>
                     <li
                       onClick={() => {
@@ -181,11 +199,11 @@ function ItemsTable(props: Props) {
       )}
 
       <DrawerContent
-        title="Sort Images"
+        title={`${drawerTitles[openForm as 'images'] || ''}`}
         open={openDrawer}
         onClose={toggleDrawer}
       >
-        {selectedItem && (
+        {selectedItem && openForm === 'images' && (
           <FormSortImages
             itemId={selectedItem.id}
             images={selectedItem.images}
@@ -194,6 +212,17 @@ function ItemsTable(props: Props) {
               refetch();
             }}
             onCancel={toggleDrawer}
+          />
+        )}
+        {selectedItem && openForm === 'variant' && (
+          <FormVariant
+            itemName={selectedItem.name}
+            onCancel={toggleDrawer}
+            itemId={selectedItem.id}
+            onSave={() => {
+              toggleDrawer();
+              refetch();
+            }}
           />
         )}
       </DrawerContent>

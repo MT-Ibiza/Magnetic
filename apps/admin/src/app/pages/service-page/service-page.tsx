@@ -2,17 +2,8 @@ import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
 import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
-import { Button, CardWrapper, DrawerContent, Text } from '@magnetic/ui';
-import { useState } from 'react';
-import FormProduct from '../../components/services/form-product';
-import { ApiResponse, Item } from '@magnetic/interfaces';
-import FormVariant from '../../components/form-variant';
+import { Button, CardWrapper, Text } from '@magnetic/ui';
 import { BoatsTable } from '../../components/boats/boats-table';
-import { useMutation } from '@tanstack/react-query';
-import { deleteItem } from '../../apis/api-items';
-import { toast } from 'sonner';
-import ConfirmAlert from '../../components/confirm-alert';
-import FormSortImages from '../../components/services/form-sort-images';
 import ItemsTable from '../../components/services/items-table';
 import './styles.scss';
 
@@ -22,38 +13,7 @@ function ServicePage(props: Props) {
   const {} = props;
   const params = useParams();
   const serviceId = parseInt(params.id || '');
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const [openForm, setOpenForm] = useState('');
-  const [selectedItem, setSelectedItem] = useState<Item>();
-  const [showAlert, setShowAlert] = useState(false);
-  const {
-    isLoading,
-    isError,
-    service,
-    error,
-    publishOrUnpublishItemApi,
-    refetch,
-  } = useService(serviceId);
-
-  const removeItem = useMutation<ApiResponse, Error, any>({
-    mutationFn: (itemId: number) => {
-      return deleteItem(serviceId, itemId);
-    },
-    onSuccess: () => {
-      setShowAlert(false);
-      toast.success(`Product removed!`);
-      refetch();
-    },
-    onError: () => {
-      setShowAlert(false);
-      toast.error(`Product cannot remove!`);
-      console.log('Product cannot remove');
-    },
-  });
-
-  const toggleDrawer = () => {
-    setOpenDrawer((prevState) => !prevState);
-  };
+  const { isLoading, isError, service, error } = useService(serviceId);
 
   if (isLoading) {
     return <Loading />;
@@ -66,20 +26,6 @@ function ServicePage(props: Props) {
   if (!service) {
     return <Text>Service Not Found</Text>;
   }
-
-  const handlePublishToggle = async (
-    productId: number,
-    currentStatus: boolean
-  ) => {
-    const newStatus = !currentStatus;
-    await publishOrUnpublishItemApi.mutateAsync({
-      itemId: productId,
-      isPublished: newStatus,
-    });
-    toast.success(`Product ${newStatus ? 'published' : 'unpublished'}`);
-
-    refetch();
-  };
 
   return (
     <>
@@ -128,54 +74,6 @@ function ServicePage(props: Props) {
           )}
         </div>
       </CardWrapper>
-      <DrawerContent
-        title={openForm === 'product' ? 'Edit Product' : 'Edit Variant'}
-        open={openDrawer}
-        onClose={toggleDrawer}
-      >
-        {openForm === 'product' && (
-          <FormProduct
-            onCancel={toggleDrawer}
-            serviceId={serviceId}
-            item={selectedItem}
-            onSave={toggleDrawer}
-          />
-        )}
-        {openForm === 'variant' && selectedItem && (
-          <FormVariant
-            itemName={selectedItem.name}
-            onCancel={toggleDrawer}
-            itemId={selectedItem.id}
-            onSave={toggleDrawer}
-          />
-        )}
-        {openForm === 'images' && selectedItem && (
-          <FormSortImages
-            itemId={selectedItem.id}
-            images={selectedItem.images}
-            onSave={() => {
-              toggleDrawer();
-            }}
-            onCancel={toggleDrawer}
-          />
-        )}
-      </DrawerContent>
-      <ConfirmAlert
-        title={'Remove product'}
-        message={
-          selectedItem?.published
-            ? 'This product is published, Are you sure you want to remove this product?'
-            : 'Are you sure you want to remove this product?'
-        }
-        show={showAlert}
-        onClickConfirm={async () => {
-          const itemId = selectedItem?.id || 0;
-          await removeItem.mutateAsync(itemId);
-        }}
-        onClickCancel={() => {
-          setShowAlert(false);
-        }}
-      />
     </>
   );
 }
