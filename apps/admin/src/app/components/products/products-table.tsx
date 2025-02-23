@@ -3,7 +3,7 @@ import { ErrorText } from '../error-text';
 import { Link } from 'react-router-dom';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { useProducts } from '../../hooks/useProducts';
-import { Button } from '@magnetic/ui';
+import { Button, DrawerContent } from '@magnetic/ui';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useMutation } from '@tanstack/react-query';
 import { deleteItem } from '../../apis/api-items';
@@ -12,6 +12,7 @@ import ConfirmAlert from '../confirm-alert';
 import { useState } from 'react';
 import { ApiResponse, Item } from '@magnetic/interfaces';
 import { placeholderItemImage } from '../../constants';
+import FormSortImages from '../services/form-sort-images';
 
 interface Props {}
 
@@ -19,6 +20,8 @@ export function ProductsTable(props: Props) {
   const {} = props;
   const [selectedItem, setSelectedItem] = useState<Item>();
   const [showAlert, setShowAlert] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
+
   const params = {
     searchText: '',
     categoryId: undefined,
@@ -35,6 +38,10 @@ export function ProductsTable(props: Props) {
     fetchNextPage,
     publishOrUnpublishItemApi,
   } = useProducts(params);
+
+  const toggleDrawer = () => {
+    setOpenDrawer((prevState) => !prevState);
+  };
 
   const removeItem = useMutation<
     ApiResponse,
@@ -141,6 +148,14 @@ export function ProductsTable(props: Props) {
                       </li>
                       <li
                         onClick={() => {
+                          toggleDrawer();
+                          setSelectedItem(product);
+                        }}
+                      >
+                        <a className="">Order Images</a>
+                      </li>
+                      <li
+                        onClick={() => {
                           setSelectedItem(product);
                           setShowAlert(true);
                         }}
@@ -168,6 +183,23 @@ export function ProductsTable(props: Props) {
           </div>
         )}
       </div>
+      <DrawerContent
+        title="Sort Images"
+        open={openDrawer}
+        onClose={toggleDrawer}
+      >
+        {selectedItem && (
+          <FormSortImages
+            itemId={selectedItem.id}
+            images={selectedItem.images}
+            onSave={() => {
+              toggleDrawer();
+              refetch();
+            }}
+            onCancel={toggleDrawer}
+          />
+        )}
+      </DrawerContent>
       <ConfirmAlert
         title={'Remove product'}
         message={
