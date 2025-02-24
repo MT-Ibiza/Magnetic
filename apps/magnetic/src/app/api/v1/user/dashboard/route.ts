@@ -19,13 +19,29 @@ export async function GET(request: Request) {
       },
     });
     const services = await db.service.findMany({
-      include: {
+      select: {
+        id: true,
+        serviceType: true,
+        imageUrl: true,
+        position: true,
+        name: true,
         packages: {
           select: {
             id: true,
             name: true,
           },
         },
+      },
+      // include: {
+      //   packages: {
+      //     select: {
+      //       id: true,
+      //       name: true,
+      //     },
+      //   },
+      // },
+      orderBy: {
+        position: 'asc',
       },
     });
     const user = await db.user.findUnique({

@@ -19,7 +19,9 @@ export function groupItemsByCategory(
   const groupedItems = Object.keys(categoryMap)
     .map((category) => ({
       category,
-      items: categoryMap[category].items,
+      items: categoryMap[category].items.sort(
+        (a, b) => a.position - b.position
+      ),
       position: categoryMap[category].position,
     }))
     .sort((a, b) => a.position - b.position);

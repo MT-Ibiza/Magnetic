@@ -1,13 +1,12 @@
 import { Item, Service } from '@magnetic/interfaces';
 import ItemCard from '../../components/items/item-card';
-import { groupItemsByCategory } from '../../utils';
+import { groupItemsByCategory } from '@magnetic/utils';
 
 interface Props {
   items: Item[];
   availableInPlan: boolean;
   service: Service;
 }
-
 function ListProducts(props: Props) {
   const { items, availableInPlan, service } = props;
   const servicesMultiple = ['drinks'];

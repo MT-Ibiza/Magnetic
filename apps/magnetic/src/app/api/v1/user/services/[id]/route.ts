@@ -40,6 +40,7 @@ export async function GET(
             images: true,
             boatAttributes: true,
             drinkAttributes: true,
+            position: true,
             variants: {
               select: {
                 priceInCents: true,

@@ -19,23 +19,6 @@ export function DashboardClientPage() {
   const { isLoading, packages, services, error, isError, userAccount } =
     useDashboard();
 
-  const filteredPackages = packages.filter(
-    (item) => item.id !== userAccount.package?.id
-  );
-
-  const filteredServices = services
-    .filter((service) =>
-      service.packages.some((pkg) => pkg.id === userAccount.package?.id)
-    )
-    .slice(0, 5);
-
-  const videoUrl = {
-    id: 'Ao7e4iisKMs',
-    title: 'Magical Scotland - 4K Scenic Relaxation Film with Calming Music',
-    thumbnail:
-      'https://images.pexels.com/photos/131423/pexels-photo-131423.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  };
-
   if (isLoading) {
     return <h1>Loading....</h1>;
   }
