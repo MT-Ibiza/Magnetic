@@ -13,6 +13,7 @@ import { useAuth } from './hooks/useAuth';
 import { User } from 'libs/interfaces/src/lib/users';
 import { FiBookOpen, FiShoppingCart, FiUser } from 'react-icons/fi';
 import CartShopping from './components/cart/cart-shopping';
+import FooterNav from './components/footer-menu';
 
 interface Props {}
 
@@ -100,6 +101,7 @@ function Layout(props: Props) {
           <Outlet />
         </div>
       </div>
+      <FooterNav/>
     </div>
   );
 }

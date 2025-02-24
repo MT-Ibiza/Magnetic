@@ -302,3 +302,13 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     @apply w-full flex pb-6;
   }
 }
+
+@media (max-width: 768px) {
+  ._tooltip_181xn_903 {
+    bottom: 5rem !important;
+  }
+  
+  ._whatsappButton_181xn_23 {
+    bottom: 4rem !important;
+  }
+}

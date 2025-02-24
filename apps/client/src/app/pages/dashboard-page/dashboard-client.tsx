@@ -82,6 +82,7 @@ export function DashboardClientPage() {
                 <div className="h-full flex flex-col items-start rounded-2xl border border-neutral-200 p-6">
                   {canMakeBookings ? (
                     <>
+                      <FaClock className="text-neutral-700 dark:text-neutral-300" />
                       <Text>
                         Booking can be made until{' '}
                         {arrivalDate.format('MMMM DD, YYYY')}
