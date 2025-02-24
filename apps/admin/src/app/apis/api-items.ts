@@ -1,19 +1,17 @@
 import {
   ApiResponse,
-  Category,
-  EditItem,
   Item,
   ItemWithServiceCategories,
-  NewItem,
   NewItemFromCategory,
+  SortItems,
 } from '@magnetic/interfaces';
 import {
   URL_CREATE_ITEM,
-  URL_GET_CATEGORIES,
   URL_GET_ITEM,
   URL_GET_ITEMS,
   URL_NEW_ITEM,
   URL_REMOVE_ITEM,
+  URL_SORT_ITEMS,
   URL_UPDATE_ITEM,
 } from './api-constants';
 
@@ -102,6 +100,22 @@ export async function deleteItem(
     headers: {
       'Content-Type': 'application/json',
     },
+  });
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
+  return dataJson;
+}
+
+export async function sortItems(
+  serviceId: number,
+  params: SortItems
+): Promise<{ message: string }> {
+  const response = await fetch(URL_SORT_ITEMS(serviceId), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
   });
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);

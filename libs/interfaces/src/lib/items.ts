@@ -111,3 +111,7 @@ export interface SortCategories {
   serviceId: number;
   positions: { categoryId: number; position: number }[];
 }
+
+export interface SortItems {
+  positions: { itemId: number; position: number }[];
+}

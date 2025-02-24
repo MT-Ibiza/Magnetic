@@ -28,6 +28,9 @@ export const URL_UPDATE_ITEM = (serviceId: number, itemId: number) =>
   `${API_URL}/services/${serviceId}/items/${itemId}`;
 export const URL_REMOVE_ITEM = (serviceId: number, itemId: number) =>
   `${API_URL}/services/${serviceId}/items/${itemId}`;
+export const URL_SORT_ITEMS = (serviceId: number) =>
+  `${API_URL}/services/${serviceId}/items/sort`;
+
 //Boats
 export const URL_GET_BOATS = (serviceId: number) =>
   `${API_URL}/services/${serviceId}/items`;

@@ -1,12 +1,12 @@
 import { FC, useState } from 'react';
 import { ReactSortable } from 'react-sortablejs';
-import { Item } from '@magnetic/interfaces';
+import { Item, SortItems } from '@magnetic/interfaces';
 import { Button, Drawer, Text } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
-import { sortImages } from '../../apis/api-images';
 import { toast } from 'sonner';
 import { placeholderItemImage } from '../../constants';
 import { groupItemsByCategory } from '@magnetic/utils';
+import { sortItems } from '../../apis/api-items';
 
 interface FormSortItemsProps {
   serviceId: number;
@@ -23,7 +23,6 @@ const FormSortItems: FC<FormSortItemsProps> = ({
 }) => {
   const itemsGroup = groupItemsByCategory(items);
 
-  // Estado para cada categoría con sus ítems ordenados
   const [sortedItems, setSortedItems] = useState(
     itemsGroup.map((group) => ({
       category: group.category,
@@ -31,18 +30,18 @@ const FormSortItems: FC<FormSortItemsProps> = ({
     }))
   );
 
-  // const sortItemsPosition = useMutation({
-  //   mutationFn: (data: { serviceId: number; positions: { itemId: number; position: number }[] }) => {
-  //     return sortImages(data);
-  //   },
-  //   onSuccess: () => {
-  //     onSave();
-  //     toast.success('Items sorted!');
-  //   },
-  //   onError: () => {
-  //     toast.error("Items couldn't be sorted!");
-  //   },
-  // });
+  const sortItemsPosition = useMutation<any, Error, SortItems>({
+    mutationFn: (data) => {
+      return sortItems(serviceId, data);
+    },
+    onSuccess: () => {
+      onSave();
+      toast.success('Items sorted!');
+    },
+    onError: () => {
+      toast.error("Items couldn't be sorted!");
+    },
+  });
 
   async function handleSubmit() {
     const positions = sortedItems.flatMap((group) =>
@@ -53,10 +52,9 @@ const FormSortItems: FC<FormSortItemsProps> = ({
     );
     console.log(positions);
 
-    // await sortItemsPosition.mutateAsync({
-    //   serviceId,
-    //   positions,
-    // });
+    await sortItemsPosition.mutateAsync({
+      positions,
+    });
   }
 
   function handleCancel() {
