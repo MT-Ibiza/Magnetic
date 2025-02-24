@@ -66,7 +66,7 @@ async function getBoatsAirtable({
     const url = new URL(
       `https://api.airtable.com/v0/${process.env.AIRTABLE_BOATS_ID}/Boats`
     );
-    url.searchParams.append('view', 'App Example');
+    url.searchParams.append('view', 'App Boats');
     url.searchParams.append('pageSize', pageSize.toString());
     if (offset) {
       url.searchParams.append('offset', offset);
@@ -77,7 +77,6 @@ async function getBoatsAirtable({
         Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
       },
     });
-    console.log('response: ', response);
 
     if (!response.ok) {
       throw new Error(
