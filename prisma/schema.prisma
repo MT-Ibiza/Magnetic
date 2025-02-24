@@ -133,6 +133,7 @@ model Item {
   published       Boolean          @default(false)
   priceInCents    Int
   serviceId       Int
+  position        Int              @default(1)
   service         Service          @relation(fields: [serviceId], references: [id])
   cartItems       CartItem[]
   ordenItems      OrderItem[]

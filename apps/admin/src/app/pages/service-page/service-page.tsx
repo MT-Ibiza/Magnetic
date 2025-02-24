@@ -8,6 +8,7 @@ import ItemsTable from '../../components/services/items-table';
 import './styles.scss';
 import FormSortCategories from '../../components/services/form-sort-categories';
 import { useState } from 'react';
+import FormSortItems from '../../components/services/form-sort-items';
 
 interface Props {}
 
@@ -17,6 +18,7 @@ function ServicePage(props: Props) {
   const serviceId = parseInt(params.id || '');
   const { isLoading, isError, service, error, refetch } = useService(serviceId);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [openForm, setOpenForm] = useState<string>();
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
   };
@@ -42,8 +44,23 @@ function ServicePage(props: Props) {
               {service.name}
             </h2>
             <div className="gap-3 flex justify-end lg:w-auto w-full">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setOpenForm('products');
+                  toggleDrawer();
+                }}
+              >
+                Sort Products
+              </Button>
               {service.categories.length > 0 && (
-                <Button variant="outline" onClick={toggleDrawer}>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setOpenForm('categories');
+                    toggleDrawer();
+                  }}
+                >
                   Sort Categories
                 </Button>
               )}
@@ -85,16 +102,30 @@ function ServicePage(props: Props) {
         title="Sort Categories"
         open={openDrawer}
         onClose={toggleDrawer}
+        width={openForm === 'products' ? '50rem' : undefined}
       >
-        <FormSortCategories
-          categories={service.categories}
-          serviceId={service.id}
-          onSave={() => {
-            toggleDrawer();
-            refetch();
-          }}
-          onCancel={toggleDrawer}
-        />
+        {openForm === 'categories' && (
+          <FormSortCategories
+            categories={service.categories}
+            serviceId={service.id}
+            onSave={() => {
+              toggleDrawer();
+              refetch();
+            }}
+            onCancel={toggleDrawer}
+          />
+        )}
+        {openForm === 'products' && (
+          <FormSortItems
+            items={service.items || []}
+            serviceId={service.id}
+            onSave={() => {
+              toggleDrawer();
+              refetch();
+            }}
+            onCancel={toggleDrawer}
+          />
+        )}
       </DrawerContent>
     </>
   );

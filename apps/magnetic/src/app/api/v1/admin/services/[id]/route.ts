@@ -20,6 +20,21 @@ export async function GET(
             position: true,
           },
         },
+        items: {
+          select: {
+            id: true,
+            name: true,
+            position: true,
+            images: true,
+            category: {
+              select: {
+                id: true,
+                name: true,
+                position: true,
+              },
+            },
+          },
+        },
         packages: {
           select: {
             id: true,

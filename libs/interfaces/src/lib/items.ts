@@ -43,6 +43,7 @@ export interface Item extends ItemBase {
   published: boolean;
   priceInCents: number;
   seasonPrices: SeasonPrice[];
+  position: number;
 }
 
 export interface ItemWithCount extends Item {
