@@ -1,4 +1,3 @@
-import React from 'react';
 import { useServices } from '../../hooks/useServices';
 import Loading from '../loading';
 import { ErrorText } from '../error-text';
@@ -42,7 +41,9 @@ function ServicesTable(props: Props) {
               <td>
                 <div className="flex gap-2">
                   {service.packages.map((pack, index) => (
-                    <div className="">{pack.name}</div>
+                    <div className="" key={index}>
+                      {pack.name}
+                    </div>
                   ))}
                 </div>
               </td>

@@ -18,6 +18,7 @@ export const useServices = () => {
     isSuccess,
     services: data || [],
     refetch,
+    data,
     error,
   };
 };

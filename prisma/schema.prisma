@@ -55,6 +55,7 @@ model Service {
   imageUrl           String?
   termsAndConditions String?
   instructions       String?
+  position           Int                @default(1)
   packages           Package[]          @relation("PackageServices")
   providerId         Int?
   provider           Provider?          @relation(fields: [providerId], references: [id])

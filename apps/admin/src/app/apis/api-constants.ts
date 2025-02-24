@@ -13,6 +13,7 @@ export const URL_GET_SERVICE = (id: number) => `${API_URL}/services/${id}`;
 export const URL_NEW_SERVICE = `${API_URL}/services`;
 export const URL_UPDATE_SERVICE = (id: number) => `${API_URL}/services/${id}`;
 export const URL_DATA_NEW_SERVICE = `${API_URL}/services/new`;
+export const URL_SORT_SERVICES = `${API_URL}/services/sort`;
 
 //Items
 export const URL_GET_ITEMS = (serviceId: number) =>

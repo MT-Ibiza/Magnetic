@@ -20,6 +20,7 @@ export interface Service extends ServiceBase {
   providerId: number;
   script?: string;
   items: Item[];
+  position: number;
   categories: {
     id: number;
     name: string;
@@ -43,3 +44,7 @@ export interface NewService {
 }
 
 export interface EditService extends NewService {}
+
+export interface SortServices {
+  positions: { serviceId: number; position: number }[];
+}

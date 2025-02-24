@@ -5,6 +5,7 @@ import {
   Package,
   Provider,
   Service,
+  SortServices,
 } from '@magnetic/interfaces';
 import {
   URL_DATA_NEW_SERVICE,
@@ -12,6 +13,7 @@ import {
   URL_GET_SERVICES,
   URL_NEW_SERVICE,
   URL_PUBLISH_PRODUCT,
+  URL_SORT_SERVICES,
   URL_UPDATE_SERVICE,
 } from './api-constants';
 
@@ -97,6 +99,21 @@ export async function editService(
   const response = await fetch(url, {
     method: 'PUT',
     body: params,
+  });
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
+  return dataJson;
+}
+
+export async function sortServices(
+  params: SortServices
+): Promise<{ message: string }> {
+  const response = await fetch(URL_SORT_SERVICES, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
   });
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);

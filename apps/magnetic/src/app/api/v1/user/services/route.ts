@@ -10,14 +10,7 @@ export async function GET(request: Request) {
         name: true,
         description: true,
         imageUrl: true,
-        items: {
-          select: {
-            id: true,
-          },
-          where: {
-            published: true
-          }
-        },
+        position: true,
         packages: {
           select: {
             id: true,
@@ -29,7 +22,7 @@ export async function GET(request: Request) {
         },
       },
       orderBy: {
-        createdAt: 'desc',
+        position: 'asc',
       },
     });
     return NextResponse.json(services);
