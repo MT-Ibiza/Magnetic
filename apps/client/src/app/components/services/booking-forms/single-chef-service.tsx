@@ -1,6 +1,11 @@
-import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
+import { Button, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../../hooks/useAuth';
+import { useApp } from '../../../hooks/useApp';
+import { centsToEurosWithCurrency } from '@magnetic/utils';
+import { placeholderItemImage } from '../../../constants';
+import ItemCounterButtons from '../../items/item-counter-buttons';
+import { useState } from 'react';
 
 interface SingleChefServiceFormData {
   date: string;
@@ -19,7 +24,10 @@ interface Props {
 
 export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
   const { getCurrentUser } = useAuth();
+  const { currentSelectItem } = useApp();
   const user = getCurrentUser();
+  const [amount, setAmount] = useState(1);
+
   const {
     register,
     handleSubmit,
@@ -29,7 +37,7 @@ export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
       ? {
           date: formData.date,
           startTime: formData.startTime,
-          numberOfPeople: formData.numberOfPeople,
+          numberOfPeople: formData.numberOfPeople || amount,
           kidsAges: formData.kidsAges,
           location: formData.location || user?.accommodation,
           dietaryComments: formData.dietaryComments,
@@ -38,14 +46,48 @@ export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
   });
 
   const handleFormSubmit = async (data: SingleChefServiceFormData) => {
-    onSubmit(data);
+    const formData = { ...data, ...{ numberOfPeople: amount } };
+    onSubmit(formData);
   };
 
   return (
     <div className="">
-      <h2 className="text-2xl font-bold text-center mb-6">
-        Single Chef Service
-      </h2>
+      <div className="flex justify-between">
+        <h2 className="text-2xl font-bold mb-6">Single Chef Service</h2>
+        <h2 className="font-bold">
+          Total:{' '}
+          {centsToEurosWithCurrency(
+            (currentSelectItem?.priceInCents || 0) * amount
+          )}
+        </h2>
+      </div>
+      <Text className="mb-2">Select Quantity</Text>
+      <div className="product flex justify-between items-center border border-gray-300 p-4 mb-3 rounded-md">
+        <div className="flex gap-3 items-center">
+          <img
+            className="w-[35px] bg-gray-50"
+            src={
+              currentSelectItem?.images[0]
+                ? currentSelectItem.images[0].url
+                : placeholderItemImage
+            }
+          />
+          <Text>{currentSelectItem?.name}</Text>
+        </div>
+        <div>
+          <ItemCounterButtons
+            currentAmount={amount}
+            onClickAdd={() => {
+              setAmount(amount + 1);
+            }}
+            onClickRemove={() => {
+              if (amount >= 1) {
+                setAmount(amount - 1);
+              }
+            }}
+          />
+        </div>
+      </div>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
@@ -71,23 +113,6 @@ export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
             {errors.startTime && (
               <p className="text-[12px] text-red-500 pt-2">
                 {errors.startTime.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <Text className="mb-2">Number of people</Text>
-            <Input
-              type="number"
-              min="1"
-              className="w-full"
-              {...register('numberOfPeople', {
-                required: 'Number of people is required',
-                valueAsNumber: true,
-              })}
-            />
-            {errors.numberOfPeople && (
-              <p className="text-[12px] text-red-500 pt-2">
-                {errors.numberOfPeople.message}
               </p>
             )}
           </div>
