@@ -5,6 +5,7 @@ import { Button } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { sortImages } from '../../apis/api-images';
 import { toast } from 'sonner';
+import { sortImagesByPosition } from '@magnetic/utils';
 
 interface FormSortImagesProps {
   itemId: number;
@@ -20,7 +21,7 @@ const FormSortImages: FC<FormSortImagesProps> = ({
   onCancel,
 }) => {
   const initialImagesSorted = useMemo(() => {
-    return [...images].sort((a, b) => a.position - b.position);
+    return sortImagesByPosition(images);
   }, [images]);
 
   const [sortedImages, setSortedImages] =

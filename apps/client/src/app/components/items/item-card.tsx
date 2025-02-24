@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Item, Service } from '@magnetic/interfaces';
 import {
   Alert,
@@ -8,7 +8,10 @@ import {
   SaleOffBadge,
   Text,
 } from '@magnetic/ui';
-import { centsToEurosWithCurrency } from '@magnetic/utils';
+import {
+  centsToEurosWithCurrency,
+  sortImagesByPosition,
+} from '@magnetic/utils';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import { Link } from 'react-router-dom';
@@ -31,6 +34,10 @@ function ItemCard(props: Props) {
   const { addItem, removeItem, cart } = useCartStore();
   const { setSelectedItem } = useApp();
   const productCart = cart.find((cartItem) => cartItem.item.id === item.id);
+  const imagesSorted = useMemo(() => {
+    return sortImagesByPosition(item.images);
+  }, [item.images]);
+
   const [alert, setAlert] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning';
@@ -129,7 +136,7 @@ function ItemCard(props: Props) {
         <div className="relative w-full rounded-2xl overflow-hidden">
           <GallerySlider
             href={`/services/${item.serviceId}/item/${item.id}`}
-            galleryImgs={item.images}
+            galleryImgs={imagesSorted}
             classImage={`${isDrinksService ? 'h-[200px]' : 'h-[250px]'}   `}
             uniqueID={`ExperiencesCard_${item.id}`}
           />

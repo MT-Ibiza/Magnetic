@@ -52,6 +52,7 @@ export async function GET(
                 name: true,
                 formType: true,
                 serviceId: true,
+                position: true,
               },
             },
             categoryId: true,

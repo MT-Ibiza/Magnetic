@@ -1,14 +1,9 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { motion } from 'framer-motion';
 import SharedModal from './SharedModal';
-
-export interface Image {
-  id: number;
-  url: string;
-  itemId: number;
-  createdAt: Date;
-}
+import { sortImagesByPosition } from '@magnetic/utils';
+import { Image } from '@magnetic/interfaces';
 
 interface GalleryModalProps {
   images: Image[];
@@ -16,6 +11,9 @@ interface GalleryModalProps {
 
 export const GalleryModal = ({ images }: GalleryModalProps) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const imagesSorted = useMemo(() => {
+    return sortImagesByPosition(images);
+  }, [images]);
 
   const handleShowAllPhotosClick = () => {
     setSelectedIndex(0);
@@ -25,9 +23,9 @@ export const GalleryModal = ({ images }: GalleryModalProps) => {
     setSelectedIndex(null);
   };
 
-  const isSingleImage = images.length === 1;
-  const isTwoImages = images.length === 2;
-  const isThreeImages = images.length === 3;
+  const isSingleImage = imagesSorted.length === 1;
+  const isTwoImages = imagesSorted.length === 2;
+  const isThreeImages = imagesSorted.length === 3;
 
   return (
     <>
@@ -49,7 +47,7 @@ export const GalleryModal = ({ images }: GalleryModalProps) => {
               onClick={() => setSelectedIndex(0)}
             >
               <img
-                src={images[0].url}
+                src={imagesSorted[0].url}
                 alt="0"
                 className="absolute inset-0 object-cover rounded-md sm:rounded-xl w-full h-full"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
@@ -65,7 +63,7 @@ export const GalleryModal = ({ images }: GalleryModalProps) => {
                     onClick={() => setSelectedIndex(0)}
                   >
                     <img
-                      src={images[0].url}
+                      src={imagesSorted[0].url}
                       alt="0"
                       className="absolute inset-0 object-cover rounded-md sm:rounded-xl w-full h-full"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
@@ -77,7 +75,7 @@ export const GalleryModal = ({ images }: GalleryModalProps) => {
                     onClick={() => setSelectedIndex(1)}
                   >
                     <img
-                      src={images[1].url}
+                      src={imagesSorted[1].url}
                       alt="1"
                       className="absolute inset-0 object-cover rounded-md sm:rounded-xl w-full h-full"
                       sizes="400px"
@@ -92,7 +90,7 @@ export const GalleryModal = ({ images }: GalleryModalProps) => {
                     onClick={() => setSelectedIndex(0)}
                   >
                     <img
-                      src={images[0].url}
+                      src={imagesSorted[0].url}
                       alt="0"
                       className="absolute inset-0 object-cover rounded-md sm:rounded-xl w-full h-full"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
@@ -104,7 +102,7 @@ export const GalleryModal = ({ images }: GalleryModalProps) => {
                     onClick={() => setSelectedIndex(1)}
                   >
                     <img
-                      src={images[1].url}
+                      src={imagesSorted[1].url}
                       alt="1"
                       className="absolute inset-0 object-cover rounded-md sm:rounded-xl w-full h-full"
                       sizes="400px"
@@ -116,7 +114,7 @@ export const GalleryModal = ({ images }: GalleryModalProps) => {
                     onClick={() => setSelectedIndex(2)}
                   >
                     <img
-                      src={images[2].url}
+                      src={imagesSorted[2].url}
                       alt="2"
                       className="absolute inset-0 object-cover rounded-md sm:rounded-xl w-full h-full"
                       sizes="400px"
@@ -131,7 +129,7 @@ export const GalleryModal = ({ images }: GalleryModalProps) => {
                     onClick={() => setSelectedIndex(0)}
                   >
                     <img
-                      src={images[0].url}
+                      src={imagesSorted[0].url}
                       alt="0"
                       className="absolute inset-0 object-cover rounded-md sm:rounded-xl w-full h-full"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
@@ -144,13 +142,13 @@ export const GalleryModal = ({ images }: GalleryModalProps) => {
                   >
                     <img
                       className="absolute inset-0 object-cover rounded-md sm:rounded-xl w-full h-full"
-                      src={images[1].url}
+                      src={imagesSorted[1].url}
                       alt="1"
                       sizes="400px"
                     />
                     <div className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity"></div>
                   </div>
-                  {images
+                  {imagesSorted
                     .filter((_, i) => i >= 2 && i < 4)
                     .map((item, index) => (
                       <div
@@ -173,7 +171,7 @@ export const GalleryModal = ({ images }: GalleryModalProps) => {
               )}
             </>
           )}
-          {images.length > 4 && (
+          {imagesSorted.length > 4 && (
             <div
               className="absolute hidden md:flex md:items-center md:justify-center left-3 bottom-3 px-4 py-2 rounded-xl bg-neutral-100 text-neutral-500 cursor-pointer hover:bg-neutral-200 z-10"
               onClick={handleShowAllPhotosClick}
@@ -202,7 +200,7 @@ export const GalleryModal = ({ images }: GalleryModalProps) => {
           />
           <SharedModal
             index={selectedIndex}
-            images={images}
+            images={imagesSorted}
             changePhotoId={(newIndex) => setSelectedIndex(newIndex)}
             closeModal={() => setSelectedIndex(null)}
             navigation={true}
