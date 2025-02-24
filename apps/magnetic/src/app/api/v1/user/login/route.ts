@@ -57,6 +57,7 @@ export async function POST(request: Request) {
     name: client.name,
     email: client.email,
     arrivalDate: client.arrivalDate,
+    accommodation: client.accommodation,
     phone: client.phone,
     image: client.image,
     package: client.package,

@@ -43,6 +43,7 @@ export function LoginPage() {
         name: user.name,
         email: user.email,
         arrivalDate: user.arrivalDate,
+        accommodation: user.accommodation,
         package: user.package,
         phone: user.phone,
         cartId: user.cartId,

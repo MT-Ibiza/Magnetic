@@ -1,5 +1,6 @@
 import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
+import { useAuth } from '../../../hooks/useAuth';
 
 export interface WeeklyChefServiceFormData {
   service: string;
@@ -20,6 +21,8 @@ interface Props {
 }
 
 export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
+  const { getCurrentUser } = useAuth();
+  const user = getCurrentUser();
   const {
     register,
     handleSubmit,
@@ -32,7 +35,7 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
           startTime: formData.startTime,
           numberOfPeople: formData.numberOfPeople,
           kidsAges: formData.kidsAges,
-          location: formData.location,
+          location: formData.location || user?.accommodation,
           dietaryComments: formData.dietaryComments,
           shoppingListRequests: formData.shoppingListRequests,
           firstMealRequests: formData.firstMealRequests,

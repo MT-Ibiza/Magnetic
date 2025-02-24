@@ -1,5 +1,6 @@
 import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
+import { useAuth } from '../../../hooks/useAuth';
 
 interface SingleChefServiceFormData {
   date: string;
@@ -17,6 +18,8 @@ interface Props {
 }
 
 export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
+  const { getCurrentUser } = useAuth();
+  const user = getCurrentUser();
   const {
     register,
     handleSubmit,
@@ -28,7 +31,7 @@ export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
           startTime: formData.startTime,
           numberOfPeople: formData.numberOfPeople,
           kidsAges: formData.kidsAges,
-          location: formData.location,
+          location: formData.location || user?.accommodation,
           dietaryComments: formData.dietaryComments,
         }
       : undefined,

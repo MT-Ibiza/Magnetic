@@ -5,6 +5,7 @@ export interface CurrentUser {
   name: string;
   email: string;
   arrivalDate?: string;
+  accommodation?: string;
   image?: string;
   packageId?: number;
   package?: Package;
@@ -63,6 +64,7 @@ export interface LoginResponse {
   email: string;
   role: string;
   accessToken: string;
+  accommodation: string;
   package: Package;
   cartId?: number;
   phone?: string;
