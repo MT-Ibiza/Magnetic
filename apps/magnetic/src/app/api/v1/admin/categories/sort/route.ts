@@ -7,14 +7,15 @@ export async function POST(request: Request) {
   const { serviceId, positions } = data;
 
   try {
-    const updatePromises = positions.map(({ categoryId, position }) =>
-      db.category.update({
-        where: { id: categoryId, serviceId },
-        data: { position },
-      })
+    await db.$transaction(
+      positions.map((category) =>
+        db.category.updateMany({
+          where: { id: category.categoryId, serviceId },
+          data: { position: category.position },
+        })
+      )
     );
 
-    await Promise.all(updatePromises);
     return NextResponse.json({ message: 'Positions updated successfully' });
   } catch (error: any) {
     return NextResponse.json(
