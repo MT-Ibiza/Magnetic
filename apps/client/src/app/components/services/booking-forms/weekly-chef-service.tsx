@@ -1,6 +1,7 @@
 import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../../hooks/useAuth';
+import { useApp } from '../../../hooks/useApp';
 
 export interface WeeklyChefServiceFormData {
   service: string;
@@ -22,6 +23,7 @@ interface Props {
 
 export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
   const { getCurrentUser } = useAuth();
+  const { currentSelectItem } = useApp();
   const user = getCurrentUser();
   const {
     register,
@@ -30,7 +32,7 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
   } = useForm<WeeklyChefServiceFormData>({
     defaultValues: formData
       ? {
-          service: formData.service,
+          service: currentSelectItem?.name || formData.service,
           date: formData.date,
           startTime: formData.startTime,
           numberOfPeople: formData.numberOfPeople,
@@ -57,10 +59,10 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
           <div>
             <Text className="mb-2">Service</Text>
             <Input
+              disabled
               type="text"
               className="w-full"
-              placeholder="Describe the weekly service required"
-              {...register('service', { required: 'Service is required' })}
+              defaultValue={currentSelectItem?.name}
             />
             {errors.service && (
               <p className="text-[12px] text-red-500 pt-2">

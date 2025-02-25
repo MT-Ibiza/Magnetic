@@ -281,7 +281,6 @@ function ItemCard(props: Props) {
           <RenderBookingForm
             type={formType}
             formData={{
-              data: {},
               serviceId: service.id,
             }}
             onSubmit={(data, quantity) => {
