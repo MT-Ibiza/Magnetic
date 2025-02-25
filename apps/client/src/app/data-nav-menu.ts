@@ -25,7 +25,11 @@ export const NAVIGATION_DEMO: NavItemType[] = [
     href: '/packages',
     name: 'Packages',
   },
-
+  {
+    id: ncNanoId(),
+    href: '/cart',
+    name: 'Cart',
+  },
   {
     id: ncNanoId(),
     href: '/account',

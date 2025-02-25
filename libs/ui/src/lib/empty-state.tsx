@@ -1,24 +1,24 @@
 'use client';
 
-// import Icon from './icon';
+import { IconType } from 'react-icons';
 
 interface EmptyStateProps {
   className?: string;
   title?: string;
-  icon?: string;
+  icon?: IconType;
   description?: string;
   children?: React.ReactElement;
 }
 
 export function EmptyState(props: EmptyStateProps) {
-  const { className, title, icon, description, children } = props;
+  const { className, title, icon: Icon, description, children } = props;
 
   return (
     <div className="flex items-center mt-6 text-center border rounded-lg h-96 dark:border-gray-700">
       <div className="flex flex-col w-full max-w-sm px-4 mx-auto">
-        {icon && (
+        {Icon && (
           <div className="p-3 mx-auto text-primary-500 bg-primary-100 rounded-full dark:bg-gray-800">
-            {/* <Icon icon={icon} size={45} /> */}
+            <Icon size={45} className="text-primary-500" />
           </div>
         )}
         <h1 className="mt-3 text-lg text-gray-800 dark:text-white">{title}</h1>

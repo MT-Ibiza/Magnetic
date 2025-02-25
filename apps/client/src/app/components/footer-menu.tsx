@@ -1,8 +1,9 @@
-import { FaChartPie, FaConciergeBell, FaBox } from 'react-icons/fa';
+import { FaChartPie, FaConciergeBell, FaBox, FaShoppingCart } from 'react-icons/fa';
 import React, { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import isInViewport from '../utils';
 import MenuBar from './menu-bar-mobile';
+import { useCartStore } from '../hooks/useCartStore';
 
 let WIN_PREV_POSITION = window.pageYOffset;
 
@@ -24,9 +25,9 @@ const NAV: NavItem[] = [
     icon: FaConciergeBell,
   },
   {
-    name: 'Packages',
-    link: '/packages',
-    icon: FaBox,
+    name: 'Cart',
+    link: '/cart',
+    icon: FaShoppingCart,
   },
   {
     name: 'Menu',
@@ -37,7 +38,9 @@ const NAV: NavItem[] = [
 const FooterNav = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
-
+  const { cart } = useCartStore();
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  
   useEffect(() => {
     window.addEventListener('scroll', handleEvent);
   }, []);
@@ -83,17 +86,22 @@ const FooterNav = () => {
           const active = location.pathname === item.link;
           return item.link ? (
             <Link
-              key={index}
-              to={item.link}
-              className={`flex flex-col items-center justify-between text-neutral-500 dark:text-neutral-300/90 ${
-                active ? 'text-neutral-900 dark:text-neutral-100' : ''
-              }`}
-            >
-              <item.icon
-                className={`w-6 h-6 ${active ? 'text-red-600' : ''}`}
-              />
-              <span className="text-[11px] leading-none mt-1">{item.name}</span>
-            </Link>
+            key={index}
+            to={item.link}
+            className={`relative flex flex-col items-center justify-between text-neutral-500 dark:text-neutral-300/90 ${
+              active ? 'text-neutral-900 dark:text-neutral-100' : ''
+            }`}
+          >
+            <item.icon className={`w-6 h-6 ${active ? 'text-red-600' : ''}`} />
+            <span className="text-[11px] leading-none mt-1">{item.name}</span>
+            {item.link === '/cart' && totalItems > 0 && (
+              <div
+                className="absolute -top-1 -right-3 bg-red-600 text-white text-xs font-bold h-5 w-5 rounded-full flex items-center justify-center shadow-lg"
+              >
+                {totalItems}
+              </div>
+            )}
+          </Link>
           ) : (
             <div
               key={index}
