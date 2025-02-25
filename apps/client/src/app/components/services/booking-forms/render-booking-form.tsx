@@ -12,7 +12,7 @@ interface Props {
   type: string;
   itemId?: number;
   formData?: any;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: any, quantity?: number) => void;
   viewCol?: boolean;
   onClose?: () => void;
 }

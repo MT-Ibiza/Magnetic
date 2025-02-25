@@ -284,8 +284,9 @@ function ItemCard(props: Props) {
               data: {},
               serviceId: service.id,
             }}
-            onSubmit={(data) => {
-              handleAddService(1, data);
+            onSubmit={(data, quantity) => {
+              const amount = quantity || 1;
+              handleAddService(amount, data);
             }}
             onClose={closeForm}
           />

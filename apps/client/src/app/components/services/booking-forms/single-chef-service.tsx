@@ -17,7 +17,7 @@ interface SingleChefServiceFormData {
 }
 
 interface Props {
-  onSubmit: (data: SingleChefServiceFormData) => void;
+  onSubmit: (data: SingleChefServiceFormData, quantity: number) => void;
   formData?: any;
   onCancel?: () => void;
 }
@@ -26,7 +26,7 @@ export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
   const { getCurrentUser } = useAuth();
   const { currentSelectItem } = useApp();
   const user = getCurrentUser();
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState(formData?.numberOfPeople || 1);
 
   const {
     register,
@@ -47,7 +47,7 @@ export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
 
   const handleFormSubmit = async (data: SingleChefServiceFormData) => {
     const formData = { ...data, ...{ numberOfPeople: amount } };
-    onSubmit(formData);
+    onSubmit(formData, amount);
   };
 
   return (
