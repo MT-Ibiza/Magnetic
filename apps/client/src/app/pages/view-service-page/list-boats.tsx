@@ -14,12 +14,14 @@ function ListBoats(props: Props) {
   const { availableInPlan, service } = props;
 
   const [searchParams, setSearchParams] = useState<BoatsSearchAttributes>({
-    boatType: undefined,
-    capacity: undefined,
-    size: undefined,
-    crew: undefined,
-    priceGreaterThan: undefined,
-    priceLessThan: undefined,
+    price_gt: undefined,
+    price_lt: undefined,
+    capacity_gt: undefined,
+    capacity_lt: undefined,
+    size_gt: undefined,
+    size_lt: undefined,
+    from: undefined,
+    to: undefined,
   });
 
   const {
@@ -47,7 +49,7 @@ function ListBoats(props: Props) {
               service={service}
               item={item}
               availableInPlan={availableInPlan}
-              noFillForm={false}
+              allowSelectMultiple={false}
             />
           </div>
         ))}

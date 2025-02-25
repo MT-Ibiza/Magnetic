@@ -55,6 +55,13 @@ export async function GET(
             },
             categoryId: true,
             serviceId: true,
+            service: {
+              select: {
+                id: true,
+                name: true,
+                serviceType: true,
+              },
+            },
           },
         },
       },
