@@ -21,6 +21,9 @@ export async function GET(
           },
         },
         items: {
+          where: {
+            published: true,
+          },
           select: {
             id: true,
             name: true,

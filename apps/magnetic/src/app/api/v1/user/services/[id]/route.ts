@@ -29,9 +29,6 @@ export async function GET(
           where: {
             published: true,
           },
-          orderBy: {
-            createdAt: 'desc',
-          },
           select: {
             id: true,
             name: true,

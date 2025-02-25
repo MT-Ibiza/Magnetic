@@ -99,7 +99,7 @@ function ServicePage(props: Props) {
         </div>
       </CardWrapper>
       <DrawerContent
-        title="Sort Categories"
+        title={openForm === 'products' ? 'Sort Products' : 'Sort Categories'}
         open={openDrawer}
         onClose={toggleDrawer}
         width={openForm === 'products' ? '50rem' : undefined}
