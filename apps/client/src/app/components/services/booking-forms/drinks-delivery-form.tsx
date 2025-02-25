@@ -1,5 +1,7 @@
 import { Button, Checkbox, Input, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
+import { useAuth } from '../../../hooks/useAuth';
+import moment from 'moment';
 
 export interface DrinksDeliveryFormData {
   date: string;
@@ -18,6 +20,9 @@ interface Props {
 
 export function DrinksDeliveryBookingForm(props: Props) {
   const { onSubmit, formData, onCancel } = props;
+  const { getCurrentUser } = useAuth();
+  const user = getCurrentUser();
+  const arrivalDate = moment(user?.arrivalDate).format('YYYY-MM-DD');
   const {
     register,
     handleSubmit,
@@ -27,8 +32,8 @@ export function DrinksDeliveryBookingForm(props: Props) {
   } = useForm<DrinksDeliveryFormData>({
     defaultValues: formData
       ? {
-          date: formData.date,
-          location: formData.location,
+          date: formData.date || arrivalDate,
+          location: formData.location || user?.accommodation,
           time: formData.time,
           acceptSubstitutes: false,
         }
@@ -52,6 +57,7 @@ export function DrinksDeliveryBookingForm(props: Props) {
           <div>
             <Text className="mb-2">Date</Text>
             <Input
+              disabled
               type="date"
               className="w-full"
               {...register('date', { required: 'Date is required' })}
