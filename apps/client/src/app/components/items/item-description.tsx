@@ -1,11 +1,13 @@
 import { Text } from '@magnetic/ui';
 import { Item } from '@magnetic/interfaces';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
+import { Link } from 'react-router-dom';
 
 interface Props {
   item: Item;
   serviceType: string;
 }
+const servicesNoDetails = ['drinks'];
 
 function ItemDescription(props: Props) {
   const { item, serviceType } = props;

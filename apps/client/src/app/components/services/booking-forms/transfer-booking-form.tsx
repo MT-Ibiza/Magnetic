@@ -1,6 +1,7 @@
 import { Button, Checkbox, Input, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../../hooks/useAuth';
+import { useApp } from '../../../hooks/useApp';
 
 export interface TransferFormData {
   date: string;
@@ -31,6 +32,8 @@ export function TransferBookingForm({
 }: Props) {
   const { getCurrentUser } = useAuth();
   const user = getCurrentUser();
+  const { currentSelectItem } = useApp();
+  console.log('currentSelectItem: ', currentSelectItem);
   const {
     register,
     handleSubmit,
