@@ -23,6 +23,7 @@ import {
 } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 import BookCard from './book-card';
+import MobileItemSticky from '../../components/mobile-footer-item';
 
 interface Props {}
 
@@ -141,7 +142,7 @@ export function ViewItemPage(props: Props) {
               {item?.boatAttributes && (
                 <>
                   <div className="w-full border-b border-neutral-100 dark:border-neutral-700" />
-                  <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 text-sm text-neutral-700 dark:text-neutral-300 ">
+                  <div className="grid grid-cols-2 xl:grid-cols-3 gap-6 text-sm text-neutral-700 dark:text-neutral-300 ">
                     {BoatAttributes.map((amenity, index) => (
                       <div key={index} className="flex items-center space-x-3">
                         {amenity.icon}
@@ -239,9 +240,18 @@ export function ViewItemPage(props: Props) {
               </>
             )}
           </div>
-          <div className="col-span-1">
+          <div className="hidden lg:block col-span-1">
             {item && (
               <BookCard startDate={startDate} endDate={endDate} item={item} />
+            )}
+          </div>
+          <div className='block lg:hidden'>
+            {item && (
+              <MobileItemSticky
+                startDate={startDate}
+                endDate={endDate}
+                item={item}
+              />
             )}
           </div>
         </div>

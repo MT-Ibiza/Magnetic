@@ -97,7 +97,7 @@ function Layout(props: Props) {
         </div>
       </HeaderClient>
       <div className="flex flex-1">
-        <div className="container pt-8 pb-10">
+        <div className="container pt-10 lg:pt-8 pb-10">
           <Outlet />
         </div>
       </div>

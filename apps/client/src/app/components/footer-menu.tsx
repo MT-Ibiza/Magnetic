@@ -75,7 +75,7 @@ const FooterNav = () => {
   return (
     <div
       ref={containerRef}
-      className="FooterNav p-2 bg-white dark:bg-neutral-800 fixed top-auto bottom-0 inset-x-0 z-30 border-t border-neutral-300 dark:border-neutral-700 
+      className="FooterNav block lg:hidden p-2 bg-white dark:bg-neutral-800 fixed top-auto bottom-0 inset-x-0 z-30 border-t border-neutral-300 dark:border-neutral-700 
         transition-transform duration-300 ease-in-out"
     >
       <div className="w-full max-w-lg flex justify-around mx-auto text-sm text-center ">

@@ -40,11 +40,11 @@ export function DashboardClientPage() {
       <div className="nc-PageHome relative overflow-hidden">
         <div className="relative mb-24 lg:mb-20">
           <div
-            className={`nc-SectionHero flex flex-col-reverse lg:flex-col relative pt-10 lg:pt-0`}
+            className={`nc-SectionHero flex flex-col-reverse lg:flex-col relative pt-0 lg:pt-0`}
             data-nc-id="SectionHero"
           >
-            <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-[30px] lg:items-center h-full">
-              <div className="h-full flex flex-col gap-[10px]">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-[15px] lg:gap-[30px] lg:items-center h-full">
+              <div className="h-full flex flex-col gap-[15px]">
                 <div className="h-full flex flex-col items-start rounded-2xl space-y-8 sm:space-y-4 xl:pr-14 lg:mr-10 xl:mr-0 border border-neutral-200 p-6">
                   <h1 className=" text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-3xl dark:text-neutral-100 max-w-4xl ">
                     Welcome,{' '}
@@ -121,7 +121,7 @@ export function DashboardClientPage() {
               </div>
             </div>
           </div>
-          <div className="lg:pt-[2rem]">
+          <div className="pt-[20px] lg:pt-[2rem]">
             <CarouselServices
               title="Services"
               itemPerRow={5}

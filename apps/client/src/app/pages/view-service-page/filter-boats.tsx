@@ -66,7 +66,7 @@ function FilterBoats(props: Props) {
 
   return (
     <>
-      <div className="bg-white w-full sticky z-10 top-[63px] lg:hidden flex-[3] max-w-lg !mx-auto md:px-3">
+      <div className="nc-header-bg shadow-sm w-full sticky z-10 top-[0px] lg:hidden flex-[3] max-w-lg !mx-auto md:px-3">
         <div className="py-5 nc-header-bg flex-[3] max-w-lg !mx-auto md:px-3">
           <FilterSearchMobile>
             <SearchBoatsMobile
