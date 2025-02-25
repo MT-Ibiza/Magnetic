@@ -221,24 +221,6 @@ export function FormItem(props: Props) {
                 </p>
               )}
             </div>
-
-            <div className="flex flex-col">
-              <label
-                htmlFor="imageFiles"
-                className="mb-2 text-sm font-semibold text-neutral-800 dark:text-neutral-200"
-              >
-                Product Images
-              </label>
-              <UploadMultipleImages
-                images={imagesFiles}
-                onChange={handleImageChange}
-                height="250px"
-                existingImages={item?.images}
-                onRemoveExistingImage={(imageIds) => {
-                  setValue('removeImagesIds', imageIds);
-                }}
-              />
-            </div>
           </div>
           <div className="adicional-info flex-1 space-y-6">
             <div className="category bg-base-100 border rounded-lg p-6">
@@ -325,6 +307,24 @@ export function FormItem(props: Props) {
                   </div>
                 )}
               </div>
+            </div>
+
+            <div className="flex flex-col">
+              <label
+                htmlFor="imageFiles"
+                className="mb-2 text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+              >
+                Product Images
+              </label>
+              <UploadMultipleImages
+                images={imagesFiles}
+                onChange={handleImageChange}
+                height="250px"
+                existingImages={item?.images}
+                onRemoveExistingImage={(imageIds) => {
+                  setValue('removeImagesIds', imageIds);
+                }}
+              />
             </div>
           </div>
         </div>
