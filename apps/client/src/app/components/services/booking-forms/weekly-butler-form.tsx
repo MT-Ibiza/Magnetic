@@ -1,6 +1,7 @@
 import { Button, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../../hooks/useAuth';
+import { useApp } from '../../../hooks/useApp';
 
 export interface WeeklyButlerServiceFormData {
   service: string;
@@ -23,6 +24,7 @@ export function WeeklyButlerServiceForm({
 }: Props) {
   const { getCurrentUser } = useAuth();
   const user = getCurrentUser();
+  const { currentSelectItem } = useApp();
 
   const {
     register,
@@ -31,7 +33,7 @@ export function WeeklyButlerServiceForm({
   } = useForm<WeeklyButlerServiceFormData>({
     defaultValues: formData
       ? {
-          service: formData.service,
+          service: currentSelectItem?.name || formData.service,
           date: formData.date,
           startTime: formData.startTime,
           numberOfPeople: formData.numberOfPeople,
@@ -54,16 +56,11 @@ export function WeeklyButlerServiceForm({
           <div>
             <Text className="mb-2">Service</Text>
             <Input
+              disabled
               type="text"
               className="w-full"
-              placeholder="Describe the butler/waiter service required"
-              {...register('service', { required: 'Service is required' })}
+              defaultValue={currentSelectItem?.name}
             />
-            {errors.service && (
-              <p className="text-[12px] text-red-500 pt-2">
-                {errors.service.message}
-              </p>
-            )}
           </div>
           <div>
             <Text className="mb-2">Date</Text>
