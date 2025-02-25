@@ -1,13 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Item, Service } from '@magnetic/interfaces';
-import {
-  Alert,
-  Button,
-  CarouselImages,
-  GallerySlider,
-  SaleOffBadge,
-  Text,
-} from '@magnetic/ui';
+import { Alert, Button, GallerySlider } from '@magnetic/ui';
 import {
   centsToEurosWithCurrency,
   sortImagesByPosition,
@@ -18,20 +11,20 @@ import { Link } from 'react-router-dom';
 import RenderBookingForm from '../services/booking-forms/render-booking-form';
 import ItemCounterButtons from './item-counter-buttons';
 import ItemHandleBookButtons from './item-handle-book-buttons';
-import { FaUsers } from 'react-icons/fa';
 import { useApp } from '../../hooks/useApp';
+import ItemDescription from './item-description';
 
 interface Props {
   item: Item;
   service: Service;
   availableInPlan: boolean;
-  noFillForm: boolean;
+  allowSelectMultiple: boolean;
 }
 
 function ItemCard(props: Props) {
-  const { item, availableInPlan, service, noFillForm } = props;
+  const { item, availableInPlan, service, allowSelectMultiple } = props;
   const { addProductToCart, addServiceToCart } = useCart();
-  const { addItem, removeItem, cart } = useCartStore();
+  const { addItem, removeItem, cart, totalDrinks } = useCartStore();
   const { setSelectedItem } = useApp();
   const productCart = cart.find((cartItem) => cartItem.item.id === item.id);
   const imagesSorted = useMemo(() => {
@@ -51,7 +44,6 @@ function ItemCard(props: Props) {
     setTimeout(() => setAlert(null), 3000);
   };
 
-  const customDetailsServices = ['drinks', 'chefs', 'transfer', 'boat_rental'];
   const formType = item.category?.formType || service.serviceType;
   const isDrinksService = service.serviceType === 'drinks';
   const handleAddProduct = (quantity: number, formData?: any) => {
@@ -134,61 +126,36 @@ function ItemCard(props: Props) {
         className={`nc-CarCard group relative border border-neutral-200 dark:border-neutral-700 rounded-3xl overflow-hidden hover:shadow-xl transition-shadow bg-white dark:bg-neutral-900 will-change-transform`}
       >
         <div className="relative w-full rounded-2xl overflow-hidden">
+          {/* href={`/services/${item.serviceId}/item/${item.id}`} */}
           <GallerySlider
-            href={`/services/${item.serviceId}/item/${item.id}`}
             galleryImgs={imagesSorted}
             classImage={`${isDrinksService ? 'h-[200px]' : 'h-[250px]'}   `}
             uniqueID={`ExperiencesCard_${item.id}`}
           />
-          {/* {item.priceInCents && (
-            <SaleOffBadge className="absolute right-3 top-3" item={item} />
-          )} */}
           <div className={'p-5 space-y-4'}>
             <div className="space-y-2">
               <div className="flex items-center">
-                {customDetailsServices.includes(service.serviceType) ? (
-                  <>
-                    {service.serviceType === 'drinks' && (
-                      <DrinkInfo
-                        name={item.name}
-                        size={item.drinkAttributes?.size}
-                        quantity={item.drinkAttributes?.units || 0}
-                      />
-                    )}
-                    {service.serviceType === 'chefs' && (
-                      <ChefInfo name={item.name} />
-                    )}
-                    {service.serviceType === 'transfer' && (
-                      <TransferInfo
-                        capacity={item.boatAttributes?.capacity || 0}
-                        name={item.name}
-                      />
-                    )}
-                    {service.serviceType === 'boat_rental' && (
-                      <BoatInfo
-                        name={item.name}
-                        price={centsToEurosWithCurrency(item.priceInCents)}
-                        secondName={item.boatAttributes?.secondName}
-                        capacity={item.boatAttributes?.capacity || 0}
-                      />
-                    )}
-                  </>
-                ) : (
-                  <DefaultProductInfo
-                    name={item.name}
-                    description={item.description}
-                  />
-                )}
+                <ItemDescription
+                  serviceType={service.serviceType}
+                  item={item}
+                />
               </div>
             </div>
             <div className="w-14 border-b border-neutral-100 dark:border-neutral-800"></div>
             <div className="flex flex-col items-end">
-              {noFillForm ? (
+              {allowSelectMultiple ? (
                 <ItemCounterButtons
                   currentAmount={productCart?.quantity || 0}
                   onClickAdd={(amount) => {
                     if (availableInPlan) {
-                      handleAddProduct(amount, undefined);
+                      if (
+                        totalDrinks === 0 &&
+                        service.serviceType === 'drinks'
+                      ) {
+                        openForm();
+                      } else {
+                        handleAddProduct(amount, undefined);
+                      }
                     } else {
                       //@ts-ignore
                       document.getElementById('modal_upgrade').showModal();
@@ -202,20 +169,7 @@ function ItemCard(props: Props) {
                       document.getElementById('modal_upgrade').showModal();
                     }
                   }}
-                >
-                  {service.serviceType === 'drink' ? (
-                    <span className="text-base font-semibold">
-                      {centsToEurosWithCurrency(item.priceInCents)}
-                      <span className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
-                        /day
-                      </span>
-                    </span>
-                  ) : (
-                    <span className="text-base font-semibold">
-                      {centsToEurosWithCurrency(item.priceInCents)}
-                    </span>
-                  )}
-                </ItemCounterButtons>
+                />
               ) : (
                 <ItemHandleBookButtons
                   item={item}
@@ -294,107 +248,5 @@ function ItemCard(props: Props) {
     </>
   );
 }
-
-const DefaultProductInfo = ({
-  name,
-  description,
-}: {
-  name: string;
-  description: string;
-}) => (
-  <div className="w-full pb-2 flex flex-col gap-3">
-    <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
-      {name}
-    </p>
-    <Text className="line-clamp-4 flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
-      {description}
-    </Text>
-  </div>
-);
-
-const DrinkInfo = ({
-  name,
-  size,
-  quantity,
-}: {
-  name: string;
-  size?: string;
-  quantity?: number;
-}) => (
-  <div className="space-y-2 flex flex-col">
-    <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
-      {name}
-    </p>
-    <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
-      {quantity && (
-        <>
-          <span className="">{size}</span>
-          <span>x</span>
-        </>
-      )}
-      <span className="">{quantity}</span>
-    </div>
-  </div>
-);
-
-const ChefInfo = ({ name }: { name: string }) => (
-  <div>
-    <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
-      {name}
-    </p>
-  </div>
-);
-
-const TransferInfo = ({
-  name,
-  capacity,
-}: {
-  name: string;
-  capacity: number;
-}) => (
-  <div className="space-y-2 flex flex-col">
-    <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
-      {name}
-    </p>
-    <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
-      <span className="">{capacity} capacity </span>
-    </div>
-  </div>
-);
-
-const BoatInfo = ({
-  name,
-  capacity,
-  secondName,
-  price,
-}: {
-  name: string;
-  capacity: number;
-  secondName?: string;
-  price?: string;
-}) => (
-  <div className="space-y-2 flex flex-col">
-    <h2 className={`capitalize ${'text-base font-medium'}`}>
-      <span className="line-clamp-1">{name}</span>
-    </h2>
-    {/* {secondName && (
-      <span className="text-sm text-neutral-500 dark:text-neutral-400">
-        {secondName}
-      </span>
-    )} */}
-    {/* <span className="text-sm text-neutral-500 dark:text-neutral-400 flex items-center gap-2">
-      <FaUsers className="text-neutral-500 text-lg" /> {capacity}
-    </span> */}
-    <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
-      {secondName && (
-        <>
-          <span className="">{secondName}</span>
-          <span>-</span>
-        </>
-      )}
-      <span className="">{capacity} capacity </span>
-    </div>
-  </div>
-);
 
 export default ItemCard;

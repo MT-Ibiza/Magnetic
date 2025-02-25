@@ -9,7 +9,7 @@ interface Props {
 }
 function ListProducts(props: Props) {
   const { items, availableInPlan, service } = props;
-  const servicesMultiple = ['drinks'];
+  const servicesAllowMultipleSelection = ['drinks'];
   const itemsGroup = groupItemsByCategory(items);
   const isDrinksService = service.serviceType === 'drinks';
 
@@ -29,7 +29,9 @@ function ListProducts(props: Props) {
                   service={service}
                   item={item}
                   availableInPlan={availableInPlan}
-                  noFillForm={servicesMultiple.includes(service.serviceType)}
+                  allowSelectMultiple={servicesAllowMultipleSelection.includes(
+                    service.serviceType
+                  )}
                 />
               </div>
             ))}

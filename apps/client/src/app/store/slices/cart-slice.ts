@@ -9,6 +9,7 @@ export type CartSlice = {
   total: number;
   addItem: (item: CartItem) => void;
   removeItem: (id: number) => void;
+  totalDrinks: number;
   clearCart: () => void;
   calculateTotal: () => number;
   getGroupedItemsByService: () => {
@@ -22,8 +23,10 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
 ) => ({
   cart: [],
   total: 0,
+  totalDrinks: 0,
   addItem: (item) => {
     set((state) => {
+      console.log(item);
       const existingItem = state.cart.find(
         (cartItem) => cartItem.id === item.id
       );
@@ -41,6 +44,9 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
           { ...item, quantity: item.quantity, id: item.id },
         ];
       }
+
+      const isDrink = item.item.service.serviceType === 'drinks';
+      set({ totalDrinks: isDrink ? get().totalDrinks + 1 : 0 });
       // localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
       return {
         cart: updatedCart,

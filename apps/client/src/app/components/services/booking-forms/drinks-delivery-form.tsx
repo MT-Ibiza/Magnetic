@@ -41,9 +41,12 @@ export function DrinksDeliveryBookingForm(props: Props) {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-center mb-6">
-        Drinks Delivery Booking
-      </h2>
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold ">Drinks Delivery</h2>
+        <Text className="text-gray-500">
+          Before you continue, where should we deliver your drinks?
+        </Text>
+      </div>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
