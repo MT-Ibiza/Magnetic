@@ -91,9 +91,11 @@ export function PaymentButton(props: {
   return (
     <>
       <Button
+        size={2}
+        radius='full'
         onClick={createOrderAndPay}
         disabled={loading || disable}
-        className="p-4 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 w-full"
+        className="text-[17px] leading-[24px] p-4 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 w-full"
       >
         {loading ? 'Processing...' : 'Pay Now'}
       </Button>

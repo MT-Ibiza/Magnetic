@@ -158,7 +158,7 @@ export function BoatCharterBookingForm({
               Cancel
             </Button>
           )}
-          <Button type="submit">Submit Booking</Button>
+          <Button size={2} type="submit">Submit Booking</Button>
         </div>
       </form>
     </div>

@@ -81,16 +81,16 @@ export function DashboardClientPage() {
                 </div>
                 <div className="h-full flex flex-col items-start rounded-2xl border border-neutral-200 p-6">
                   {canMakeBookings ? (
-                    <>
-                      <FaClock className="text-neutral-700 dark:text-neutral-300" />
+                    <div className="flex items-center gap-4">
+                      <FaClock className="text-neutral-700 dark:text-neutral-300 text-2xl lg:text-xl md:text-2xl" />
                       <Text>
                         Booking can be made until{' '}
                         {arrivalDate.format('MMMM DD, YYYY')}
                       </Text>
-                    </>
+                    </div>
                   ) : (
-                    <div className="flex items-center gap-2">
-                      <FaClock className="text-neutral-700 dark:text-neutral-300" />
+                    <div className="flex items-center gap-4">
+                      <FaClock className="text-neutral-700 dark:text-neutral-300 text-2xl lg:text-xl md:text-2xl" />
                       <span>
                         The booking services has closed as the date has already
                         passed.

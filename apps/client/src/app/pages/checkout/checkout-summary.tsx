@@ -21,8 +21,8 @@ function CheckoutSummary(props: Props) {
       <div className="flex flex-col gap-2">
         {services.map((service, index) => (
           <div key={index} className="flex justify-between">
-            <Text size="1">{service.service}</Text>
-            <Text.TextNumeric>
+            <Text className='text-neutral-6000 dark:text-neutral-300' size="2">{service.service}</Text>
+            <Text.TextNumeric className='text-neutral-6000 dark:text-neutral-300'>
               {centsToEurosWithCurrency(service.total)}
             </Text.TextNumeric>
           </div>

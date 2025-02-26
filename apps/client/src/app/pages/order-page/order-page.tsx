@@ -84,7 +84,7 @@ function OrderPage(props: Props) {
               />
               <div
                 role="tabpanel"
-                className="tab-content bg-base-100 border-base-300 rounded-box p-6"
+                className="tab-content bg-base-100 border-base-300 rounded-box p-0 lg:p-6"
               >
                 <div className="p-5 my-3">
                   {form.formData && Object.keys(form.formData).length > 0 ? (

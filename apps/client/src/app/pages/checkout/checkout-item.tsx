@@ -19,11 +19,11 @@ function CheckoutItem(props: Props) {
   const formType = item.category?.formType || item.service?.serviceType;
 
   return (
-    <div className="flex justify-between w-full">
-      <div className="flex gap-3">
-        <div className="w-5 h-5 lg:w-20 lg:h-20">
+    <div className="lg:flex grid grid-cols-4 lg:justify-between w-full">
+      <div className="grid grid-cols-2 col-span-3 lg:flex lg:gap-3">
+        <div className="lg:w-20 lg:h-20">
           <img
-            className="w-[20px] h-[20px] rounded-[8px] lg:w-full lg:h-full object-cover"
+            className="w-[90%] h-[100px] rounded-[8px] lg:w-full lg:h-full object-cover"
             src={image}
             alt={item.name}
           />
@@ -43,7 +43,7 @@ function CheckoutItem(props: Props) {
           )}
         </div>
       </div>
-      <div className="flex items-end flex-col">
+      <div className="col-span-1 flex items-end flex-col">
         <Text>Total</Text>
         <Text className="mb-2 text-green-800">
           {centsToEurosWithCurrency(cartItem.quantity * item.priceInCents)}

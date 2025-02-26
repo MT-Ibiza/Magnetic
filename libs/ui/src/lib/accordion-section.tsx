@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { FaAngleDown } from 'react-icons/fa';
 
 interface Props {
@@ -11,6 +11,7 @@ export function AccordionSection(props: Props) {
   const { title, children, defaultOpen = false } = props;
 
   const [isOpen, setIsOpen] = useState(defaultOpen);
+  const contentRef = useRef<HTMLDivElement | null>(null);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
@@ -35,10 +36,12 @@ export function AccordionSection(props: Props) {
       <div
         className="overflow-hidden transition-all duration-500 ease-in-out"
         style={{
-          maxHeight: isOpen ? '500px' : '0',
+          height: isOpen && contentRef.current ? `${contentRef.current.scrollHeight}px` : '0',
         }}
       >
-        <div className="mt-3">{children}</div>
+        <div className="mt-3" ref={contentRef}>
+          {children}
+        </div>
       </div>
     </div>
   );

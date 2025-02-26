@@ -11,8 +11,8 @@ export function BookingsTable(props: Props) {
     useBookings();
 
   return (
-    <div className="">
-      <table className="table w-full">
+    <div className="overflow-x-auto">
+      <table className="table w-full min-w-[600px]">
         <thead>
           <tr>
             <th>Booking</th>
