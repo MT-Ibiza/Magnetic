@@ -10,6 +10,7 @@ import { useCartStore } from '../../hooks/useCartStore';
 import ItemDrinkCard from '../../components/items/cards/item-drink-card';
 import ItemDefaultCard from '../../components/items/cards/item-default-card';
 import ItemTransferCard from '../../components/items/cards/item-transfer-card';
+import ItemChefsCard from '../../components/items/cards/item-chefs-card';
 
 interface Props {
   items: Item[];
@@ -123,7 +124,7 @@ function ListProducts(props: Props) {
     document.getElementById(`modal-form-product`).close();
   };
 
-  const customDetailsServices = ['drinks', 'transfer', 'boat_rental'];
+  const customDetailsServices = ['drinks', 'chefs', 'transfer', 'boat_rental'];
 
   function handleAddItem(item: Item, amount: number) {
     if (availableInPlan) {
@@ -149,6 +150,7 @@ function ListProducts(props: Props) {
     if (availableInPlan) {
       openForm();
       setSelectedItem(item);
+      setCurrentItemSelected(item);
     } else {
       //@ts-ignore
       document.getElementById('modal_upgrade').showModal();
@@ -182,6 +184,14 @@ function ListProducts(props: Props) {
                         }}
                         onClickRemove={(amount) => {
                           handleRemoveItem(item, amount);
+                        }}
+                      />
+                    )}
+                    {serviceType === 'chefs' && (
+                      <ItemChefsCard
+                        item={item}
+                        onClickBookNow={() => {
+                          handleBookNow(item);
                         }}
                       />
                     )}
@@ -238,10 +248,10 @@ function ListProducts(props: Props) {
       </dialog>
       <dialog id={`modal-form-product`} className="modal">
         <div className="modal-box p-8 w-full max-w-5xl">
-          {openFormModal && (
+          {openFormModal && currentItemSelected && (
             <RenderBookingForm
               type={
-                currentItemSelected?.category?.formType || service.serviceType
+                currentItemSelected.category?.formType || service.serviceType
               }
               formData={{
                 serviceId: service.id,
