@@ -30,13 +30,12 @@ function ItemBoatCard(props: Props) {
       className={`nc-CarCard group relative border border-neutral-200 dark:border-neutral-700 rounded-3xl overflow-hidden hover:shadow-xl transition-shadow bg-white dark:bg-neutral-900 will-change-transform`}
     >
       <div className="relative w-full rounded-2xl overflow-hidden">
-        <Link to={`/services/${item.serviceId}/item/${item.id}`}>
-          <GallerySlider
-            galleryImgs={imagesSorted}
-            classImage="h-[200px]"
-            uniqueID={`ExperiencesCard_${item.id}`}
-          />
-        </Link>
+        <GallerySlider
+          href={`/services/${item.serviceId}/item/${item.id}`}
+          galleryImgs={imagesSorted}
+          classImage="h-[200px]"
+          uniqueID={`ExperiencesCard_${item.id}`}
+        />
         <div className="p-5 space-y-4">
           <div className="space-y-2 flex flex-col">
             <Link

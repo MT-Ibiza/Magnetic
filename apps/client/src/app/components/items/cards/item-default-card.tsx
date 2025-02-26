@@ -31,6 +31,7 @@ function ItemDefaultCard(props: Props) {
     >
       <div className="relative w-full rounded-2xl overflow-hidden">
         <GallerySlider
+          href={`/services/${item.serviceId}/item/${item.id}`}
           galleryImgs={imagesSorted}
           classImage="h-[200px]"
           uniqueID={`ExperiencesCard_${item.id}`}
