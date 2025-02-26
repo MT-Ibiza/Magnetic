@@ -2,6 +2,8 @@ import { Button, Checkbox, Input, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../../hooks/useAuth';
 import { useApp } from '../../../hooks/useApp';
+import { centsToEurosWithCurrency } from '@magnetic/utils';
+import { useState } from 'react';
 
 export interface TransferFormData {
   date: string;
@@ -33,7 +35,16 @@ export function TransferBookingForm({
   const { getCurrentUser } = useAuth();
   const user = getCurrentUser();
   const { currentSelectItem } = useApp();
-  console.log('currentSelectItem: ', currentSelectItem);
+  const [total, setTotal] = useState(currentSelectItem?.priceInCents || 0);
+
+  const variantOptions =
+    currentSelectItem?.variants.map((variant) => {
+      return {
+        value: variant.id,
+        text: `${currentSelectItem.name} - ${variant.name}`,
+      };
+    }) || [];
+  console.log(currentSelectItem?.variants);
   const {
     register,
     handleSubmit,
@@ -70,7 +81,35 @@ export function TransferBookingForm({
 
   return (
     <div className="">
-      <h2 className="text-2xl font-bold text-center mb-6">Transfer Booking</h2>
+      <div className="flex justify-between">
+        <h2 className="text-2xl font-bold mb-6">Transfer Booking</h2>
+        <h2 className="font-bold">Total: {centsToEurosWithCurrency(total)}</h2>
+      </div>
+      {variantOptions.length > 0 && (
+        <div className="mb-3">
+          <Text className="mb-2">Select option</Text>
+          <select
+            className="select select-bordered w-full"
+            onChange={(e) => {
+              const value = e.target.value;
+              const variant = currentSelectItem?.variants.find(
+                (v) => v.id === Number(value)
+              );
+              console.log(value);
+              if (variant) {
+                setTotal(variant.priceInCents);
+              }
+            }}
+          >
+            <option value="">{currentSelectItem?.name}</option>
+            {variantOptions.map((option, index) => (
+              <option value={option.value} key={index}>
+                {option.text}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
         <div className={viewClasses}>
           <div>

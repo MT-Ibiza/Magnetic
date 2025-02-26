@@ -40,6 +40,7 @@ export async function GET(
             position: true,
             variants: {
               select: {
+                id: true,
                 priceInCents: true,
                 name: true,
               },

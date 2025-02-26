@@ -245,7 +245,7 @@ export function ViewItemPage(props: Props) {
               <BookCard startDate={startDate} endDate={endDate} item={item} />
             )}
           </div>
-          <div className='block lg:hidden'>
+          <div className="block lg:hidden">
             {item && (
               <MobileItemSticky
                 startDate={startDate}
