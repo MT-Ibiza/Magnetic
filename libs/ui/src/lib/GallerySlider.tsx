@@ -1,4 +1,5 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useId } from 'react';
 import NextPrev from './NextPrev';
 import { Image } from '@magnetic/interfaces';
@@ -10,6 +11,7 @@ export interface GallerySliderProps {
   galleryImgs: Image[];
   ratioClass?: string;
   uniqueID: string;
+  href?: string;
   classImage?: string;
 }
 
@@ -18,6 +20,7 @@ export const GallerySlider: FC<GallerySliderProps> = ({
   galleryImgs,
   ratioClass = 'aspect-w-4 aspect-h-3',
   uniqueID = 'uniqueID',
+  href,
   classImage,
 }) => {
   function useNcId(pre = 'nc'): string {
@@ -27,6 +30,8 @@ export const GallerySlider: FC<GallerySliderProps> = ({
 
   const UNIQUE_CLASS = `gallerySlider__${uniqueID}` + useNcId();
 
+  const [glideInstance, setGlideInstance] = useState<any>(null);
+
   useEffect(() => {
     if (galleryImgs.length > 0) {
       const glide = new Glide(`.${UNIQUE_CLASS}`, {
@@ -34,6 +39,8 @@ export const GallerySlider: FC<GallerySliderProps> = ({
         gap: 0,
         keyboard: false,
       });
+
+      setGlideInstance(glide);
 
       glide.mount();
 
@@ -68,24 +75,24 @@ export const GallerySlider: FC<GallerySliderProps> = ({
             {galleryImgs.length > 0 ? (
               galleryImgs.map((item, index) => (
                 <li key={index} className="glide__slide">
-                  <div className={`block ${ratioClass}`}>
+                  <Link to={href || ''} className={`block ${ratioClass}`}>
                     <img
                       className={`w-full object-cover ${classImage}`}
                       src={item.url}
                       alt={`Image ${index}`}
                     />
-                  </div>
+                  </Link>
                 </li>
               ))
             ) : (
               <li className="glide__slide">
-                <div className={`block ${ratioClass}`}>
+                <Link to={href || ''} className={`block ${ratioClass}`}>
                   <img
                     className={`w-full object-cover ${classImage}`}
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU"
                     alt="Default Image"
                   />
-                </div>
+                </Link>
               </li>
             )}
           </ul>
@@ -115,13 +122,13 @@ export const GallerySlider: FC<GallerySliderProps> = ({
         <div className={`${UNIQUE_CLASS} relative group overflow-hidden`}>
           <ul className="glide__slides">
             <li className="glide__slide">
-              <div className={`block ${ratioClass}`}>
+              <Link to={href || ''} className={`block ${ratioClass}`}>
                 <img
                   className="w-full h-[250px] object-cover"
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU"
                   alt="Default Image"
                 />
-              </div>
+              </Link>
             </li>
           </ul>
         </div>
