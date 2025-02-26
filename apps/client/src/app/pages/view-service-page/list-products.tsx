@@ -98,8 +98,9 @@ function ListProducts(props: Props) {
       addProductToCart.mutate(
         { itemId: item.id, quantity: newVal },
         {
-          onSuccess: () => {
-            removeItem(item.id);
+          onSuccess: (response) => {
+            const { cartItem } = response;
+            removeItem(cartItem.id);
             showAlert('Item removed to the cart', 'success');
           },
           onError: () => {

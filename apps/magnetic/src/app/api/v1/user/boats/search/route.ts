@@ -83,7 +83,24 @@ export async function GET(request: NextRequest) {
         published: true,
         id: { in: boats.map((boat) => boat.itemId) },
       },
-      include: { boatAttributes: true, variants: true, images: true },
+      select: {
+        id: true,
+        name: true,
+        priceInCents: true,
+        description: true,
+        images: true,
+        boatAttributes: true,
+        position: true,
+        categoryId: true,
+        serviceId: true,
+        service: {
+          select: {
+            id: true,
+            name: true,
+            serviceType: true,
+          },
+        },
+      },
     });
 
     return NextResponse.json(items);

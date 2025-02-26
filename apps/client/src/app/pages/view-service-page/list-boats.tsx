@@ -8,6 +8,7 @@ import BoatCharterBookingForm from '../../components/services/booking-forms/boat
 import { useApp } from '../../hooks/useApp';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
+import { Alert } from '@magnetic/ui';
 
 interface Props {}
 
@@ -80,10 +81,10 @@ function ListBoats(props: Props) {
               quantity: newVal,
               formData,
             });
-            showAlert('Product added to the cart', 'success');
+            showAlert('Boat added to the cart', 'success');
           },
-          onError: () => {
-            showAlert('Failed to add product to the cart', 'error');
+          onError: (err) => {
+            showAlert('Failed to add boat to the cart', 'error');
           },
         }
       );
@@ -112,10 +113,22 @@ function ListBoats(props: Props) {
           ))}
         </div>
       </div>
+      {alert && (
+        <Alert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
       <dialog id={`modal-form-product`} className="modal">
         <div className="modal-box p-8 w-full max-w-5xl">
           {openFormModal && (
-            <BoatCharterBookingForm onSubmit={() => {}} onCancel={closeForm} />
+            <BoatCharterBookingForm
+              onSubmit={(data) => {
+                handleAddService(1, data);
+              }}
+              onCancel={closeForm}
+            />
           )}
         </div>
       </dialog>
