@@ -10,13 +10,12 @@ import { useCartStore } from '../../../hooks/useCartStore';
 
 interface Props {
   item: Item;
-  service: Service;
   onClickAdd: (amount: number) => void;
   onClickRemove: (amount: number) => void;
 }
 
 function ItemDrinkCard(props: Props) {
-  const { item, service, onClickAdd, onClickRemove } = props;
+  const { item, onClickAdd, onClickRemove } = props;
   const { name, priceInCents, drinkAttributes } = item;
   const { cart } = useCartStore();
   const cartItem = cart.find((cartItem) => cartItem.item.id === item.id);

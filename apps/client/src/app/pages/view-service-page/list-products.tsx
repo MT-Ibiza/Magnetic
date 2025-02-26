@@ -18,10 +18,11 @@ interface Props {
 }
 function ListProducts(props: Props) {
   const { items, availableInPlan, service } = props;
-  const [openFormModal, setOpenFormModal] = useState(false);
-  const { setSelectedItem, currentSelectItem } = useApp();
+  const { setSelectedItem } = useApp();
   const { addProductToCart, addServiceToCart } = useCart();
   const { addItem, removeItem, cart, totalDrinks } = useCartStore();
+  const [openFormModal, setOpenFormModal] = useState(false);
+  const [currentItemSelected, setCurrentItemSelected] = useState<Item>();
 
   const itemsGroup = groupItemsByCategory(items);
   const isDrinksService = service.serviceType === 'drinks';
@@ -41,16 +42,16 @@ function ListProducts(props: Props) {
 
   const handleAddService = (quantity: number, formData?: any) => {
     const newVal = quantity;
-    if (currentSelectItem) {
+    if (currentItemSelected) {
       addServiceToCart.mutate(
-        { itemId: currentSelectItem.id, quantity: newVal, formData },
+        { itemId: currentItemSelected.id, quantity: newVal, formData },
         {
           onSuccess: (response) => {
             const { cartItem } = response;
             closeForm();
             addItem({
               id: cartItem.id,
-              item: currentSelectItem,
+              item: currentItemSelected,
               quantity: newVal,
               formData,
             });
@@ -64,40 +65,41 @@ function ListProducts(props: Props) {
     }
   };
 
-  const handleSaveAddProduct = (quantity: number, formData?: any) => {
-    if (currentSelectItem) {
-      const newVal = quantity;
-
-      addProductToCart.mutate(
-        { itemId: currentSelectItem.id, quantity: newVal, formData },
-        {
-          onSuccess: (response) => {
-            const { cartItem } = response;
-            closeForm();
-            addItem({
-              id: cartItem.id,
-              item: currentSelectItem,
-              quantity: newVal,
-              formData,
-            });
-            showAlert('Product added to the cart', 'success');
-          },
-          onError: () => {
-            showAlert('Failed to add product to the cart', 'error');
-          },
-        }
-      );
-    }
-  };
-
-  const handleSaveRemoveProduct = (quantity: number) => {
+  const handleSaveAddProduct = (
+    item: Item,
+    quantity: number,
+    formData?: any
+  ) => {
     const newVal = quantity;
-    if (newVal >= 0 && currentSelectItem) {
+    addProductToCart.mutate(
+      { itemId: item.id, quantity: newVal, formData },
+      {
+        onSuccess: (response) => {
+          const { cartItem } = response;
+          closeForm();
+          addItem({
+            id: cartItem.id,
+            item: item,
+            quantity: newVal,
+            formData,
+          });
+          showAlert('Product added to the cart', 'success');
+        },
+        onError: () => {
+          showAlert('Failed to add product to the cart', 'error');
+        },
+      }
+    );
+  };
+
+  const handleSaveRemoveProduct = (item: Item, quantity: number) => {
+    const newVal = quantity;
+    if (newVal >= 0) {
       addProductToCart.mutate(
-        { itemId: currentSelectItem.id, quantity: newVal },
+        { itemId: item.id, quantity: newVal },
         {
           onSuccess: () => {
-            removeItem(currentSelectItem.id);
+            removeItem(item.id);
             showAlert('Item removed to the cart', 'success');
           },
           onError: () => {
@@ -125,20 +127,17 @@ function ListProducts(props: Props) {
   function handleAddItem(item: Item, amount: number) {
     if (availableInPlan) {
       setSelectedItem(item);
-      if (totalDrinks === 0 && service.serviceType === 'drinks') {
-        openForm();
-      } else {
-        handleSaveAddProduct(amount, undefined);
-      }
+      setCurrentItemSelected(item);
+      handleSaveAddProduct(item, amount, undefined);
     } else {
       //@ts-ignore
       document.getElementById('modal_upgrade').showModal();
     }
   }
 
-  function handleRemoveItem(amount: number) {
+  function handleRemoveItem(item: Item, amount: number) {
     if (availableInPlan) {
-      handleSaveRemoveProduct(amount);
+      handleSaveRemoveProduct(item, amount);
     } else {
       //@ts-ignore
       document.getElementById('modal_upgrade').showModal();
@@ -172,14 +171,19 @@ function ListProducts(props: Props) {
                     {serviceType === 'drinks' && (
                       <ItemDrinkCard
                         item={item}
-                        service={service}
                         onClickAdd={(amount) => {
-                          handleAddItem(item, amount);
+                          setCurrentItemSelected(item);
+                          if (totalDrinks === 0) {
+                            openForm();
+                          } else {
+                            handleSaveAddProduct(item, amount, undefined);
+                          }
                         }}
-                        onClickRemove={handleRemoveItem}
+                        onClickRemove={(amount) => {
+                          handleRemoveItem(item, amount);
+                        }}
                       />
                     )}
-
                     {serviceType === 'transfer' && (
                       <ItemTransferCard
                         item={item}
@@ -196,7 +200,9 @@ function ListProducts(props: Props) {
                     onClickAdd={(amount) => {
                       handleAddItem(item, amount);
                     }}
-                    onClickRemove={handleRemoveItem}
+                    onClickRemove={(amount) => {
+                      handleRemoveItem(item, amount);
+                    }}
                   />
                 )}
               </div>
@@ -234,7 +240,7 @@ function ListProducts(props: Props) {
           {openFormModal && (
             <RenderBookingForm
               type={
-                currentSelectItem?.category?.formType || service.serviceType
+                currentItemSelected?.category?.formType || service.serviceType
               }
               formData={{
                 serviceId: service.id,
