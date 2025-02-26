@@ -7,13 +7,12 @@ import { Link } from 'react-router-dom';
 interface Props {
   item: Item;
   currentAmount: number;
-  onClickAdd: (amount: number) => void;
-  onClickRemove: (amount: number) => void;
+  onClicBookNow: (amount: number) => void;
   children?: React.ReactElement;
 }
 
 function ItemHandleBookButtons(props: Props) {
-  const { item, currentAmount, onClickAdd, onClickRemove, children } = props;
+  const { currentAmount, onClicBookNow, children } = props;
 
   return (
     <div className="flex justify-between w-full">
@@ -21,7 +20,7 @@ function ItemHandleBookButtons(props: Props) {
       <div className="flex items-center justify-end gap-3 w-full">
         <Button
           onClick={() => {
-            onClickAdd(currentAmount + 1);
+            onClicBookNow(currentAmount + 1);
           }}
         >
           Book Now

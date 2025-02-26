@@ -1,5 +1,4 @@
 import { Item, Service } from '@magnetic/interfaces';
-import ItemCard from '../../components/items/item-card';
 import { groupItemsByCategory } from '@magnetic/utils';
 import { Alert, Button } from '@magnetic/ui';
 import { Link } from 'react-router-dom';
@@ -8,6 +7,9 @@ import { useState } from 'react';
 import { useApp } from '../../hooks/useApp';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
+import ItemDrinkCard from '../../components/items/cards/item-drink-card';
+import ItemDefaultCard from '../../components/items/cards/item-default-card';
+import ItemTransferCard from '../../components/items/cards/item-transfer-card';
 
 interface Props {
   items: Item[];
@@ -21,10 +23,9 @@ function ListProducts(props: Props) {
   const { addProductToCart, addServiceToCart } = useCart();
   const { addItem, removeItem, cart, totalDrinks } = useCartStore();
 
-  const servicesAllowMultipleSelection = ['drinks'];
   const itemsGroup = groupItemsByCategory(items);
   const isDrinksService = service.serviceType === 'drinks';
-
+  const { serviceType } = service;
   const [alert, setAlert] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning';
@@ -63,7 +64,7 @@ function ListProducts(props: Props) {
     }
   };
 
-  const handleAddProduct = (quantity: number, formData?: any) => {
+  const handleSaveAddProduct = (quantity: number, formData?: any) => {
     if (currentSelectItem) {
       const newVal = quantity;
 
@@ -89,7 +90,7 @@ function ListProducts(props: Props) {
     }
   };
 
-  const handleRemoveProduct = (quantity: number) => {
+  const handleSaveRemoveProduct = (quantity: number) => {
     const newVal = quantity;
     if (newVal >= 0 && currentSelectItem) {
       addProductToCart.mutate(
@@ -119,6 +120,41 @@ function ListProducts(props: Props) {
     document.getElementById(`modal-form-product`).close();
   };
 
+  const customDetailsServices = ['drinks', 'transfer', 'boat_rental'];
+
+  function handleAddItem(item: Item, amount: number) {
+    if (availableInPlan) {
+      setSelectedItem(item);
+      if (totalDrinks === 0 && service.serviceType === 'drinks') {
+        openForm();
+      } else {
+        handleSaveAddProduct(amount, undefined);
+      }
+    } else {
+      //@ts-ignore
+      document.getElementById('modal_upgrade').showModal();
+    }
+  }
+
+  function handleRemoveItem(amount: number) {
+    if (availableInPlan) {
+      handleSaveRemoveProduct(amount);
+    } else {
+      //@ts-ignore
+      document.getElementById('modal_upgrade').showModal();
+    }
+  }
+
+  function handleBookNow(item: Item) {
+    if (availableInPlan) {
+      openForm();
+      setSelectedItem(item);
+    } else {
+      //@ts-ignore
+      document.getElementById('modal_upgrade').showModal();
+    }
+  }
+
   return (
     <>
       {itemsGroup.map((group, index) => (
@@ -131,46 +167,38 @@ function ListProducts(props: Props) {
           >
             {group.items.map((item, index) => (
               <div key={index}>
-                <ItemCard
-                  service={service}
-                  item={item}
-                  allowSelectMultiple={servicesAllowMultipleSelection.includes(
-                    service.serviceType
-                  )}
-                  onClickBookNow={() => {
-                    if (availableInPlan) {
-                      openForm();
-                      setSelectedItem(item);
-                    } else {
-                      //@ts-ignore
-                      document.getElementById('modal_upgrade').showModal();
-                    }
-                  }}
-                  onClickAdd={(amount) => {
-                    if (availableInPlan) {
-                      setSelectedItem(item);
-                      if (
-                        totalDrinks === 0 &&
-                        service.serviceType === 'drinks'
-                      ) {
-                        openForm();
-                      } else {
-                        handleAddProduct(amount, undefined);
-                      }
-                    } else {
-                      //@ts-ignore
-                      document.getElementById('modal_upgrade').showModal();
-                    }
-                  }}
-                  onClickRemove={(amount) => {
-                    if (availableInPlan) {
-                      handleRemoveProduct(amount);
-                    } else {
-                      //@ts-ignore
-                      document.getElementById('modal_upgrade').showModal();
-                    }
-                  }}
-                />
+                {customDetailsServices.includes(serviceType) ? (
+                  <>
+                    {serviceType === 'drinks' && (
+                      <ItemDrinkCard
+                        item={item}
+                        service={service}
+                        onClickAdd={(amount) => {
+                          handleAddItem(item, amount);
+                        }}
+                        onClickRemove={handleRemoveItem}
+                      />
+                    )}
+
+                    {serviceType === 'transfer' && (
+                      <ItemTransferCard
+                        item={item}
+                        onClickBookNow={() => {
+                          handleBookNow(item);
+                        }}
+                      />
+                    )}
+                  </>
+                ) : (
+                  <ItemDefaultCard
+                    item={item}
+                    service={service}
+                    onClickAdd={(amount) => {
+                      handleAddItem(item, amount);
+                    }}
+                    onClickRemove={handleRemoveItem}
+                  />
+                )}
               </div>
             ))}
           </div>
