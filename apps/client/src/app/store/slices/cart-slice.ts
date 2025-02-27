@@ -7,9 +7,9 @@ const CART_STORAGE_KEY = 'cart_state';
 export type CartSlice = {
   cart: CartItem[];
   total: number;
+  totalDrinks: number;
   addItem: (item: CartItem) => void;
   removeItem: (id: number) => void;
-  totalDrinks: number;
   clearCart: () => void;
   calculateTotal: () => number;
   getGroupedItemsByService: () => {
@@ -24,6 +24,7 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
   cart: [],
   total: 0,
   totalDrinks: 0,
+
   addItem: (item) => {
     set((state) => {
       const existingItem = state.cart.find(
@@ -31,51 +32,60 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
       );
       let updatedCart;
 
-      if (existingItem && item.quantity > 1) {
+      if (existingItem) {
         updatedCart = state.cart.map((cartItem) =>
           cartItem.id === item.id
             ? { ...cartItem, quantity: cartItem.quantity + 1 }
             : cartItem
         );
       } else {
-        updatedCart = [
-          ...state.cart,
-          { ...item, quantity: item.quantity, id: item.id },
-        ];
+        updatedCart = [...state.cart, { ...item, quantity: 1 }];
       }
 
       const isDrink = item.item.service.serviceType === 'drinks';
-      set({ totalDrinks: isDrink ? get().totalDrinks + 1 : get().totalDrinks });
-      // localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
+      const newTotalDrinks = isDrink
+        ? get().totalDrinks + item.quantity
+        : get().totalDrinks;
+
       return {
         cart: updatedCart,
         total: get().calculateTotal(),
+        totalDrinks: newTotalDrinks,
       };
     });
   },
+
   removeItem: (id) => {
     set((state) => {
+      const itemToRemove = state.cart.find((item) => item.id === id);
+      if (!itemToRemove) return state;
+
       const updatedCart = state.cart
         .map((item) =>
           item.id === id ? { ...item, quantity: item.quantity - 1 } : item
         )
         .filter((item) => item.quantity > 0);
 
+      const isDrink = itemToRemove.item.service.serviceType === 'drinks';
+      const newTotalDrinks = isDrink
+        ? Math.max(get().totalDrinks - 1, 0)
+        : get().totalDrinks;
+
       return {
         cart: updatedCart,
         total: get().calculateTotal(),
+        totalDrinks: newTotalDrinks,
       };
     });
   },
 
   clearCart: () => {
     localStorage.removeItem(CART_STORAGE_KEY);
-    set({ cart: [], total: 0 });
+    set({ cart: [], total: 0, totalDrinks: 0 });
   },
 
   calculateTotal: () => {
-    const { cart } = get();
-    return cart.reduce(
+    return get().cart.reduce(
       (total, cartItem) =>
         total + cartItem.item.priceInCents * cartItem.quantity,
       0
@@ -83,19 +93,15 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
   },
 
   getGroupedItemsByService: () => {
-    const { cart } = get();
-    const grouped = cart.reduce((groups: any, cartItem: CartItem) => {
+    return get().cart.reduce((groups: any, cartItem: CartItem) => {
       const service = cartItem.item?.service;
-      if (service && service.id) {
-        const serviceId = service.id;
-        if (!groups[serviceId]) {
-          groups[serviceId] = { service: service, items: [] };
+      if (service?.id) {
+        if (!groups[service.id]) {
+          groups[service.id] = { service, items: [] };
         }
-        groups[serviceId].items.push(cartItem);
+        groups[service.id].items.push(cartItem);
       }
       return groups;
     }, {});
-
-    return grouped;
   },
 });
