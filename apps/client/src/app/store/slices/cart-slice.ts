@@ -26,7 +26,6 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
   totalDrinks: 0,
   addItem: (item) => {
     set((state) => {
-      console.log(item);
       const existingItem = state.cart.find(
         (cartItem) => cartItem.id === item.id
       );
@@ -46,7 +45,7 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
       }
 
       const isDrink = item.item.service.serviceType === 'drinks';
-      set({ totalDrinks: isDrink ? get().totalDrinks + 1 : 0 });
+      set({ totalDrinks: isDrink ? get().totalDrinks + 1 : get().totalDrinks });
       // localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
       return {
         cart: updatedCart,

@@ -3,6 +3,8 @@ import moment from 'moment';
 
 type GroupedCategory = {
   category: string;
+  categoryId: number;
+  type: string;
   items: CartItem[];
 };
 
@@ -27,9 +29,16 @@ export function userCanMakeBookings(arrivalDate: string | Date) {
 export function groupCartItemsByCategory(items: CartItem[]): GroupedCategory[] {
   return items.reduce<GroupedCategory[]>((result, currentItem) => {
     const categoryName = currentItem.item.service?.name;
+    const categoryType = currentItem.item.service?.serviceType;
+    const categoryId = currentItem.item.service?.id;
     let category = result.find((group) => group.category === categoryName);
     if (!category) {
-      category = { category: categoryName, items: [] };
+      category = {
+        category: categoryName,
+        items: [],
+        type: categoryType,
+        categoryId,
+      };
       result.push(category);
     }
     category.items.push(currentItem);
@@ -49,6 +58,14 @@ export function calculateTotalsByService(items: CartItem[]): ServiceTotal[] {
     serviceGroup.total += itemTotal;
     return result;
   }, []);
+}
+
+export function calculateTotalCartItems(items: CartItem[]): number {
+  return items.reduce<number>((result, currentItem) => {
+    const itemTotal = currentItem.item.priceInCents * currentItem.quantity;
+    result += itemTotal;
+    return result;
+  }, 0);
 }
 
 export default function isInViewport(element: HTMLElement) {

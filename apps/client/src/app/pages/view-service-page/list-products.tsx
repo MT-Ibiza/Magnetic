@@ -179,6 +179,7 @@ function ListProducts(props: Props) {
                         item={item}
                         onClickAdd={(amount) => {
                           setCurrentItemSelected(item);
+                          console.log(totalDrinks);
                           if (totalDrinks === 0) {
                             openForm();
                           } else {
