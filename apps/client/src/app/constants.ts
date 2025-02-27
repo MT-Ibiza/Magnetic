@@ -97,3 +97,5 @@ export const budgetFilterOptions = [
     data: { size_gt: '10000' },
   },
 ];
+
+export const DRINKS_MINIMUM = 70000; // 700 euros in cents

@@ -4,11 +4,11 @@ import { calculateTotalCartItems, groupCartItemsByCategory } from '../../utils';
 import CheckoutItem from './checkout-item';
 import { Text } from '@magnetic/ui';
 import { Link } from 'react-router-dom';
+import { DRINKS_MINIMUM } from '../../constants';
 
 function ProductsSummary() {
   const { cart } = useCartStore();
   const itemsByCategory = groupCartItemsByCategory(cart);
-  const DRINKS_MINIMUM = 70000; // 700 euros in cents
 
   return (
     <div>

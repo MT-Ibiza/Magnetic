@@ -10,6 +10,7 @@ type GroupedCategory = {
 
 type ServiceTotal = {
   service: string;
+  serviceType: string;
   total: number;
 };
 
@@ -49,10 +50,11 @@ export function groupCartItemsByCategory(items: CartItem[]): GroupedCategory[] {
 export function calculateTotalsByService(items: CartItem[]): ServiceTotal[] {
   return items.reduce<ServiceTotal[]>((result, currentItem) => {
     const serviceName = currentItem.item.service?.name;
+    const serviceType = currentItem.item.service?.serviceType;
     const itemTotal = currentItem.item.priceInCents * currentItem.quantity;
     let serviceGroup = result.find((group) => group.service === serviceName);
     if (!serviceGroup) {
-      serviceGroup = { service: serviceName, total: 0 };
+      serviceGroup = { service: serviceName, total: 0, serviceType };
       result.push(serviceGroup);
     }
     serviceGroup.total += itemTotal;
