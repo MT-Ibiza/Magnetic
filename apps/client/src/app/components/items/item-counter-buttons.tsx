@@ -16,7 +16,8 @@ function ItemCounterButtons(props: Props) {
       <div className="flex items-center justify-center gap-4">
         <button
           className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             onClickRemove(currentAmount - 1);
           }}
         >
@@ -30,7 +31,8 @@ function ItemCounterButtons(props: Props) {
           {currentAmount}
         </p>
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             onClickAdd(currentAmount + 1);
           }}
           className="bg-gray-100 text-black px-2 py-[0.5px] rounded-lg hover:bg-primary-dark transition-colors"

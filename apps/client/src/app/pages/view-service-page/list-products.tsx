@@ -11,6 +11,7 @@ import ItemDrinkCard from '../../components/items/cards/item-drink-card';
 import ItemDefaultCard from '../../components/items/cards/item-default-card';
 import ItemTransferCard from '../../components/items/cards/item-transfer-card';
 import ItemChefsCard from '../../components/items/cards/item-chefs-card';
+import Modal from '../../components/modal';
 
 interface Props {
   items: Item[];
@@ -114,14 +115,10 @@ function ListProducts(props: Props) {
 
   const openForm = () => {
     setOpenFormModal(true);
-    //@ts-ignore
-    document.getElementById(`modal-form-product`).showModal();
   };
 
   const closeForm = () => {
     setOpenFormModal(false);
-    //@ts-ignore
-    document.getElementById(`modal-form-product`).close();
   };
 
   const customDetailsServices = ['drinks', 'chefs', 'transfer', 'boat_rental'];
@@ -246,25 +243,19 @@ function ListProducts(props: Props) {
           </div>
         </div>
       </dialog>
-      <dialog id={`modal-form-product`} className="modal">
-        <div className="modal-box p-8 w-full max-w-5xl">
-          {openFormModal && currentItemSelected && (
-            <RenderBookingForm
-              type={
-                currentItemSelected.category?.formType || service.serviceType
-              }
-              formData={{
-                serviceId: service.id,
-              }}
-              onSubmit={(data, quantity) => {
-                const amount = quantity || 1;
-                handleAddService(amount, data);
-              }}
-              onClose={closeForm}
-            />
-          )}
-        </div>
-      </dialog>
+      <Modal open={openFormModal}>
+        <RenderBookingForm
+          type={currentItemSelected?.category?.formType || service.serviceType}
+          formData={{
+            serviceId: service.id,
+          }}
+          onSubmit={(data, quantity) => {
+            const amount = quantity || 1;
+            handleAddService(amount, data);
+          }}
+          onClose={closeForm}
+        />
+      </Modal>
     </>
   );
 }
