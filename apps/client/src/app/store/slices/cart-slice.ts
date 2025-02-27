@@ -55,15 +55,24 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
   },
   removeItem: (id) => {
     set((state) => {
+      const itemToRemove = state.cart.find((item) => item.id === id);
+      if (!itemToRemove) return state;
+
       const updatedCart = state.cart
         .map((item) =>
           item.id === id ? { ...item, quantity: item.quantity - 1 } : item
         )
         .filter((item) => item.quantity > 0);
 
+      const isDrink = itemToRemove.item.service.serviceType === 'drinks';
+      const newTotalDrinks = isDrink
+        ? get().totalDrinks - 1
+        : get().totalDrinks;
+
       return {
         cart: updatedCart,
         total: get().calculateTotal(),
+        totalDrinks: newTotalDrinks,
       };
     });
   },
