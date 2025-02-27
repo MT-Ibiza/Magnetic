@@ -134,7 +134,9 @@ export function DrinksDeliveryBookingForm(props: Props) {
                   Cancel
                 </Button>
               )}
-              <Button type="submit">Book Service</Button>
+              <Button type="submit" disabled={!watch('acceptSubstitutes')}>
+                Book Service
+              </Button>
             </div>
           </div>
         </Modal.Footer>
