@@ -1,3 +1,4 @@
+import { FormSubmitParams } from '@magnetic/interfaces';
 import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 
@@ -12,7 +13,7 @@ export interface SpaBeautyFormData {
 }
 
 interface Props {
-  onSubmit: (data: SpaBeautyFormData) => void;
+  onSubmit: (data: FormSubmitParams<SpaBeautyFormData>) => void;
 }
 
 export function SpaBeautyBookingForm({ onSubmit }: Props) {
@@ -35,8 +36,7 @@ export function SpaBeautyBookingForm({ onSubmit }: Props) {
   });
 
   const handleFormSubmit = async (data: SpaBeautyFormData) => {
-    console.log(data);
-    onSubmit(data);
+    onSubmit({ form: data });
   };
 
   return (

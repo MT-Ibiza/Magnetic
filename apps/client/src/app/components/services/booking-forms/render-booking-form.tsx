@@ -7,12 +7,13 @@ import SecurityBookingForm from './security-form';
 import ChildcareBookingForm from './childcare-booking-form';
 import WeeklyButlerServiceForm from './weekly-butler-form';
 import SingleChefServiceForm from './single-chef-service';
+import { FormSubmitParams } from '@magnetic/interfaces';
 
 interface Props {
   type: string;
   itemId?: number;
   formData?: any;
-  onSubmit: (data: any, quantity?: number) => void;
+  onSubmit: (data: FormSubmitParams<any>) => void;
   viewCol?: boolean;
   onClose?: () => void;
 }

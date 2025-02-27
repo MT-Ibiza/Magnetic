@@ -5,6 +5,7 @@ import moment from 'moment';
 import Modal from '../../modal';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useApp } from '../../../hooks/useApp';
+import { FormSubmitParams } from '@magnetic/interfaces';
 
 export interface DrinksDeliveryFormData {
   date: string;
@@ -16,7 +17,7 @@ export interface DrinksDeliveryFormData {
 }
 
 interface Props {
-  onSubmit: (data: DrinksDeliveryFormData) => void;
+  onSubmit: (data: FormSubmitParams<DrinksDeliveryFormData>) => void;
   formData?: any;
   onCancel?: () => void;
 }
@@ -45,7 +46,7 @@ export function DrinksDeliveryBookingForm(props: Props) {
   });
 
   const handleFormSubmit = async (data: DrinksDeliveryFormData) => {
-    onSubmit(data);
+    onSubmit({ form: data });
   };
 
   return (
@@ -63,7 +64,10 @@ export function DrinksDeliveryBookingForm(props: Props) {
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Modal.Body>
           <div className="text-blue-800 bg-blue-100 py-5 px-10">
-            <Text>Reminder: Orders must be at least $700 to be processed</Text>
+            <Text>
+              Reminder: Orders must be at least{' '}
+              {centsToEurosWithCurrency(70000)} to be processed
+            </Text>
           </div>
           <div className="flex flex-col gap-6 p-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

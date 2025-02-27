@@ -1,10 +1,11 @@
-import { Button, Checkbox, Input, Text } from '@magnetic/ui';
+import { Button, Input, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../../hooks/useAuth';
 import { useApp } from '../../../hooks/useApp';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useState } from 'react';
 import Modal from '../../modal';
+import { FormSubmitParams } from '@magnetic/interfaces';
 
 export interface TransferFormData {
   date: string;
@@ -21,7 +22,7 @@ export interface TransferFormData {
 }
 
 interface Props {
-  onSubmit: (data: TransferFormData) => void;
+  onSubmit: (data: FormSubmitParams<TransferFormData>) => void;
   formData?: any;
   viewCol?: boolean;
   onCancel?: () => void;
@@ -37,6 +38,7 @@ export function TransferBookingForm({
   const user = getCurrentUser();
   const { currentSelectItem } = useApp();
   const [total, setTotal] = useState(currentSelectItem?.priceInCents || 0);
+  const [selectedVariantId, setSelectedVariantId] = useState<number>();
 
   const variantOptions =
     currentSelectItem?.variants.map((variant) => {
@@ -45,7 +47,7 @@ export function TransferBookingForm({
         text: `${currentSelectItem.name} - ${variant.name}`,
       };
     }) || [];
-  console.log(currentSelectItem?.variants);
+
   const {
     register,
     handleSubmit,
@@ -73,7 +75,10 @@ export function TransferBookingForm({
   });
 
   const handleFormSubmit = async (data: TransferFormData) => {
-    onSubmit(data);
+    onSubmit({
+      form: data,
+      variantId: selectedVariantId,
+    });
   };
 
   const viewClasses = 'grid grid-cols-1 md:grid-cols-2 gap-6';
@@ -98,8 +103,8 @@ export function TransferBookingForm({
                     const variant = currentSelectItem?.variants.find(
                       (v) => v.id === Number(value)
                     );
-                    console.log(value);
                     if (variant) {
+                      setSelectedVariantId(variant.id);
                       setTotal(variant.priceInCents);
                     }
                   }}

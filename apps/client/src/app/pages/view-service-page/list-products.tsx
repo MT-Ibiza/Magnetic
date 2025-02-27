@@ -1,4 +1,4 @@
-import { Item, Service } from '@magnetic/interfaces';
+import { FormSubmitParams, Item, Service } from '@magnetic/interfaces';
 import { groupItemsByCategory } from '@magnetic/utils';
 import { Alert, Button } from '@magnetic/ui';
 import { Link } from 'react-router-dom';
@@ -42,11 +42,12 @@ function ListProducts(props: Props) {
     setTimeout(() => setAlert(null), 3000);
   };
 
-  const handleAddService = (quantity: number, formData?: any) => {
-    const newVal = quantity;
+  const handleAddService = (data: FormSubmitParams<any>) => {
+    const { form, quantity, variantId } = data;
+    const newVal = quantity || 1;
     if (currentItemSelected) {
       addServiceToCart.mutate(
-        { itemId: currentItemSelected.id, quantity: newVal, formData },
+        { itemId: currentItemSelected.id, quantity: newVal, formData: form },
         {
           onSuccess: (response) => {
             const { cartItem } = response;
@@ -55,7 +56,7 @@ function ListProducts(props: Props) {
               id: cartItem.id,
               item: currentItemSelected,
               quantity: newVal,
-              formData,
+              formData: form,
             });
             showAlert('Product added to the cart', 'success');
           },
@@ -249,10 +250,7 @@ function ListProducts(props: Props) {
           formData={{
             serviceId: service.id,
           }}
-          onSubmit={(data, quantity) => {
-            const amount = quantity || 1;
-            handleAddService(amount, data);
-          }}
+          onSubmit={handleAddService}
           onClose={closeForm}
         />
       </Modal>

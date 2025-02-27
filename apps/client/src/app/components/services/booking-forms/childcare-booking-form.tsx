@@ -1,3 +1,4 @@
+import { FormSubmitParams } from '@magnetic/interfaces';
 import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 
@@ -13,7 +14,7 @@ export interface ChildcareFormData {
 }
 
 interface Props {
-  onSubmit: (data: ChildcareFormData) => void;
+  onSubmit: (data: FormSubmitParams<ChildcareFormData>) => void;
 }
 
 export function ChildcareBookingForm({ onSubmit }: Props) {
@@ -37,8 +38,7 @@ export function ChildcareBookingForm({ onSubmit }: Props) {
   });
 
   const handleFormSubmit = async (data: ChildcareFormData) => {
-    console.log(data);
-    onSubmit(data);
+    onSubmit({ form: data });
   };
 
   return (

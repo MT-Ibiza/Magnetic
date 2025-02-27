@@ -1,4 +1,3 @@
-import { Button } from '@magnetic/ui';
 import React, { useEffect, useState } from 'react';
 
 interface Props {
@@ -38,7 +37,7 @@ function Modal(props: Props) {
   return (
     <dialog id={id ? id : 'modal-magnetic'} className="modal">
       <div className="p-8 w-full max-w-5xl">
-        <div className="relative">{children}</div>
+        {openContent && <div className="relative">{children}</div>}
       </div>
     </dialog>
   );

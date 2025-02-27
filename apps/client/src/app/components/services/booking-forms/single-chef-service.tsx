@@ -7,6 +7,7 @@ import { placeholderItemImage } from '../../../constants';
 import ItemCounterButtons from '../../items/item-counter-buttons';
 import { useState } from 'react';
 import Modal from '../../modal';
+import { FormSubmitParams } from '@magnetic/interfaces';
 
 interface SingleChefServiceFormData {
   date: string;
@@ -18,7 +19,7 @@ interface SingleChefServiceFormData {
 }
 
 interface Props {
-  onSubmit: (data: SingleChefServiceFormData, quantity: number) => void;
+  onSubmit: (data: FormSubmitParams<SingleChefServiceFormData>) => void;
   formData?: any;
   onCancel?: () => void;
 }
@@ -48,7 +49,7 @@ export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
 
   const handleFormSubmit = async (data: SingleChefServiceFormData) => {
     const formData = { ...data, ...{ numberOfPeople: amount } };
-    onSubmit(formData, amount);
+    onSubmit({ form: formData, quantity: amount });
   };
 
   return (

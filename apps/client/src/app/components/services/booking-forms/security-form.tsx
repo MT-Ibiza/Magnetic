@@ -1,3 +1,4 @@
+import { FormSubmitParams } from '@magnetic/interfaces';
 import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 
@@ -12,7 +13,7 @@ export interface SecurityFormData {
 }
 
 interface Props {
-  onSubmit: (data: SecurityFormData) => void;
+  onSubmit: (data: FormSubmitParams<SecurityFormData>) => void;
 }
 
 export function SecurityBookingForm({ onSubmit }: Props) {
@@ -35,8 +36,7 @@ export function SecurityBookingForm({ onSubmit }: Props) {
   });
 
   const handleFormSubmit = async (data: SecurityFormData) => {
-    console.log(data);
-    onSubmit(data);
+    onSubmit({ form: data });
   };
 
   return (

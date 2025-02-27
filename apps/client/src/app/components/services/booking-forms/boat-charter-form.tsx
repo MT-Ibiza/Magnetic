@@ -1,4 +1,4 @@
-import { BoatCharterFormData } from '@magnetic/interfaces';
+import { BoatCharterFormData, FormSubmitParams } from '@magnetic/interfaces';
 import {
   Button,
   CalendarCustomInput,
@@ -10,7 +10,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useApp } from '../../../hooks/useApp';
 
 interface Props {
-  onSubmit: (data: BoatCharterFormData) => void;
+  onSubmit: (data: FormSubmitParams<BoatCharterFormData>) => void;
   formData?: any;
   onCancel?: () => void;
 }
@@ -41,7 +41,7 @@ export function BoatCharterBookingForm({
       boat: currentSelectItem?.name || '',
       date: new Date(data.date).toISOString(),
     };
-    onSubmit(formattedData);
+    onSubmit({ form: formattedData });
   };
 
   return (
@@ -49,7 +49,8 @@ export function BoatCharterBookingForm({
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold ">Boat Charter Booking</h2>
         <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
-        Boat: {currentSelectItem?.name}</span>
+          Boat: {currentSelectItem?.name}
+        </span>
       </div>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -158,7 +159,9 @@ export function BoatCharterBookingForm({
               Cancel
             </Button>
           )}
-          <Button size={2} type="submit">Submit Booking</Button>
+          <Button size={2} type="submit">
+            Submit Booking
+          </Button>
         </div>
       </form>
     </div>

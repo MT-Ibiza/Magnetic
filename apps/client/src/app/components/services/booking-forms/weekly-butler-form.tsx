@@ -4,6 +4,7 @@ import { useAuth } from '../../../hooks/useAuth';
 import { useApp } from '../../../hooks/useApp';
 import Modal from '../../modal';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
+import { FormSubmitParams } from '@magnetic/interfaces';
 
 export interface WeeklyButlerServiceFormData {
   service: string;
@@ -14,7 +15,7 @@ export interface WeeklyButlerServiceFormData {
 }
 
 interface Props {
-  onSubmit: (data: WeeklyButlerServiceFormData) => void;
+  onSubmit: (data: FormSubmitParams<WeeklyButlerServiceFormData>) => void;
   formData?: any;
   onCancel?: () => void;
 }
@@ -45,7 +46,7 @@ export function WeeklyButlerServiceForm({
   });
 
   const handleFormSubmit = async (data: WeeklyButlerServiceFormData) => {
-    onSubmit(data);
+    onSubmit({ form: data });
   };
 
   return (
