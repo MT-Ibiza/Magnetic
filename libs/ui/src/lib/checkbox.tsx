@@ -18,7 +18,10 @@ export function Checkbox({
   onChange,
 }: CheckboxProps) {
   return (
-    <div className={`flex text-sm sm:text-base ${className}`}>
+    <div
+      className={`flex text-sm sm:text-base ${className}`}
+      style={{ width: 'fit-content' }}
+    >
       <input
         id={name}
         name={name}
@@ -30,14 +33,9 @@ export function Checkbox({
       {label && (
         <label
           htmlFor={name}
-          className="cursor-pointer ml-3.5 flex flex-col flex-1 justify-center"
+          className="ml-3.5 flex flex-col flex-1 justify-center hover:text-gray-500"
         >
-          <span className="text-neutral-6000 dark:text-neutral-100">{label}</span>
-          {subLabel && (
-            <p className="mt-1 text-neutral-6000 dark:text-neutral-400 text-sm font-light">
-              {subLabel}
-            </p>
-          )}
+          {label}
         </label>
       )}
     </div>
