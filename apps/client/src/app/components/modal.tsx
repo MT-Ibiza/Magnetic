@@ -13,6 +13,7 @@ interface ModalFooterProps extends React.HTMLProps<HTMLDivElement> {
 function Modal(props: Props) {
   const { id, open, children } = props;
   const [openContent, setOpenContent] = useState(open);
+  const modalId = id ? id : 'modal-magnetic';
 
   useEffect(() => {
     if (open) {
@@ -25,13 +26,13 @@ function Modal(props: Props) {
   const openForm = () => {
     setOpenContent(true);
     //@ts-ignore
-    document.getElementById(`modal-magnetic`).showModal();
+    document.getElementById(modalId).showModal();
   };
 
   const closeForm = () => {
     setOpenContent(false);
     //@ts-ignore
-    document.getElementById(`modal-magnetic`).close();
+    document.getElementById(modalId).close();
   };
 
   return (
