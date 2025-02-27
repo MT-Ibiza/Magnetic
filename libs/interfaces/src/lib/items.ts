@@ -53,16 +53,6 @@ export interface ItemWithCount extends Item {
   };
 }
 
-export interface Cart {
-  id: number;
-  userId: number;
-  items: CartItem[];
-  totalItems: number;
-  totalPriceInCents: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 export interface NewItem extends ItemBase {
   serviceId: number;
   boatAttributes?: BoatBase;
@@ -82,13 +72,6 @@ export interface Image extends ImageBase {
 
 export interface EditItem extends ItemBase {
   serviceId: number;
-}
-
-export interface CartItem {
-  id: number;
-  item: Item;
-  quantity: number;
-  formData?: any;
 }
 
 export interface ItemWithServiceCategories {

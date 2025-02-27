@@ -156,14 +156,16 @@ model Image {
 }
 
 model ItemVariant {
-  id           Int      @id @default(autoincrement())
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id           Int         @id @default(autoincrement())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
   name         String
   description  String?
   priceInCents Int
   itemId       Int
-  item         Item     @relation(fields: [itemId], references: [id])
+  item         Item        @relation(fields: [itemId], references: [id])
+  CartItem     CartItem[]
+  OrderItem    OrderItem[]
 }
 
 model Package {
@@ -200,15 +202,17 @@ model Cart {
 }
 
 model CartItem {
-  id        Int      @id @default(autoincrement())
+  id        Int          @id @default(autoincrement())
   quantity  Int
   itemId    Int
   formData  Json?
-  item      Item     @relation(fields: [itemId], references: [id])
+  item      Item         @relation(fields: [itemId], references: [id])
   cartId    Int
-  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  cart      Cart         @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  variant   ItemVariant? @relation(fields: [variantId], references: [id])
+  variantId Int?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
 }
 
 model OrderBookingForm {
@@ -236,15 +240,17 @@ model Order {
 }
 
 model OrderItem {
-  id           Int      @id @default(autoincrement())
+  id           Int          @id @default(autoincrement())
   quantity     Int
   priceInCents Int
   itemId       Int
-  item         Item     @relation(fields: [itemId], references: [id])
+  item         Item         @relation(fields: [itemId], references: [id])
   orderId      Int
-  order        Order    @relation(fields: [orderId], references: [id])
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  order        Order        @relation(fields: [orderId], references: [id])
+  variant      ItemVariant? @relation(fields: [variantId], references: [id])
+  variantId    Int?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
 }
 
 model SeasonPrice {

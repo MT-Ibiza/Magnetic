@@ -32,6 +32,7 @@ export interface OrderItem {
   itemId: number;
   orderId: number;
   item: ItemBaseFields;
+  variantId?: number;
 }
 
 export interface OrderBookingForm {
