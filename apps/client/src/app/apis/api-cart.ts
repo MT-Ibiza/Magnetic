@@ -27,6 +27,7 @@ export async function createItemCartService(params: {
   cartItemId?: number;
   quantity: number;
   formData?: any;
+  variantId?: number;
 }): Promise<{ message: string; cartItem: CartItem }> {
   const url = URL_ADD_SERVICE_TO_CART;
   const accessToken = localStorage.getItem('magnetic_auth');

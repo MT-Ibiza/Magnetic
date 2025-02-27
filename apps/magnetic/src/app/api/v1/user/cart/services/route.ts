@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 
     const userId = decodedToken.id;
     const body = await request.json();
-    const { itemId, cartItemId, quantity, formData } = body;
+    const { itemId, cartItemId, quantity, formData, variantId } = body;
 
     if (!itemId || quantity < 0) {
       return NextResponse.json(
@@ -68,6 +68,7 @@ export async function POST(request: Request) {
           itemId: itemId,
           quantity: quantity,
           formData: formData,
+          variantId,
         },
       });
       return NextResponse.json({
@@ -81,6 +82,7 @@ export async function POST(request: Request) {
           itemId: itemId,
           quantity: quantity,
           formData: formData,
+          variantId,
         },
       });
       return NextResponse.json({

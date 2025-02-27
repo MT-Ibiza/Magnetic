@@ -17,6 +17,14 @@ export async function GET(request: Request) {
             id: true,
             quantity: true,
             formData: true,
+            variantId: true,
+            variant: {
+              select: {
+                id: true,
+                name: true,
+                priceInCents: true,
+              },
+            },
             item: {
               select: {
                 id: true,

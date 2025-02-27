@@ -47,7 +47,12 @@ function ListProducts(props: Props) {
     const newVal = quantity || 1;
     if (currentItemSelected) {
       addServiceToCart.mutate(
-        { itemId: currentItemSelected.id, quantity: newVal, formData: form },
+        {
+          itemId: currentItemSelected.id,
+          quantity: newVal,
+          formData: form,
+          variantId,
+        },
         {
           onSuccess: (response) => {
             const { cartItem } = response;

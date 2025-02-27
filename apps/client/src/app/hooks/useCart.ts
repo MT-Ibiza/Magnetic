@@ -23,12 +23,21 @@ export const useCart = () => {
       cartItemId,
       quantity,
       formData,
+      variantId,
     }: {
       itemId: number;
       cartItemId?: number;
       quantity: number;
       formData?: any;
-    }) => createItemCartService({ itemId, cartItemId, quantity, formData }),
+      variantId?: number;
+    }) =>
+      createItemCartService({
+        itemId,
+        cartItemId,
+        quantity,
+        formData,
+        variantId,
+      }),
     onSuccess: () => {
       // refetch();
     },
