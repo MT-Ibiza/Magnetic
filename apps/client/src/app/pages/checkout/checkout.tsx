@@ -1,30 +1,14 @@
-import { Button, CardWrapper, EmptyState, Text } from '@magnetic/ui';
+import { Button, EmptyState, Text } from '@magnetic/ui';
 import { useCartStore } from '../../hooks/useCartStore';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
 import { useCart } from '../../hooks/useCart';
 import ProductsSummary from './products-summary';
 import CheckoutSummary from './checkout-summary';
 import CheckoutPayment from './checkout-payment';
 
 export function CheckoutPage() {
-  const { cart, addItem, clearCart } = useCartStore();
+  const { cart } = useCartStore();
   const { isLoading, data } = useCart();
-
-  useEffect(() => {
-    if (data) {
-      clearCart();
-      data.items.map((cartItem) => {
-        addItem({
-          id: cartItem.id,
-          item: cartItem.item,
-          quantity: cartItem.quantity,
-          formData: cartItem.formData,
-        });
-        return cartItem;
-      });
-    }
-  }, [data]);
 
   if (isLoading) {
     return <h1>Loading....</h1>;

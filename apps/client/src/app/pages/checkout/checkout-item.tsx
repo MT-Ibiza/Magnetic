@@ -20,7 +20,7 @@ function CheckoutItem(props: Props) {
   const price = cartItem.variant
     ? cartItem.variant.priceInCents
     : cartItem.item.priceInCents;
-  console.log('price: ', cartItem);
+
   return (
     <div className="lg:flex grid grid-cols-4 lg:justify-between w-full">
       <div className="grid grid-cols-2 col-span-3 lg:flex lg:gap-3">
@@ -65,7 +65,10 @@ const TransferInfo = ({
   formType: string;
 }) => (
   <div className="flex flex-col gap-1">
-    <h1>{cartItem.item.name}</h1>
+    <h1>
+      {cartItem.item.name}{' '}
+      {cartItem.variant ? `- ${cartItem.variant.name}` : ''}
+    </h1>
     {cartItem.formData && (
       <>
         <Text size="1">Date: {formatDate(cartItem.formData.date)}</Text>

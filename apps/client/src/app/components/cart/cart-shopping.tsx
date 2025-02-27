@@ -40,14 +40,8 @@ export function CartShopping() {
   useEffect(() => {
     if (data) {
       clearCart();
-      data.items.map((cartItem) => {
-        addItem({
-          id: cartItem.id,
-          item: cartItem.item,
-          quantity: cartItem.quantity,
-          formData: cartItem.formData,
-        });
-        return cartItem;
+      data.items.forEach((cartItem) => {
+        addItem(cartItem);
       });
     }
   }, [data]);
