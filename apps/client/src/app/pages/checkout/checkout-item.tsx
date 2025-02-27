@@ -13,11 +13,14 @@ interface Props {
 function CheckoutItem(props: Props) {
   const { cartItem } = props;
   const { item } = cartItem;
-  const image =
-    item.images?.length > 0 ? item.images[0].url : placeholderItemImage;
-  const serviceType = item.service?.serviceType;
-  const formType = item.category?.formType || item.service?.serviceType;
-
+  const { service, images, category } = item;
+  const image = images?.length > 0 ? images[0].url : placeholderItemImage;
+  const serviceType = service?.serviceType;
+  const formType = category?.formType || service?.serviceType;
+  const price = cartItem.variant
+    ? cartItem.variant.priceInCents
+    : cartItem.item.priceInCents;
+  console.log('price: ', cartItem);
   return (
     <div className="lg:flex grid grid-cols-4 lg:justify-between w-full">
       <div className="grid grid-cols-2 col-span-3 lg:flex lg:gap-3">
@@ -46,7 +49,7 @@ function CheckoutItem(props: Props) {
       <div className="col-span-1 flex items-end flex-col">
         <Text>Total</Text>
         <Text className="mb-2 text-green-800">
-          {centsToEurosWithCurrency(cartItem.quantity * item.priceInCents)}
+          {centsToEurosWithCurrency(cartItem.quantity * price)}
         </Text>
         <CheckoutItemRemove cartItem={cartItem} />
       </div>

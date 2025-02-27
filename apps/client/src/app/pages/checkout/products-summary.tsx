@@ -1,4 +1,3 @@
-import React from 'react';
 import { useCartStore } from '../../hooks/useCartStore';
 import { groupCartItemsByCategory } from '../../utils';
 import CheckoutItem from './checkout-item';

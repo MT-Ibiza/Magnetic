@@ -24,8 +24,8 @@ export function userCanMakeBookings(arrivalDate: string | Date) {
   return moment(limitDate).isAfter(moment());
 }
 
-export function groupCartItemsByCategory(data: CartItem[]): GroupedCategory[] {
-  return data.reduce<GroupedCategory[]>((result, currentItem) => {
+export function groupCartItemsByCategory(items: CartItem[]): GroupedCategory[] {
+  return items.reduce<GroupedCategory[]>((result, currentItem) => {
     const categoryName = currentItem.item.service?.name;
     let category = result.find((group) => group.category === categoryName);
     if (!category) {
@@ -37,8 +37,8 @@ export function groupCartItemsByCategory(data: CartItem[]): GroupedCategory[] {
   }, []);
 }
 
-export function calculateTotalsByService(data: CartItem[]): ServiceTotal[] {
-  return data.reduce<ServiceTotal[]>((result, currentItem) => {
+export function calculateTotalsByService(items: CartItem[]): ServiceTotal[] {
+  return items.reduce<ServiceTotal[]>((result, currentItem) => {
     const serviceName = currentItem.item.service?.name;
     const itemTotal = currentItem.item.priceInCents * currentItem.quantity;
     let serviceGroup = result.find((group) => group.service === serviceName);
