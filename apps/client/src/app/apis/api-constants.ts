@@ -46,6 +46,9 @@ export const URL_GET_BOOKINGS = `${API_URL}/bookings`;
 export const URL_SEARCH_BOATS = (query: string) =>
   `${API_URL}/boats/search?${query}`;
 
+export const URL_SEARCH_BOAT_AVAILABILITY = (query: string) =>
+  `${API_URL}/boats/availability?${query}`;
+
 //Request a call
 export const URL_REQUEST_CALL = `${API_URL}/call`;
 

@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import moment from 'moment';
 import { BoatCharterFormData, FormSubmitParams } from '@magnetic/interfaces';
 import {
   Button,
@@ -8,6 +10,7 @@ import {
 } from '@magnetic/ui';
 import { Controller, useForm } from 'react-hook-form';
 import { useApp } from '../../../hooks/useApp';
+import { searchAvailabilityBoat } from '../../../apis/api-boats';
 
 interface Props {
   onSubmit: (data: FormSubmitParams<BoatCharterFormData>) => void;
@@ -21,6 +24,8 @@ export function BoatCharterBookingForm({
   onCancel,
 }: Props) {
   const { currentSelectItem } = useApp();
+  const [disabledDates, setDisabledDates] = useState<Date[]>([]);
+
   const {
     register,
     control,
@@ -30,18 +35,50 @@ export function BoatCharterBookingForm({
     defaultValues: formData
       ? {
           ...formData,
-          date: formData.date ? new Date(formData.date).toISOString() : '',
+          date: formData.date ? moment(formData.date).toISOString() : '',
         }
       : undefined,
   });
 
-  const handleFormSubmit = async (data: BoatCharterFormData) => {
-    const formattedData = {
-      ...data,
-      boat: currentSelectItem?.name || '',
-      date: new Date(data.date).toISOString(),
+  useEffect(() => {
+    if (!currentSelectItem?.id) return;
+
+    const fetchAvailability = async () => {
+      try {
+        const from = moment().format('YYYY-MM-DD'); // today
+        const to = moment().add(6, 'months').format('YYYY-MM-DD'); // 6 month
+
+        const availability = await searchAvailabilityBoat({
+          boatId: currentSelectItem.id.toString(),
+          from,
+          to,
+        });
+
+        const bookedDates = availability.flatMap(({ startDate, endDate }) => {
+          const start = moment(startDate);
+          const end = moment(endDate);
+          return Array.from({ length: end.diff(start, 'days') + 1 }, (_, i) =>
+            start.clone().add(i, 'days').toDate()
+          );
+        });
+
+        setDisabledDates(bookedDates);
+      } catch (error) {
+        console.error('Error fetching boat availability:', error);
+      }
     };
-    onSubmit({ form: formattedData });
+
+    fetchAvailability();
+  }, [currentSelectItem?.id]);
+
+  const handleFormSubmit = async (data: BoatCharterFormData) => {
+    onSubmit({
+      form: {
+        ...data,
+        boat: currentSelectItem?.name || '',
+        date: moment(data.date).toISOString(),
+      },
+    });
   };
 
   return (
@@ -62,10 +99,14 @@ export function BoatCharterBookingForm({
               rules={{ required: 'Date is required' }}
               render={({ field }) => (
                 <CalendarCustomInput
-                  selectedDate={field.value ? new Date(field.value) : null}
-                  onSelectDate={field.onChange}
+                  selectedDate={
+                    field.value ? moment(field.value).toDate() : null
+                  }
+                  onSelectDate={(date) =>
+                    field.onChange(moment(date).toISOString())
+                  }
                   className="w-full"
-                  disabledDates={[]}
+                  disabledDates={disabledDates}
                 />
               )}
             />
