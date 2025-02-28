@@ -12,6 +12,7 @@ import ItemDefaultCard from '../../components/items/cards/item-default-card';
 import ItemTransferCard from '../../components/items/cards/item-transfer-card';
 import ItemChefsCard from '../../components/items/cards/item-chefs-card';
 import Modal from '../../components/modal';
+import ItemWellnessCard from '../../components/items/cards/item-wellness-card';
 
 interface Props {
   items: Item[];
@@ -127,7 +128,13 @@ function ListProducts(props: Props) {
     setOpenFormModal(false);
   };
 
-  const customDetailsServices = ['drinks', 'chefs', 'transfer', 'boat_rental'];
+  const customDetailsServices = [
+    'drinks',
+    'chefs',
+    'transfer',
+    'boat_rental',
+    'wellness',
+  ];
 
   function handleAddItem(item: Item, amount: number) {
     if (availableInPlan) {
@@ -204,6 +211,17 @@ function ListProducts(props: Props) {
                         item={item}
                         onClickBookNow={() => {
                           handleBookNow(item);
+                        }}
+                      />
+                    )}
+                    {serviceType === 'wellness' && (
+                      <ItemWellnessCard
+                        item={item}
+                        onClickAdd={(amount) => {
+                          handleSaveAddProduct(item, amount, undefined);
+                        }}
+                        onClickRemove={(amount) => {
+                          handleRemoveItem(item, amount);
                         }}
                       />
                     )}
