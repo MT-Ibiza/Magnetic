@@ -1,12 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useItem } from '../../hooks/useItem';
-import {
-  Badge,
-  DatePickerCustomDay,
-  DatePickerCustomHeaderTwoMonth,
-  GalleryModal,
-  SectionCard,
-} from '@magnetic/ui';
+import { Badge, GalleryModal, SectionCard } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import { useState } from 'react';
@@ -40,14 +34,13 @@ export function ViewItemPage(props: Props) {
   const [openFormModal, setOpenFormModal] = useState(false);
   const { setSelectedItem } = useApp();
 
-  const { isLoading, isError, item, serviceCategories, error, service } =
-    useItem(serviceId, itemId);
+  const { isLoading, isError, item, error } = useItem(serviceId, itemId);
 
   const [alert, setAlert] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning';
   } | null>(null);
-  console.log(service);
+
   const showAlert = (
     message: string,
     type: 'success' | 'error' | 'warning'
@@ -237,10 +230,11 @@ export function ViewItemPage(props: Props) {
                       </div>
                     </div>
                   </SectionCard>
-                  {(service?.instructions || service?.termsAndConditions) && (
+                  {(item.service?.instructions ||
+                    item.service?.termsAndConditions) && (
                     <SectionCard title="Things to know">
                       <div>
-                        {service.instructions && (
+                        {item.service.instructions && (
                           <>
                             <h4 className="text-lg font-semibold">
                               Instructions
@@ -248,15 +242,16 @@ export function ViewItemPage(props: Props) {
                             <div
                               className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
                               dangerouslySetInnerHTML={{
-                                __html: service.instructions,
+                                __html: item.service.instructions,
                               }}
                             />
                           </>
                         )}
-                        {service.instructions && service.termsAndConditions && (
-                          <div className="w-14 my-[32px] border-b border-neutral-200 dark:border-neutral-700"></div>
-                        )}
-                        {service.termsAndConditions && (
+                        {item.service.instructions &&
+                          item.service.termsAndConditions && (
+                            <div className="w-14 my-[32px] border-b border-neutral-200 dark:border-neutral-700"></div>
+                          )}
+                        {item.service.termsAndConditions && (
                           <>
                             <h4 className="text-lg font-semibold">
                               Cancellation policy
@@ -264,7 +259,7 @@ export function ViewItemPage(props: Props) {
                             <div
                               className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
                               dangerouslySetInnerHTML={{
-                                __html: service.termsAndConditions,
+                                __html: item.service.termsAndConditions,
                               }}
                             />
                           </>

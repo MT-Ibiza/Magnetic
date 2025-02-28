@@ -1,15 +1,7 @@
-import {
-  ItemWithServiceCategories,
-} from '@magnetic/interfaces';
-import {
-  URL_GET_ITEM,
-} from './api-constants';
+import { Item } from '@magnetic/interfaces';
+import { URL_GET_ITEM } from './api-constants';
 
-
-export async function getItem(
-  serviceId: number,
-  id: number
-): Promise<ItemWithServiceCategories> {
+export async function getItem(serviceId: number, id: number): Promise<Item> {
   const url = URL_GET_ITEM(serviceId, id);
   const response = await fetch(url, {
     method: 'GET',
@@ -21,4 +13,3 @@ export async function getItem(
   if (!response.ok) throw new Error(dataJson.message);
   return dataJson;
 }
-

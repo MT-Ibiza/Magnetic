@@ -23,6 +23,10 @@ export async function GET(request: NextRequest) {
           { endDate: { lte: new Date(to) } },
         ],
       },
+      select: {
+        startDate: true,
+        endDate: true,
+      },
       orderBy: { startDate: 'asc' },
     });
 

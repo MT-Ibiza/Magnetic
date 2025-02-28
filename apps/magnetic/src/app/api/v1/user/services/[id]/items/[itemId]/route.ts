@@ -11,8 +11,19 @@ export async function GET(
         id: Number(params.itemId),
         serviceId: Number(params.id),
       },
-      include: {
-        images: true,
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        priceInCents: true,
+        serviceId: true,
+        images: {
+          select: {
+            id: true,
+            position: true,
+            url: true,
+          },
+        },
         category: {
           select: {
             id: true,
@@ -25,7 +36,7 @@ export async function GET(
             name: true,
             serviceType: true,
             instructions: true,
-            termsAndConditions: true
+            termsAndConditions: true,
           },
         },
         boatAttributes: true,
@@ -42,28 +53,7 @@ export async function GET(
         },
       },
     });
-
-    const categories = await db.category.findMany({
-      select: {
-        id: true,
-        name: true,
-        description: true,
-      },
-      // where: {
-      //   items: {
-      //     some: {
-      //       service: {
-      //         name: item?.category?.name,
-      //       },
-      //     },
-      //   },
-      // },
-    });
-    const data = {
-      item,
-      categories,
-    };
-    return NextResponse.json(data);
+    return NextResponse.json(item);
   } catch (error: any) {
     return NextResponse.json(
       {
@@ -75,5 +65,3 @@ export async function GET(
     );
   }
 }
-
-
