@@ -13,6 +13,7 @@ import ItemTransferCard from '../../components/items/cards/item-transfer-card';
 import ItemChefsCard from '../../components/items/cards/item-chefs-card';
 import Modal from '../../components/modal';
 import ItemWellnessCard from '../../components/items/cards/item-wellness-card';
+import ItemSpaCard from '../../components/items/cards/item-spa-card';
 
 interface Props {
   items: Item[];
@@ -134,6 +135,7 @@ function ListProducts(props: Props) {
     'transfer',
     'boat_rental',
     'wellness',
+    'spa',
   ];
 
   function handleAddItem(item: Item, amount: number) {
@@ -222,6 +224,14 @@ function ListProducts(props: Props) {
                         }}
                         onClickRemove={(amount) => {
                           handleRemoveItem(item, amount);
+                        }}
+                      />
+                    )}
+                    {serviceType === 'spa' && (
+                      <ItemSpaCard
+                        item={item}
+                        onClickBookNow={() => {
+                          handleBookNow(item);
                         }}
                       />
                     )}
