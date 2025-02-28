@@ -3,17 +3,12 @@ import { groupItemsByCategory } from '@magnetic/utils';
 import { Alert, Button } from '@magnetic/ui';
 import { Link } from 'react-router-dom';
 import RenderBookingForm from '../../components/services/booking-forms/render-booking-form';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useApp } from '../../hooks/useApp';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
-import ItemDrinkCard from '../../components/items/cards/item-drink-card';
-import ItemDefaultCard from '../../components/items/cards/item-default-card';
-import ItemTransferCard from '../../components/items/cards/item-transfer-card';
-import ItemChefsCard from '../../components/items/cards/item-chefs-card';
 import Modal from '../../components/modal';
-import ItemWellnessCard from '../../components/items/cards/item-wellness-card';
-import ItemSpaCard from '../../components/items/cards/item-spa-card';
+import ItemCard from '../../components/items/cards/item-card';
 
 interface Props {
   items: Item[];
@@ -27,14 +22,19 @@ function ListProducts(props: Props) {
   const { addItem, removeItem, cart, totalDrinks } = useCartStore();
   const [openFormModal, setOpenFormModal] = useState(false);
   const [currentItemSelected, setCurrentItemSelected] = useState<Item>();
-
-  const itemsGroup = groupItemsByCategory(items);
   const isDrinksService = service.serviceType === 'drinks';
   const { serviceType } = service;
   const [alert, setAlert] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning';
   } | null>(null);
+
+  const itemsGroup = useMemo(() => groupItemsByCategory(items), [items]);
+
+  const cartMap = useMemo(
+    () => new Map(cart.map((cartItem) => [cartItem.item.id, cartItem])),
+    [cart]
+  );
 
   const showAlert = (
     message: string,
@@ -121,31 +121,25 @@ function ListProducts(props: Props) {
     }
   };
 
-  const openForm = () => {
-    setOpenFormModal(true);
-  };
-
-  const closeForm = () => {
-    setOpenFormModal(false);
-  };
-
-  const customDetailsServices = [
-    'drinks',
-    'chefs',
-    'transfer',
-    'boat_rental',
-    'wellness',
-    'spa',
-  ];
+  const openForm = () => setOpenFormModal(true);
+  const closeForm = () => setOpenFormModal(false);
 
   function handleAddItem(item: Item, amount: number) {
-    if (availableInPlan) {
-      setSelectedItem(item);
-      setCurrentItemSelected(item);
-      handleSaveAddProduct(item, amount, undefined);
+    setCurrentItemSelected(item);
+    if (isDrinksService) {
+      if (totalDrinks === 0) {
+        openForm();
+      } else {
+        handleSaveAddProduct(item, amount, undefined);
+      }
     } else {
-      //@ts-ignore
-      document.getElementById('modal_upgrade').showModal();
+      if (availableInPlan) {
+        setSelectedItem(item);
+        handleSaveAddProduct(item, amount, undefined);
+      } else {
+        //@ts-ignore
+        document.getElementById('modal_upgrade').showModal();
+      }
     }
   }
 
@@ -179,76 +173,18 @@ function ListProducts(props: Props) {
               isDrinksService ? 'lg:grid-cols-4' : 'lg:grid-cols-3'
             }`}
           >
-            {group.items.map((item, index) => (
-              <div key={index}>
-                {customDetailsServices.includes(serviceType) ? (
-                  <>
-                    {serviceType === 'drinks' && (
-                      <ItemDrinkCard
-                        item={item}
-                        onClickAdd={(amount) => {
-                          setCurrentItemSelected(item);
-                          console.log(totalDrinks);
-                          if (totalDrinks === 0) {
-                            openForm();
-                          } else {
-                            handleSaveAddProduct(item, amount, undefined);
-                          }
-                        }}
-                        onClickRemove={(amount) => {
-                          handleRemoveItem(item, amount);
-                        }}
-                      />
-                    )}
-                    {serviceType === 'chefs' && (
-                      <ItemChefsCard
-                        item={item}
-                        onClickBookNow={() => {
-                          handleBookNow(item);
-                        }}
-                      />
-                    )}
-                    {serviceType === 'transfer' && (
-                      <ItemTransferCard
-                        item={item}
-                        onClickBookNow={() => {
-                          handleBookNow(item);
-                        }}
-                      />
-                    )}
-                    {serviceType === 'wellness' && (
-                      <ItemWellnessCard
-                        item={item}
-                        onClickAdd={(amount) => {
-                          handleSaveAddProduct(item, amount, undefined);
-                        }}
-                        onClickRemove={(amount) => {
-                          handleRemoveItem(item, amount);
-                        }}
-                      />
-                    )}
-                    {serviceType === 'spa' && (
-                      <ItemSpaCard
-                        item={item}
-                        onClickBookNow={() => {
-                          handleBookNow(item);
-                        }}
-                      />
-                    )}
-                  </>
-                ) : (
-                  <ItemDefaultCard
-                    item={item}
-                    service={service}
-                    onClickAdd={(amount) => {
-                      handleAddItem(item, amount);
-                    }}
-                    onClickRemove={(amount) => {
-                      handleRemoveItem(item, amount);
-                    }}
-                  />
-                )}
-              </div>
+            {group.items.map((item) => (
+              <ItemCard
+                key={item.id}
+                item={item}
+                serviceType={service.serviceType}
+                cartItem={cartMap.get(item.id)}
+                onClickAdd={(amount) => handleAddItem(item, amount)}
+                onClickRemove={(amount) => handleRemoveItem(item, amount)}
+                onClickBookNow={() => {
+                  handleBookNow(item);
+                }}
+              />
             ))}
           </div>
         </div>

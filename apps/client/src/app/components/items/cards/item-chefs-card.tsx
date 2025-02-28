@@ -5,21 +5,16 @@ import {
   centsToEurosWithCurrency,
   sortImagesByPosition,
 } from '@magnetic/utils';
-import { useCartStore } from '../../../hooks/useCartStore';
 import ItemHandleBookButtons from '../item-handle-book-buttons';
 
 interface Props {
   item: Item;
+  cartItemAmount: number;
   onClickBookNow: (amount: number) => void;
 }
 
-function ItemChefsCard({ item, onClickBookNow }: Props) {
+function ItemChefsCard({ item, onClickBookNow, cartItemAmount }: Props) {
   const { name, priceInCents, category, images, id, serviceId } = item;
-  const { cart } = useCartStore();
-  const cartItem = useMemo(
-    () => cart.find((cartItem) => cartItem.item.id === id),
-    [cart, id]
-  );
 
   const imagesSorted = useMemo(() => {
     return sortImagesByPosition(images);
@@ -61,7 +56,7 @@ function ItemChefsCard({ item, onClickBookNow }: Props) {
             <ItemHandleBookButtons
               item={item}
               onClicBookNow={onClickBookNow}
-              currentAmount={cartItem?.quantity || 0}
+              currentAmount={cartItemAmount}
             />
           </div>
         </div>

@@ -6,19 +6,21 @@ import {
   sortImagesByPosition,
 } from '@magnetic/utils';
 import ItemCounterButtons from '../item-counter-buttons';
-import { useCartStore } from '../../../hooks/useCartStore';
 
 interface Props {
   item: Item;
+  cartItemAmount: number;
   onClickAdd: (amount: number) => void;
   onClickRemove: (amount: number) => void;
 }
 
-function ItemDrinkCard(props: Props) {
-  const { item, onClickAdd, onClickRemove } = props;
+function ItemDrinkCard({
+  item,
+  onClickAdd,
+  onClickRemove,
+  cartItemAmount,
+}: Props) {
   const { name, priceInCents, drinkAttributes } = item;
-  const { cart } = useCartStore();
-  const cartItem = cart.find((cartItem) => cartItem.item.id === item.id);
 
   const imagesSorted = useMemo(() => {
     return sortImagesByPosition(item.images);
@@ -54,7 +56,7 @@ function ItemDrinkCard(props: Props) {
               {centsToEurosWithCurrency(priceInCents)}
             </Text>
             <ItemCounterButtons
-              currentAmount={cartItem?.quantity || 0}
+              currentAmount={cartItemAmount}
               onClickAdd={onClickAdd}
               onClickRemove={onClickRemove}
             />

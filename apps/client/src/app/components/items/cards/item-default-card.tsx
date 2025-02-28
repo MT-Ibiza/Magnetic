@@ -1,25 +1,22 @@
 import { useMemo } from 'react';
-import { Item, Service } from '@magnetic/interfaces';
+import { Item } from '@magnetic/interfaces';
 import { GallerySlider, Text } from '@magnetic/ui';
 import {
   centsToEurosWithCurrency,
   sortImagesByPosition,
 } from '@magnetic/utils';
 import ItemCounterButtons from '../item-counter-buttons';
-import { useCartStore } from '../../../hooks/useCartStore';
 
 interface Props {
   item: Item;
-  service: Service;
+  cartItemAmount: number;
   onClickAdd: (amount: number) => void;
   onClickRemove: (amount: number) => void;
 }
 
 function ItemDefaultCard(props: Props) {
-  const { item, service, onClickAdd, onClickRemove } = props;
+  const { item, onClickAdd, onClickRemove, cartItemAmount } = props;
   const { name, priceInCents, description } = item;
-  const { cart } = useCartStore();
-  const cartItem = cart.find((cartItem) => cartItem.item.id === item.id);
 
   const imagesSorted = useMemo(() => {
     return sortImagesByPosition(item.images);
@@ -47,7 +44,7 @@ function ItemDefaultCard(props: Props) {
               {centsToEurosWithCurrency(priceInCents)}
             </Text>
             <ItemCounterButtons
-              currentAmount={cartItem?.quantity || 0}
+              currentAmount={cartItemAmount}
               onClickAdd={onClickAdd}
               onClickRemove={onClickRemove}
             />
