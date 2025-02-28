@@ -13,15 +13,22 @@ interface Props {
   onClickBookNow: (amount: number) => void;
 }
 
-function ItemChefsCard(props: Props) {
-  const { item, onClickBookNow } = props;
-  const { name, priceInCents } = item;
+function ItemChefsCard({ item, onClickBookNow }: Props) {
+  const { name, priceInCents, category, images, id, serviceId } = item;
   const { cart } = useCartStore();
-  const cartItem = cart.find((cartItem) => cartItem.item.id === item.id);
+  const cartItem = useMemo(
+    () => cart.find((cartItem) => cartItem.item.id === id),
+    [cart, id]
+  );
 
   const imagesSorted = useMemo(() => {
-    return sortImagesByPosition(item.images);
-  }, [item.images]);
+    return sortImagesByPosition(images);
+  }, [images]);
+
+  const texts: Record<string, string> = {
+    default: 'per week',
+    'chef-single': 'per person',
+  };
 
   return (
     <div
@@ -29,10 +36,10 @@ function ItemChefsCard(props: Props) {
     >
       <div className="relative w-full rounded-2xl overflow-hidden">
         <GallerySlider
-          href={`/services/${item.serviceId}/item/${item.id}`}
+          href={`/services/${serviceId}/item/${id}`}
           galleryImgs={imagesSorted}
           classImage="h-[200px]"
-          uniqueID={`ExperiencesCard_${item.id}`}
+          uniqueID={`ExperiencesCard_${id}`}
         />
         <div className="p-5 space-y-4">
           <div className="w-full pb-2 flex flex-col gap-3">
@@ -41,9 +48,16 @@ function ItemChefsCard(props: Props) {
             </p>
           </div>
           <div className="flex justify-between mt-5">
-            <Text className="text-base font-semibold">
-              {centsToEurosWithCurrency(priceInCents)}
-            </Text>
+            <div className="flex gap-1 items-center">
+              <Text className="text-base font-semibold">
+                {centsToEurosWithCurrency(priceInCents)}
+              </Text>
+              {category?.formType && (
+                <Text className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
+                  {`/ ${texts[category.formType] || texts.default}`}
+                </Text>
+              )}
+            </div>
             <ItemHandleBookButtons
               item={item}
               onClicBookNow={onClickBookNow}
