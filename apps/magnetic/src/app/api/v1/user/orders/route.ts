@@ -117,21 +117,11 @@ export async function POST(request: Request) {
       try {
         await db.boatAvailability.createMany({
           data: boatForms.map((bf) => {
-            const date = moment(bf.data.date);
+            const date = moment(bf.data.date).toDate();
             return {
               boatId: bf.item.boatAttributes?.id || 0,
-              startDate: date
-                .hour(10)
-                .minute(0)
-                .second(0)
-                .millisecond(0)
-                .toDate(),
-              endDate: date
-                .hour(18)
-                .minute(0)
-                .second(0)
-                .millisecond(0)
-                .toDate(),
+              startDate: date,
+              endDate: date,
               text: `Boat reservation: ${bf.item.name}`,
               source: 'app',
             };
