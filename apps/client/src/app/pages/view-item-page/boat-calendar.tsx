@@ -9,7 +9,6 @@ import moment from 'moment';
 import { ErrorText } from '../../components/error-text';
 import { useEffect, useState } from 'react';
 import { bookedBoatDates } from '../../utils';
-import { BoatAvailability } from '@magnetic/interfaces';
 
 interface Props {
   startDate: Date | null;

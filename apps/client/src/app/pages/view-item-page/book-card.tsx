@@ -8,10 +8,11 @@ interface Props {
   item: Item;
   startDate: Date | null;
   endDate: Date | null;
+  onClick: () => void;
 }
 
 function BookCard(props: Props) {
-  const { item, startDate, endDate } = props;
+  const { item, startDate, endDate, onClick } = props;
   const { variants } = item;
 
   const [priceSelected, setPriceSelected] = useState(item.priceInCents);
@@ -87,7 +88,7 @@ function BookCard(props: Props) {
         </>
       )}
 
-      <Button size={2} radius="full" href={'/checkout'}>
+      <Button size={2} radius="full" onClick={onClick}>
         Book Now
       </Button>
     </div>

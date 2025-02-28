@@ -18,10 +18,13 @@ import {
   FaBed,
   FaGasPump,
 } from 'react-icons/fa';
-import DatePicker from 'react-datepicker';
 import BookCard from './book-card';
 import MobileItemSticky from '../../components/mobile-footer-item';
 import BoatCalendar from './boat-calendar';
+import Modal from '../../components/modal';
+import RenderBookingForm from '../../components/services/booking-forms/render-booking-form';
+import { FormSubmitParams } from '@magnetic/interfaces';
+import { useApp } from '../../hooks/useApp';
 
 interface Props {}
 
@@ -34,8 +37,12 @@ export function ViewItemPage(props: Props) {
   const { cart, addItem, removeItem } = useCartStore();
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [openFormModal, setOpenFormModal] = useState(false);
+  const { setSelectedItem } = useApp();
+
   const { isLoading, isError, item, serviceCategories, error, service } =
     useItem(serviceId, itemId);
+
   const [alert, setAlert] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning';
@@ -125,129 +132,187 @@ export function ViewItemPage(props: Props) {
     },
   ];
 
+  const handleAddService = (data: FormSubmitParams<any>) => {
+    const { form, quantity, variantId } = data;
+    const newVal = quantity || 1;
+    if (item) {
+      addServiceToCart.mutate(
+        {
+          itemId: item.id,
+          quantity: newVal,
+          formData: form,
+          variantId,
+        },
+        {
+          onSuccess: (response) => {
+            const { cartItem } = response;
+            setOpenFormModal(false);
+            addItem({
+              id: cartItem.id,
+              item: item,
+              quantity: newVal,
+              formData: form,
+            });
+            showAlert('Product added to the cart', 'success');
+          },
+          onError: () => {
+            showAlert('Failed to add product to the cart', 'error');
+          },
+        }
+      );
+    }
+  };
+
   return (
-    <div className={`nc-ListingCarDetailPage `}>
-      <div className="flex flex-col gap-6">
-        {item?.images && item.images.length > 0 && (
-          <GalleryModal images={item?.images} />
-        )}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="col-span-2 space-y-6">
-            <div className="listingSection__wrap bg-base-100 !space-y-6">
-              {item?.boatAttributes?.boatType && (
-                <div className="flex justify-between items-center">
-                  <Badge name={item?.boatAttributes?.boatType} />
+    <>
+      <div className={`nc-ListingCarDetailPage `}>
+        <div className="flex flex-col gap-6">
+          {item?.images && item.images.length > 0 && (
+            <GalleryModal images={item?.images} />
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="col-span-2 space-y-6">
+              <div className="listingSection__wrap bg-base-100 !space-y-6">
+                {item?.boatAttributes?.boatType && (
+                  <div className="flex justify-between items-center">
+                    <Badge name={item?.boatAttributes?.boatType} />
+                  </div>
+                )}
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
+                  {item?.name}
+                </h2>
+                {item?.boatAttributes && (
+                  <>
+                    <div className="w-full border-b border-neutral-100 dark:border-neutral-700" />
+                    <div className="grid grid-cols-2 xl:grid-cols-3 gap-6 text-sm text-neutral-700 dark:text-neutral-300 ">
+                      {BoatAttributes.map((amenity, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center space-x-3"
+                        >
+                          {amenity.icon}
+                          <span>
+                            {amenity.name}: {amenity.value}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+              <SectionCard title="Included">
+                <div className="text-neutral-6000 dark:text-neutral-300 editor-text">
+                  <div
+                    className="block"
+                    dangerouslySetInnerHTML={{
+                      __html: item?.description || '',
+                    }}
+                  />
                 </div>
-              )}
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
-                {item?.name}
-              </h2>
+              </SectionCard>
               {item?.boatAttributes && (
                 <>
-                  <div className="w-full border-b border-neutral-100 dark:border-neutral-700" />
-                  <div className="grid grid-cols-2 xl:grid-cols-3 gap-6 text-sm text-neutral-700 dark:text-neutral-300 ">
-                    {BoatAttributes.map((amenity, index) => (
-                      <div key={index} className="flex items-center space-x-3">
-                        {amenity.icon}
-                        <span>
-                          {amenity.name}: {amenity.value}
-                        </span>
+                  <SectionCard
+                    title="Calendar"
+                    subTitle="Prices may increase on weekends or holidays"
+                  >
+                    <BoatCalendar
+                      startDate={startDate}
+                      onChangeDate={onChangeDate}
+                      boatId={item.boatAttributes.id}
+                    />
+                  </SectionCard>
+                  <SectionCard title="Location" subTitle="Description Location">
+                    <div className="aspect-w-5 aspect-h-5 sm:aspect-h-3 ring-1 ring-black/10 rounded-xl z-0">
+                      <div className="rounded-xl overflow-hidden z-0">
+                        <iframe
+                          title="Mapa de la Torre Eiffel"
+                          width="100%"
+                          height="450px"
+                          loading="lazy"
+                          allowFullScreen
+                          referrerPolicy="no-referrer-when-downgrade"
+                          src="https://maps.google.com/maps?q=48.8584,2.2945&z=14&output=embed"
+                        ></iframe>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  </SectionCard>
+                  {(service?.instructions || service?.termsAndConditions) && (
+                    <SectionCard title="Things to know">
+                      <div>
+                        {service.instructions && (
+                          <>
+                            <h4 className="text-lg font-semibold">
+                              Instructions
+                            </h4>
+                            <div
+                              className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
+                              dangerouslySetInnerHTML={{
+                                __html: service.instructions,
+                              }}
+                            />
+                          </>
+                        )}
+                        {service.instructions && service.termsAndConditions && (
+                          <div className="w-14 my-[32px] border-b border-neutral-200 dark:border-neutral-700"></div>
+                        )}
+                        {service.termsAndConditions && (
+                          <>
+                            <h4 className="text-lg font-semibold">
+                              Cancellation policy
+                            </h4>
+                            <div
+                              className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
+                              dangerouslySetInnerHTML={{
+                                __html: service.termsAndConditions,
+                              }}
+                            />
+                          </>
+                        )}
+                      </div>
+                    </SectionCard>
+                  )}
                 </>
               )}
             </div>
-            <SectionCard title="Included">
-              <div className="text-neutral-6000 dark:text-neutral-300 editor-text">
-                <div
-                  className="block"
-                  dangerouslySetInnerHTML={{ __html: item?.description || '' }}
+            <div className="hidden lg:block col-span-1">
+              {item && (
+                <BookCard
+                  startDate={startDate}
+                  endDate={endDate}
+                  item={item}
+                  onClick={() => {
+                    setOpenFormModal(true);
+                    setSelectedItem(item);
+                  }}
                 />
-              </div>
-            </SectionCard>
-            {item?.boatAttributes && (
-              <>
-                <SectionCard
-                  title="Calendar"
-                  subTitle="Prices may increase on weekends or holidays"
-                >
-                  <BoatCalendar
-                    startDate={startDate}
-                    onChangeDate={onChangeDate}
-                    boatId={item.boatAttributes.id}
-                  />
-                </SectionCard>
-                <SectionCard title="Location" subTitle="Description Location">
-                  <div className="aspect-w-5 aspect-h-5 sm:aspect-h-3 ring-1 ring-black/10 rounded-xl z-0">
-                    <div className="rounded-xl overflow-hidden z-0">
-                      <iframe
-                        title="Mapa de la Torre Eiffel"
-                        width="100%"
-                        height="450px"
-                        loading="lazy"
-                        allowFullScreen
-                        referrerPolicy="no-referrer-when-downgrade"
-                        src="https://maps.google.com/maps?q=48.8584,2.2945&z=14&output=embed"
-                      ></iframe>
-                    </div>
-                  </div>
-                </SectionCard>
-                {(service?.instructions || service?.termsAndConditions) && (
-                  <SectionCard title="Things to know">
-                    <div>
-                      {service.instructions && (
-                        <>
-                          <h4 className="text-lg font-semibold">
-                            Instructions
-                          </h4>
-                          <div
-                            className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
-                            dangerouslySetInnerHTML={{
-                              __html: service.instructions,
-                            }}
-                          />
-                        </>
-                      )}
-                      {service.instructions && service.termsAndConditions && (
-                        <div className="w-14 my-[32px] border-b border-neutral-200 dark:border-neutral-700"></div>
-                      )}
-                      {service.termsAndConditions && (
-                        <>
-                          <h4 className="text-lg font-semibold">
-                            Cancellation policy
-                          </h4>
-                          <div
-                            className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
-                            dangerouslySetInnerHTML={{
-                              __html: service.termsAndConditions,
-                            }}
-                          />
-                        </>
-                      )}
-                    </div>
-                  </SectionCard>
-                )}
-              </>
-            )}
-          </div>
-          <div className="hidden lg:block col-span-1">
-            {item && (
-              <BookCard startDate={startDate} endDate={endDate} item={item} />
-            )}
-          </div>
-          <div className="block lg:hidden">
-            {item && (
-              <MobileItemSticky
-                startDate={startDate}
-                endDate={endDate}
-                item={item}
-              />
-            )}
+              )}
+            </div>
+            <div className="block lg:hidden">
+              {item && (
+                <MobileItemSticky
+                  startDate={startDate}
+                  endDate={endDate}
+                  item={item}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <Modal open={openFormModal}>
+        <RenderBookingForm
+          type={item?.category?.formType || item?.service.serviceType || ''}
+          formData={{
+            serviceId: item?.serviceId || 0,
+          }}
+          onSubmit={handleAddService}
+          onClose={() => {
+            setOpenFormModal(false);
+          }}
+        />
+      </Modal>
+    </>
   );
 }
 
