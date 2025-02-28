@@ -1,9 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useItem } from '../../hooks/useItem';
 import {
-  AccordionSection,
   Badge,
-  Button,
   DatePickerCustomDay,
   DatePickerCustomHeaderTwoMonth,
   GalleryModal,
@@ -12,7 +10,6 @@ import {
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import { useState } from 'react';
-import { centsToEuros, cmToMeters, eurosToCents } from '@magnetic/utils';
 import {
   FaUsers,
   FaUserTie,
@@ -24,6 +21,7 @@ import {
 import DatePicker from 'react-datepicker';
 import BookCard from './book-card';
 import MobileItemSticky from '../../components/mobile-footer-item';
+import BoatCalendar from './boat-calendar';
 
 interface Props {}
 
@@ -51,9 +49,14 @@ export function ViewItemPage(props: Props) {
     setTimeout(() => setAlert(null), 3000);
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError)
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
     return <div>Error: {error?.message || 'Something went wrong'}</div>;
+  }
+
   const handleAddItem = (item: any, quantity: number) => {
     const newVal = quantity + 1;
     addServiceToCart.mutate(
@@ -169,23 +172,11 @@ export function ViewItemPage(props: Props) {
                   title="Calendar"
                   subTitle="Prices may increase on weekends or holidays"
                 >
-                  <div className="addListingDatePickerExclude">
-                    <DatePicker
-                      selected={startDate}
-                      onChange={onChangeDate}
-                      minDate={new Date()}
-                      excludeDates={[]}
-                      selectsRange
-                      monthsShown={1}
-                      inline
-                      renderCustomHeader={(p) => (
-                        <DatePickerCustomHeaderTwoMonth {...p} />
-                      )}
-                      renderDayContents={(day, date) => (
-                        <DatePickerCustomDay dayOfMonth={day} date={date} />
-                      )}
-                    />
-                  </div>
+                  <BoatCalendar
+                    startDate={startDate}
+                    onChangeDate={onChangeDate}
+                    boatId={item.boatAttributes.id}
+                  />
                 </SectionCard>
                 <SectionCard title="Location" subTitle="Description Location">
                   <div className="aspect-w-5 aspect-h-5 sm:aspect-h-3 ring-1 ring-black/10 rounded-xl z-0">

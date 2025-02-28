@@ -31,29 +31,29 @@ function BookCard(props: Props) {
         </span>
       </div>
       <div className="flex flex-col space-y-4">
-        <div className='border border-neutral-200 dark:border-neutral-700 rounded-2xl'>
-          <div className='p-3 w-full flex-1 z-10 flex relative items-center space-x-3 focus:outline-none '>
-          <div className="text-neutral-300 dark:text-neutral-400">
-            <FaCalendarAlt className="w-5 h-5 lg:w-7 lg:h-7 text-neutral-300 dark:text-neutral-400" />
-          </div>
-          <div className="flex-grow text-left">
-            <span className="block xl:text-lg font-semibold">
-              {startDate?.toLocaleDateString('en-US', {
-                month: 'short',
-                day: '2-digit',
-              }) || 'Add date'}
-              {endDate
-                ? ' - ' +
-                  endDate?.toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: '2-digit',
-                  })
-                : ''}
-            </span>
-            <span className="block mt-1 text-sm text-neutral-400 leading-none font-light">
-              {'Pick up - Drop off'}
-            </span>
-          </div>
+        <div className="border border-neutral-200 dark:border-neutral-700 rounded-2xl">
+          <div className="p-3 w-full flex-1 z-10 flex relative items-center space-x-3 focus:outline-none ">
+            <div className="text-neutral-300 dark:text-neutral-400">
+              <FaCalendarAlt className="w-5 h-5 lg:w-7 lg:h-7 text-neutral-300 dark:text-neutral-400" />
+            </div>
+            <div className="flex-grow text-left">
+              <span className="block xl:text-lg font-semibold">
+                {startDate?.toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: '2-digit',
+                }) || 'Add date'}
+                {endDate
+                  ? ' - ' +
+                    endDate?.toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: '2-digit',
+                    })
+                  : ''}
+              </span>
+              <span className="block mt-1 text-sm text-neutral-400 leading-none font-light">
+                {'Pick up - Drop off'}
+              </span>
+            </div>
           </div>
         </div>
         <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
@@ -86,6 +86,7 @@ function BookCard(props: Props) {
           </select>
         </>
       )}
+
       <Button size={2} radius="full" href={'/checkout'}>
         Book Now
       </Button>

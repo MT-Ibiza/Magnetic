@@ -13,6 +13,7 @@ import { useApp } from '../../../hooks/useApp';
 import { searchAvailabilityBoat } from '../../../apis/api-boats';
 import Modal from '../../modal';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
+import { bookedBoatDates } from '../../../utils';
 
 interface Props {
   onSubmit: (data: FormSubmitParams<BoatCharterFormData>) => void;
@@ -55,15 +56,7 @@ export function BoatCharterBookingForm({
           from,
           to,
         });
-
-        const bookedDates = availability.flatMap(({ startDate, endDate }) => {
-          const start = moment(startDate);
-          const end = moment(endDate);
-          return Array.from({ length: end.diff(start, 'days') + 1 }, (_, i) =>
-            start.clone().add(i, 'days').toDate()
-          );
-        });
-
+        const bookedDates = bookedBoatDates(availability);
         setDisabledDates(bookedDates);
       } catch (error) {
         console.error('Error fetching boat availability:', error);

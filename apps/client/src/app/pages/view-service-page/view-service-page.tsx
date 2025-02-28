@@ -1,9 +1,4 @@
-import {
-  AccordionSection,
-  Badge,
-  CardWrapper,
-  SectionCard,
-} from '@magnetic/ui';
+import { AccordionSection, SectionCard } from '@magnetic/ui';
 import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
 import { useAuth } from '../../hooks/useAuth';
@@ -11,7 +6,6 @@ import ListProducts from './list-products';
 import NoticeBookingUnavailable from '../../components/notice-booking-unavailable';
 import ListBoats from './list-boats';
 import './styles.scss';
-import { placeholderItemImage } from '../../constants';
 
 interface Props {}
 
@@ -40,7 +34,7 @@ function ViewServicePage(props: Props) {
   const availableInPlan = packageIds.includes(user?.package?.id || -1);
 
   return (
-    <div>
+    <>
       <NoticeBookingUnavailable arrivalDate={user?.arrivalDate} />
       <div className="space-y-6">
         <SectionCard title={service.name}>
@@ -85,7 +79,7 @@ function ViewServicePage(props: Props) {
         ) : (
           <>
             {service.serviceType === 'boat_rental' ? (
-              <ListBoats availableInPlan={true} service={service} />
+              <ListBoats />
             ) : (
               <div className="bg-gray-50 py-5 px-10 rounded-md">
                 <ListProducts
@@ -98,16 +92,7 @@ function ViewServicePage(props: Props) {
           </>
         )}
       </div>
-      {/* {!service.script && (
-          <div className="flex justify-end pt-[20px]">
-            <Link to="/checkout">
-              <Button className="py-[8px] text-[16px] w-full">
-                Checkout Now
-              </Button>
-            </Link>
-          </div>
-        )} */}
-    </div>
+    </>
   );
 }
 

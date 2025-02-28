@@ -1,4 +1,9 @@
-import { CartItem, Item, ItemVariant } from '@magnetic/interfaces';
+import {
+  BoatAvailability,
+  CartItem,
+  Item,
+  ItemVariant,
+} from '@magnetic/interfaces';
 import moment from 'moment';
 
 type GroupedCategory = {
@@ -79,4 +84,14 @@ export default function isInViewport(element: HTMLElement) {
       (window.innerHeight || document.documentElement.clientHeight) &&
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
+}
+
+export function bookedBoatDates(availability: BoatAvailability[]) {
+  return availability.flatMap(({ startDate, endDate }) => {
+    const start = moment(startDate);
+    const end = moment(endDate);
+    return Array.from({ length: end.diff(start, 'days') + 1 }, (_, i) =>
+      start.clone().add(i, 'days').toDate()
+    );
+  });
 }
