@@ -52,7 +52,7 @@ const Header = ({
   onClose?: () => void;
 }) => {
   return (
-    <div className="relative w-full top-0 py-5 px-10 bg-slate-50">
+    <div className="relative w-full top-0 py-5 px-10 bg-slate-50 border border-b-1">
       {children}
       {onClose && (
         <button
@@ -76,7 +76,10 @@ const Body = ({ children, ...props }: ModalFooterProps) => {
 
 const Footer = ({ children, ...props }: ModalFooterProps) => {
   return (
-    <div className="footer bottom-0 py-5 px-10 bg-slate-50" {...props}>
+    <div
+      className="footer bottom-0 py-5 px-10 bg-slate-50 border border-t-1"
+      {...props}
+    >
       {children}
     </div>
   );

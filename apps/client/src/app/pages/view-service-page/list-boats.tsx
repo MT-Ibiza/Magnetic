@@ -9,6 +9,7 @@ import { useApp } from '../../hooks/useApp';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import { Alert } from '@magnetic/ui';
+import Modal from '../../components/modal';
 
 interface Props {}
 
@@ -56,14 +57,10 @@ function ListBoats(props: Props) {
 
   const openForm = () => {
     setOpenFormModal(true);
-    //@ts-ignore
-    document.getElementById(`modal-form-product`).showModal();
   };
 
   const closeForm = () => {
     setOpenFormModal(false);
-    //@ts-ignore
-    document.getElementById(`modal-form-product`).close();
   };
 
   const handleAddService = (quantity: number, formData?: any) => {
@@ -120,18 +117,14 @@ function ListBoats(props: Props) {
           onClose={() => setAlert(null)}
         />
       )}
-      <dialog id={`modal-form-product`} className="modal">
-        <div className="modal-box p-8 w-full max-w-5xl">
-          {openFormModal && (
-            <BoatCharterBookingForm
-              onSubmit={(data) => {
-                handleAddService(1, data);
-              }}
-              onCancel={closeForm}
-            />
-          )}
-        </div>
-      </dialog>
+      <Modal open={openFormModal}>
+        <BoatCharterBookingForm
+          onSubmit={(data) => {
+            handleAddService(1, data);
+          }}
+          onCancel={closeForm}
+        />
+      </Modal>
     </>
   );
 }

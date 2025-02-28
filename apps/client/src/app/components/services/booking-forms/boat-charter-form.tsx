@@ -11,6 +11,8 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { useApp } from '../../../hooks/useApp';
 import { searchAvailabilityBoat } from '../../../apis/api-boats';
+import Modal from '../../modal';
+import { centsToEurosWithCurrency } from '@magnetic/utils';
 
 interface Props {
   onSubmit: (data: FormSubmitParams<BoatCharterFormData>) => void;
@@ -83,127 +85,139 @@ export function BoatCharterBookingForm({
 
   return (
     <div className="">
-      <div className="text-center mb-6">
+      <Modal.Header onClose={onCancel}>
         <h2 className="text-2xl font-bold ">Boat Charter Booking</h2>
         <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
           Boat: {currentSelectItem?.name}
         </span>
-      </div>
-      <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <Text className="mb-2">Date</Text>
-            <Controller
-              name="date"
-              control={control}
-              rules={{ required: 'Date is required' }}
-              render={({ field }) => (
-                <CalendarCustomInput
-                  selectedDate={
-                    field.value ? moment(field.value).toDate() : null
-                  }
-                  onSelectDate={(date) =>
-                    field.onChange(moment(date).toISOString())
-                  }
-                  className="w-full"
-                  disabledDates={disabledDates}
+      </Modal.Header>
+      <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <Modal.Body>
+          <div className="flex flex-col gap-6 p-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <Text className="mb-2">Date</Text>
+                <Controller
+                  name="date"
+                  control={control}
+                  rules={{ required: 'Date is required' }}
+                  render={({ field }) => (
+                    <CalendarCustomInput
+                      selectedDate={
+                        field.value ? moment(field.value).toDate() : null
+                      }
+                      onSelectDate={(date) =>
+                        field.onChange(moment(date).toISOString())
+                      }
+                      className="w-full"
+                      disabledDates={disabledDates}
+                    />
+                  )}
                 />
+                {errors.date && (
+                  <p className="text-[12px] text-red-500 pt-2">
+                    {errors.date.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <Text className="mb-2">Start Time</Text>
+                <Input
+                  type="time"
+                  className="w-full"
+                  {...register('startTime', {
+                    required: 'Start time is required',
+                  })}
+                />
+                {errors.startTime && (
+                  <p className="text-[12px] text-red-500 pt-2">
+                    {errors.startTime.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <Text className="mb-2">Number of people</Text>
+                <Input
+                  type="number"
+                  min="1"
+                  className="w-full"
+                  {...register('numberOfPeople', {
+                    required: 'Number of people is required',
+                    valueAsNumber: true,
+                  })}
+                />
+                {errors.numberOfPeople && (
+                  <p className="text-[12px] text-red-500 pt-2">
+                    {errors.numberOfPeople.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <Text className="mb-2">Kids and Ages</Text>
+                <Input
+                  type="text"
+                  className="w-full"
+                  placeholder="e.g., 2 kids, ages 5 and 8"
+                  {...register('kidsAges', {
+                    required: 'Kids and ages are required',
+                  })}
+                />
+                {errors.kidsAges && (
+                  <p className="text-[12px] text-red-500 pt-2">
+                    {errors.kidsAges.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <Text className="mb-2">Extras (e.g., Seabob)</Text>
+                <Input
+                  type="text"
+                  className="w-full"
+                  placeholder="Add any extras like Seabob"
+                  {...register('extras')}
+                />
+              </div>
+              <div>
+                <Text className="mb-2">Lunch Booking</Text>
+                <Input
+                  type="text"
+                  className="w-full"
+                  placeholder="Describe lunch preferences"
+                  {...register('lunchBooking')}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-[10px]">
+              <Text>Comments</Text>
+              <TextArea
+                placeholder="Add any additional comments"
+                {...register('comments')}
+              />
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <div className="flex justify-between gap-3 w-full">
+            <h2 className="text-xl">
+              Total:{' '}
+              {centsToEurosWithCurrency(currentSelectItem?.priceInCents || 0)}
+            </h2>
+            <div className="flex gap-3">
+              {onCancel && (
+                <Button
+                  className=""
+                  variant="outline"
+                  color="neutral"
+                  type="button"
+                  onClick={onCancel}
+                >
+                  Cancel
+                </Button>
               )}
-            />
-            {errors.date && (
-              <p className="text-[12px] text-red-500 pt-2">
-                {errors.date.message}
-              </p>
-            )}
+              <Button type="submit">Book Boat</Button>
+            </div>
           </div>
-          <div>
-            <Text className="mb-2">Start Time</Text>
-            <Input
-              type="time"
-              className="w-full"
-              {...register('startTime', { required: 'Start time is required' })}
-            />
-            {errors.startTime && (
-              <p className="text-[12px] text-red-500 pt-2">
-                {errors.startTime.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <Text className="mb-2">Number of people</Text>
-            <Input
-              type="number"
-              min="1"
-              className="w-full"
-              {...register('numberOfPeople', {
-                required: 'Number of people is required',
-                valueAsNumber: true,
-              })}
-            />
-            {errors.numberOfPeople && (
-              <p className="text-[12px] text-red-500 pt-2">
-                {errors.numberOfPeople.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <Text className="mb-2">Kids and Ages</Text>
-            <Input
-              type="text"
-              className="w-full"
-              placeholder="e.g., 2 kids, ages 5 and 8"
-              {...register('kidsAges', {
-                required: 'Kids and ages are required',
-              })}
-            />
-            {errors.kidsAges && (
-              <p className="text-[12px] text-red-500 pt-2">
-                {errors.kidsAges.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <Text className="mb-2">Extras (e.g., Seabob)</Text>
-            <Input
-              type="text"
-              className="w-full"
-              placeholder="Add any extras like Seabob"
-              {...register('extras')}
-            />
-          </div>
-          <div>
-            <Text className="mb-2">Lunch Booking</Text>
-            <Input
-              type="text"
-              className="w-full"
-              placeholder="Describe lunch preferences"
-              {...register('lunchBooking')}
-            />
-          </div>
-        </div>
-        <div className="flex flex-col gap-[10px]">
-          <Text>Comments</Text>
-          <TextArea
-            placeholder="Add any additional comments"
-            {...register('comments')}
-          />
-        </div>
-        <div className="flex justify-end gap-3">
-          {onCancel && (
-            <Button
-              className=""
-              variant="outline"
-              color="neutral"
-              type="button"
-              onClick={onCancel}
-            >
-              Cancel
-            </Button>
-          )}
-          <Button size={2} type="submit">
-            Submit Booking
-          </Button>
-        </div>
+        </Modal.Footer>
       </form>
     </div>
   );
