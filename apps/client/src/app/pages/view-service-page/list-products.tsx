@@ -23,7 +23,6 @@ function ListProducts(props: Props) {
   const [openFormModal, setOpenFormModal] = useState(false);
   const [currentItemSelected, setCurrentItemSelected] = useState<Item>();
   const isDrinksService = service.serviceType === 'drinks';
-  const { serviceType } = service;
   const [alert, setAlert] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning';
@@ -181,9 +180,7 @@ function ListProducts(props: Props) {
                 cartItem={cartMap.get(item.id)}
                 onClickAdd={(amount) => handleAddItem(item, amount)}
                 onClickRemove={(amount) => handleRemoveItem(item, amount)}
-                onClickBookNow={() => {
-                  handleBookNow(item);
-                }}
+                onClickBookNow={() => handleBookNow(item)}
               />
             ))}
           </div>

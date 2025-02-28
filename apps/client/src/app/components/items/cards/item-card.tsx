@@ -5,6 +5,7 @@ import ItemDefaultCard from './item-default-card';
 import ItemChefsCard from './item-chefs-card';
 import ItemTransferCard from './item-transfer-card';
 import ItemWellnessCard from './item-wellness-card';
+import ItemDefaultServiceCard from './item-default-service-card';
 
 interface ItemCardProps {
   item: Item;
@@ -62,6 +63,22 @@ function ItemCard({
     case 'spa':
       return (
         <ItemSpaCard
+          item={item}
+          cartItemAmount={currentAmount}
+          onClickBookNow={onClickBookNow}
+        />
+      );
+    case 'childcare':
+      return (
+        <ItemDefaultServiceCard
+          item={item}
+          cartItemAmount={currentAmount}
+          onClickBookNow={onClickBookNow}
+        />
+      );
+    case 'security':
+      return (
+        <ItemDefaultServiceCard
           item={item}
           cartItemAmount={currentAmount}
           onClickBookNow={onClickBookNow}

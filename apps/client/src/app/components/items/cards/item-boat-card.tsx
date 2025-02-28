@@ -65,7 +65,7 @@ function ItemBoatCard(props: Props) {
             </div>
             <ItemHandleBookButtons
               item={item}
-              onClicBookNow={onClickBookNow}
+              onClickBookNow={onClickBookNow}
               currentAmount={cartItem?.quantity || 0}
             />
           </div>

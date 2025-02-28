@@ -55,7 +55,7 @@ function ItemChefsCard({ item, onClickBookNow, cartItemAmount }: Props) {
             </div>
             <ItemHandleBookButtons
               item={item}
-              onClicBookNow={onClickBookNow}
+              onClickBookNow={onClickBookNow}
               currentAmount={cartItemAmount}
             />
           </div>

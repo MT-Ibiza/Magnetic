@@ -47,7 +47,7 @@ function ItemSpaCard(props: Props) {
             </Text>
             <ItemHandleBookButtons
               item={item}
-              onClicBookNow={onClickBookNow}
+              onClickBookNow={onClickBookNow}
               currentAmount={cartItemAmount}
             />
           </div>

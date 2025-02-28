@@ -4,16 +4,16 @@ import { Button } from '@magnetic/ui';
 interface Props {
   item: Item;
   currentAmount: number;
-  onClicBookNow: (amount: number) => void;
+  onClickBookNow: (amount: number) => void;
 }
 
 function ItemHandleBookButtons(props: Props) {
-  const { currentAmount, onClicBookNow } = props;
+  const { currentAmount, onClickBookNow } = props;
 
   return (
     <Button
       onClick={() => {
-        onClicBookNow(currentAmount + 1);
+        onClickBookNow(currentAmount + 1);
       }}
     >
       Book Now
