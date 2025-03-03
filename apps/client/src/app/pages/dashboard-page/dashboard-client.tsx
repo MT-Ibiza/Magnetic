@@ -1,19 +1,12 @@
-import {
-  BgGlassmorphism,
-  Button,
-  Card3Small,
-  PlanCard,
-  Text,
-} from '@magnetic/ui';
-import ServiceCardHorizontal from '../../components/services/service-card-horizontal';
+import moment from 'moment';
+import { Button, Text } from '@magnetic/ui';
 import { useDashboard } from '../../hooks/useDashboard';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import { FloatingWhatsApp } from '@carlos8a/react-whatsapp-floating-button';
 import { maxDateToBooking, userCanMakeBookings } from '../../utils';
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt } from 'react-icons/fa';
-import ServiceCard from '../../components/services/service-card';
 import CarouselServices from '../../components/carousel-servies';
+import { getNameFromUsername } from '@magnetic/utils';
 
 export function DashboardClientPage() {
   const { isLoading, packages, services, error, isError, userAccount } =
@@ -27,12 +20,12 @@ export function DashboardClientPage() {
     return <h1>Please try again</h1>;
   }
 
-  const arrivalDate2 = maxDateToBooking(userAccount.arrivalDate);
+  const maxBookingDate = maxDateToBooking(userAccount.arrivalDate);
   const arrivalDate = moment(userAccount.arrivalDate);
   const departureDate = moment(userAccount.departureDate);
-  const formattedDates = `${arrivalDate2.format(
-    'DD MMM'
-  )} - ${departureDate.format('DD MMM YYYY')}`;
+  const formattedDates = `${arrivalDate
+    .utc()
+    .format('DD MMM')} - ${departureDate.utc().format('DD MMM YYYY')}`;
   const canMakeBookings = userCanMakeBookings(userAccount.arrivalDate);
 
   return (
@@ -48,12 +41,10 @@ export function DashboardClientPage() {
                 <div className="h-full flex flex-col items-start rounded-2xl space-y-8 sm:space-y-4 xl:pr-14 lg:mr-10 xl:mr-0 border border-neutral-200 p-6">
                   <h1 className=" text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-3xl dark:text-neutral-100 max-w-4xl ">
                     Welcome,{' '}
-                    {userAccount?.firstName
-                      ? userAccount.firstName.split(' ')[0]
-                      : 'Guest'}{' '}
-                    {userAccount?.lastName
-                      ? userAccount.lastName.split(' ').slice(-1)
-                      : ''}
+                    {getNameFromUsername(
+                      userAccount.firstName,
+                      userAccount.lastName
+                    )}
                   </h1>
                   <span className="font-semibold text-neutral-700 text-base md:text-lg">
                     Your concierge package:{' '}
@@ -85,7 +76,7 @@ export function DashboardClientPage() {
                       <FaClock className="text-neutral-700 dark:text-neutral-300 text-2xl lg:text-xl md:text-2xl" />
                       <Text>
                         Booking can be made until{' '}
-                        {arrivalDate.format('MMMM DD, YYYY')}
+                        {maxBookingDate.format('MMMM DD, YYYY')}
                       </Text>
                     </div>
                   ) : (

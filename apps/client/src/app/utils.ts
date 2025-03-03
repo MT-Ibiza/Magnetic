@@ -1,9 +1,4 @@
-import {
-  BoatAvailability,
-  CartItem,
-  Item,
-  ItemVariant,
-} from '@magnetic/interfaces';
+import { BoatAvailability, CartItem } from '@magnetic/interfaces';
 import moment from 'moment';
 
 type GroupedCategory = {
@@ -24,7 +19,7 @@ export function formatDate(date: string | Date) {
 }
 
 export function maxDateToBooking(date: string | Date) {
-  return moment(date).subtract(7, 'days');
+  return moment(date).utc().subtract(7, 'days');
 }
 
 export function userCanMakeBookings(arrivalDate: string | Date) {
