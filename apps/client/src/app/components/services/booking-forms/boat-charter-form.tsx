@@ -61,9 +61,9 @@ export function BoatCharterBookingForm({
       try {
         const from = moment().format('YYYY-MM-DD'); // today
         const to = moment().add(6, 'months').format('YYYY-MM-DD'); // 6 month
-
+        const boatId = currentSelectItem.boatAttributes?.id || 0;
         const availability = await searchAvailabilityBoat({
-          boatId: currentSelectItem.id.toString(),
+          boatId: boatId.toString(),
           from,
           to,
         });
