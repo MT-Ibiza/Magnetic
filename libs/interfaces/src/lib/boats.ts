@@ -60,10 +60,10 @@ export interface BoatCharterFormData {
   date: string;
   boat: string;
   numberOfPeople: number;
-  kidsAges: string;
+  childrenAges: string;
   startTime: string;
-  lunchBooking: string;
+  lunchReservation: string;
   comments: string;
-  extras: string;
+  seabob: boolean;
   depositPaid: boolean;
 }

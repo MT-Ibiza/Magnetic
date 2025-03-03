@@ -48,7 +48,7 @@ export const RentalCarDatesRangeInput: FC<RentalCarDatesRangeInputProps> = ({
                   month: 'short',
                   day: '2-digit',
                 })
-              : 'Select a date'}
+              : 'Date'}
           </span>
           <span className="block mt-1 text-sm text-neutral-400 leading-none font-light">
             {'Select a day'}

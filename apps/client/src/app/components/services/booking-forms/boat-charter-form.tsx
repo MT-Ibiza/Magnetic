@@ -4,6 +4,7 @@ import { BoatCharterFormData, FormSubmitParams } from '@magnetic/interfaces';
 import {
   Button,
   CalendarCustomInput,
+  Checkbox,
   Input,
   Text,
   TextArea,
@@ -33,6 +34,8 @@ export function BoatCharterBookingForm({
     register,
     control,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<BoatCharterFormData>({
     defaultValues: formData
@@ -81,7 +84,7 @@ export function BoatCharterBookingForm({
       <Modal.Header onClose={onCancel}>
         <h2 className="text-2xl font-bold ">Boat Charter Booking</h2>
         <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
-          Boat: {currentSelectItem?.name}
+          {currentSelectItem?.name}
         </span>
       </Modal.Header>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -129,7 +132,7 @@ export function BoatCharterBookingForm({
                 )}
               </div>
               <div>
-                <Text className="mb-2">Number of people</Text>
+                <Text className="mb-2">Number of People</Text>
                 <Input
                   type="number"
                   min="1"
@@ -146,45 +149,45 @@ export function BoatCharterBookingForm({
                 )}
               </div>
               <div>
-                <Text className="mb-2">Kids and Ages</Text>
+                <Text className="mb-2">Children & Ages</Text>
                 <Input
                   type="text"
                   className="w-full"
                   placeholder="e.g., 2 kids, ages 5 and 8"
-                  {...register('kidsAges', {
-                    required: 'Kids and ages are required',
+                  {...register('childrenAges', {
+                    required: 'Children and ages are required',
                   })}
                 />
-                {errors.kidsAges && (
+                {errors.childrenAges && (
                   <p className="text-[12px] text-red-500 pt-2">
-                    {errors.kidsAges.message}
+                    {errors.childrenAges.message}
                   </p>
                 )}
               </div>
-              <div>
-                <Text className="mb-2">Extras (e.g., Seabob)</Text>
-                <Input
-                  type="text"
-                  className="w-full"
-                  placeholder="Add any extras like Seabob"
-                  {...register('extras')}
-                />
-              </div>
-              <div>
-                <Text className="mb-2">Lunch Booking</Text>
-                <Input
-                  type="text"
-                  className="w-full"
-                  placeholder="Describe lunch preferences"
-                  {...register('lunchBooking')}
-                />
-              </div>
+            </div>
+            <div>
+              <Text className="mb-2">
+                Lunch Reservation - Preferred restaurant & time
+              </Text>
+              <TextArea
+                className="w-full"
+                placeholder="Describe your preferences"
+                {...register('lunchReservation')}
+              />
             </div>
             <div className="flex flex-col gap-[10px]">
               <Text>Comments</Text>
               <TextArea
                 placeholder="Add any additional comments"
                 {...register('comments')}
+              />
+            </div>
+            <div>
+              <Checkbox
+                name="disclaimerAccepted"
+                label="Add extra Seabob"
+                defaultChecked={watch('seabob')}
+                onChange={(checked) => setValue('seabob', checked)}
               />
             </div>
           </div>
