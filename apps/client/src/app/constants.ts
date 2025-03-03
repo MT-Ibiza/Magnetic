@@ -2,7 +2,7 @@ export const placeholderItemImage =
   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU';
 
 export const capacityFilterOptions = [
-  { value: '', label: 'Select Capacity' },
+  { value: '', label: 'Capacity' },
   {
     value: '1',
     label: '1-7 people',
@@ -36,7 +36,7 @@ export const capacityFilterOptions = [
 ];
 
 export const sizeFilterOptions = [
-  { value: '', label: 'Select Size' },
+  { value: '', label: 'Size' },
   {
     value: '20',
     label: '20-40ft',
@@ -65,7 +65,7 @@ export const sizeFilterOptions = [
 ];
 
 export const budgetFilterOptions = [
-  { value: '', label: 'Select Budget' },
+  { value: '', label: 'Budget' },
   {
     value: '0',
     label: '0 - €2000',
