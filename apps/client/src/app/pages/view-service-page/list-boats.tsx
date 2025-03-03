@@ -10,6 +10,7 @@ import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import { Alert } from '@magnetic/ui';
 import Modal from '../../components/modal';
+import { getNumberMonth } from '../../utils';
 
 interface Props {}
 
@@ -19,6 +20,9 @@ function ListBoats(props: Props) {
   const [openFormModal, setOpenFormModal] = useState(false);
   const { addServiceToCart } = useCart();
   const { addItem } = useCartStore();
+  const defaultMonthNumber = getNumberMonth();
+  const [currentMonthNumber, setCurrentMonthNumber] =
+    useState(defaultMonthNumber);
 
   const [searchParams, setSearchParams] = useState<BoatsSearchAttributes>({
     price_gt: undefined,
@@ -93,6 +97,10 @@ function ListBoats(props: Props) {
       <div className="flex flex-col gap-[15px] lg:gap-[40px]">
         <FilterBoats
           onChangeFilters={(filters) => {
+            if (filters.from) {
+              const newMonthNumber = getNumberMonth(filters.from);
+              setCurrentMonthNumber(newMonthNumber);
+            }
             setSearchParams(filters);
           }}
         />
@@ -101,6 +109,7 @@ function ListBoats(props: Props) {
             <div key={index}>
               <ItemBoatCard
                 item={item}
+                priceMonthNumber={currentMonthNumber}
                 onClickBookNow={() => {
                   setSelectedItem(item);
                   openForm();

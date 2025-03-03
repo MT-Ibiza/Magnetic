@@ -11,16 +11,20 @@ import { Link } from 'react-router-dom';
 
 interface Props {
   item: Item;
+  priceMonthNumber: number;
   onClickBookNow: (amount: number) => void;
 }
 
 function ItemBoatCard(props: Props) {
-  const { item, onClickBookNow } = props;
-  const { name, priceInCents, boatAttributes } = item;
+  const { item, onClickBookNow, priceMonthNumber } = props;
+  const { name, priceInCents, boatAttributes, seasonPrices } = item;
   const { secondName, capacity } = boatAttributes as BoatBase;
   const { cart } = useCartStore();
   const cartItem = cart.find((cartItem) => cartItem.item.id === item.id);
-
+  const monthPrice = seasonPrices.find(
+    (seasonPrice) => seasonPrice.startMonth === priceMonthNumber
+  );
+  const price = monthPrice ? monthPrice.priceInCents : priceInCents;
   const imagesSorted = useMemo(() => {
     return sortImagesByPosition(item.images);
   }, [item.images]);
@@ -57,7 +61,7 @@ function ItemBoatCard(props: Props) {
           <div className="flex justify-between mt-5">
             <div className="flex gap-1 items-center">
               <Text className="text-base font-semibold">
-                {centsToEurosWithCurrency(priceInCents)}
+                {centsToEurosWithCurrency(price)}
               </Text>
               <Text className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
                 /day

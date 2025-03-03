@@ -89,10 +89,30 @@ export async function GET(request: NextRequest) {
         priceInCents: true,
         description: true,
         images: true,
-        boatAttributes: true,
+        boatAttributes: {
+          select: {
+            id: true,
+            capacity: true,
+            sizeInFeet: true,
+            lengthInMeters: true,
+            crew: true,
+            cabins: true,
+            port: true,
+            secondName: true,
+            latitude: true,
+            longitude: true,
+          },
+        },
         position: true,
         categoryId: true,
         serviceId: true,
+        seasonPrices: {
+          select: {
+            startMonth: true,
+            endMonth: true,
+            priceInCents: true,
+          },
+        },
         service: {
           select: {
             id: true,
