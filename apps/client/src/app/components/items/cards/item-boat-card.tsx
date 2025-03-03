@@ -52,7 +52,7 @@ function ItemBoatCard(props: Props) {
               {secondName && (
                 <>
                   <span className="">{secondName}</span>
-                  <span>-</span>
+                  <span>|</span>
                 </>
               )}
               <span className="">{capacity} capacity </span>
