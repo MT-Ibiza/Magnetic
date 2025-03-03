@@ -2,7 +2,6 @@ import {
   Category,
   Item,
   ItemBase,
-  ItemVariant,
   SeasonPrice,
   Service,
 } from '@magnetic/interfaces';
@@ -19,12 +18,7 @@ import 'react-quill/dist/quill.snow.css';
 import { toast } from 'sonner';
 import { editItem, newItem } from '../../apis/api-items';
 import { useNavigate } from 'react-router-dom';
-import {
-  centsToEuros,
-  eurosToCents,
-  formatSeasonPrice,
-  formatSeasonPrices,
-} from '@magnetic/utils';
+import { centsToEuros, eurosToCents, formatSeasonPrice } from '@magnetic/utils';
 import { useState } from 'react';
 import ReactQuill from 'react-quill';
 import FormSeasonPrice from './boats/form-season-price';
@@ -433,6 +427,22 @@ export function FormBoatItem(props: Props) {
                       {...register('boatAttributes.longitude')}
                     />
                   </div>
+                </div>
+                <div className="w-full">
+                  <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                    ICal
+                  </Text>
+                  <Input
+                    type="text"
+                    className="mt-2 w-full"
+                    placeholder="Fuel consumption in liters/hour"
+                    {...register('boatAttributes.iCal')}
+                  />
+                  {errors.boatAttributes?.fuelConsumption && (
+                    <p className="text-[12px] text-red-500 pt-2">
+                      {errors.boatAttributes?.fuelConsumption.message}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="flex flex-col">

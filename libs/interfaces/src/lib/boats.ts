@@ -14,6 +14,7 @@ export interface BoatBase {
   longitude?: string;
   itemId: number;
   secondName?: string;
+  iCal: string;
 }
 
 export interface Boat extends BoatBase {
