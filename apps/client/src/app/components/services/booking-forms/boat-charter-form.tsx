@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import moment from 'moment';
-import { BoatCharterFormData, FormSubmitParams } from '@magnetic/interfaces';
+import {
+  BoatCharterFormData,
+  FormSubmitParams,
+  Item,
+  SeasonPrice,
+} from '@magnetic/interfaces';
 import {
   Button,
   CalendarCustomInput,
@@ -12,9 +17,9 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { useApp } from '../../../hooks/useApp';
 import { searchAvailabilityBoat } from '../../../apis/api-boats';
-import Modal from '../../modal';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
-import { bookedBoatDates } from '../../../utils';
+import { bookedBoatDates, getNumberMonth } from '../../../utils';
+import Modal from '../../modal';
 
 interface Props {
   onSubmit: (data: FormSubmitParams<BoatCharterFormData>) => void;
@@ -28,7 +33,10 @@ export function BoatCharterBookingForm({
   onCancel,
 }: Props) {
   const { currentSelectItem } = useApp();
+  const { seasonPrices, priceInCents } = currentSelectItem as Item;
   const [disabledDates, setDisabledDates] = useState<Date[]>([]);
+  const seasonPrice = findSeasonPriceByMonth(seasonPrices || []);
+  const [price, setPrice] = useState(seasonPrice?.priceInCents || priceInCents);
 
   const {
     register,
@@ -102,9 +110,17 @@ export function BoatCharterBookingForm({
                       selectedDate={
                         field.value ? moment(field.value).toDate() : null
                       }
-                      onSelectDate={(date) =>
-                        field.onChange(moment(date).toISOString())
-                      }
+                      onSelectDate={(date) => {
+                        const seasonPrice = findSeasonPriceByMonth(
+                          seasonPrices,
+                          date
+                        );
+                        const price = seasonPrice
+                          ? seasonPrice.priceInCents
+                          : priceInCents;
+                        setPrice(price);
+                        field.onChange(moment(date).toISOString());
+                      }}
                       className="w-full"
                       disabledDates={disabledDates}
                     />
@@ -195,8 +211,7 @@ export function BoatCharterBookingForm({
         <Modal.Footer>
           <div className="flex justify-between gap-3 w-full">
             <h2 className="text-xl">
-              Total:{' '}
-              {centsToEurosWithCurrency(currentSelectItem?.priceInCents || 0)}
+              Total: {centsToEurosWithCurrency(price)}
             </h2>
             <div className="flex gap-3">
               {onCancel && (
@@ -216,6 +231,16 @@ export function BoatCharterBookingForm({
         </Modal.Footer>
       </form>
     </div>
+  );
+}
+
+function findSeasonPriceByMonth(
+  seasonPrices: SeasonPrice[],
+  date?: string | Date
+) {
+  const monthNumber = getNumberMonth(date);
+  return seasonPrices.find(
+    (seasonPrice) => seasonPrice.startMonth === monthNumber
   );
 }
 
