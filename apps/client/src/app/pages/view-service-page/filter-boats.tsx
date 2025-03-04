@@ -83,23 +83,23 @@ function FilterBoats(props: Props) {
       <div className="hidden lg:block sticky z-10 top-[80px] w-full relative mt-8 rounded-[40px] xl:rounded-[49px] rounded-t-2xl xl:rounded-t-3xl shadow-xl dark:shadow-2xl bg-white dark:bg-neutral-800">
         <form className="lg:grid grid-cols-4 gap-x-[30px]">
           <CustomInput
-            name="capacity"
-            desc="Select Capacity"
+            name="Capacity"
+            desc="Select capacity"
             options={capacityFilterOptions}
             value={searchParams.capacity_gt || ''}
             onChange={handleSearchChange}
           />
           <CustomInput
-            name="size"
-            desc="Select Size"
+            name="Size"
+            desc="Select size"
             options={sizeFilterOptions}
             value={searchParams.size_gt || ''}
             onChange={handleSearchChange}
           />
           <RentalCarDatesRangeInput onSelectDate={handleDateChange} />
           <CustomInput
-            name="budget"
-            desc="Select Budget"
+            name="Budget"
+            desc="Select budget"
             options={budgetFilterOptions}
             value={searchParams.price_gt || ''}
             onChange={handleSearchChange}

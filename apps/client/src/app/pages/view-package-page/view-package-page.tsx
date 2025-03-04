@@ -54,7 +54,7 @@ function ViewPackagePage(props: Props) {
               )}
             </>
           </SectionCard>
-          <SectionCard title="Include" subTitle="Included in the price">
+          <SectionCard title="Included">
             <div className="grid grid-cols-1 gap-4 lg:text-[16px] text-[14px]">
               {parsedFeatures.map((feature, index) => (
                 <li className="flex items-center" key={index}>
@@ -69,10 +69,10 @@ function ViewPackagePage(props: Props) {
         </div>
         <div className="col-span-4">
           <div className="sticky bg-base-100 top-[90px] listingSection__wrap">
-            <h3 className="text-xl font-semibold">Need Assistance?</h3>
+            <h3 className="text-xl font-semibold">Elevate Your Stay</h3>
             <p className="lg:text-[16px] text-[14px]">
-              Speak with our team to discuss your needs and discover Platinum
-              Package benefits.
+              Upgrade your package today for exclusive access, or chat with our
+              team to learn more.
             </p>
             <div className="space-y-4">
               {plan.name !== 'Diamond' && (

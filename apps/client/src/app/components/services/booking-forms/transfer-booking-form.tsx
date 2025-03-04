@@ -95,7 +95,7 @@ export function TransferBookingForm({
           <div className={`p-10`}>
             {variantOptions.length > 0 && (
               <div className="mb-6">
-                <Text className="mb-2">Select option</Text>
+                <Text className="mb-2">Select Option</Text>
                 <select
                   className="select select-bordered w-full"
                   onChange={(e) => {
@@ -147,7 +147,7 @@ export function TransferBookingForm({
                 )}
               </div>
               <div>
-                <Text className="mb-2">Pick Up Location</Text>
+                <Text className="mb-2">Pick-up Location</Text>
                 <Input
                   type="text"
                   className="w-full"
@@ -163,7 +163,7 @@ export function TransferBookingForm({
                 )}
               </div>
               <div>
-                <Text className="mb-2">Drop Off Location</Text>
+                <Text className="mb-2">Drop-off Location</Text>
                 <Input
                   type="text"
                   className="w-full"
@@ -179,7 +179,7 @@ export function TransferBookingForm({
                 )}
               </div>
               <div>
-                <Text className="mb-2">Number of people</Text>
+                <Text className="mb-2">Number of People</Text>
                 <Input
                   type="number"
                   min="1"
@@ -241,7 +241,7 @@ export function TransferBookingForm({
                 <Input
                   type="text"
                   className="w-full"
-                  placeholder="Optional"
+                  placeholder="If applicable"
                   {...register('flightNumber')}
                 />
               </div>
@@ -251,6 +251,7 @@ export function TransferBookingForm({
                   type="number"
                   min="0"
                   className="w-full"
+                  placeholder='If applicable'
                   {...register('luggageAmount', { valueAsNumber: true })}
                 />
               </div>
