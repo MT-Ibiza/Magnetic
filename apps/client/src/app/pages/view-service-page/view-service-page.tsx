@@ -44,11 +44,12 @@ function ViewServicePage(props: Props) {
           />
         </SectionCard>
         {(service.instructions || service.termsAndConditions) && (
-          <AccordionSection title="Things to know">
+          <AccordionSection title="Need to Know">
             <div>
+              {/* <div className="w-14 mb-[32px] border-b border-neutral-200 dark:border-neutral-700"></div> */}
               {service.instructions && (
                 <>
-                  <h4 className="text-lg font-semibold">Instructions</h4>
+                  <h4 className="text-lg font-semibold">Before You Book</h4>
                   <div
                     className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
                     dangerouslySetInnerHTML={{ __html: service.instructions }}
@@ -62,7 +63,7 @@ function ViewServicePage(props: Props) {
 
               {service.termsAndConditions && (
                 <>
-                  <h4 className="text-lg font-semibold">Cancellation policy</h4>
+                  <h4 className="text-lg font-semibold">Cancellation Policy</h4>
                   <div
                     className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
                     dangerouslySetInnerHTML={{

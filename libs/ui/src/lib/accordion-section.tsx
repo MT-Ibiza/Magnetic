@@ -32,14 +32,17 @@ export function AccordionSection(props: Props) {
           />
         </h2>
       </div>
-      <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
       <div
-        className="overflow-hidden transition-all duration-500 ease-in-out"
+        className="test overflow-hidden transition-all duration-500 ease-in-out"
         style={{
-          height: isOpen && contentRef.current ? `${contentRef.current.scrollHeight}px` : '0',
+          maxHeight:
+            isOpen && contentRef.current
+              ? `${contentRef.current.scrollHeight}px`
+              : '0',
         }}
       >
-        <div className="mt-3" ref={contentRef}>
+        <div className="mt-[35px]" ref={contentRef}>
+          <div className="w-14 mb-[32px] border-b border-neutral-200 dark:border-neutral-700"></div>
           {children}
         </div>
       </div>

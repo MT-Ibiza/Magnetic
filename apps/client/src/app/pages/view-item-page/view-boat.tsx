@@ -218,11 +218,11 @@ export function ViewBoat({ item }: Props) {
               </SectionCard>
               {(item.service?.instructions ||
                 item.service?.termsAndConditions) && (
-                <SectionCard title="Things to know">
+                <SectionCard title="Need to Know">
                   <div>
                     {item.service.instructions && (
                       <>
-                        <h4 className="text-lg font-semibold">Instructions</h4>
+                        <h4 className="text-lg font-semibold">Before You Book</h4>
                         <div
                           className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
                           dangerouslySetInnerHTML={{
@@ -238,7 +238,7 @@ export function ViewBoat({ item }: Props) {
                     {item.service.termsAndConditions && (
                       <>
                         <h4 className="text-lg font-semibold">
-                          Cancellation policy
+                          Cancellation Policy
                         </h4>
                         <div
                           className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"

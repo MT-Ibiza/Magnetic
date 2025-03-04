@@ -9,10 +9,21 @@ interface Props {
   maxFeatures?: number;
   seeMoreLink?: string;
   className?: string;
+  packageId?: number;
+  userPackageId?: number;
 }
 
 export function PlanCard(props: Props) {
-  const { title, price, features, maxFeatures, seeMoreLink, className } = props;
+  const {
+    title,
+    price,
+    features,
+    maxFeatures,
+    seeMoreLink,
+    className,
+    packageId,
+    userPackageId,
+  } = props;
 
   const parseFeaturesFromHtml = (
     featuresHtml: string | undefined
@@ -39,25 +50,31 @@ export function PlanCard(props: Props) {
     <div
       className={`h-full relative px-6 py-8 rounded-3xl border-2 flex flex-col overflow-hidden ${className}`}
     >
-      <span className="bg-primary-500 text-white px-3 py-1 tracking-widest text-xs absolute right-3 top-3 rounded-full z-10">
+      {/* <span className="bg-primary-500 text-white px-3 py-1 tracking-widest text-xs absolute right-3 top-3 rounded-full z-10">
         PLAN
-      </span>
+      </span> */}
       <div className="mb-8">
         <h3 className="block text-sm uppercase tracking-widest  mb-2 font-medium">
           {title}
         </h3>
-        <h2 className="text-5xl leading-none flex items-center ">
-          <span className="text-3xl lg:text-5xl">{price}</span>
-          <span className="text-base lg:text-lg ml-1 font-normal text-neutral-500">
-            /per week
-          </span>
-        </h2>
+        {packageId === userPackageId ? (
+          <h2 className="text-5xl leading-none flex items-center ">
+            <span className="text-3xl lg:text-4xl">Your Package</span>
+          </h2>
+        ) : (
+          <h2 className="text-5xl leading-none flex items-center ">
+            <span className="text-3xl lg:text-5xl">{price}€</span>
+            <span className="text-base lg:text-lg ml-1 font-normal text-neutral-500">
+              per week
+            </span>
+          </h2>
+        )}
       </div>
       <nav className="space-y-4 mb-8">
         {truncatedFeatures.map((item, index) => (
           <li className="flex items-center" key={index}>
             <span className="mr-4 inline-flex flex-shrink-0">
-              <FaCheck className='text-[#5046e5]' />
+              <FaCheck className="text-[#5046e5]" />
             </span>
             <span className="text-[14px] lg:text-[16px]">{item}</span>
           </li>
@@ -77,7 +94,7 @@ export function PlanCard(props: Props) {
             )}
         </div>
         {/* <Link to={seeMoreLink || ''}> */}
-        <Button className="w-full">Upgrade Now</Button>
+        <Button className="w-full">View Details</Button>
         {/* </Link> */}
       </div>
     </div>

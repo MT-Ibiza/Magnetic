@@ -20,11 +20,10 @@ export function PackagePage() {
         <div className="text-center mb-10">
           <header className="text-center max-w-2xl mx-auto mt-12 mb-20">
             <h2 className="flex items-center text-3xl leading-[115%] md:text-5xl md:leading-[115%] font-semibold text-neutral-900 dark:text-neutral-100 justify-center">
-              Explore Our Packages
+              Concierge Packages
             </h2>
             <span className="block text-sm mt-2 text-neutral-700 sm:text-base dark:text-neutral-200">
-              Find the perfect package for your needs. Choose the one that best
-              fits your goals.
+              Explore the perfect package for your stay.
             </span>
             <Button
               className="mt-[15px]"
@@ -33,7 +32,7 @@ export function PackagePage() {
                 document.getElementById('modal-form-call').showModal();
               }}
             >
-              Request a call
+              Book a Call
             </Button>
           </header>
         </div>
@@ -47,6 +46,8 @@ export function PackagePage() {
               title={pkg.name}
               price={pkg.priceInCents}
               features={pkg.features}
+              packageId={pkg.id}
+              userPackageId={user?.package?.id}
               className={`${
                 pkg.id === user?.package?.id
                   ? 'border-primary-500'
