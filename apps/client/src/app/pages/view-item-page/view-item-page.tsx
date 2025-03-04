@@ -19,6 +19,8 @@ import Modal from '../../components/modal';
 import RenderBookingForm from '../../components/services/booking-forms/render-booking-form';
 import { FormSubmitParams } from '@magnetic/interfaces';
 import { useApp } from '../../hooks/useApp';
+import ViewItemDefault from './view-item-default';
+import ViewBoat from './view-boat';
 
 interface Props {}
 
@@ -159,141 +161,18 @@ export function ViewItemPage(props: Props) {
   return (
     <>
       <div className={`nc-ListingCarDetailPage `}>
-        <div className="flex flex-col gap-6">
-          {item?.images && item.images.length > 0 && (
-            <GalleryModal images={item?.images} />
-          )}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="col-span-2 space-y-6">
-              <div className="listingSection__wrap bg-base-100 !space-y-6">
-                {item?.boatAttributes?.boatType && (
-                  <div className="flex justify-between items-center">
-                    <Badge name={item?.boatAttributes?.boatType} />
-                  </div>
-                )}
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
-                  {item?.name}
-                </h2>
-                {item?.boatAttributes && (
-                  <>
-                    <div className="w-full border-b border-neutral-100 dark:border-neutral-700" />
-                    <div className="grid grid-cols-2 xl:grid-cols-3 gap-6 text-sm text-neutral-700 dark:text-neutral-300 ">
-                      {BoatAttributes.map((amenity, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center space-x-3"
-                        >
-                          {amenity.icon}
-                          <span>
-                            {amenity.name}: {amenity.value}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </div>
-              <SectionCard title="Included">
-                <div className="text-neutral-6000 dark:text-neutral-300 editor-text">
-                  <div
-                    className="block"
-                    dangerouslySetInnerHTML={{
-                      __html: item?.description || '',
-                    }}
-                  />
-                </div>
-              </SectionCard>
-              {item?.boatAttributes && (
-                <>
-                  <SectionCard
-                    title="Calendar"
-                    subTitle="Prices may increase on weekends or holidays"
-                  >
-                    <BoatCalendar
-                      startDate={startDate}
-                      onChangeDate={onChangeDate}
-                      boatId={item.boatAttributes.id}
-                    />
-                  </SectionCard>
-                  <SectionCard title="Location" subTitle="Description Location">
-                    <div className="aspect-w-5 aspect-h-5 sm:aspect-h-3 ring-1 ring-black/10 rounded-xl z-0">
-                      <div className="rounded-xl overflow-hidden z-0">
-                        <iframe
-                          title="Mapa de la Torre Eiffel"
-                          width="100%"
-                          height="450px"
-                          loading="lazy"
-                          allowFullScreen
-                          referrerPolicy="no-referrer-when-downgrade"
-                          src="https://maps.google.com/maps?q=48.8584,2.2945&z=14&output=embed"
-                        ></iframe>
-                      </div>
-                    </div>
-                  </SectionCard>
-                  {(item.service?.instructions ||
-                    item.service?.termsAndConditions) && (
-                    <SectionCard title="Things to know">
-                      <div>
-                        {item.service.instructions && (
-                          <>
-                            <h4 className="text-lg font-semibold">
-                              Instructions
-                            </h4>
-                            <div
-                              className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
-                              dangerouslySetInnerHTML={{
-                                __html: item.service.instructions,
-                              }}
-                            />
-                          </>
-                        )}
-                        {item.service.instructions &&
-                          item.service.termsAndConditions && (
-                            <div className="w-14 my-[32px] border-b border-neutral-200 dark:border-neutral-700"></div>
-                          )}
-                        {item.service.termsAndConditions && (
-                          <>
-                            <h4 className="text-lg font-semibold">
-                              Cancellation policy
-                            </h4>
-                            <div
-                              className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
-                              dangerouslySetInnerHTML={{
-                                __html: item.service.termsAndConditions,
-                              }}
-                            />
-                          </>
-                        )}
-                      </div>
-                    </SectionCard>
-                  )}
-                </>
-              )}
-            </div>
-            <div className="hidden lg:block col-span-1">
-              {item && (
-                <BookCard
-                  startDate={startDate}
-                  endDate={endDate}
-                  item={item}
-                  onClick={() => {
-                    setOpenFormModal(true);
-                    setSelectedItem(item);
-                  }}
-                />
-              )}
-            </div>
-            <div className="block lg:hidden">
-              {item && (
-                <MobileItemSticky
-                  startDate={startDate}
-                  endDate={endDate}
-                  item={item}
-                />
-              )}
-            </div>
+        {item && (
+          <div className="flex flex-col gap-6">
+            {item.images && item.images.length > 0 && (
+              <GalleryModal images={item?.images} />
+            )}
+            {item.service.serviceType === 'boat_rental' ? (
+              <ViewBoat item={item} />
+            ) : (
+              <ViewItemDefault item={item} />
+            )}
           </div>
-        </div>
+        )}
       </div>
       <Modal open={openFormModal}>
         <RenderBookingForm

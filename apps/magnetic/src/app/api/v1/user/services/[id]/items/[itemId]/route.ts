@@ -28,6 +28,9 @@ export async function GET(
           select: {
             id: true,
             name: true,
+            formType: true,
+            serviceId: true,
+            position: true,
           },
         },
         service: {
