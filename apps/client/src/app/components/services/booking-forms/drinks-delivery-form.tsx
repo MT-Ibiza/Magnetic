@@ -56,7 +56,7 @@ export function DrinksDeliveryBookingForm(props: Props) {
           <div>
             <h2 className="text-2xl font-semibold">Drinks Delivery</h2>
             <Text className="text-gray-500">
-              Before you continue, where should we deliver your drinks?
+              Please confirm the following details before you continue.
             </Text>
           </div>
         </div>
@@ -74,7 +74,6 @@ export function DrinksDeliveryBookingForm(props: Props) {
               <div>
                 <Text className="mb-2">Date</Text>
                 <Input
-                  disabled
                   type="date"
                   className="w-full"
                   {...register('date', { required: 'Date is required' })}
@@ -139,7 +138,7 @@ export function DrinksDeliveryBookingForm(props: Props) {
                 </Button>
               )}
               <Button type="submit" disabled={!watch('acceptSubstitutes')}>
-                Book Service
+                Continue
               </Button>
             </div>
           </div>

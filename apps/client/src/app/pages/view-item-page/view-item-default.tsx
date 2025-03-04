@@ -74,7 +74,7 @@ export function ViewItemDefault({ item }: Props) {
               {item?.name}
             </h2>
           </div>
-          <SectionCard title="Included">
+          <SectionCard title="Details">
             <div className="text-neutral-6000 dark:text-neutral-300 editor-text">
               <div
                 className="block"
