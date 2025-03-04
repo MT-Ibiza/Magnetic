@@ -6,15 +6,15 @@
   @apply text-neutral-900 dark:text-neutral-200 text-base;
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
+
 .hiddenScrollbar::-webkit-scrollbar {
   display: none;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
+
 .hiddenScrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
 }
 
 .z-max {
@@ -312,3 +312,12 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     bottom: 4rem !important;
   }
 }
+
+._chatHeader_181xn_163 {
+  background-color: #5046e5 !important; 
+}
+
+._startChatButton_181xn_559 {
+  background-color: #5046e5 !important;
+}
+

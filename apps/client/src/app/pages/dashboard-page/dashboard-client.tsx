@@ -92,12 +92,12 @@ export function DashboardClientPage() {
               </div>
               <div className="col-span-1 h-full">
                 <header className="h-full flex flex-col justify-center container rounded-2xl border border-neutral-200 p-6">
-                  <div className=" max-w-screen-md space-y-4">
-                    <h1 className=" text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-3xl dark:text-neutral-100 max-w-4xl ">
-                      Upgrade your Stay
+                  <div className="lg:flex lg:flex-col items-center md:px-[0px] xl:px-[80px] max-w-screen-md space-y-4">
+                    <h1 className="text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-3xl dark:text-neutral-100 max-w-4xl ">
+                      Upgrade Your Stay
                     </h1>
-                    <span className="block text-base text-neutral-500 md:text-lg dark:text-neutral-400 pb-1">
-                      Discover our concierge packages
+                    <span className="lg:text-center block text-base text-neutral-500 md:text-lg dark:text-neutral-400 pb-1">
+                      Enhance your experience with premium concierge services
                     </span>
                     <Button
                       href={'/packages'}
@@ -131,8 +131,12 @@ export function DashboardClientPage() {
           initialMessageByClient="Hello! I would like to chat with you"
           statusMessage="Available"
           startChatText="Start chat with us"
-          tooltipText="Need help? Click to chat!"
+          // tooltipText="Need help? Click to chat!"
           allowEsc={true}
+          buttonStyle={{
+            backgroundColor: '#5046e5',
+            color: '#fff',
+          }}
         />
       </div>
     </>
