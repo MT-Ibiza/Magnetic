@@ -51,12 +51,6 @@ const NavMobile: React.FC<NavMobileProps> = ({
         >
           <img className="w-24" src={'/icons/logo-app-trim.png'} alt="Logo" />
         </NavLink>
-        <div className="flex flex-col mt-5 text-neutral-700 dark:text-neutral-300 text-sm">
-          <span>
-            Magnetic Travel is a leading Ibiza concierge company, dedicated to
-            providing personalised and exclusive travel experiences.
-          </span>
-        </div>
         <span className="absolute right-2 top-2 p-1">
           <button
             onClick={onClickClose}

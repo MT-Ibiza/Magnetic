@@ -18,7 +18,7 @@ export const Heading: React.FC<HeadingProps> = ({
 }) => {
   return (
     <div
-      className={`nc-Section-Heading relative flex flex-col sm:flex-row sm:items-end justify-between ${className}`}
+      className={`nc-Section-Heading relative flex items-center sm:flex-row sm:items-end justify-between ${className}`}
     >
       <div
         className={
@@ -38,7 +38,7 @@ export const Heading: React.FC<HeadingProps> = ({
         )}
       </div>
       {hasNextPrev && !isCenter && (
-        <div className="mt-4 flex justify-end sm:ml-2 sm:mt-0 flex-shrink-0">
+        <div className="flex justify-end sm:ml-2 sm:mt-0 flex-shrink-0">
           <NextPrev onClickNext={() => {}} onClickPrev={() => {}} />
         </div>
       )}

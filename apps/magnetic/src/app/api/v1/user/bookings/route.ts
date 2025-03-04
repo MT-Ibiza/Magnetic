@@ -34,6 +34,8 @@ export async function GET(request: Request) {
             name: true,
             serviceType: true,
             id: true,
+            items: true,
+            imageUrl: true,
           },
         },
       },

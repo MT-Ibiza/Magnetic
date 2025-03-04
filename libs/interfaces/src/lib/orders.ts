@@ -73,5 +73,6 @@ export interface BookingForm {
     name: string;
     serviceType: string;
     id: number;
+    imageUrl: string;
   };
 }

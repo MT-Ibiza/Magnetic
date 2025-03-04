@@ -72,32 +72,9 @@ export function LoginPage() {
   return (
     <div className="min-h-screen flex items-stretch ">
       <div
-        className="bg-[url('https://www.magnetic-travel.com/wp-content/uploads/2023/07/2-min.png')]
-        lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center"
+        className="bg-[url('/images/cover-image-login.jpg')] lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center"
       >
         <div className="absolute bg-black opacity-50 inset-0 z-0"></div>
-        <div className="w-full px-24 z-10">
-          <h1 className="text-5xl font-bold text-left tracking-wide text-white">
-            Magnetic Travel
-          </h1>
-          <p className="text-2xl mt-5 text-white">
-            How can we assist you organizing the perfect Ibiza holiday?
-          </p>
-        </div>
-        <div className="bottom-0 absolute p-4 text-center right-0 left-0 flex justify-center space-x-4">
-          {socialLinks.map((social, index) => (
-            <a
-              key={index}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white"
-              aria-label={social.label}
-            >
-              <div className="text-2xl">{social.icon}</div>
-            </a>
-          ))}
-        </div>
       </div>
       <div className="lg:w-1/2 w-full flex flex-col items-center justify-center md:px-16 px-0 z-0 b-[#161616]">
         {error && (
