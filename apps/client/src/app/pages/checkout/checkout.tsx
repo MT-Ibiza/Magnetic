@@ -30,12 +30,11 @@ export function CheckoutPage() {
           <div className="col-span-8 w-full ">
             <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 px-0 sm:p-6 xl:p-8">
               <h2 className="text-3xl lg:text-4xl font-semibold">
-                Confirm and payment
+                Confirm & Pay
               </h2>
               <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
               <Text className="text-gray-500 mt-2">
-                Please ensure all details, especially the dates, are accurate to
-                prevent any inconveniences
+              Ensure all details, especially dates and timings, are correct to avoid any inconveniences.
               </Text>
               <div className="mt-8">
                 <ProductsSummary />

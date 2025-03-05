@@ -146,6 +146,7 @@ const DrinkInfo = ({
       {cartItem.quantity} x{' '}
       {centsToEurosWithCurrency(cartItem.item.priceInCents)}
     </Text>
+    <Text size="1">Time: {cartItem.formData.time}</Text>
   </div>
 );
 

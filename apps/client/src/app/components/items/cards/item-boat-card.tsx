@@ -55,7 +55,7 @@ function ItemBoatCard(props: Props) {
                   <span>|</span>
                 </>
               )}
-              <span className="">{capacity} capacity </span>
+              <span className="">{capacity} pax </span>
             </div>
           </div>
           <div className="flex justify-between mt-5">
