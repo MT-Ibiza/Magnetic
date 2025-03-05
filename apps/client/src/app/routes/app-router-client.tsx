@@ -14,6 +14,7 @@ import OrderPage from '../pages/order-page/order-page';
 import OrdersPage from '../pages/orders-page/orders-page';
 import ViewItemPage from '../pages/view-item-page/view-item-page';
 import BookingsPage from '../pages/bookings-page/bookings-page';
+import PrivacyPolicyPage from '../pages/privacy-policy-page/privacy-policy-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -25,6 +26,7 @@ export const AppRouter = () => {
   return (
     <Routes>
       <Route path="login" element={<RedirectRoute />} />
+      <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<DashboardClientPage />} />
