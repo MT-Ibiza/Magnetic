@@ -251,7 +251,7 @@ export function TransferBookingForm({
                   type="number"
                   min="0"
                   className="w-full"
-                  placeholder='If applicable'
+                  placeholder="If applicable"
                   {...register('luggageAmount', { valueAsNumber: true })}
                 />
               </div>

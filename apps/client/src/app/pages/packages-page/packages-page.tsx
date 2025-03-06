@@ -4,11 +4,18 @@ import { usePackages } from '../../hooks/usePackages';
 import { useAuth } from '../../hooks/useAuth';
 import FormRequestCall from '../../components/form-request-call';
 import { toast } from 'sonner';
+import Modal from '../../components/modal';
+import { useState } from 'react';
 
 export function PackagePage() {
   const { isLoading, packages, error, isError } = usePackages();
   const { getCurrentUser } = useAuth();
   const user = getCurrentUser();
+  const [openModal, setOpenModal] = useState(false);
+
+  function toggleOpeModal() {
+    setOpenModal(!openModal);
+  }
 
   const filteredPackages = packages.filter(
     (item) => item.id !== user?.package?.id
@@ -25,13 +32,7 @@ export function PackagePage() {
             <span className="block text-sm mt-2 text-neutral-700 sm:text-base dark:text-neutral-200">
               Explore the perfect package for your stay.
             </span>
-            <Button
-              className="mt-[15px]"
-              onClick={() => {
-                //@ts-ignore
-                document.getElementById('modal-form-call').showModal();
-              }}
-            >
+            <Button className="mt-[15px]" onClick={toggleOpeModal}>
               Book a Call
             </Button>
           </header>
@@ -57,21 +58,15 @@ export function PackagePage() {
           ))}
         </div>
       </div>
-      <dialog id="modal-form-call" className="modal">
-        <div className="modal-box">
-          <FormRequestCall
-            onSave={() => {
-              //@ts-ignore
-              document.getElementById('modal-form-call').close();
-              toast.success('Your call has been successfully scheduled! 🎉');
-            }}
-            onCancel={() => {
-              //@ts-ignore
-              document.getElementById('modal-form-call').close();
-            }}
-          />
-        </div>
-      </dialog>
+      <Modal open={openModal}>
+        <FormRequestCall
+          onSave={() => {
+            toggleOpeModal();
+            toast.success('Your call has been successfully scheduled! 🎉');
+          }}
+          onCancel={toggleOpeModal}
+        />
+      </Modal>
     </>
   );
 }
