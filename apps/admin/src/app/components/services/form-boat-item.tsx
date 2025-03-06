@@ -236,7 +236,7 @@ export function FormBoatItem(props: Props) {
                 </div>
                 <div className="w-full">
                   <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                    Price
+                    Base Price
                   </Text>
                   <Input
                     type="number"
