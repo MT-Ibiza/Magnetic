@@ -3,7 +3,7 @@ import { useItem } from '../../hooks/useItem';
 import { Badge, GalleryModal, SectionCard } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   FaUsers,
   FaUserTie,
@@ -37,6 +37,12 @@ export function ViewItemPage(props: Props) {
   const { setSelectedItem } = useApp();
 
   const { isLoading, isError, item, error } = useItem(serviceId, itemId);
+
+  useEffect(() => {
+    if (item) {
+      setSelectedItem(item);
+    }
+  }, [item]);
 
   const [alert, setAlert] = useState<{
     message: string;

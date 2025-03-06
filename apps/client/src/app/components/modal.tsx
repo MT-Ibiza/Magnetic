@@ -52,7 +52,7 @@ const Header = ({
   onClose?: () => void;
 }) => {
   return (
-    <div className="rounded-t-[10px] text-lg font-medium leading-6 text-gray-900 relative w-full top-0 px-6 py-3 bg-white border-b border-neutral-200">
+    <div className="rounded-t-[10px] text-lg font-medium leading-6 text-gray-900 relative w-full top-0 py-5 px-10 bg-white border-b border-neutral-200">
       {children}
       {onClose && (
         <button
@@ -77,7 +77,7 @@ const Body = ({ children, ...props }: ModalFooterProps) => {
 const Footer = ({ children, ...props }: ModalFooterProps) => {
   return (
     <div
-      className="rounded-b-[10px] p-6 flex-shrink-0 bg-neutral-50 dark:bg-neutral-900 dark:border-t dark:border-neutral-800 flex items-center justify-between"
+      className="rounded-b-[10px] py-5 px-10 flex-shrink-0 bg-neutral-50 dark:bg-neutral-900 dark:border-t dark:border-neutral-800 flex items-center justify-between"
       {...props}
     >
       {children}

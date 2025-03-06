@@ -54,6 +54,13 @@ export async function GET(
             createdAt: 'asc',
           },
         },
+        seasonPrices: {
+          select: {
+            startMonth: true,
+            endMonth: true,
+            priceInCents: true,
+          },
+        },
       },
     });
     return NextResponse.json(item);
