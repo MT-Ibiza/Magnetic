@@ -1,6 +1,7 @@
 'use client';
 
 export interface CheckboxProps {
+  url?: string;
   label?: string;
   subLabel?: string;
   className?: string;
@@ -10,6 +11,7 @@ export interface CheckboxProps {
 }
 
 export function Checkbox({
+  url,
   subLabel = '',
   label = '',
   name,
@@ -35,7 +37,13 @@ export function Checkbox({
           htmlFor={name}
           className="ml-3.5 flex flex-col flex-1 justify-center hover:text-gray-500"
         >
-          {label}
+          {url ? (
+            <a href={url} target="_blank">
+              {label}
+            </a>
+          ) : (
+            <>{label}</>
+          )}
         </label>
       )}
     </div>

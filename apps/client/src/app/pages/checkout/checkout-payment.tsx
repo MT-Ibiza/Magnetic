@@ -23,6 +23,7 @@ function CheckoutPayment() {
     <div>
       <Checkbox
         name="paymentConfirmed"
+        url="/terms-conditions"
         label="By continuing, you confirm your acceptance of the Terms and Conditions."
         defaultChecked={accepted}
         onChange={(checked) => {
