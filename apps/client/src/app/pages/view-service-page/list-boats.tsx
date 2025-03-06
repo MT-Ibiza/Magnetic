@@ -18,6 +18,7 @@ function ListBoats(props: Props) {
   const {} = props;
   const { setSelectedItem, currentSelectItem } = useApp();
   const [openFormModal, setOpenFormModal] = useState(false);
+  const [isFilterBoats, setIsFilterBoats] = useState(false);
   const { addServiceToCart } = useCart();
   const { addItem } = useCartStore();
   const defaultMonthNumber = getNumberMonth();
@@ -100,6 +101,7 @@ function ListBoats(props: Props) {
             if (filters.from) {
               const newMonthNumber = getNumberMonth(filters.from);
               setCurrentMonthNumber(newMonthNumber);
+              setIsFilterBoats(true);
             }
             setSearchParams(filters);
           }}
@@ -108,12 +110,9 @@ function ListBoats(props: Props) {
           {boats?.map((item, index) => (
             <div key={index}>
               <ItemBoatCard
+                isFilterItem={isFilterBoats}
                 item={item}
                 priceMonthNumber={currentMonthNumber}
-                onClickBookNow={() => {
-                  setSelectedItem(item);
-                  openForm();
-                }}
               />
             </div>
           ))}

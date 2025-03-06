@@ -49,3 +49,24 @@ export const formatSeasonPrice = (seasonPrices: SeasonPrice) => {
     };
   }
 };
+
+export function getPriceRange(seasonPrices: SeasonPrice[]) {
+  if (!seasonPrices.length) return { low: 0, high: 0 };
+
+  return seasonPrices.reduce(
+    (acc, { priceInCents }) => ({
+      low: Math.min(acc.low, priceInCents),
+      high: Math.max(acc.high, priceInCents),
+    }),
+    { low: Infinity, high: -Infinity }
+  );
+}
+
+export function getHighestPrice(seasonPrices: SeasonPrice[]) {
+  if (!seasonPrices.length) return 0;
+
+  return seasonPrices.reduce(
+    (max, { priceInCents }) => Math.max(max, priceInCents),
+    -Infinity
+  );
+}
