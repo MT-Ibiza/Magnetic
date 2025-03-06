@@ -14,6 +14,7 @@ import { User } from 'libs/interfaces/src/lib/users';
 import { FiBookOpen, FiShoppingCart, FiUser } from 'react-icons/fi';
 import CartShopping from './components/cart/cart-shopping';
 import FooterNav from './components/footer-menu';
+import Footer from './components/footer';
 
 interface Props {}
 
@@ -38,43 +39,9 @@ function Layout(props: Props) {
     }
   }, [pathname]);
 
-  const navigation = [
-    {
-      text: 'Dashboard',
-      key: 'dashboard',
-      url: '/dashboard',
-      icon: MdDashboardCustomize,
-    },
-    {
-      text: 'Services',
-      key: 'services',
-      url: '/services',
-      icon: SiTask,
-    },
-    {
-      text: 'Bookings',
-      key: 'bookings',
-      url: '/bookings',
-      icon: FaBook,
-    },
-    // {
-    //   text: 'My Orders',
-    //   key: 'orders',
-    //   url: '/orders',
-    //   icon: FaShoppingCart,
-    // },
-    {
-      text: 'Packages',
-      key: 'packages',
-      url: '/packages',
-      icon: FaUserFriends,
-    },
-  ];
-
   const navigationOptions = [
     { name: 'Account', href: '/account', icon: FiUser },
     { name: 'Bookings', href: '/bookings', icon: FiBookOpen },
-    // { name: 'Orders', href: '/orders', icon: FiShoppingCart },
   ];
 
   return (
@@ -88,7 +55,7 @@ function Layout(props: Props) {
           <CartShopping />
           {user && (
             <AvatarDropdown
-              bgAvatar='#5046e5'
+              bgAvatar="#5046e5"
               logout={logoutClient}
               user={user as User}
               options={navigationOptions}
@@ -101,7 +68,8 @@ function Layout(props: Props) {
           <Outlet />
         </div>
       </div>
-      <FooterNav/>
+      <Footer />
+      <FooterNav />
     </div>
   );
 }
