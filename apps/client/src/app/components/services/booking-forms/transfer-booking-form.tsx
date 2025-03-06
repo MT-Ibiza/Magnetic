@@ -266,6 +266,7 @@ export function TransferBookingForm({
             <div className="flex gap-3">
               {onCancel && (
                 <Button
+                  radius="full"
                   className=""
                   variant="outline"
                   color="neutral"
@@ -275,7 +276,9 @@ export function TransferBookingForm({
                   Cancel
                 </Button>
               )}
-              <Button type="submit">Book Transfer</Button>
+              <Button radius="full" type="submit">
+                Book Transfer
+              </Button>
             </div>
           </div>
         </Modal.Footer>

@@ -147,6 +147,7 @@ function FormRequestCall(props: {
           <div className="flex justify-end gap-3 w-full">
             {onCancel && (
               <Button
+                radius="full"
                 className=""
                 variant="outline"
                 color="neutral"
@@ -157,6 +158,7 @@ function FormRequestCall(props: {
               </Button>
             )}
             <Button
+              radius="full"
               disabled={!accepted}
               loading={isSaving}
               type="submit"

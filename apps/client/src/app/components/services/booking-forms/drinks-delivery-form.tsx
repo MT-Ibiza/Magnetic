@@ -128,6 +128,7 @@ export function DrinksDeliveryBookingForm(props: Props) {
             <div className="flex gap-3">
               {onCancel && (
                 <Button
+                  radius="full"
                   className=""
                   variant="outline"
                   color="neutral"
@@ -137,7 +138,11 @@ export function DrinksDeliveryBookingForm(props: Props) {
                   Cancel
                 </Button>
               )}
-              <Button type="submit" disabled={!watch('acceptSubstitutes')}>
+              <Button
+                radius="full"
+                type="submit"
+                disabled={!watch('acceptSubstitutes')}
+              >
                 Continue
               </Button>
             </div>

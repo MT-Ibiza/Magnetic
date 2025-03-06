@@ -216,6 +216,7 @@ export function BoatCharterBookingForm({
             <div className="flex gap-3">
               {onCancel && (
                 <Button
+                  radius="full"
                   className=""
                   variant="outline"
                   color="neutral"
@@ -225,7 +226,9 @@ export function BoatCharterBookingForm({
                   Cancel
                 </Button>
               )}
-              <Button type="submit">Book Boat</Button>
+              <Button className='text-[18px]' radius="full" type="submit">
+                Book Boat
+              </Button>
             </div>
           </div>
         </Modal.Footer>

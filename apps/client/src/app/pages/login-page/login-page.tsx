@@ -82,10 +82,7 @@ export function LoginPage() {
         )}
         <img
           className="w-[250px]"
-          src={
-            isDarkMode
-              ? '/icons/logo-app-white.png'
-              : '/icons/logo-app-black.png'
+          src={'/icons/logo-app-black.png'
           }
           alt="Logo"
         />

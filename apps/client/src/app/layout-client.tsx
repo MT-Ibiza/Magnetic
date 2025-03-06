@@ -51,7 +51,7 @@ function Layout(props: Props) {
         isSidebarVisible={isSidebarVisible}
       >
         <div className="flex items-center gap-4">
-          <ThemeSelector uniqueKey={'client'} />
+          {/* <ThemeSelector uniqueKey={'client'} /> */}
           <CartShopping />
           {user && (
             <AvatarDropdown

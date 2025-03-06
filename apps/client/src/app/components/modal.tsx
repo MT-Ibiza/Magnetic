@@ -52,11 +52,11 @@ const Header = ({
   onClose?: () => void;
 }) => {
   return (
-    <div className="relative w-full top-0 py-5 px-10 bg-slate-50 border border-b-1">
+    <div className="rounded-t-[10px] text-lg font-medium leading-6 text-gray-900 relative w-full top-0 px-6 py-3 bg-white border-b border-neutral-200">
       {children}
       {onClose && (
         <button
-          className="btn btn-sm btn-circle btn-ghost absolute right-8 top-5"
+          className="hover:bg-neutral-100 btn btn-sm btn-circle btn-ghost absolute right-8 top-5"
           onClick={onClose}
         >
           ✕
@@ -68,7 +68,7 @@ const Header = ({
 
 const Body = ({ children, ...props }: ModalFooterProps) => {
   return (
-    <div className="max-h-[50vh] bg-base-100 overflow-y-auto" {...props}>
+    <div className="max-h-[60vh] bg-base-100 overflow-y-auto" {...props}>
       {children}
     </div>
   );
@@ -77,7 +77,7 @@ const Body = ({ children, ...props }: ModalFooterProps) => {
 const Footer = ({ children, ...props }: ModalFooterProps) => {
   return (
     <div
-      className="footer bottom-0 py-5 px-10 bg-slate-50 border border-t-1"
+      className="rounded-b-[10px] p-6 flex-shrink-0 bg-neutral-50 dark:bg-neutral-900 dark:border-t dark:border-neutral-800 flex items-center justify-between"
       {...props}
     >
       {children}

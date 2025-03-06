@@ -144,6 +144,7 @@ export function WeeklyButlerServiceForm({
             <div className="flex gap-3">
               {onCancel && (
                 <Button
+                  radius="full"
                   className=""
                   variant="outline"
                   color="neutral"
@@ -153,7 +154,9 @@ export function WeeklyButlerServiceForm({
                   Cancel
                 </Button>
               )}
-              <Button type="submit">Book Service</Button>
+              <Button radius="full" type="submit">
+                Book Service
+              </Button>
             </div>
           </div>
         </Modal.Footer>

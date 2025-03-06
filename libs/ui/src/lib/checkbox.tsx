@@ -35,7 +35,7 @@ export function Checkbox({
       {label && (
         <label
           htmlFor={name}
-          className="ml-3.5 flex flex-col flex-1 justify-center hover:text-gray-500"
+          className="cursor-pointer ml-3.5 flex flex-col flex-1 justify-center hover:text-gray-500"
         >
           {url ? (
             <a href={url} target="_blank">
