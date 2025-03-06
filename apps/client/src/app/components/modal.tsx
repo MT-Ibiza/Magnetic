@@ -77,7 +77,7 @@ const Body = ({ children, ...props }: ModalFooterProps) => {
 const Footer = ({ children, ...props }: ModalFooterProps) => {
   return (
     <div
-      className="rounded-b-[10px] py-5 px-10 flex-shrink-0 bg-neutral-50 dark:bg-neutral-900 dark:border-t dark:border-neutral-800 flex items-center justify-between"
+      className="rounded-b-[10px] py-5 px-10 flex-shrink-0 bg-neutral-50 flex items-center justify-between border-t border-neutral-200"
       {...props}
     >
       {children}
