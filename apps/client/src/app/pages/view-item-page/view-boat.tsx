@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Alert, Badge, SectionCard } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   FaUsers,
   FaUserTie,
@@ -56,6 +56,7 @@ export function ViewBoat({ item }: Props) {
   const monthPrice = getSeasonPrice(seasonPrices, defaultMonthNumber);
   const displayPrice = monthPrice?.priceInCents ?? priceInCents;
   const [boatPrice, setBoatPrice] = useState(displayPrice);
+  const calendarRef = useRef<HTMLDivElement | null>(null);
 
   const [alert, setAlert] = useState<{
     message: string;
@@ -177,21 +178,23 @@ export function ViewBoat({ item }: Props) {
               />
             </div>
           </SectionCard>
-          <SectionCard title="Calendar" subTitle="Select date">
-            <BoatCalendar
-              startDate={startDate}
-              onChangeDate={(dates) => {
-                if (dates && dates[0]) {
-                  const date = dates[0];
-                  const monthNumber = getNumberMonth(date);
-                  const season = getSeasonPrice(seasonPrices, monthNumber);
-                  season && setBoatPrice(season.priceInCents);
-                }
-                onChangeDate(dates);
-              }}
-              boatId={boat.id}
-            />
-          </SectionCard>
+          <div ref={calendarRef}>
+            <SectionCard title="Calendar" subTitle="Select date">
+              <BoatCalendar
+                startDate={startDate}
+                onChangeDate={(dates) => {
+                  if (dates && dates[0]) {
+                    const date = dates[0];
+                    const monthNumber = getNumberMonth(date);
+                    const season = getSeasonPrice(seasonPrices, monthNumber);
+                    season && setBoatPrice(season.priceInCents);
+                  }
+                  onChangeDate(dates);
+                }}
+                boatId={boat.id}
+              />
+            </SectionCard>
+          </div>
           <SectionCard title="Location" subTitle={port}>
             <div className="aspect-w-5 aspect-h-5 sm:aspect-h-3 ring-1 ring-black/10 rounded-xl z-0">
               <div className="rounded-xl overflow-hidden z-0">
@@ -243,6 +246,7 @@ export function ViewBoat({ item }: Props) {
         </div>
         <div className="hidden lg:block col-span-1">
           <BookBoatCard
+            calendarRef={calendarRef}
             price={boatPrice}
             startDate={startDate}
             item={item}
