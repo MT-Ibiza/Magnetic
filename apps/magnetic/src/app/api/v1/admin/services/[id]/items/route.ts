@@ -53,8 +53,7 @@ export async function POST(
                 cabins: boatAttributes.cabins,
                 fuelConsumption: boatAttributes.fuelConsumption,
                 description: boatAttributes.description,
-                latitude: boatAttributes.latitude,
-                longitude: boatAttributes.longitude,
+                locationMapUrl: boatAttributes.locationMapUrl,
                 sizeInFeet: boatAttributes.sizeInFeet,
               },
             }

@@ -52,6 +52,7 @@ export function ViewBoat({ item }: Props) {
     beamInMeters,
     cabins,
     fuelConsumption,
+    locationMapUrl,
   } = boat;
   const monthPrice = getSeasonPrice(seasonPrices, defaultMonthNumber);
   const displayPrice = monthPrice?.priceInCents ?? priceInCents;
@@ -195,21 +196,23 @@ export function ViewBoat({ item }: Props) {
               />
             </SectionCard>
           </div>
-          <SectionCard title="Location" subTitle={port}>
-            <div className="aspect-w-5 aspect-h-5 sm:aspect-h-3 ring-1 ring-black/10 rounded-xl z-0">
-              <div className="rounded-xl overflow-hidden z-0">
-                <iframe
-                  title={port}
-                  width="100%"
-                  height="450px"
-                  loading="lazy"
-                  allowFullScreen
-                  referrerPolicy="no-referrer-when-downgrade"
-                  src="https://maps.google.com/maps?q=48.8584,2.2945&z=14&output=embed"
-                ></iframe>
+          {locationMapUrl && (
+            <SectionCard title="Location" subTitle={port}>
+              <div className="aspect-w-5 aspect-h-5 sm:aspect-h-3 ring-1 ring-black/10 rounded-xl z-0">
+                <div className="rounded-xl overflow-hidden z-0">
+                  <iframe
+                    title={port}
+                    width="100%"
+                    height="450px"
+                    loading="lazy"
+                    allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                    src={`${locationMapUrl}&z=16&output=embed`}
+                  ></iframe>
+                </div>
               </div>
-            </div>
-          </SectionCard>
+            </SectionCard>
+          )}
           {(service.instructions || service.termsAndConditions) && (
             <SectionCard title="Need to Know">
               <div>

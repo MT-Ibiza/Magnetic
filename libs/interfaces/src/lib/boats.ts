@@ -10,8 +10,7 @@ export interface BoatBase {
   cabins: number;
   fuelConsumption: number;
   description?: string;
-  latitude?: string;
-  longitude?: string;
+  locationMapUrl?: string;
   itemId: number;
   secondName?: string;
   iCal: string;

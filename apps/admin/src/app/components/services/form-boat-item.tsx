@@ -145,11 +145,8 @@ export function FormBoatItem(props: Props) {
           fuelConsumption: Number(boatAttributes.fuelConsumption),
           sizeInFeet: Number(boatAttributes.sizeInFeet),
           lengthInMeters: Number(boatAttributes.lengthInMeters),
-          latitude: boatAttributes.latitude
-            ? boatAttributes.latitude.toString()
-            : '',
-          longitude: boatAttributes.longitude
-            ? boatAttributes.longitude.toString()
+          locationMapUrl: boatAttributes.locationMapUrl
+            ? boatAttributes.locationMapUrl
             : '',
         })
       );
@@ -407,24 +404,13 @@ export function FormBoatItem(props: Props) {
                 <div className="flex gap-5">
                   <div className="w-full">
                     <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                      Latitude
+                      Location Map Url
                     </Text>
                     <Input
                       type="text"
                       className="mt-2 w-full"
-                      placeholder="Enter the latitude"
-                      {...register('boatAttributes.latitude')}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                      Longitude
-                    </Text>
-                    <Input
-                      type="text"
-                      className="mt-2 w-full"
-                      placeholder="Enter the longitude"
-                      {...register('boatAttributes.longitude')}
+                      placeholder="Enter map url"
+                      {...register('boatAttributes.locationMapUrl')}
                     />
                   </div>
                 </div>

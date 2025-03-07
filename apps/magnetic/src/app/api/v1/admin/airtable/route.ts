@@ -120,6 +120,7 @@ async function getBoatsAirtable({
 
 function getFieldsBoats(record: AirtableBoatField) {
   const { fields } = record;
+  console.log(fields);
   return {
     id: record.id,
     boat: fields.Boat,

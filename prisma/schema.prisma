@@ -92,8 +92,7 @@ model BoatAttributes {
   port            String?
   secondName      String?
   description     String?
-  latitude        String?
-  longitude       String?
+  locationMapUrl  String?
   iCal            String?
   itemId          Int                @unique
   item            Item               @relation(fields: [itemId], references: [id], onDelete: Cascade)
