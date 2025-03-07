@@ -10,11 +10,11 @@ import { Link } from 'react-router-dom';
 
 interface Props {
   item: Item;
-  isFilterItem: boolean;
+  selectedDate?: string;
   priceMonthNumber: number;
 }
 
-function ItemBoatCard({ item, priceMonthNumber, isFilterItem }: Props) {
+function ItemBoatCard({ item, priceMonthNumber, selectedDate }: Props) {
   const {
     name,
     priceInCents,
@@ -41,22 +41,21 @@ function ItemBoatCard({ item, priceMonthNumber, isFilterItem }: Props) {
   );
 
   const displayPrice = monthPrice?.priceInCents ?? priceInCents;
+  const baseUrl = `/services/${serviceId}/item/${id}`;
+  const url = selectedDate ? `${baseUrl}?date=${selectedDate}` : baseUrl;
 
   return (
     <div className="nc-CarCard group relative border border-neutral-200 dark:border-neutral-700 rounded-3xl overflow-hidden hover:shadow-xl transition-shadow bg-white dark:bg-neutral-900">
       <div className="relative w-full rounded-2xl overflow-hidden">
         <GallerySlider
-          href={`/services/${serviceId}/item/${id}`}
+          href={url}
           galleryImgs={imagesSorted}
           classImage="h-[200px]"
           uniqueID={`ExperiencesCard_${id}`}
         />
         <div className="p-5 space-y-4">
           <div className="space-y-2 flex flex-col">
-            <Link
-              to={`/services/${serviceId}/item/${id}`}
-              className="capitalize text-base font-medium"
-            >
+            <Link to={url} className="capitalize text-base font-medium">
               <span className="line-clamp-1">{name}</span>
             </Link>
             <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
@@ -67,7 +66,7 @@ function ItemBoatCard({ item, priceMonthNumber, isFilterItem }: Props) {
           <div className="flex justify-between mt-5">
             <div className="flex gap-1 items-center">
               <Text className="text-base font-semibold">
-                {isFilterItem
+                {selectedDate
                   ? `From ${centsToEurosWithCurrency(displayPrice)}`
                   : priceRange.low === priceRange.high
                   ? `From ${centsToEurosWithCurrency(priceInCents)}`
@@ -79,9 +78,7 @@ function ItemBoatCard({ item, priceMonthNumber, isFilterItem }: Props) {
                 /day
               </Text>
             </div>
-            <Button href={`/services/${serviceId}/item/${id}`}>
-              View Details
-            </Button>
+            <Button href={url}>View Details</Button>
           </div>
         </div>
       </div>

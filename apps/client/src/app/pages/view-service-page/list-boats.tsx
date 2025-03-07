@@ -110,7 +110,7 @@ function ListBoats(props: Props) {
           {boats?.map((item, index) => (
             <div key={index}>
               <ItemBoatCard
-                isFilterItem={isFilterBoats}
+                selectedDate={searchParams.from}
                 item={item}
                 priceMonthNumber={currentMonthNumber}
               />
@@ -118,21 +118,6 @@ function ListBoats(props: Props) {
           ))}
         </div>
       </div>
-      {alert && (
-        <Alert
-          message={alert.message}
-          type={alert.type}
-          onClose={() => setAlert(null)}
-        />
-      )}
-      <Modal open={openFormModal}>
-        <BoatCharterBookingForm
-          onSubmit={(data) => {
-            handleAddService(1, data);
-          }}
-          onCancel={closeForm}
-        />
-      </Modal>
     </>
   );
 }
