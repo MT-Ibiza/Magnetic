@@ -6,6 +6,7 @@ import Modal from '../modal';
 import BoatBookingSummary from './summary/boat-booking-summary';
 import { useState } from 'react';
 import { BookingForm } from '@magnetic/interfaces';
+import { placeholderItemImage } from '../../constants';
 
 interface Props {}
 
@@ -57,7 +58,7 @@ export function BookingsTable(props: Props) {
                   <div className="flex gap-3 items-center text-neutral-6000 dark:text-neutral-300">
                     <img
                       className="w-16 h-10 object-cover rounded-md"
-                      src={booking.service.imageUrl}
+                      src={booking.service.imageUrl || placeholderItemImage}
                       alt={booking.service.name}
                     />
                     <div className="flex flex-col gap-1">
