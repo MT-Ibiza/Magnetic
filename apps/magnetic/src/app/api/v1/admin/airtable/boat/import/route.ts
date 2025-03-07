@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
     cabins,
     crew,
     type,
+    locationMapUrl,
   } = data;
   try {
     const service = await db.service.findMany({
@@ -47,6 +48,7 @@ export async function POST(request: NextRequest) {
             airtableId: id,
             lengthInMeters,
             sizeInFeet,
+            locationMapUrl,
           },
         },
       },
@@ -84,6 +86,7 @@ export async function PUT(request: NextRequest) {
     cabins,
     crew,
     type,
+    locationMapUrl,
   } = data;
   try {
     const boatFound = await db.boatAttributes.findUnique({
@@ -127,6 +130,7 @@ export async function PUT(request: NextRequest) {
             lengthInMeters,
             sizeInFeet,
             description: included,
+            locationMapUrl,
           },
         },
       },

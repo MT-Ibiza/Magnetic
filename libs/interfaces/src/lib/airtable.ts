@@ -47,6 +47,7 @@ export interface AirtableBoatField {
       url: string;
     };
     iCal: string;
+    Location: string;
   };
 }
 
@@ -71,4 +72,5 @@ export interface AirtableBoat {
   included: string;
   iCal: string;
   boat: string;
+  locationMapUrl: string;
 }

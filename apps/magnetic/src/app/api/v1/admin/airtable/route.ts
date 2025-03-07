@@ -120,7 +120,6 @@ async function getBoatsAirtable({
 
 function getFieldsBoats(record: AirtableBoatField) {
   const { fields } = record;
-  console.log(fields);
   return {
     id: record.id,
     boat: fields.Boat,
@@ -137,5 +136,6 @@ function getFieldsBoats(record: AirtableBoatField) {
     fuelConsumption: fields['Fuel Consuption (L/H)'],
     included: fields.Included,
     iCal: fields.iCal,
+    locationMapUrl: fields.Location,
   };
 }

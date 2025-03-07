@@ -221,15 +221,8 @@ export function FormBoatItem(props: Props) {
                     className="mt-2 w-full"
                     type="text"
                     placeholder="Enter the type of boat"
-                    {...register('boatAttributes.boatType', {
-                      required: 'Type is required',
-                    })}
+                    {...register('boatAttributes.boatType')}
                   />
-                  {errors.boatAttributes?.boatType && (
-                    <p className="text-[12px] text-red-500 pt-2">
-                      {errors.boatAttributes?.boatType.message}
-                    </p>
-                  )}
                 </div>
                 <div className="w-full">
                   <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
