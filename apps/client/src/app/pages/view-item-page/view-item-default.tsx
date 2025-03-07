@@ -88,8 +88,6 @@ export function ViewItemDefault({ item }: Props) {
         <div className="hidden lg:block col-span-1">
           {item && (
             <BookCard
-              startDate={startDate}
-              endDate={endDate}
               item={item}
               onClick={() => {
                 setOpenFormModal(true);
