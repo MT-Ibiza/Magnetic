@@ -775,9 +775,13 @@ function TermsConditionsPage(props: Props) {
             partir de la fecha de recepción del producto o desde la celebración
             del contrato de compraventa si fuera una prestación de un servicio,
             para ejercer el derecho de desistimiento, regulado en el{' '}
-            <span className="underline">
+            <a
+              href="https://www.boe.es/buscar/act.php?id=BOE-A-2007-20555&b=156&tn=1&p=20140328#a102"
+              target="_blank"
+              className="underline"
+            >
               artículo 102 del Real Decreto Legislativo 1/2007
-            </span>
+            </a>
             , de 16 de noviembre, por el que se aprueba el texto refundido de la
             Ley General para la Defensa de los Consumidores y Usuarios y otras
             leyes complementarias, en adelante RDL 1/2007. Si el PRESTADOR no
@@ -785,12 +789,33 @@ function TermsConditionsPage(props: Props) {
             de desistimiento, el plazo para su ejercicio finalizará doce meses
             después de la fecha de expiración del período de desistimiento
             inicial, conforme al{' '}
-            <span className="underline">artículo 105 del RDL 1/2007.</span>
+            <a
+              href="https://www.boe.es/buscar/act.php?id=BOE-A-2007-20555&p=20140328&tn=1#a105"
+              target="_blank"
+              className="underline"
+            >
+              artículo 105 del RDL 1/2007.
+            </a>
           </p>
           <p>
             El derecho de desistimiento no será aplicable a los contratos
-            referidos y enumerados en el artículo 103 del RDL 1/2007, y que se
-            relacionan aquí.
+            referidos y enumerados en{' '}
+            <a
+              href="https://www.boe.es/buscar/act.php?id=BOE-A-2007-20555&p=20140328&tn=1#a103"
+              target="_blank"
+              className="underline"
+            >
+              el artículo 103 del RDL 1/2007
+            </a>
+            , y que se relacionan{' '}
+            <a
+              href="https://www.boe.es/buscar/act.php?id=BOE-A-2007-20555&p=20211103&tn=1#tiv-3"
+              target="_blank"
+              className="underline"
+            >
+              aquí
+            </a>{' '}
+            .
           </p>
           <p>
             Toda solicitud de devolución deberá comunicarse al PRESTADOR,
