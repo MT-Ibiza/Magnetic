@@ -184,11 +184,10 @@ export function BoatCharterBookingForm({
             <div>
               <div className="flex gap-1 mb-2">
                 <Text className="">Lunch Reservation</Text>
-                <Text className="italic">(Preferred restaurant & time)</Text>
               </div>
               <TextArea
                 className="w-full"
-                placeholder="Describe your preferences"
+                placeholder="Request preferred restaurant and time"
                 {...register('lunchReservation')}
               />
             </div>
@@ -202,7 +201,7 @@ export function BoatCharterBookingForm({
             <div>
               <Checkbox
                 name="disclaimerAccepted"
-                label="Add extra Seabob"
+                label="Add Seabob €365"
                 defaultChecked={watch('seabob')}
                 onChange={(checked) => setValue('seabob', checked)}
               />
