@@ -1,6 +1,5 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useItem } from '../../hooks/useItem';
-import { Badge, SectionCard } from '@magnetic/ui';
+import { useSearchParams } from 'react-router-dom';
+import { Alert, Badge, SectionCard } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import { useState } from 'react';
@@ -12,29 +11,35 @@ import {
   FaBed,
   FaGasPump,
 } from 'react-icons/fa';
-import BookCard from './book-card';
 import MobileItemSticky from '../../components/mobile-footer-item';
 import BoatCalendar from './boat-calendar';
 import Modal from '../../components/modal';
 import RenderBookingForm from '../../components/services/booking-forms/render-booking-form';
-import { FormSubmitParams, Item } from '@magnetic/interfaces';
+import { FormSubmitParams, Item, SeasonPrice } from '@magnetic/interfaces';
 import { useApp } from '../../hooks/useApp';
+import moment from 'moment';
+import BookBoatCard from './book-boat-card';
+import { getNumberMonth } from '../../utils';
 
 interface Props {
   item: Item;
 }
 
+const defaultMonthNumber = getNumberMonth();
+
 export function ViewBoat({ item }: Props) {
-  const params = useParams();
-  const serviceId = Number(params.serviceId);
-  const itemId = Number(params.itemId);
-  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const selectedDate = searchParams.get('date');
+  const initialDate = selectedDate ? moment(selectedDate).toDate() : null;
   const { addServiceToCart } = useCart();
-  const { cart, addItem, removeItem } = useCartStore();
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const { addItem } = useCartStore();
+  const [startDate, setStartDate] = useState<Date | null>(initialDate);
   const [openFormModal, setOpenFormModal] = useState(false);
   const { setSelectedItem } = useApp();
+  const { seasonPrices, priceInCents } = item;
+  const monthPrice = getSeasonPrice(seasonPrices, defaultMonthNumber);
+  const displayPrice = monthPrice?.priceInCents ?? priceInCents;
+  const [boatPrice, setBoatPrice] = useState(displayPrice);
 
   const [alert, setAlert] = useState<{
     message: string;
@@ -72,10 +77,6 @@ export function ViewBoat({ item }: Props) {
   const onChangeDate = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
     setStartDate(start);
-    setEndDate(end);
-    // if (start && end) {
-    //   onSelectRange({ start, end });
-    // }
   };
 
   const BoatAttributes = [
@@ -197,7 +198,15 @@ export function ViewBoat({ item }: Props) {
               <SectionCard title="Calendar" subTitle="Select date">
                 <BoatCalendar
                   startDate={startDate}
-                  onChangeDate={onChangeDate}
+                  onChangeDate={(dates) => {
+                    if (dates && dates[0]) {
+                      const date = dates[0];
+                      const monthNumber = getNumberMonth(date);
+                      const season = getSeasonPrice(seasonPrices, monthNumber);
+                      season && setBoatPrice(season.priceInCents);
+                    }
+                    onChangeDate(dates);
+                  }}
                   boatId={item.boatAttributes.id}
                 />
               </SectionCard>
@@ -222,7 +231,9 @@ export function ViewBoat({ item }: Props) {
                   <div>
                     {item.service.instructions && (
                       <>
-                        <h4 className="text-lg font-semibold">Before You Book</h4>
+                        <h4 className="text-lg font-semibold">
+                          Before You Book
+                        </h4>
                         <div
                           className="editor-text block mt-3 leading-relaxed text-neutral-500 dark:text-neutral-400"
                           dangerouslySetInnerHTML={{
@@ -256,9 +267,9 @@ export function ViewBoat({ item }: Props) {
         </div>
         <div className="hidden lg:block col-span-1">
           {item && (
-            <BookCard
+            <BookBoatCard
+              price={boatPrice}
               startDate={startDate}
-              endDate={endDate}
               item={item}
               onClick={() => {
                 setOpenFormModal(true);
@@ -268,15 +279,16 @@ export function ViewBoat({ item }: Props) {
           )}
         </div>
         <div className="block lg:hidden">
-          {item && (
-            <MobileItemSticky
-              startDate={startDate}
-              endDate={endDate}
-              item={item}
-            />
-          )}
+          {item && <MobileItemSticky startDate={startDate} item={item} />}
         </div>
       </div>
+      {alert && (
+        <Alert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
       <Modal open={openFormModal}>
         <RenderBookingForm
           type={item?.category?.formType || item?.service.serviceType || ''}
@@ -293,4 +305,9 @@ export function ViewBoat({ item }: Props) {
   );
 }
 
+function getSeasonPrice(seasonPrices: SeasonPrice[], numberMonth: number) {
+  return seasonPrices.find(
+    (seasonPrice) => seasonPrice.startMonth === numberMonth
+  );
+}
 export default ViewBoat;

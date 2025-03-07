@@ -6,11 +6,10 @@ import { Button } from '@magnetic/ui';
 interface Props {
   item: Item;
   startDate: Date | null;
-  endDate: Date | null;
 }
 
 const MobileItemSticky = (props: Props) => {
-  const { item, startDate, endDate } = props;
+  const { item, startDate } = props;
   const { variants } = item;
 
   const [priceSelected, setPriceSelected] = useState(item.priceInCents);

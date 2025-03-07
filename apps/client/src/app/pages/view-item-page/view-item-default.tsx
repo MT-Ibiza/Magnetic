@@ -1,4 +1,4 @@
-import { SectionCard } from '@magnetic/ui';
+import { Alert, SectionCard } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import { useState } from 'react';
@@ -102,12 +102,19 @@ export function ViewItemDefault({ item }: Props) {
           {item && (
             <MobileItemSticky
               startDate={startDate}
-              endDate={endDate}
+              // endDate={endDate}
               item={item}
             />
           )}
         </div>
       </div>
+      {alert && (
+        <Alert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
       <Modal open={openFormModal}>
         <RenderBookingForm
           type={item?.category?.formType || item?.service.serviceType || ''}

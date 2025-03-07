@@ -182,9 +182,10 @@ export function BoatCharterBookingForm({
               </div>
             </div>
             <div>
-              <Text className="mb-2">
-                Lunch Reservation - Preferred restaurant & time
-              </Text>
+              <div className="flex gap-1 mb-2">
+                <Text className="">Lunch Reservation</Text>
+                <Text className="italic">(Preferred restaurant & time)</Text>
+              </div>
               <TextArea
                 className="w-full"
                 placeholder="Describe your preferences"
@@ -226,7 +227,7 @@ export function BoatCharterBookingForm({
                   Cancel
                 </Button>
               )}
-              <Button className='text-[18px]' radius="full" type="submit">
+              <Button className="text-[18px]" radius="full" type="submit">
                 Book Boat
               </Button>
             </div>
