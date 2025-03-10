@@ -109,11 +109,16 @@ export function BoatsTable(props: Props) {
                         : placeholderItemImage
                     }
                   />
-                  <Link
-                    to={`/services/${product.serviceId}/items/${product.id}/edit`}
-                  >
-                    {product.name}
-                  </Link>
+                  <div className="flex flex-col">
+                    <Link
+                      to={`/services/${product.serviceId}/items/${product.id}/edit`}
+                    >
+                      {product.name}
+                    </Link>
+                    <Text size="1" className="text-gray-500">
+                      {product.boatAttributes?.secondName}
+                    </Text>
+                  </div>
                 </div>
               </td>
               <td>{centsToEurosWithCurrency(product.priceInCents)}</td>
