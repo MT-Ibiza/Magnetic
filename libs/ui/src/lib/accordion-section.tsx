@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { FaAngleDown } from 'react-icons/fa';
+import AnimateHeight from 'react-animate-height';
 
 interface Props {
   title: string;
@@ -9,9 +10,7 @@ interface Props {
 
 export function AccordionSection(props: Props) {
   const { title, children, defaultOpen = false } = props;
-
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const contentRef = useRef<HTMLDivElement | null>(null);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
@@ -32,20 +31,12 @@ export function AccordionSection(props: Props) {
           />
         </h2>
       </div>
-      <div
-        className="test overflow-hidden transition-all duration-500 ease-in-out"
-        style={{
-          maxHeight:
-            isOpen && contentRef.current
-              ? `${contentRef.current.scrollHeight}px`
-              : '0',
-        }}
-      >
-        <div className="mt-[35px]" ref={contentRef}>
+      <AnimateHeight className='custom-accordion' duration={300} height={isOpen ? 'auto' : 0}>
+        <div className="mt-[35px]">
           <div className="w-14 mb-[32px] border-b border-neutral-200 dark:border-neutral-700"></div>
           {children}
         </div>
-      </div>
+      </AnimateHeight>
     </div>
   );
 }
