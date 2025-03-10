@@ -44,7 +44,7 @@ export function TransferBookingForm({
     currentSelectItem?.variants.map((variant) => {
       return {
         value: variant.id,
-        text: `${currentSelectItem.name} - ${variant.name}`,
+        text: `${currentSelectItem.name} - ${variant.name} - (${variant.capacity} pax)`,
       };
     }) || [];
 
@@ -109,7 +109,10 @@ export function TransferBookingForm({
                     }
                   }}
                 >
-                  <option value="">{currentSelectItem?.name}</option>
+                  <option value="">
+                    {currentSelectItem?.name} (
+                    {currentSelectItem?.transferAttributes?.capacity} pax)
+                  </option>
                   {variantOptions.map((option, index) => (
                     <option value={option.value} key={index}>
                       {option.text}

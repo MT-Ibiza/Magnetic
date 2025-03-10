@@ -34,8 +34,8 @@ function ItemBoatCard({ item, priceMonthNumber, selectedDate }: Props) {
       ),
     [seasonPrices, priceMonthNumber]
   );
+
   const priceRange = useMemo(
-    //@ts-ignore
     () => getPriceRange([...seasonPrices, { priceInCents }]),
     [seasonPrices, priceInCents]
   );
@@ -67,9 +67,9 @@ function ItemBoatCard({ item, priceMonthNumber, selectedDate }: Props) {
             <div className="flex gap-1 items-center">
               <Text className="text-base font-semibold">
                 {selectedDate
-                  ? `From ${centsToEurosWithCurrency(displayPrice)}`
+                  ? `${centsToEurosWithCurrency(displayPrice)}`
                   : priceRange.low === priceRange.high
-                  ? `From ${centsToEurosWithCurrency(priceInCents)}`
+                  ? `${centsToEurosWithCurrency(priceInCents)}`
                   : `From ${centsToEurosWithCurrency(
                       priceRange.low
                     )} - ${centsToEurosWithCurrency(priceRange.high)}`}

@@ -37,12 +37,18 @@ export async function GET(
             images: true,
             boatAttributes: true,
             drinkAttributes: true,
+            transferAttributes: {
+              select: {
+                capacity: true,
+              },
+            },
             position: true,
             variants: {
               select: {
                 id: true,
                 priceInCents: true,
                 name: true,
+                capacity: true,
               },
             },
             category: {

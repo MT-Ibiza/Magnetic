@@ -4,6 +4,7 @@ import { GallerySlider, Text } from '@magnetic/ui';
 import {
   centsToEurosWithCurrency,
   sortImagesByPosition,
+  getPriceRange,
 } from '@magnetic/utils';
 import ItemHandleBookButtons from '../item-handle-book-buttons';
 
@@ -15,11 +16,16 @@ interface Props {
 
 function ItemTransferCard(props: Props) {
   const { item, onClickBookNow, cartItemAmount } = props;
-  const { name, priceInCents } = item;
+  const { name, priceInCents, variants, transferAttributes } = item;
 
   const imagesSorted = useMemo(() => {
     return sortImagesByPosition(item.images);
   }, [item.images]);
+
+  const priceRange = useMemo(
+    () => getPriceRange([...variants, { priceInCents }]),
+    [variants, priceInCents]
+  );
 
   return (
     <div
@@ -38,12 +44,18 @@ function ItemTransferCard(props: Props) {
               {name}
             </p>
             <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
-              <span className="">{4} capacity </span>
+              <span className="">
+                {transferAttributes?.capacity || 4} capacity
+              </span>
             </div>
           </div>
           <div className="flex justify-between mt-5">
             <Text className="text-base font-semibold">
-              {centsToEurosWithCurrency(priceInCents)}
+              {priceRange.low === priceRange.high
+                ? `${centsToEurosWithCurrency(priceInCents)}`
+                : `From ${centsToEurosWithCurrency(
+                    priceRange.low
+                  )} - ${centsToEurosWithCurrency(priceRange.high)}`}
             </Text>
             <ItemHandleBookButtons
               item={item}

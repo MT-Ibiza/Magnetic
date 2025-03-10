@@ -25,3 +25,15 @@ export function eurosToCents(price: number) {
   const cents = price * 100;
   return cents;
 }
+
+export function getPriceRange(prices: { priceInCents: number }[]) {
+  if (!prices.length) return { low: 0, high: 0 };
+
+  return prices.reduce(
+    (acc, { priceInCents }) => ({
+      low: Math.min(acc.low, priceInCents),
+      high: Math.max(acc.high, priceInCents),
+    }),
+    { low: Infinity, high: -Infinity }
+  );
+}
