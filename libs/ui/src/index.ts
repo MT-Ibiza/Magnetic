@@ -44,6 +44,7 @@ export { AccordionSection } from './lib/accordion-section';
 export { SectionCard } from './lib/section-card';
 export { NextPrev } from './lib/NextPrev';
 export { Heading } from './lib/Heading';
+export { SelectCategory } from './lib/select-categories';
 
 
 

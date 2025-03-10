@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   SearchBoatsMobile,
   CustomInput,
-  FilterSearchMobile,
+  FilterSearchMobile, 
   RentalCarDatesRangeInput,
 } from '@magnetic/ui';
 import { BoatsSearchAttributes } from '@magnetic/interfaces';

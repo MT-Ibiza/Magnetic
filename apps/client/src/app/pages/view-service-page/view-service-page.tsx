@@ -6,6 +6,7 @@ import ListProducts from './list-products';
 import NoticeBookingUnavailable from '../../components/notice-booking-unavailable';
 import ListBoats from './list-boats';
 import './styles.scss';
+import FilterDrinks from './filter-drinks';
 
 interface Props {}
 
@@ -82,12 +83,21 @@ function ViewServicePage(props: Props) {
             {service.serviceType === 'boat_rental' ? (
               <ListBoats />
             ) : (
-              <div className="bg-gray-50 py-5 px-10 rounded-md">
-                <ListProducts
-                  service={service}
-                  items={publishedItems}
-                  availableInPlan={availableInPlan}
-                />
+              <div>
+                {service.serviceType === 'drinks' && (
+                  <FilterDrinks
+                    onChangeFilters={function (filters: any): void {
+                      throw new Error('Function not implemented.');
+                    }}
+                  />
+                )}
+                <div className="bg-gray-50 py-5 px-10 rounded-md">
+                  <ListProducts
+                    service={service}
+                    items={publishedItems}
+                    availableInPlan={availableInPlan}
+                  />
+                </div>
               </div>
             )}
           </>
