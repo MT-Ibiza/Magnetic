@@ -59,6 +59,7 @@ export function ViewBoat({ item }: Props) {
   const displayPrice = monthPrice?.priceInCents ?? priceInCents;
   const [boatPrice, setBoatPrice] = useState(displayPrice);
   const calendarRef = useRef<HTMLDivElement | null>(null);
+  const mapUrl = `https://maps.google.com/maps?z=15&t=m&q=loc:${latitude}+${longitude}&z=16&output=embed`;
 
   const [alert, setAlert] = useState<{
     message: string;
@@ -208,7 +209,7 @@ export function ViewBoat({ item }: Props) {
                     loading="lazy"
                     allowFullScreen
                     referrerPolicy="no-referrer-when-downgrade"
-                    src={`${latitude}&z=16&output=embed`}
+                    src={mapUrl}
                   ></iframe>
                 </div>
               </div>

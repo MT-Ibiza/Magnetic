@@ -79,7 +79,6 @@ export async function GET(request: NextRequest) {
             cabins: true,
             port: true,
             secondName: true,
-            locationMapUrl: true,
           },
         },
         position: true,
