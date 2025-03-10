@@ -6,13 +6,14 @@ import FormItem from '../../components/services/form-item';
 import { useItem } from '../../hooks/useItem';
 import FormBoatItem from '../../components/services/form-boat-item';
 import FormDrinkItem from '../../components/services/form-drink-item';
+import FormTransferItem from '../../components/services/form-transfer-item';
 
 export function EditItemPage() {
   const params = useParams();
   const serviceId = Number(params.serviceId);
   const itemId = Number(params.itemId);
   const navigate = useNavigate();
-  const otherForms = ['drinks', 'boat_rental'];
+  const otherForms = ['drinks', 'boat_rental', 'transfer'];
 
   const { isLoading, isError, item, serviceCategories, error } = useItem(
     serviceId,
@@ -60,6 +61,16 @@ export function EditItemPage() {
         )}
         {item.service.serviceType === 'drinks' && (
           <FormDrinkItem
+            item={item}
+            serviceId={serviceId}
+            onSave={() => {
+              navigate(`/services/${serviceId}`, { replace: true });
+            }}
+            serviceCategories={serviceCategories}
+          />
+        )}
+        {item.service.serviceType === 'transfer' && (
+          <FormTransferItem
             item={item}
             serviceId={serviceId}
             onSave={() => {

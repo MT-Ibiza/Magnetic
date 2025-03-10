@@ -21,6 +21,9 @@ export interface ItemBase {
   category?: Category;
   boatAttributes?: BoatBase;
   drinkAttributes?: DrinkBase;
+  transferAttributes?: {
+    capacity: number;
+  };
   images: Image[];
   removeImagesIds?: number[];
 }

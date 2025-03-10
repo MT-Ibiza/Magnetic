@@ -19,6 +19,9 @@ export async function POST(
   const drinkAttributes = data.get('drinkAttributes')
     ? JSON.parse(data.get('drinkAttributes') as string)
     : null;
+  const transferAttributes = data.get('transferAttributes')
+    ? JSON.parse(data.get('transferAttributes') as string)
+    : null;
 
   try {
     let imageUrls: string[] = [];
@@ -56,6 +59,13 @@ export async function POST(
                 latitude: boatAttributes.latitude,
                 longitude: boatAttributes.longitude,
                 sizeInFeet: boatAttributes.sizeInFeet,
+              },
+            }
+          : {},
+        transferAttributes: transferAttributes
+          ? {
+              create: {
+                capacity: transferAttributes.capacity,
               },
             }
           : {},

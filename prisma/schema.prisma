@@ -124,26 +124,34 @@ model DrinkAttributes {
   item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
 }
 
+model TransferAttributes {
+  id       Int  @id @default(autoincrement())
+  capacity Int  @default(4)
+  itemId   Int  @unique
+  item     Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+}
+
 model Item {
-  id              Int              @id @default(autoincrement())
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  name            String
-  description     String
-  published       Boolean          @default(false)
-  priceInCents    Int
-  serviceId       Int
-  position        Int              @default(1)
-  service         Service          @relation(fields: [serviceId], references: [id])
-  cartItems       CartItem[]
-  ordenItems      OrderItem[]
-  variants        ItemVariant[]
-  categoryId      Int?
-  category        Category?        @relation(fields: [categoryId], references: [id])
-  boatAttributes  BoatAttributes?
-  drinkAttributes DrinkAttributes?
-  images          Image[]
-  seasonPrices    SeasonPrice[]
+  id                 Int                 @id @default(autoincrement())
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  name               String
+  description        String
+  published          Boolean             @default(false)
+  priceInCents       Int
+  serviceId          Int
+  position           Int                 @default(1)
+  service            Service             @relation(fields: [serviceId], references: [id])
+  cartItems          CartItem[]
+  ordenItems         OrderItem[]
+  variants           ItemVariant[]
+  categoryId         Int?
+  category           Category?           @relation(fields: [categoryId], references: [id])
+  images             Image[]
+  seasonPrices       SeasonPrice[]
+  boatAttributes     BoatAttributes?
+  drinkAttributes    DrinkAttributes?
+  transferAttributes TransferAttributes?
 }
 
 model Image {

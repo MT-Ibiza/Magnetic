@@ -22,6 +22,8 @@ import { useState } from 'react';
 import FormCategory from '../form-category';
 import FormVariant from '../form-variant';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 export interface Props {
   className?: string;
@@ -32,7 +34,7 @@ export interface Props {
   serviceCategories: Category[];
 }
 
-export function FormDrinkItem(props: Props) {
+export function FormTransferItem(props: Props) {
   const { item, serviceId, onSave, serviceCategories } = props;
   const editMode = !!item;
   const navigate = useNavigate();
@@ -55,6 +57,7 @@ export function FormDrinkItem(props: Props) {
   const [itemCategories, setItemCategories] = useState(categories);
   const [selectedCategory, setSelectedCategory] = useState(categoryFound);
   const [imagesFiles, setImagesFiles] = useState<File[]>([]);
+  const [description, setDescription] = useState(item?.description);
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
@@ -111,27 +114,25 @@ export function FormDrinkItem(props: Props) {
   const onSubmit = async (data: ItemBase) => {
     const {
       name,
-      description,
       priceInCents,
       categoryId,
-      drinkAttributes,
+      transferAttributes,
       removeImagesIds,
     } = data;
     const formData: FormData = new FormData();
     formData.append('name', name);
-    formData.append('description', description);
+    formData.append('description', description || '');
     formData.append(
       'priceInCents',
       eurosToCents(Number(priceInCents)).toString()
     );
     formData.append('serviceId', serviceId.toString());
     formData.append('categoryId', categoryId ? categoryId.toString() : '');
-    if (drinkAttributes) {
+    if (transferAttributes) {
       formData.append(
-        'drinkAttributes',
+        'transferAttributes',
         JSON.stringify({
-          size: drinkAttributes.size,
-          units: Number(drinkAttributes.units),
+          capacity: Number(transferAttributes.capacity),
         })
       );
     }
@@ -159,7 +160,7 @@ export function FormDrinkItem(props: Props) {
                 htmlFor="name"
                 className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
               >
-                Drink Name
+                Product Name
               </label>
               <Input
                 id="name"
@@ -172,60 +173,50 @@ export function FormDrinkItem(props: Props) {
               )}
             </div>
 
-            <div className="flex flex-col">
-              <label
-                htmlFor="priceInCents"
-                className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
-              >
-                Price
-              </label>
-              <Input
-                id="priceInCents"
-                type="number"
-                min={1}
-                step={0.01}
-                placeholder="Enter the price product"
-                {...register('priceInCents', { required: true })}
-                className="mt-2"
-              />
-              {errors.priceInCents && (
-                <p className="text-xs text-red-500 mt-1">
-                  Product price is required
-                </p>
-              )}
-            </div>
-
-            <div className="drink-attr flex flex-col lg:flex-row gap-6">
+            <div className="flex flex-col lg:flex-row gap-6">
               <div className="w-full">
                 <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Units
+                  Capacity
                 </Text>
                 <Input
                   className="mt-2 w-full"
                   type="number"
                   min={0}
-                  max={10000}
+                  max={12}
                   placeholder=""
-                  {...register('drinkAttributes.units', {
-                    required: 'Units is required',
+                  {...register('transferAttributes.capacity', {
+                    required: 'Capacity is required',
                   })}
                 />
-                {errors.drinkAttributes?.units && (
+                {errors.transferAttributes?.capacity && (
                   <p className="text-[12px] text-red-500 pt-2">
-                    {errors.drinkAttributes?.units.message}
+                    {errors.transferAttributes?.capacity.message}
                   </p>
                 )}
               </div>
               <div className="w-full">
-                <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                  Size
-                </Text>
-                <Input
-                  className="mt-2 w-full"
-                  type="text"
-                  placeholder=""
-                  {...register('drinkAttributes.size')}
-                />
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="priceInCents"
+                    className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
+                  >
+                    Price
+                  </label>
+                  <Input
+                    id="priceInCents"
+                    type="number"
+                    min={1}
+                    step={0.01}
+                    placeholder="Enter the price product"
+                    {...register('priceInCents', { required: true })}
+                    className="mt-2"
+                  />
+                  {errors.priceInCents && (
+                    <p className="text-xs text-red-500 mt-1">
+                      Product price is required
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -236,11 +227,11 @@ export function FormDrinkItem(props: Props) {
               >
                 Description
               </label>
-              <TextArea
-                id="description"
-                placeholder="Describe your product here"
-                {...register('description')}
-                className="mt-2"
+              <ReactQuill
+                theme="snow"
+                defaultValue={description}
+                onChange={setDescription}
+                className="h-[200px]"
               />
             </div>
           </div>
@@ -364,7 +355,7 @@ export function FormDrinkItem(props: Props) {
             Cancel
           </Button>
           <Button type="submit" className="px-8 py-2" loading={isSaving}>
-            {item ? 'Update Drink' : 'Create Drink'}
+            {item ? 'Update Transfer' : 'Create Transfer'}
           </Button>
         </div>
       </form>
@@ -423,4 +414,4 @@ export function FormDrinkItem(props: Props) {
   );
 }
 
-export default FormDrinkItem;
+export default FormTransferItem;
