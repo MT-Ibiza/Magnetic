@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Item } from '@magnetic/interfaces';
-import { GallerySlider, Text } from '@magnetic/ui';
+import { Button, GallerySlider, Text } from '@magnetic/ui';
 import {
   centsToEurosWithCurrency,
   sortImagesByPosition,
@@ -24,6 +24,8 @@ function ItemChefsCard({ item, onClickBookNow, cartItemAmount }: Props) {
     default: 'per week',
     'chef-single': 'per person',
   };
+
+  const url = `/services/${serviceId}/item/${id}`;
 
   return (
     <div
@@ -53,11 +55,7 @@ function ItemChefsCard({ item, onClickBookNow, cartItemAmount }: Props) {
                 </Text>
               )}
             </div>
-            <ItemHandleBookButtons
-              item={item}
-              onClickBookNow={onClickBookNow}
-              currentAmount={cartItemAmount}
-            />
+            <Button href={url}>View Details</Button>
           </div>
         </div>
       </div>
