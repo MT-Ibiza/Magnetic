@@ -1,4 +1,5 @@
 import {
+  ApiResponse,
   Category,
   EditItem,
   Item,
@@ -33,6 +34,7 @@ import FormCategory from '../form-category';
 import FormVariant from '../form-variant';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import ReactQuill from 'react-quill';
+import { deleteVariant } from '../../apis/api-variants';
 
 export interface Props {
   className?: string;
@@ -121,6 +123,22 @@ export function FormItem(props: Props) {
     },
   });
 
+  const removeItem = useMutation<ApiResponse, Error, number>({
+    mutationFn: (id) => {
+      setIsSaving(true);
+      return deleteVariant(id);
+    },
+    onSuccess: () => {
+      toast.success(`Variant removed!`);
+      onSave();
+      setIsSaving(false);
+    },
+    onError: (error) => {
+      toast.error('The variant could not be removed');
+      setIsSaving(false);
+    },
+  });
+
   const onSubmit = async (data: ItemBase) => {
     const { name, priceInCents, categoryId, removeImagesIds } = data;
     const formData: FormData = new FormData();
@@ -154,6 +172,10 @@ export function FormItem(props: Props) {
       await createItem.mutateAsync(formData);
     }
   };
+
+  async function handleRemoveItem(id: number) {
+    await removeItem.mutateAsync(id);
+  }
 
   return (
     <>
@@ -289,7 +311,9 @@ export function FormItem(props: Props) {
                           size={18}
                         />
                         <FaTrashAlt
-                          onClick={() => {}}
+                          onClick={() => {
+                            handleRemoveItem(variant.id);
+                          }}
                           className="cursor-pointer hover:scale-110 transition-transform"
                           size={18}
                         />
