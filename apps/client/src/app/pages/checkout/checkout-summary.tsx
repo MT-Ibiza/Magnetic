@@ -1,5 +1,4 @@
-import { CardWrapper, Text } from '@magnetic/ui';
-import React from 'react';
+import { Text } from '@magnetic/ui';
 import { useCartStore } from '../../hooks/useCartStore';
 import { calculateTotalsByService } from '../../utils';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
@@ -11,8 +10,9 @@ function CheckoutSummary(props: Props) {
   const { cart } = useCartStore();
   const services = calculateTotalsByService(cart);
 
-  const total = services.reduce((a, b) => b.total + a, 0);
-  const vat = total / 1.21 * 0.21; // IVA incluido, lo extraemos del total
+  const subtotal = services.reduce((a, b) => b.total + a, 0);
+  const vat = subtotal * 0.21;
+  const total = subtotal + vat;
 
   return (
     <div className="flex flex-col space-y-4">
@@ -20,8 +20,10 @@ function CheckoutSummary(props: Props) {
       <div className="flex flex-col gap-2">
         {services.map((service, index) => (
           <div key={index} className="flex justify-between">
-            <Text className='text-neutral-600 dark:text-neutral-300' size="2">{service.service}</Text>
-            <Text.TextNumeric className='text-neutral-600 dark:text-neutral-300'>
+            <Text className="text-neutral-600 dark:text-neutral-300" size="2">
+              {service.service}
+            </Text>
+            <Text.TextNumeric className="text-neutral-600 dark:text-neutral-300">
               {centsToEurosWithCurrency(service.total)}
             </Text.TextNumeric>
           </div>
@@ -29,7 +31,9 @@ function CheckoutSummary(props: Props) {
       </div>
       <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
       <div className="flex justify-between mt-3">
-        <Text className="text-neutral-600 dark:text-neutral-300">VAT (21%)</Text>
+        <Text className="text-neutral-600 dark:text-neutral-300">
+          VAT (21%)
+        </Text>
         <Text.TextNumeric className="text-neutral-600 dark:text-neutral-300">
           {centsToEurosWithCurrency(vat)}
         </Text.TextNumeric>
