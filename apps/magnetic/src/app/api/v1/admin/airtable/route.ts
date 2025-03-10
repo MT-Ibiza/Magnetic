@@ -137,5 +137,6 @@ function getFieldsBoats(record: AirtableBoatField) {
     included: fields.Included,
     iCal: fields.iCal,
     locationMapUrl: fields.Location,
+    coordinates: fields.Coordinates || '',
   };
 }

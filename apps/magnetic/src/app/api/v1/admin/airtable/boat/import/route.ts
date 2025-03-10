@@ -20,8 +20,13 @@ export async function POST(request: NextRequest) {
     cabins,
     crew,
     type,
-    locationMapUrl,
+    coordinates,
   } = data;
+
+  const formatCoordinates = coordinates.split(', ');
+  const latitude = formatCoordinates[0] || '';
+  const longitude = formatCoordinates[1] || '';
+
   try {
     const service = await db.service.findMany({
       where: {
@@ -48,7 +53,8 @@ export async function POST(request: NextRequest) {
             airtableId: id,
             lengthInMeters,
             sizeInFeet,
-            locationMapUrl,
+            latitude,
+            longitude,
           },
         },
       },
@@ -86,8 +92,13 @@ export async function PUT(request: NextRequest) {
     cabins,
     crew,
     type,
-    locationMapUrl,
+    coordinates,
   } = data;
+
+  const formatCoordinates = coordinates.split(', ');
+  const latitude = formatCoordinates[0] || '';
+  const longitude = formatCoordinates[1] || '';
+
   try {
     const boatFound = await db.boatAttributes.findUnique({
       where: {
@@ -130,7 +141,8 @@ export async function PUT(request: NextRequest) {
             lengthInMeters,
             sizeInFeet,
             description: included,
-            locationMapUrl,
+            latitude,
+            longitude,
           },
         },
       },

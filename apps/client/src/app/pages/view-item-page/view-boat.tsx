@@ -52,7 +52,8 @@ export function ViewBoat({ item }: Props) {
     beamInMeters,
     cabins,
     fuelConsumption,
-    locationMapUrl,
+    latitude,
+    longitude,
   } = boat;
   const monthPrice = getSeasonPrice(seasonPrices, defaultMonthNumber);
   const displayPrice = monthPrice?.priceInCents ?? priceInCents;
@@ -196,7 +197,7 @@ export function ViewBoat({ item }: Props) {
               />
             </SectionCard>
           </div>
-          {locationMapUrl && (
+          {latitude && longitude && (
             <SectionCard title="Location" subTitle={port}>
               <div className="aspect-w-5 aspect-h-5 sm:aspect-h-3 ring-1 ring-black/10 rounded-xl z-0">
                 <div className="rounded-xl overflow-hidden z-0">
@@ -207,7 +208,7 @@ export function ViewBoat({ item }: Props) {
                     loading="lazy"
                     allowFullScreen
                     referrerPolicy="no-referrer-when-downgrade"
-                    src={`${locationMapUrl}&z=16&output=embed`}
+                    src={`${latitude}&z=16&output=embed`}
                   ></iframe>
                 </div>
               </div>
