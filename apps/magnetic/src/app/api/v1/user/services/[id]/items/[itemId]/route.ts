@@ -49,6 +49,7 @@ export async function GET(
             name: true,
             priceInCents: true,
             description: true,
+            capacity: true,
           },
           orderBy: {
             createdAt: 'asc',
