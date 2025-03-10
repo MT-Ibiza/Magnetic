@@ -170,6 +170,7 @@ model ItemVariant {
   name         String
   description  String?
   priceInCents Int
+  capacity     Int?
   itemId       Int
   item         Item        @relation(fields: [itemId], references: [id])
   CartItem     CartItem[]

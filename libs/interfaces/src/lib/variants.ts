@@ -4,6 +4,7 @@ export interface ItemVariantBase {
   name: string;
   description: string;
   priceInCents: number;
+  capacity?: number;
 }
 
 export interface ItemVariant extends ItemVariantBase {

@@ -17,6 +17,7 @@ import {
 
 interface Props {
   itemName: string;
+  serviceType?: string;
   variant?: ItemVariant;
   onCancel: () => void;
   onSave: (variant: ItemVariant) => void;
@@ -24,7 +25,7 @@ interface Props {
 }
 
 function FormVariant(props: Props) {
-  const { itemName, variant, onCancel, itemId, onSave } = props;
+  const { itemName, variant, onCancel, itemId, onSave, serviceType } = props;
   const {
     register,
     handleSubmit,
@@ -68,12 +69,13 @@ function FormVariant(props: Props) {
   });
 
   const onSubmit = async (data: ItemVariantBase) => {
-    const { name, description, priceInCents } = data;
+    const { name, description, priceInCents, capacity } = data;
     if (variant) {
       await updateVariant.mutateAsync({
         itemId,
         name,
         description,
+        capacity: capacity ? Number(capacity) : undefined,
         priceInCents: eurosToCents(priceInCents),
       });
     } else {
@@ -81,6 +83,7 @@ function FormVariant(props: Props) {
         itemId,
         name,
         description,
+        capacity: capacity ? Number(capacity) : undefined,
         priceInCents: eurosToCents(priceInCents),
       });
     }
@@ -112,6 +115,12 @@ function FormVariant(props: Props) {
               <Text.TextInputError text="Price is required" />
             )}
           </div>
+          {serviceType === 'transfer' && (
+            <div className="flex flex-col gap-[10px]">
+              <Text>Capacity</Text>
+              <Input type="number" min={1} {...register('capacity')} />
+            </div>
+          )}
           <div className="flex flex-col gap-[10px]">
             <Text>Description</Text>
             <Input

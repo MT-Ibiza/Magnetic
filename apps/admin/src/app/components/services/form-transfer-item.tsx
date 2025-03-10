@@ -231,7 +231,7 @@ export function FormTransferItem(props: Props) {
                 theme="snow"
                 defaultValue={description}
                 onChange={setDescription}
-                className="h-[200px]"
+                className="h-[200px] mt-3"
               />
             </div>
           </div>
@@ -264,7 +264,7 @@ export function FormTransferItem(props: Props) {
 
             <div className="variants bg-base-100 border rounded-lg p-6">
               <div className="flex justify-between items-center pb-2">
-                <Text className="font-semibold text-lg">Product Variants</Text>
+                <Text className="font-semibold text-lg">Transfer Variants</Text>
                 <Text
                   className="text-primary-500 text-md font-medium cursor-pointer"
                   onClick={() => {
@@ -287,6 +287,9 @@ export function FormTransferItem(props: Props) {
                           <div>
                             {item?.name} - {variant.name}
                           </div>
+                        </Text>
+                        <Text className="text-gray-500">
+                          ({variant.capacity})
                         </Text>
                         <Text className="text-gray-500">
                           {`${centsToEurosWithCurrency(variant.priceInCents)}`}
@@ -387,6 +390,7 @@ export function FormTransferItem(props: Props) {
           )}
           {openForm === 'variant' && item && (
             <FormVariant
+              serviceType={item.service.serviceType}
               itemName={item.name}
               onCancel={toggleDrawer}
               itemId={item.id}

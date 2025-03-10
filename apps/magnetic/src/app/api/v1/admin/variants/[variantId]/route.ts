@@ -30,7 +30,7 @@ export async function PUT(
   { params }: { params: { variantId: string } }
 ) {
   const data: EditItemVariant = await request.json();
-  const { name, priceInCents, description, itemId } = data;
+  const { name, priceInCents, description, itemId, capacity } = data;
   try {
     const variant = await db.itemVariant.update({
       where: {
@@ -41,6 +41,7 @@ export async function PUT(
         name,
         priceInCents,
         description,
+        capacity,
       },
     });
     return NextResponse.json(variant, { status: 201 });
