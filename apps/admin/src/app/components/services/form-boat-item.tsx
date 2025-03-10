@@ -399,7 +399,7 @@ export function FormBoatItem(props: Props) {
                       Latitude
                     </Text>
                     <Input
-                      type="number"
+                      type="text"
                       className="mt-2 w-full"
                       placeholder="Enter map latitude"
                       {...register('boatAttributes.latitude')}
@@ -410,7 +410,7 @@ export function FormBoatItem(props: Props) {
                       Longitude
                     </Text>
                     <Input
-                      type="number"
+                      type="text"
                       className="mt-2 w-full"
                       placeholder="Enter map longitude"
                       {...register('boatAttributes.longitude')}
