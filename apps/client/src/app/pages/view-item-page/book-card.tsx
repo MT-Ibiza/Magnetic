@@ -37,7 +37,7 @@ function BookCard(props: Props) {
       </div>
       {variantOptions.length > 0 && (
         <>
-          <Text>Look another options</Text>
+          <Text>Select option</Text>
           <select
             className="select select-bordered w-full"
             onChange={(e) => {
