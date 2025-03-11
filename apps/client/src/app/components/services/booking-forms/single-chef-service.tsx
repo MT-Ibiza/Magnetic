@@ -122,13 +122,13 @@ export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
                 )}
               </div>
               <div>
-                <Text className="mb-2">Kids and Ages</Text>
+                <Text className="mb-2">Children & Ages</Text>
                 <Input
                   type="text"
                   className="w-full"
                   placeholder="e.g., 2 kids, ages 5 and 8"
                   {...register('kidsAges', {
-                    required: 'Kids and ages are required',
+                    required: 'Children & ages are required',
                   })}
                 />
                 {errors.kidsAges && (
@@ -138,7 +138,7 @@ export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
                 )}
               </div>
               <div>
-                <Text className="mb-2">Location (Your Villa)</Text>
+                <Text className="mb-2">Location</Text>
                 <Input
                   type="text"
                   className="w-full"
@@ -155,7 +155,7 @@ export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
               </div>
             </div>
             <div className="mt-6">
-              <Text className="mb-2">Preferences and Dietary Comments</Text>
+              <Text className="mb-2">Preferences & Dietary Requirements</Text>
               <TextArea
                 className="w-full"
                 placeholder="Any dietary preferences or special comments"
