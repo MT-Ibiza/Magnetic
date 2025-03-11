@@ -149,6 +149,10 @@ export function ProfileForm(props: Props) {
           </div>
           <div className="flex gap-5">
             <div className="flex flex-col gap-2 w-full">
+              <Text>Phone</Text>
+              <Input type="tel" placeholder="Phone" {...register('phone')} />
+            </div>
+            <div className="flex flex-col gap-2 w-full">
               <Text>Accommodation</Text>
               <Input
                 type="text"
@@ -160,10 +164,6 @@ export function ProfileForm(props: Props) {
                   Accommodation is required
                 </p>
               )}
-            </div>
-            <div className="flex flex-col gap-2 w-full">
-              <Text>Phone</Text>
-              <Input type="tel" placeholder="Phone" {...register('phone')} />
             </div>
           </div>
           <div className="flex gap-5">

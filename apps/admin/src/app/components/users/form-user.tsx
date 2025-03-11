@@ -175,6 +175,10 @@ export function FormUser(props: Props) {
           </div>
           <div className="flex gap-5">
             <div className="flex flex-col gap-2 w-full">
+              <Text>Phone</Text>
+              <Input type="tel" placeholder="Phone" {...register('phone')} />
+            </div>
+            <div className="flex flex-col gap-2 w-full">
               <Text>Accommodation</Text>
               <Input
                 type="text"
@@ -251,10 +255,6 @@ export function FormUser(props: Props) {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-5">
-            <div className="flex flex-col gap-2 w-full">
-              <Text>Phone</Text>
-              <Input type="tel" placeholder="Phone" {...register('phone')} />
-            </div>
             <div>
               <label className="flex flex-col">
                 <div className="flex gap-[10px] items-center">
