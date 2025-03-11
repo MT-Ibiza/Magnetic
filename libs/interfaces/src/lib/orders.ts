@@ -40,6 +40,11 @@ export interface OrderBookingForm {
   status: string;
   serviceId: number;
   itemId?: number;
+  modificationRequest?: string;
+  modificationResponse?: string;
+  cancellationRequest?: string;
+  cancellationResponse?: string;
+  refundedAmountInCents?: number;
 }
 
 export interface OrderForm {
