@@ -181,8 +181,8 @@ export function FormTransferItem(props: Props) {
                 <Input
                   className="mt-2 w-full"
                   type="number"
-                  min={0}
-                  max={12}
+                  min={1}
+                  max={120}
                   placeholder=""
                   {...register('transferAttributes.capacity', {
                     required: 'Capacity is required',

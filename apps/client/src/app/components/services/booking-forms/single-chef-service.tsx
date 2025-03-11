@@ -90,7 +90,7 @@ export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
               </div>
             </div>
             <Text className="mb-4 text-primary-600" size="1">
-              Require min 8 people
+              Minimum charge for 8 people
             </Text>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>

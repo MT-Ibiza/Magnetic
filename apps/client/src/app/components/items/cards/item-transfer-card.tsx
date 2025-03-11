@@ -44,9 +44,7 @@ function ItemTransferCard(props: Props) {
               {name}
             </p>
             <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
-              <span className="">
-                {transferAttributes?.capacity || 4} capacity
-              </span>
+              <span className="">{transferAttributes?.capacity || 4} pax</span>
             </div>
           </div>
           <div className="flex justify-between mt-5">
