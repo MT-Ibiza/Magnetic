@@ -7,6 +7,7 @@ import BoatBookingSummary from './summary/boat-booking-summary';
 import { useState } from 'react';
 import { BookingForm } from '@magnetic/interfaces';
 import { placeholderItemImage } from '../../constants';
+import FormModifyBooking from './form-modify-booking';
 
 interface Props {}
 
@@ -15,6 +16,7 @@ export function BookingsTable(props: Props) {
   const { isLoading, bookings, error, isError, refetch } = useBookings();
   const [openModal, setOpenModal] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState<BookingForm>();
+  const [openFormType, setOpenFormType] = useState<string>();
 
   const getStatusIndicator = (status: string) => {
     let color = 'bg-gray-400';
@@ -72,6 +74,7 @@ export function BookingsTable(props: Props) {
                     onClick={() => {
                       setSelectedBooking(booking);
                       toggleOpenModal();
+                      setOpenFormType('view-details');
                     }}
                   >
                     {`#${booking.id}`}
@@ -81,7 +84,14 @@ export function BookingsTable(props: Props) {
                   {getStatusIndicator(booking.order.status)}
                 </td>
                 <td>
-                  <Button variant="outline" radius="full">
+                  <Button
+                    variant="outline"
+                    radius="full"
+                    onClick={() => {
+                      setOpenFormType('request-changes');
+                      toggleOpenModal();
+                    }}
+                  >
                     Modify
                   </Button>
                 </td>
@@ -91,30 +101,20 @@ export function BookingsTable(props: Props) {
         </table>
       </div>
       <Modal open={openModal}>
-        <Modal.Header>Booking Details</Modal.Header>
-        <Modal.Body>
-          <div className="p-10">
-            {selectedBooking ? (
-              <BoatBookingSummary booking={selectedBooking} />
-            ) : (
-              <p>No data</p>
-            )}
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <div className="flex justify-end w-full">
-            <Button
-              radius="full"
-              className=""
-              variant="outline"
-              color="neutral"
-              type="button"
-              onClick={toggleOpenModal}
-            >
-              Cancel
-            </Button>
-          </div>
-        </Modal.Footer>
+        <>
+          {openFormType === 'view-details' && selectedBooking && (
+            <BoatBookingSummary
+              booking={selectedBooking}
+              onCancel={toggleOpenModal}
+            />
+          )}
+          {openFormType === 'request-changes' && (
+            <FormModifyBooking
+              onCancel={toggleOpenModal}
+              onSave={toggleOpenModal}
+            />
+          )}
+        </>
       </Modal>
     </>
   );
