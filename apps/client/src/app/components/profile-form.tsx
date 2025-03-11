@@ -1,20 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { useClient } from '../hooks/useClient';
-import { Button, Input } from '@magnetic/ui';
+import { Button, Input, Text } from '@magnetic/ui';
+import { toast } from 'sonner';
+
+import { User, UserBase } from '@magnetic/interfaces';
+import { useState } from 'react';
 import { editClient } from '../apis/api-client';
 import { useNavigate } from 'react-router-dom';
 
+export interface ProfileFormData {
+  firstName: string;
+  lastName: string;
+  accommodation: string;
+  arrivalDate: string;
+  departureDate: string;
+  passportNumber: string;
+  passportAttachmentUrl: string;
+  billingAddress: string;
+  email: string;
+  phone?: string;
+  password: string;
+  packageId: number;
+  companyName?: string;
+}
+
 export interface Props {
-  className?: string;
+  user: UserBase;
 }
 
 export function ProfileForm(props: Props) {
-  const { className } = props;
-  const { client, isClientLoading, isClientError, clientError } = useClient();
-  const [error, setError] = useState<any>(null);
-  const [image, setImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const { user } = props;
   const [passportFile, setPassportFile] = useState<File | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const navigate = useNavigate();
@@ -23,74 +38,66 @@ export function ProfileForm(props: Props) {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
-  } = useForm({
-    defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      date: '',
-      accommodation: '',
-      arrivalDate: '',
-      departureDate: '',
-      passportNumber: '',
-      billingAddress: '',
-      passportAttachmentUrl: '',
+  } = useForm<ProfileFormData>({
+    defaultValues: user
+      ? {
+          email: user.email,
+          phone: user.phone,
+          password: undefined,
+          packageId: user.packageId,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          accommodation: user.accommodation,
+          arrivalDate: user.arrivalDate
+            ? new Date(user.arrivalDate).toISOString().split('T')[0]
+            : '',
+          departureDate: user.departureDate
+            ? new Date(user.departureDate).toISOString().split('T')[0]
+            : '',
+          passportNumber: user.passportNumber,
+          passportAttachmentUrl: user.passportAttachmentUrl,
+          billingAddress: user.billingAddress,
+          companyName: user.companyName,
+        }
+      : undefined,
+  });
+
+  const updateClient = useMutation<UserBase, Error, FormData>({
+    mutationFn: (data) => {
+      return editClient(data);
+    },
+    onSuccess: (user) => {
+      toast.success('Account Updated!');
+      setIsSaving(false);
+      navigate(`/dashboard`);
+    },
+    onError: (error) => {
+      toast.error('The account could not be updated');
+      setIsSaving(false);
     },
   });
 
-  useEffect(() => {
-    if (client) {
-      reset({
-        firstName: client.name || '',
-        lastName: client.lastName || '',
-        email: client.email || '',
-        phone: client.phone || '',
-        // date: client.dateOfBirth || '',
-        accommodation: client.accommodation || '',
-        arrivalDate: client.arrivalDate
-          ? new Date(client.arrivalDate).toISOString().split('T')[0]
-          : '',
-        departureDate: client.departureDate
-          ? new Date(client.departureDate).toISOString().split('T')[0]
-          : '',
-        passportNumber: client.passportNumber || '',
-        billingAddress: client.billingAddress || '',
-        passportAttachmentUrl: client.passportAttachmentUrl || '',
-      });
+  const onSubmit = async (data: ProfileFormData) => {
+    const formData = new FormData();
+    formData.append('firstName', data.firstName);
+    formData.append('lastName', data.lastName);
+    formData.append('email', data.email);
+    formData.append('phone', data.phone || '');
+    formData.append('accommodation', data.accommodation);
+    formData.append('arrivalDate', new Date(data.arrivalDate).toISOString());
+    formData.append(
+      'departureDate',
+      new Date(data.departureDate).toISOString()
+    );
+    formData.append('passportNumber', data.passportNumber);
+    formData.append('billingAddress', data.billingAddress);
+    data.password && formData.append('password', data.password);
+    data.companyName && formData.append('companyName', data.companyName);
+    formData.append('packageId', String(data.packageId));
+    if (passportFile) {
+      formData.append('passportAttachmentUrl', passportFile);
     }
-  }, [client, reset]);
-
-  const onSubmit = async (data: any) => {
-    setIsSaving(true);
-    try {
-      const formData = new FormData();
-      formData.append('firstName', data.firstName);
-      formData.append('lastName', data.lastName);
-      formData.append('email', data.email);
-      formData.append('phone', data.phone);
-      formData.append('date', data.date);
-      formData.append('accommodation', data.accommodation);
-      formData.append('arrivalDate', new Date(data.arrivalDate).toISOString());
-      formData.append(
-        'departureDate',
-        new Date(data.departureDate).toISOString()
-      );
-      formData.append('passportNumber', data.passportNumber);
-      formData.append('billingAddress', data.billingAddress);
-      if (passportFile) {
-        formData.append('passportAttachmentUrl', passportFile);
-      }
-      const updatedUser = await editClient(formData);
-      setIsSaving(false);
-      navigate(`/dashboard`);
-      console.log('Updated User:', updatedUser);
-    } catch (err: any) {
-      console.error('Error updating user:', err);
-      setIsSaving(false);
-      setError(err.message || 'An error occurred while updating the profile');
-    }
+    await updateClient.mutateAsync(formData);
   };
 
   const handlePassportChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,152 +115,138 @@ export function ProfileForm(props: Props) {
     }
   };
 
-  if (isClientLoading) {
-    return <p>Loading profile...</p>;
-  }
-
-  if (isClientError) {
-    return (
-      <p className="text-red-500">
-        Error fetching profile: {clientError?.message}
-      </p>
-    );
-  }
-
   return (
-    <div className={`service-form ${className}`}>
-      <div className="container">
-        <div className="mx-auto space-y-6">
-          <form
-            className="grid grid-cols-1 gap-[50px]"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-[25px] gap-x-[40px]">
-              <div className="flex flex-col">
-                <div className="text-neutral-800 dark:text-neutral-200">
-                  First Name
-                </div>
-                <Input
-                  type="text"
-                  placeholder="Enter your first name"
-                  className="mt-1"
-                  {...register('firstName', { required: true })}
-                />
-                {errors.firstName && (
-                  <p className="text-[12px] mt-1 text-red-500">
-                    First name is required
-                  </p>
-                )}
-              </div>
-              <div className="flex flex-col">
-                <label className="text-neutral-800 dark:text-neutral-200">
-                  Last Name
-                </label>
-                <Input
-                  type="text"
-                  placeholder="Enter your last name"
-                  className="mt-1"
-                  {...register('lastName', { required: false })}
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-neutral-800 dark:text-neutral-200">
-                  Email
-                </label>
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="mt-1"
-                  {...register('email', { required: true })}
-                  readOnly
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-neutral-800 dark:text-neutral-200">
-                  Phone Number
-                </label>
-                <Input
-                  type="number"
-                  placeholder="Enter your phone number"
-                  className="mt-1"
-                  {...register('phone', { required: true })}
-                />
-                {errors.phone && (
-                  <p className="text-[12px] mt-1 text-red-500">
-                    Phone is required
-                  </p>
-                )}
-              </div>
-              <div className="flex flex-col">
-                <label className="text-neutral-800 dark:text-neutral-200">
-                  Billing Address
-                </label>
-                <Input
-                  type="text"
-                  placeholder="Enter billing address"
-                  className="mt-1"
-                  {...register('billingAddress', { required: true })}
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-neutral-800 dark:text-neutral-200">
-                  Accommodation
-                </label>
-                <Input
-                  type="text"
-                  placeholder="Enter accommodation details"
-                  className="mt-1"
-                  {...register('accommodation', { required: true })}
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-neutral-800 dark:text-neutral-200">
-                  Arrival Date
-                </label>
-                <Input
-                  type="date"
-                  placeholder="Enter arrival date"
-                  className="mt-1"
-                  {...register('arrivalDate', { required: true })}
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-neutral-800 dark:text-neutral-200">
-                  Departure Date
-                </label>
-                <Input
-                  type="date"
-                  placeholder="Enter departure date"
-                  className="mt-1"
-                  {...register('departureDate', { required: true })}
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-neutral-800 dark:text-neutral-200">
-                  Passport Number
-                </label>
-                <Input
-                  type="text"
-                  placeholder="Enter your passport number"
-                  className="mt-1"
-                  {...register('passportNumber', { required: true })}
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-neutral-800 dark:text-neutral-200">
-                  Upload Passport
-                </label>
-                <p className="text-sm text-neutral-500 mt-2">
-                  PDF and images are allow, maximum file size: 5MB
+    <div className="bg-base-100">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-[20px]">
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-2 w-full">
+              <Text>First Name</Text>
+              <Input
+                type="text"
+                placeholder="First Name"
+                {...register('firstName', { required: true })}
+              />
+              {errors.firstName && (
+                <p className="text-[12px] text-red-500">
+                  First Name is required
                 </p>
+              )}
+            </div>
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Last Name</Text>
+              <Input
+                type="text"
+                placeholder="Last Name"
+                {...register('lastName', { required: true })}
+              />
+              {errors.lastName && (
+                <p className="text-[12px] text-red-500">
+                  Last Name is required
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Accommodation</Text>
+              <Input
+                type="text"
+                placeholder="Accommodation"
+                {...register('accommodation', { required: true })}
+              />
+              {errors.accommodation && (
+                <p className="text-[12px] text-red-500">
+                  Accommodation is required
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Phone</Text>
+              <Input type="tel" placeholder="Phone" {...register('phone')} />
+            </div>
+          </div>
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Departure Date</Text>
+              <Input
+                type="date"
+                {...register('departureDate', { required: true })}
+              />
+              {errors.departureDate && (
+                <p className="text-[12px] text-red-500">
+                  Departure Date is required
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Arrival Date</Text>
+              <Input
+                type="date"
+                {...register('arrivalDate', { required: true })}
+              />
+              {errors.arrivalDate && (
+                <p className="text-[12px] text-red-500">
+                  Arrival Date is required
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Company Name</Text>
+              <Input type="text" {...register('companyName')} />
+            </div>
+
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Passport/Company Number</Text>
+              <Input
+                type="text"
+                placeholder="Passport Number"
+                {...register('passportNumber')}
+              />
+            </div>
+          </div>
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Billing Address</Text>
+              <Input
+                type="text"
+                placeholder="Billing Address"
+                {...register('billingAddress')}
+              />
+            </div>
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Email</Text>
+              <Input
+                type="email"
+                placeholder="Email"
+                {...register('email', { required: true })}
+              />
+              {errors.email && (
+                <p className="text-[12px] text-red-500">Email is required</p>
+              )}
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-5">
+            <div>
+              <label className="flex flex-col">
+                <div className="flex gap-[10px] items-center">
+                  <span className="text-neutral-800 dark:text-neutral-200">
+                    Upload Passport
+                  </span>
+                  <p className="text-sm text-neutral-500">
+                    (Maximum file size: 5MB)
+                  </p>
+                </div>
                 <div className="mt-3 cursor-pointer p-4 border border-neutral-300 rounded-lg shadow-sm flex justify-between gap-4">
-                  {client?.passportAttachmentUrl && !passportFile && (
+                  {user?.passportAttachmentUrl && !passportFile && (
                     <div className="flex items-center gap-3">
-                      {client.passportAttachmentUrl.endsWith('.pdf') ? (
+                      {user.passportAttachmentUrl.endsWith('.pdf') ? (
                         <div className="flex items-center gap-2 border border-neutral-300 rounded-lg p-3 bg-gray-50 shadow-sm">
                           <i className="fas fa-file-pdf text-red-500"></i>
                           <a
-                            href={client.passportAttachmentUrl}
+                            href={user.passportAttachmentUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-500 underline text-sm"
@@ -264,7 +257,7 @@ export function ProfileForm(props: Props) {
                       ) : (
                         <div className="relative">
                           <img
-                            src={client.passportAttachmentUrl}
+                            src={user.passportAttachmentUrl}
                             alt="Uploaded Passport"
                             className="object-cover w-[100px] h-[100px] rounded-lg shadow-sm border"
                           />
@@ -311,20 +304,28 @@ export function ProfileForm(props: Props) {
                         document.getElementById('passport-file')?.click()
                       }
                     >
-                      Select Passport Document
+                      Upload New Passport
                     </Button>
                   </div>
                 </div>
-              </div>
+              </label>
             </div>
-            <div className="flex justify-end">
-              <Button type="submit" loading={isSaving} loadingText="Saving...">
-                Update Profile
-              </Button>
-            </div>
-          </form>
+          </div>
         </div>
-      </div>
+        <div className="flex gap-[10px] justify-end pt-[80px]">
+          <Button
+            variant="outline"
+            href={'/clients'}
+            type="submit"
+            color="neutral"
+          >
+            Cancel
+          </Button>
+          <Button loading={isSaving} type="submit">
+            Update Account
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }

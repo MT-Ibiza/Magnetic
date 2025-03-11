@@ -16,6 +16,7 @@ export async function GET(request: Request) {
       where: { id: userId },
       select: {
         name: true,
+        firstName: true,
         lastName: true,
         email: true,
         phone: true,
@@ -25,6 +26,7 @@ export async function GET(request: Request) {
         passportNumber: true,
         billingAddress: true,
         passportAttachmentUrl: true,
+        companyName: true,
       },
     });
 
@@ -54,7 +56,7 @@ export async function PUT(request: Request) {
     }
     const userId = decodedToken.id;
     const formData = await request.formData();
-    const name = formData.get('firstName') as string;
+    const firstName = formData.get('firstName') as string;
     const lastName = formData.get('lastName') as string;
     const email = formData.get('email') as string;
     const phone = formData.get('phone') as string;
@@ -64,6 +66,7 @@ export async function PUT(request: Request) {
     const passportNumber = formData.get('passportNumber') as string;
     const billingAddress = formData.get('billingAddress') as string;
     const passportFile = formData.get('passportAttachmentUrl') as File;
+    const companyName = formData.get('companyName') as string | undefined;
 
     let passportAttachmentUrl = null;
     if (passportFile) {
@@ -74,7 +77,7 @@ export async function PUT(request: Request) {
       passportAttachmentUrl = uploadedFiles[0];
     }
 
-    if (!name || !lastName || !email) {
+    if (!firstName || !lastName || !email) {
       return NextResponse.json(
         { message: 'Missing required fields: firstName, lastName, or email' },
         { status: 400 }
@@ -84,7 +87,8 @@ export async function PUT(request: Request) {
     const updatedUser = await db.user.update({
       where: { id: userId },
       data: {
-        name,
+        name: `${firstName} ${lastName}`,
+        firstName,
         lastName,
         email,
         phone,
@@ -94,6 +98,7 @@ export async function PUT(request: Request) {
         passportNumber,
         billingAddress,
         passportAttachmentUrl,
+        companyName,
       },
     });
     return NextResponse.json(updatedUser);
