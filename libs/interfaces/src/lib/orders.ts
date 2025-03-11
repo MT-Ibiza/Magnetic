@@ -37,6 +37,7 @@ export interface OrderItem {
 
 export interface OrderBookingForm {
   data: any;
+  status: string;
   serviceId: number;
   itemId?: number;
 }
