@@ -41,6 +41,8 @@ export const URL_EDIT_FORM_ORDER = (id: number) =>
 
 //Bookings
 export const URL_GET_BOOKINGS = `${API_URL}/bookings`;
+export const URL_REQUEST_CHANGES_BOOKINGS = (id: number) =>
+  `${API_URL}/bookings/${id}/modify`;
 
 //Boats
 export const URL_SEARCH_BOATS = (query: string) =>

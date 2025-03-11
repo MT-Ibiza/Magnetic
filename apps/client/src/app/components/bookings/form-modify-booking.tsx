@@ -1,16 +1,40 @@
 import React, { useState } from 'react';
 import Modal from '../modal';
 import { Button, TextArea, Text } from '@magnetic/ui';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { requestChangeBooking } from '../../apis/api-bookings';
 
 interface Props {
   onCancel: () => void;
   onSave: () => void;
+  bookingId: number;
 }
 
 function FormModifyBooking(props: Props) {
-  const { onCancel, onSave } = props;
+  const { onCancel, onSave, bookingId } = props;
   const [text, setText] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+
+  const requestChanges = useMutation({
+    mutationFn: (bookingId: number) => {
+      setIsSaving(true);
+      return requestChangeBooking(bookingId, text);
+    },
+    onSuccess: () => {
+      setIsSaving(false);
+      toast.success(`Request sended!`);
+      onSave();
+    },
+    onError: () => {
+      setIsSaving(false);
+      toast.success(`Request couldn't be sended!`);
+    },
+  });
+
+  async function handleSave() {
+    await requestChanges.mutateAsync(bookingId);
+  }
 
   return (
     <div>
@@ -59,6 +83,7 @@ function FormModifyBooking(props: Props) {
             loading={isSaving}
             type="submit"
             loadingText="Saving..."
+            onClick={handleSave}
           >
             Send Request
           </Button>

@@ -88,6 +88,7 @@ export function BookingsTable(props: Props) {
                     variant="outline"
                     radius="full"
                     onClick={() => {
+                      setSelectedBooking(booking);
                       setOpenFormType('request-changes');
                       toggleOpenModal();
                     }}
@@ -108,8 +109,9 @@ export function BookingsTable(props: Props) {
               onCancel={toggleOpenModal}
             />
           )}
-          {openFormType === 'request-changes' && (
+          {openFormType === 'request-changes' && selectedBooking && (
             <FormModifyBooking
+              bookingId={selectedBooking.id}
               onCancel={toggleOpenModal}
               onSave={toggleOpenModal}
             />

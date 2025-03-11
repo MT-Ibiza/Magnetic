@@ -11,12 +11,17 @@ export async function POST(
     if (!decodedToken) {
       return NextResponse.json({ message: 'Invalid Token' }, { status: 403 });
     }
+
+    const body = await request.json();
+    const { message } = body;
+
     const booking = await db.orderBookingForm.update({
       where: {
         id: Number(params.id),
       },
       data: {
         status: 'modification_requested',
+        cancellationRequest: message,
       },
     });
 
