@@ -99,6 +99,7 @@ export async function POST(request: Request) {
                 return {
                   formData: form.data as any,
                   serviceId: form.serviceId,
+                  status: 'accepted',
                 };
               }),
             },

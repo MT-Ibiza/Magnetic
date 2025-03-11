@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { BookingForm } from '@magnetic/interfaces';
 import { placeholderItemImage } from '../../constants';
 import FormModifyBooking from './form-modify-booking';
+import ViewRequest from './view-request';
 
 interface Props {}
 
@@ -20,10 +21,11 @@ export function BookingsTable(props: Props) {
 
   const getStatusIndicator = (status: string) => {
     let color = 'bg-gray-400';
-    if (status === 'paid' || status === 'confirmed') color = 'bg-green-500';
+    if (status === 'accepted' || status === 'completed') color = 'bg-green-500';
     else if (status === 'cancelled') color = 'bg-red-500';
-    else if (status === 'pending') color = 'bg-orange-500';
-
+    else if (status === 'pending' || status === 'modification_requested')
+      color = 'bg-orange-500';
+    console.log(status);
     return <span className={`p-[7px] w-3 h-3 rounded-full ${color}`} />;
   };
 
@@ -81,20 +83,35 @@ export function BookingsTable(props: Props) {
                   </p>
                 </td>
                 <td className="ml-[25px] flex items-center">
-                  {getStatusIndicator(booking.order.status)}
+                  {getStatusIndicator(booking.status)}
                 </td>
                 <td>
-                  <Button
-                    variant="outline"
-                    radius="full"
-                    onClick={() => {
-                      setSelectedBooking(booking);
-                      setOpenFormType('request-changes');
-                      toggleOpenModal();
-                    }}
-                  >
-                    Modify
-                  </Button>
+                  {booking.status === 'modification_requested' ? (
+                    <Button
+                      variant="outline"
+                      radius="full"
+                      onClick={() => {
+                        console.log(booking);
+                        setSelectedBooking(booking);
+                        setOpenFormType('view-message');
+                        toggleOpenModal();
+                      }}
+                    >
+                      View Message
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      radius="full"
+                      onClick={() => {
+                        setSelectedBooking(booking);
+                        setOpenFormType('request-changes');
+                        toggleOpenModal();
+                      }}
+                    >
+                      Modify
+                    </Button>
+                  )}
                 </td>
               </tr>
             ))}
@@ -114,6 +131,12 @@ export function BookingsTable(props: Props) {
               bookingId={selectedBooking.id}
               onCancel={toggleOpenModal}
               onSave={toggleOpenModal}
+            />
+          )}
+          {openFormType === 'view-message' && selectedBooking && (
+            <ViewRequest
+              onCancel={toggleOpenModal}
+              message={selectedBooking.modificationRequest || ''}
             />
           )}
         </>

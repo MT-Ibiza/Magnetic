@@ -67,6 +67,12 @@ export interface BookingForm {
   serviceId: number;
   createdAt: Date;
   updatedAt: Date;
+  status: string;
+  modificationRequest?: string;
+  modificationResponse?: string;
+  cancellationRequest?: string;
+  cancellationResponse?: string;
+  refundedAmountInCents?: number;
   order: {
     id: number;
     status: string;

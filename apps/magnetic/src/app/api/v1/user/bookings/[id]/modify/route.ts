@@ -21,7 +21,7 @@ export async function POST(
       },
       data: {
         status: 'modification_requested',
-        cancellationRequest: message,
+        modificationRequest: message,
       },
     });
 
