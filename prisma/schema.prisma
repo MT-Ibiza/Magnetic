@@ -33,6 +33,7 @@ model User {
   phone                 String?
   countryCodePhone      String?
   countryNamePhone      String?
+  companyName           String?
   active                Boolean   @default(true)
   role                  Role      @default(client)
   packageId             Int?

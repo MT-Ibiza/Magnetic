@@ -63,7 +63,6 @@ export const URL_GET_USERS = `${API_URL}/users`;
 export const URL_GET_USER = (id: number) => `${API_URL}/users/${id}`;
 export const URL_GET_BOOKINGS_USER = (id: number) =>
   `${API_URL}/users/${id}/bookings`;
-export const URL_UPDATE_USER = (id: number) => `${API_URL}/users/${id}`;
 export const URL_UPDATE_CLIENT = (id: number) =>
   `${API_URL}/users/client/${id}`;
 export const URL_UPDATE_ADMIN = (id: number) => `${API_URL}/users/admin/${id}`;

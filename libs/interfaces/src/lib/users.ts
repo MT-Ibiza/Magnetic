@@ -30,6 +30,7 @@ export interface UserBase {
   countryNamePhone?: string;
   package?: Package;
   packageId?: number;
+  companyName?: string;
 }
 
 export interface User extends UserBase {

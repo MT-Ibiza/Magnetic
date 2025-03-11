@@ -22,6 +22,7 @@ export interface FormUserData {
   phone?: string;
   password: string;
   packageId: number;
+  companyName?: string;
 }
 
 export interface Props {
@@ -58,6 +59,7 @@ export function FormUser(props: Props) {
           passportNumber: user.passportNumber,
           passportAttachmentUrl: user.passportAttachmentUrl,
           billingAddress: user.billingAddress,
+          companyName: user.companyName,
         }
       : undefined,
   });
@@ -112,11 +114,11 @@ export function FormUser(props: Props) {
     formData.append('passportNumber', data.passportNumber);
     formData.append('billingAddress', data.billingAddress);
     data.password && formData.append('password', data.password);
+    data.companyName && formData.append('companyName', data.companyName);
+    formData.append('packageId', String(data.packageId));
     if (passportFile) {
       formData.append('passportAttachmentUrl', passportFile);
     }
-    formData.append('packageId', String(data.packageId));
-
     if (editMode) {
       await updateClient.mutateAsync(formData);
     } else {
@@ -148,12 +150,12 @@ export function FormUser(props: Props) {
               <Text>First Name</Text>
               <Input
                 type="text"
-                placeholder="First Name/Company Name"
+                placeholder="First Name"
                 {...register('firstName', { required: true })}
               />
               {errors.firstName && (
                 <p className="text-[12px] text-red-500">
-                  First Name/Company Name is required
+                  First Name is required
                 </p>
               )}
             </div>
@@ -185,6 +187,20 @@ export function FormUser(props: Props) {
                 </p>
               )}
             </div>
+          </div>
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Departure Date</Text>
+              <Input
+                type="date"
+                {...register('departureDate', { required: true })}
+              />
+              {errors.departureDate && (
+                <p className="text-[12px] text-red-500">
+                  Departure Date is required
+                </p>
+              )}
+            </div>
             <div className="flex flex-col gap-2 w-full">
               <Text>Arrival Date</Text>
               <Input
@@ -200,17 +216,10 @@ export function FormUser(props: Props) {
           </div>
           <div className="flex gap-5">
             <div className="flex flex-col gap-2 w-full">
-              <Text>Departure Date</Text>
-              <Input
-                type="date"
-                {...register('departureDate', { required: true })}
-              />
-              {errors.departureDate && (
-                <p className="text-[12px] text-red-500">
-                  Departure Date is required
-                </p>
-              )}
+              <Text>Company Name</Text>
+              <Input type="text" {...register('companyName')} />
             </div>
+
             <div className="flex flex-col gap-2 w-full">
               <Text>Passport/Company Number</Text>
               <Input

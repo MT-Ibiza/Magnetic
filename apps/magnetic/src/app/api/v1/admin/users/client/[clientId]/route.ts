@@ -36,6 +36,7 @@ export async function PUT(
       passportNumber: extractField('passportNumber'),
       billingAddress: extractField('billingAddress'),
       packageId: extractField('packageId'),
+      companyName: extractField('companyName'),
       passportAttachmentUrl: formData.get(
         'passportAttachmentUrl'
       ) as File | null,
@@ -51,6 +52,7 @@ export async function PUT(
       passportNumber: fields.passportNumber,
       billingAddress: fields.billingAddress,
       packageId: fields.packageId ? Number(fields.packageId) : null,
+      companyName: fields.companyName,
     };
 
     // if (fields.password) {

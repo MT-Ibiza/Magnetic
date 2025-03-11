@@ -14,7 +14,6 @@ import {
   URL_REMOVE_ADMIN,
   URL_UPDATE_ADMIN,
   URL_UPDATE_CLIENT,
-  URL_UPDATE_USER,
 } from './api-constants';
 
 export async function getUsers(
@@ -68,20 +67,6 @@ export async function newAdmin(params: FormData): Promise<User> {
 export async function newClient(params: FormData): Promise<User> {
   const response = await fetch(URL_NEW_CLIENT, {
     method: 'POST',
-    body: params,
-  });
-  const dataJson = await response.json();
-  if (!response.ok) throw new Error(dataJson.message);
-  return dataJson;
-}
-
-export async function editUser(
-  userId: number,
-  params: FormData
-): Promise<User> {
-  const url = URL_UPDATE_USER(userId);
-  const response = await fetch(url, {
-    method: 'PUT',
     body: params,
   });
   const dataJson = await response.json();
