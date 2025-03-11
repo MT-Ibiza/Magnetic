@@ -126,7 +126,7 @@ export async function PUT(request: NextRequest) {
       },
       data: {
         name: boat,
-        description: included,
+        // description: included,
         boatAttributes: {
           update: {
             crew,
@@ -140,7 +140,7 @@ export async function PUT(request: NextRequest) {
             airtableId: id,
             lengthInMeters,
             sizeInFeet,
-            description: included,
+            // description: included,
             latitude,
             longitude,
           },
