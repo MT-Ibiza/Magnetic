@@ -28,7 +28,7 @@ export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
   const { getCurrentUser } = useAuth();
   const { currentSelectItem } = useApp();
   const user = getCurrentUser();
-  const [amount, setAmount] = useState(formData?.numberOfPeople || 1);
+  const [amount, setAmount] = useState(formData?.numberOfPeople || 8);
 
   const {
     register,
@@ -56,13 +56,13 @@ export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
     <div className="">
       <Modal.Header onClose={onCancel}>
         <div className="flex justify-between">
-          <h2 className="text-2xl font-bold">Single Chef Service</h2>
+          <h2 className="text-2xl font-bold">Menu Service</h2>
         </div>
       </Modal.Header>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Modal.Body>
           <div className="p-10">
-            <Text className="mb-2">Select Quantity</Text>
+            <Text className="mb-2">Number of People</Text>
             <div className="product flex justify-between items-center border border-gray-300 p-4 mb-3 rounded-md">
               <div className="flex gap-3 items-center">
                 <img
@@ -82,13 +82,16 @@ export function SingleChefServiceForm({ onSubmit, formData, onCancel }: Props) {
                     setAmount(amount + 1);
                   }}
                   onClickRemove={() => {
-                    if (amount >= 1) {
+                    if (amount > 8) {
                       setAmount(amount - 1);
                     }
                   }}
                 />
               </div>
             </div>
+            <Text className="mb-4 text-primary-600" size="1">
+              Require min 8 people
+            </Text>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <Text className="mb-2">Date</Text>
