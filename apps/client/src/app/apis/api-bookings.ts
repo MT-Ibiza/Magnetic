@@ -1,9 +1,10 @@
+import { BookingUser } from '@magnetic/interfaces';
 import {
   URL_GET_BOOKINGS,
   URL_REQUEST_CHANGES_BOOKINGS,
 } from './api-constants';
 
-export async function getBookings(): Promise<any> {
+export async function getBookings(): Promise<BookingUser[]> {
   try {
     const accessToken = localStorage.getItem('magnetic_auth');
     if (!accessToken) {

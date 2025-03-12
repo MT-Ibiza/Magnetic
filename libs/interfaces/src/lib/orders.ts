@@ -67,6 +67,7 @@ export interface BookingForm {
   serviceId: number;
   createdAt: Date;
   updatedAt: Date;
+  date: Date;
   status: string;
   modificationRequest?: string;
   modificationResponse?: string;
@@ -87,4 +88,9 @@ export interface BookingForm {
     id: number;
     imageUrl: string;
   };
+}
+
+export interface BookingUser {
+  booking: BookingForm;
+  orderItem: OrderItem;
 }

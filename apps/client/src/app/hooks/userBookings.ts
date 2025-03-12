@@ -1,28 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
-import { getBookings } from '../apis/api-bookings'; 
-import { BookingForm } from '@magnetic/interfaces';
+import { getBookings } from '../apis/api-bookings';
+import { BookingUser } from '@magnetic/interfaces';
 
 export const useBookings = () => {
-  const { isLoading, isError, data, error, refetch, isSuccess } = useQuery<BookingForm[]>({
-    queryKey: [`bookings`],
+  const { isLoading, isError, data, error, refetch, isSuccess } = useQuery<
+    BookingUser[]
+  >({
+    queryKey: [`user-bookings`],
     queryFn: async () => {
       return getBookings();
     },
-    enabled: true, 
+    enabled: true,
   });
 
   return {
     isLoading,
     isError,
     isSuccess,
-    bookings: data,
-    bookingsOptions:
-    data?.map((booking) => {
-      return {
-        label: `Booking #${booking.id}`,
-        value: booking.id,
-      };
-    }) || [],
+    bookings: data || [],
     error,
     refetch,
   };

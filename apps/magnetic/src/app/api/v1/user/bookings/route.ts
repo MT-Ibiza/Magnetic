@@ -10,41 +10,43 @@ export async function GET(request: Request) {
     }
     const userId = decodedToken.id;
 
-    const bookings = await db.orderBookingForm.findMany({
+    const orders = await db.order.findMany({
       where: {
-        order: {
-          userId: userId,
-        },
+        userId: userId,
       },
-      include: {
-        order: {
+      select: {
+        forms: true,
+        items: {
           select: {
             id: true,
-            status: true,
-            totalInCents: true,
-            user: {
+            priceInCents: true,
+            quantity: true,
+            item: {
               select: {
                 name: true,
+                images: {
+                  select: {
+                    url: true,
+                  },
+                },
               },
             },
           },
         },
-        service: {
-          select: {
-            name: true,
-            serviceType: true,
-            id: true,
-            items: true,
-            imageUrl: true,
-          },
-        },
-      },
-      orderBy: {
-        createdAt: 'desc',
       },
     });
 
-    return NextResponse.json(bookings);
+    const transformedOrders = orders
+      .map((order) => {
+        const itemsMap = new Map(order.items.map((i) => [i.id, i]));
+        return order.forms.map((form) => ({
+          booking: form,
+          orderItem: itemsMap.get(form.id) || null,
+        }));
+      })
+      .flat();
+
+    return NextResponse.json(transformedOrders);
   } catch (error: any) {
     return NextResponse.json(
       {
