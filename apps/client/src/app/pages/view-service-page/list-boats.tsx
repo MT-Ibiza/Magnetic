@@ -4,12 +4,9 @@ import { useQuery } from '@tanstack/react-query';
 import { searchBoats } from '../../apis/api-boats';
 import { useState } from 'react';
 import ItemBoatCard from '../../components/items/cards/item-boat-card';
-import BoatCharterBookingForm from '../../components/services/booking-forms/boat-charter-form';
 import { useApp } from '../../hooks/useApp';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
-import { Alert } from '@magnetic/ui';
-import Modal from '../../components/modal';
 import { getNumberMonth } from '../../utils';
 
 interface Props {}

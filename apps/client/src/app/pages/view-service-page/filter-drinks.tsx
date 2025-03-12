@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 interface Props {
   onChangeFilters: (filters: any) => void;
+  categories: { name: string; id: number }[];
 }
 
 function FilterDrinks(props: Props) {
@@ -39,7 +40,7 @@ function FilterDrinks(props: Props) {
             value={searchParams.category}
             onChange={handleSearchChange}
           />
-          <SelectCategory />
+          <SelectCategory categoriesAvailable={[]} />
         </form>
       </div>
     </>

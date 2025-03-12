@@ -99,11 +99,13 @@ const defaultCategories = [
 export interface SelectCategoryProps {
   onChange?: (categories: any) => void;
   fieldClassName?: string;
+  categoriesAvailable: { name: string }[];
 }
 
 export const SelectCategory: FC<SelectCategoryProps> = ({
   onChange,
   fieldClassName = '[ nc-hero-field-padding ]',
+  categoriesAvailable,
 }) => {
   const [categories, setCategories] = useState(defaultCategories);
 

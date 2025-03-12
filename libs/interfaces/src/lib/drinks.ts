@@ -3,3 +3,8 @@ export interface DrinkBase {
   units: number;
   itemId: number;
 }
+
+export interface DrinkSearchAttributes {
+  categoriesIds?: string[];
+  name?: string;
+}

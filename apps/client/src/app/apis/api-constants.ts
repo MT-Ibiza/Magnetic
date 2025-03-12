@@ -58,3 +58,7 @@ export const URL_REQUEST_CALL = `${API_URL}/call`;
 export const URL_REQUEST_PAYMENT = `${API_URL}/payment`;
 export const URL_REQUEST_PAYMENT_SUCCESS = `${API_URL}/payment/success`;
 export const URL_REQUEST_PAYMENT_FAILURE = `${API_URL}/payment/failure`;
+
+//Drinks
+export const URL_SEARCH_DRINKS = (query: string) =>
+  `${API_URL}/drinks/search?${query}`;
