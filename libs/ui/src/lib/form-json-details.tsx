@@ -36,6 +36,8 @@ export function FormJsonDetails(props: Props) {
     dropOffLocation: 'Drop Off Location',
     comments: 'Comments',
     seabob: 'Seabod',
+    childSeats: 'Child Seats',
+    kidsAges: 'kids & Ages',
   };
 
   if (keys.length === 0) {
@@ -52,7 +54,9 @@ export function FormJsonDetails(props: Props) {
               {moment(formData[key]).utc().format('D MMM YYYY')}
             </Text>
           ) : (
-            <Text className="text-gray-500">{formData[key] || '-'}</Text>
+            <Text className="text-gray-500">
+              {formData[key].toString() || '-'}
+            </Text>
           )}
         </div>
       ))}
