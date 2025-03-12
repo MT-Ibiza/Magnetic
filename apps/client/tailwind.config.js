@@ -29,7 +29,7 @@ module.exports = {
       center: true,
       padding: {
         DEFAULT: "1rem",
-        "2xl": "128px",
+        "2xl": "100px",
       },
     },
     fontFamily: {

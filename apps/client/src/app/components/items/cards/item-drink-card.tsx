@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Item, Service } from '@magnetic/interfaces';
-import { GallerySlider, Text } from '@magnetic/ui';
+import { GallerySlider, Text, Tooltip } from '@magnetic/ui';
 import {
   centsToEurosWithCurrency,
   sortImagesByPosition,
@@ -28,7 +28,7 @@ function ItemDrinkCard({
 
   return (
     <div
-      className={`nc-CarCard group relative border border-neutral-200 dark:border-neutral-700 rounded-3xl overflow-hidden hover:shadow-xl transition-shadow bg-white dark:bg-neutral-900 will-change-transform`}
+      className={`nc-CarCard min-h-[340px] max-h-[370px] group relative border border-neutral-200 dark:border-neutral-700 rounded-3xl overflow-hidden hover:shadow-xl transition-shadow bg-white dark:bg-neutral-900 will-change-transform`}
     >
       <div className="relative w-full rounded-2xl overflow-hidden">
         <GallerySlider
@@ -36,11 +36,13 @@ function ItemDrinkCard({
           classImage="h-[200px]"
           uniqueID={`ExperiencesCard_${item.id}`}
         />
-        <div className="p-5 space-y-4">
+        <div className="p-5 flex flex-col justify-end space-y-4">
           <div className="space-y-2 flex flex-col">
-            <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
-              {name}
-            </p>
+            <Tooltip content={name}>
+              <p className="line-clamp-2 capitalize text-lg font-semibold text-primary cursor-pointer">
+                {name}
+              </p>
+            </Tooltip>
             <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
               {drinkAttributes?.size && (
                 <>
@@ -51,17 +53,17 @@ function ItemDrinkCard({
               <span>{drinkAttributes?.units}</span>
             </div>
           </div>
-          <div className="flex justify-between mt-5">
-            <Text className="text-base font-semibold">
-              {centsToEurosWithCurrency(priceInCents)}
-            </Text>
-            <ItemCounterButtons
-              currentAmount={cartItemAmount}
-              onClickAdd={onClickAdd}
-              onClickRemove={onClickRemove}
-            />
-          </div>
         </div>
+      </div>
+      <div className="absolute bottom-5 left-0 right-0 flex justify-between px-5">
+        <Text className="text-base font-semibold">
+          {centsToEurosWithCurrency(priceInCents)}
+        </Text>
+        <ItemCounterButtons
+          currentAmount={cartItemAmount}
+          onClickAdd={onClickAdd}
+          onClickRemove={onClickRemove}
+        />
       </div>
     </div>
   );
