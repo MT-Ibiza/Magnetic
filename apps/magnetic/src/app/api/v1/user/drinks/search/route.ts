@@ -33,7 +33,10 @@ export async function GET(request: NextRequest) {
 
     if (drinkService.length) {
       const items = await db.item.findMany({
-        where: { ...filters, ...{ serviceId: drinkService[0].id } },
+        where: {
+          ...filters,
+          ...{ serviceId: drinkService[0].id, published: true },
+        },
         select: {
           id: true,
           name: true,
