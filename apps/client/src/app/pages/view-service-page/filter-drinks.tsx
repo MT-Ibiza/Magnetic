@@ -17,7 +17,7 @@ function FilterDrinks(props: Props) {
     const updatedFilters = { ...searchParams, [name]: value };
     setSearchParams(updatedFilters);
     onChangeFilters(updatedFilters);
-    console.log(searchParams)
+    console.log(searchParams);
   };
 
   return (
@@ -26,9 +26,9 @@ function FilterDrinks(props: Props) {
         <form className="lg:grid grid-cols-2 gap-x-[30px]">
           <CustomInput
             allowTyping
-            placeHolder="Search drink category"
+            placeHolder="Search a drink"
             name="category"
-            desc="Select or type a drink category"
+            desc="Type a drink"
             options={[
               { value: 'cocktails', label: 'Cocktail' },
               { value: 'beer', label: 'Beer' },
