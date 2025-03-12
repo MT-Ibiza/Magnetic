@@ -1,4 +1,5 @@
 import { Text } from '@magnetic/ui';
+import moment from 'moment';
 
 interface Props {
   formData: any;
@@ -8,6 +9,10 @@ export function FormJsonDetails(props: Props) {
   const { formData } = props;
   const keys = Object.keys(formData);
 
+  const excludeFields = ['serviceId'];
+
+  const fields = keys.filter((key) => !excludeFields.includes(key));
+
   const dictionary = {
     date: 'Date',
     time: 'Time',
@@ -15,7 +20,7 @@ export function FormJsonDetails(props: Props) {
     extras: 'Extras',
     lunchReservation: 'Lunch Booking',
     service: 'Service',
-    kidsAges: 'kids Ages',
+    childrenAges: 'Children & Ages',
     location: 'Location',
     startTime: 'Start Time',
     numberOfPeople: 'Number Of People',
@@ -29,6 +34,8 @@ export function FormJsonDetails(props: Props) {
     luggageAmount: 'Luggage Amount',
     pickUpLocation: 'PickUp Location',
     dropOffLocation: 'Drop Off Location',
+    comments: 'Comments',
+    seabob: 'Seabod',
   };
 
   if (keys.length === 0) {
@@ -37,12 +44,16 @@ export function FormJsonDetails(props: Props) {
 
   return (
     <div className="flex flex-col gap-3">
-      {keys.map((key) => (
-        <div className="flex gap-2">
-          <h1 className="font-medium">{dictionary[key as 'date'] || key}:</h1>
-          <div className="text-neutral-6000 dark:text-neutral-300">
-            {formData[key]}
-          </div>
+      {fields.map((key, index) => (
+        <div className="flex flex-col gap-1" key={index}>
+          <h1 className="font-medium">{dictionary[key as 'date'] || key}</h1>
+          {key === 'date' ? (
+            <Text className="text-gray-500">
+              {moment(formData[key]).utc().format('D MMM YYYY')}
+            </Text>
+          ) : (
+            <Text className="text-gray-500">{formData[key] || '-'}</Text>
+          )}
         </div>
       ))}
     </div>

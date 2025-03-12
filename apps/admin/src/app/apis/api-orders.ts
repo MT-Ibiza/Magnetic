@@ -65,7 +65,7 @@ export async function getBookingsOrders(): Promise<BookingUser[]> {
   }
 }
 
-export async function getBooking(id: number): Promise<BookingForm> {
+export async function getBooking(id: number): Promise<BookingUser> {
   const url = URL_GET_BOOKING(id);
   const response = await fetch(url, {
     method: 'GET',
