@@ -65,7 +65,10 @@ export async function POST(request: Request) {
           return item.formData !== null;
         })
         .map((item) => {
-          return { data: item.formData, serviceId: item.item.serviceId };
+          return {
+            data: item.formData,
+            serviceId: item.item.serviceId,
+          };
         });
 
       const boatForms: { data: BoatCharterFormData; item: Item }[] = items

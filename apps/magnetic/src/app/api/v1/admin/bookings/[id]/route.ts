@@ -11,7 +11,15 @@ export async function GET(
         id: Number(params.id),
       },
     });
-    return NextResponse.json(booking);
+
+    const orderItem = booking?.id
+      ? await db.orderItem.findUnique({
+          where: {
+            id: booking?.id,
+          },
+        })
+      : null;
+    return NextResponse.json({ booking, orderItem });
   } catch (error: any) {
     return NextResponse.json(
       {
