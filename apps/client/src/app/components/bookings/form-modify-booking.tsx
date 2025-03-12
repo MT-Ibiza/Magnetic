@@ -54,7 +54,7 @@ function FormModifyBooking(props: Props) {
             }}
           />
           <Text className="mt-3">
-            Before proceeding, please review our{' '}
+            Before submitting, please review our{' '}
             <a
               href="/terms-conditions"
               className="underline text-primary-600"
@@ -62,7 +62,7 @@ function FormModifyBooking(props: Props) {
             >
               Terms and Conditions
             </a>{' '}
-            regarding modifications and cancellations.
+            for modification and cancellation policies.
           </Text>
         </div>
       </Modal.Body>

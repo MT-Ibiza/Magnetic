@@ -1,15 +1,13 @@
-import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { Button, Text } from '@magnetic/ui';
 import { useBookings } from '../../hooks/userBookings';
-import Modal from '../modal';
-import BoatBookingSummary from './summary/boat-booking-summary';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BookingForm } from '@magnetic/interfaces';
 import { placeholderItemImage } from '../../constants';
 import FormModifyBooking from './form-modify-booking';
 import ViewRequest from './view-request';
-
+import Modal from '../modal';
+import BoatBookingSummary from './summary/boat-booking-summary';
 interface Props {}
 
 export function BookingsTable(props: Props) {
@@ -149,47 +147,4 @@ export function BookingsTable(props: Props) {
       </Modal>
     </>
   );
-}
-
-interface Form {
-  id: number;
-  orderId: number;
-  [key: string]: any;
-}
-
-interface Item {
-  id: number;
-  item: {
-    name: string;
-    images: { url: string }[];
-  };
-}
-
-interface BackendResponse {
-  forms: Form[];
-  items: Item[];
-}
-
-interface Booking {
-  form: Form;
-  item: Item['item'] | null;
-}
-
-function mapBookings(response: BackendResponse[]): Booking[] {
-  if (!Array.isArray(response) || response.length === 0) return [];
-
-  const { forms, items } = response[0];
-
-  // Crear un mapa de items por id para acceso rápido
-  const itemsMap = new Map<number, Item['item']>(
-    items.map((item) => [item.id, item.item])
-  );
-
-  // Mapear los formularios con sus respectivos items
-  const bookings: Booking[] = forms.map((form) => ({
-    form,
-    item: itemsMap.get(form.id) || null, // Si no encuentra un item, asigna null
-  }));
-
-  return bookings;
 }
