@@ -25,8 +25,8 @@ export function BookingsTable(props: Props) {
       <table className="table w-full">
         <thead>
           <tr>
-            <th>Client</th>
             <th>Booking</th>
+            <th>Client</th>
             <th>Service</th>
             <th>Status</th>
           </tr>
@@ -37,16 +37,6 @@ export function BookingsTable(props: Props) {
             return (
               <tr className="hover" key={index}>
                 <td>
-                  <Link to={`/clients/${user.id}`}>
-                    <p className="hover:text-primary-500 hover:underline">
-                      {user.name}
-                    </p>
-                  </Link>
-                  <Text size="1" className="text-sm text-gray-500">
-                    {user.email}
-                  </Text>
-                </td>
-                <td>
                   <Link to={`/bookings/${booking.id}`}>
                     <Text size="1" className="underline">
                       Booking #{booking.id}
@@ -56,6 +46,16 @@ export function BookingsTable(props: Props) {
                     {booking.date
                       ? moment(booking.date).format('DD MMM YYYY')
                       : 'n/a'}
+                  </Text>
+                </td>
+                <td>
+                  <Link to={`/clients/${user.id}`}>
+                    <p className="hover:text-primary-500 hover:underline">
+                      {user.name}
+                    </p>
+                  </Link>
+                  <Text size="1" className="text-sm text-gray-500">
+                    {user.email}
                   </Text>
                 </td>
                 <td>

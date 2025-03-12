@@ -46,6 +46,4 @@ export { NextPrev } from './lib/NextPrev';
 export { Heading } from './lib/Heading';
 export { SelectCategory } from './lib/select-categories';
 export { Tooltip } from './lib/tooltip';
-
-
-
+export { StatusBooking } from './lib/status-booking';
