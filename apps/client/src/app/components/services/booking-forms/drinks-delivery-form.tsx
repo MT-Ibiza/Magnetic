@@ -28,6 +28,7 @@ export function DrinksDeliveryBookingForm(props: Props) {
   const user = getCurrentUser();
   const arrivalDate = moment(user?.arrivalDate).format('YYYY-MM-DD');
   const { currentSelectItem } = useApp();
+  const today = new Date().toISOString().split('T')[0];
   const {
     register,
     handleSubmit,
@@ -75,6 +76,7 @@ export function DrinksDeliveryBookingForm(props: Props) {
                 <Text className="mb-2">Date</Text>
                 <Input
                   type="date"
+                  min={today}
                   className="w-full"
                   {...register('date', { required: 'Date is required' })}
                 />
