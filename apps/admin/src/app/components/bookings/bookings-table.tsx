@@ -25,9 +25,9 @@ export function BookingsTable(props: Props) {
       <table className="table w-full">
         <thead>
           <tr>
+            <th>Client</th>
             <th>Booking</th>
             <th>Service</th>
-            <th>Client</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -37,7 +37,17 @@ export function BookingsTable(props: Props) {
             return (
               <tr className="hover" key={index}>
                 <td>
-                  <Link to={`/booking/${booking.id}`}>
+                  <Link to={`/clients/${user.id}`}>
+                    <p className="hover:text-primary-500 hover:underline">
+                      {user.name}
+                    </p>
+                  </Link>
+                  <Text size="1" className="text-sm text-gray-500">
+                    {user.email}
+                  </Text>
+                </td>
+                <td>
+                  <Link to={`/bookings/${booking.id}`}>
                     <Text size="1" className="underline">
                       Booking #{booking.id}
                     </Text>
@@ -61,18 +71,7 @@ export function BookingsTable(props: Props) {
                     </div>
                   </div>
                 </td>
-                <td>
-                  <p
-                    className="hover:text-primary-500 hover:underline"
-                    onClick={() => {
-                      // setSelectedBooking(booking);
-                      // toggleOpenModal();
-                      // setOpenFormType('view-details');
-                    }}
-                  >
-                    {user.name}
-                  </p>
-                </td>
+
                 <td className="ml-[25px] flex items-center">
                   {getStatusIndicator(booking.status)}
                 </td>

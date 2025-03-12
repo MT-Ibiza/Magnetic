@@ -7,7 +7,9 @@ export async function GET(request: Request) {
       select: {
         user: {
           select: {
+            id: true,
             name: true,
+            email: true,
           },
         },
         forms: true,

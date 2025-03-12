@@ -91,7 +91,7 @@ export interface BookingForm {
 }
 
 export interface BookingUser {
-  user: UserBase;
+  user: User;
   booking: BookingForm;
   orderItem: OrderItem;
 }

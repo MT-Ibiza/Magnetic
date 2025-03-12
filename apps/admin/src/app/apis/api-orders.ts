@@ -1,10 +1,6 @@
+import { Order, BookingForm, BookingUser } from '@magnetic/interfaces';
 import {
-  Order,
-  BookingForm,
-  OrderForm,
-  BookingUser,
-} from '@magnetic/interfaces';
-import {
+  URL_GET_BOOKING,
   URL_GET_BOOKINGS_ORDERS,
   URL_GET_ORDER,
   URL_GET_ORDERS,
@@ -67,4 +63,19 @@ export async function getBookingsOrders(): Promise<BookingUser[]> {
     console.error('Error fetching orders:', error.message);
     throw error;
   }
+}
+
+export async function getBooking(id: number): Promise<BookingForm> {
+  const url = URL_GET_BOOKING(id);
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const dataJson = await response.json();
+  if (!response.ok)
+    throw new Error(dataJson.message || 'Failed to fetch order');
+  return dataJson;
 }

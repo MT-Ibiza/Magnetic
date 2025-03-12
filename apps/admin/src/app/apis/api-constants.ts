@@ -95,6 +95,7 @@ export const URL_PUBLISH_PRODUCT = (id: number) =>
 export const URL_GET_ORDERS = `${API_URL}/orders`;
 export const URL_GET_BOOKINGS_ORDERS = `${API_URL}/bookings`;
 export const URL_GET_ORDER = (id: number) => `${API_URL}/orders/${id}`;
+export const URL_GET_BOOKING = (id: number) => `${API_URL}/bookings/${id}`;
 
 //airtable
 export const URL_GET_AIRTABLE_BOATS = `${API_URL}/airtable`;

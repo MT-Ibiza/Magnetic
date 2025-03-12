@@ -29,6 +29,7 @@ import OrdersPage from '../pages/orders-page/orders-page';
 import ViewOrderPage from '../pages/view-order-page/view-order-page';
 import CategoriesPage from '../pages/categories-page/categories-page';
 import AirtablePage from '../pages/airtable-page/airtable-page';
+import BookingPage from '../pages/booking-page/booking-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -70,6 +71,7 @@ export const AppRouter = () => {
           <Route path="clients/new" element={<NewUserPage />} />
           <Route path="clients/edit/:id" element={<EditUserPage />} />
           <Route path="bookings" element={<BookingsPage />} />
+          <Route path="bookings/:id" element={<BookingPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="clients/:id" element={<UserLayout />}></Route>
           <Route
