@@ -19,7 +19,26 @@ export async function GET(
           },
         })
       : null;
-    return NextResponse.json({ booking, orderItem });
+
+    const order = booking?.id
+      ? await db.order.findUnique({
+          where: {
+            id: booking.orderId,
+          },
+          select: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+              },
+            },
+          },
+        })
+      : null;
+    return NextResponse.json({ booking, orderItem, user: order?.user });
   } catch (error: any) {
     return NextResponse.json(
       {

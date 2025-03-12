@@ -1,4 +1,9 @@
-import { CardWrapper, FormJsonDetails, StatusBooking } from '@magnetic/ui';
+import {
+  CardWrapper,
+  FormJsonDetails,
+  StatusBooking,
+  Text,
+} from '@magnetic/ui';
 import { useParams } from 'react-router-dom';
 import { useBooking } from '../../hooks/useBooking';
 import Loading from '../../components/loading';
@@ -36,6 +41,17 @@ export function BookingPage() {
         </div>
         {data && (
           <div className="">
+            {data.booking.modificationRequest &&
+              data.booking.status === 'modification_requested' && (
+                <div className="border p-5 rounded-md w-full mt-5">
+                  <h1 className="font-medium text-sm mb-2">
+                    {data.user.name} has required changes
+                  </h1>
+                  <div className="">
+                    <Text>{data.booking.modificationRequest}</Text>
+                  </div>
+                </div>
+              )}
             <div className="border p-5 rounded-md w-full mt-5">
               <FormJsonDetails formData={data.booking.formData} />
             </div>
