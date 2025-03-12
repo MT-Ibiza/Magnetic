@@ -15,6 +15,7 @@ function FormModifyBooking(props: Props) {
   const { onCancel, onSave, bookingId } = props;
   const [text, setText] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const requestChanges = useMutation({
     mutationFn: (bookingId: number) => {
@@ -33,14 +34,19 @@ function FormModifyBooking(props: Props) {
   });
 
   async function handleSave() {
-    await requestChanges.mutateAsync(bookingId);
+    if (text) {
+      setShowError(false);
+      await requestChanges.mutateAsync(bookingId);
+    } else {
+      setShowError(true);
+    }
   }
 
   return (
     <div>
       <Modal.Header>Request a Change or Cancellation</Modal.Header>
       <Modal.Body>
-        <div className="py-5 px-10">
+        <form className="py-5 px-10">
           <Text className="mb-3">
             If you need to modify or cancel your booking, please fill out the
             form below. Our team will review your request and notify you via
@@ -48,11 +54,15 @@ function FormModifyBooking(props: Props) {
           </Text>
           <TextArea
             className="w-full"
+            required
             onChange={(e) => {
               const value = e.target.value;
               setText(value);
             }}
           />
+          {showError && (
+            <p className="text-xs text-red-500 mt-1">Text is required</p>
+          )}
           <Text className="mt-3">
             Before submitting, please review our{' '}
             <a
@@ -64,7 +74,7 @@ function FormModifyBooking(props: Props) {
             </a>{' '}
             for modification and cancellation policies.
           </Text>
-        </div>
+        </form>
       </Modal.Body>
       <Modal.Footer>
         <div className="flex gap-3 justify-end w-full">
