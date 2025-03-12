@@ -23,7 +23,6 @@ export function BookingsTable(props: Props) {
     else if (status === 'cancelled') color = 'bg-red-500';
     else if (status === 'pending' || status === 'modification_requested')
       color = 'bg-orange-500';
-    console.log(status);
     return <span className={`p-[7px] w-3 h-3 rounded-full ${color}`} />;
   };
 
@@ -134,7 +133,10 @@ export function BookingsTable(props: Props) {
             <FormModifyBooking
               bookingId={selectedBooking.id}
               onCancel={toggleOpenModal}
-              onSave={toggleOpenModal}
+              onSave={() => {
+                refetch();
+                toggleOpenModal();
+              }}
             />
           )}
           {openFormType === 'view-message' && selectedBooking && (

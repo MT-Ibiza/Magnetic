@@ -1,10 +1,10 @@
-import { BookingForm } from '@magnetic/interfaces';
+import { BookingForm, BookingUser } from '@magnetic/interfaces';
 import { getBookingsOrders, getOrders } from '../apis/api-orders';
 import { useQuery } from '@tanstack/react-query';
 
 export function useBookings() {
   const { isLoading, isError, data, error, isSuccess, refetch } = useQuery<
-    BookingForm[]
+    BookingUser[]
   >({
     queryKey: [`bookings`],
     queryFn: async () => {
@@ -17,13 +17,6 @@ export function useBookings() {
     isError,
     isSuccess,
     bookings: data || [],
-    bookingsOptions:
-      data?.map((booking) => {
-        return {
-          label: `Booking #${booking.id}`,
-          value: booking.id,
-        };
-      }) || [],
     refetch,
     error,
   };

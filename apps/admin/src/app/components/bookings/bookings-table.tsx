@@ -1,21 +1,16 @@
 import Loading from '../loading';
 import { ErrorText } from '../error-text';
 import { Link } from 'react-router-dom';
-import { HiOutlineDotsVertical } from 'react-icons/hi';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import { removePackage } from '../../apis/api-packages';
-import { useOrders } from '../../hooks/useOrders';
 import moment from 'moment';
-import { Text } from '@magnetic/ui';
+import { Button, Text } from '@magnetic/ui';
 import { useBookings } from '../../hooks/useBookings';
+import { placeholderItemImage } from '../../constants';
 
 interface Props {}
 
 export function BookingsTable(props: Props) {
   const {} = props;
-  const { isLoading, bookings, bookingsOptions, error, isError, refetch } =
-    useBookings();
+  const { isLoading, bookings, error, isError, refetch } = useBookings();
 
   if (isLoading) {
     return <Loading />;
@@ -33,37 +28,68 @@ export function BookingsTable(props: Props) {
             <th>Booking</th>
             <th>Service</th>
             <th>Client</th>
-            <th>Order</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {bookings.map((booking, index) => (
-            <tr className="hover" key={index}>
-              <td>
-                <Link
-                  className="hover:text-primary-500 hover:underline"
-                  to={`/orders/${booking.order.id}`}
-                >
-                  {bookingsOptions[index]?.label || `Order #${booking.id}`}
-                </Link>
-                <Text size="1" className="text-gray-500">
-                  {moment(booking.createdAt).format('DD MMM YYYY')}
-                </Text>
-              </td>
-              <td>{booking.service.name}</td>
-              <td>{booking.order.user.name}</td>
-              <td>
-                <Link
-                  className="hover:text-primary-500 hover:underline"
-                  to={`/orders/${booking.order.id}`}
-                >
-                  {`#${booking.order.id}`}
-                </Link>
-              </td>
-            </tr>
-          ))}
+          {bookings.map((elm, index) => {
+            const { booking, user, orderItem } = elm;
+            return (
+              <tr className="hover" key={index}>
+                <td>
+                  <Link to={`/booking/${booking.id}`}>
+                    <Text size="1" className="underline">
+                      Booking #{booking.id}
+                    </Text>
+                  </Link>
+                  <Text size="1" className="text-gray-500">
+                    {booking.date
+                      ? moment(booking.date).format('DD MMM YYYY')
+                      : 'n/a'}
+                  </Text>
+                </td>
+                <td>
+                  <div className="flex gap-3 items-center text-neutral-6000 dark:text-neutral-300">
+                    <img
+                      className="w-16 h-10 object-cover rounded-md"
+                      src={
+                        orderItem.item.images[0]?.url || placeholderItemImage
+                      }
+                    />
+                    <div className="flex flex-col gap-1">
+                      <Text>{orderItem.item?.name}</Text>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <p
+                    className="hover:text-primary-500 hover:underline"
+                    onClick={() => {
+                      // setSelectedBooking(booking);
+                      // toggleOpenModal();
+                      // setOpenFormType('view-details');
+                    }}
+                  >
+                    {user.name}
+                  </p>
+                </td>
+                <td className="ml-[25px] flex items-center">
+                  {getStatusIndicator(booking.status)}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
   );
 }
+
+const getStatusIndicator = (status: string) => {
+  let color = 'bg-gray-400';
+  if (status === 'accepted' || status === 'completed') color = 'bg-green-500';
+  else if (status === 'cancelled') color = 'bg-red-500';
+  else if (status === 'pending' || status === 'modification_requested')
+    color = 'bg-orange-500';
+  return <span className={`p-[7px] w-3 h-3 rounded-full ${color}`} />;
+};

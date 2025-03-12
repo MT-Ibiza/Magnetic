@@ -1,5 +1,5 @@
 import { Image } from './items';
-import { User } from './users';
+import { User, UserBase } from './users';
 
 export interface Order {
   id: number;
@@ -91,6 +91,7 @@ export interface BookingForm {
 }
 
 export interface BookingUser {
+  user: UserBase;
   booking: BookingForm;
   orderItem: OrderItem;
 }

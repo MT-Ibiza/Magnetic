@@ -1,4 +1,9 @@
-import { Order, BookingForm, OrderForm } from '@magnetic/interfaces';
+import {
+  Order,
+  BookingForm,
+  OrderForm,
+  BookingUser,
+} from '@magnetic/interfaces';
 import {
   URL_GET_BOOKINGS_ORDERS,
   URL_GET_ORDER,
@@ -42,7 +47,7 @@ export async function getOrder(id: number): Promise<Order> {
   return dataJson;
 }
 
-export async function getBookingsOrders(): Promise<BookingForm[]> {
+export async function getBookingsOrders(): Promise<BookingUser[]> {
   try {
     const response = await fetch(URL_GET_BOOKINGS_ORDERS, {
       method: 'GET',
