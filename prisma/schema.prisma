@@ -232,15 +232,16 @@ model OrderBookingForm {
   orderItemId           Int? //could be associate specific item and service
   formData              Json
   orderId               Int
-  status                BookingStatus @default(pending)
-  order                 Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  serviceId             Int
-  service               Service       @relation(fields: [serviceId], references: [id])
+  date                  DateTime?
   modificationRequest   String?
   modificationResponse  String?
   cancellationRequest   String?
   cancellationResponse  String?
   refundedAmountInCents Int?
+  status                BookingStatus @default(pending)
+  order                 Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  serviceId             Int
+  service               Service       @relation(fields: [serviceId], references: [id])
 }
 
 model Order {

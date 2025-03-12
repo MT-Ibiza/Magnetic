@@ -96,8 +96,13 @@ export async function POST(request: Request) {
           forms: {
             createMany: {
               data: forms.map((form) => {
+                const formData = form.data as any;
+                const date = formData?.date
+                  ? moment(formData?.date).toDate()
+                  : undefined;
                 return {
-                  formData: form.data as any,
+                  date,
+                  formData,
                   serviceId: form.serviceId,
                   status: 'accepted',
                 };
