@@ -63,11 +63,11 @@ export function BookingsTable(props: Props) {
                     <img
                       className="w-16 h-10 object-cover rounded-md"
                       src={
-                        orderItem.item.images[0]?.url || placeholderItemImage
+                        orderItem?.item?.images[0]?.url || placeholderItemImage
                       }
                     />
                     <div className="flex flex-col gap-1">
-                      <Text>{orderItem.item?.name}</Text>
+                      <Text>{orderItem?.item?.name || 'Drink Service'}</Text>
                     </div>
                   </div>
                 </td>
