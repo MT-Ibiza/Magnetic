@@ -28,7 +28,7 @@ function ItemDrinkCard({
 
   return (
     <div
-      className={`nc-CarCard min-h-[340px] max-h-[370px] group relative border border-neutral-200 dark:border-neutral-700 rounded-3xl overflow-hidden hover:shadow-xl transition-shadow bg-white dark:bg-neutral-900 will-change-transform`}
+      className={`nc-CarCard min-h-[360px] group relative border border-neutral-200 dark:border-neutral-700 rounded-3xl hover:shadow-xl transition-shadow bg-white dark:bg-neutral-900 will-change-transform`}
     >
       <div className="relative w-full rounded-2xl overflow-hidden">
         <GallerySlider
@@ -39,7 +39,7 @@ function ItemDrinkCard({
         <div className="p-5 flex flex-col justify-end space-y-4">
           <div className="space-y-2 flex flex-col">
             <Tooltip content={name}>
-              <p className="line-clamp-2 capitalize text-lg font-semibold text-primary cursor-pointer">
+              <p className="line-clamp-2 capitalize text-md font-semibold text-primary cursor-pointer">
                 {name}
               </p>
             </Tooltip>
