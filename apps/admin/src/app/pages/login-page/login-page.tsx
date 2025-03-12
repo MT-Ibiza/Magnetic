@@ -10,7 +10,6 @@ export function LoginPage() {
   const [error, setError] = useState('');
   const { setToken, setLoggedIn, setCurrentUser } = useAuth();
   const navigate = useNavigate();
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
   const mutation = useMutation<LoginResponse, Error, Credentials>({
@@ -18,20 +17,6 @@ export function LoginPage() {
       return login(formData);
     },
   });
-
-  useEffect(() => {
-    const darkModeMediaQuery = window.matchMedia(
-      '(prefers-color-scheme: dark)'
-    );
-    setIsDarkMode(darkModeMediaQuery.matches);
-    const handleChange = (e: MediaQueryListEvent) => {
-      setIsDarkMode(e.matches);
-    };
-    darkModeMediaQuery.addEventListener('change', handleChange);
-    return () => {
-      darkModeMediaQuery.removeEventListener('change', handleChange);
-    };
-  }, []);
 
   async function onSubmitForm(data: { email: string; password: string }) {
     setIsSaving(true);
@@ -58,13 +43,7 @@ export function LoginPage() {
       {error && (
         <p className="text-lg text-red-500 p-3 rounded mb-2">{error}</p>
       )}
-      <img
-        className="w-[250px]"
-        src={
-          isDarkMode ? '/icons/logo-app-white.png' : '/icons/logo-app-black.png'
-        }
-        alt="Logo"
-      />
+      <img className="w-[250px]" src={'/icons/logo-app-black.png'} alt="Logo" />
       <LoginForm onSubmit={onSubmitForm} isSaving={isSaving} />
     </div>
   );

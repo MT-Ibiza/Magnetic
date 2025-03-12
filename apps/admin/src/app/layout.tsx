@@ -182,7 +182,6 @@ function Layout(props: Props) {
         pageTitle={getPageTitle()}
       >
         <div className="flex items-center gap-3">
-          <ThemeSelector className="lg:hidden" uniqueKey={'client'} />
           {user && (
             <AvatarDropdown
               showInformation={true}
@@ -199,14 +198,7 @@ function Layout(props: Props) {
           headerClassName="py-3 lg:py-2"
           isVisible={isSidebarVisible}
           toggleSidebar={toggleSidebar}
-        >
-          <div className="sm:block hidden lg:absolute bottom-0 p-4 w-full">
-            <div className="bg-base-200 flex justify-between px-6 py-3 rounded-md">
-              <Text size="1">Dark Mode</Text>
-              <ThemeSelector uniqueKey={'admin'} />
-            </div>
-          </div>
-        </Sidebar>
+        />
         <div
           className={`p-6 flex-1 transition-all duration-300 ${
             isSidebarVisible ? 'lg:ml-[260px]' : 'lg:ml-0'
