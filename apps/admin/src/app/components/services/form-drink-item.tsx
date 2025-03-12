@@ -1,4 +1,10 @@
-import { Category, Item, ItemBase, ItemVariant } from '@magnetic/interfaces';
+import {
+  ApiResponse,
+  Category,
+  Item,
+  ItemBase,
+  ItemVariant,
+} from '@magnetic/interfaces';
 import {
   Button,
   DrawerContent,
@@ -22,6 +28,7 @@ import { useState } from 'react';
 import FormCategory from '../form-category';
 import FormVariant from '../form-variant';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { deleteVariant } from '../../apis/api-variants';
 
 export interface Props {
   className?: string;
@@ -148,6 +155,26 @@ export function FormDrinkItem(props: Props) {
       await createItem.mutateAsync(formData);
     }
   };
+
+  const removeItem = useMutation<ApiResponse, Error, number>({
+    mutationFn: (id) => {
+      setIsSaving(true);
+      return deleteVariant(id);
+    },
+    onSuccess: () => {
+      toast.success(`Variant removed!`);
+      onSave();
+      setIsSaving(false);
+    },
+    onError: (error) => {
+      toast.error('The variant could not be removed');
+      setIsSaving(false);
+    },
+  });
+
+  async function handleRemoveItem(id: number) {
+    await removeItem.mutateAsync(id);
+  }
 
   return (
     <>
@@ -312,7 +339,9 @@ export function FormDrinkItem(props: Props) {
                           size={18}
                         />
                         <FaTrashAlt
-                          onClick={() => {}}
+                          onClick={() => {
+                            handleRemoveItem(variant.id);
+                          }}
                           className="cursor-pointer hover:scale-110 transition-transform"
                           size={18}
                         />
