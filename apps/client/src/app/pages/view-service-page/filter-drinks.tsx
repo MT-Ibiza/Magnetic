@@ -7,7 +7,7 @@ interface Props {
 }
 
 function FilterDrinks(props: Props) {
-  const { onChangeFilters } = props;
+  const { onChangeFilters, categories } = props;
 
   const [searchParams, setSearchParams] = useState({
     units: undefined,
@@ -40,7 +40,7 @@ function FilterDrinks(props: Props) {
             value={searchParams.category}
             onChange={handleSearchChange}
           />
-          <SelectCategory categoriesAvailable={[]} />
+          <SelectCategory categoriesAvailable={categories} />
         </form>
       </div>
     </>

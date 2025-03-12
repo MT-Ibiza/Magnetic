@@ -53,6 +53,13 @@ function ListDrinks(props: Props) {
     [drinks]
   );
 
+  const categories = itemsGroup.map((item) => {
+    return {
+      name: item.category,
+      id: item.categoryId,
+    };
+  });
+
   const [alert, setAlert] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning';
@@ -172,12 +179,9 @@ function ListDrinks(props: Props) {
   return (
     <>
       <div>
-        <FilterDrinks
-          onChangeFilters={function (filters: any): void {
-            throw new Error('Function not implemented.');
-          }}
-          categories={[]}
-        />
+        {categories.length > 0 && (
+          <FilterDrinks onChangeFilters={() => {}} categories={categories} />
+        )}
       </div>
       {itemsGroup.map((group, index) => (
         <div key={index} className="pt-[30px]">
@@ -185,8 +189,9 @@ function ListDrinks(props: Props) {
           <div
             className={`grid pt-[30px] gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-5`}
           >
-            {group.items.map((item) => (
+            {group.items.map((item, index) => (
               <ItemDrinkCard
+                key={index}
                 item={item}
                 onClickAdd={(amount) => {
                   handleAddItem(item, amount);

@@ -50,6 +50,15 @@ export async function GET(request: NextRequest) {
           position: true,
           categoryId: true,
           serviceId: true,
+          category: {
+            select: {
+              formType: true,
+              id: true,
+              name: true,
+              position: true,
+              serviceId: true,
+            },
+          },
           service: {
             select: {
               id: true,
