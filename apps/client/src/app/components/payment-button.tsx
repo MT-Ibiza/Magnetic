@@ -32,7 +32,7 @@ export function PaymentButton(props: {
         body: JSON.stringify({
           amount: amountInCents,
           orderId: `${orderId}`,
-          urlOk: `${window.location.origin}/orders/${orderId}`, // URL en caso de éxito
+          urlOk: `${window.location.origin}/bookings`, // URL en caso de éxito
           urlKo: `${window.location.origin}/checkout/failure`, // URL en caso de error
         }),
       });
@@ -92,7 +92,7 @@ export function PaymentButton(props: {
     <>
       <Button
         size={2}
-        radius='full'
+        radius="full"
         onClick={createOrderAndPay}
         disabled={loading || disable}
         className="text-[17px] leading-[24px] p-4 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 w-full"
