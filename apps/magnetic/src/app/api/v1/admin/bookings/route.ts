@@ -33,6 +33,11 @@ export async function GET(request: Request) {
       },
     });
 
+    console.log('-------------------');
+    console.log(orders[0]?.items);
+    console.log(orders[0]?.forms);
+    console.log('-------------------');
+
     const transformedOrders = orders
       .map((order) => {
         const itemsMap = new Map(order.items.map((i) => [i.id, i]));
