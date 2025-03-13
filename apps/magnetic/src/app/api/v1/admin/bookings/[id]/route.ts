@@ -17,8 +17,55 @@ export async function GET(
           where: {
             id: booking?.id,
           },
+          select: {
+            id: true,
+            priceInCents: true,
+            quantity: true,
+            item: {
+              select: {
+                id: true,
+                name: true,
+                priceInCents: true,
+              },
+            },
+            variant: {
+              select: {
+                id: true,
+                name: true,
+                priceInCents: true,
+              },
+            },
+          },
         })
       : null;
+
+    const orderItems =
+      booking?.id && booking.cartItemId
+        ? await db.orderItem.findMany({
+            where: {
+              cartItemId: booking.cartItemId,
+            },
+            select: {
+              id: true,
+              priceInCents: true,
+              quantity: true,
+              item: {
+                select: {
+                  id: true,
+                  name: true,
+                  priceInCents: true,
+                },
+              },
+              variant: {
+                select: {
+                  id: true,
+                  name: true,
+                  priceInCents: true,
+                },
+              },
+            },
+          })
+        : null;
 
     const order = booking?.id
       ? await db.order.findUnique({
@@ -38,7 +85,12 @@ export async function GET(
           },
         })
       : null;
-    return NextResponse.json({ booking, orderItem, user: order?.user });
+    return NextResponse.json({
+      booking,
+      orderItem,
+      user: order?.user,
+      orderItems,
+    });
   } catch (error: any) {
     return NextResponse.json(
       {
