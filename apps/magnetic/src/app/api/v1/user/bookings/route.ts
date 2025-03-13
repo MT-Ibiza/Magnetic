@@ -21,6 +21,14 @@ export async function GET(request: Request) {
             id: true,
             priceInCents: true,
             quantity: true,
+            cartItemId: true,
+            variant: {
+              select: {
+                id: true,
+                name: true,
+                priceInCents: true,
+              },
+            },
             item: {
               select: {
                 name: true,
@@ -43,7 +51,7 @@ export async function GET(request: Request) {
         return order.forms.map((form) => ({
           booking: form,
           orderItem: order.items.find(
-            (itemCart) => itemCart.item.serviceId === form.serviceId
+            (itemCart) => itemCart.cartItemId === form.cartItemId
           ),
         }));
       })
