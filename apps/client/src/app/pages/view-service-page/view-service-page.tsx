@@ -7,6 +7,7 @@ import NoticeBookingUnavailable from '../../components/notice-booking-unavailabl
 import ListBoats from './list-boats';
 import ListDrinks from './list-drinks';
 import './styles.scss';
+import { useState } from 'react';
 
 interface Props {}
 
@@ -17,6 +18,8 @@ function ViewServicePage(props: Props) {
   const { getCurrentUser } = useAuth();
   const user = getCurrentUser();
   const { isLoading, isError, service, error } = useService(serviceId);
+
+  const [selectedCarService, setSelectedCarService] = useState('standard');
 
   if (isLoading) {
     return <p>Loading..</p>;
@@ -47,7 +50,6 @@ function ViewServicePage(props: Props) {
         {(service.instructions || service.termsAndConditions) && (
           <AccordionSection title="Need to Know">
             <div>
-              {/* <div className="w-14 mb-[32px] border-b border-neutral-200 dark:border-neutral-700"></div> */}
               {service.instructions && (
                 <>
                   <h4 className="text-lg font-semibold">Before You Book</h4>
@@ -77,7 +79,66 @@ function ViewServicePage(props: Props) {
           </AccordionSection>
         )}
         {service.script ? (
-          <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
+          <>
+            {service.serviceType === 'cart_rental' ? (
+              <div>
+                <div className="flex justify-center gap-10 w-full pb-5">
+                  <div
+                    className={`border border-gray-600 rounded-md py-3 px-10 cursor-pointer hover:bg-primary-100 ${
+                      selectedCarService === 'standard' &&
+                      'border-primary-500 bg-primary-100'
+                    }`}
+                    onClick={() => {
+                      setSelectedCarService('standard');
+                    }}
+                  >
+                    Standard
+                  </div>
+                  <div
+                    className={`border border-gray-600 rounded-md py-3 px-10 cursor-pointer hover:bg-primary-100 ${
+                      selectedCarService === 'premium' &&
+                      'border-primary-500 bg-primary-100'
+                    }`}
+                    onClick={() => {
+                      setSelectedCarService('premium');
+                    }}
+                  >
+                    Premium
+                  </div>
+                  <div
+                    className={`border border-gray-600 rounded-md py-3 px-10 cursor-pointer hover:bg-gray-50 ${
+                      selectedCarService === 'luxury' &&
+                      'border-primary-500 hover:bg-primary-100 bg-primary-100'
+                    }`}
+                    onClick={() => {
+                      setSelectedCarService('luxury');
+                    }}
+                  >
+                    Luxury
+                  </div>
+                </div>
+                {selectedCarService === 'standard' && (
+                  <div
+                    dangerouslySetInnerHTML={{ __html: service.script }}
+                  ></div>
+                )}
+                {selectedCarService === 'premium' && (
+                  <div
+                    dangerouslySetInnerHTML={{ __html: service.script }}
+                  ></div>
+                )}
+                {selectedCarService === 'luxury' && (
+                  <iframe
+                    style={{ width: '100%', border: 'none', height: '40rem' }}
+                    id="iframe_carplus_afiliado"
+                    src="https://exclusiverentalcars.es/iframe-dynamic/"
+                  ></iframe>
+                )}
+              </div>
+            ) : (
+              <div dangerouslySetInnerHTML={{ __html: service.script }}></div>
+            )}
+          </>
         ) : (
           <>
             {service.serviceType === 'drinks' && (
