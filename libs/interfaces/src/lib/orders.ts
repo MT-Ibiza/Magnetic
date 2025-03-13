@@ -24,6 +24,9 @@ export interface ItemBaseFields {
     name: string;
     serviceType: string;
   };
+  drinkAttributes?: {
+    id: number;
+  };
 }
 
 export interface OrderItem {

@@ -30,6 +30,11 @@ export async function GET() {
               select: {
                 name: true,
                 serviceId: true,
+                drinkAttributes: {
+                  select: {
+                    id: true,
+                  },
+                },
                 images: {
                   select: {
                     url: true,

@@ -66,12 +66,18 @@ export function BookingsTable(props: Props) {
                         orderItem?.item?.images[0]?.url || placeholderItemImage
                       }
                     />
-                    <div className="flex flex-col gap-1">
-                      <Text>{orderItem?.item?.name || 'N/A'}</Text>
-                      <Text size="1" className="text-gray-500">
-                        {orderItem?.variant?.name}
-                      </Text>
-                    </div>
+                    {orderItem?.item?.drinkAttributes ? (
+                      <div className="flex flex-col gap-1">
+                        <Text>Drink Service</Text>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col gap-1">
+                        <Text>{orderItem?.item?.name || 'N/A'}</Text>
+                        <Text size="1" className="text-gray-500">
+                          {orderItem?.variant?.name}
+                        </Text>
+                      </div>
+                    )}
                   </div>
                 </td>
                 <td className="ml-[25px] flex items-center">
