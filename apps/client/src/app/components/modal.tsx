@@ -37,7 +37,7 @@ function Modal(props: Props) {
 
   return (
     <dialog id={id ? id : 'modal-magnetic'} className="modal">
-      <div className="p-8 w-full max-w-5xl">
+      <div className="p-4 lg:p-8 w-full max-w-5xl">
         {openContent && <div className="relative">{children}</div>}
       </div>
     </dialog>
@@ -52,7 +52,7 @@ const Header = ({
   onClose?: () => void;
 }) => {
   return (
-    <div className="rounded-t-[10px] text-lg font-medium leading-6 text-gray-900 relative w-full top-0 py-5 px-10 bg-white border-b border-neutral-200">
+    <div className="rounded-t-[10px] text-lg font-medium leading-6 text-gray-900 relative w-full top-0 px-6 py-4 lg:py-5 lg:px-10 bg-white border-b border-neutral-200">
       {children}
       {onClose && (
         <button
@@ -77,7 +77,7 @@ const Body = ({ children, ...props }: ModalFooterProps) => {
 const Footer = ({ children, ...props }: ModalFooterProps) => {
   return (
     <div
-      className="rounded-b-[10px] py-5 px-10 flex-shrink-0 bg-neutral-50 flex items-center justify-between border-t border-neutral-200"
+      className="rounded-b-[10px] p-6 lg:py-5 lg:px-10 flex-shrink-0 bg-neutral-50 flex items-center justify-between border-t border-neutral-200"
       {...props}
     >
       {children}

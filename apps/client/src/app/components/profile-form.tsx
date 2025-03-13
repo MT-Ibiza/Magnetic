@@ -120,7 +120,7 @@ export function ProfileForm(props: Props) {
     <div className="bg-base-100">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-[20px]">
-          <div className="flex gap-5">
+          <div className="flex lg:flex-row flex-col gap-5">
             <div className="flex flex-col gap-2 w-full">
               <Text>First Name</Text>
               <Input
@@ -148,7 +148,7 @@ export function ProfileForm(props: Props) {
               )}
             </div>
           </div>
-          <div className="flex gap-5">
+          <div className="flex lg:flex-row flex-col gap-5">
             <div className="flex flex-col gap-2 w-full">
               <Text>Phone</Text>
               <Input type="tel" placeholder="Phone" {...register('phone')} />
@@ -167,7 +167,7 @@ export function ProfileForm(props: Props) {
               )}
             </div>
           </div>
-          <div className="flex gap-5">
+          <div className="flex lg:flex-row flex-col gap-5">
             <div className="flex flex-col gap-2 w-full">
               <Text>Arrival Date</Text>
               <Input
@@ -195,7 +195,7 @@ export function ProfileForm(props: Props) {
               )}
             </div>
           </div>
-          <div className="flex gap-5">
+          <div className="flex lg:flex-row flex-col gap-5">
             <div className="flex flex-col gap-2 w-full">
               <Text>Company Name</Text>
               <Input type="text" {...register('companyName')} />
@@ -210,7 +210,7 @@ export function ProfileForm(props: Props) {
               />
             </div>
           </div>
-          <div className="flex gap-5">
+          <div className="flex lg:flex-row flex-col gap-5">
             <div className="flex flex-col gap-2 w-full">
               <Text>Billing Address</Text>
               <Input
@@ -231,7 +231,7 @@ export function ProfileForm(props: Props) {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid lg:grid-cols-2 gap-5">
             <div>
               <label className="flex flex-col">
                 <div className="flex gap-[10px] items-center">
@@ -315,10 +315,10 @@ export function ProfileForm(props: Props) {
             </div>
           </div>
         </div>
-        <div className="flex gap-[10px] justify-end pt-[80px]">
+        <div className="flex gap-[10px] justify-end pt-[40px] lg:pt-[80px]">
           <Button
             variant="outline"
-            href={'/clients'}
+            href={'/dashboard'}
             type="submit"
             color="neutral"
           >

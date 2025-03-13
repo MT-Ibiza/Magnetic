@@ -102,6 +102,11 @@ export function ViewItemDefault({ item }: Props) {
               startDate={startDate}
               // endDate={endDate}
               item={item}
+              price={0}
+              onClick={() => {
+                setOpenFormModal(true);
+                setSelectedItem(item);
+              }}
             />
           )}
         </div>

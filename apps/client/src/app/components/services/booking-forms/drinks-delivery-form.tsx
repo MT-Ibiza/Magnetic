@@ -57,7 +57,7 @@ export function DrinksDeliveryBookingForm(props: Props) {
         <div className="flex justify-between">
           <div>
             <h2 className="text-2xl font-semibold">Drinks Delivery</h2>
-            <Text className="text-gray-500">
+            <Text className="mt-2 lg:mt-0 text-gray-500">
               Please confirm the following details before you continue.
             </Text>
           </div>
@@ -71,7 +71,7 @@ export function DrinksDeliveryBookingForm(props: Props) {
               {centsToEurosWithCurrency(70000)} to be processed
             </Text>
           </div>
-          <div className="flex flex-col gap-6 p-10">
+          <div className="flex flex-col gap-6 p-6 lg:p-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <Text className="mb-2">Date</Text>

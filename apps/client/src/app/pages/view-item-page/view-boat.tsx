@@ -262,7 +262,16 @@ export function ViewBoat({ item }: Props) {
           />
         </div>
         <div className="block lg:hidden">
-          <MobileItemSticky startDate={startDate} item={item} />
+          <MobileItemSticky
+            isBoatCalendar={true}
+            onClick={() => {
+              setOpenFormModal(true);
+              setSelectedItem(item);
+            }}
+            price={boatPrice}
+            startDate={startDate}
+            item={item}
+          />
         </div>
       </div>
       {alert && (

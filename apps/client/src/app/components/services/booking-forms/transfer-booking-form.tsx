@@ -92,7 +92,7 @@ export function TransferBookingForm({
       </Modal.Header>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="">
         <Modal.Body>
-          <div className={`p-10`}>
+          <div className={`p-6 lg:p-10`}>
             {variantOptions.length > 0 && (
               <div className="mb-6">
                 <Text className="mb-2">Select Option</Text>

@@ -97,7 +97,7 @@ export function BoatCharterBookingForm({
       </Modal.Header>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Modal.Body>
-          <div className="flex flex-col gap-6 p-10">
+          <div className="flex flex-col gap-6 p-6 lg:p-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <Text className="mb-2">Date</Text>
