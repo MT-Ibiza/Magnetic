@@ -21,6 +21,7 @@ export async function GET() {
             item: {
               select: {
                 name: true,
+                serviceId: true,
                 images: {
                   select: {
                     url: true,
@@ -35,11 +36,13 @@ export async function GET() {
 
     const transformedOrders = orders
       .map((order) => {
-        const itemsMap = new Map(order.items.map((i) => [i.id, i]));
-        return order.forms.map((form, index) => ({
+        // const itemsMap = new Map(order.items.map((i) => [i.id, i]));
+        return order.forms.map((form) => ({
           user: order.user,
           booking: form,
-          orderItem: order.items[index] || null,
+          orderItem: order.items.find(
+            (itemCart) => itemCart.item.serviceId === form.serviceId
+          ),
         }));
       })
       .flat();
