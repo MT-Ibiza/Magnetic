@@ -18,20 +18,11 @@ export async function PUT(
   });
 
   if (!bookingDb) {
-    return NextResponse.json(
-      {
-        message: 'Booking not found',
-      },
-      {
-        status: 404,
-      }
-    );
+    return NextResponse.json({ message: 'Booking not found' }, { status: 404 });
   }
 
   const order = await db.order.findUnique({
-    where: {
-      id: bookingDb.orderId,
-    },
+    where: { id: bookingDb.orderId },
     select: {
       user: {
         select: {
@@ -44,9 +35,7 @@ export async function PUT(
 
   try {
     const booking = await db.orderBookingForm.update({
-      where: {
-        id: bookingDb.id,
-      },
+      where: { id: bookingDb.id },
       data: {
         status: status as 'completed',
         modificationResponse: text,
@@ -55,26 +44,24 @@ export async function PUT(
 
     if (order) {
       const { user } = order;
-      await sendEmail({
-        to: user.email,
-        subject: `Booking Changes`,
-        html: bookingStatusTemplate({
-          username: user.name,
-          bookingId: bookingDb.id,
-          bookingDate: moment(bookingDb.date).format('D MMM YYYY'),
-          status,
-        }),
-      });
+      try {
+        await sendEmail({
+          to: user.email,
+          subject: `Booking Changes`,
+          html: bookingStatusTemplate({
+            username: user.name,
+            bookingId: bookingDb.id,
+            bookingDate: moment(bookingDb.date).format('D MMM YYYY'),
+            status,
+          }),
+        });
+      } catch (emailError) {
+        console.error('⚠️ Error sending email:', emailError);
+      }
     }
+
     return NextResponse.json(booking, { status: 201 });
   } catch (error: any) {
-    return NextResponse.json(
-      {
-        message: error.message,
-      },
-      {
-        status: 500,
-      }
-    );
+    return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
