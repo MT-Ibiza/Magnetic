@@ -8,6 +8,7 @@ import Loading from '../loading';
 import { ErrorText } from '../error-text';
 import { User } from '@magnetic/interfaces';
 import { useState } from 'react';
+import { TODAY_DATE } from '../../constants';
 
 export interface FormUserData {
   firstName: string;
@@ -194,26 +195,28 @@ export function FormUser(props: Props) {
           </div>
           <div className="flex gap-5">
             <div className="flex flex-col gap-2 w-full">
-              <Text>Departure Date</Text>
-              <Input
-                type="date"
-                {...register('departureDate', { required: true })}
-              />
-              {errors.departureDate && (
-                <p className="text-[12px] text-red-500">
-                  Departure Date is required
-                </p>
-              )}
-            </div>
-            <div className="flex flex-col gap-2 w-full">
               <Text>Arrival Date</Text>
               <Input
                 type="date"
+                min={TODAY_DATE}
                 {...register('arrivalDate', { required: true })}
               />
               {errors.arrivalDate && (
                 <p className="text-[12px] text-red-500">
                   Arrival Date is required
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col gap-2 w-full">
+              <Text>Departure Date</Text>
+              <Input
+                type="date"
+                min={TODAY_DATE}
+                {...register('departureDate', { required: true })}
+              />
+              {errors.departureDate && (
+                <p className="text-[12px] text-red-500">
+                  Departure Date is required
                 </p>
               )}
             </div>
