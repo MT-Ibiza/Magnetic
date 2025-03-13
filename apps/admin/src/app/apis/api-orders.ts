@@ -4,6 +4,7 @@ import {
   URL_GET_BOOKINGS_ORDERS,
   URL_GET_ORDER,
   URL_GET_ORDERS,
+  URL_UPDATE_BOOKING_STATUS,
 } from './api-constants';
 
 export async function getOrders(): Promise<Order[]> {
@@ -77,5 +78,25 @@ export async function getBooking(id: number): Promise<BookingUser> {
   const dataJson = await response.json();
   if (!response.ok)
     throw new Error(dataJson.message || 'Failed to fetch order');
+  return dataJson;
+}
+
+export async function updateBookingStatus(
+  bookingId: number,
+  params: {
+    status: string;
+    text?: string;
+  }
+): Promise<any> {
+  const url = URL_UPDATE_BOOKING_STATUS(bookingId);
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  });
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
   return dataJson;
 }

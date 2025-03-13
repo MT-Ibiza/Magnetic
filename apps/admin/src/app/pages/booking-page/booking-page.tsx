@@ -10,6 +10,9 @@ import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
 import ConfirmAlert from '../../components/confirm-alert';
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { updateBookingStatus } from '../../apis/api-orders';
+import { toast } from 'sonner';
 
 export function BookingPage() {
   const params = useParams();
@@ -21,7 +24,24 @@ export function BookingPage() {
     setShowAlert((prevState) => !prevState);
   };
 
-  const { isLoading, isError, data, error } = useBooking(bookingId);
+  const { isLoading, isError, data, error, refetch } = useBooking(bookingId);
+
+  const updateStatus = useMutation({
+    mutationFn: () => {
+      return updateBookingStatus(bookingId, {
+        status: selectedStatus || 'completed',
+        text: '',
+      });
+    },
+    onSuccess: () => {
+      toast.success(`Booking updated!`);
+      toggleAlert();
+      refetch();
+    },
+    onError: () => {
+      toast.success(`Booking couldn't be updated!`);
+    },
+  });
 
   if (isLoading) {
     return <Loading />;
@@ -118,7 +138,7 @@ export function BookingPage() {
         message={`Are you sure you want to change status booking to: ${selectedStatus}`}
         show={showAlert}
         onClickConfirm={async () => {
-          console.log(1);
+          await updateStatus.mutateAsync();
         }}
         onClickCancel={() => {
           setShowAlert(false);
