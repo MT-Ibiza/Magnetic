@@ -15,7 +15,13 @@ export async function GET(request: Request) {
         userId: userId,
       },
       select: {
-        forms: true,
+        forms: {
+          where: {
+            status: {
+              not: 'cancelled',
+            },
+          },
+        },
         items: {
           select: {
             id: true,
