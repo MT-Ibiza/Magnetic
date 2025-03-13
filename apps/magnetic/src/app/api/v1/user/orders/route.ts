@@ -53,12 +53,13 @@ export async function POST(request: Request) {
       const { items } = cart;
       const orderItems =
         items.map((cartItem) => {
-          const { item, quantity, variantId } = cartItem;
+          const { item, quantity, variantId, id } = cartItem;
           return {
             quantity,
+            variantId,
             priceInCents: item.priceInCents,
             itemId: item.id,
-            variantId,
+            cartItemId: id,
           };
         }) || [];
 
@@ -66,10 +67,17 @@ export async function POST(request: Request) {
         .filter((item) => {
           return item.formData !== null;
         })
-        .map((item) => {
+        .map((cartItem) => {
+          const formData = cartItem.formData as any;
+          const date = formData?.date
+            ? moment(formData?.date).toDate()
+            : undefined;
           return {
-            data: item.formData,
-            serviceId: item.item.serviceId,
+            date,
+            formData,
+            serviceId: cartItem.item.serviceId,
+            status: 'accepted' as 'accepted',
+            cartItemId: cartItem.id,
           };
         });
 
@@ -100,18 +108,7 @@ export async function POST(request: Request) {
           },
           forms: {
             createMany: {
-              data: forms.map((form) => {
-                const formData = form.data as any;
-                const date = formData?.date
-                  ? moment(formData?.date).toDate()
-                  : undefined;
-                return {
-                  date,
-                  formData,
-                  serviceId: form.serviceId,
-                  status: 'accepted',
-                };
-              }),
+              data: forms,
             },
           },
         },

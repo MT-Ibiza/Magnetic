@@ -229,7 +229,7 @@ model OrderBookingForm {
   id                    Int           @id @default(autoincrement())
   createdAt             DateTime      @default(now())
   updatedAt             DateTime      @updatedAt
-  orderItemId           Int? //could be associate specific item and service
+  cartItemId            Int? //could be associate specific item and service
   formData              Json
   orderId               Int
   date                  DateTime?
@@ -266,6 +266,7 @@ model OrderItem {
   order        Order        @relation(fields: [orderId], references: [id])
   variant      ItemVariant? @relation(fields: [variantId], references: [id])
   variantId    Int?
+  cartItemId   Int?
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 }
