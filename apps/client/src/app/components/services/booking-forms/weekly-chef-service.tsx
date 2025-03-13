@@ -1,10 +1,11 @@
-import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
+import { Button, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../../hooks/useAuth';
 import { useApp } from '../../../hooks/useApp';
 import Modal from '../../modal';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { FormSubmitParams } from '@magnetic/interfaces';
+import { TODAY_DATE } from '../../../constants';
 
 export interface WeeklyChefServiceFormData {
   service: string;
@@ -81,6 +82,7 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
                 <Text className="mb-2">Date</Text>
                 <Input
                   type="date"
+                  min={TODAY_DATE}
                   className="w-full"
                   {...register('date', { required: 'Date is required' })}
                 />

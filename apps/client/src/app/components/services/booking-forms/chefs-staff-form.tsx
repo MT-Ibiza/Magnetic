@@ -1,5 +1,6 @@
 import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
+import { TODAY_DATE } from '../../../constants';
 
 export interface ChefStaffFormData {
   menu: string;
@@ -66,6 +67,7 @@ export function SingleChefServiceForm({ onSubmit }: Props) {
             <Input
               type="date"
               className="w-full"
+              min={TODAY_DATE}
               {...register('date', { required: 'Date is required' })}
             />
             {errors.date && (

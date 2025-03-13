@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { requestACall } from '../apis/api-request-call';
 import { useState } from 'react';
 import Modal from './modal';
+import { TODAY_DATE } from '../constants';
 
 function FormRequestCall(props: {
   onSave?: () => void;
@@ -44,8 +45,6 @@ function FormRequestCall(props: {
     setIsSaving(true);
     await sendRequestCall.mutateAsync(data);
   };
-
-  const today = new Date().toISOString().split('T')[0];
 
   return (
     <div>
@@ -99,7 +98,7 @@ function FormRequestCall(props: {
               <input
                 id="date"
                 type="date"
-                min={today}
+                min={TODAY_DATE}
                 className="input input-bordered"
                 {...register('date', { required: 'Date is required' })}
               />

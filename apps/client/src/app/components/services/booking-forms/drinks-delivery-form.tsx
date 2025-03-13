@@ -6,6 +6,7 @@ import Modal from '../../modal';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useApp } from '../../../hooks/useApp';
 import { FormSubmitParams } from '@magnetic/interfaces';
+import { TODAY_DATE } from '../../../constants';
 
 export interface DrinksDeliveryFormData {
   date: string;
@@ -76,7 +77,7 @@ export function DrinksDeliveryBookingForm(props: Props) {
                 <Text className="mb-2">Date</Text>
                 <Input
                   type="date"
-                  min={today}
+                  min={TODAY_DATE}
                   className="w-full"
                   {...register('date', { required: 'Date is required' })}
                 />

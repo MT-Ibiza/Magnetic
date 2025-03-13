@@ -99,3 +99,4 @@ export const budgetFilterOptions = [
 ];
 
 export const DRINKS_MINIMUM = 70000; // 700 euros in cents
+export const TODAY_DATE = new Date().toISOString().split('T')[0];
