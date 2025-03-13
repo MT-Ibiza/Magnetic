@@ -1,7 +1,7 @@
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const orders = await db.order.findMany({
       select: {
@@ -33,18 +33,13 @@ export async function GET(request: Request) {
       },
     });
 
-    console.log('-------------------');
-    console.log(orders[0]?.items);
-    console.log(orders[0]?.forms);
-    console.log('-------------------');
-
     const transformedOrders = orders
       .map((order) => {
         const itemsMap = new Map(order.items.map((i) => [i.id, i]));
-        return order.forms.map((form) => ({
+        return order.forms.map((form, index) => ({
           user: order.user,
           booking: form,
-          orderItem: itemsMap.get(form.id) || null,
+          orderItem: order.items[index] || null,
         }));
       })
       .flat();
