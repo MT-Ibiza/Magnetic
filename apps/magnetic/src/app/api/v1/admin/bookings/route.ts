@@ -18,6 +18,14 @@ export async function GET() {
             id: true,
             priceInCents: true,
             quantity: true,
+            cartItemId: true,
+            variant: {
+              select: {
+                id: true,
+                name: true,
+                priceInCents: true,
+              },
+            },
             item: {
               select: {
                 name: true,
@@ -41,7 +49,7 @@ export async function GET() {
           user: order.user,
           booking: form,
           orderItem: order.items.find(
-            (itemCart) => itemCart.item.serviceId === form.serviceId
+            (itemCart) => itemCart.cartItemId === form.cartItemId
           ),
         }));
       })

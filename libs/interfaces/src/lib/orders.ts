@@ -1,5 +1,6 @@
 import { Image } from './items';
 import { User, UserBase } from './users';
+import { ItemVariant } from './variants';
 
 export interface Order {
   id: number;
@@ -33,6 +34,7 @@ export interface OrderItem {
   orderId: number;
   item: ItemBaseFields;
   variantId?: number;
+  variant?: ItemVariant;
 }
 
 export interface OrderBookingForm {

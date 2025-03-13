@@ -67,11 +67,13 @@ export function BookingsTable(props: Props) {
                       }
                     />
                     <div className="flex flex-col gap-1">
-                      <Text>{orderItem?.item?.name || 'Drink Service'}</Text>
+                      <Text>{orderItem?.item?.name || 'N/A'}</Text>
+                      <Text size="1" className="text-gray-500">
+                        {orderItem?.variant?.name}
+                      </Text>
                     </div>
                   </div>
                 </td>
-
                 <td className="ml-[25px] flex items-center">
                   {getStatusIndicator(booking.status)}
                 </td>

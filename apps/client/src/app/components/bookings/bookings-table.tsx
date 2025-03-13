@@ -8,6 +8,7 @@ import FormModifyBooking from './form-modify-booking';
 import ViewRequest from './view-request';
 import Modal from '../modal';
 import BoatBookingSummary from './summary/boat-booking-summary';
+import { sortUserBookingsByDate } from '@magnetic/utils';
 interface Props {}
 
 export function BookingsTable(props: Props) {
@@ -26,9 +27,7 @@ export function BookingsTable(props: Props) {
     return <span className={`p-[7px] w-3 h-3 rounded-full ${color}`} />;
   };
 
-  // const sortedBookings = [...(bookings || [])].sort((a, b) => {
-  //   return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-  // });
+  const sortedBookings = sortUserBookingsByDate(bookings);
 
   function toggleOpenModal() {
     setOpenModal(!openModal);
@@ -48,7 +47,7 @@ export function BookingsTable(props: Props) {
             </tr>
           </thead>
           <tbody>
-            {bookings.map((elm, index) => {
+            {sortedBookings.map((elm, index) => {
               const { booking, orderItem } = elm;
               return (
                 <tr className="hover" key={index}>
@@ -69,7 +68,10 @@ export function BookingsTable(props: Props) {
                         }
                       />
                       <div className="flex flex-col gap-1">
-                        <Text>{orderItem?.item?.name || 'Drink Service'}</Text>
+                        <Text>{orderItem?.item?.name || 'N/A'}</Text>
+                        <Text size="1" className="text-gray-500">
+                          {orderItem?.variant?.name}
+                        </Text>
                       </div>
                     </div>
                   </td>
