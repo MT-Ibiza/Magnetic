@@ -14,7 +14,7 @@ export interface WeeklyChefServiceFormData {
   date: string;
   startTime: string;
   numberOfPeople: number;
-  numberOfWeek: number;
+  numberOfWeeks: number;
   childrenAges: string;
   location: string;
   dietaryComments: string;
@@ -32,7 +32,7 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
   const { getCurrentUser } = useAuth();
   const { currentSelectItem } = useApp();
   const user = getCurrentUser();
-  const [amount, setAmount] = useState(formData?.numberOfWeek || 1);
+  const [amount, setAmount] = useState(formData?.numberOfWeeks || 1);
 
   const {
     register,
@@ -45,7 +45,7 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
           service: currentSelectItem?.name || formData.service,
           date: formData.date,
           startTime: formData.startTime,
-          numberOfWeek: formData.numberOfWeek,
+          numberOfWeeks: formData.numberOfWeeks,
           numberOfPeople: formData.numberOfPeople,
           childrenAges: formData.childrenAges,
           location: formData.location || user?.accommodation,

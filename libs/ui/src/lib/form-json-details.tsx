@@ -24,6 +24,7 @@ export function FormJsonDetails(props: Props) {
     location: 'Location',
     startTime: 'Start Time',
     numberOfPeople: 'Number Of People',
+    numberOfWeeks: 'Number Of Weeks',
     dietaryComments: 'Dietary Comments',
     firstMealRequests: 'First Meal Requests',
     shoppingListRequests: 'Shopping List Requests',
