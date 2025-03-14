@@ -12,7 +12,6 @@ export interface WeeklyChefServiceFormData {
   date: string;
   startTime: string;
   numberOfPeople: number;
-  numberOfWeek: number;
   childrenAges: string;
   location: string;
   commentsPreference: string;
@@ -32,7 +31,6 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<WeeklyChefServiceFormData>({
     defaultValues: formData
@@ -41,7 +39,6 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
           date: formData.date,
           startTime: formData.startTime,
           numberOfPeople: formData.numberOfPeople,
-          numberOfWeek: formData.numberOfWeek,
           childrenAges: formData.childrenAges,
           location: formData.location || user?.accommodation,
           firstMealRequests: formData.firstMealRequests,
@@ -51,7 +48,7 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
   });
 
   const handleFormSubmit = async (data: WeeklyChefServiceFormData) => {
-    onSubmit({ form: data, quantity: data.numberOfWeek });
+    onSubmit({ form: data });
   };
 
   return (
@@ -64,21 +61,21 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Modal.Body>
           <div className="p-10 flex flex-col gap-6">
-            <div>
-              <Text className="mb-2">Service</Text>
-              <Input
-                disabled
-                type="text"
-                className="w-full"
-                defaultValue={currentSelectItem?.name}
-              />
-              {errors.service && (
-                <p className="text-[12px] text-red-500 pt-2">
-                  {errors.service.message}
-                </p>
-              )}
-            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <Text className="mb-2">Service</Text>
+                <Input
+                  disabled
+                  type="text"
+                  className="w-full"
+                  defaultValue={currentSelectItem?.name}
+                />
+                {errors.service && (
+                  <p className="text-[12px] text-red-500 pt-2">
+                    {errors.service.message}
+                  </p>
+                )}
+              </div>
               <div>
                 <Text className="mb-2">Date</Text>
                 <Input
@@ -90,25 +87,6 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
                 {errors.date && (
                   <p className="text-[12px] text-red-500 pt-2">
                     {errors.date.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                <Text className="mb-2">Number of Weeks</Text>
-                <Input
-                  type="number"
-                  min="1"
-                  max="30"
-                  defaultValue={1}
-                  className="w-full"
-                  {...register('numberOfWeek', {
-                    required: 'Number of week is required',
-                    valueAsNumber: true,
-                  })}
-                />
-                {errors.numberOfWeek && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.numberOfWeek.message}
                   </p>
                 )}
               </div>
@@ -202,10 +180,7 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
           <div className="flex justify-between gap-3 w-full">
             <h2 className="text-xl">
               Total:{' '}
-              {centsToEurosWithCurrency(
-                (currentSelectItem?.priceInCents || 0) *
-                  (watch('numberOfWeek') || 1)
-              )}
+              {centsToEurosWithCurrency(currentSelectItem?.priceInCents || 0)}
             </h2>
             <div className="flex gap-3">
               {onCancel && (
