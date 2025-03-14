@@ -5,6 +5,7 @@ import {
   centsToEurosWithCurrency,
   sortImagesByPosition,
   getPriceRange,
+  getCapacityRange,
 } from '@magnetic/utils';
 import ItemHandleBookButtons from '../item-handle-book-buttons';
 
@@ -17,6 +18,12 @@ interface Props {
 function ItemTransferCard(props: Props) {
   const { item, onClickBookNow, cartItemAmount } = props;
   const { name, priceInCents, variants, transferAttributes } = item;
+  const capacity = transferAttributes?.capacity || 4;
+  const variantsWithCapacity = variants.map((v) => {
+    return {
+      capacity: v.capacity || 4,
+    };
+  });
 
   const imagesSorted = useMemo(() => {
     return sortImagesByPosition(item.images);
@@ -24,6 +31,11 @@ function ItemTransferCard(props: Props) {
 
   const priceRange = useMemo(
     () => getPriceRange([...variants, { priceInCents }]),
+    [variants, priceInCents]
+  );
+
+  const capacityRange = useMemo(
+    () => getCapacityRange([...variantsWithCapacity, { capacity }]),
     [variants, priceInCents]
   );
 
@@ -44,7 +56,11 @@ function ItemTransferCard(props: Props) {
               {name}
             </p>
             <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
-              <span className="">{transferAttributes?.capacity || 4} pax</span>
+              <span className="">
+                {capacityRange.low === capacityRange.high
+                  ? `${capacityRange.low} pax`
+                  : `${capacityRange.low} - ${capacityRange.high} pax`}
+              </span>
             </div>
           </div>
           <div className="flex justify-between mt-5">

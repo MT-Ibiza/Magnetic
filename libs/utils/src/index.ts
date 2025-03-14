@@ -5,3 +5,4 @@ export * from './lib/images';
 export * from './lib/items';
 export * from './lib/user';
 export * from './lib/bookings';
+export * from './lib/variants';
