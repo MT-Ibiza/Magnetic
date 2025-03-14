@@ -12,10 +12,9 @@ export interface WeeklyChefServiceFormData {
   date: string;
   startTime: string;
   numberOfPeople: number;
-  kidsAges: string;
+  childrenAges: string;
   location: string;
-  dietaryComments: string;
-  shoppingListRequests: string;
+  commentsPreference: string;
   firstMealRequests: string;
 }
 
@@ -40,11 +39,10 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
           date: formData.date,
           startTime: formData.startTime,
           numberOfPeople: formData.numberOfPeople,
-          kidsAges: formData.kidsAges,
+          childrenAges: formData.childrenAges,
           location: formData.location || user?.accommodation,
-          dietaryComments: formData.dietaryComments,
-          shoppingListRequests: formData.shoppingListRequests,
           firstMealRequests: formData.firstMealRequests,
+          commentsPreference: formData.commentsPreference,
         }
       : undefined,
   });
@@ -57,7 +55,7 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
     <div className="">
       <Modal.Header onClose={onCancel}>
         <div className="flex justify-between">
-          <h2 className="text-2xl font-semibold">Weekly Chef Service</h2>
+          <h2 className="text-2xl font-semibold">Weekly Chef</h2>
         </div>
       </Modal.Header>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -108,7 +106,7 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
                 )}
               </div>
               <div>
-                <Text className="mb-2">Number of people</Text>
+                <Text className="mb-2">Number of People</Text>
                 <Input
                   type="number"
                   min="1"
@@ -125,23 +123,23 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
                 )}
               </div>
               <div>
-                <Text className="mb-2">Kids and Ages</Text>
+                <Text className="mb-2">Children & Ages</Text>
                 <Input
                   type="text"
                   className="w-full"
                   placeholder="e.g., 2 kids, ages 5 and 8"
-                  {...register('kidsAges', {
-                    required: 'Kids and ages are required',
+                  {...register('childrenAges', {
+                    required: 'Children and Ages are required',
                   })}
                 />
-                {errors.kidsAges && (
+                {errors.childrenAges && (
                   <p className="text-[12px] text-red-500 pt-2">
-                    {errors.kidsAges.message}
+                    {errors.childrenAges.message}
                   </p>
                 )}
               </div>
               <div>
-                <Text className="mb-2">Location (Your Villa)</Text>
+                <Text className="mb-2">Location</Text>
                 <Input
                   type="text"
                   className="w-full"
@@ -157,29 +155,7 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
                 )}
               </div>
             </div>
-            <div>
-              <Text className="mb-2">Preferences and Dietary Comments</Text>
-              <TextArea
-                className="w-full"
-                placeholder="Any dietary preferences or special comments"
-                {...register('dietaryComments', {
-                  required: 'Dietary comments are required',
-                })}
-              />
-              {errors.dietaryComments && (
-                <p className="text-[12px] text-red-500 pt-2">
-                  {errors.dietaryComments.message}
-                </p>
-              )}
-            </div>
-            <div>
-              <Text className="mb-2">Shopping List Requests</Text>
-              <TextArea
-                className="w-full"
-                placeholder="Any shopping list requests for ingredients"
-                {...register('shoppingListRequests')}
-              />
-            </div>
+
             <div>
               <Text className="mb-2">
                 First Meal Requests (1st Dinner & 1st Breakfast)
@@ -188,6 +164,14 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
                 className="w-full"
                 placeholder="First dinner and breakfast requests"
                 {...register('firstMealRequests')}
+              />
+            </div>
+            <div>
+              <Text className="mb-2">Comments & Preferences</Text>
+              <TextArea
+                className="w-full"
+                placeholder="Any preferences or special comments"
+                {...register('commentsPreference')}
               />
             </div>
           </div>
