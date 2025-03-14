@@ -122,7 +122,7 @@ const ChefsInfo = ({
     {cartItem.formData && (
       <>
         <Text size="1">Date: {formatDate(cartItem.formData.date)}</Text>
-        <Text size="1">Location: {cartItem.formData.location}</Text>
+        <Text size="1">Time: {cartItem.formData.startTime}</Text>
       </>
     )}
     <CheckoutItemEdit

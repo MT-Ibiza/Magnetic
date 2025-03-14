@@ -33,8 +33,9 @@ export function CheckoutPage() {
                 Confirm & Pay
               </h2>
               <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
-              <Text className="text-gray-500 mt-2">
-              Ensure all details, especially dates and timings, are correct to avoid any inconveniences.
+              <Text className="text-gray-500 mt-2 italic">
+                Ensure all details, especially dates and timings, are correct to
+                avoid any inconveniences
               </Text>
               <div className="mt-8">
                 <ProductsSummary />

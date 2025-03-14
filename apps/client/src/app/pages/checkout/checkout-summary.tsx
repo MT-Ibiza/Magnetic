@@ -16,7 +16,7 @@ function CheckoutSummary(props: Props) {
 
   return (
     <div className="flex flex-col space-y-4">
-      <h3 className="text-2xl font-semibold mb-3">Summary order</h3>
+      <h3 className="text-2xl font-semibold mb-3">Order Summary</h3>
       <div className="flex flex-col gap-2">
         {services.map((service, index) => (
           <div key={index} className="flex justify-between">
