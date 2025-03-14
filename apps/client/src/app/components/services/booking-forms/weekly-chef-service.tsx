@@ -6,13 +6,16 @@ import Modal from '../../modal';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { FormSubmitParams } from '@magnetic/interfaces';
 import { TODAY_DATE } from '../../../constants';
+import ItemCounterButtons from '../../items/item-counter-buttons';
+import { useState } from 'react';
 
 export interface WeeklyChefServiceFormData {
   service: string;
   date: string;
   startTime: string;
   numberOfPeople: number;
-  kidsAges: string;
+  numberOfWeek: number;
+  childrenAges: string;
   location: string;
   dietaryComments: string;
   shoppingListRequests: string;
@@ -29,9 +32,12 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
   const { getCurrentUser } = useAuth();
   const { currentSelectItem } = useApp();
   const user = getCurrentUser();
+  const [amount, setAmount] = useState(formData?.numberOfWeek || 1);
+
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<WeeklyChefServiceFormData>({
     defaultValues: formData
@@ -39,8 +45,9 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
           service: currentSelectItem?.name || formData.service,
           date: formData.date,
           startTime: formData.startTime,
+          numberOfWeek: formData.numberOfWeek,
           numberOfPeople: formData.numberOfPeople,
-          kidsAges: formData.kidsAges,
+          childrenAges: formData.childrenAges,
           location: formData.location || user?.accommodation,
           dietaryComments: formData.dietaryComments,
           shoppingListRequests: formData.shoppingListRequests,
@@ -50,19 +57,39 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
   });
 
   const handleFormSubmit = async (data: WeeklyChefServiceFormData) => {
-    onSubmit({ form: data });
+    onSubmit({ form: data, quantity: amount });
   };
 
   return (
     <div className="">
       <Modal.Header onClose={onCancel}>
         <div className="flex justify-between">
-          <h2 className="text-2xl font-semibold">Weekly Chef Service</h2>
+          <h2 className="text-2xl font-semibold">Weekly Chef</h2>
         </div>
       </Modal.Header>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Modal.Body>
           <div className="p-10 flex flex-col gap-6">
+            <div>
+              <div className="product flex justify-between items-center border border-gray-300 p-4 mb-3 rounded-md">
+                <div className="flex gap-3 items-center">
+                  <Text>Number of Weeks</Text>
+                </div>
+                <div>
+                  <ItemCounterButtons
+                    currentAmount={amount}
+                    onClickAdd={() => {
+                      setAmount(amount + 1);
+                    }}
+                    onClickRemove={() => {
+                      if (amount > 1) {
+                        setAmount(amount - 1);
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <Text className="mb-2">Service</Text>
@@ -108,7 +135,7 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
                 )}
               </div>
               <div>
-                <Text className="mb-2">Number of people</Text>
+                <Text className="mb-2">Number of People</Text>
                 <Input
                   type="number"
                   min="1"
@@ -125,23 +152,23 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
                 )}
               </div>
               <div>
-                <Text className="mb-2">Kids and Ages</Text>
+                <Text className="mb-2">Children & Ages</Text>
                 <Input
                   type="text"
                   className="w-full"
                   placeholder="e.g., 2 kids, ages 5 and 8"
-                  {...register('kidsAges', {
+                  {...register('childrenAges', {
                     required: 'Kids and ages are required',
                   })}
                 />
-                {errors.kidsAges && (
+                {errors.childrenAges && (
                   <p className="text-[12px] text-red-500 pt-2">
-                    {errors.kidsAges.message}
+                    {errors.childrenAges.message}
                   </p>
                 )}
               </div>
               <div>
-                <Text className="mb-2">Location (Your Villa)</Text>
+                <Text className="mb-2">Location</Text>
                 <Input
                   type="text"
                   className="w-full"
@@ -158,7 +185,7 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
               </div>
             </div>
             <div>
-              <Text className="mb-2">Preferences and Dietary Comments</Text>
+              <Text className="mb-2">Preferences & Dietary Requirements</Text>
               <TextArea
                 className="w-full"
                 placeholder="Any dietary preferences or special comments"
@@ -173,7 +200,10 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
               )}
             </div>
             <div>
-              <Text className="mb-2">Shopping List Requests</Text>
+              <div className="flex gap-1 mb-2">
+                <Text className="">Shopping List -</Text>
+                <Text className="italic">Any grocery requests for arrival</Text>
+              </div>
               <TextArea
                 className="w-full"
                 placeholder="Any shopping list requests for ingredients"
@@ -181,9 +211,12 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
               />
             </div>
             <div>
-              <Text className="mb-2">
-                First Meal Requests (1st Dinner & 1st Breakfast)
-              </Text>
+              <div className="flex gap-1 mb-2">
+                <Text className="">First Meal -</Text>
+                <Text className="italic">
+                  Requirements for first dinner and breakfast
+                </Text>
+              </div>
               <TextArea
                 className="w-full"
                 placeholder="First dinner and breakfast requests"
@@ -196,7 +229,9 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
           <div className="flex justify-between gap-3 w-full">
             <h2 className="text-xl">
               Total:{' '}
-              {centsToEurosWithCurrency(currentSelectItem?.priceInCents || 0)}
+              {centsToEurosWithCurrency(
+                (currentSelectItem?.priceInCents || 0) * amount
+              )}
             </h2>
             <div className="flex gap-3">
               {onCancel && (
