@@ -30,13 +30,40 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
   const [fieldNameShow, setFieldNameShow] = useState<
     'capacity' | 'size' | 'budget' | 'dates'
   >('capacity');
-  const [capacity, setCapacity] = useState(searchParams.capacity || '');
-  const [size, setSize] = useState(searchParams.size || '');
-  const [budget, setBudget] = useState(searchParams.priceGreaterThan || '');
-  const handleCapacityChange = (name: string, value: string) =>
-    setCapacity(value);
-  const handleSizeChange = (name: string, value: string) => setSize(value);
-  const handleBudgetChange = (name: string, value: string) => setBudget(value);
+  const [capacityGt, setCapacityGt] = useState(searchParams.capacity_gt || '');
+  const [capacityLt, setCapacityLt] = useState(searchParams.capacity_lt || '');
+  const [sizeGt, setSizeGt] = useState(searchParams.size_gt || '');
+  const [sizeLt, setSizeLt] = useState(searchParams.size_lt || '');
+  const [budgetGt, setBudgetGt] = useState(searchParams.price_gt || '');
+  const [budgetLt, setBudgetLt] = useState(searchParams.price_lt || '');
+
+  const handleCapacityChange = (
+    name: string,
+    value: string,
+    data: { capacity_gt: string; capacity_lt: string }
+  ) => {
+    setCapacityGt(data.capacity_gt);
+    setCapacityLt(data.capacity_lt);
+  };
+
+  const handleSizeChange = (
+    name: string,
+    value: string,
+    data: { size_gt: string; size_lt: string }
+  ) => {
+    setSizeGt(data.size_gt);
+    setSizeLt(data.size_lt);
+  };
+
+  const handleBudgetChange = (
+    name: string,
+    value: string,
+    data: { size_gt: string; size_lt: string }
+  ) => {
+    setBudgetGt(data.size_gt);
+    setBudgetLt(data.size_lt);
+  };
+
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     searchParams.from ? new Date(searchParams.from) : null
   );
@@ -48,9 +75,12 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
   const handleSearch = () => {
     const updatedFilters = {
       ...searchParams,
-      capacity,
-      size,
-      budget,
+      capacity_gt: capacityGt || undefined,
+      capacity_lt: capacityLt || undefined,
+      size_gt: sizeGt || undefined,
+      size_lt: sizeLt || undefined,
+      price_gt: budgetGt || undefined,
+      price_lt: budgetLt || undefined,
       from: selectedDate
         ? moment(selectedDate).format('YYYY-MM-DD')
         : undefined,
@@ -79,13 +109,17 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
             onClick={() => setFieldNameShow('capacity')}
           >
             <span className="text-neutral-400">Capacity</span>
-            <span>{capacity || 'Select Capacity'}</span>
+            <span>
+              {capacityGt && capacityLt
+                ? `${capacityGt} - ${capacityLt}`
+                : 'Select Capacity'}
+            </span>
           </button>
         ) : (
           <SearchBoatInput
             name={fieldNameShow}
             options={capacityOptions}
-            defaultValue={capacity}
+            defaultValue={capacityGt}
             onChange={handleCapacityChange}
           />
         )}
@@ -109,13 +143,15 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
             onClick={() => setFieldNameShow('size')}
           >
             <span className="text-neutral-400">Size</span>
-            <span>{size || 'Select Size'}</span>
+            <span>
+              {sizeGt && sizeLt ? `${sizeGt} - ${sizeLt}` : 'Select Capacity'}
+            </span>
           </button>
         ) : (
           <SearchBoatInput
             name={fieldNameShow}
             options={sizeOptions}
-            defaultValue={size}
+            defaultValue={sizeGt}
             onChange={handleSizeChange}
           />
         )}
@@ -139,13 +175,13 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
             onClick={() => setFieldNameShow('budget')}
           >
             <span className="text-neutral-400">Budget</span>
-            <span>{budget || 'Select Budget'}</span>
+            {/* <span>{budget || 'Select Budget'}</span> */}
           </button>
         ) : (
           <SearchBoatInput
             name={fieldNameShow}
             options={budgetOptions}
-            defaultValue={budget}
+            defaultValue={budgetGt}
             onChange={handleBudgetChange}
           />
         )}

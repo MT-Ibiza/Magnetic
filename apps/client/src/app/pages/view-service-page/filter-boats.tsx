@@ -21,7 +21,7 @@ function FilterBoats(props: Props) {
   const { onChangeFilters } = props;
 
   const [searchParams, setSearchParams] = useState<BoatsSearchAttributes>({
-    price_gt: undefined,
+    price_gt: undefined, 
     price_lt: undefined,
     capacity_gt: undefined,
     capacity_lt: undefined,

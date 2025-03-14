@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, FC } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
 interface Props {
-  onChange: (name: string, value: string) => void;
+  onChange: (name: string, value: string, data: any) => void;
   name: string;
   className?: string;
   defaultValue?: string;
@@ -26,10 +26,13 @@ export const SearchBoatInput: FC<Props> = ({
     setValue(defaultValue);
   }, [defaultValue]);
 
-  const handleSelectOption = (item: { value: string; label: string }) => {
+  const handleSelectOption = (item: {
+    value: string;
+    label: string;
+    data?: any;
+  }) => {
     setValue(item.label);
-    onChange(name, item.value);
-    console.log('name:', name, 'value:', item.value);
+    onChange(name, item.value, item.data);
   };
 
   const renderSearchValues = () => {
