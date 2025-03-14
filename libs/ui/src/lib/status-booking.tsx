@@ -24,11 +24,13 @@ export function StatusBooking({ status }: Props) {
   const color = statusColors[status] || 'bg-gray-400';
   const textColor = textColors[status] || 'text-gray-400';
 
+  const name = status === 'modification_requested' ? 'Modification' : status;
+
   return (
     <div className="flex gap-3 items-center border rounded-lg px-4 py-2">
       <span className={`p-[7px] w-3 h-3 rounded-full ${color}`} />
       <Text className={`${textColor} capitalize`} size="1">
-        {status}
+        {name}
       </Text>
     </div>
   );

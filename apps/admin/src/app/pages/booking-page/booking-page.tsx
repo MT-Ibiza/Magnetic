@@ -109,7 +109,7 @@ export function BookingPage() {
                               toggleAlert();
                             }}
                           >
-                            <Text size="1">Confirmed Changes</Text>
+                            <Text size="1">Confirm Changes</Text>
                           </li>
                           <li
                             onClick={() => {
@@ -135,7 +135,7 @@ export function BookingPage() {
       </CardWrapper>
       <ConfirmAlert
         title="Change Status"
-        message={`Are you sure you want to change status booking to: ${selectedStatus}`}
+        message={`Are you sure you want to change status booking`}
         show={showAlert}
         onClickConfirm={async () => {
           await updateStatus.mutateAsync();

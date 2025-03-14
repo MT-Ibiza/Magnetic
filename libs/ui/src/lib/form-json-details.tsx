@@ -28,6 +28,7 @@ export function FormJsonDetails(props: Props) {
     dietaryComments: 'Dietary Comments',
     firstMealRequests: 'First Meal Requests',
     shoppingListRequests: 'Shopping List Requests',
+    commentsPreference: 'Comments & Preference',
     acceptSubstitutes: 'Accept Substitutes',
     contactName: 'Contact Name',
     flightNumber: 'Flight Number',
