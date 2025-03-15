@@ -51,7 +51,7 @@ export function calculateTotalsByService(items: CartItem[]): ServiceTotal[] {
   return items.reduce<ServiceTotal[]>((result, currentItem) => {
     const serviceName = currentItem.item.service?.name;
     const serviceType = currentItem.item.service?.serviceType;
-    const itemTotal = currentItem.item.priceInCents * currentItem.quantity;
+    const itemTotal = currentItem.priceInCents;
     let serviceGroup = result.find((group) => group.service === serviceName);
     if (!serviceGroup) {
       serviceGroup = { service: serviceName, total: 0, serviceType };

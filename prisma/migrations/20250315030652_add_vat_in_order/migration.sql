@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Order" ADD COLUMN     "totalWithVatInCents" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "vatInCents" INTEGER NOT NULL DEFAULT 0;

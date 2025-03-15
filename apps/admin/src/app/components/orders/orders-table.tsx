@@ -1,7 +1,6 @@
 import Loading from '../loading';
 import { ErrorText } from '../error-text';
 import { Link } from 'react-router-dom';
-import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { removePackage } from '../../apis/api-packages';
@@ -65,7 +64,7 @@ export function OrdersTable(props: Props) {
                 </Link>
               </td>
               <td>{order.user?.name}</td>
-              <td>{centsToEurosWithCurrency(order.totalInCents)}</td>
+              <td>{centsToEurosWithCurrency(order.totalWithVatInCents)}</td>
               <td> {moment(order.createdAt).format('DD MMM YYYY')}</td>
               <td>{order.status}</td>
             </tr>

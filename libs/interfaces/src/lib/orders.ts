@@ -13,6 +13,8 @@ export interface Order {
   userId: number;
   status: string;
   totalInCents: number;
+  vatInCents: number;
+  totalWithVatInCents: number;
   forms: OrderForm[];
 }
 
