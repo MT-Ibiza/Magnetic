@@ -24,16 +24,10 @@ export interface TransferFormData {
 interface Props {
   onSubmit: (data: FormSubmitParams<TransferFormData>) => void;
   formData?: any;
-  viewCol?: boolean;
   onCancel?: () => void;
 }
 
-export function TransferBookingForm({
-  onSubmit,
-  formData,
-  viewCol,
-  onCancel,
-}: Props) {
+export function TransferBookingForm({ onSubmit, formData, onCancel }: Props) {
   const { getCurrentUser } = useAuth();
   const user = getCurrentUser();
   const { currentSelectItem } = useApp();
@@ -52,8 +46,6 @@ export function TransferBookingForm({
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
-    watch,
   } = useForm<TransferFormData>({
     defaultValues: formData
       ? {

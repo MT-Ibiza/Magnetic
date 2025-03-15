@@ -50,6 +50,19 @@ export async function GET(request: Request) {
                     formType: true,
                   },
                 },
+                variants: {
+                  select: {
+                    id: true,
+                    priceInCents: true,
+                    name: true,
+                    capacity: true,
+                  },
+                },
+                transferAttributes: {
+                  select: {
+                    capacity: true,
+                  },
+                },
                 boatAttributes: {
                   select: {
                     id: true,
