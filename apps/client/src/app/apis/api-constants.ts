@@ -28,10 +28,14 @@ export const URL_GET_DASHBOARD = `${API_URL}/dashboard`;
 
 // Cart
 export const URL_GET_CART = `${API_URL}/cart`;
-export const URL_ADD_SERVICE_TO_CART = `${API_URL}/cart/services`;
-export const URL_ADD_PRODUCT_TO_CART = `${API_URL}/cart/products`;
-export const URL_ADD_BOAT_TO_CART = `${API_URL}/cart/services/boats`;
 export const REMOVE_CART = `${API_URL}/cart`;
+
+//CartItem
+export const URL_ADD_SERVICE_TO_CART = `${API_URL}/cart/cartItem/services`;
+export const URL_ADD_PRODUCT_TO_CART = `${API_URL}/cart/cartItem/products`;
+export const URL_ADD_BOAT_TO_CART = `${API_URL}/cart/cartItem/boats`;
+export const URL_REMOVE_CART_ITEM = (id: number) =>
+  `${API_URL}/cart/cartItem/${id}`;
 
 // Order
 export const URL_CREATE_ORDER = `${API_URL}/orders`;

@@ -6,6 +6,7 @@ import {
   removeServiceCart,
   createItemCartProduct,
   createItemBoatToCart,
+  deleteCartItem,
 } from '../apis/api-cart';
 
 export const useCart = () => {
@@ -79,6 +80,13 @@ export const useCart = () => {
     },
   });
 
+  const removeItemCart = useMutation({
+    mutationFn: (cartItemId: number) => deleteCartItem(cartItemId),
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
   return {
     isLoading,
     isError,
@@ -89,6 +97,7 @@ export const useCart = () => {
     addServiceToCart,
     addProductToCart,
     removeAllItemsCart,
+    removeItemCart,
     addBoatToCart,
     data,
   };

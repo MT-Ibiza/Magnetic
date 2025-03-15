@@ -5,6 +5,7 @@ import {
   REMOVE_CART,
   URL_ADD_PRODUCT_TO_CART,
   URL_ADD_BOAT_TO_CART,
+  URL_REMOVE_CART_ITEM,
 } from './api-constants';
 
 export async function getCart(): Promise<Cart> {
@@ -106,5 +107,22 @@ export async function createItemBoatToCart(params: {
   const dataJson = await response.json();
   if (!response.ok)
     throw new Error(dataJson.message || 'Failed to add boat to cart');
+  return dataJson;
+}
+
+export async function deleteCartItem(cartItemId: number): Promise<null> {
+  const url = URL_REMOVE_CART_ITEM(cartItemId);
+  const accessToken = localStorage.getItem('magnetic_auth');
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  const dataJson = await response.json();
+  if (!response.ok)
+    throw new Error(dataJson.message || 'Failed to add item to cart');
   return dataJson;
 }

@@ -13,22 +13,19 @@ interface Props {
 function CheckoutItemRemove(props: Props) {
   const { cartItem } = props;
   const { item } = cartItem;
-  const { addServiceToCart } = useCart();
+  const { removeItemCart } = useCart();
   const { removeItem } = useCartStore();
 
   const handleRemoveItem = () => {
-    addServiceToCart.mutate(
-      { cartItemId: cartItem.id, itemId: item.id, quantity: 0 },
-      {
-        onSuccess: () => {
-          removeItem(cartItem.id);
-          // showAlert('Item removed to the cart', 'success');
-        },
-        onError: () => {
-          // showAlert('Failed to remove item to the cart', 'error');
-        },
-      }
-    );
+    removeItemCart.mutate(cartItem.id, {
+      onSuccess: () => {
+        removeItem(cartItem.id);
+        // showAlert('Item removed to the cart', 'success');
+      },
+      onError: () => {
+        // showAlert('Failed to remove item to the cart', 'error');
+      },
+    });
   };
 
   return (
