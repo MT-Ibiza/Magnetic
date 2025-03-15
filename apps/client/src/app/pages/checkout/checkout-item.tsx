@@ -2,9 +2,9 @@ import { CartItem } from '@magnetic/interfaces';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { Text } from '@magnetic/ui';
 import { formatDate } from '../../utils';
+import { placeholderItemImage } from '../../constants';
 import CheckoutItemEdit from './checkout-item-edit';
 import CheckoutItemRemove from './checkout-item-remove';
-import { placeholderItemImage } from '../../constants';
 
 interface Props {
   cartItem: CartItem;
@@ -12,14 +12,12 @@ interface Props {
 
 function CheckoutItem(props: Props) {
   const { cartItem } = props;
-  const { item } = cartItem;
+  const { item, priceInCents } = cartItem;
   const { service, images, category } = item;
   const image = images?.length > 0 ? images[0].url : placeholderItemImage;
   const serviceType = service?.serviceType;
   const formType = category?.formType || service?.serviceType;
-  const price = cartItem.variant
-    ? cartItem.variant.priceInCents
-    : cartItem.item.priceInCents;
+  const price = priceInCents;
 
   return (
     <div className="lg:flex grid grid-cols-4 lg:justify-between w-full">
