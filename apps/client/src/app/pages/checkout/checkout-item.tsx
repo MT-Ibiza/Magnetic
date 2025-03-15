@@ -81,6 +81,7 @@ const TransferInfo = ({
       formData={cartItem.formData}
       formType={formType}
       item={cartItem.item}
+      cartItemId={cartItem.id}
     />
   </div>
 );
@@ -104,6 +105,7 @@ const BoatsInfo = ({
       formData={cartItem.formData}
       formType={formType}
       item={cartItem.item}
+      cartItemId={cartItem.id}
     />
   </div>
 );
@@ -127,6 +129,7 @@ const ChefsInfo = ({
       formData={cartItem.formData}
       formType={formType}
       item={cartItem.item}
+      cartItemId={cartItem.id}
     />
   </div>
 );
