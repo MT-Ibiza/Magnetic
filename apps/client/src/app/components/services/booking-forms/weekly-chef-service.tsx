@@ -200,26 +200,18 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
               )}
             </div>
             <div>
-              <div className="flex gap-1 mb-2">
-                <Text className="">Shopping List -</Text>
-                <Text className="italic">Any grocery requests for arrival</Text>
-              </div>
+              <Text className="mb-2">Shopping List</Text>
               <TextArea
                 className="w-full"
-                placeholder="Any shopping list requests for ingredients"
+                placeholder="Any grocery requests for arrival"
                 {...register('shoppingListRequests')}
               />
             </div>
             <div>
-              <div className="flex gap-1 mb-2">
-                <Text className="">First Meal -</Text>
-                <Text className="italic">
-                  Requirements for first dinner and breakfast
-                </Text>
-              </div>
+              <Text className="mb-2">First Meal</Text>
               <TextArea
                 className="w-full"
-                placeholder="First dinner and breakfast requests"
+                placeholder="Requirements for first dinner and breakfast"
                 {...register('firstMealRequests')}
               />
             </div>
