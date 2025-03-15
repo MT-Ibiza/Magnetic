@@ -9,59 +9,50 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'Invalid Token' }, { status: 403 });
     }
 
+    const { itemId, formData, seasonId } = await request.json();
     const userId = decodedToken.id;
-    const body = await request.json();
-    const { itemId, formData, seasonId } = body;
+    const SEABOB_PRICE_CENTS = 36500;
 
     if (!itemId) {
       return NextResponse.json(
-        {
-          message: 'Invalid item data. Ensure itemId is provided and valid.',
-        },
+        { message: 'Invalid item data. Ensure itemId is provided and valid.' },
         { status: 400 }
       );
     }
 
-    const item = await db.item.findUnique({
-      where: {
-        id: itemId,
-      },
-    });
-
+    const item = await db.item.findUnique({ where: { id: itemId } });
     if (!item) {
       return NextResponse.json(
-        {
-          message: `Item with id: ${itemId} not found`,
-        },
+        { message: `Item with id: ${itemId} not found` },
         { status: 404 }
       );
     }
 
-    let cart = await db.cart.findUnique({
-      where: { userId },
-    });
-
+    let cart = await db.cart.findUnique({ where: { userId } });
     if (!cart) {
-      cart = await db.cart.create({
-        data: {
-          userId,
-        },
-      });
+      cart = await db.cart.create({ data: { userId } });
     }
 
-    const season = await db.seasonPrice.findUnique({
-      where: {
-        id: seasonId,
-      },
-    });
+    let seasonPrice = 0;
+    if (seasonId) {
+      const season = await db.seasonPrice.findUnique({
+        where: { id: seasonId },
+      });
+      seasonPrice = season?.priceInCents || 0;
+    }
+
+    const basePrice = seasonPrice || item.priceInCents;
+    const totalPrice = formData.seabob
+      ? basePrice + SEABOB_PRICE_CENTS
+      : basePrice;
 
     const newCartItem = await db.cartItem.create({
       data: {
         cartId: cart.id,
-        itemId: itemId,
+        itemId,
         quantity: 1,
-        formData: formData,
-        priceInCents: season?.priceInCents || item.priceInCents,
+        formData,
+        priceInCents: totalPrice,
       },
     });
 
@@ -71,15 +62,9 @@ export async function POST(request: Request) {
     });
   } catch (error: any) {
     console.error('Error adding item to cart:', error);
-
     return NextResponse.json(
-      {
-        message: 'Internal Server Error',
-        error: error.message,
-      },
-      {
-        status: 500,
-      }
+      { message: 'Internal Server Error', error: error.message },
+      { status: 500 }
     );
   }
 }

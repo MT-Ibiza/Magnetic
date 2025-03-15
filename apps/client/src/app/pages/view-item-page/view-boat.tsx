@@ -133,10 +133,10 @@ export function ViewBoat({ item }: Props) {
               formData: form,
               priceInCents: cartItem.priceInCents,
             });
-            showAlert('Product added to the cart', 'success');
+            showAlert('Boat added to the cart', 'success');
           },
           onError: () => {
-            showAlert('Failed to add product to the cart', 'error');
+            showAlert('Failed to add Boat to the cart', 'error');
           },
         }
       );
