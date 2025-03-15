@@ -187,7 +187,7 @@ export function BoatCharterBookingForm({
               </div>
               <TextArea
                 className="w-full"
-                placeholder="Request preferred restaurant and time"
+                placeholder="Preferred restaurant & time"
                 {...register('lunchReservation')}
               />
             </div>
