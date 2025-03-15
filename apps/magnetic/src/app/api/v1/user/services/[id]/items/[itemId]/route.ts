@@ -57,6 +57,7 @@ export async function GET(
         },
         seasonPrices: {
           select: {
+            id: true,
             startMonth: true,
             endMonth: true,
             priceInCents: true,

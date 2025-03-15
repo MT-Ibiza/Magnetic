@@ -30,7 +30,7 @@ export const URL_GET_DASHBOARD = `${API_URL}/dashboard`;
 export const URL_GET_CART = `${API_URL}/cart`;
 export const URL_ADD_SERVICE_TO_CART = `${API_URL}/cart/services`;
 export const URL_ADD_PRODUCT_TO_CART = `${API_URL}/cart/products`;
-export const URL_ADD_BOAT_TO_CART = `${API_URL}/cart/boats`;
+export const URL_ADD_BOAT_TO_CART = `${API_URL}/cart/services/boats`;
 export const REMOVE_CART = `${API_URL}/cart`;
 
 // Order

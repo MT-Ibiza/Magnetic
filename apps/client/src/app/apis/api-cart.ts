@@ -4,6 +4,7 @@ import {
   URL_ADD_SERVICE_TO_CART,
   REMOVE_CART,
   URL_ADD_PRODUCT_TO_CART,
+  URL_ADD_BOAT_TO_CART,
 } from './api-constants';
 
 export async function getCart(): Promise<Cart> {
@@ -91,7 +92,7 @@ export async function createItemBoatToCart(params: {
   formData: any;
   seasonId?: number;
 }): Promise<{ message: string; cartItem: CartItem }> {
-  const url = URL_ADD_PRODUCT_TO_CART;
+  const url = URL_ADD_BOAT_TO_CART;
   const accessToken = localStorage.getItem('magnetic_auth');
   const response = await fetch(url, {
     method: 'POST',

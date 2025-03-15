@@ -16,6 +16,7 @@ export async function GET(request: Request) {
           select: {
             id: true,
             quantity: true,
+            priceInCents: true,
             formData: true,
             variantId: true,
             variant: {
@@ -30,7 +31,11 @@ export async function GET(request: Request) {
                 id: true,
                 name: true,
                 priceInCents: true,
-                images: true,
+                images: {
+                  select: {
+                    url: true,
+                  },
+                },
                 service: {
                   select: {
                     serviceType: true,

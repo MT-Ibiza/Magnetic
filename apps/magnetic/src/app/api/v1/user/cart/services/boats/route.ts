@@ -11,13 +11,12 @@ export async function POST(request: Request) {
 
     const userId = decodedToken.id;
     const body = await request.json();
-    const { itemId, quantity, formData, seasonId } = body;
+    const { itemId, formData, seasonId } = body;
 
-    if (!itemId || quantity < 0) {
+    if (!itemId) {
       return NextResponse.json(
         {
-          message:
-            'Invalid item data. Ensure itemId and quantity are provided and valid.',
+          message: 'Invalid item data. Ensure itemId is provided and valid.',
         },
         { status: 400 }
       );
@@ -60,7 +59,7 @@ export async function POST(request: Request) {
       data: {
         cartId: cart.id,
         itemId: itemId,
-        quantity: quantity,
+        quantity: 1,
         formData: formData,
         priceInCents: season?.priceInCents || item.priceInCents,
       },

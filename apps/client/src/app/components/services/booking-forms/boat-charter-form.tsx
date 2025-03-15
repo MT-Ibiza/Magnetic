@@ -17,7 +17,7 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { useApp } from '../../../hooks/useApp';
 import { searchAvailabilityBoat } from '../../../apis/api-boats';
-import { centsToEuros, centsToEurosWithCurrency } from '@magnetic/utils';
+import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { bookedBoatDates, getNumberMonth } from '../../../utils';
 import Modal from '../../modal';
 
@@ -36,7 +36,10 @@ export function BoatCharterBookingForm({
   const { seasonPrices, priceInCents } = currentSelectItem as Item;
   const [disabledDates, setDisabledDates] = useState<Date[]>([]);
   const seasonPrice = findSeasonPriceByMonth(seasonPrices || []);
-  const [price, setPrice] = useState(seasonPrice?.priceInCents || priceInCents);
+  const [selectedSeasonPrice, setSelectedSeasonPrice] = useState(seasonPrice);
+  const [price, setPrice] = useState(
+    selectedSeasonPrice?.priceInCents || priceInCents
+  );
   const priceSeabodInCents = 36500;
 
   const {
@@ -87,6 +90,7 @@ export function BoatCharterBookingForm({
         boat: currentSelectItem?.name || '',
         date: moment(data.date).toISOString(),
       },
+      seasonId: selectedSeasonPrice?.id,
     });
   };
 
@@ -122,6 +126,7 @@ export function BoatCharterBookingForm({
                           ? seasonPrice.priceInCents
                           : priceInCents;
                         setPrice(price);
+                        setSelectedSeasonPrice(seasonPrice);
                         field.onChange(moment(date).toISOString());
                       }}
                       className="w-full"
