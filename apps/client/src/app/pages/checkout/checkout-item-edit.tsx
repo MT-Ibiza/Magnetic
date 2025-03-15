@@ -5,6 +5,7 @@ import RenderBookingForm from '../../components/services/booking-forms/render-bo
 import { Item } from '@magnetic/interfaces';
 import Modal from '../../components/modal';
 import { useState } from 'react';
+import { useApp } from '../../hooks/useApp';
 
 interface Props {
   formType: string;
@@ -15,6 +16,7 @@ interface Props {
 function CheckoutItemEdit(props: Props) {
   const { formType, item, formData } = props;
   const [openFormModal, setOpenFormModal] = useState(false);
+  const { setSelectedItem } = useApp();
 
   return (
     <>
@@ -23,6 +25,7 @@ function CheckoutItemEdit(props: Props) {
           className="flex gap-1 items-center"
           onClick={() => {
             setOpenFormModal(true);
+            setSelectedItem(item);
           }}
         >
           <GoPencil size={12} />

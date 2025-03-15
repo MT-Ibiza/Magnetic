@@ -62,7 +62,6 @@ export function BoatCharterBookingForm({
 
   useEffect(() => {
     if (!currentSelectItem?.id) return;
-
     const fetchAvailability = async () => {
       try {
         const from = moment().format('YYYY-MM-DD'); // today

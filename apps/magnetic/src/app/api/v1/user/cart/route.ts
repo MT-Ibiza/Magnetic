@@ -50,6 +50,12 @@ export async function GET(request: Request) {
                     formType: true,
                   },
                 },
+                boatAttributes: {
+                  select: {
+                    id: true,
+                    secondName: true,
+                  },
+                },
               },
             },
           },
