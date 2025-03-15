@@ -93,9 +93,9 @@ export function PlanCard(props: Props) {
               </Link>
             )}
         </div>
-        {/* <Link to={seeMoreLink || ''}> */}
-        <Button className="w-full">View Details</Button>
-        {/* </Link> */}
+        <Button className="w-full" href={seeMoreLink}>
+          View Details
+        </Button>
       </div>
     </div>
   );
