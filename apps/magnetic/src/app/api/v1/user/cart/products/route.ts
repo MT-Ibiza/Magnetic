@@ -23,6 +23,21 @@ export async function POST(request: Request) {
       );
     }
 
+    const item = await db.item.findUnique({
+      where: {
+        id: itemId,
+      },
+    });
+
+    if (!item) {
+      return NextResponse.json(
+        {
+          message: `Item with id: ${itemId} not found`,
+        },
+        { status: 404 }
+      );
+    }
+
     let cart = await db.cart.findUnique({
       where: { userId },
     });
@@ -69,6 +84,7 @@ export async function POST(request: Request) {
           itemId: itemId,
           quantity: quantity,
           formData: formData,
+          priceInCents: item.priceInCents,
         },
       });
       return NextResponse.json({

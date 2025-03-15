@@ -22,11 +22,12 @@ export function CartShopping() {
   const groupedCart = getGroupedItemsByService();
 
   const total = cart.reduce(
-    (sum, cartItem) => sum + cartItem.item.priceInCents * cartItem.quantity,
+    (sum, cartItem) => sum + cartItem.priceInCents * cartItem.quantity,
     0
   );
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
   const [isBouncing, setIsBouncing] = useState(false);
 
   useEffect(() => {
@@ -143,7 +144,7 @@ export function CartShopping() {
                                     </p>
                                     <p className="text-xs">
                                       {centsToEurosWithCurrency(
-                                        cartItem.item.priceInCents
+                                        cartItem.priceInCents
                                       )}{' '}
                                       x unit
                                     </p>
