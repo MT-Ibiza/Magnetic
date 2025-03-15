@@ -19,7 +19,7 @@ interface Props {
 function ListDrinks(props: Props) {
   const { serviceId } = props;
   const [openFormModal, setOpenFormModal] = useState(false);
-  const { addServiceToCart, addProductToCart } = useCart();
+  const { addDrinkToCart } = useCart();
   const { addItem, removeItem, cart, totalDrinks } = useCartStore();
   const [currentItemSelected, setCurrentItemSelected] = useState<Item>();
   const [searchParams, setSearchParams] = useState<DrinkSearchAttributes>({
@@ -81,16 +81,15 @@ function ListDrinks(props: Props) {
     setOpenFormModal(false);
   };
 
-  const handleAddService = (data: FormSubmitParams<any>) => {
-    const { form, quantity, variantId } = data;
+  const handleSaveForm = (data: FormSubmitParams<any>) => {
+    const { form, quantity } = data;
     const newVal = quantity || 1;
     if (currentItemSelected) {
-      addServiceToCart.mutate(
+      addDrinkToCart.mutate(
         {
           itemId: currentItemSelected.id,
           quantity: newVal,
           formData: form,
-          variantId,
         },
         {
           onSuccess: (response) => {
@@ -103,23 +102,19 @@ function ListDrinks(props: Props) {
               formData: form,
               priceInCents: cartItem.priceInCents,
             });
-            showAlert('Product added to the cart', 'success');
+            showAlert('Drink added to the cart', 'success');
           },
           onError: () => {
-            showAlert('Failed to add product to the cart', 'error');
+            showAlert('Failed to add drink to the cart', 'error');
           },
         }
       );
     }
   };
 
-  const handleSaveAddProduct = (
-    item: Item,
-    quantity: number,
-    formData?: any
-  ) => {
+  const handleSaveAddDrink = (item: Item, quantity: number, formData?: any) => {
     const newVal = quantity;
-    addProductToCart.mutate(
+    addDrinkToCart.mutate(
       { itemId: item.id, quantity: newVal, formData },
       {
         onSuccess: (response) => {
@@ -144,16 +139,16 @@ function ListDrinks(props: Props) {
   const handleSaveRemoveProduct = (item: Item, quantity: number) => {
     const newVal = quantity;
     if (newVal >= 0) {
-      addProductToCart.mutate(
+      addDrinkToCart.mutate(
         { itemId: item.id, quantity: newVal },
         {
           onSuccess: (response) => {
             const { cartItem } = response;
             removeItem(cartItem.id);
-            showAlert('Item removed to the cart', 'success');
+            showAlert('Drink removed to the cart', 'success');
           },
           onError: () => {
-            showAlert('Failed to remove item to the cart', 'error');
+            showAlert('Failed to remove drink to the cart', 'error');
           },
         }
       );
@@ -165,7 +160,7 @@ function ListDrinks(props: Props) {
     if (totalDrinks === 0) {
       openForm();
     } else {
-      handleSaveAddProduct(item, amount, undefined);
+      handleSaveAddDrink(item, amount, undefined);
     }
   }
 
@@ -218,7 +213,7 @@ function ListDrinks(props: Props) {
       )}
       <Modal open={openFormModal}>
         <DrinksDeliveryBookingForm
-          onSubmit={handleAddService}
+          onSubmit={handleSaveForm}
           formData={{
             serviceId,
           }}

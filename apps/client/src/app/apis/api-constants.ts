@@ -34,6 +34,7 @@ export const REMOVE_CART = `${API_URL}/cart`;
 export const URL_ADD_SERVICE_TO_CART = `${API_URL}/cart/cartItem/services`;
 export const URL_ADD_PRODUCT_TO_CART = `${API_URL}/cart/cartItem/products`;
 export const URL_ADD_BOAT_TO_CART = `${API_URL}/cart/cartItem/boats`;
+export const URL_ADD_DRINK_TO_CART = `${API_URL}/cart/cartItem/drinks`;
 export const URL_REMOVE_CART_ITEM = (id: number) =>
   `${API_URL}/cart/cartItem/${id}`;
 

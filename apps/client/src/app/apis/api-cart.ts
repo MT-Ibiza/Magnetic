@@ -6,6 +6,7 @@ import {
   URL_ADD_PRODUCT_TO_CART,
   URL_ADD_BOAT_TO_CART,
   URL_REMOVE_CART_ITEM,
+  URL_ADD_DRINK_TO_CART,
 } from './api-constants';
 
 export async function getCart(): Promise<Cart> {
@@ -21,6 +22,29 @@ export async function getCart(): Promise<Cart> {
 
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message || 'Failed to fetch cart');
+  return dataJson;
+}
+
+export async function addItemCartDrink(params: {
+  itemId: number;
+  cartItemId?: number;
+  quantity: number;
+  formData?: any;
+}): Promise<{ message: string; cartItem: CartItem }> {
+  const url = URL_ADD_DRINK_TO_CART;
+  const accessToken = localStorage.getItem('magnetic_auth');
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(params),
+  });
+
+  const dataJson = await response.json();
+  if (!response.ok)
+    throw new Error(dataJson.message || 'Failed to add item to cart');
   return dataJson;
 }
 

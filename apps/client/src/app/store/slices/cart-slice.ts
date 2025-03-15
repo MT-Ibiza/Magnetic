@@ -79,7 +79,7 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
 
   clearCart: () => {
     localStorage.removeItem(CART_STORAGE_KEY);
-    set({ cart: [], total: 0 });
+    set({ cart: [], total: 0, totalDrinks: 0 });
   },
 
   calculateTotal: () => {
