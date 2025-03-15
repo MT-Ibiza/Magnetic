@@ -19,6 +19,7 @@ export async function GET(request: Request) {
             priceInCents: true,
             formData: true,
             variantId: true,
+            type: true,
             variant: {
               select: {
                 id: true,

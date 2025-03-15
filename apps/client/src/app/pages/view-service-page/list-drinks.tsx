@@ -101,6 +101,7 @@ function ListDrinks(props: Props) {
               quantity: newVal,
               formData: form,
               priceInCents: cartItem.priceInCents,
+              type: 'drinks',
             });
             showAlert('Drink added to the cart', 'success');
           },
@@ -125,6 +126,7 @@ function ListDrinks(props: Props) {
             item: item,
             quantity: newVal,
             priceInCents: cartItem.priceInCents,
+            type: 'drinks',
             formData,
           });
           showAlert('Drink added to the cart', 'success');
