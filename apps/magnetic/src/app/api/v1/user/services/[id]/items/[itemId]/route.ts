@@ -43,6 +43,11 @@ export async function GET(
           },
         },
         boatAttributes: true,
+        transferAttributes: {
+          select: {
+            capacity: true,
+          },
+        },
         variants: {
           select: {
             id: true,
