@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import db from 'apps/magnetic/src/app/libs/db';
-import { getTokenFromRequest } from '../../../util';
+import { getTokenFromRequest } from '../../../../util';
 
 export async function POST(request: Request) {
   try {
@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 
     const userId = decodedToken.id;
     const body = await request.json();
-    const { itemId, cartItemId, quantity, formData, variantId } = body;
+    const { itemId, quantity, formData, seasonId } = body;
 
     if (!itemId || quantity < 0) {
       return NextResponse.json(
@@ -50,63 +50,26 @@ export async function POST(request: Request) {
       });
     }
 
-    if (cartItemId) {
-      const existingCartItem = await db.cartItem.findFirst({
-        where: {
-          cartId: cart.id,
-          id: cartItemId,
-        },
-      });
+    const season = await db.seasonPrice.findUnique({
+      where: {
+        id: seasonId,
+      },
+    });
 
-      if (!existingCartItem) {
-        return NextResponse.json(
-          {
-            message: 'Item cart not found',
-          },
-          { status: 400 }
-        );
-      }
+    const newCartItem = await db.cartItem.create({
+      data: {
+        cartId: cart.id,
+        itemId: itemId,
+        quantity: quantity,
+        formData: formData,
+        priceInCents: season?.priceInCents || item.priceInCents,
+      },
+    });
 
-      if (quantity === 0) {
-        const updatedCartItem = await db.cartItem.delete({
-          where: { id: cartItemId },
-        });
-        return NextResponse.json({
-          message: 'Cart item removed successfully',
-          cartItem: updatedCartItem,
-        });
-      }
-
-      const newCartItem = await db.cartItem.create({
-        data: {
-          cartId: cart.id,
-          itemId: itemId,
-          quantity: quantity,
-          formData: formData,
-          priceInCents: item.priceInCents,
-          variantId,
-        },
-      });
-      return NextResponse.json({
-        message: 'Item added to cart successfully',
-        cartItem: newCartItem,
-      });
-    } else {
-      const newCartItem = await db.cartItem.create({
-        data: {
-          cartId: cart.id,
-          itemId: itemId,
-          quantity: quantity,
-          formData: formData,
-          variantId,
-          priceInCents: item.priceInCents,
-        },
-      });
-      return NextResponse.json({
-        message: 'Item added to cart successfully',
-        cartItem: newCartItem,
-      });
-    }
+    return NextResponse.json({
+      message: 'Boat added to cart successfully',
+      cartItem: newCartItem,
+    });
   } catch (error: any) {
     console.error('Error adding item to cart:', error);
 

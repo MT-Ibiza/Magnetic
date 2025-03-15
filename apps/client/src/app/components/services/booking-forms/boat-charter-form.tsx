@@ -17,7 +17,7 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { useApp } from '../../../hooks/useApp';
 import { searchAvailabilityBoat } from '../../../apis/api-boats';
-import { centsToEurosWithCurrency } from '@magnetic/utils';
+import { centsToEuros, centsToEurosWithCurrency } from '@magnetic/utils';
 import { bookedBoatDates, getNumberMonth } from '../../../utils';
 import Modal from '../../modal';
 
@@ -37,6 +37,7 @@ export function BoatCharterBookingForm({
   const [disabledDates, setDisabledDates] = useState<Date[]>([]);
   const seasonPrice = findSeasonPriceByMonth(seasonPrices || []);
   const [price, setPrice] = useState(seasonPrice?.priceInCents || priceInCents);
+  const priceSeabodInCents = 36500;
 
   const {
     register,
@@ -53,6 +54,8 @@ export function BoatCharterBookingForm({
         }
       : undefined,
   });
+
+  const total = price + (watch('seabob') ? priceSeabodInCents : 0);
 
   useEffect(() => {
     if (!currentSelectItem?.id) return;
@@ -201,7 +204,9 @@ export function BoatCharterBookingForm({
             <div>
               <Checkbox
                 name="disclaimerAccepted"
-                label="Add Seabob €365"
+                label={`Add Seabob ${centsToEurosWithCurrency(
+                  priceSeabodInCents
+                )}`}
                 defaultChecked={watch('seabob')}
                 onChange={(checked) => setValue('seabob', checked)}
               />
@@ -211,7 +216,7 @@ export function BoatCharterBookingForm({
         <Modal.Footer>
           <div className="flex justify-between gap-3 w-full">
             <h2 className="text-xl">
-              Total: {centsToEurosWithCurrency(price)}
+              Total: {centsToEurosWithCurrency(total)}
             </h2>
             <div className="flex gap-3">
               {onCancel && (

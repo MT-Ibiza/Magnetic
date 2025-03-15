@@ -14,7 +14,6 @@ import {
 import MobileItemSticky from '../../components/mobile-footer-item';
 import BoatCalendar from './boat-calendar';
 import Modal from '../../components/modal';
-import RenderBookingForm from '../../components/services/booking-forms/render-booking-form';
 import {
   Boat,
   FormSubmitParams,
@@ -25,6 +24,7 @@ import { useApp } from '../../hooks/useApp';
 import moment from 'moment';
 import BookBoatCard from './book-boat-card';
 import { getNumberMonth } from '../../utils';
+import BoatCharterBookingForm from '../../components/services/booking-forms/boat-charter-form';
 
 interface Props {
   item: Item;
@@ -36,7 +36,7 @@ export function ViewBoat({ item }: Props) {
   const [searchParams] = useSearchParams();
   const selectedDate = searchParams.get('date');
   const initialDate = selectedDate ? moment(selectedDate).toDate() : null;
-  const { addServiceToCart } = useCart();
+  const { addBoatToCart } = useCart();
   const { addItem } = useCartStore();
   const [startDate, setStartDate] = useState<Date | null>(initialDate);
   const [openFormModal, setOpenFormModal] = useState(false);
@@ -55,8 +55,9 @@ export function ViewBoat({ item }: Props) {
     latitude,
     longitude,
   } = boat;
-  const monthPrice = getSeasonPrice(seasonPrices, defaultMonthNumber);
-  const displayPrice = monthPrice?.priceInCents ?? priceInCents;
+
+  const seasonSelected = getSeasonPrice(seasonPrices, defaultMonthNumber);
+  const displayPrice = seasonSelected?.priceInCents ?? priceInCents;
   const [boatPrice, setBoatPrice] = useState(displayPrice);
   const calendarRef = useRef<HTMLDivElement | null>(null);
   const mapUrl = `https://maps.google.com/maps?z=15&t=m&q=loc:${latitude}+${longitude}&z=16&output=embed`;
@@ -112,16 +113,14 @@ export function ViewBoat({ item }: Props) {
     },
   ];
 
-  const handleAddService = (data: FormSubmitParams<any>) => {
-    const { form, quantity, variantId } = data;
-    const newVal = quantity || 1;
+  const handleAddBoat = (data: FormSubmitParams<any>) => {
+    const { form, seasonId } = data;
     if (item) {
-      addServiceToCart.mutate(
+      addBoatToCart.mutate(
         {
           itemId: item.id,
-          quantity: newVal,
           formData: form,
-          variantId,
+          seasonId,
         },
         {
           onSuccess: (response) => {
@@ -130,8 +129,9 @@ export function ViewBoat({ item }: Props) {
             addItem({
               id: cartItem.id,
               item: item,
-              quantity: newVal,
+              quantity: 1,
               formData: form,
+              priceInCents: cartItem.priceInCents,
             });
             showAlert('Product added to the cart', 'success');
           },
@@ -282,13 +282,12 @@ export function ViewBoat({ item }: Props) {
         />
       )}
       <Modal open={openFormModal}>
-        <RenderBookingForm
-          type={item?.category?.formType || item?.service.serviceType || ''}
+        <BoatCharterBookingForm
+          onSubmit={handleAddBoat}
           formData={{
             serviceId: item?.serviceId || 0,
           }}
-          onSubmit={handleAddService}
-          onClose={() => {
+          onCancel={() => {
             setOpenFormModal(false);
           }}
         />

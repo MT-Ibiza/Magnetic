@@ -5,6 +5,7 @@ import {
   createItemCartService,
   removeServiceCart,
   createItemCartProduct,
+  createItemBoatToCart,
 } from '../apis/api-cart';
 
 export const useCart = () => {
@@ -60,6 +61,17 @@ export const useCart = () => {
     },
   });
 
+  const addBoatToCart = useMutation({
+    mutationFn: (params: {
+      itemId: number;
+      formData: any;
+      seasonId?: number;
+    }) => createItemBoatToCart(params),
+    onSuccess: () => {
+      // refetch();
+    },
+  });
+
   const removeAllItemsCart = useMutation({
     mutationFn: () => removeServiceCart(),
     onSuccess: () => {
@@ -77,6 +89,7 @@ export const useCart = () => {
     addServiceToCart,
     addProductToCart,
     removeAllItemsCart,
+    addBoatToCart,
     data,
   };
 };

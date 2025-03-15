@@ -85,3 +85,25 @@ export async function createItemCartProduct(params: {
     throw new Error(dataJson.message || 'Failed to add item to cart');
   return dataJson;
 }
+
+export async function createItemBoatToCart(params: {
+  itemId: number;
+  formData: any;
+  seasonId?: number;
+}): Promise<{ message: string; cartItem: CartItem }> {
+  const url = URL_ADD_PRODUCT_TO_CART;
+  const accessToken = localStorage.getItem('magnetic_auth');
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(params),
+  });
+
+  const dataJson = await response.json();
+  if (!response.ok)
+    throw new Error(dataJson.message || 'Failed to add boat to cart');
+  return dataJson;
+}
