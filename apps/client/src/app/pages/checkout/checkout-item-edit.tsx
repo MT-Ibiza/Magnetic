@@ -6,17 +6,38 @@ import { Item } from '@magnetic/interfaces';
 import Modal from '../../components/modal';
 import { useState } from 'react';
 import { useApp } from '../../hooks/useApp';
+import { useCart } from '../../hooks/useCart';
 
 interface Props {
   formType: string;
   item: Item;
   formData?: any;
+  cartItemId: number;
 }
 
 function CheckoutItemEdit(props: Props) {
-  const { formType, item, formData } = props;
+  const { formType, item, cartItemId, formData } = props;
   const [openFormModal, setOpenFormModal] = useState(false);
   const { setSelectedItem } = useApp();
+  const { editFormItemCart } = useCart();
+
+  const handleEditForm = (formData: any) => {
+    editFormItemCart.mutate(
+      {
+        itemId: item.id,
+        cartItemId,
+        formData,
+      },
+      {
+        onSuccess: () => {
+          setOpenFormModal(false);
+        },
+        onError: () => {
+          // showAlert('Failed to remove item to the cart', 'error');
+        },
+      }
+    );
+  };
 
   return (
     <>
@@ -39,7 +60,7 @@ function CheckoutItemEdit(props: Props) {
           type={formType}
           formData={formData}
           onSubmit={(data) => {
-            // handleAddItem(0, data);
+            handleEditForm(data.form);
           }}
           onClose={() => {
             setOpenFormModal(false);

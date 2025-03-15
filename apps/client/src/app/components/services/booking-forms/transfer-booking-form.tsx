@@ -19,6 +19,7 @@ export interface TransferFormData {
   luggageAmount: number;
   childSeats: string;
   paymentConfirmed: boolean;
+  variantId?: number;
 }
 
 interface Props {
@@ -32,7 +33,9 @@ export function TransferBookingForm({ onSubmit, formData, onCancel }: Props) {
   const user = getCurrentUser();
   const { currentSelectItem } = useApp();
   const [total, setTotal] = useState(currentSelectItem?.priceInCents || 0);
-  const [selectedVariantId, setSelectedVariantId] = useState<number>();
+  const [selectedVariantId, setSelectedVariantId] = useState(
+    formData.variantId
+  );
 
   const variantOptions =
     currentSelectItem?.variants.map((variant) => {
@@ -42,9 +45,14 @@ export function TransferBookingForm({ onSubmit, formData, onCancel }: Props) {
       };
     }) || [];
 
+  const selectedVariant = variantOptions.find((variant) => {
+    return variant.value === selectedVariantId;
+  });
+
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<TransferFormData>({
     defaultValues: formData
@@ -59,6 +67,7 @@ export function TransferBookingForm({ onSubmit, formData, onCancel }: Props) {
           flightNumber: formData.flightNumber,
           luggageAmount: formData.luggageAmount,
           childSeats: formData.childSeats || '',
+          variantId: formData.variantId,
         }
       : {
           contactName: user?.name,
@@ -98,12 +107,16 @@ export function TransferBookingForm({ onSubmit, formData, onCancel }: Props) {
                     if (variant) {
                       setSelectedVariantId(variant.id);
                       setTotal(variant.priceInCents);
+                      setValue('variantId', variant.id);
                     }
                   }}
                 >
                   <option value="">
-                    {currentSelectItem?.name} (
-                    {currentSelectItem?.transferAttributes?.capacity} pax)
+                    {`${
+                      selectedVariant
+                        ? selectedVariant.text
+                        : `${currentSelectItem?.name} (${currentSelectItem?.transferAttributes?.capacity}) pax`
+                    }`}
                   </option>
                   {variantOptions.map((option, index) => (
                     <option value={option.value} key={index}>

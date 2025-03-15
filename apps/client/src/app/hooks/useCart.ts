@@ -8,6 +8,7 @@ import {
   createItemBoatToCart,
   deleteCartItem,
   addItemCartDrink,
+  updateFormCartItem,
 } from '../apis/api-cart';
 
 export const useCart = () => {
@@ -105,6 +106,17 @@ export const useCart = () => {
     },
   });
 
+  const editFormItemCart = useMutation({
+    mutationFn: (params: {
+      itemId: number;
+      cartItemId: number;
+      formData: any;
+    }) => updateFormCartItem(params),
+    onSuccess: () => {
+      // refetch();
+    },
+  });
+
   return {
     isLoading,
     isError,
@@ -118,6 +130,7 @@ export const useCart = () => {
     removeAllItemsCart,
     removeItemCart,
     addBoatToCart,
+    editFormItemCart,
     data,
   };
 };

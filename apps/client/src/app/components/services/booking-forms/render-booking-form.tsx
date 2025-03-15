@@ -11,15 +11,13 @@ import { FormSubmitParams } from '@magnetic/interfaces';
 
 interface Props {
   type: string;
-  itemId?: number;
   formData?: any;
   onSubmit: (data: FormSubmitParams<any>) => void;
-  viewCol?: boolean;
   onClose?: () => void;
 }
 
 function RenderBookingForm(props: Props) {
-  const { type, itemId, onSubmit, formData, viewCol, onClose } = props;
+  const { type, onSubmit, formData, onClose } = props;
   return (
     <div>
       {type === 'none' && <div></div>}
@@ -27,7 +25,6 @@ function RenderBookingForm(props: Props) {
         <TransferBookingForm
           onSubmit={onSubmit}
           formData={formData}
-          viewCol={viewCol}
           onCancel={onClose}
         />
       )}
