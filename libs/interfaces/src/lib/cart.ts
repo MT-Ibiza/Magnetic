@@ -16,6 +16,7 @@ export interface CartItem {
   quantity: number;
   formData?: any;
   variantId?: number;
+  priceInCents: number;
   variant?: {
     id: number;
     name: string;
