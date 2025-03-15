@@ -222,6 +222,7 @@ model CartItem {
   variant      ItemVariant? @relation(fields: [variantId], references: [id])
   variantId    Int?
   priceInCents Int          @default(0)
+  type         ServiceType  @default(none)
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 }
