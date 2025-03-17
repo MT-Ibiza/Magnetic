@@ -14,12 +14,12 @@ function CheckoutItemRemove(props: Props) {
   const { cartItem } = props;
   const { item } = cartItem;
   const { removeItemCart } = useCart();
-  const { removeItem } = useCartStore();
+  const { removeItem, removeService } = useCartStore();
 
   const handleRemoveItem = () => {
     removeItemCart.mutate(cartItem.id, {
       onSuccess: () => {
-        removeItem(cartItem.id);
+        removeService(cartItem.id);
         // showAlert('Item removed to the cart', 'success');
       },
       onError: () => {

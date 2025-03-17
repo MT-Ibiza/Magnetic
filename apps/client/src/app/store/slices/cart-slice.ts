@@ -8,6 +8,7 @@ export type CartSlice = {
   cart: CartItem[];
   total: number;
   addItem: (item: CartItem) => void;
+  removeService: (id: number) => void;
   removeItem: (id: number) => void;
   totalDrinks: number;
   clearCart: () => void;
@@ -53,6 +54,15 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
       };
     });
   },
+  removeService: (id) => {
+    set((state) => {
+      const updatedCart = state.cart.filter((item) => item.id !== id);
+      return {
+        cart: updatedCart,
+        total: get().calculateTotal(),
+      };
+    });
+  },
   removeItem: (id) => {
     set((state) => {
       const itemToRemove = state.cart.find((item) => item.id === id);
@@ -76,7 +86,6 @@ export const createCartSlice: StateCreator<StoreState, [], [], CartSlice> = (
       };
     });
   },
-
   clearCart: () => {
     localStorage.removeItem(CART_STORAGE_KEY);
     set({ cart: [], total: 0, totalDrinks: 0 });
