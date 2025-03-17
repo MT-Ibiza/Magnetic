@@ -47,3 +47,6 @@ export { Heading } from './lib/Heading';
 export { SelectCategory } from './lib/select-categories';
 export { Tooltip } from './lib/tooltip';
 export { StatusBooking } from './lib/status-booking';
+export { Modal } from './lib/modal';
+export { ItemCounterButtons } from './lib/item-counter-buttons';
+export { RenderBookingForm } from './lib/forms/render-booking-form';
