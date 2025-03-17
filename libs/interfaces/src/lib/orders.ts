@@ -95,6 +95,7 @@ export interface BookingForm {
     id: number;
     imageUrl: string;
   };
+  type: string;
 }
 
 export interface BookingUser {

@@ -1,6 +1,8 @@
 import {
   CardWrapper,
   FormJsonDetails,
+  Modal,
+  RenderBookingForm,
   StatusBooking,
   Text,
 } from '@magnetic/ui';
@@ -19,6 +21,7 @@ export function BookingPage() {
   const bookingId = parseInt(params.id || '');
   const [showAlert, setShowAlert] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<string>();
+  const [openFormModal, setOpenFormModal] = useState(false);
 
   const toggleAlert = () => {
     setShowAlert((prevState) => !prevState);
@@ -101,15 +104,14 @@ export function BookingPage() {
                               toggleAlert();
                             }}
                           >
-                            <Text size="1">Keep Booking Active</Text>
+                            <Text size="1">Keep Initial Booking</Text>
                           </li>
                           <li
                             onClick={() => {
-                              setSelectedStatus('completed');
-                              toggleAlert();
+                              setOpenFormModal(true);
                             }}
                           >
-                            <Text size="1">Confirm Changes</Text>
+                            <Text size="1">Edit Booking</Text>
                           </li>
                           <li
                             onClick={() => {
@@ -144,6 +146,24 @@ export function BookingPage() {
           setShowAlert(false);
         }}
       />
+      <Modal open={openFormModal}>
+        {data ? (
+          <RenderBookingForm
+            type={data.booking.type}
+            formData={data.booking.formData}
+            onSubmit={(data) => {
+              setSelectedStatus('completed');
+              toggleAlert();
+              // handleEditForm(data.form);
+            }}
+            onClose={() => {
+              setOpenFormModal(false);
+            }}
+          />
+        ) : (
+          <h1>Nothing</h1>
+        )}
+      </Modal>
     </>
   );
 }
