@@ -5,7 +5,6 @@ import {
   centsToEurosWithCurrency,
   sortImagesByPosition,
 } from '@magnetic/utils';
-import ItemHandleBookButtons from '../item-handle-book-buttons';
 
 interface Props {
   item: Item;

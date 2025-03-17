@@ -52,8 +52,10 @@ export function ViewItemDefault({ item }: Props) {
             addItem({
               id: cartItem.id,
               item: item,
-              quantity: newVal,
+              quantity: cartItem.quantity,
               formData: form,
+              priceInCents: cartItem.priceInCents,
+              type: cartItem.type,
             });
             showAlert('Product added to the cart', 'success');
           },

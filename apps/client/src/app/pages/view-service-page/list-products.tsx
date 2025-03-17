@@ -9,7 +9,6 @@ import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import Modal from '../../components/modal';
 import ItemCard from '../../components/items/cards/item-card';
-import FilterDrinks from './filter-drinks';
 
 interface Props {
   items: Item[];
@@ -59,11 +58,14 @@ function ListProducts(props: Props) {
           onSuccess: (response) => {
             const { cartItem } = response;
             closeForm();
+            debugger;
             addItem({
               id: cartItem.id,
               item: currentItemSelected,
-              quantity: newVal,
               formData: form,
+              quantity: cartItem.quantity,
+              priceInCents: cartItem.priceInCents,
+              type: cartItem.type,
             });
             showAlert('Product added to the cart', 'success');
           },
@@ -88,10 +90,12 @@ function ListProducts(props: Props) {
           const { cartItem } = response;
           closeForm();
           addItem({
+            formData,
             id: cartItem.id,
             item: item,
-            quantity: newVal,
-            formData,
+            quantity: cartItem.quantity,
+            priceInCents: cartItem.priceInCents,
+            type: cartItem.type,
           });
           showAlert('Product added to the cart', 'success');
         },

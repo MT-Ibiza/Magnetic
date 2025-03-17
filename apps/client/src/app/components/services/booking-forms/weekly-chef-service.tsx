@@ -38,6 +38,7 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<WeeklyChefServiceFormData>({
     defaultValues: formData
@@ -79,11 +80,15 @@ export function WeeklyChefServiceForm({ onSubmit, formData, onCancel }: Props) {
                   <ItemCounterButtons
                     currentAmount={amount}
                     onClickAdd={() => {
-                      setAmount(amount + 1);
+                      const newAmount = amount + 1;
+                      setAmount(newAmount);
+                      setValue('numberOfWeeks', newAmount);
                     }}
                     onClickRemove={() => {
                       if (amount > 1) {
-                        setAmount(amount - 1);
+                        const newAmount = amount - 1;
+                        setAmount(newAmount);
+                        setValue('numberOfWeeks', newAmount);
                       }
                     }}
                   />
