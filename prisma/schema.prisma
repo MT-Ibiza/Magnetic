@@ -248,6 +248,8 @@ model OrderBookingForm {
 
 model Order {
   id                  Int                @id @default(autoincrement())
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
   userId              Int
   user                User               @relation(fields: [userId], references: [id])
   items               OrderItem[]
@@ -255,8 +257,6 @@ model Order {
   vatInCents          Int                @default(0)
   totalWithVatInCents Int                @default(0)
   status              String             @default("pending")
-  createdAt           DateTime           @default(now())
-  updatedAt           DateTime           @updatedAt
   forms               OrderBookingForm[]
 }
 
@@ -269,6 +269,7 @@ model OrderItem {
   orderId      Int
   order        Order        @relation(fields: [orderId], references: [id])
   variant      ItemVariant? @relation(fields: [variantId], references: [id])
+  type         ServiceType  @default(none)
   variantId    Int?
   cartItemId   Int?
   createdAt    DateTime     @default(now())

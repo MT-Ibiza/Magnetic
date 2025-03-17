@@ -27,6 +27,13 @@ export async function POST(request: Request) {
       where: {
         id: itemId,
       },
+      include: {
+        service: {
+          select: {
+            serviceType: true,
+          },
+        },
+      },
     });
 
     if (!item) {
@@ -84,6 +91,7 @@ export async function POST(request: Request) {
           quantity: quantity,
           formData: formData,
           priceInCents: item.priceInCents,
+          type: item.service.serviceType,
           variantId,
         },
       });
@@ -100,6 +108,7 @@ export async function POST(request: Request) {
           formData: formData,
           variantId,
           priceInCents: item.priceInCents,
+          type: item.service.serviceType,
         },
       });
       return NextResponse.json({

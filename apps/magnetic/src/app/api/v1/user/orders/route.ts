@@ -24,6 +24,7 @@ export async function POST(request: Request) {
             quantity: true,
             formData: true,
             variantId: true,
+            type: true,
             item: {
               select: {
                 id: true,
@@ -53,13 +54,14 @@ export async function POST(request: Request) {
       const { items } = cart;
       const orderItems =
         items.map((cartItem) => {
-          const { item, quantity, variantId, id } = cartItem;
+          const { item, quantity, variantId, id, type } = cartItem;
           return {
             quantity,
             variantId,
             priceInCents: item.priceInCents,
             itemId: item.id,
             cartItemId: id,
+            type,
           };
         }) || [];
 
