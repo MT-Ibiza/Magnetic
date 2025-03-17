@@ -195,25 +195,48 @@ export async function DELETE(
   request: Request,
   { params }: { params: { id: number; itemId: number } }
 ) {
+  const item = await db.item.findUnique({
+    where: {
+      id: Number(params.itemId),
+      serviceId: Number(params.id),
+    },
+    select: {
+      images: {
+        select: {
+          url: true,
+        },
+      },
+    },
+  });
+
+  if (!item) {
+    return NextResponse.json({ message: 'Item not found' }, { status: 404 });
+  }
+
   try {
+    const images = item.images || [];
+    const urls = images.map((image) => image.url);
+
+    await Promise.all(urls.map((url) => deleteImageFromSpaces(url)));
+
+    await db.image.deleteMany({
+      where: {
+        itemId: Number(params.itemId),
+      },
+    });
+
     await db.item.delete({
       where: {
         id: Number(params.itemId),
         serviceId: Number(params.id),
       },
     });
+
     return NextResponse.json(
       { message: 'Product deleted successfully' },
       { status: 200 }
     );
   } catch (error: any) {
-    return NextResponse.json(
-      {
-        message: error.message,
-      },
-      {
-        status: 500,
-      }
-    );
+    return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
