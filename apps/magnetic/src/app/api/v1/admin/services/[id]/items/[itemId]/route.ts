@@ -206,6 +206,7 @@ export async function DELETE(
           url: true,
         },
       },
+      boatAttributes: true,
     },
   });
 
@@ -224,6 +225,16 @@ export async function DELETE(
         itemId: Number(params.itemId),
       },
     });
+
+    if (item.boatAttributes) {
+      const { id } = item.boatAttributes;
+      await db.boatAvailability.deleteMany({
+        where: {
+          boatId: id,
+          source: 'ical',
+        },
+      });
+    }
 
     await db.item.delete({
       where: {

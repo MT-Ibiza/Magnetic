@@ -25,9 +25,7 @@ export async function POST(
     }
 
     if (!boat.iCal) {
-      return new Response('No iCal URL found', {
-        status: 404,
-      });
+      return new Response('No iCal URL found');
     }
 
     const response = await fetch(boat.iCal);
