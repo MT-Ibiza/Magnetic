@@ -240,6 +240,7 @@ model OrderBookingForm {
   cancellationRequest   String?
   cancellationResponse  String?
   refundedAmountInCents Int?
+  type                  ServiceType   @default(none)
   status                BookingStatus @default(pending)
   order                 Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
   serviceId             Int

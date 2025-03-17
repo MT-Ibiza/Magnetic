@@ -53,6 +53,7 @@ export async function POST(request: Request) {
         quantity: 1,
         formData,
         priceInCents: totalPrice,
+        type: 'boat_rental',
       },
     });
 

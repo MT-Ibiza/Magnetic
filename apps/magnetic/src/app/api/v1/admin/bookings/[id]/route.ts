@@ -21,6 +21,7 @@ export async function GET(
             id: true,
             priceInCents: true,
             quantity: true,
+            type: true,
             item: {
               select: {
                 id: true,
@@ -43,7 +44,8 @@ export async function GET(
       booking?.id && booking.cartItemId
         ? await db.orderItem.findMany({
             where: {
-              cartItemId: booking.cartItemId,
+              orderId: booking.orderId,
+              type: booking.type,
             },
             select: {
               id: true,

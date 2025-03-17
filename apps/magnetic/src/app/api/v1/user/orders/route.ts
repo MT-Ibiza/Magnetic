@@ -80,6 +80,7 @@ export async function POST(request: Request) {
             serviceId: cartItem.item.serviceId,
             status: 'accepted' as 'accepted',
             cartItemId: cartItem.id,
+            type: cartItem.type,
           };
         });
 
@@ -91,7 +92,7 @@ export async function POST(request: Request) {
           );
         })
         .map((item: any) => {
-          return { data: item.formData, item: item.item };
+          return { data: item.formData, item: item.item, type: 'boat_rental' };
         });
 
       const totalOrder = orderItems.reduce(
