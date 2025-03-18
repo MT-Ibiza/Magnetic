@@ -71,6 +71,7 @@ export function RenderBookingForm(props: Props) {
       )}
       {type === 'boat_rental' && (
         <BoatCharterBookingForm
+          item={item}
           onSubmit={onSubmit}
           formData={formData}
           onCancel={onClose}

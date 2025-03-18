@@ -42,6 +42,7 @@ export async function GET(
                     url: true,
                   },
                 },
+                seasonPrices: true,
               },
             },
             variant: {
