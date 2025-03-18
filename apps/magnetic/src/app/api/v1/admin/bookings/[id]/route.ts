@@ -79,3 +79,37 @@ export async function GET(
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
+
+export async function PUT(request: Request) {
+  const data = await request.json();
+  const { orderItemId, formData, quantity } = data;
+
+  const orderItem = await db.orderItem.findUnique({
+    where: { id: orderItemId },
+    include: {
+      item: true,
+    },
+  });
+
+  if (!orderItem) {
+    return NextResponse.json(
+      { message: `order item not found` },
+      { status: 404 }
+    );
+  }
+
+  try {
+    const cartItem = await db.cartItem.update({
+      where: { id: orderItem.id },
+      data: {
+        formData,
+        quantity,
+        priceInCents: orderItem.item.priceInCents * quantity,
+      },
+    });
+
+    return NextResponse.json(cartItem);
+  } catch (error: any) {
+    return NextResponse.json({ message: error.message }, { status: 500 });
+  }
+}
