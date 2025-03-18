@@ -13,7 +13,7 @@ import { ErrorText } from '../../components/error-text';
 import ConfirmAlert from '../../components/confirm-alert';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { updateBookingStatus } from '../../apis/api-orders';
+import { updateBookingOrder, updateBookingStatus } from '../../apis/api-orders';
 import { toast } from 'sonner';
 import { Item } from '@magnetic/interfaces';
 import OrderItemsTable from '../../components/orders/order-items.table';
@@ -23,10 +23,14 @@ export function BookingPage() {
   const bookingId = parseInt(params.id || '');
   const [showAlert, setShowAlert] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<string>();
-  const [openFormModal, setOpenFormModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const toggleAlert = () => {
     setShowAlert((prevState) => !prevState);
+  };
+
+  const toggleModal = () => {
+    setOpenModal((prevState) => !prevState);
   };
 
   const { isLoading, isError, data, error, refetch } = useBooking(bookingId);
@@ -48,6 +52,25 @@ export function BookingPage() {
     },
   });
 
+  const updateBooking = useMutation({
+    mutationFn: (params: {
+      orderItemId: number;
+      formData: any;
+      quantity: number;
+    }) => {
+      return updateBookingOrder(bookingId, params);
+    },
+    onSuccess: () => {
+      toggleModal();
+      toast.success(`Booking updated!`);
+      setSelectedStatus('completed');
+      refetch();
+    },
+    onError: () => {
+      toast.success(`Booking couldn't be updated!`);
+    },
+  });
+
   if (isLoading) {
     return <Loading />;
   }
@@ -62,7 +85,8 @@ export function BookingPage() {
     0
   );
 
-  const item = orderItems.length > 0 ? orderItems[0].item : undefined;
+  const orderItem = orderItems[0];
+  const item = orderItems.length > 0 ? orderItem.item : undefined;
 
   return (
     <>
@@ -118,7 +142,7 @@ export function BookingPage() {
                           </li>
                           <li
                             onClick={() => {
-                              setOpenFormModal(true);
+                              setOpenModal(true);
                             }}
                           >
                             <Text size="1">Edit Booking</Text>
@@ -159,19 +183,21 @@ export function BookingPage() {
           setShowAlert(false);
         }}
       />
-      <Modal open={openFormModal}>
+      <Modal open={openModal}>
         {data ? (
           <RenderBookingForm
             item={item as Item}
             type={data.booking.type}
             formData={data.booking.formData}
-            onSubmit={(data) => {
-              setSelectedStatus('completed');
-              toggleAlert();
-              // handleEditForm(data.form);
+            onSubmit={async (data) => {
+              await updateBooking.mutateAsync({
+                orderItemId: orderItem.id,
+                formData: data.form,
+                quantity: data.quantity || 1,
+              });
             }}
             onClose={() => {
-              setOpenFormModal(false);
+              setOpenModal(false);
             }}
           />
         ) : (

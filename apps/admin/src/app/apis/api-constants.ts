@@ -96,7 +96,10 @@ export const URL_GET_ORDERS = `${API_URL}/orders`;
 export const URL_GET_BOOKINGS_ORDERS = `${API_URL}/bookings`;
 export const URL_GET_ORDER = (id: number) => `${API_URL}/orders/${id}`;
 export const URL_REMOVE_ORDER = (id: number) => `${API_URL}/orders/${id}`;
+
+//Bookings
 export const URL_GET_BOOKING = (id: number) => `${API_URL}/bookings/${id}`;
+export const URL_UPDATE_BOOKING = (id: number) => `${API_URL}/bookings/${id}`;
 export const URL_UPDATE_BOOKING_STATUS = (id: number) =>
   `${API_URL}/bookings/${id}/status`;
 

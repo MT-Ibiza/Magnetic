@@ -80,9 +80,19 @@ export async function GET(
   }
 }
 
-export async function PUT(request: Request) {
-  const data = await request.json();
-  const { orderItemId, formData, quantity } = data;
+export async function PUT(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const { orderItemId, formData, quantity } = await request.json();
+  const bookingId = Number(params.id);
+  const booking = await db.orderBookingForm.findUnique({
+    where: { id: bookingId },
+  });
+
+  if (!booking) {
+    return NextResponse.json({ message: 'Booking not found' }, { status: 404 });
+  }
 
   const orderItem = await db.orderItem.findUnique({
     where: { id: orderItemId },
@@ -93,22 +103,28 @@ export async function PUT(request: Request) {
 
   if (!orderItem) {
     return NextResponse.json(
-      { message: `order item not found` },
+      { message: `Order item not found` },
       { status: 404 }
     );
   }
 
   try {
-    const cartItem = await db.cartItem.update({
-      where: { id: orderItem.id },
+    const booking = await db.orderBookingForm.update({
+      where: { id: bookingId },
       data: {
         formData,
-        quantity,
-        priceInCents: orderItem.item.priceInCents * quantity,
+        status: 'completed',
       },
     });
 
-    return NextResponse.json(cartItem);
+    const orderItemDb = await db.orderItem.update({
+      where: { id: orderItemId },
+      data: {
+        quantity,
+      },
+    });
+
+    return NextResponse.json(booking);
   } catch (error: any) {
     return NextResponse.json({ message: error.message }, { status: 500 });
   }

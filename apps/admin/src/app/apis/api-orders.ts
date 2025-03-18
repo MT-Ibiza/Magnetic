@@ -5,6 +5,7 @@ import {
   URL_GET_ORDER,
   URL_GET_ORDERS,
   URL_REMOVE_ORDER,
+  URL_UPDATE_BOOKING,
   URL_UPDATE_BOOKING_STATUS,
 } from './api-constants';
 
@@ -109,6 +110,27 @@ export async function removeOrder(id: number): Promise<{ message: string }> {
     headers: {
       'Content-Type': 'application/json',
     },
+  });
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
+  return dataJson;
+}
+
+export async function updateBookingOrder(
+  bookingId: number,
+  params: {
+    orderItemId: number;
+    formData: any;
+    quantity: number;
+  }
+): Promise<any> {
+  const url = URL_UPDATE_BOOKING(bookingId);
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
   });
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);
