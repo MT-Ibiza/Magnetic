@@ -27,6 +27,7 @@ export async function GET(
                 id: true,
                 name: true,
                 priceInCents: true,
+                variants: true,
               },
             },
             variant: {
@@ -56,6 +57,7 @@ export async function GET(
                   id: true,
                   name: true,
                   priceInCents: true,
+                  variants: true,
                 },
               },
               variant: {
