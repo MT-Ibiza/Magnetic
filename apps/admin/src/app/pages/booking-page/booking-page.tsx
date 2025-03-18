@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { updateBookingStatus } from '../../apis/api-orders';
 import { toast } from 'sonner';
+import { Item } from '@magnetic/interfaces';
 
 export function BookingPage() {
   const params = useParams();
@@ -149,6 +150,7 @@ export function BookingPage() {
       <Modal open={openFormModal}>
         {data ? (
           <RenderBookingForm
+            item={data.orderItem.item as Item}
             type={data.booking.type}
             formData={data.booking.formData}
             onSubmit={(data) => {

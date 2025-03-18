@@ -1,8 +1,8 @@
 import { Button, Checkbox, Input, Modal, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
-import moment from 'moment';
 import { centsToEurosWithCurrency, TODAY_DATE } from '@magnetic/utils';
-import { FormSubmitParams, Item, UserBase } from '@magnetic/interfaces';
+import { CurrentUser, FormSubmitParams, Item } from '@magnetic/interfaces';
+import moment from 'moment';
 
 export interface DrinksDeliveryFormData {
   date: string;
@@ -17,7 +17,7 @@ interface Props {
   onSubmit: (data: FormSubmitParams<DrinksDeliveryFormData>) => void;
   formData?: any;
   onCancel?: () => void;
-  user?: UserBase;
+  user?: CurrentUser;
   item?: Item;
 }
 

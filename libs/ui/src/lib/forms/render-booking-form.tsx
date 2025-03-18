@@ -6,7 +6,7 @@ import SecurityBookingForm from './security-form';
 import ChildcareBookingForm from './childcare-booking-form';
 import WeeklyButlerServiceForm from './weekly-butler-form';
 import SingleChefServiceForm from './single-chef-service';
-import { FormSubmitParams } from '@magnetic/interfaces';
+import { FormSubmitParams, Item, CurrentUser } from '@magnetic/interfaces';
 import BoatCharterBookingForm from './boat-charter-form';
 
 interface Props {
@@ -14,15 +14,19 @@ interface Props {
   formData?: any;
   onSubmit: (data: FormSubmitParams<any>) => void;
   onClose?: () => void;
+  item?: Item;
+  user?: CurrentUser;
 }
 
 export function RenderBookingForm(props: Props) {
-  const { type, onSubmit, formData, onClose } = props;
+  const { type, onSubmit, formData, onClose, item, user } = props;
   return (
     <div>
       {type === 'none' && <div></div>}
       {type === 'transfer' && (
         <TransferBookingForm
+          item={item}
+          user={user}
           onSubmit={onSubmit}
           formData={formData}
           onCancel={onClose}
@@ -30,21 +34,18 @@ export function RenderBookingForm(props: Props) {
       )}
       {type === 'drinks' && (
         <DrinksDeliveryBookingForm
+          item={item}
+          user={user}
           onSubmit={onSubmit}
           formData={formData}
           onCancel={onClose}
         />
       )}
       {type === 'food' && <div></div>}
-      {/* {type === 'chefs' && (
-        <WeeklyChefServiceForm
-          onSubmit={onSubmit}
-          formData={formData}
-          onCancel={onClose}
-        />
-      )} */}
       {type === 'chef-single' && (
         <SingleChefServiceForm
+          item={item}
+          user={user}
           onSubmit={onSubmit}
           formData={formData}
           onCancel={onClose}
@@ -52,6 +53,8 @@ export function RenderBookingForm(props: Props) {
       )}
       {type === 'chef-weekly' && (
         <WeeklyChefServiceForm
+          item={item}
+          user={user}
           onSubmit={onSubmit}
           formData={formData}
           onCancel={onClose}
@@ -59,6 +62,8 @@ export function RenderBookingForm(props: Props) {
       )}
       {type === 'chef-weekly-waiter' && (
         <WeeklyButlerServiceForm
+          item={item}
+          user={user}
           onSubmit={onSubmit}
           formData={formData}
           onCancel={onClose}

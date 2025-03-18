@@ -2,7 +2,7 @@ import { Button, Input, Modal, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useState } from 'react';
-import { FormSubmitParams, Item } from '@magnetic/interfaces';
+import { FormSubmitParams, Item, CurrentUser } from '@magnetic/interfaces';
 
 export interface TransferFormData {
   date: string;
@@ -23,10 +23,7 @@ interface Props {
   onSubmit: (data: FormSubmitParams<TransferFormData>) => void;
   formData?: any;
   onCancel?: () => void;
-  user?: {
-    name: string;
-    phone: string;
-  };
+  user?: CurrentUser;
   item?: Item;
 }
 

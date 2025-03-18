@@ -12,7 +12,7 @@ import {
   placeholderItemImage,
 } from '@magnetic/utils';
 import { useState } from 'react';
-import { FormSubmitParams, Item } from '@magnetic/interfaces';
+import { CurrentUser, FormSubmitParams, Item } from '@magnetic/interfaces';
 
 interface SingleChefServiceFormData {
   date: string;
@@ -27,11 +27,7 @@ interface Props {
   onSubmit: (data: FormSubmitParams<SingleChefServiceFormData>) => void;
   formData?: any;
   onCancel?: () => void;
-  user?: {
-    name: string;
-    phone: string;
-    accommodation: string;
-  };
+  user?: CurrentUser;
   item?: Item;
 }
 
