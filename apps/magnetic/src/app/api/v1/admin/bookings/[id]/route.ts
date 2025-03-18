@@ -22,6 +22,7 @@ export async function GET(
             priceInCents: true,
             quantity: true,
             type: true,
+            cartItemId: true,
             item: {
               select: {
                 id: true,
@@ -52,6 +53,7 @@ export async function GET(
               id: true,
               priceInCents: true,
               quantity: true,
+              cartItemId: true,
               item: {
                 select: {
                   id: true,

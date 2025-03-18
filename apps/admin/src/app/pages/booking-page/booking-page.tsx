@@ -55,6 +55,9 @@ export function BookingPage() {
     return <ErrorText text={error?.message || ''} />;
   }
 
+  const orderItems = data?.orderItems || [];
+  const item = orderItems.length > 0 ? orderItems[0].item : undefined;
+
   return (
     <>
       <CardWrapper className="p-6">
@@ -150,7 +153,7 @@ export function BookingPage() {
       <Modal open={openFormModal}>
         {data ? (
           <RenderBookingForm
-            item={data.orderItem.item as Item}
+            item={item as Item}
             type={data.booking.type}
             formData={data.booking.formData}
             onSubmit={(data) => {
