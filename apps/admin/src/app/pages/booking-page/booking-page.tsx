@@ -16,6 +16,7 @@ import { useMutation } from '@tanstack/react-query';
 import { updateBookingStatus } from '../../apis/api-orders';
 import { toast } from 'sonner';
 import { Item } from '@magnetic/interfaces';
+import OrderItemsTable from '../../components/orders/order-items.table';
 
 export function BookingPage() {
   const params = useParams();
@@ -56,12 +57,17 @@ export function BookingPage() {
   }
 
   const orderItems = data?.orderItems || [];
+  const totalInCents = orderItems.reduce(
+    (sum, item) => sum + item.priceInCents * item.quantity,
+    0
+  );
+
   const item = orderItems.length > 0 ? orderItems[0].item : undefined;
 
   return (
     <>
       <CardWrapper className="p-6">
-        <div className="header gap-[15px] lg:flex-row lg:justify-between lg:items-center mb-6 pb-4">
+        <div className="gap-[15px] lg:flex-row lg:justify-between lg:items-center mb-6 pb-4">
           <div className="flex justify-between">
             <div className="flex flex-col gap-1">
               <h2 className="text-2xl font-semibold">Booking #{bookingId}</h2>
@@ -137,6 +143,9 @@ export function BookingPage() {
               </div>
             </div>
           )}
+          <div className="products mt-3">
+            <OrderItemsTable items={orderItems} totalInCents={totalInCents} />
+          </div>
         </div>
       </CardWrapper>
       <ConfirmAlert
