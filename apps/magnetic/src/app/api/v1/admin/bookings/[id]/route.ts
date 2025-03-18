@@ -37,6 +37,11 @@ export async function GET(
                 name: true,
                 priceInCents: true,
                 variants: true,
+                images: {
+                  select: {
+                    url: true,
+                  },
+                },
               },
             },
             variant: {
