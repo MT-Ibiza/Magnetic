@@ -4,6 +4,7 @@ import {
   URL_GET_BOOKINGS_ORDERS,
   URL_GET_ORDER,
   URL_GET_ORDERS,
+  URL_REMOVE_ORDER,
   URL_UPDATE_BOOKING_STATUS,
 } from './api-constants';
 
@@ -95,6 +96,19 @@ export async function updateBookingStatus(
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(params),
+  });
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
+  return dataJson;
+}
+
+export async function removeOrder(id: number): Promise<{ message: string }> {
+  const url = URL_REMOVE_ORDER(id);
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);

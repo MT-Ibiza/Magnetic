@@ -3,10 +3,11 @@ import { ErrorText } from '../error-text';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { removePackage } from '../../apis/api-packages';
 import { useOrders } from '../../hooks/useOrders';
-import moment from 'moment';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
+import { removeOrder } from '../../apis/api-orders';
+import moment from 'moment';
+import { Button } from '@magnetic/ui';
 
 interface Props {}
 
@@ -16,8 +17,15 @@ export function OrdersTable(props: Props) {
     useOrders();
 
   const mutation = useMutation<any, Error, any>({
-    mutationFn: (packageId) => {
-      return removePackage(packageId);
+    mutationFn: (orderId) => {
+      return removeOrder(orderId);
+    },
+    onSuccess: () => {
+      refetch();
+      toast.success(`Order removed!`);
+    },
+    onError: () => {
+      toast.success(`Order couldn't be removed!`);
     },
   });
 
@@ -29,17 +37,6 @@ export function OrdersTable(props: Props) {
     return <ErrorText text={error?.message || ''} />;
   }
 
-  const handleDelete = (id: number) => {
-    toast.promise(mutation.mutateAsync(id), {
-      loading: 'Deleting..',
-      success: () => {
-        refetch();
-        return 'Package removed!';
-      },
-      error: (data) => data.message,
-    });
-  };
-
   return (
     <div className="">
       <table className="table w-full">
@@ -50,6 +47,7 @@ export function OrdersTable(props: Props) {
             <th>Price</th>
             <th>Date</th>
             <th>Status</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -67,6 +65,15 @@ export function OrdersTable(props: Props) {
               <td>{centsToEurosWithCurrency(order.totalWithVatInCents)}</td>
               <td> {moment(order.createdAt).format('DD MMM YYYY')}</td>
               <td>{order.status}</td>
+              <td>
+                <Button
+                  onClick={async () => {
+                    await mutation.mutateAsync(order.id);
+                  }}
+                >
+                  Delete
+                </Button>
+              </td>
             </tr>
           ))}
         </tbody>

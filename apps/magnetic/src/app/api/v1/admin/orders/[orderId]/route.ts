@@ -58,3 +58,29 @@ export async function GET(
     );
   }
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { orderId: string } }
+) {
+  try {
+    await db.order.delete({
+      where: {
+        id: Number(params.orderId),
+      },
+    });
+    return NextResponse.json(
+      { message: 'Order deleted successfully' },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        message: error.message,
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
