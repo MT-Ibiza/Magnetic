@@ -33,6 +33,11 @@ export async function POST(request: Request) {
             serviceType: true,
           },
         },
+        category: {
+          select: {
+            formType: true,
+          },
+        },
       },
     });
 
@@ -91,8 +96,9 @@ export async function POST(request: Request) {
           quantity: quantity,
           formData: formData,
           priceInCents: item.priceInCents,
-          type: item.service.serviceType,
           variantId,
+          type:
+            (item.category?.formType as 'chefs') || item.service.serviceType,
         },
       });
       return NextResponse.json({
@@ -108,7 +114,8 @@ export async function POST(request: Request) {
           formData: formData,
           variantId,
           priceInCents: item.priceInCents,
-          type: item.service.serviceType,
+          type:
+            (item.category?.formType as 'chefs') || item.service.serviceType,
         },
       });
       return NextResponse.json({
