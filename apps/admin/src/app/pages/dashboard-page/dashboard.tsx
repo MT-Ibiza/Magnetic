@@ -1,30 +1,31 @@
-import { StatsCard } from '@magnetic/ui';
+import { ErrorText } from '../../components/error-text';
+import Loading from '../../components/loading';
+import { useAdminDashboard } from '../../hooks/useDashboard';
+import { Text } from '@magnetic/ui';
 
 export function DashboardPage() {
-  const options = [
-    {
-      title: 'Total Guests',
-      number: '10293',
-      icon: 'ticket-perforated',
-    },
-    {
-      title: 'Total Sales',
-      number: '$89,000',
-      icon: 'calendar',
-    },
-    {
-      title: 'Total Commissions',
-      number: '2040',
-      icon: 'house',
-    },
-  ];
+  const { isLoading, isError, data, error, refetch } = useAdminDashboard();
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <ErrorText text={error?.message || ''} />;
+  }
 
   return (
     <div className="flex flex-col gap-5">
       <div className="grid grid-cols-3 gap-x-[20px]">
-        {/* {options.map((option, index) => (
-            <StatsCard key={index} icon={option.icon} title={option.title} percentage={option.number}/>
-          ))} */}
+        <div className="">
+          <Text>New Bookings</Text>
+        </div>
+        <div className="">
+          <Text>Active Bookings</Text>
+        </div>
+        <div className="">
+          <Text>Upcoming Bookings</Text>
+        </div>
       </div>
     </div>
   );

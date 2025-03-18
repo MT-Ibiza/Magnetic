@@ -109,3 +109,9 @@ export interface BookingAdmin {
   booking: BookingForm;
   orderItems: OrderItem[];
 }
+
+export interface AdminDashboard {
+  new: BookingForm[];
+  active: BookingForm[];
+  upcoming: BookingForm[];
+}
