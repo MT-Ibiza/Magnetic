@@ -1,4 +1,4 @@
-import { AccordionSection, SectionCard } from '@magnetic/ui';
+import { AccordionSection, Badge, SectionCard } from '@magnetic/ui';
 import { useParams } from 'react-router-dom';
 import { useService } from '../../hooks/useService';
 import { useAuth } from '../../hooks/useAuth';
@@ -59,7 +59,6 @@ function ViewServicePage(props: Props) {
                   />
                 </>
               )}
-
               {service.instructions && service.termsAndConditions && (
                 <div className="w-14 my-[32px] border-b border-neutral-200 dark:border-neutral-700"></div>
               )}
@@ -78,12 +77,91 @@ function ViewServicePage(props: Props) {
             </div>
           </AccordionSection>
         )}
+        {service.serviceType === 'food' && (
+          <div className="grid grid-cols-3">
+            <a
+              href="https://www.samos-deli.com/online-shop/"
+              target="_blank"
+              className="cursor-pointer font-semibold text-white"
+            >
+              <div
+                className={`flex-shrink-0 relative w-full rounded-xl overflow-hidden group`}
+              >
+                <img
+                  className="rounded-[10px] w-full"
+                  src={'/images/food-card.jpg'}
+                />
+                <div className={`cursor-pointer relative`}>
+                  <div className="rounded-[10px] flex items-center bg-primary-700 hover:bg-primary-800 h-[30px] px-[30px] absolute z-10 bottom-[10px] right-[10px]">
+                    <label className="cursor-pointer text-white">
+                      Visit Shop
+                    </label>
+                  </div>
+                </div>
+                <span className="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity"></span>
+              </div>
+            </a>
+            {/* <a
+              href="https://www.samos-deli.com/online-shop/"
+              target="_blank"
+              className="cursor-pointer font-semibold text-white"
+            >
+              <div className={`cursor-pointer relative`}>
+                <div className="rounded-[10px] flex items-center bg-primary-700 h-[30px] px-[30px] absolute z-10 bottom-[10px] right-[10px]">
+                  <label className="cursor-pointer font-semibold text-white">
+                    Visit Shop
+                  </label>
+                </div>
+              </div>
+            </a> */}
+          </div>
+        )}
         {service.script ? (
           <>
             {service.serviceType === 'cart_rental' ? (
               <div>
-                <div className="flex justify-center gap-10 w-full pb-5">
+                <div className="grid grid-cols-2 gap-[15px] w-full pb-5">
                   <div
+                    className={`cursor-pointer relative ${
+                      selectedCarService === 'standard'
+                        ? 'opacity-100'
+                        : 'opacity-50'
+                    }`}
+                    onClick={() => {
+                      setSelectedCarService('standard');
+                    }}
+                  >
+                    <img
+                      className="rounded-[10px] w-full"
+                      src={'/images/standard-rental-car.jpg'}
+                    />
+                    <div className="rounded-[10px] flex items-center bg-primary-700 h-[30px] px-[30px] absolute z-10 bottom-[10px] right-[10px]">
+                      <label className="cursor-pointer font-semibold text-white">
+                        Standard
+                      </label>
+                    </div>
+                  </div>
+                  <div
+                    className={`cursor-pointer relative ${
+                      selectedCarService === 'premium'
+                        ? 'opacity-100'
+                        : 'opacity-50'
+                    }`}
+                    onClick={() => {
+                      setSelectedCarService('premium');
+                    }}
+                  >
+                    <img
+                      className="rounded-[10px]"
+                      src={'/images/premium-rental-car.jpg'}
+                    />
+                    <div className="rounded-[10px] flex items-center bg-primary-700 h-[30px] px-[30px] absolute z-10 bottom-[10px] right-[10px]">
+                      <label className="cursor-pointer font-semibold text-white">
+                        Premium
+                      </label>
+                    </div>
+                  </div>
+                  {/* <div
                     className={`border border-gray-600 rounded-md py-3 px-10 cursor-pointer hover:bg-primary-100 ${
                       selectedCarService === 'standard' &&
                       'border-primary-500 bg-primary-100'
@@ -104,8 +182,8 @@ function ViewServicePage(props: Props) {
                     }}
                   >
                     Premium
-                  </div>
-                  <div
+                  </div> */}
+                  {/* <div
                     className={`border border-gray-600 rounded-md py-3 px-10 cursor-pointer hover:bg-gray-50 ${
                       selectedCarService === 'luxury' &&
                       'border-primary-500 hover:bg-primary-100 bg-primary-100'
@@ -115,7 +193,7 @@ function ViewServicePage(props: Props) {
                     }}
                   >
                     Luxury
-                  </div>
+                  </div> */}
                 </div>
                 {selectedCarService === 'standard' && (
                   <div
@@ -127,13 +205,13 @@ function ViewServicePage(props: Props) {
                     dangerouslySetInnerHTML={{ __html: service.script }}
                   ></div>
                 )}
-                {selectedCarService === 'luxury' && (
+                {/* {selectedCarService === 'luxury' && (
                   <iframe
                     style={{ width: '100%', border: 'none', height: '40rem' }}
                     id="iframe_carplus_afiliado"
                     src="https://exclusiverentalcars.es/iframe-dynamic/"
                   ></iframe>
-                )}
+                )} */}
               </div>
             ) : (
               <div dangerouslySetInnerHTML={{ __html: service.script }}></div>

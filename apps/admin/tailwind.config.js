@@ -71,8 +71,10 @@ module.exports = {
         },
       },
       fontFamily: {
-        nunito: ['Nunito', 'sans-serif'],
-        book: ['MaisonNeueBook', 'sans-serif'],
+        regular: ['Poppins-Regular', 'sans-serif'],
+        medium: ['Poppins-Medium', 'sans-serif'],
+        semiBold: ['Poppins-SemiBold', 'sans-serif'],
+        bold: ['Poppins-Bold', 'sans-serif'],
       },
     },
   },
