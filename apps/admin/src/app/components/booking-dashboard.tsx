@@ -9,6 +9,20 @@ interface Props {
 }
 
 function BookingDashboard({ title, bookings }: Props) {
+  const getStatusIndicator = (status: string) => {
+    let color = 'bg-gray-400';
+    if (status === 'accepted' || status === 'completed') color = 'bg-green-500';
+    else if (status === 'cancelled') color = 'bg-red-500';
+    else if (status === 'pending' || status === 'modification_requested')
+      color = 'bg-orange-500';
+
+    return (
+      <span
+        className={`text-sm text-gray-700 inline-block w-3 h-3 rounded-full ${color}`}
+      />
+    );
+  };
+
   return (
     <div className="bg-white p-4 rounded-xl shadow-md border border-gray-200">
       <Text className="font-semiBold text-lg font-semibold mb-3">{title}</Text>
@@ -25,11 +39,7 @@ function BookingDashboard({ title, bookings }: Props) {
                     <p className="text-sm text-gray-500">
                       Arrival Date: {moment(booking.date).format('DD MMM YYYY')}
                     </p>
-                    <Link to={`/bookings/${booking.id}`}>
-                      <p className="text-sm font-medium text-primary-700 hover:text-primary-800 hover:underline">
-                        View
-                      </p>
-                    </Link>
+                    {getStatusIndicator(booking.status)}
                   </div>
                   <p className="text-sm text-gray-500">
                     Client: {booking.order.user.name}
@@ -37,6 +47,11 @@ function BookingDashboard({ title, bookings }: Props) {
                   <p className="text-sm text-gray-500">
                     Accommodation: {booking.service.name}
                   </p>
+                  <Link to={`/bookings/${booking.id}`}>
+                    <p className="text-end text-sm font-medium text-primary-700 hover:text-primary-800 hover:underline">
+                      View
+                    </p>
+                  </Link>
                 </>
               ) : (
                 <>
@@ -44,11 +59,7 @@ function BookingDashboard({ title, bookings }: Props) {
                     <p className="text-md font-medium text-gray-900">
                       {booking.service.name}
                     </p>
-                    <Link to={`/bookings/${booking.id}`}>
-                      <p className="text-sm font-medium text-primary-700 hover:text-primary-800 hover:underline">
-                        View
-                      </p>
-                    </Link>
+                    {getStatusIndicator(booking.status)}
                   </div>
                   <p className="text-sm text-gray-500">
                     Date: {moment(booking.date).format('DD MMM YYYY')}
@@ -56,9 +67,11 @@ function BookingDashboard({ title, bookings }: Props) {
                   <p className="text-sm text-gray-500">
                     Client: {booking.order.user.name}
                   </p>
-                  <p className="text-sm text-gray-700">
-                    Status: {booking.status}
-                  </p>
+                  <Link to={`/bookings/${booking.id}`}>
+                    <p className="text-end text-sm font-medium text-primary-700 hover:text-primary-800 hover:underline">
+                      View
+                    </p>
+                  </Link>
                 </>
               )}
             </div>
