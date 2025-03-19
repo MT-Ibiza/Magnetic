@@ -201,9 +201,11 @@ function ViewServicePage(props: Props) {
                   ></div>
                 )}
                 {selectedCarService === 'premium' && (
-                  <div
-                    dangerouslySetInnerHTML={{ __html: service.script }}
-                  ></div>
+                  <iframe
+                    scrolling="no"
+                    style={{ width: '100%', border: 'none', height: '50rem' }}
+                    src="https://classrentacar.es/afiliados/211/?lang=es"
+                  ></iframe>
                 )}
                 {/* {selectedCarService === 'luxury' && (
                   <iframe
