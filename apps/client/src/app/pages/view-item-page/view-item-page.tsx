@@ -20,6 +20,10 @@ export function ViewItemPage() {
     }
   }, [item]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }

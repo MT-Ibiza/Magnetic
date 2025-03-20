@@ -19,7 +19,7 @@ export function CheckoutPage() {
       {cart.length === 0 ? (
         <EmptyState
           title="Your cart is empty"
-          description="Search in our services and start to planning your trip"
+          description="Browse services to start planning your trip."
         >
           <Link to={`/services`}>
             <Button>View Services</Button>

@@ -9,7 +9,7 @@ import { BoatsSearchAttributes } from '@magnetic/interfaces';
 import moment from 'moment';
 import {
   budgetFilterOptions,
-  capacityFilterOptions,
+  capacityFilterOptions, 
   sizeFilterOptions,
 } from '../../constants';
 import {

@@ -69,32 +69,32 @@ export const budgetFilterOptions = [
   {
     value: '0',
     label: '0 - €2000',
-    data: { size_gt: '0', size_lt: '2000' },
+    data: { price_gt: '0', price_lt: '2000' },
   },
   {
     value: '1000',
     label: '€2000 - €4000',
-    data: { size_gt: '2000', size_lt: '4000' },
+    data: { price_gt: '2000', price_lt: '4000' },
   },
   {
     value: '4000',
     label: '€4000 - €6000',
-    data: { size_gt: '4000', size_lt: '6000' },
+    data: { price_gt: '4000', price_lt: '6000' },
   },
   {
     value: '6000',
     label: '€6000 - €8000',
-    data: { size_gt: '6000', size_lt: '8000' },
+    data: { price_gt: '6000', price_lt: '8000' },
   },
   {
     value: '8000',
     label: '€8000 - €10000',
-    data: { size_gt: '8000', size_lt: '10000' },
+    data: { price_gt: '8000', price_lt: '10000' },
   },
   {
     value: '10000',
     label: '€10000 +',
-    data: { size_gt: '10000' },
+    data: { price_gt: '10000' },
   },
 ];
 

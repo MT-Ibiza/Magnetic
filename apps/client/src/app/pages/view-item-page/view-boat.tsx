@@ -109,7 +109,7 @@ export function ViewBoat({ item }: Props) {
     {
       name: 'Fuel Consumption',
       icon: <FaGasPump className="text-lg" />,
-      value: fuelConsumption ? beamInMeters + ' L/H' : 'n/a',
+      value: fuelConsumption ? fuelConsumption + ' L/H' : 'n/a',
     },
   ];
 
