@@ -2,6 +2,7 @@ import { Text } from '@magnetic/ui';
 import { BookingForm } from '@magnetic/interfaces';
 import BookingCard from './dashboard/booking-card';
 import UpcomingBookingCard from './dashboard/upcoming-booking-card';
+import { Fragment } from 'react';
 
 interface Props {
   title: string;
@@ -15,13 +16,13 @@ function BookingDashboard({ title, bookings }: Props) {
       {bookings.length > 0 ? (
         <div className="space-y-3 max-h-[70vh] overflow-y-auto">
           {bookings.map((booking, index) => (
-            <>
+            <Fragment key={index}>
               {title === 'Upcoming Clients' ? (
                 <UpcomingBookingCard booking={booking} key={index} />
               ) : (
                 <BookingCard booking={booking} key={index} />
               )}
-            </>
+            </Fragment>
           ))}
         </div>
       ) : (

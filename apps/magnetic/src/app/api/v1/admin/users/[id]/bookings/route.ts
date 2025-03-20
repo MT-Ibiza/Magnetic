@@ -13,7 +13,7 @@ export async function GET(
         },
       },
       include: {
-        order: {
+        order: { 
           select: {
             id: true,
             status: true,
@@ -21,6 +21,22 @@ export async function GET(
             user: {
               select: {
                 name: true,
+              },
+            },
+            items: {
+              select: {
+                cartItemId: true,
+                type: true,
+                item: {
+                  select: {
+                    name: true,
+                    images: {
+                      select: {
+                        url: true,
+                      },
+                    },
+                  },
+                },
               },
             },
           },

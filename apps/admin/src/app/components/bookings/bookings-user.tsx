@@ -23,15 +23,27 @@ export function BookingsUser(props: Props) {
       <table className="min-w-full table-auto">
         <thead>
           <tr className="border-b border-neutral-200">
-            <th className="text-left text-sm font-semibold text-neutral-800 py-2 px-4">Booking</th>
-            <th className="text-left text-sm font-semibold text-neutral-800 py-2 px-4">Service</th>
-            <th className="text-left text-sm font-semibold text-neutral-800 py-2 px-4">Order</th>
+            <th className="text-left text-sm font-semibold text-neutral-800 py-2 px-4">
+              Booking
+            </th>
+            <th className="text-left text-sm font-semibold text-neutral-800 py-2 px-4">
+              Product
+            </th>
+            <th className="text-left text-sm font-semibold text-neutral-800 py-2 px-4">
+              Service
+            </th>
+            <th className="text-left text-sm font-semibold text-neutral-800 py-2 px-4">
+              Order
+            </th>
           </tr>
         </thead>
         <tbody>
           {bookings &&
             bookings.map((booking, index) => (
-              <tr className="border-b border-neutral-100 hover:bg-neutral-50" key={index}>
+              <tr
+                className="border-b border-neutral-100 hover:bg-neutral-50"
+                key={index}
+              >
                 <td className="py-2 px-4 text-sm text-neutral-700">
                   <Link
                     className="text-primary-600 hover:underline"
@@ -43,7 +55,26 @@ export function BookingsUser(props: Props) {
                     {moment(booking.createdAt).format('DD MMM YYYY')}
                   </Text>
                 </td>
-                <td className="py-2 px-4 text-sm text-neutral-700">{booking.service.name}</td>
+                <td className="py-2 px-4 text-sm text-neutral-700">
+                  {booking.order.items.length > 0 ? (
+                    booking.order.items.every(
+                      (cartItem) => cartItem.type === 'drinks'
+                    ) && booking.order.items.length > 1 ? (
+                      'Many products'
+                    ) : (
+                      <ul>
+                        {booking.order.items.map((cartItem, index) => (
+                          <li key={index}>{cartItem.item.name}</li>
+                        ))}
+                      </ul>
+                    )
+                  ) : (
+                    'No item'
+                  )}
+                </td>
+                <td className="py-2 px-4 text-sm text-neutral-700">
+                  {booking.service.name}
+                </td>
                 <td className="py-2 px-4 text-sm text-neutral-700">
                   <Link
                     className="hover:text-primary-600 hover:underline"

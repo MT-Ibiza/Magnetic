@@ -29,12 +29,12 @@ function BookingCard(props: Props) {
       </div>
       <div>
         {booking.type === 'drinks' ? (
-          <Text>Many products</Text>
+          <Text className="text-gray-500">Many products</Text>
         ) : (
-          <Text>{mainItem.item.name}</Text>
+          <Text className="text-gray-500">{mainItem.item.name}</Text>
         )}
       </div>
-      <Text className="text-gray-500 mt-1">
+      <Text className="text-gray-500">
         {moment(booking.date).format('DD MMM YYYY')}
       </Text>
       <Text className="text-gray-500">{booking.order.user.name}</Text>
