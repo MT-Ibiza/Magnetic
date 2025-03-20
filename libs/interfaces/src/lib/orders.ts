@@ -1,4 +1,4 @@
-import { Image } from './items';
+import { Image, Item } from './items';
 import { User, UserBase } from './users';
 import { ItemVariant } from './variants';
 
@@ -40,6 +40,7 @@ export interface OrderItem {
   item: ItemBaseFields;
   variantId?: number;
   variant?: ItemVariant;
+  type: string;
 }
 
 export interface OrderBookingForm {
@@ -91,6 +92,7 @@ export interface BookingForm {
       accommodation: string;
       arrivalDate: Date;
     };
+    items: OrderItem[];
   };
   service: {
     name: string;

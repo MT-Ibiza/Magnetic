@@ -6,7 +6,7 @@ export async function GET(request: Request) {
     const bookings = await db.orderBookingForm.findMany({
       orderBy: { createdAt: 'desc' },
       include: {
-        service: { 
+        service: {
           select: {
             id: true,
             name: true,
@@ -23,6 +23,22 @@ export async function GET(request: Request) {
                 email: true,
                 accommodation: true,
                 arrivalDate: true,
+              },
+            },
+            items: {
+              select: {
+                cartItemId: true,
+                type: true,
+                item: {
+                  select: {
+                    name: true,
+                    images: {
+                      select: {
+                        url: true,
+                      },
+                    },
+                  },
+                },
               },
             },
           },

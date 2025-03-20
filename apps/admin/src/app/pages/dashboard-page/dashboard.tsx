@@ -17,9 +17,16 @@ export function DashboardPage() {
   return (
     <div className="flex flex-col gap-5">
       <div className="grid grid-cols-3 gap-x-5">
-        <BookingDashboard title="New Bookings" bookings={data?.new || []} />
-        <BookingDashboard title="Active Bookings" bookings={data?.active || []} />
-        <BookingDashboard title="Upcoming Clients" bookings={data?.upcoming || []} />
+        {data && (
+          <>
+            <BookingDashboard title="New Bookings" bookings={data.new} />
+            <BookingDashboard title="Active Bookings" bookings={data.active} />
+            <BookingDashboard
+              title="Upcoming Clients"
+              bookings={data.upcoming}
+            />
+          </>
+        )}
       </div>
     </div>
   );
