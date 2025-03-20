@@ -2,7 +2,7 @@ import { Button } from '@headlessui/react';
 import { Text } from '@magnetic/ui';
 import { GoPencil } from 'react-icons/go';
 import RenderBookingForm from '../../components/services/booking-forms/render-booking-form';
-import { Item } from '@magnetic/interfaces';
+import { FormSubmitParams, Item } from '@magnetic/interfaces';
 import Modal from '../../components/modal';
 import { useState } from 'react';
 import { useApp } from '../../hooks/useApp';
@@ -19,18 +19,22 @@ function CheckoutItemEdit(props: Props) {
   const { formType, item, cartItemId, formData } = props;
   const [openFormModal, setOpenFormModal] = useState(false);
   const { setSelectedItem } = useApp();
-  const { editFormItemCart } = useCart();
+  const { editFormItemCart, refetch } = useCart();
 
-  const handleEditForm = (formData: any) => {
+  const handleEditForm = (cartItemData: FormSubmitParams<any>) => {
     editFormItemCart.mutate(
       {
-        itemId: item.id,
         cartItemId,
-        formData,
+        itemId: item.id,
+        formData: cartItemData.form,
+        quantity: cartItemData.quantity,
+        variantId: cartItemData.variantId,
+        seasonId: cartItemData.seasonId,
       },
       {
         onSuccess: () => {
           setOpenFormModal(false);
+          refetch();
         },
         onError: () => {
           // showAlert('Failed to remove item to the cart', 'error');
@@ -55,13 +59,11 @@ function CheckoutItemEdit(props: Props) {
           </Text>
         </Button>
       </div>
-      <Modal open={openFormModal} id={`modal-form-${item.id}`}>
+      <Modal open={openFormModal} id={`modal-form-${cartItemId}`}>
         <RenderBookingForm
           type={formType}
           formData={formData}
-          onSubmit={(data) => {
-            handleEditForm(data.form);
-          }}
+          onSubmit={handleEditForm}
           onClose={() => {
             setOpenFormModal(false);
           }}

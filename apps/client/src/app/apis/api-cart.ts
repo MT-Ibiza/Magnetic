@@ -1,4 +1,4 @@
-import { Cart, CartItem } from '@magnetic/interfaces';
+import { Cart, CartItem, EditCartItem } from '@magnetic/interfaces';
 import {
   URL_GET_CART,
   URL_ADD_SERVICE_TO_CART,
@@ -152,11 +152,9 @@ export async function deleteCartItem(cartItemId: number): Promise<null> {
   return dataJson;
 }
 
-export async function updateFormCartItem(params: {
-  itemId: number;
-  cartItemId: number;
-  formData: any;
-}): Promise<{ message: string; cartItem: CartItem }> {
+export async function updateFormCartItem(
+  params: EditCartItem
+): Promise<{ message: string; cartItem: CartItem }> {
   const url = URL_EDIT_FORM_CART_ITEM;
   const accessToken = localStorage.getItem('magnetic_auth');
   const response = await fetch(url, {

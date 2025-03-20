@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function PUT(request: Request) {
   const data = await request.json();
-  const { itemId, cartItemId, formData } = data;
+  const { itemId, cartItemId, formData, quantity, variantId, seasonId } = data;
 
   const existingCartItem = await db.cartItem.findFirst({
     where: { itemId: itemId, id: cartItemId },
@@ -18,6 +18,8 @@ export async function PUT(request: Request) {
       where: { id: existingCartItem.id },
       data: {
         formData,
+        quantity,
+        variantId,
       },
     });
 

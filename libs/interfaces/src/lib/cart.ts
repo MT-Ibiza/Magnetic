@@ -24,3 +24,12 @@ export interface CartItem {
     priceInCents: number;
   };
 }
+
+export interface EditCartItem {
+  itemId: number;
+  cartItemId: number;
+  formData: any;
+  quantity?: number;
+  variantId?: number;
+  seasonId?: number;
+}

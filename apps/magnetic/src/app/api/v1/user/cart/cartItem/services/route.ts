@@ -38,6 +38,12 @@ export async function POST(request: Request) {
             formType: true,
           },
         },
+        variants: {
+          select: {
+            id: true,
+            priceInCents: true,
+          },
+        },
       },
     });
 
@@ -60,6 +66,12 @@ export async function POST(request: Request) {
           userId,
         },
       });
+    }
+    let priceItem = item.priceInCents;
+
+    if (variantId) {
+      const variant = item.variants.find((v) => v.id === variantId);
+      priceItem = variant?.priceInCents || priceItem;
     }
 
     if (cartItemId) {
@@ -95,7 +107,7 @@ export async function POST(request: Request) {
           itemId: itemId,
           quantity: quantity,
           formData: formData,
-          priceInCents: item.priceInCents,
+          priceInCents: priceItem,
           variantId,
           type:
             (item.category?.formType as 'chefs') || item.service.serviceType,
@@ -113,7 +125,7 @@ export async function POST(request: Request) {
           quantity: quantity,
           formData: formData,
           variantId,
-          priceInCents: item.priceInCents,
+          priceInCents: priceItem,
           type:
             (item.category?.formType as 'chefs') || item.service.serviceType,
         },

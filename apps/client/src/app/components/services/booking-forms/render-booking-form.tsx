@@ -18,64 +18,67 @@ interface Props {
 
 function RenderBookingForm(props: Props) {
   const { type, onSubmit, formData, onClose } = props;
-  return (
-    <div>
-      {type === 'none' && <div></div>}
-      {type === 'transfer' && (
-        <TransferBookingForm
-          onSubmit={onSubmit}
-          formData={formData}
-          onCancel={onClose}
-        />
-      )}
-      {type === 'drinks' && (
+
+  switch (type) {
+    case 'drinks':
+      return (
         <DrinksDeliveryBookingForm
           onSubmit={onSubmit}
           formData={formData}
           onCancel={onClose}
         />
-      )}
-      {type === 'food' && <div></div>}
-      {/* {type === 'chefs' && (
-        <WeeklyChefServiceForm
-          onSubmit={onSubmit}
-          formData={formData}
-          onCancel={onClose}
-        />
-      )} */}
-      {type === 'chef-single' && (
+      );
+    case 'chef-single':
+      return (
         <SingleChefServiceForm
           onSubmit={onSubmit}
           formData={formData}
           onCancel={onClose}
         />
-      )}
-      {type === 'chef-weekly' && (
+      );
+    case 'chef-weekly':
+      return (
         <WeeklyChefServiceForm
           onSubmit={onSubmit}
           formData={formData}
           onCancel={onClose}
         />
-      )}
-      {type === 'chef-weekly-waiter' && (
+      );
+    case 'chef-weekly-waiter':
+      return (
         <WeeklyButlerServiceForm
           onSubmit={onSubmit}
           formData={formData}
           onCancel={onClose}
         />
-      )}
-      {type === 'boat_rental' && (
+      );
+    case 'transfer':
+      return (
+        <TransferBookingForm
+          onSubmit={onSubmit}
+          formData={formData}
+          onCancel={onClose}
+        />
+      );
+    case 'wellness':
+      return <div></div>;
+    case 'spa':
+      return <SpaBeautyBookingForm onSubmit={onSubmit} />;
+    case 'childcare':
+      return <ChildcareBookingForm onSubmit={onSubmit} />;
+    case 'security':
+      return <SecurityBookingForm onSubmit={onSubmit} />;
+    case 'boat_rental':
+      return (
         <BoatCharterBookingForm
           onSubmit={onSubmit}
           formData={formData}
           onCancel={onClose}
         />
-      )}
-      {type === 'spa' && <SpaBeautyBookingForm onSubmit={onSubmit} />}
-      {type === 'security' && <SecurityBookingForm onSubmit={onSubmit} />}
-      {type === 'childcare' && <ChildcareBookingForm onSubmit={onSubmit} />}
-    </div>
-  );
+      );
+    default:
+      return <div></div>;
+  }
 }
 
 export default RenderBookingForm;

@@ -1,4 +1,4 @@
-import { Cart } from '@magnetic/interfaces';
+import { Cart, EditCartItem } from '@magnetic/interfaces';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import {
   getCart,
@@ -107,11 +107,7 @@ export const useCart = () => {
   });
 
   const editFormItemCart = useMutation({
-    mutationFn: (params: {
-      itemId: number;
-      cartItemId: number;
-      formData: any;
-    }) => updateFormCartItem(params),
+    mutationFn: (params: EditCartItem) => updateFormCartItem(params),
     onSuccess: () => {
       // refetch();
     },
