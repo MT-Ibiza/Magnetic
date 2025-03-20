@@ -25,7 +25,7 @@ export const SelectCategory: FC<SelectCategoryProps> = ({
     categories
       .filter((cat) => cat.checked)
       .map((cat) => cat.name)
-      .join(', ') || 'Select category';
+      .join(', ') || 'Category';
 
   return (
     <Popover className="flex relative flex-1">
@@ -44,7 +44,7 @@ export const SelectCategory: FC<SelectCategoryProps> = ({
                 <span className="line-clamp-1">{selectedText}</span>
               </span>
               <span className="block mt-1 text-sm text-neutral-400 leading-none font-light">
-                Drink Category
+                Select categories
               </span>
             </div>
           </PopoverButton>

@@ -1,9 +1,18 @@
 import { CustomInput, SelectCategory } from '@magnetic/ui';
 import { useState } from 'react';
 
+interface CategoriesSelect {
+  name: string;
+  id: number;
+  checked?: boolean;
+}
+
 interface Props {
-  onChangeFilters: (filters: { drink?: string; category?: string }) => void;
-  categories: { name: string; id: number }[];
+  onChangeFilters: (filters: {
+    drink?: string;
+    categoriesIds?: string;
+  }) => void;
+  categories: CategoriesSelect[];
 }
 
 function FilterDrinks(props: Props) {
@@ -11,7 +20,7 @@ function FilterDrinks(props: Props) {
 
   const [searchParams, setSearchParams] = useState({
     drink: '',
-    category: undefined,
+    categoriesIds: undefined,
   });
 
   const handleSearchChange = (name: string, value: string, data?: any) => {
@@ -20,20 +29,30 @@ function FilterDrinks(props: Props) {
     onChangeFilters(updatedFilters);
   };
 
+  const handleCategoriesChange = (categories: CategoriesSelect[]) => {
+    const ids = categories
+      .filter((category) => category.checked)
+      .map((category) => category.id);
+    onChangeFilters({ ...searchParams, categoriesIds: ids.join(',') });
+  };
+
   return (
     <>
       <div className="hidden lg:block sticky z-10 top-[80px] w-full relative mt-8 rounded-[40px] xl:rounded-[49px] rounded-t-2xl xl:rounded-t-3xl shadow-xl dark:shadow-2xl bg-white dark:bg-neutral-800">
         <form className="lg:grid grid-cols-2 gap-x-[30px]">
           <CustomInput
             allowTyping
-            placeHolder="Search a drink"
+            placeHolder="Search"
             name="drink"
-            desc="Type a drink"
+            desc="Search your drinks"
             options={[]}
             value={searchParams.drink}
             onChange={handleSearchChange}
           />
-          <SelectCategory categoriesAvailable={categories} />
+          <SelectCategory
+            categoriesAvailable={categories}
+            onChange={handleCategoriesChange}
+          />
         </form>
       </div>
     </>

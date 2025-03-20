@@ -5,6 +5,6 @@ export interface DrinkBase {
 }
 
 export interface DrinkSearchAttributes {
-  categoriesIds?: string[];
+  categoriesIds?: string;
   name?: string;
 }

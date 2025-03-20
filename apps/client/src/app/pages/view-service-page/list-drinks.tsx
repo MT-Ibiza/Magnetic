@@ -164,11 +164,14 @@ function ListDrinks(props: Props) {
     handleSaveRemoveProduct(item, amount);
   }
 
-  async function handleSearch(filters: { drink?: string; category?: string }) {
+  async function handleSearch(filters: {
+    drink?: string;
+    categoriesIds?: string;
+  }) {
     console.log('filters: ', filters);
     setSearchParams({
       name: filters.drink,
-      categoriesIds: undefined,
+      categoriesIds: filters.categoriesIds,
     });
   }
 
