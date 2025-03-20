@@ -117,13 +117,13 @@ export const CustomInput: FC<CustomInputProps> = ({
         </>
       </div>
 
-      {showPopover && (
+      {showPopover && options.length > 0 && (
         <div
           className={`h-8 absolute self-center top-1/2 -translate-y-1/2 z-0 bg-white dark:bg-neutral-800 ${divHideVerticalLineClass}`}
         ></div>
       )}
 
-      {showPopover && (
+      {showPopover && options.length > 0 && (
         <div className="absolute left-0 z-40 w-full min-w-[200px] bg-white dark:bg-neutral-800 top-full mt-3 py-3 rounded-3xl shadow-xl max-h-96 overflow-y-auto">
           {filteredOptions.map((option) => (
             <span
