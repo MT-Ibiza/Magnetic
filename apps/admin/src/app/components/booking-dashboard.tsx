@@ -33,21 +33,20 @@ function BookingDashboard({ title, bookings }: Props) {
               key={booking.id}
               className="flex flex-col bg-gray-50 p-3 rounded-lg shadow-sm"
             >
-              {title === 'Upcoming Bookings' ? (
+              {title === 'Upcoming Clients' ? (
                 <>
                   <div className="flex justify-between items-center">
                     <p className="text-sm text-gray-500">
-                      Arrival Date: {moment(booking.date).format('DD MMM YYYY')}
+                      {moment(booking.date).format('DD MMM YYYY')}
                     </p>
-                    {getStatusIndicator(booking.status)}
                   </div>
                   <p className="text-sm text-gray-500">
-                    Client: {booking.order.user.name}
+                    {booking.order.user.name}
                   </p>
                   <p className="text-sm text-gray-500">
-                    Accommodation: {booking.service.name}
+                    {booking.order.user.accommodation}
                   </p>
-                  <Link to={`/bookings/${booking.id}`}>
+                  <Link to={`/clients/${booking.order.user.id}?tab=bookings`}>
                     <p className="text-end text-sm font-medium text-primary-700 hover:text-primary-800 hover:underline">
                       View
                     </p>
@@ -62,10 +61,10 @@ function BookingDashboard({ title, bookings }: Props) {
                     {getStatusIndicator(booking.status)}
                   </div>
                   <p className="text-sm text-gray-500">
-                    Date: {moment(booking.date).format('DD MMM YYYY')}
+                    {moment(booking.date).format('DD MMM YYYY')}
                   </p>
                   <p className="text-sm text-gray-500">
-                    Client: {booking.order.user.name}
+                    {booking.order.user.name}
                   </p>
                   <Link to={`/bookings/${booking.id}`}>
                     <p className="text-end text-sm font-medium text-primary-700 hover:text-primary-800 hover:underline">

@@ -87,6 +87,8 @@ export interface BookingForm {
     totalInCents: number;
     user: {
       name: string;
+      id: number;
+      accommodation: string;
     };
   };
   service: {

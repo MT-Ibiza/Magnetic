@@ -78,7 +78,7 @@ function ViewServicePage(props: Props) {
           </AccordionSection>
         )}
         {service.serviceType === 'food' && (
-          <div className="grid grid-cols-3">
+          <div className="grid lg:grid-cols-3">
             <a
               href="https://www.samos-deli.com/online-shop/"
               target="_blank"

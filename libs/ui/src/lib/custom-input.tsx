@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, FC } from 'react';
+import React, { useState, useRef, useEffect, FC, ReactNode } from 'react';
 
 export interface CustomInputProps {
   name: string;
@@ -13,6 +13,7 @@ export interface CustomInputProps {
   divHideVerticalLineClass?: string;
   autoFocus?: boolean;
   allowTyping?: boolean;
+  icon?: ReactNode;
 }
 
 export const CustomInput: FC<CustomInputProps> = ({
@@ -26,6 +27,7 @@ export const CustomInput: FC<CustomInputProps> = ({
   divHideVerticalLineClass = 'left-10 -right-0.5',
   autoFocus = false,
   allowTyping = false,
+  icon,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -84,20 +86,25 @@ export const CustomInput: FC<CustomInputProps> = ({
           showPopover ? 'nc-hero-field-focused' : ''
         }`}
       >
-        <div className="flex-grow">
-          <input
-            className="block w-full bg-transparent border-none focus:ring-0 p-0 focus:outline-none focus:placeholder-neutral-300 xl:text-lg font-semibold placeholder-neutral-800 dark:placeholder-neutral-200 truncate cursor-pointer"
-            placeholder={placeHolder}
-            value={inputValue}
-            readOnly={!allowTyping}
-            onClick={() => allowTyping && setShowPopover(true)}
-            onChange={allowTyping ? handleInputChange : undefined}
-            ref={inputRef}
-          />
-          <span className="block mt-0.5 text-sm text-neutral-400 font-light">
-            <span className="line-clamp-1">{desc}</span>
-          </span>
-        </div>
+        <>
+          {icon && (
+            <div className="text-neutral-300 dark:text-neutral-400">{icon}</div>
+          )}
+          <div className="flex-grow">
+            <input
+              className="block w-full bg-transparent border-none focus:ring-0 p-0 focus:outline-none focus:placeholder-neutral-300 xl:text-lg font-semibold placeholder-neutral-800 dark:placeholder-neutral-200 truncate cursor-pointer"
+              placeholder={placeHolder}
+              value={inputValue}
+              readOnly={!allowTyping}
+              onClick={() => allowTyping && setShowPopover(true)}
+              onChange={allowTyping ? handleInputChange : undefined}
+              ref={inputRef}
+            />
+            <span className="block mt-0.5 text-sm text-neutral-400 font-light">
+              <span className="line-clamp-1">{desc}</span>
+            </span>
+          </div>
+        </>
       </div>
 
       {showPopover && (

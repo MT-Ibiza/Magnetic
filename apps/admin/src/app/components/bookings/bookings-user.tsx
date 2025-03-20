@@ -35,7 +35,7 @@ export function BookingsUser(props: Props) {
                 <td className="py-2 px-4 text-sm text-neutral-700">
                   <Link
                     className="text-primary-600 hover:underline"
-                    to={`/orders/${booking.order.id}`}
+                    to={`/bookings/${booking.id}`}
                   >
                     {bookingsOptions[index]?.label || `Order #${booking.id}`}
                   </Link>

@@ -26,6 +26,7 @@ export function BookingsTable(props: Props) {
         <thead>
           <tr>
             <th>Booking</th>
+            <th>Date</th>
             <th>Client</th>
             <th>Service</th>
             <th>Status</th>
@@ -42,7 +43,9 @@ export function BookingsTable(props: Props) {
                       Booking #{booking.id}
                     </Text>
                   </Link>
-                  <Text size="1" className="text-gray-500">
+                </td>
+                    <td>
+                    <Text size="1" className="text-gray-500">
                     {booking.date
                       ? moment(booking.date).format('DD MMM YYYY')
                       : 'n/a'}
@@ -54,9 +57,6 @@ export function BookingsTable(props: Props) {
                       {user.name}
                     </p>
                   </Link>
-                  <Text size="1" className="text-sm text-gray-500">
-                    {user.email}
-                  </Text>
                 </td>
                 <td>
                   <div className="flex gap-3 items-center text-neutral-6000 dark:text-neutral-300">

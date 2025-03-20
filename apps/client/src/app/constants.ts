@@ -57,11 +57,11 @@ export const sizeFilterOptions = [
     label: '80-100ft',
     data: { size_gt: '80', size_lt: '100' },
   },
-  {
-    value: '100',
-    label: '100ft +',
-    data: { size_gt: '100' },
-  },
+  // {
+  //   value: '100',
+  //   label: '100ft +',
+  //   data: { size_gt: '100' },
+  // },
 ];
 
 export const budgetFilterOptions = [

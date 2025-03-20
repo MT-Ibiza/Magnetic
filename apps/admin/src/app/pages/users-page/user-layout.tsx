@@ -1,5 +1,5 @@
-import { Link, useParams } from 'react-router-dom';
-import { Fragment, useState } from 'react';
+import { Link, useParams, useLocation } from 'react-router-dom';
+import { Fragment, useState, useEffect } from 'react';
 import { useUser } from '../../hooks/useUser';
 import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
@@ -11,17 +11,20 @@ import { InformationProfile } from '../../components/users/information-profile';
 
 export function UserLayout() {
   const { id } = useParams();
+  const location = useLocation();
   const userId = parseInt(id || '');
-  const { isLoading, isError, user, bookings, data, refetch, error } =
-    useUser(userId);
+  const { isLoading, isError, user, bookings, error } = useUser(userId);
+  const searchParams = new URLSearchParams(location.search);
+  const tabParam = searchParams.get('tab');
+  const initialTab = tabParam === 'bookings' ? 1 : 0;
+  const [selectedIndexTab, setSelectedIndexTab] = useState(initialTab);
 
-  const routes = ['general-information'];
-  let path = location.pathname;
-  const currentRoute = path.split('/').pop();
-  const index = routes.indexOf(currentRoute || '');
-  const [selectedIndexTab, setSelectedIndexTab] = useState(
-    index >= 0 ? index : 0
-  );
+  useEffect(() => {
+    if (tabParam === 'bookings') {
+      setSelectedIndexTab(1);
+    }
+  }, [tabParam]);
+
   if (isLoading) {
     return <Loading />;
   }
@@ -45,11 +48,9 @@ export function UserLayout() {
                   hasCheckedClass="w-6 h-6 -top-0.5 right-2"
                   size="xl"
                 />
-                <div className="space-y-3 text-center flex flex-col items-center">
-                  <h2 className="text-2xl lg:text-2xl font-semibold">
-                    {user.firstName} {user.lastName}
-                  </h2>
-                </div>
+                <h2 className="text-2xl lg:text-2xl font-semibold">
+                  {user.firstName} {user.lastName}
+                </h2>
                 <div className="border-b border-neutral-200 dark:border-neutral-700 w-14"></div>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-4">
