@@ -37,8 +37,12 @@ function ListDrinks(props: Props) {
     setOpenFormModal((prevState) => !prevState);
   };
 
-  const toggleForm = () => {
-    setOpenFormModal((prevState) => !prevState);
+  const openForm = () => {
+    setOpenFormModal(true);
+  };
+
+  const closeForm = () => {
+    setOpenFormModal(false);
   };
 
   const cartMap = useMemo(
@@ -88,7 +92,7 @@ function ListDrinks(props: Props) {
         {
           onSuccess: (response) => {
             const { cartItem } = response;
-            toggleForm();
+            closeForm();
             addItem({
               id: cartItem.id,
               item: currentItemSelected,
@@ -114,7 +118,7 @@ function ListDrinks(props: Props) {
       {
         onSuccess: (response) => {
           const { cartItem } = response;
-          toggleForm();
+          closeForm();
           addItem({
             id: cartItem.id,
             item: item,
@@ -154,7 +158,7 @@ function ListDrinks(props: Props) {
   function handleAddItem(item: Item, amount: number) {
     setCurrentItemSelected(item);
     if (totalDrinks === 0) {
-      toggleForm();
+      openForm();
     } else {
       handleSaveAddDrink(item, amount, undefined);
     }
