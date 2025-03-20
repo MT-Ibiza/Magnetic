@@ -1,16 +1,20 @@
 import { Text } from '@magnetic/ui';
 import { useCartStore } from '../../hooks/useCartStore';
-import { calculateTotalsByService } from '../../utils';
-import { centsToEurosWithCurrency } from '@magnetic/utils';
+import {
+  centsToEurosWithCurrency,
+  getTotalByService,
+  ServiceTotal,
+} from '@magnetic/utils';
 
-interface Props {}
+interface Props {
+  servicesSummary: ServiceTotal[];
+  total: number;
+}
 
 function CheckoutSummary(props: Props) {
-  const {} = props;
-  const { cart } = useCartStore();
-  const services = calculateTotalsByService(cart);
+  const { servicesSummary: services, total: totalServices } = props;
 
-  const subtotal = services.reduce((a, b) => b.total + a, 0);
+  const subtotal = totalServices;
   const vat = subtotal * 0.21;
   const total = subtotal + vat;
 

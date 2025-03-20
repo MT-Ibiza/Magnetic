@@ -1,6 +1,9 @@
-import { centsToEurosWithCurrency } from '@magnetic/utils';
+import {
+  calculateTotalCartItems,
+  centsToEurosWithCurrency,
+} from '@magnetic/utils';
 import { useCartStore } from '../../hooks/useCartStore';
-import { calculateTotalCartItems, groupCartItemsByCategory } from '../../utils';
+import { groupCartItemsByCategory } from '../../utils';
 import CheckoutItem from './checkout-item';
 import { Text } from '@magnetic/ui';
 import { Link } from 'react-router-dom';

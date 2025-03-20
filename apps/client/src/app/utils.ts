@@ -8,12 +8,6 @@ type GroupedCategory = {
   items: CartItem[];
 };
 
-type ServiceTotal = {
-  service: string;
-  serviceType: string;
-  total: number;
-};
-
 export function formatDate(date: string | Date) {
   return moment(date).format('MMMM DD, YYYY');
 }
@@ -45,29 +39,6 @@ export function groupCartItemsByCategory(items: CartItem[]): GroupedCategory[] {
     category.items.push(currentItem);
     return result;
   }, []);
-}
-
-export function calculateTotalsByService(items: CartItem[]): ServiceTotal[] {
-  return items.reduce<ServiceTotal[]>((result, currentItem) => {
-    const serviceName = currentItem.item.service?.name;
-    const serviceType = currentItem.item.service?.serviceType;
-    const itemTotal = currentItem.priceInCents * currentItem.quantity;
-    let serviceGroup = result.find((group) => group.service === serviceName);
-    if (!serviceGroup) {
-      serviceGroup = { service: serviceName, total: 0, serviceType };
-      result.push(serviceGroup);
-    }
-    serviceGroup.total += itemTotal;
-    return result;
-  }, []);
-}
-
-export function calculateTotalCartItems(items: CartItem[]): number {
-  return items.reduce<number>((result, currentItem) => {
-    const itemTotal = currentItem.item.priceInCents * currentItem.quantity;
-    result += itemTotal;
-    return result;
-  }, 0);
 }
 
 export default function isInViewport(element: HTMLElement) {

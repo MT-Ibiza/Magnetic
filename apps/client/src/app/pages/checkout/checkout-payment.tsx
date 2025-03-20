@@ -1,23 +1,25 @@
-import { CardWrapper, Checkbox, Text } from '@magnetic/ui';
-import React, { useState } from 'react';
+import { Checkbox, Text } from '@magnetic/ui';
+import { useState } from 'react';
 import PaymentButton from '../../components/payment-button';
-import { useCartStore } from '../../hooks/useCartStore';
-import { calculateTotalsByService } from '../../utils';
 import { DRINKS_MINIMUM } from '../../constants';
-import { centsToEurosWithCurrency } from '@magnetic/utils';
+import { centsToEurosWithCurrency, ServiceTotal } from '@magnetic/utils';
 
-function CheckoutPayment() {
+interface Props {
+  servicesSummary: ServiceTotal[];
+  total: number;
+}
+
+function CheckoutPayment(props: Props) {
+  const { servicesSummary: services, total: totalServices } = props;
   const [accepted, setAccepted] = useState(false);
-  const { cart } = useCartStore();
-  const services = calculateTotalsByService(cart);
-
-  const total = services.reduce((sum, service) => sum + service.total, 0);
   const drinkService = services.find((s) => s.serviceType === 'drinks');
   const totalDrinks = drinkService?.total || 0;
   const missingAmount = DRINKS_MINIMUM - totalDrinks;
   const hasInsufficientDrinks = drinkService && totalDrinks < DRINKS_MINIMUM;
-
   const isPayDisabled = !accepted || hasInsufficientDrinks;
+  const subtotal = totalServices;
+  const vat = subtotal * 0.21;
+  const total = subtotal + vat;
 
   return (
     <div>
