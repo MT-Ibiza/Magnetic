@@ -89,6 +89,7 @@ export interface BookingForm {
       name: string;
       id: number;
       accommodation: string;
+      arrivalDate: Date;
     };
   };
   service: {

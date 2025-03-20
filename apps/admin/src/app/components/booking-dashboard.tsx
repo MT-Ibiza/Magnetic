@@ -37,7 +37,9 @@ function BookingDashboard({ title, bookings }: Props) {
                 <>
                   <div className="flex justify-between items-center">
                     <p className="text-sm text-gray-500">
-                      {moment(booking.date).format('DD MMM YYYY')}
+                      {moment(booking.order.user.arrivalDate).format(
+                        'DD MMM YYYY'
+                      )}
                     </p>
                   </div>
                   <p className="text-sm text-gray-500">

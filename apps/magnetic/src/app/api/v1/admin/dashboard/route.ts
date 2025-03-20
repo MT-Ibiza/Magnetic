@@ -21,7 +21,8 @@ export async function GET(request: Request) {
                 firstName: true,
                 lastName: true,
                 email: true,
-                accommodation: true
+                accommodation: true,
+                arrivalDate: true,
               },
             },
           },
