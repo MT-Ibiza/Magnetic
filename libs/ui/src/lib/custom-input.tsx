@@ -116,7 +116,7 @@ export const CustomInput: FC<CustomInputProps> = ({
           </div>
         </>
       </div>
-      {/*
+
       {showPopover && (
         <div
           className={`h-8 absolute self-center top-1/2 -translate-y-1/2 z-0 bg-white dark:bg-neutral-800 ${divHideVerticalLineClass}`}
@@ -137,7 +137,7 @@ export const CustomInput: FC<CustomInputProps> = ({
             </span>
           ))}
         </div>
-      )} */}
+      )}
     </div>
   );
 };
