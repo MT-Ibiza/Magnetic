@@ -47,11 +47,11 @@ export async function GET(request: Request) {
     });
 
     const newBookings = bookings.filter(
-      (b) => b.status === 'accepted' && !b.modificationResponse
+      (b) => b.status === 'accepted' && b.date && b.date > new Date()
     );
 
-    const activeBookings = bookings.filter(
-      (b) => b.status === 'accepted' && b.date && b.date > new Date()
+    const activeBookings = bookings.filter((b) =>
+      ['modification_requested', 'accepted'].includes(b.status)
     );
 
     const upcomingClients = bookings.filter(
