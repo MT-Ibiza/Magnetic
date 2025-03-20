@@ -222,7 +222,10 @@ function ViewServicePage(props: Props) {
         ) : (
           <>
             {service.serviceType === 'drinks' && (
-              <ListDrinks serviceId={serviceId} />
+              <ListDrinks
+                serviceId={serviceId}
+                categories={service.categories}
+              />
             )}
             {service.serviceType === 'boat_rental' && <ListBoats />}
             {!['drinks', 'boat_rental'].includes(service.serviceType) && (

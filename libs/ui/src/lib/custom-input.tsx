@@ -35,6 +35,7 @@ export const CustomInput: FC<CustomInputProps> = ({
   const [inputValue, setInputValue] = useState(
     options.find((opt) => opt.value === value)?.label || ''
   );
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (showPopover) {
@@ -69,7 +70,15 @@ export const CustomInput: FC<CustomInputProps> = ({
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    const value = e.target.value;
+    const name = e.target.name;
+    setInputValue(value);
+
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(() => {
+      onChange(name, value);
+    }, 500);
   };
 
   const filteredOptions = allowTyping
@@ -95,6 +104,7 @@ export const CustomInput: FC<CustomInputProps> = ({
               className="block w-full bg-transparent border-none focus:ring-0 p-0 focus:outline-none focus:placeholder-neutral-300 xl:text-lg font-semibold placeholder-neutral-800 dark:placeholder-neutral-200 truncate cursor-pointer"
               placeholder={placeHolder}
               value={inputValue}
+              name={name}
               readOnly={!allowTyping}
               onClick={() => allowTyping && setShowPopover(true)}
               onChange={allowTyping ? handleInputChange : undefined}
@@ -106,7 +116,7 @@ export const CustomInput: FC<CustomInputProps> = ({
           </div>
         </>
       </div>
-
+      {/*
       {showPopover && (
         <div
           className={`h-8 absolute self-center top-1/2 -translate-y-1/2 z-0 bg-white dark:bg-neutral-800 ${divHideVerticalLineClass}`}
@@ -127,7 +137,7 @@ export const CustomInput: FC<CustomInputProps> = ({
             </span>
           ))}
         </div>
-      )}
+      )} */}
     </div>
   );
 };

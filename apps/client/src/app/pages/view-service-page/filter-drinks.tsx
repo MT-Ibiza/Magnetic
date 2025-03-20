@@ -2,7 +2,7 @@ import { CustomInput, SelectCategory } from '@magnetic/ui';
 import { useState } from 'react';
 
 interface Props {
-  onChangeFilters: (filters: any) => void;
+  onChangeFilters: (filters: { drink?: string; category?: string }) => void;
   categories: { name: string; id: number }[];
 }
 
@@ -10,15 +10,14 @@ function FilterDrinks(props: Props) {
   const { onChangeFilters, categories } = props;
 
   const [searchParams, setSearchParams] = useState({
-    units: undefined,
-    category: '',
+    drink: '',
+    category: undefined,
   });
 
   const handleSearchChange = (name: string, value: string, data?: any) => {
     const updatedFilters = { ...searchParams, [name]: value };
     setSearchParams(updatedFilters);
     onChangeFilters(updatedFilters);
-    console.log(searchParams);
   };
 
   return (
@@ -28,16 +27,10 @@ function FilterDrinks(props: Props) {
           <CustomInput
             allowTyping
             placeHolder="Search a drink"
-            name="category"
+            name="drink"
             desc="Type a drink"
-            options={[
-              { value: 'cocktails', label: 'Cocktail' },
-              { value: 'beer', label: 'Beer' },
-              { value: 'wine', label: 'Wine' },
-              { value: 'whiskey', label: 'Whiskey' },
-              { value: 'non-alcoholic', label: 'Non-Alcoholic' },
-            ]}
-            value={searchParams.category}
+            options={[]}
+            value={searchParams.drink}
             onChange={handleSearchChange}
           />
           <SelectCategory categoriesAvailable={categories} />

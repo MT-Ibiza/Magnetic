@@ -19,6 +19,12 @@ export async function GET(
         termsAndConditions: true,
         imageUrl: true,
         serviceType: true,
+        categories: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         packages: {
           select: {
             id: true,

@@ -1,4 +1,9 @@
-import { FormSubmitParams, Item } from '@magnetic/interfaces';
+import {
+  Category,
+  CategoryBase,
+  FormSubmitParams,
+  Item,
+} from '@magnetic/interfaces';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import { useCart } from '../../hooks/useCart';
@@ -7,17 +12,18 @@ import FilterDrinks from './filter-drinks';
 import { searchDrinks } from '../../apis/api-drinks';
 import { DrinkSearchAttributes } from 'libs/interfaces/src/lib/drinks';
 import ItemDrinkCard from '../../components/items/cards/item-drink-card';
-import { Alert } from '@magnetic/ui';
+import { Alert, EmptyState, Text } from '@magnetic/ui';
 import { groupItemsByCategory } from '@magnetic/utils';
 import Modal from '../../components/modal';
 import DrinksDeliveryBookingForm from '../../components/services/booking-forms/drinks-delivery-form';
 
 interface Props {
   serviceId: number;
+  categories: { id: number; name: string }[];
 }
 
 function ListDrinks(props: Props) {
-  const { serviceId } = props;
+  const { serviceId, categories } = props;
   const [openFormModal, setOpenFormModal] = useState(false);
   const { addDrinkToCart } = useCart();
   const { addItem, removeItem, cart, totalDrinks } = useCartStore();
@@ -31,11 +37,14 @@ function ListDrinks(props: Props) {
     setOpenFormModal((prevState) => !prevState);
   };
 
+  const toggleForm = () => {
+    setOpenFormModal((prevState) => !prevState);
+  };
+
   const cartMap = useMemo(
     () => new Map(cart.map((cartItem) => [cartItem.item.id, cartItem])),
     [cart]
   );
-  const availableInPlan = true;
 
   const {
     data: drinks,
@@ -53,13 +62,6 @@ function ListDrinks(props: Props) {
     [drinks]
   );
 
-  const categories = itemsGroup.map((item) => {
-    return {
-      name: item.category,
-      id: item.categoryId,
-    };
-  });
-
   const [alert, setAlert] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning';
@@ -71,14 +73,6 @@ function ListDrinks(props: Props) {
   ) => {
     setAlert({ message, type });
     setTimeout(() => setAlert(null), 3000);
-  };
-
-  const openForm = () => {
-    setOpenFormModal(true);
-  };
-
-  const closeForm = () => {
-    setOpenFormModal(false);
   };
 
   const handleSaveForm = (data: FormSubmitParams<any>) => {
@@ -94,7 +88,7 @@ function ListDrinks(props: Props) {
         {
           onSuccess: (response) => {
             const { cartItem } = response;
-            closeForm();
+            toggleForm();
             addItem({
               id: cartItem.id,
               item: currentItemSelected,
@@ -120,7 +114,7 @@ function ListDrinks(props: Props) {
       {
         onSuccess: (response) => {
           const { cartItem } = response;
-          closeForm();
+          toggleForm();
           addItem({
             id: cartItem.id,
             item: item,
@@ -160,27 +154,28 @@ function ListDrinks(props: Props) {
   function handleAddItem(item: Item, amount: number) {
     setCurrentItemSelected(item);
     if (totalDrinks === 0) {
-      openForm();
+      toggleForm();
     } else {
       handleSaveAddDrink(item, amount, undefined);
     }
   }
 
   function handleRemoveItem(item: Item, amount: number) {
-    if (availableInPlan) {
-      handleSaveRemoveProduct(item, amount);
-    } else {
-      //@ts-ignore
-      document.getElementById('modal_upgrade').showModal();
-    }
+    handleSaveRemoveProduct(item, amount);
+  }
+
+  async function handleSearch(filters: { drink?: string; category?: string }) {
+    console.log('filters: ', filters);
+    setSearchParams({
+      name: filters.drink,
+      categoriesIds: undefined,
+    });
   }
 
   return (
     <>
       <div>
-        {categories.length > 0 && (
-          <FilterDrinks onChangeFilters={() => {}} categories={categories} />
-        )}
+        <FilterDrinks onChangeFilters={handleSearch} categories={categories} />
       </div>
       {itemsGroup.map((group, index) => (
         <div key={index} className="pt-[30px]">
@@ -206,6 +201,13 @@ function ListDrinks(props: Props) {
           </div>
         </div>
       ))}
+
+      {drinks?.length === 0 && (
+        <EmptyState
+          title="No drinks found"
+          description="Try with other options"
+        ></EmptyState>
+      )}
       {alert && (
         <Alert
           message={alert.message}
