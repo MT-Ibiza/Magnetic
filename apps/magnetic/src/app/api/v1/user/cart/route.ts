@@ -13,6 +13,9 @@ export async function GET(request: Request) {
       where: { userId },
       include: {
         items: {
+          orderBy: {
+            createdAt: 'desc',
+          },
           select: {
             id: true,
             quantity: true,
