@@ -11,7 +11,7 @@ import Checkbox from './checkbox';
 export interface SelectCategoryProps {
   onChange?: (categories: any) => void;
   fieldClassName?: string;
-  categoriesAvailable: { name: string; id: number }[];
+  categoriesAvailable: { name: string; id: number; checked?: boolean }[];
 }
 
 export const SelectCategory: FC<SelectCategoryProps> = ({
@@ -20,15 +20,12 @@ export const SelectCategory: FC<SelectCategoryProps> = ({
   categoriesAvailable,
 }) => {
   const [categories, setCategories] = useState(categoriesAvailable);
-  const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<number[]>(
-    []
-  );
 
-  // let selectedText =
-  //   categories
-  //     .filter((cat) => cat.checked)
-  //     .map((cat) => cat.name)
-  //     .join(', ') || 'Select category';
+  let selectedText =
+    categories
+      .filter((cat) => cat.checked)
+      .map((cat) => cat.name)
+      .join(', ') || 'Select category';
 
   return (
     <Popover className="flex relative flex-1">
@@ -44,7 +41,7 @@ export const SelectCategory: FC<SelectCategoryProps> = ({
             </div>
             <div className="flex-1">
               <span className="block xl:text-lg font-semibold overflow-hidden">
-                <span className="line-clamp-1">Select Categories</span>
+                <span className="line-clamp-1">{selectedText}</span>
               </span>
               <span className="block mt-1 text-sm text-neutral-400 leading-none font-light">
                 Drink Category
@@ -70,7 +67,8 @@ export const SelectCategory: FC<SelectCategoryProps> = ({
                     key={category.name}
                     name={category.name}
                     label={category.name}
-                    defaultChecked={false}
+                    // subLabel={category.description}
+                    defaultChecked={category.checked}
                     onChange={(checked) => {
                       const updatedCategories = categories.map((cat, i) =>
                         i === index ? { ...cat, checked } : cat
