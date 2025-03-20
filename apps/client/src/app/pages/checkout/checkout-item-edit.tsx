@@ -1,10 +1,8 @@
-import { Button } from '@headlessui/react';
-import { Text } from '@magnetic/ui';
-import { GoPencil } from 'react-icons/go';
-import RenderBookingForm from '../../components/services/booking-forms/render-booking-form';
-import { FormSubmitParams, Item } from '@magnetic/interfaces';
-import Modal from '../../components/modal';
 import { useState } from 'react';
+import { Button } from '@headlessui/react';
+import { Modal, RenderBookingForm, Text } from '@magnetic/ui';
+import { GoPencil } from 'react-icons/go';
+import { FormSubmitParams, Item } from '@magnetic/interfaces';
 import { useApp } from '../../hooks/useApp';
 import { useCart } from '../../hooks/useCart';
 
@@ -61,6 +59,7 @@ function CheckoutItemEdit(props: Props) {
       </div>
       <Modal open={openFormModal} id={`modal-form-${cartItemId}`}>
         <RenderBookingForm
+          item={item}
           type={formType}
           formData={formData}
           onSubmit={handleEditForm}
