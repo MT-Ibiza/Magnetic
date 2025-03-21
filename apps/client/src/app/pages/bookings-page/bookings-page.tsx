@@ -13,7 +13,7 @@ function BookingsPage(props: Props) {
             <span className="text-sm">Confirmed</span>
           </div>
           <div className="flex items-center">
-            <span className="w-2 h-2 rounded-full bg-yellow-500 mr-2"></span>
+            <span className="w-2 h-2 rounded-full bg-orange-500 mr-2"></span>
             <span className="text-sm">Pending</span>
           </div>
           <div className="flex items-center">
