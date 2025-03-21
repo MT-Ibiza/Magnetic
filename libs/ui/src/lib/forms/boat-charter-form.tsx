@@ -31,7 +31,7 @@ interface Props {
   urlApi: string;
 }
 
-function BoatCharterBookingForm({
+export function BoatCharterBookingForm({
   onSubmit,
   formData,
   onCancel,
@@ -234,7 +234,7 @@ function BoatCharterBookingForm({
                 </Button>
               )}
               <Button className="text-[18px]" radius="full" type="submit">
-                {item ? 'Update Booking' : 'Book Boat'}
+                Book Boat
               </Button>
             </div>
           </div>

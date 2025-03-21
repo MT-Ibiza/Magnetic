@@ -10,7 +10,6 @@ import CartPage from '../pages/cart/cart';
 import CheckoutPage from '../pages/checkout/checkout';
 import ViewPackagePage from '../pages/view-package-page/view-package-page';
 import AccountPage from '../pages/account/account';
-import OrderPage from '../pages/order-page/order-page';
 import OrdersPage from '../pages/orders-page/orders-page';
 import ViewItemPage from '../pages/view-item-page/view-item-page';
 import BookingsPage from '../pages/bookings-page/bookings-page';
@@ -47,7 +46,6 @@ export const AppRouter = () => {
           <Route path="packages" element={<PackagePage />} />
           <Route path="packages/:id" element={<ViewPackagePage />} />
           <Route path="orders" element={<OrdersPage />} />
-          <Route path="orders/:id" element={<OrderPage />} />
         </Route>
       </Route>
     </Routes>

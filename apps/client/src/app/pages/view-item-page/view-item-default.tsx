@@ -1,13 +1,13 @@
-import { Alert, SectionCard } from '@magnetic/ui';
+import { Alert, RenderBookingForm, SectionCard } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import { useState } from 'react';
 import BookCard from './book-card';
 import MobileItemSticky from '../../components/mobile-footer-item';
 import Modal from '../../components/modal';
-import RenderBookingForm from '../../components/services/booking-forms/render-booking-form';
 import { FormSubmitParams, Item } from '@magnetic/interfaces';
 import { useApp } from '../../hooks/useApp';
+import { API_URL } from '../../apis/api-constants';
 
 interface Props {
   item: Item;
@@ -122,6 +122,8 @@ export function ViewItemDefault({ item }: Props) {
       )}
       <Modal open={openFormModal}>
         <RenderBookingForm
+          apiUrl={API_URL}
+          item={item}
           type={item?.category?.formType || item?.service.serviceType || ''}
           formData={{
             serviceId: item?.serviceId || 0,

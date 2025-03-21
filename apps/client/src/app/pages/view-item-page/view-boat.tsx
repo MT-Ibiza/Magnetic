@@ -1,5 +1,10 @@
 import { useSearchParams } from 'react-router-dom';
-import { Alert, Badge, SectionCard } from '@magnetic/ui';
+import {
+  Alert,
+  Badge,
+  BoatCharterBookingForm,
+  SectionCard,
+} from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import { useRef, useState } from 'react';
@@ -24,7 +29,7 @@ import { useApp } from '../../hooks/useApp';
 import moment from 'moment';
 import BookBoatCard from './book-boat-card';
 import { getNumberMonth } from '../../utils';
-import BoatCharterBookingForm from '../../components/services/booking-forms/boat-charter-form';
+import { API_UR_BACKED } from '../../apis/api-constants';
 
 interface Props {
   item: Item;
@@ -132,6 +137,7 @@ export function ViewBoat({ item }: Props) {
               quantity: 1,
               formData: form,
               priceInCents: cartItem.priceInCents,
+              type: 'boat',
             });
             showAlert('Boat added to the cart', 'success');
           },
@@ -283,6 +289,8 @@ export function ViewBoat({ item }: Props) {
       )}
       <Modal open={openFormModal}>
         <BoatCharterBookingForm
+          urlApi={`${API_UR_BACKED}/boats/availability`}
+          item={item}
           onSubmit={handleAddBoat}
           formData={{
             serviceId: item?.serviceId || 0,

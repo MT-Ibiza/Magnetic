@@ -4,20 +4,13 @@ import { useQuery } from '@tanstack/react-query';
 import { searchBoats } from '../../apis/api-boats';
 import { useState } from 'react';
 import ItemBoatCard from '../../components/items/cards/item-boat-card';
-import { useApp } from '../../hooks/useApp';
-import { useCart } from '../../hooks/useCart';
-import { useCartStore } from '../../hooks/useCartStore';
 import { getNumberMonth } from '../../utils';
 
 interface Props {}
 
 function ListBoats(props: Props) {
   const {} = props;
-  const { setSelectedItem, currentSelectItem } = useApp();
-  const [openFormModal, setOpenFormModal] = useState(false);
   const [isFilterBoats, setIsFilterBoats] = useState(false);
-  const { addServiceToCart } = useCart();
-  const { addItem } = useCartStore();
   const defaultMonthNumber = getNumberMonth();
   const [currentMonthNumber, setCurrentMonthNumber] =
     useState(defaultMonthNumber);
@@ -43,52 +36,6 @@ function ListBoats(props: Props) {
       return searchBoats(searchParams);
     },
   });
-
-  const [alert, setAlert] = useState<{
-    message: string;
-    type: 'success' | 'error' | 'warning';
-  } | null>(null);
-
-  const showAlert = (
-    message: string,
-    type: 'success' | 'error' | 'warning'
-  ) => {
-    setAlert({ message, type });
-    setTimeout(() => setAlert(null), 3000);
-  };
-
-  const openForm = () => {
-    setOpenFormModal(true);
-  };
-
-  const closeForm = () => {
-    setOpenFormModal(false);
-  };
-
-  const handleAddService = (quantity: number, formData?: any) => {
-    const newVal = quantity;
-    if (currentSelectItem) {
-      addServiceToCart.mutate(
-        { itemId: currentSelectItem.id, quantity: newVal, formData },
-        {
-          onSuccess: (response) => {
-            const { cartItem } = response;
-            closeForm();
-            addItem({
-              id: cartItem.id,
-              item: currentSelectItem,
-              quantity: newVal,
-              formData,
-            });
-            showAlert('Boat added to the cart', 'success');
-          },
-          onError: (err) => {
-            showAlert('Failed to add boat to the cart', 'error');
-          },
-        }
-      );
-    }
-  };
 
   return (
     <>
