@@ -234,7 +234,7 @@ function BoatCharterBookingForm({
                 </Button>
               )}
               <Button className="text-[18px]" radius="full" type="submit">
-                Book Boat
+                {item ? 'Update Booking' : 'Book Boat'}
               </Button>
             </div>
           </div>

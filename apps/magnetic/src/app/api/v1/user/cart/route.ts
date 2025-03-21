@@ -35,6 +35,15 @@ export async function GET(request: Request) {
                 id: true,
                 name: true,
                 priceInCents: true,
+                seasonPrices: {
+                  select: {
+                    id: true,
+                    priceInCents: true,
+                    startMonth: true,
+                    endMonth: true,
+                  },
+                },
+
                 images: {
                   select: {
                     url: true,
