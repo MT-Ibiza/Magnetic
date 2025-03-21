@@ -1,6 +1,6 @@
 import { FormSubmitParams, Item, Service } from '@magnetic/interfaces';
 import { groupItemsByCategory } from '@magnetic/utils';
-import { Alert, Button, DrinksDeliveryBookingForm } from '@magnetic/ui';
+import { Alert, Button, RenderBookingForm } from '@magnetic/ui';
 import { Link } from 'react-router-dom';
 import { useMemo, useState } from 'react';
 import { useApp } from '../../hooks/useApp';
@@ -8,6 +8,7 @@ import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import Modal from '../../components/modal';
 import ItemCard from '../../components/items/cards/item-card';
+import { API_URL } from '../../apis/api-constants';
 
 interface Props {
   items: Item[];
@@ -215,10 +216,21 @@ function ListProducts(props: Props) {
         </div>
       </dialog>
       <Modal open={openFormModal}>
-        <DrinksDeliveryBookingForm
+        <RenderBookingForm
+          apiUrl={API_URL}
           item={currentItemSelected}
+          type={
+            currentItemSelected?.category?.formType ||
+            currentItemSelected?.service.serviceType ||
+            ''
+          }
+          formData={{
+            serviceId: currentItemSelected?.serviceId || 0,
+          }}
           onSubmit={handleAddService}
-          onCancel={closeForm}
+          onClose={() => {
+            setOpenFormModal(false);
+          }}
         />
       </Modal>
     </>
