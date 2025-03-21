@@ -42,7 +42,7 @@ export function BoatCharterBookingForm({
 
   const { seasonPrices, priceInCents } = currentSelectItem as Item;
   const [disabledDates, setDisabledDates] = useState<Date[]>([]);
-  const seasonPrice = findSeasonPriceByMonth(seasonPrices || []);
+  const seasonPrice = findSeasonPriceByMonth(seasonPrices || [], formData.date);
   const [selectedSeasonPrice, setSelectedSeasonPrice] = useState(seasonPrice);
   const [price, setPrice] = useState(
     selectedSeasonPrice?.priceInCents || priceInCents
@@ -65,7 +65,7 @@ export function BoatCharterBookingForm({
       : undefined,
   });
 
-  const total = price + (watch('seabob') ? priceSeabodInCents : 0);
+  const total = price + (watch('seabob') === true ? priceSeabodInCents : 0);
 
   const fetchDates = useCallback(async (boatId: number) => {
     const dates = await fetchAvailability(boatId, urlApi);

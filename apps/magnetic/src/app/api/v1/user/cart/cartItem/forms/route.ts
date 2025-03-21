@@ -4,12 +4,14 @@ import { NextResponse } from 'next/server';
 export async function PUT(request: Request) {
   const data = await request.json();
   const { itemId, cartItemId, formData, quantity, variantId, seasonId } = data;
+  const SEABOB_PRICE_CENTS = 36500;
 
   const cartItem = await db.cartItem.findFirst({
     where: { itemId: itemId, id: cartItemId },
     include: {
       item: {
         include: {
+          boatAttributes: true,
           variants: {
             select: {
               id: true,
@@ -31,6 +33,14 @@ export async function PUT(request: Request) {
     const { item } = cartItem;
     const variant = item.variants.find((v) => v.id === variantId);
     priceItem = variant?.priceInCents || priceItem;
+  }
+
+  if (seasonId) {
+    const season = await db.seasonPrice.findUnique({
+      where: { id: seasonId },
+    });
+    priceItem = season?.priceInCents || priceItem;
+    priceItem = formData.seabob ? priceItem + SEABOB_PRICE_CENTS : priceItem;
   }
 
   try {
