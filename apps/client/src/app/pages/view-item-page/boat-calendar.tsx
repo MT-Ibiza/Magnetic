@@ -8,7 +8,7 @@ import { useBoatCalendar } from '../../hooks/useBoatCalendar';
 import moment from 'moment';
 import { ErrorText } from '../../components/error-text';
 import { useEffect, useState } from 'react';
-import { bookedBoatDates } from '../../utils';
+import { bookedBoatDates } from '@magnetic/utils';
 
 interface Props {
   startDate: Date | null;

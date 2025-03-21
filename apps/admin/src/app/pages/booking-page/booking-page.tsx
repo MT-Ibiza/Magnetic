@@ -17,6 +17,7 @@ import { updateBookingOrder, updateBookingStatus } from '../../apis/api-orders';
 import { toast } from 'sonner';
 import { Item } from '@magnetic/interfaces';
 import OrderItemsTable from '../../components/orders/order-items.table';
+import { API_URL_USER } from '../../apis/api-constants';
 
 export function BookingPage() {
   const params = useParams();
@@ -186,6 +187,7 @@ export function BookingPage() {
       <Modal open={openModal}>
         {data ? (
           <RenderBookingForm
+            apiUrl={API_URL_USER}
             item={item as Item}
             type={data.booking.type}
             formData={data.booking.formData}

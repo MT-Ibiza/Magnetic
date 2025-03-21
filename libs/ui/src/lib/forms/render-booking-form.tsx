@@ -16,10 +16,12 @@ interface Props {
   onClose?: () => void;
   item?: Item;
   user?: CurrentUser;
+  apiUrl: string;
 }
 
 export function RenderBookingForm(props: Props) {
-  const { type, onSubmit, formData, onClose, item, user } = props;
+  const { type, onSubmit, formData, onClose, item, user, apiUrl } = props;
+  const URL_SEARCH_BOAT_AVAILABILITY = `${apiUrl}/boats/availability`;
 
   switch (type) {
     case 'drinks':
@@ -75,6 +77,7 @@ export function RenderBookingForm(props: Props) {
     case 'boat_rental':
       return (
         <BoatCharterBookingForm
+          urlApi={URL_SEARCH_BOAT_AVAILABILITY}
           item={item}
           onSubmit={onSubmit}
           formData={formData}

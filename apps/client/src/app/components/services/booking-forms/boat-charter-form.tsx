@@ -17,8 +17,8 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { useApp } from '../../../hooks/useApp';
 import { searchAvailabilityBoat } from '../../../apis/api-boats';
-import { centsToEurosWithCurrency } from '@magnetic/utils';
-import { bookedBoatDates, getNumberMonth } from '../../../utils';
+import { bookedBoatDates, centsToEurosWithCurrency } from '@magnetic/utils';
+import { getNumberMonth } from '../../../utils';
 import Modal from '../../modal';
 
 interface Props {

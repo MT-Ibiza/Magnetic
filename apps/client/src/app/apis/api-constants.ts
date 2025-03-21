@@ -1,6 +1,6 @@
 // @ts-nocheck
 const API = `${import.meta.env.VITE_API_URL}/api`;
-const API_URL = `${API}/v1/user`;
+export const API_URL = `${API}/v1/user`;
 
 export const WEBSITE_URL = import.meta.env.VITE_API_URL;
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import moment from 'moment';
 import {
   BoatCharterFormData,
@@ -16,16 +16,28 @@ import {
   TextArea,
 } from '@magnetic/ui';
 import { Controller, useForm } from 'react-hook-form';
-import { centsToEurosWithCurrency, getNumberMonth } from '@magnetic/utils';
+import {
+  bookedBoatDates,
+  centsToEurosWithCurrency,
+  getNumberMonth,
+  searchAvailabilityBoat,
+} from '@magnetic/utils';
 
 interface Props {
   onSubmit: (data: FormSubmitParams<BoatCharterFormData>) => void;
   formData?: any;
   onCancel?: () => void;
   item?: Item;
+  urlApi: string;
 }
 
-function BoatCharterBookingForm({ onSubmit, formData, onCancel, item }: Props) {
+function BoatCharterBookingForm({
+  onSubmit,
+  formData,
+  onCancel,
+  item,
+  urlApi,
+}: Props) {
   const currentSelectItem = item;
 
   const { seasonPrices, priceInCents } = currentSelectItem as Item;
@@ -55,27 +67,18 @@ function BoatCharterBookingForm({ onSubmit, formData, onCancel, item }: Props) {
 
   const total = price + (watch('seabob') ? priceSeabodInCents : 0);
 
-  // useEffect(() => {
-  //   if (!currentSelectItem?.id) return;
-  //   const fetchAvailability = async () => {
-  //     try {
-  //       const from = moment().format('YYYY-MM-DD'); // today
-  //       const to = moment().add(6, 'months').format('YYYY-MM-DD'); // 6 month
-  //       const boatId = currentSelectItem.boatAttributes?.id || 0;
-  //       const availability = await searchAvailabilityBoat({
-  //         boatId: boatId.toString(),
-  //         from,
-  //         to,
-  //       });
-  //       const bookedDates = bookedBoatDates(availability);
-  //       setDisabledDates(bookedDates);
-  //     } catch (error) {
-  //       console.error('Error fetching boat availability:', error);
-  //     }
-  //   };
+  const fetchDates = useCallback(async (boatId: number) => {
+    const dates = await fetchAvailability(boatId, urlApi);
+    setDisabledDates(dates);
+  }, []);
 
-  //   fetchAvailability();
-  // }, [currentSelectItem?.id]);
+  useEffect(() => {
+    if (!currentSelectItem?.id) return;
+    const boatId = currentSelectItem.boatAttributes?.id;
+    if (boatId) {
+      fetchDates(boatId);
+    }
+  }, [currentSelectItem?.id]);
 
   const handleFormSubmit = async (data: BoatCharterFormData) => {
     onSubmit({
@@ -252,3 +255,23 @@ function findSeasonPriceByMonth(
     (seasonPrice) => seasonPrice.startMonth === monthNumber
   );
 }
+
+const fetchAvailability = async (boatId: number, urlApi: string) => {
+  try {
+    const from = moment().format('YYYY-MM-DD');
+    const to = moment().add(6, 'months').format('YYYY-MM-DD');
+    const availability = await searchAvailabilityBoat(
+      {
+        boatId: boatId.toString(),
+        from,
+        to,
+      },
+      urlApi
+    );
+    const bookedDates = bookedBoatDates(availability);
+    return bookedDates;
+  } catch (error) {
+    console.error('Error fetching boat availability:', error);
+    return [];
+  }
+};

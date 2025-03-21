@@ -5,6 +5,7 @@ import { GoPencil } from 'react-icons/go';
 import { FormSubmitParams, Item } from '@magnetic/interfaces';
 import { useApp } from '../../hooks/useApp';
 import { useCart } from '../../hooks/useCart';
+import { API_URL } from '../../apis/api-constants';
 
 interface Props {
   formType: string;
@@ -59,6 +60,7 @@ function CheckoutItemEdit(props: Props) {
       </div>
       <Modal open={openFormModal} id={`modal-form-${cartItemId}`}>
         <RenderBookingForm
+          apiUrl={API_URL}
           item={item}
           type={formType}
           formData={formData}
