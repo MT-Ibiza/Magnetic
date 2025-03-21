@@ -1,6 +1,8 @@
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic'; // Desactiva la optimización estática
+
 export async function GET(request: Request) {
   try {
     const bookings = await db.orderBookingForm.findMany({
