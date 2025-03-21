@@ -30,7 +30,7 @@ function ItemDrinkCard({
     <div
       className={`nc-CarCard min-h-[360px] group relative border border-neutral-200 dark:border-neutral-700 rounded-3xl hover:shadow-xl transition-shadow bg-white dark:bg-neutral-900 will-change-transform`}
     >
-      <div className="relative w-full rounded-2xl overflow-hidden">
+      <div className="relative w-full rounded-3xl overflow-hidden">
         <GallerySlider
           galleryImgs={imagesSorted}
           classImage="h-[200px]"
