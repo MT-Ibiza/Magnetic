@@ -1,9 +1,4 @@
-import {
-  Category,
-  CategoryBase,
-  FormSubmitParams,
-  Item,
-} from '@magnetic/interfaces';
+import { FormSubmitParams, Item } from '@magnetic/interfaces';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import { useCart } from '../../hooks/useCart';
@@ -12,10 +7,10 @@ import FilterDrinks from './filter-drinks';
 import { searchDrinks } from '../../apis/api-drinks';
 import { DrinkSearchAttributes } from 'libs/interfaces/src/lib/drinks';
 import ItemDrinkCard from '../../components/items/cards/item-drink-card';
-import { Alert, EmptyState, Text } from '@magnetic/ui';
+import { Alert, DrinksDeliveryBookingForm, EmptyState } from '@magnetic/ui';
 import { groupItemsByCategory } from '@magnetic/utils';
 import Modal from '../../components/modal';
-import DrinksDeliveryBookingForm from '../../components/services/booking-forms/drinks-delivery-form';
+import { useAuth } from '../../hooks/useAuth';
 
 interface Props {
   serviceId: number;
@@ -27,6 +22,9 @@ function ListDrinks(props: Props) {
   const [openFormModal, setOpenFormModal] = useState(false);
   const { addDrinkToCart } = useCart();
   const { addItem, removeItem, cart, totalDrinks } = useCartStore();
+  const { getCurrentUser } = useAuth();
+  const user = getCurrentUser();
+
   const [currentItemSelected, setCurrentItemSelected] = useState<Item>();
   const [searchParams, setSearchParams] = useState<DrinkSearchAttributes>({
     categoriesIds: undefined,
@@ -224,6 +222,7 @@ function ListDrinks(props: Props) {
       )}
       <Modal open={openFormModal}>
         <DrinksDeliveryBookingForm
+          user={user}
           onSubmit={handleSaveForm}
           formData={{
             serviceId,

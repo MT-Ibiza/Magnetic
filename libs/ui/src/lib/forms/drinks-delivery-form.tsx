@@ -83,19 +83,6 @@ export function DrinksDeliveryBookingForm(props: Props) {
                 )}
               </div>
               <div>
-                <Text className="mb-2">Time</Text>
-                <Input
-                  type="time"
-                  className="w-full"
-                  {...register('time', { required: 'Time is required' })}
-                />
-                {errors.time && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.time.message}
-                  </p>
-                )}
-              </div>
-              <div>
                 <Text className="mb-2">Location</Text>
                 <Input
                   type="text"
@@ -139,7 +126,7 @@ export function DrinksDeliveryBookingForm(props: Props) {
               <Button
                 radius="full"
                 type="submit"
-                disabled={!watch('acceptSubstitutes')}
+                // disabled={!watch('acceptSubstitutes')}
               >
                 Continue
               </Button>
