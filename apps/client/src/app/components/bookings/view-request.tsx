@@ -10,7 +10,7 @@ function ViewRequest(props: Props) {
   const { message, onCancel } = props;
   return (
     <div>
-      <Modal.Header>Message</Modal.Header>
+      <Modal.Header>Requested</Modal.Header>
       <Modal.Body>
         <div className="p-10">
           <Text>{message}</Text>

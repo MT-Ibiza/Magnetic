@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Button, Text } from '@magnetic/ui';
+import { Button, Text, Tooltip } from '@magnetic/ui';
 import { useBookings } from '../../hooks/userBookings';
 import { useState } from 'react';
 import { BookingForm } from '@magnetic/interfaces';
@@ -41,7 +41,7 @@ export function BookingsTable(props: Props) {
             <tr className="text-[18px] leading-[28px] text-neutral-800">
               <th>Date</th>
               <th>Service</th>
-              <th>Booking</th>
+              <th>Booking Details</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -69,7 +69,7 @@ export function BookingsTable(props: Props) {
                       />
                       {orderItem?.item?.drinkAttributes ? (
                         <div className="flex flex-col gap-1">
-                          <Text>Drink Service</Text>
+                          <Text>Drink Delivery</Text>
                         </div>
                       ) : (
                         <div className="flex flex-col gap-1">
@@ -82,8 +82,9 @@ export function BookingsTable(props: Props) {
                     </div>
                   </td>
                   <td>
+                    {/* <Tooltip className='w-[50px]' content={'Booking Details'}> */}
                     <p
-                      className="hover:text-primary-500 hover:underline"
+                      className="cursor-pointer lg:pl-[55px] hover:text-primary-500 hover:underline"
                       onClick={() => {
                         setSelectedBooking(booking);
                         toggleOpenModal();
@@ -92,6 +93,7 @@ export function BookingsTable(props: Props) {
                     >
                       {`#${booking.id}`}
                     </p>
+                    {/* </Tooltip> */}
                   </td>
                   <td className="ml-[25px] flex items-center">
                     {getStatusIndicator(booking.status)}

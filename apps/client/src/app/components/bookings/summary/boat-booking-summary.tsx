@@ -9,14 +9,14 @@ interface Props {
 
 function BoatBookingSummary(props: Props) {
   const { booking, onCancel } = props;
-  const { formData } = booking;
+  const { formData, service } = booking;
 
   return (
     <div>
       <Modal.Header>Booking Details</Modal.Header>
       <Modal.Body>
         <div className="p-10">
-          <FormJsonDetails formData={formData} />
+          <FormJsonDetails serviceType={booking.type} formData={formData} />
         </div>
       </Modal.Body>
       <Modal.Footer>

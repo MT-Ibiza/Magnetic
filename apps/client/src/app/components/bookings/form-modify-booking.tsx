@@ -24,7 +24,7 @@ function FormModifyBooking(props: Props) {
     },
     onSuccess: () => {
       setIsSaving(false);
-      toast.success(`Request sended!`);
+      toast.success(`Request Sent!`);
       onSave();
     },
     onError: () => {

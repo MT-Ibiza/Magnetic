@@ -3,20 +3,47 @@ import moment from 'moment';
 
 interface Props {
   formData: any;
+  serviceType: string;
 }
 
 export function FormJsonDetails(props: Props) {
-  const { formData } = props;
+  const { formData, serviceType } = props;
   const keys = Object.keys(formData);
 
   const excludeFields = ['serviceId'];
+  const serviceOrder: Record<string, string[]> = {
+    boat_rental: [
+      'date',
+      'boat',
+      'time',
+      'numberOfPeople',
+      'kidsAges',
+      'lunchReservation',
+      'seabob',
+      'comments',
+    ],
+    transfer: [
+      'date',
+      'time',
+      'pickUpLocation',
+      'dropOffLocation',
+      'numberOfPeople',
+      'childSeats',
+      'contactName',
+      'contactNumber',
+      'flightNumber',
+      'luggageAmount',
+    ],
+  };
+  const orderedFields = serviceOrder[serviceType] || keys;
+  const fields = orderedFields.filter(
+    (key) => key in formData && !excludeFields.includes(key)
+  );
 
-  const fields = keys.filter((key) => !excludeFields.includes(key));
-
-  const dictionary = {
+  const dictionary: Record<string, string> = {
     date: 'Date',
-    time: 'Time',
     boat: 'Boat',
+    time: 'Time',
     extras: 'Extras',
     lunchReservation: 'Lunch Booking',
     service: 'Service',
@@ -39,7 +66,7 @@ export function FormJsonDetails(props: Props) {
     comments: 'Comments',
     seabob: 'Seabod',
     childSeats: 'Child Seats',
-    kidsAges: 'kids & Ages',
+    kidsAges: 'Kids & Ages',
   };
 
   if (keys.length === 0) {
@@ -48,20 +75,26 @@ export function FormJsonDetails(props: Props) {
 
   return (
     <div className="flex flex-col gap-3">
-      {fields.map((key, index) => (
-        <div className="flex flex-col gap-1" key={index}>
-          <h1 className="font-medium">{dictionary[key as 'date'] || key}</h1>
-          {key === 'date' ? (
-            <Text className="text-gray-500">
-              {moment(formData[key]).utc().format('D MMM YYYY')}
-            </Text>
-          ) : (
-            <Text className="text-gray-500">
-              {formData[key].toString() || '-'}
-            </Text>
-          )}
-        </div>
-      ))}
+      {fields.map((key, index) => {
+        let value;
+        switch (key) {
+          case 'date':
+            value = moment(formData[key]).utc().format('D MMM YYYY');
+            break;
+          case 'acceptSubstitutes':
+          case 'seabob':
+            value = formData[key] === 'true' ? 'Yes' : 'No';
+            break;
+          default:
+            value = formData[key]?.toString() || '-';
+        }
+        return (
+          <div className="flex flex-col gap-1" key={index}>
+            <h1 className="font-medium">{dictionary[key] || key}</h1>
+            <Text className="text-gray-500">{value}</Text>
+          </div>
+        );
+      })}
     </div>
   );
 }
