@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useOrder } from '../../hooks/useOrder';
-import { CardWrapper, FormJsonDetails, Text } from '@magnetic/ui';
+import {
+  CardWrapper,
+  FormJsonDetails,
+  RenderBookingForm,
+  Text,
+} from '@magnetic/ui';
 import OrderItemsTable from '../../components/order/order-items-table';
-import OrderBookings from '../../components/services/order-bookings';
 import { useMutation } from '@tanstack/react-query';
 import { editFormOrder } from '../../apis/api-order';
 import { OrderForm } from '@magnetic/interfaces';
 import { toast } from 'sonner';
-import RenderBookingForm from '../../components/services/booking-forms/render-booking-form';
+import { API_URL } from '../../apis/api-constants';
 
 interface Props {}
 
@@ -91,6 +95,7 @@ function OrderPage(props: Props) {
                     <FormJsonDetails formData={form.formData} />
                   ) : (
                     <RenderBookingForm
+                      apiUrl={API_URL}
                       type={form.service.serviceType}
                       formData={form.formData}
                       onSubmit={async (data) => {

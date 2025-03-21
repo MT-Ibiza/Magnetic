@@ -29,7 +29,7 @@ import { useApp } from '../../hooks/useApp';
 import moment from 'moment';
 import BookBoatCard from './book-boat-card';
 import { getNumberMonth } from '../../utils';
-import { API_UR_BACKED } from '../../apis/api-constants';
+import { API_URL } from '../../apis/api-constants';
 
 interface Props {
   item: Item;
@@ -289,7 +289,7 @@ export function ViewBoat({ item }: Props) {
       )}
       <Modal open={openFormModal}>
         <BoatCharterBookingForm
-          urlApi={`${API_UR_BACKED}/boats/availability`}
+          urlApi={`${API_URL}/boats/availability`}
           item={item}
           onSubmit={handleAddBoat}
           formData={{
