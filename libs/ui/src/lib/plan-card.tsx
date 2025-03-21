@@ -50,23 +50,39 @@ export function PlanCard(props: Props) {
     <div
       className={`h-full relative px-6 py-8 rounded-3xl border-2 flex flex-col overflow-hidden ${className}`}
     >
-      {/* <span className="bg-primary-500 text-white px-3 py-1 tracking-widest text-xs absolute right-3 top-3 rounded-full z-10">
-        PLAN
-      </span> */}
       <div className="mb-8">
-        <h3 className="block text-sm uppercase tracking-widest  mb-2 font-medium">
+        <h3 className="block text-sm uppercase tracking-widest mb-2 font-medium">
           {title}
         </h3>
         {packageId === userPackageId ? (
-          <h2 className="text-5xl leading-none flex items-center ">
+          <h2 className="flex flex-col text-5xl leading-none">
             <span className="text-3xl lg:text-4xl">Your Package</span>
+            <span className="text-base lg:text-lg ml-1 font-normal text-neutral-500">
+              (Included)
+            </span>
           </h2>
         ) : (
           <h2 className="text-5xl leading-none flex items-center ">
-            <span className="text-3xl lg:text-5xl">{price}€</span>
-            <span className="text-base lg:text-lg ml-1 font-normal text-neutral-500">
-              per week
-            </span>
+            {title === 'Diamond' ? (
+              <div className="flex flex-col">
+                <span className="text-3xl lg:text-4xl">
+                  +10% Management Fee
+                </span>
+                <span className="text-base lg:text-lg ml-1 font-normal text-neutral-500">
+                  Minimum spend €15,000 per week.
+                </span>
+                <span className="text-base lg:text-lg ml-1 font-normal text-neutral-500">
+                  €1,800 flat fee for lower spend.
+                </span>
+              </div>
+            ) : (
+              <>
+                <span className="text-3xl lg:text-5xl">{price}€</span>
+                <span className="text-base lg:text-lg ml-1 font-normal text-neutral-500">
+                  per week
+                </span>
+              </>
+            )}
           </h2>
         )}
       </div>

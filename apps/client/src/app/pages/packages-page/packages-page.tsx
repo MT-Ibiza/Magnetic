@@ -17,9 +17,11 @@ export function PackagePage() {
     setOpenModal(!openModal);
   }
 
-  const filteredPackages = packages.filter(
-    (item) => item.id !== user?.package?.id
-  );
+  const priorityOrder = ['Gold', 'Platinum', 'Diamond'];
+
+  const sortedPackages = [...packages].sort((a, b) => {
+    return priorityOrder.indexOf(a.name) - priorityOrder.indexOf(b.name);
+  });
 
   return (
     <>
@@ -39,7 +41,7 @@ export function PackagePage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {packages.map((pkg) => (
+          {sortedPackages.map((pkg) => (
             <PlanCard
               key={pkg.id}
               maxFeatures={3}
