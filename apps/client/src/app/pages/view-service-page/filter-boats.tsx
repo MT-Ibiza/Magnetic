@@ -9,7 +9,7 @@ import { BoatsSearchAttributes } from '@magnetic/interfaces';
 import moment from 'moment';
 import {
   budgetFilterOptions,
-  capacityFilterOptions, 
+  capacityFilterOptions,
   sizeFilterOptions,
 } from '../../constants';
 import {
@@ -39,17 +39,17 @@ function FilterBoats(props: Props) {
     to: undefined,
   });
 
+  const allFilters = {
+    capacity: { greater: 'capacity_gt', less: 'capacity_lt' },
+    size: { greater: 'size_gt', less: 'size_lt' },
+    budget: { greater: 'price_gt', less: 'price_lt' },
+  };
+
   const handleSearchChange = (name: string, value: string, data?: any) => {
     const filterName = name as 'capacity';
-    const allFilters = {
-      capacity: { greater: 'capacity_gt', less: 'capacity_lt' },
-      size: { greater: 'size_gt', less: 'size_lt' },
-      budget: { greater: 'price_gt', less: 'price_lt' },
-    };
-
+    debugger;
     if (data) {
       const updatedFilters = { ...searchParams, ...data };
-      console.log(updatedFilters);
       setSearchParams(updatedFilters);
       onChangeFilters(updatedFilters);
     } else {
@@ -91,7 +91,7 @@ function FilterBoats(props: Props) {
       <div className="border border-neutral-200 hidden lg:block sticky z-10 top-[80px] w-full relative mt-4 rounded-[45px] shadow-xl dark:shadow-2xl bg-white dark:bg-neutral-800">
         <form className="lg:grid grid-cols-4 gap-x-[30px]">
           <CustomInput
-            name="Capacity"
+            name="capacity"
             desc="Select capacity"
             options={capacityFilterOptions}
             value={searchParams.capacity_gt || ''}
@@ -101,7 +101,7 @@ function FilterBoats(props: Props) {
             }
           />
           <CustomInput
-            name="Size"
+            name="size"
             desc="Select size"
             options={sizeFilterOptions}
             value={searchParams.size_gt || ''}
@@ -112,7 +112,7 @@ function FilterBoats(props: Props) {
           />
           <RentalCarDatesRangeInput onSelectDate={handleDateChange} />
           <CustomInput
-            name="Budget"
+            name="budget"
             desc="Select budget"
             options={budgetFilterOptions}
             value={searchParams.price_gt || ''}
