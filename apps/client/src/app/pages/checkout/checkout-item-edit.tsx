@@ -6,6 +6,7 @@ import { FormSubmitParams, Item } from '@magnetic/interfaces';
 import { useApp } from '../../hooks/useApp';
 import { useCart } from '../../hooks/useCart';
 import { API_URL } from '../../apis/api-constants';
+import { toast } from 'sonner';
 
 interface Props {
   formType: string;
@@ -34,6 +35,7 @@ function CheckoutItemEdit(props: Props) {
         onSuccess: () => {
           setOpenFormModal(false);
           refetch();
+          toast.success('Booking Updated!');
         },
         onError: () => {
           // showAlert('Failed to remove item to the cart', 'error');

@@ -1,7 +1,10 @@
 import { CartItem } from '@magnetic/interfaces';
-import { centsToEurosWithCurrency } from '@magnetic/utils';
+import {
+  centsToEurosWithCurrency,
+  formatTime,
+  formatDate,
+} from '@magnetic/utils';
 import { Text } from '@magnetic/ui';
-import { formatDate } from '../../utils';
 import { placeholderItemImage } from '../../constants';
 import CheckoutItemEdit from './checkout-item-edit';
 import CheckoutItemRemove from './checkout-item-remove';
@@ -98,7 +101,7 @@ const BoatsInfo = ({
     {cartItem.formData && (
       <>
         <Text size="1">Date: {formatDate(cartItem.formData.date)}</Text>
-        <Text size="1">Time: {cartItem.formData.startTime}</Text>
+        <Text size="1">Time: {formatTime(cartItem.formData.startTime)}</Text>
       </>
     )}
     <CheckoutItemEdit
@@ -122,7 +125,7 @@ const ChefsInfo = ({
     {cartItem.formData && (
       <>
         <Text size="1">Date: {formatDate(cartItem.formData.date)}</Text>
-        <Text size="1">Time: {cartItem.formData.startTime}</Text>
+        <Text size="1">Time: {formatTime(cartItem.formData.startTime)}</Text>
       </>
     )}
     <CheckoutItemEdit

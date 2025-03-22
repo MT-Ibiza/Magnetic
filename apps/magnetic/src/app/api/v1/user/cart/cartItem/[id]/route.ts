@@ -14,7 +14,7 @@ export async function DELETE(
     const cartItemId = Number(params.id);
     const cartItem = await db.cartItem.findUnique({
       where: { id: cartItemId },
-      select: { cartId: true },
+      select: { cartId: true, type: true, formData: true },
     });
 
     if (!cartItem) {
@@ -27,6 +27,19 @@ export async function DELETE(
     await db.cartItem.delete({
       where: { id: cartItemId },
     });
+
+    if (cartItem.type === 'drinks' && cartItem.formData) {
+      const anotherDrinkItem = await db.cartItem.findFirst({
+        where: { cartId: cartItem.cartId, type: 'drinks', formData: undefined },
+      });
+
+      if (anotherDrinkItem) {
+        await db.cartItem.update({
+          where: { id: anotherDrinkItem.id },
+          data: { formData: cartItem.formData },
+        });
+      }
+    }
 
     const remainingItems = await db.cartItem.findMany({
       where: { cartId: cartItem.cartId },

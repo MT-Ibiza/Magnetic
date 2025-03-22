@@ -1,4 +1,4 @@
-import { Item } from '@magnetic/interfaces';
+import { CartItem, Item } from '@magnetic/interfaces';
 
 export function groupItemsByCategory(
   items: Item[]
@@ -35,6 +35,12 @@ export function groupItemsByCategory(
     .sort((a, b) => a.position - b.position);
 
   return groupedItems;
+}
+
+export function findICartItemDrink(carItems: CartItem[]) {
+  return carItems.find((carItem) => {
+    return carItem.type === 'drinks' && carItem.formData;
+  });
 }
 
 export const placeholderItemImage =

@@ -7,7 +7,6 @@ import moment from 'moment';
 export interface DrinksDeliveryFormData {
   date: string;
   location: string;
-  time: string;
   acceptSubstitutes: boolean;
   minimumSpend: number;
   paymentConfirmed: boolean;
@@ -36,7 +35,6 @@ export function DrinksDeliveryBookingForm(props: Props) {
       ? {
           date: formData.date || arrivalDate,
           location: formData.location || user?.accommodation,
-          time: formData.time,
           acceptSubstitutes: false,
         }
       : undefined,

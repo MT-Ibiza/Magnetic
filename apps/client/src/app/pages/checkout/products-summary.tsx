@@ -1,17 +1,21 @@
 import {
   calculateTotalCartItems,
   centsToEurosWithCurrency,
+  findICartItemDrink,
 } from '@magnetic/utils';
 import { useCartStore } from '../../hooks/useCartStore';
-import { groupCartItemsByCategory } from '../../utils';
+import { formatDate, groupCartItemsByCategory } from '../../utils';
 import CheckoutItem from './checkout-item';
 import { Text } from '@magnetic/ui';
 import { Link } from 'react-router-dom';
 import { DRINKS_MINIMUM } from '../../constants';
+import CheckoutItemEdit from './checkout-item-edit';
+import { CartItem } from '@magnetic/interfaces';
 
 function ProductsSummary() {
   const { cart } = useCartStore();
   const itemsByCategory = groupCartItemsByCategory(cart);
+  const drinkItem = findICartItemDrink(cart);
 
   return (
     <div>
@@ -38,11 +42,13 @@ function ProductsSummary() {
                 </div>
               </div>
             )}
-
             <div className="border-b pb-4 mb-4">
               <h3 className="text-lg font-semibold mb-2">
                 {category.category}
               </h3>
+              {category.type === 'drinks' && drinkItem && (
+                <DrinkInfo drinkItem={drinkItem} />
+              )}
               <div className="flex flex-col gap-3">
                 {category.items.map((item) => (
                   <CheckoutItem cartItem={item} key={item.id} />
@@ -55,5 +61,21 @@ function ProductsSummary() {
     </div>
   );
 }
+
+const DrinkInfo = ({ drinkItem }: { drinkItem: CartItem }) => (
+  <div className="flex justify-between w-full mb-5">
+    <div className="flex gap-2">
+      <Text size="1">Location: {drinkItem.formData.location}</Text>
+      <Text className="text-gray-400">/</Text>
+      <Text size="1">{formatDate(drinkItem.formData.date)}</Text>
+    </div>
+    <CheckoutItemEdit
+      formData={drinkItem.formData}
+      formType={'drinks'}
+      item={drinkItem.item}
+      cartItemId={drinkItem.id}
+    />
+  </div>
+);
 
 export default ProductsSummary;

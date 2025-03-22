@@ -9,3 +9,4 @@ export * from './lib/bookings';
 export * from './lib/variants';
 export * from './lib/orders';
 export * from './lib/share-api';
+export * from './lib/dates';
