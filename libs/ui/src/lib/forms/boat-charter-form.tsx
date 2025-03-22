@@ -44,7 +44,10 @@ export function BoatCharterBookingForm({
 
   const { seasonPrices, priceInCents } = currentSelectItem as Item;
   const [disabledDates, setDisabledDates] = useState<Date[]>([]);
-  const seasonPrice = findSeasonPriceByMonth(seasonPrices || [], formData.date);
+  const seasonPrice = findSeasonPriceByMonth(
+    seasonPrices || [],
+    formData.date || selectedDate
+  );
   const [selectedSeasonPrice, setSelectedSeasonPrice] = useState(seasonPrice);
   const [price, setPrice] = useState(
     selectedSeasonPrice?.priceInCents || priceInCents

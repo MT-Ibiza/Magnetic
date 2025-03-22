@@ -195,7 +195,9 @@ export function ViewBoat({ item }: Props) {
                     const date = dates[0];
                     const monthNumber = getNumberMonth(date);
                     const season = getSeasonPrice(seasonPrices, monthNumber);
-                    season && setBoatPrice(season.priceInCents);
+                    setBoatPrice(
+                      season ? season.priceInCents : item.priceInCents
+                    );
                   }
                   onChangeDate(dates);
                 }}
