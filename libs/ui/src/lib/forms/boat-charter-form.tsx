@@ -29,6 +29,7 @@ interface Props {
   onCancel?: () => void;
   item?: Item;
   urlApi: string;
+  selectedDate?: Date | null;
 }
 
 export function BoatCharterBookingForm({
@@ -37,6 +38,7 @@ export function BoatCharterBookingForm({
   onCancel,
   item,
   urlApi,
+  selectedDate,
 }: Props) {
   const currentSelectItem = item;
 
@@ -112,7 +114,11 @@ export function BoatCharterBookingForm({
                   render={({ field }) => (
                     <CalendarCustomInput
                       selectedDate={
-                        field.value ? moment(field.value).toDate() : null
+                        field.value
+                          ? moment(field.value).toDate()
+                          : selectedDate
+                          ? moment(selectedDate).toDate()
+                          : null
                       }
                       onSelectDate={(date) => {
                         const seasonPrice = findSeasonPriceByMonth(

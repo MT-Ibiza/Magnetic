@@ -261,9 +261,10 @@ export function ViewBoat({ item }: Props) {
             price={boatPrice}
             startDate={startDate}
             item={item}
-            onClick={() => {
+            onClick={(date) => {
               setOpenFormModal(true);
               setSelectedItem(item);
+              setStartDate(date);
             }}
           />
         </div>
@@ -298,6 +299,7 @@ export function ViewBoat({ item }: Props) {
           onCancel={() => {
             setOpenFormModal(false);
           }}
+          selectedDate={startDate}
         />
       </Modal>
     </>
