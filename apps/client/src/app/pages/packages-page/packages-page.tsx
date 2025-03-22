@@ -2,10 +2,10 @@ import { Button } from '@magnetic/ui';
 import { PlanCard } from '@magnetic/ui';
 import { usePackages } from '../../hooks/usePackages';
 import { useAuth } from '../../hooks/useAuth';
-import FormRequestCall from '../../components/form-request-call';
-import { toast } from 'sonner';
 import Modal from '../../components/modal';
 import { useState } from 'react';
+import FormCalendly from '../../components/form-calendly';
+import { toast } from 'sonner';
 
 export function PackagePage() {
   const { isLoading, packages, error, isError } = usePackages();
@@ -61,7 +61,7 @@ export function PackagePage() {
         </div>
       </div>
       <Modal open={openModal}>
-        <FormRequestCall
+        <FormCalendly
           onSave={() => {
             toggleOpeModal();
             toast.success('Your call has been successfully scheduled! 🎉');
