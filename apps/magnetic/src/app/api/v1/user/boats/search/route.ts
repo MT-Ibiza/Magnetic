@@ -12,7 +12,6 @@ export async function GET(request: NextRequest) {
   const sizeGreaterThan = searchParams.get('size_gt');
   const sizeLessThan = searchParams.get('size_lt');
   const startDate = searchParams.get('from');
-  const endDate = searchParams.get('to');
 
   try {
     const filters: any[] = [];
@@ -41,12 +40,11 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    if (startDate && endDate) {
+    if (startDate) {
       const start = new Date(startDate);
-      const end = new Date(endDate);
       const unavailableBoats = await db.boatAvailability.findMany({
         where: {
-          OR: [{ startDate: { lte: end }, endDate: { gte: start } }],
+          OR: [{ endDate: { gte: start } }],
         },
         select: { boatId: true },
       });
