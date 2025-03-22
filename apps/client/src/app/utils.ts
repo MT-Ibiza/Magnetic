@@ -52,6 +52,6 @@ export default function isInViewport(element: HTMLElement) {
   );
 }
 
-export function getNumberMonth(date?: string | Date) {
+export function getNumberMonth(date?: string | Date | null) {
   return moment(date).utc().month() + 1;
 }

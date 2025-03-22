@@ -35,8 +35,6 @@ interface Props {
   item: Item;
 }
 
-const defaultMonthNumber = getNumberMonth();
-
 export function ViewBoat({ item }: Props) {
   const [searchParams] = useSearchParams();
   const selectedDate = searchParams.get('date');
@@ -61,7 +59,8 @@ export function ViewBoat({ item }: Props) {
     longitude,
   } = boat;
 
-  const seasonSelected = getSeasonPrice(seasonPrices, defaultMonthNumber);
+  const monthNumber = getNumberMonth(startDate);
+  const seasonSelected = getSeasonPrice(seasonPrices, monthNumber);
   const displayPrice = seasonSelected?.priceInCents ?? priceInCents;
   const [boatPrice, setBoatPrice] = useState(displayPrice);
   const calendarRef = useRef<HTMLDivElement | null>(null);
