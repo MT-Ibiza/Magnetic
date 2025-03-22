@@ -18,7 +18,7 @@ export function EmptyState(props: EmptyStateProps) {
       <div className="flex flex-col w-full max-w-sm px-4 mx-auto">
         {Icon && (
           <div className="p-3 mx-auto text-primary-500 bg-primary-100 rounded-full">
-            <Icon size={45} className="text-primary-500" />
+            <Icon size={45} className="text-gray-500" />
           </div>
         )}
         <h1 className="mt-3 text-lg text-gray-800 dark:text-white">{title}</h1>

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import ItemBoatCard from '../../components/items/cards/item-boat-card';
 import { getNumberMonth } from '../../utils';
 import { EmptyState, GridSkeleton } from '@magnetic/ui';
+import { FaShip } from 'react-icons/fa';
 
 interface Props {}
 
@@ -71,8 +72,9 @@ function ListBoats(props: Props) {
               </div>
             ) : (
               <EmptyState
+                icon={FaShip}
                 title="No boats found"
-                description="Try with other filters"
+                description="Adjust your filters and try again"
               ></EmptyState>
             )}
           </>
