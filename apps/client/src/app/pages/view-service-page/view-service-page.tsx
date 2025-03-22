@@ -196,16 +196,16 @@ function ViewServicePage(props: Props) {
                   </div> */}
                 </div>
                 {selectedCarService === 'standard' && (
-                  <div
-                    dangerouslySetInnerHTML={{ __html: service.script }}
-                  ></div>
-                )}
-                {selectedCarService === 'premium' && (
                   <iframe
                     scrolling="no"
                     style={{ width: '100%', border: 'none', height: '50rem' }}
                     src="https://classrentacar.es/afiliados/211/?lang=es"
                   ></iframe>
+                )}
+                {selectedCarService === 'premium' && (
+                  <div
+                    dangerouslySetInnerHTML={{ __html: service.script }}
+                  ></div>
                 )}
                 {/* {selectedCarService === 'luxury' && (
                   <iframe
