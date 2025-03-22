@@ -7,10 +7,16 @@ import FilterDrinks from './filter-drinks';
 import { searchDrinks } from '../../apis/api-drinks';
 import { DrinkSearchAttributes } from 'libs/interfaces/src/lib/drinks';
 import ItemDrinkCard from '../../components/items/cards/item-drink-card';
-import { Alert, DrinksDeliveryBookingForm, EmptyState } from '@magnetic/ui';
+import {
+  Alert,
+  DrinksDeliveryBookingForm,
+  EmptyState,
+  GridSkeleton,
+} from '@magnetic/ui';
 import { groupItemsByCategory } from '@magnetic/utils';
 import Modal from '../../components/modal';
 import { useAuth } from '../../hooks/useAuth';
+import { PiBeerBottleFill } from 'react-icons/pi';
 
 interface Props {
   serviceId: number;
@@ -55,7 +61,9 @@ function ListDrinks(props: Props) {
   } = useQuery<Item[]>({
     queryKey: ['drinks', searchParams],
     queryFn: async () => {
-      return searchDrinks(searchParams);
+      const result = searchDrinks(searchParams);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      return result;
     },
   });
 
@@ -170,7 +178,6 @@ function ListDrinks(props: Props) {
     drink?: string;
     categoriesIds?: string;
   }) {
-    console.log('filters: ', filters);
     setSearchParams({
       name: filters.drink,
       categoriesIds: filters.categoriesIds,
@@ -179,39 +186,49 @@ function ListDrinks(props: Props) {
 
   return (
     <>
-      <div>
-        <FilterDrinks onChangeFilters={handleSearch} categories={categories} />
-      </div>
-      {itemsGroup.map((group, index) => (
-        <div key={index} className="pt-[30px]">
-          <h2 className="text-2xl font-semibold">{group.category}</h2>
-          <div
-            className={`grid pt-[30px] gap-6 md:gap-8 grid-cols-2 lg:grid-cols-5`}
-          >
-            {group.items.map((item, index) => (
-              <ItemDrinkCard
-                key={index}
-                item={item}
-                onClickAdd={(amount) => {
-                  handleAddItem(item, amount);
-                }}
-                onClickRemove={(amount) => {
-                  handleRemoveItem(item, amount);
-                }}
-                cartItemAmount={
-                  cartMap.get(item.id) ? cartMap.get(item.id)?.quantity || 0 : 0
-                }
-              />
-            ))}
-          </div>
-        </div>
-      ))}
-
-      {drinks?.length === 0 && (
-        <EmptyState
-          title="No drinks found"
-          description="Try with other options"
-        ></EmptyState>
+      <FilterDrinks onChangeFilters={handleSearch} categories={categories} />
+      {isLoading ? (
+        <GridSkeleton
+          totalItems={10}
+          classNameContent="grid pt-[30px] gap-6 md:gap-8 grid-cols-2 lg:grid-cols-5"
+        />
+      ) : (
+        <>
+          {drinks?.length !== 0 ? (
+            <div>
+              {itemsGroup.map((group, index) => (
+                <div key={index} className="pt-[30px]">
+                  <h2 className="text-2xl font-semibold">{group.category}</h2>
+                  <div className="grid pt-[30px] gap-6 md:gap-8 grid-cols-2 lg:grid-cols-5">
+                    {group.items.map((item, index) => (
+                      <ItemDrinkCard
+                        key={index}
+                        item={item}
+                        onClickAdd={(amount) => {
+                          handleAddItem(item, amount);
+                        }}
+                        onClickRemove={(amount) => {
+                          handleRemoveItem(item, amount);
+                        }}
+                        cartItemAmount={
+                          cartMap.get(item.id)
+                            ? cartMap.get(item.id)?.quantity || 0
+                            : 0
+                        }
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <EmptyState
+              icon={PiBeerBottleFill}
+              title="No drinks found"
+              description="Try adjusting your search!"
+            ></EmptyState>
+          )}
+        </>
       )}
       {alert && (
         <Alert
