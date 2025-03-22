@@ -1,6 +1,10 @@
 import { Item } from '@magnetic/interfaces';
 import { Button } from '@magnetic/ui';
-import { centsToEurosWithCurrency, getPriceRange } from '@magnetic/utils';
+import {
+  centsToEurosWithCurrency,
+  formatDate,
+  getPriceRange,
+} from '@magnetic/utils';
 import { MutableRefObject, useMemo } from 'react';
 import { FaCalendarAlt } from 'react-icons/fa';
 
@@ -8,7 +12,7 @@ interface Props {
   item: Item;
   startDate: Date | null;
   price: number;
-  onClick: () => void;
+  onClick: (date: Date | null) => void;
   calendarRef: MutableRefObject<HTMLDivElement | null>;
 }
 
@@ -17,7 +21,6 @@ function BookBoatCard(props: Props) {
   const { priceInCents, seasonPrices } = item;
 
   const priceRange = useMemo(
-    //@ts-ignore
     () => getPriceRange([...seasonPrices, { priceInCents }]),
     [seasonPrices, priceInCents]
   );
@@ -50,10 +53,7 @@ function BookBoatCard(props: Props) {
             </div>
             <div className="flex-grow text-left">
               <span className="block xl:text-lg font-semibold">
-                {startDate?.toLocaleDateString('en-US', {
-                  month: 'short',
-                  day: '2-digit',
-                }) || 'Date'}
+                {startDate ? formatDate(startDate) : 'Date'}
               </span>
               <span className="block mt-1 text-sm text-neutral-400 leading-none font-light">
                 {'Select date'}
@@ -63,7 +63,13 @@ function BookBoatCard(props: Props) {
         </div>
         <div className="border-b border-neutral-200"></div>
       </div>
-      <Button size={2} radius="full" onClick={onClick}>
+      <Button
+        size={2}
+        radius="full"
+        onClick={() => {
+          onClick(startDate);
+        }}
+      >
         Book Now
       </Button>
     </div>
