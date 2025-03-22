@@ -20,15 +20,15 @@ function CheckoutItemEdit(props: Props) {
   const { setSelectedItem } = useApp();
   const { editFormItemCart, refetch } = useCart();
 
-  const handleEditForm = (cartItemData: FormSubmitParams<any>) => {
+  const handleEditForm = (data: FormSubmitParams<any>) => {
     editFormItemCart.mutate(
       {
         cartItemId,
         itemId: item.id,
-        formData: cartItemData.form,
-        quantity: cartItemData.quantity,
-        variantId: cartItemData.variantId,
-        seasonId: cartItemData.seasonId,
+        formData: data.form,
+        quantity: data.quantity,
+        variantId: data.variantId,
+        seasonId: data.seasonId,
       },
       {
         onSuccess: () => {
