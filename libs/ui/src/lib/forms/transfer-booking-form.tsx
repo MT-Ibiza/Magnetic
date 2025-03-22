@@ -1,6 +1,6 @@
 import { Button, Input, Modal, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
-import { centsToEurosWithCurrency } from '@magnetic/utils';
+import { centsToEurosWithCurrency, TODAY_DATE } from '@magnetic/utils';
 import { useState } from 'react';
 import { FormSubmitParams, Item, CurrentUser } from '@magnetic/interfaces';
 
@@ -133,8 +133,8 @@ export function TransferBookingForm({
               <div>
                 <Text className="mb-2">Date</Text>
                 <Input
-                  min={new Date().toISOString().split('T')[0]}
                   type="date"
+                  min={TODAY_DATE}
                   className="w-full"
                   {...register('date', { required: 'Date is required' })}
                 />

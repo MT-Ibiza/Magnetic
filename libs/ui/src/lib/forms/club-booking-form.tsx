@@ -1,4 +1,5 @@
 import { Button, Input, Text, TextArea } from '@magnetic/ui';
+import { TODAY_DATE } from '@magnetic/utils';
 import { useForm } from 'react-hook-form';
 
 export interface ClubBookingFormData {
@@ -54,6 +55,7 @@ export function ClubBookingForm({ onSubmit }: Props) {
             <Text className="mb-2">Date</Text>
             <Input
               type="date"
+              min={TODAY_DATE}
               className="w-full"
               {...register('date', { required: 'Date is required' })}
             />

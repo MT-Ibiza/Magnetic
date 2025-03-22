@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import {
   centsToEurosWithCurrency,
   placeholderItemImage,
+  TODAY_DATE,
 } from '@magnetic/utils';
 import { useState } from 'react';
 import { CurrentUser, FormSubmitParams, Item } from '@magnetic/interfaces';
@@ -109,6 +110,7 @@ export function SingleChefServiceForm({
                 <Input
                   type="date"
                   className="w-full"
+                  min={TODAY_DATE}
                   {...register('date', { required: 'Date is required' })}
                 />
                 {errors.date && (
