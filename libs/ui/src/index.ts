@@ -52,3 +52,4 @@ export { ItemCounterButtons } from './lib/item-counter-buttons';
 export { RenderBookingForm } from './lib/forms/render-booking-form';
 export { DrinksDeliveryBookingForm } from './lib/forms/drinks-delivery-form';
 export { BoatCharterBookingForm } from './lib/forms/boat-charter-form';
+export { GridSkeleton } from './lib/grid-skeleton';

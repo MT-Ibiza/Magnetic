@@ -5,6 +5,7 @@ import { searchBoats } from '../../apis/api-boats';
 import { useState } from 'react';
 import ItemBoatCard from '../../components/items/cards/item-boat-card';
 import { getNumberMonth } from '../../utils';
+import { EmptyState, GridSkeleton } from '@magnetic/ui';
 
 interface Props {}
 
@@ -33,7 +34,9 @@ function ListBoats(props: Props) {
   } = useQuery<Item[]>({
     queryKey: ['boats', searchParams],
     queryFn: async () => {
-      return searchBoats(searchParams);
+      const result = searchBoats(searchParams);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      return result;
     },
   });
 
@@ -50,17 +53,30 @@ function ListBoats(props: Props) {
             setSearchParams(filters);
           }}
         />
-        <div className="grid grid-cols-1 gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {boats?.map((item, index) => (
-            <div key={index}>
-              <ItemBoatCard
-                selectedDate={searchParams.from}
-                item={item}
-                priceMonthNumber={currentMonthNumber}
-              />
-            </div>
-          ))}
-        </div>
+        {isLoading ? (
+          <GridSkeleton totalItems={6} />
+        ) : (
+          <>
+            {boats?.length !== 0 ? (
+              <div className="grid grid-cols-1 gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {boats?.map((item, index) => (
+                  <div key={index}>
+                    <ItemBoatCard
+                      selectedDate={searchParams.from}
+                      item={item}
+                      priceMonthNumber={currentMonthNumber}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <EmptyState
+                title="No boats found"
+                description="Try with other filters"
+              ></EmptyState>
+            )}
+          </>
+        )}
       </div>
     </>
   );
