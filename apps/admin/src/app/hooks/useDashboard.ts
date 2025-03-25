@@ -16,6 +16,9 @@ export function useAdminDashboard() {
     isError,
     isSuccess,
     data,
+    newBookings: data ? data.new : [],
+    activeBookings: data ? data.active : [],
+    upcomingUsers: data ? data.upcoming : [],
     refetch,
     error,
   };
