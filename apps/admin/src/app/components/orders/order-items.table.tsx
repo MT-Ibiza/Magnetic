@@ -5,10 +5,11 @@ import { Text } from '@magnetic/ui';
 interface Props {
   items: OrderItem[];
   totalInCents: number;
+  vatInCents: number;
 }
 
 function OrderItemsTable(props: Props) {
-  const { items, totalInCents } = props;
+  const { items, totalInCents, vatInCents } = props;
 
   return (
     <div className="">
@@ -60,11 +61,35 @@ function OrderItemsTable(props: Props) {
             <td></td>
             <td></td>
             <td>
-              <h1>TOTAL</h1>
+              <h1>Subtotal</h1>
             </td>
             <td>
               <Text.TextNumeric>
                 {centsToEurosWithCurrency(totalInCents)}
+              </Text.TextNumeric>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>
+              <h1>V.A.T</h1>
+            </td>
+            <td>
+              <Text.TextNumeric>
+                {centsToEurosWithCurrency(vatInCents)}
+              </Text.TextNumeric>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>
+              <h1>TOTAL</h1>
+            </td>
+            <td>
+              <Text.TextNumeric>
+                {centsToEurosWithCurrency(totalInCents + vatInCents)}
               </Text.TextNumeric>
             </td>
           </tr>

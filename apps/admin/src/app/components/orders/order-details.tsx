@@ -43,7 +43,11 @@ function OrderDetail(props: Props) {
           </p>
         </div>
       </div>
-      <OrderItemsTable items={order.items} totalInCents={order.totalInCents} />
+      <OrderItemsTable
+        items={order.items}
+        totalInCents={order.totalInCents}
+        vatInCents={order.vatInCents}
+      />
     </CardWrapper>
   );
 }

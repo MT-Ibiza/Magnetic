@@ -92,7 +92,7 @@ function OrderPage(props: Props) {
               >
                 <div className="p-5 my-3">
                   {form.formData && Object.keys(form.formData).length > 0 ? (
-                    <FormJsonDetails formData={form.formData} />
+                    <FormJsonDetails formData={form.formData} serviceType="" />
                   ) : (
                     <RenderBookingForm
                       apiUrl={API_URL}

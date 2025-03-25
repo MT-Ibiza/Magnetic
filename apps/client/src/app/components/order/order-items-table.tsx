@@ -1,5 +1,5 @@
 import React from 'react';
-import { OrderItem } from '@magnetic/interfaces';
+import { Order, OrderItem } from '@magnetic/interfaces';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { Text } from '@magnetic/ui';
 import { placeholderItemImage } from '../../constants';
@@ -26,7 +26,7 @@ function OrderItemsTable(props: Props) {
       <table className="table w-full border-collapse">
         <thead>
           <tr>
-            <th className='text-[14px] font-bold'>Product/Service</th>
+            <th className="text-[14px] font-bold">Product/Service</th>
             <th className="text-center font-bold text-[14px]">Price</th>
             <th className="text-center font-bold text-[14px]">Quantity</th>
             <th className="text-center font-bold text-[14px]">Total</th>
