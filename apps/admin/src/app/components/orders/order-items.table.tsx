@@ -5,7 +5,7 @@ import { Text } from '@magnetic/ui';
 interface Props {
   items: OrderItem[];
   totalInCents: number;
-  vatInCents: number;
+  vatInCents?: number;
 }
 
 function OrderItemsTable(props: Props) {
@@ -57,30 +57,34 @@ function OrderItemsTable(props: Props) {
               </td>
             </tr>
           ))}
-          <tr>
-            <td></td>
-            <td></td>
-            <td>
-              <h1>Subtotal</h1>
-            </td>
-            <td>
-              <Text.TextNumeric>
-                {centsToEurosWithCurrency(totalInCents)}
-              </Text.TextNumeric>
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td>
-              <h1>V.A.T</h1>
-            </td>
-            <td>
-              <Text.TextNumeric>
-                {centsToEurosWithCurrency(vatInCents)}
-              </Text.TextNumeric>
-            </td>
-          </tr>
+          {vatInCents && (
+            <>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>
+                  <h1>Subtotal</h1>
+                </td>
+                <td>
+                  <Text.TextNumeric>
+                    {centsToEurosWithCurrency(totalInCents)}
+                  </Text.TextNumeric>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>
+                  <h1>V.A.T</h1>
+                </td>
+                <td>
+                  <Text.TextNumeric>
+                    {centsToEurosWithCurrency(vatInCents)}
+                  </Text.TextNumeric>
+                </td>
+              </tr>
+            </>
+          )}
           <tr>
             <td></td>
             <td></td>
@@ -89,7 +93,7 @@ function OrderItemsTable(props: Props) {
             </td>
             <td>
               <Text.TextNumeric>
-                {centsToEurosWithCurrency(totalInCents + vatInCents)}
+                {centsToEurosWithCurrency(totalInCents + (vatInCents || 0))}
               </Text.TextNumeric>
             </td>
           </tr>

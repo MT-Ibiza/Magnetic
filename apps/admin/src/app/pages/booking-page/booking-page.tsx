@@ -164,7 +164,10 @@ export function BookingPage() {
                   </div>
                 )}
               <div className="border p-5 rounded-md w-full mt-5">
-                <FormJsonDetails formData={data.booking.formData} />
+                <FormJsonDetails
+                  formData={data.booking.formData}
+                  serviceType=""
+                />
               </div>
             </div>
           )}
