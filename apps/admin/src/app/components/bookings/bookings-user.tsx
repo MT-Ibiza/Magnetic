@@ -56,22 +56,28 @@ export function BookingsUser(props: Props) {
                   </Text>
                 </td>
                 <td className="py-2 px-4 text-sm text-neutral-700">
-                  {booking.order.items.length > 0 ? (
-                    booking.order.items.every(
-                      (cartItem) => cartItem.type === 'drinks'
-                    ) && booking.order.items.length > 1 ? (
-                      'Many products'
-                    ) : (
-                      <ul>
-                        {booking.order.items.map((cartItem, index) => (
-                          <li key={index}>{cartItem.item.name}</li>
-                        ))}
-                      </ul>
-                    )
-                  ) : (
-                    'No item'
-                  )}
+                  <ul>
+                    {booking.order.items
+                      .filter((orderItem) => orderItem.type === booking.type)
+                      .slice(0, 3)
+                      .map((item, index) => (
+                        <li key={index}>{item.item.name}</li>
+                      ))}
+
+                    {booking.order.items.filter(
+                      (orderItem) => orderItem.type === booking.type
+                    ).length > 3 && (
+                      <li className="text-gray-500 oooo">
+                        +
+                        {booking.order.items.filter(
+                          (orderItem) => orderItem.type === booking.type
+                        ).length - 3}{' '}
+                        items
+                      </li>
+                    )}
+                  </ul>
                 </td>
+
                 <td className="py-2 px-4 text-sm text-neutral-700">
                   {booking.service.name}
                 </td>

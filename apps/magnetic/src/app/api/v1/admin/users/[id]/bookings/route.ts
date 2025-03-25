@@ -13,7 +13,7 @@ export async function GET(
         },
       },
       include: {
-        order: { 
+        order: {
           select: {
             id: true,
             status: true,
