@@ -10,8 +10,6 @@ interface Props {
 function BoatBookingSummary(props: Props) {
   const { booking, onCancel } = props;
 
-  // const drinkItems = items.
-
   return (
     <div>
       <Modal.Header>Booking Details</Modal.Header>

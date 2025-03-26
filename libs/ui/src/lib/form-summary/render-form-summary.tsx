@@ -3,6 +3,7 @@ import BoatSummary from './boat-summary';
 import DrinksSummary from './drinks-summary';
 import { BookingForm } from '@magnetic/interfaces';
 import SingleChefsSummary from './single-chefs-summary';
+import FormJsonDetails from '../form-json-details';
 
 interface Props {
   booking: BookingForm;
@@ -24,7 +25,11 @@ export function RenderFormSummary(props: Props) {
     case 'chef-single':
       return <SingleChefsSummary formData={formData} />;
     default:
-      return <div></div>;
+      return (
+        <div className="p-10">
+          <FormJsonDetails serviceType={booking.type} formData={formData} />
+        </div>
+      );
   }
 }
 
