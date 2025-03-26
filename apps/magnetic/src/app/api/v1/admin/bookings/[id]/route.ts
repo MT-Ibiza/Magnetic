@@ -20,7 +20,7 @@ export async function GET(
     const isDrinkType = booking.type === 'drinks';
 
     const orderItemCondition = isDrinkType
-      ? { type: booking.type }
+      ? { orderId: booking.orderId, type: booking.type }
       : {
           orderId: booking.orderId,
           type: booking.type,

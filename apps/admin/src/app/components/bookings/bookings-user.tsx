@@ -18,8 +18,8 @@ export function BookingsUser(props: Props) {
       };
     }) || [];
 
-  const sortedBookings = bookings?.sort((a, b) => 
-    moment(b.createdAt).unix() - moment(a.createdAt).unix()
+  const sortedBookings = bookings?.sort(
+    (a, b) => moment(a.date).valueOf() - moment(b.date).valueOf()
   );
 
   return (
@@ -42,7 +42,7 @@ export function BookingsUser(props: Props) {
             <th className="text-left text-sm font-semibold text-neutral-800 py-4 px-4">
               Order
             </th>
-          </tr> 
+          </tr>
         </thead>
         <tbody>
           {sortedBookings &&
@@ -52,7 +52,7 @@ export function BookingsUser(props: Props) {
                 key={index}
               >
                 <td className="py-4 px-4 text-sm text-neutral-700 flex items-center">
-                    {getStatusIndicator(booking.status)}
+                  {getStatusIndicator(booking.status)}
                   <Link
                     className="text-primary-600 hover:underline ml-2"
                     to={`/bookings/${booking.id}`}
@@ -61,28 +61,23 @@ export function BookingsUser(props: Props) {
                   </Link>
                 </td>
                 <td className="py-4 px-4 text-sm text-neutral-700">
-                  {moment(booking.createdAt).format('DD MMM YYYY')}
+                  {moment(booking.date).format('DD MMM YYYY')}
                 </td>
                 <td className="py-4 px-4 text-sm text-neutral-700">
                   <ul>
                     {booking.order.items
-                      .filter((orderItem) => orderItem.type === booking.type)
-                      .slice(0, 3)
+                      .filter(
+                        (orderItem) =>
+                          orderItem.type === booking.type &&
+                          orderItem.cartItemId === booking.cartItemId
+                      )
                       .map((item, index) => (
-                        <li key={index}>{item.item.name}</li>
+                        <li key={index}>
+                          {booking.type === 'drinks'
+                            ? 'Many drinks'
+                            : item.item.name}
+                        </li>
                       ))}
-
-                    {booking.order.items.filter(
-                      (orderItem) => orderItem.type === booking.type
-                    ).length > 3 && (
-                      <li className="text-gray-500">
-                        +
-                        {booking.order.items.filter(
-                          (orderItem) => orderItem.type === booking.type
-                        ).length - 3}{' '}
-                        items
-                      </li>
-                    )}
                   </ul>
                 </td>
 

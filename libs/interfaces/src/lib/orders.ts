@@ -41,6 +41,7 @@ export interface OrderItem {
   variantId?: number;
   variant?: ItemVariant;
   type: string;
+  cartItemId: number;
 }
 
 export interface OrderBookingForm {
@@ -70,6 +71,7 @@ export interface OrderForm {
 export interface BookingForm {
   id: number;
   orderItemId?: number;
+  cartItemId: number;
   formData: any;
   orderId: number;
   serviceId: number;
