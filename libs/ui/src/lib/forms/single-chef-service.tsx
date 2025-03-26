@@ -15,7 +15,7 @@ import {
 import { useState } from 'react';
 import { CurrentUser, FormSubmitParams, Item } from '@magnetic/interfaces';
 
-interface SingleChefServiceFormData {
+export interface SingleChefServiceFormData {
   date: string;
   startTime: string;
   numberOfPeople: number;
