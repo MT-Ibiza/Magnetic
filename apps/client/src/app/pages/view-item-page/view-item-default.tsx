@@ -8,6 +8,7 @@ import Modal from '../../components/modal';
 import { FormSubmitParams, Item } from '@magnetic/interfaces';
 import { useApp } from '../../hooks/useApp';
 import { API_URL } from '../../apis/api-constants';
+import { useAuth } from '../../hooks/useAuth';
 
 interface Props {
   item: Item;
@@ -20,6 +21,8 @@ export function ViewItemDefault({ item }: Props) {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [openFormModal, setOpenFormModal] = useState(false);
   const { setSelectedItem } = useApp();
+  const { getCurrentUser } = useAuth();
+  const user = getCurrentUser();
 
   const [alert, setAlert] = useState<{
     message: string;
@@ -122,6 +125,7 @@ export function ViewItemDefault({ item }: Props) {
       )}
       <Modal open={openFormModal}>
         <RenderBookingForm
+          user={user}
           apiUrl={API_URL}
           item={item}
           type={item?.category?.formType || item?.service.serviceType || ''}
