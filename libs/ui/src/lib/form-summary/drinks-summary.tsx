@@ -1,7 +1,6 @@
 import { Text } from '@magnetic/ui';
 import { formatDate } from '@magnetic/utils';
-import { DrinksDeliveryFormData } from '../forms/drinks-delivery-form';
-import { OrderItem } from '@magnetic/interfaces';
+import { DrinksDeliveryFormData, OrderItem } from '@magnetic/interfaces';
 
 interface Props {
   formData: DrinksDeliveryFormData;

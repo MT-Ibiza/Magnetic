@@ -1,15 +1,6 @@
+import { WellnessFitnessFormData } from '@magnetic/interfaces';
 import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
-
-export interface WellnessFitnessFormData {
-  service: string;
-  dates: string;
-  time: string;
-  numberOfPeople: number;
-  location: string;
-  comments: string;
-  paymentConfirmed: boolean;
-}
 
 interface Props {
   onSubmit: (data: WellnessFitnessFormData) => void;

@@ -13,16 +13,12 @@ import {
   TODAY_DATE,
 } from '@magnetic/utils';
 import { useState } from 'react';
-import { CurrentUser, FormSubmitParams, Item } from '@magnetic/interfaces';
-
-export interface SingleChefServiceFormData {
-  date: string;
-  startTime: string;
-  numberOfPeople: number;
-  kidsAges: string;
-  location: string;
-  dietaryComments: string;
-}
+import {
+  CurrentUser,
+  FormSubmitParams,
+  Item,
+  SingleChefServiceFormData,
+} from '@magnetic/interfaces';
 
 interface Props {
   onSubmit: (data: FormSubmitParams<SingleChefServiceFormData>) => void;

@@ -2,22 +2,12 @@ import { Button, Input, Modal, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 import { centsToEurosWithCurrency, TODAY_DATE } from '@magnetic/utils';
 import { useState } from 'react';
-import { FormSubmitParams, Item, CurrentUser } from '@magnetic/interfaces';
-
-export interface TransferFormData {
-  date: string;
-  time: string;
-  pickUpLocation: string;
-  dropOffLocation: string;
-  numberOfPeople: number;
-  contactName: string;
-  contactNumber: string;
-  flightNumber: string;
-  luggageAmount: number;
-  childSeats: string;
-  paymentConfirmed: boolean;
-  variantId?: number;
-}
+import {
+  FormSubmitParams,
+  Item,
+  CurrentUser,
+  TransferFormData,
+} from '@magnetic/interfaces';
 
 interface Props {
   onSubmit: (data: FormSubmitParams<TransferFormData>) => void;

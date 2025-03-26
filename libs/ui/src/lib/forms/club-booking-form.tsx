@@ -1,13 +1,7 @@
+import { ClubBookingFormData } from '@magnetic/interfaces';
 import { Button, Input, Text, TextArea } from '@magnetic/ui';
 import { TODAY_DATE } from '@magnetic/utils';
 import { useForm } from 'react-hook-form';
-
-export interface ClubBookingFormData {
-  venue: string;
-  date: string;
-  numberOfPeople: number;
-  comments: string;
-}
 
 interface Props {
   onSubmit: (data: ClubBookingFormData) => void;

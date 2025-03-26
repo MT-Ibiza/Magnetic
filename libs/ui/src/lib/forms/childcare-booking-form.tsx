@@ -1,17 +1,6 @@
-import { FormSubmitParams } from '@magnetic/interfaces';
+import { ChildcareFormData, FormSubmitParams } from '@magnetic/interfaces';
 import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
-
-export interface ChildcareFormData {
-  service: string;
-  kidsAges: string;
-  startDateTime: string;
-  finishDateTime: string;
-  location: string;
-  comments: string;
-  disclaimerAccepted: boolean;
-  paymentConfirmed: boolean;
-}
 
 interface Props {
   onSubmit: (data: FormSubmitParams<ChildcareFormData>) => void;

@@ -1,16 +1,7 @@
+import { ChefStaffFormData } from '@magnetic/interfaces';
 import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
 import { TODAY_DATE } from '@magnetic/utils';
 import { useForm } from 'react-hook-form';
-
-export interface ChefStaffFormData {
-  menu: string;
-  date: string;
-  time: string;
-  numberOfPeople: number;
-  kidsAges: string;
-  location: string;
-  dietaryComments: string;
-}
 
 interface Props {
   onSubmit: (data: ChefStaffFormData) => void;

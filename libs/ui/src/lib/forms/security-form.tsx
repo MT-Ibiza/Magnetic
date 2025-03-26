@@ -1,16 +1,6 @@
-import { FormSubmitParams } from '@magnetic/interfaces';
+import { FormSubmitParams, SecurityFormData } from '@magnetic/interfaces';
 import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
-
-export interface SecurityFormData {
-  service: string;
-  dates: string;
-  startTime: string;
-  finishTime: string;
-  location: string;
-  comments: string;
-  paymentConfirmed: boolean;
-}
 
 interface Props {
   onSubmit: (data: FormSubmitParams<SecurityFormData>) => void;

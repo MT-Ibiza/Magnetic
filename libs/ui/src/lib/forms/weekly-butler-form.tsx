@@ -8,19 +8,13 @@ import {
 } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 import { centsToEurosWithCurrency, TODAY_DATE } from '@magnetic/utils';
-import { FormSubmitParams, Item, CurrentUser } from '@magnetic/interfaces';
+import {
+  FormSubmitParams,
+  Item,
+  CurrentUser,
+  WeeklyButlerServiceFormData,
+} from '@magnetic/interfaces';
 import { useState } from 'react';
-
-export interface WeeklyButlerServiceFormData {
-  service: string;
-  date: string;
-  startTime: string;
-  numberOfPeople: number;
-  numberOfWeeks: number;
-  childrenAges: string;
-  commentsPreference: string;
-  location: string;
-}
 
 interface Props {
   onSubmit: (data: FormSubmitParams<WeeklyButlerServiceFormData>) => void;

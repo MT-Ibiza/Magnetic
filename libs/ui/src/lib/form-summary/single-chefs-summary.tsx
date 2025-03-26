@@ -1,4 +1,4 @@
-import { SingleChefServiceFormData } from '../forms/single-chef-service';
+import { SingleChefServiceFormData } from '@magnetic/interfaces';
 import { Text } from '@magnetic/ui';
 import { formatDate, formatTime } from '@magnetic/utils';
 
