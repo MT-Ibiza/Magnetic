@@ -1,4 +1,5 @@
 import { Item } from '@magnetic/interfaces';
+import { getNumberMonth } from '@magnetic/utils';
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -88,13 +89,29 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    items = items.map((item) => {
-      const prices = item.seasonPrices.map((sp) => sp.priceInCents);
-      return {
-        ...item,
-        prices: prices.concat(item.priceInCents),
-      } as any;
-    });
+    const monthSelected = startDate ? getNumberMonth(startDate) : undefined;
+
+    if (monthSelected) {
+      items = items.map((item) => {
+        const seasonPrice = item.seasonPrices.find(
+          (seasonPrice) => seasonPrice.startMonth === monthSelected
+        );
+        return {
+          ...item,
+          prices: seasonPrice
+            ? [seasonPrice.priceInCents]
+            : [item.priceInCents],
+        } as any;
+      });
+    } else {
+      items = items.map((item) => {
+        const prices = item.seasonPrices.map((sp) => sp.priceInCents);
+        return {
+          ...item,
+          prices: prices.concat(item.priceInCents),
+        } as any;
+      });
+    }
 
     if (priceGreaterThan || priceLessThan) {
       const priceInCentsGreaterThan = priceGreaterThan
