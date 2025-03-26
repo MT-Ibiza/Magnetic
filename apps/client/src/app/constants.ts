@@ -94,7 +94,7 @@ export const budgetFilterOptions = [
   {
     value: '10000',
     label: '€10000 +',
-    data: { price_gt: '10000' },
+    data: { price_gt: '10000', price_lt: undefined },
   },
 ];
 

@@ -47,7 +47,6 @@ function FilterBoats(props: Props) {
 
   const handleSearchChange = (name: string, value: string, data?: any) => {
     const filterName = name as 'capacity';
-    debugger;
     if (data) {
       const updatedFilters = { ...searchParams, ...data };
       setSearchParams(updatedFilters);

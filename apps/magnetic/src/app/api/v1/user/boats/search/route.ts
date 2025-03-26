@@ -27,18 +27,6 @@ export async function GET(request: NextRequest) {
       filters.push({ sizeInFeet: { gte: parseInt(sizeGreaterThan) } });
     if (sizeLessThan)
       filters.push({ sizeInFeet: { lte: parseInt(sizeLessThan) } });
-    if (priceGreaterThan || priceLessThan) {
-      filters.push({
-        item: {
-          priceInCents: {
-            ...(priceGreaterThan
-              ? { gte: parseInt(priceGreaterThan) * 100 }
-              : {}),
-            ...(priceLessThan ? { lte: parseInt(priceLessThan) * 100 } : {}),
-          },
-        },
-      });
-    }
 
     if (startDate) {
       const start = new Date(startDate);
@@ -56,7 +44,7 @@ export async function GET(request: NextRequest) {
       where: { AND: filters.length > 0 ? filters : undefined },
     });
 
-    const items = await db.item.findMany({
+    let items = await db.item.findMany({
       where: {
         published: true,
         id: { in: boats.map((boat) => boat.itemId) },
@@ -84,8 +72,6 @@ export async function GET(request: NextRequest) {
         serviceId: true,
         seasonPrices: {
           select: {
-            startMonth: true,
-            endMonth: true,
             priceInCents: true,
           },
         },
@@ -98,6 +84,27 @@ export async function GET(request: NextRequest) {
         },
       },
     });
+
+    items = items.map((item) => {
+      const maxSeasonPrice = item.seasonPrices.length
+        ? Math.max(...item.seasonPrices.map((sp) => sp.priceInCents))
+        : 0;
+      const maxPrice = Math.max(item.priceInCents, maxSeasonPrice);
+      return { ...item, maxPriceInCents: maxPrice } as any;
+    });
+
+    if (priceGreaterThan || priceLessThan) {
+      const priceInCentsGreaterThan = Number(priceGreaterThan || 0) * 100;
+      const priceInCentsLessThan = Number(priceLessThan || 0) * 100;
+
+      items = items.filter((item: any) => {
+        return (
+          (!priceGreaterThan ||
+            item.maxPriceInCents >= priceInCentsGreaterThan) &&
+          (!priceLessThan || item.maxPriceInCents <= priceInCentsLessThan)
+        );
+      });
+    }
 
     return NextResponse.json(items);
   } catch (error: any) {
