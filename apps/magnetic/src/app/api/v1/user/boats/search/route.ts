@@ -1,3 +1,4 @@
+import { Item } from '@magnetic/interfaces';
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -88,24 +89,26 @@ export async function GET(request: NextRequest) {
     });
 
     items = items.map((item) => {
-      const maxSeasonPrice = item.seasonPrices.length
-        ? Math.max(...item.seasonPrices.map((sp) => sp.priceInCents))
-        : 0;
-      const maxPrice = Math.max(item.priceInCents, maxSeasonPrice);
-      return { ...item, maxPriceInCents: maxPrice } as any;
+      const prices = item.seasonPrices.map((sp) => sp.priceInCents);
+      return {
+        ...item,
+        prices: prices.concat(item.priceInCents),
+      } as any;
     });
 
     if (priceGreaterThan || priceLessThan) {
-      const priceInCentsGreaterThan = Number(priceGreaterThan || 0) * 100;
-      const priceInCentsLessThan = Number(priceLessThan || 0) * 100;
-
-      items = items.filter((item: any) => {
-        return (
-          (!priceGreaterThan ||
-            item.maxPriceInCents >= priceInCentsGreaterThan) &&
-          (!priceLessThan || item.maxPriceInCents <= priceInCentsLessThan)
-        );
-      });
+      const priceInCentsGreaterThan = priceGreaterThan
+        ? Number(priceGreaterThan) * 100
+        : undefined;
+      const priceInCentsLessThan = priceLessThan
+        ? Number(priceLessThan) * 100
+        : undefined;
+      items = filterItemsByPriceRange(
+        //@ts-ignore
+        items,
+        priceInCentsGreaterThan,
+        priceInCentsLessThan
+      ) as any[];
     }
 
     return NextResponse.json(items);
@@ -116,4 +119,21 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+function filterItemsByPriceRange(
+  items: { prices: number[]; name: string }[],
+  minPrice?: number,
+  maxPrice?: number
+) {
+  console.log('minPrice: ', minPrice);
+  console.log('maxPrice: ', maxPrice);
+  return items.filter(({ prices, name }) => {
+    console.log(`${name}:  prices: [${prices}]`);
+    return prices.some(
+      (price) =>
+        (minPrice === undefined || price >= minPrice) &&
+        (maxPrice === undefined || price <= maxPrice)
+    );
+  });
 }
