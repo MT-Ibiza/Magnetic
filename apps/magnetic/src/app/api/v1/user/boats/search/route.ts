@@ -1,3 +1,4 @@
+import { getNumberMonth } from '@magnetic/utils';
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -73,6 +74,8 @@ export async function GET(request: NextRequest) {
         seasonPrices: {
           select: {
             priceInCents: true,
+            startMonth: true,
+            endMonth: true,
           },
         },
         service: {
@@ -85,12 +88,23 @@ export async function GET(request: NextRequest) {
       },
     });
 
+    const numberMonthSelected = startDate ? getNumberMonth(startDate) : -1;
+
     items = items.map((item) => {
+      const seasonPriceFound = item.seasonPrices.find(
+        (seasonPrice) => seasonPrice.startMonth === numberMonthSelected
+      );
       const maxSeasonPrice = item.seasonPrices.length
         ? Math.max(...item.seasonPrices.map((sp) => sp.priceInCents))
         : 0;
       const maxPrice = Math.max(item.priceInCents, maxSeasonPrice);
-      return { ...item, maxPriceInCents: maxPrice } as any;
+      return {
+        ...item,
+        maxPriceInCents: maxPrice,
+        priceMonth: startDate
+          ? seasonPriceFound?.priceInCents || item.priceInCents
+          : undefined,
+      } as any;
     });
 
     if (priceGreaterThan || priceLessThan) {
@@ -98,10 +112,17 @@ export async function GET(request: NextRequest) {
       const priceInCentsLessThan = Number(priceLessThan || 0) * 100;
 
       items = items.filter((item: any) => {
+        console.log(
+          `${item.name} - ${item.maxPriceInCents / 100} ---- priceMonth: ${
+            item.priceMonth
+          }`
+        );
+        const priceFilter = item.priceMonth
+          ? item.priceMonth
+          : item.maxPriceInCents;
         return (
-          (!priceGreaterThan ||
-            item.maxPriceInCents >= priceInCentsGreaterThan) &&
-          (!priceLessThan || item.maxPriceInCents <= priceInCentsLessThan)
+          (!priceGreaterThan || priceFilter >= priceInCentsGreaterThan) &&
+          (!priceLessThan || priceFilter <= priceInCentsLessThan)
         );
       });
     }
