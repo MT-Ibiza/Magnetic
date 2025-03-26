@@ -124,9 +124,9 @@ export function CartShopping() {
                                 key={index}
                                 className="flex items-center gap-4 justify-between"
                               >
-                                <div className="flex items-center gap-4">
+                                <div className="flex gap-4">
                                   <img
-                                    className="w-16 h-16 rounded object-cover"
+                                    className="w-14 h-14 rounded object-cover"
                                     src={
                                       cartItem.item.images &&
                                       cartItem.item.images.length > 0
