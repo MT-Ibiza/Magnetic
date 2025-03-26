@@ -5,7 +5,7 @@ import {
   PopoverPanel,
   Transition,
 } from '@headlessui/react';
-import { FiGrid } from 'react-icons/fi';
+import { MdWineBar } from 'react-icons/md';
 import Checkbox from './checkbox';
 
 export interface SelectCategoryProps {
@@ -25,7 +25,7 @@ export const SelectCategory: FC<SelectCategoryProps> = ({
     categories
       .filter((cat) => cat.checked)
       .map((cat) => cat.name)
-      .join(', ') || 'Category';
+      .join(', ') || 'Search by type';
 
   return (
     <Popover className="flex relative flex-1">
@@ -37,7 +37,7 @@ export const SelectCategory: FC<SelectCategoryProps> = ({
             }`}
           >
             <div className="text-neutral-300 dark:text-neutral-400">
-              <FiGrid className="w-6 h-6 lg:w-7 lg:h-7" />
+              <MdWineBar className="w-6 h-6 lg:w-7 lg:h-7" />
             </div>
             <div className="flex-1">
               <span className="block xl:text-lg font-semibold overflow-hidden">
