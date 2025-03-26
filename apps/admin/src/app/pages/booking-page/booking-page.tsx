@@ -1,8 +1,8 @@
 import {
   CardWrapper,
-  FormJsonDetails,
   Modal,
   RenderBookingForm,
+  RenderFormSummary,
   StatusBooking,
   Text,
 } from '@magnetic/ui';
@@ -163,11 +163,8 @@ export function BookingPage() {
                     </div>
                   </div>
                 )}
-              <div className="border p-5 rounded-md w-full mt-5">
-                <FormJsonDetails
-                  formData={data.booking.formData}
-                  serviceType=""
-                />
+              <div className="border rounded-md w-full mt-5">
+                <RenderFormSummary booking={data.booking as any} />
               </div>
             </div>
           )}
