@@ -73,6 +73,8 @@ export async function GET(request: NextRequest) {
         seasonPrices: {
           select: {
             priceInCents: true,
+            startMonth: true,
+            endMonth: true,
           },
         },
         service: {
