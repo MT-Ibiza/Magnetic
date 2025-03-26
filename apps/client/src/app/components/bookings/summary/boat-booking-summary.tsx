@@ -1,5 +1,5 @@
 import { BoatCharterFormData, BookingForm } from '@magnetic/interfaces';
-import { Button, FormJsonDetails } from '@magnetic/ui';
+import { Button, FormJsonDetails, RenderFormSummary } from '@magnetic/ui';
 import Modal from '../../modal';
 
 interface Props {
@@ -9,15 +9,14 @@ interface Props {
 
 function BoatBookingSummary(props: Props) {
   const { booking, onCancel } = props;
-  const { formData, service } = booking;
+
+  // const drinkItems = items.
 
   return (
     <div>
       <Modal.Header>Booking Details</Modal.Header>
       <Modal.Body>
-        <div className="p-10">
-          <FormJsonDetails serviceType={booking.type} formData={formData} />
-        </div>
+        <RenderFormSummary booking={booking} />
       </Modal.Body>
       <Modal.Footer>
         <div className="flex justify-end w-full">
