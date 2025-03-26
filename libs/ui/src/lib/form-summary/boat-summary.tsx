@@ -34,11 +34,11 @@ function BoatSummary(props: Props) {
         </div>
         <div>
           <Text className="font-medium">Lunch Reservation</Text>
-          <Text className="text-gray-500">{formData.lunchReservation}</Text>
+          <Text className="text-gray-500">{formData.lunchReservation || "No lunch reservation"}</Text>
         </div>
         <div className="flex flex-col gap-[10px]">
           <Text className="font-medium">Comments</Text>
-          <Text className="text-gray-500">{formData.comments}</Text>
+          <Text className="text-gray-500">{formData.comments || 'No comments'}</Text>
         </div>
         <div>
           <Text className="font-medium">Add Seabob</Text>

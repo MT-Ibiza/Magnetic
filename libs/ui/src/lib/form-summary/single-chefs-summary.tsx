@@ -20,22 +20,22 @@ function SingleChefsSummary(props: Props) {
           <Text className="text-gray-500">{formatDate(formData.date)}</Text>
         </div>
         <div>
-          <Text className="mb-2">Start Time</Text>
+          <Text className="font-medium">Start Time</Text>
           <Text className="text-gray-500">
             {formatTime(formData.startTime)}
           </Text>
         </div>
         <div>
-          <Text className="mb-2">Children & Ages</Text>
+          <Text className="font-medium">Children & Ages</Text>
           <Text className="text-gray-500">{formData.kidsAges}</Text>
         </div>
         <div>
-          <Text className="mb-2">Location</Text>
+          <Text className="font-medium">Location</Text>
           <Text className="text-gray-500">{formData.location}</Text>
         </div>
       </div>
       <div className="mt-6">
-        <Text className="mb-2">Preferences & Dietary Requirements</Text>
+        <Text className="font-medium">Preferences & Dietary Requirements</Text>
         <Text className="text-gray-500">{formData.dietaryComments}</Text>
       </div>
     </div>
