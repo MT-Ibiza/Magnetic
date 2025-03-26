@@ -69,7 +69,7 @@ export function BookingsTable(props: Props) {
                       />
                       {orderItem?.item?.drinkAttributes ? (
                         <div className="flex flex-col gap-1">
-                          <Text>Drink Delivery</Text>
+                          <Text>Drinks Delivery</Text>
                         </div>
                       ) : (
                         <div className="flex flex-col gap-1">
@@ -110,7 +110,7 @@ export function BookingsTable(props: Props) {
                           toggleOpenModal();
                         }}
                       >
-                        View Message
+                        Requested
                       </Button>
                     ) : (
                       <Button

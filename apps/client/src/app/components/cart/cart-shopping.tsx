@@ -109,7 +109,7 @@ export function CartShopping() {
                       </button>
                     )}
                   </div>
-                  <ul className="mt-4 space-y-2 max-h-[600px] overflow-y-auto">
+                  <ul className="mt-4 space-y-2 max-h-[55vh] overflow-y-auto">
                     {Object.entries(groupedCart).length > 0 ? (
                       Object.entries(groupedCart).map(
                         ([serviceId, group]: any) => (
@@ -139,15 +139,26 @@ export function CartShopping() {
                                     <h4 className="text-sm dark:text-gray-100">
                                       {cartItem.item.name}
                                     </h4>
-                                    <p className="text-xs">
-                                      Quantity: {cartItem.quantity}
-                                    </p>
-                                    <p className="text-xs">
-                                      {centsToEurosWithCurrency(
-                                        cartItem.priceInCents
-                                      )}{' '}
-                                      x unit
-                                    </p>
+                                    {cartItem.item.service.serviceType ===
+                                    'drinks' ? (
+                                      <>
+                                        <p className="text-xs">
+                                          Quantity: {cartItem.quantity}
+                                        </p>
+                                        <p className="text-xs">
+                                          {centsToEurosWithCurrency(
+                                            cartItem.item.priceInCents
+                                          )}{' '}
+                                          x unit
+                                        </p>
+                                      </>
+                                    ) : (
+                                      <p className="text-xs">
+                                        {centsToEurosWithCurrency(
+                                          cartItem.item.priceInCents
+                                        )}
+                                      </p>
+                                    )}
                                   </div>
                                 </div>
                               </li>
