@@ -21,7 +21,11 @@ export async function GET(
 
     const orderItemCondition = isDrinkType
       ? { type: booking.type }
-      : { orderId: booking.orderId, type: booking.type };
+      : {
+          orderId: booking.orderId,
+          type: booking.type,
+          cartItemId: booking.cartItemId,
+        };
 
     const orderItems = booking.cartItemId
       ? await db.orderItem.findMany({
