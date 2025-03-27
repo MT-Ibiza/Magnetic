@@ -82,8 +82,12 @@ export async function POST(request: Request) {
     try {
       await sendEmail({
         to: newUser.email,
-        subject: `Welcome to Magnetic Travel`,
-        html: newAccountTemplate(newUser.name, newUser.package?.name || ''),
+        subject: 'Your Ibiza Holiday - Concierge Services Platform',
+        html: newAccountTemplate({
+          name: newUser.name,
+          email: newUser.email,
+          password: fields.password || '',
+        }),
       });
     } catch (emailError) {
       console.error('Error sending email:', emailError);
