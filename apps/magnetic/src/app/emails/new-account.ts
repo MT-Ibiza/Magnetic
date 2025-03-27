@@ -94,7 +94,7 @@ export function newAccountTemplate({
 				<h1>Welcome to Magnetic Travel!</h1>
 			</div>
 			<div class="content">
-				<h2>Hi, ${name} 👋</h2>
+				<h2>Hi, ${name}</h2>
 				<p>
 					Welcome to Magnetic Travel's online booking platform. As part of your
 					stay, you have access to complimentary
@@ -124,7 +124,7 @@ export function newAccountTemplate({
 				</p>
 				<p><strong>Username:</strong> ${email}</p>
 				<p><strong>Password:</strong> ${password}</p>
-				<a href="https://mymagnetictravel.com/dashboard" target="_blank"
+				<a href="https://bookings.magnetic-travel.com/dashboard" target="_blank"
 					>Get Started</a
 				>
 				<h3>Enhance Your Stay</h3>
@@ -134,7 +134,7 @@ export function newAccountTemplate({
 					<span class="highlight">Platinum</span> and
 					<span class="highlight">Diamond</span> packages.
 				</p>
-				<a href="https://mymagnetictravel.com/packages" target="_blank"
+				<a href="https://bookings.magnetic-travel.com/packages" target="_blank"
 					>View Packages</a
 				>
 			</div>
