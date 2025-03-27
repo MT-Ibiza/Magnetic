@@ -164,7 +164,7 @@ export function BookingPage() {
                   </div>
                 )}
               <div className="border rounded-md w-full mt-5">
-                <RenderFormSummary booking={data.booking as any} />
+                <RenderFormSummary booking={data.booking as any} items={[]} />
               </div>
             </div>
           )}
