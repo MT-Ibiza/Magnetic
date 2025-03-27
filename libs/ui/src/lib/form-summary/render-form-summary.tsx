@@ -1,7 +1,7 @@
 import React from 'react';
 import BoatSummary from './boat-summary';
 import DrinksSummary from './drinks-summary';
-import { BookingForm } from '@magnetic/interfaces';
+import { BookingForm, OrderItem } from '@magnetic/interfaces';
 import SingleChefsSummary from './single-chefs-summary';
 import FormJsonDetails from '../form-json-details';
 import TransferSummary from './transfer-summary';
@@ -11,21 +11,18 @@ import ChildcareSummary from './childcare-summary';
 
 interface Props {
   booking: BookingForm;
+  items: OrderItem[];
 }
 
 export function RenderFormSummary(props: Props) {
-  const { booking } = props;
-  const {
-    type,
-    formData,
-    // order: { items },
-  } = booking;
+  const { booking, items } = props;
+  const { type, formData } = booking;
 
   switch (type) {
     case 'boat_rental':
       return <BoatSummary formData={formData} />;
     case 'drinks':
-      return <DrinksSummary formData={formData} items={[]} />;
+      return <DrinksSummary formData={formData} items={items} />;
     case 'chef-single':
       return <SingleChefsSummary formData={formData} />;
     case 'transfer':

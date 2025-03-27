@@ -2,20 +2,20 @@ import moment from 'moment';
 import { Button, Text, Tooltip } from '@magnetic/ui';
 import { useBookings } from '../../hooks/userBookings';
 import { useState } from 'react';
-import { BookingForm } from '@magnetic/interfaces';
+import { BookingForm, BookingUser } from '@magnetic/interfaces';
 import { placeholderItemImage } from '../../constants';
 import FormModifyBooking from './form-modify-booking';
 import ViewRequest from './view-request';
 import Modal from '../modal';
-import BoatBookingSummary from './summary/boat-booking-summary';
 import { sortUserBookingsByDate } from '@magnetic/utils';
+import ModalBookingSummary from './modal-booking-summary';
 interface Props {}
 
 export function BookingsTable(props: Props) {
   const {} = props;
   const { isLoading, bookings, error, isError, refetch } = useBookings();
   const [openModal, setOpenModal] = useState(false);
-  const [selectedBooking, setSelectedBooking] = useState<BookingForm>();
+  const [selectedBooking, setSelectedBooking] = useState<BookingUser>();
   const [openFormType, setOpenFormType] = useState<string>();
 
   const getStatusIndicator = (status: string) => {
@@ -48,7 +48,8 @@ export function BookingsTable(props: Props) {
           </thead>
           <tbody>
             {sortedBookings.map((elm, index) => {
-              const { booking, orderItem } = elm;
+              const { booking, orderItems } = elm;
+              const orderItem = orderItems[0];
               return (
                 <tr className="hover" key={index}>
                   <td>
@@ -86,7 +87,7 @@ export function BookingsTable(props: Props) {
                     <p
                       className="cursor-pointer lg:pl-[55px] hover:text-primary-500 hover:underline"
                       onClick={() => {
-                        setSelectedBooking(booking);
+                        setSelectedBooking(elm);
                         toggleOpenModal();
                         setOpenFormType('view-details');
                       }}
@@ -105,7 +106,7 @@ export function BookingsTable(props: Props) {
                         radius="full"
                         onClick={() => {
                           console.log(booking);
-                          setSelectedBooking(booking);
+                          setSelectedBooking(elm);
                           setOpenFormType('view-message');
                           toggleOpenModal();
                         }}
@@ -117,7 +118,7 @@ export function BookingsTable(props: Props) {
                         variant="outline"
                         radius="full"
                         onClick={() => {
-                          setSelectedBooking(booking);
+                          setSelectedBooking(elm);
                           setOpenFormType('request-changes');
                           toggleOpenModal();
                         }}
@@ -135,14 +136,15 @@ export function BookingsTable(props: Props) {
       <Modal open={openModal}>
         <>
           {openFormType === 'view-details' && selectedBooking && (
-            <BoatBookingSummary
-              booking={selectedBooking}
+            <ModalBookingSummary
+              booking={selectedBooking.booking}
+              items={selectedBooking.orderItems}
               onCancel={toggleOpenModal}
             />
           )}
           {openFormType === 'request-changes' && selectedBooking && (
             <FormModifyBooking
-              bookingId={selectedBooking.id}
+              bookingId={selectedBooking.booking.id}
               onCancel={toggleOpenModal}
               onSave={() => {
                 refetch();
@@ -153,7 +155,7 @@ export function BookingsTable(props: Props) {
           {openFormType === 'view-message' && selectedBooking && (
             <ViewRequest
               onCancel={toggleOpenModal}
-              message={selectedBooking.modificationRequest || ''}
+              message={selectedBooking.booking.modificationRequest || ''}
             />
           )}
         </>

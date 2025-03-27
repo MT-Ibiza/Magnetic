@@ -108,7 +108,7 @@ export interface BookingForm {
 export interface BookingUser {
   user: User;
   booking: BookingForm;
-  orderItem: OrderItem;
+  orderItems: OrderItem[];
 }
 
 export interface BookingAdmin {

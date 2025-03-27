@@ -51,7 +51,6 @@ export async function GET() {
 
     const transformedOrders = orders
       .map((order) => {
-        // const itemsMap = new Map(order.items.map((i) => [i.id, i]));
         return order.forms.map((form) => ({
           user: order.user,
           booking: form,

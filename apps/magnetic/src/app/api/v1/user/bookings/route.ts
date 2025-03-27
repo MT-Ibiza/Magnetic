@@ -28,6 +28,7 @@ export async function GET(request: Request) {
             priceInCents: true,
             quantity: true,
             cartItemId: true,
+            type: true,
             variant: {
               select: {
                 id: true,
@@ -58,11 +59,12 @@ export async function GET(request: Request) {
 
     const transformedOrders = orders
       .map((order) => {
-        // const itemsMap = new Map(order.items.map((i) => [i.id, i]));
         return order.forms.map((form) => ({
           booking: form,
-          orderItem: order.items.find(
-            (itemCart) => itemCart.cartItemId === form.cartItemId
+          orderItems: order.items.filter((itemCart) =>
+            form.type === 'drinks'
+              ? itemCart.type === 'drinks'
+              : itemCart.cartItemId === form.cartItemId
           ),
         }));
       })
