@@ -1,11 +1,10 @@
 import { Button, Checkbox, Text } from '@magnetic/ui';
 import { useState } from 'react';
 import Modal from './modal';
-import { InlineWidget } from 'react-calendly'; // Importar Calendly
+import { InlineWidget } from 'react-calendly';
 
 function FormCalendly(props: { onSave?: () => void; onCancel?: () => void }) {
   const { onCancel, onSave } = props;
-  const [accepted, setAccepted] = useState(false);
 
   return (
     <div>
@@ -16,15 +15,7 @@ function FormCalendly(props: { onSave?: () => void; onCancel?: () => void }) {
         </p>
       </Modal.Header>
       <Modal.Body>
-        <InlineWidget url="https://calendly.com/leviskp87/test" />
-        <Checkbox
-          name="paymentConfirmed"
-          url="/privacy-policy"
-          label="I have read and accept the privacy policy"
-          defaultChecked={accepted}
-          onChange={(checked) => setAccepted(checked)}
-          className="mt-5"
-        />
+        <InlineWidget url="https://calendly.com/concierge-magnetic-travel" />
       </Modal.Body>
       <Modal.Footer>
         <div className="flex justify-end gap-3 w-full">
