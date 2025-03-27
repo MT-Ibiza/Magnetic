@@ -8,6 +8,8 @@ import TransferSummary from './transfer-summary';
 import SpaBeautySummary from './spa-beauty-summary';
 import SecuritySummary from './security-summary';
 import ChildcareSummary from './childcare-summary';
+import WeeklyChefsSummary from './weekly-chef-summary';
+import WeeklyChefsButlerSummary from './chef-weekly-butler-summary';
 
 interface Props {
   booking: BookingForm;
@@ -23,8 +25,6 @@ export function RenderFormSummary(props: Props) {
       return <BoatSummary formData={formData} />;
     case 'drinks':
       return <DrinksSummary formData={formData} items={items} />;
-    case 'chef-single':
-      return <SingleChefsSummary formData={formData} />;
     case 'transfer':
       return <TransferSummary formData={formData} />;
     case 'spa':
@@ -33,7 +33,12 @@ export function RenderFormSummary(props: Props) {
       return <SecuritySummary formData={formData} />;
     case 'childcare':
       return <ChildcareSummary formData={formData} />;
-
+    case 'chef-single':
+      return <SingleChefsSummary formData={formData} />;
+    case 'chef-weekly':
+      return <WeeklyChefsSummary formData={formData} />;
+    case 'chef-weekly-waiter':
+      return <WeeklyChefsButlerSummary formData={formData} />;
     default:
       return (
         <div className="p-10">
