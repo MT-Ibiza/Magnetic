@@ -2,9 +2,9 @@ import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 import { getTokenFromRequest } from '../../util';
 import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
-import { newOrderTemplate } from 'apps/magnetic/src/app/emails/new-order';
-import { Boat, BoatCharterFormData, Item } from '@magnetic/interfaces';
+import { BoatCharterFormData, Item } from '@magnetic/interfaces';
 import moment from 'moment';
+import { bookingConfirmationTemplate } from 'apps/magnetic/src/app/emails/new-order-confirmation';
 
 export async function POST(request: Request) {
   try {
@@ -158,7 +158,7 @@ export async function POST(request: Request) {
         await sendEmail({
           to: cart.user.email,
           subject: `New Order ${order.id}`,
-          html: newOrderTemplate(order as any),
+          html: bookingConfirmationTemplate(order as any),
         });
       } catch (emailError) {
         console.error('Error sending email:', emailError);
