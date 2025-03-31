@@ -53,3 +53,4 @@ export { RenderFormSummary } from './lib/form-summary/render-form-summary';
 export { DrinksDeliveryBookingForm } from './lib/forms/drinks-delivery-form';
 export { BoatCharterBookingForm } from './lib/forms/boat-charter-form';
 export { GridSkeleton } from './lib/grid-skeleton';
+export { ButtonSubmitFilters } from './lib/btn-submit-form';
