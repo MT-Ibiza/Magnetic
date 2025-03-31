@@ -157,7 +157,7 @@ export async function POST(request: Request) {
       try {
         await sendEmail({
           to: cart.user.email,
-          subject: `New Order ${order.id}`,
+          subject: `New Order: ${order.id}`,
           html: bookingConfirmationTemplate(order as any),
         });
       } catch (emailError) {

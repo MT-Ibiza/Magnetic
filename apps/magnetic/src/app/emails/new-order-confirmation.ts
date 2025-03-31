@@ -1,7 +1,13 @@
 import { Order } from '@magnetic/interfaces';
-import { centsToEurosWithCurrency } from '@magnetic/utils';
+import {
+  centsToEurosWithCurrency,
+  formatDate,
+  getCurrentYear,
+} from '@magnetic/utils';
 
 export function bookingConfirmationTemplate(order: Order) {
+  const year = getCurrentYear();
+
   const itemsHtml = order.items
     .map(
       (item) => `
@@ -121,7 +127,7 @@ export function bookingConfirmationTemplate(order: Order) {
 				<h3><strong>Booking Details</strong></h3>
 				<p><strong>Order ID:</strong> #${order.id}</p>
 				<p>
-					<strong>Date:</strong> ${new Date(order.createdAt).toLocaleDateString()}
+					<strong>Date:</strong> ${formatDate(order.createdAt)}
 				</p>
 				<p><strong>Client:</strong> ${order.user.name}</p>
 				<p><strong>Email:</strong> ${order.user.email}</p>
@@ -155,7 +161,7 @@ export function bookingConfirmationTemplate(order: Order) {
 			</div>
 
 			<div class="footer">
-				<p>&copy; 2025 Magnetic Travel. All rights reserved.</p>
+				<p>&copy; ${year} Magnetic Travel. All rights reserved.</p>
 			</div>
 		</div>
 	</body>
