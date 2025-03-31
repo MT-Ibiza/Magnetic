@@ -1,10 +1,11 @@
-import { NextResponse } from 'next/server';
+import moment from 'moment';
 import bcrypt from 'bcrypt';
 import db from 'apps/magnetic/src/app/libs/db';
+import { NextResponse } from 'next/server';
 import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
-import { newAccountTemplate } from 'apps/magnetic/src/app/emails/new-account';
-import moment from 'moment';
 import { uploadBulkImages } from 'apps/magnetic/src/app/libs/s3';
+import { newUserGoldTemplate } from 'apps/magnetic/src/app/emails/gold/new-user-gold';
+import { newUserPlatinumTemplate } from 'apps/magnetic/src/app/emails/platinum/new-user-platinum';
 
 export async function POST(request: Request) {
   try {
@@ -80,15 +81,28 @@ export async function POST(request: Request) {
     });
 
     try {
-      await sendEmail({
-        to: newUser.email,
-        subject: 'Your Ibiza Holiday - Concierge Services Platform',
-        html: newAccountTemplate({
-          name: newUser.name,
-          email: newUser.email,
-          password: fields.password || '',
-        }),
-      });
+      if (newUser.package?.name === 'gold') {
+        await sendEmail({
+          to: newUser.email,
+          subject: 'Your Ibiza Holiday - Concierge Services Platform',
+          html: newUserGoldTemplate({
+            name: newUser.name,
+            email: newUser.email,
+            password: fields.password || '',
+          }),
+        });
+      }
+      if (newUser.package?.name === 'platinum') {
+        await sendEmail({
+          to: newUser.email,
+          subject: 'Your Ibiza Holiday - Concierge Services Platform',
+          html: newUserPlatinumTemplate({
+            name: newUser.name,
+            email: newUser.email,
+            password: fields.password || '',
+          }),
+        });
+      }
     } catch (emailError) {
       console.error('Error sending email:', emailError);
     }
