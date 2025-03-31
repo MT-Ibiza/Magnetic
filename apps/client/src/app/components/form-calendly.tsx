@@ -9,13 +9,13 @@ function FormCalendly(props: { onSave?: () => void; onCancel?: () => void }) {
   return (
     <div>
       <Modal.Header onClose={onCancel}>
-        <h2 className="text-2xl font-semibold">Schedule a call</h2>
+        <h2 className="text-2xl font-semibold">Book a call</h2>
         <p className="text-sm text-gray-500">
-          Complete the form to schedule a call with a magnetic team member.
+          Let’s discuss your upcoming trip.
         </p>
       </Modal.Header>
       <Modal.Body>
-        <InlineWidget url="https://calendly.com/concierge-magnetic-travel" />
+        <InlineWidget url="https://calendly.com/concierge-magnetic-travel/meeting" />
       </Modal.Body>
       <Modal.Footer>
         <div className="flex justify-end gap-3 w-full">
