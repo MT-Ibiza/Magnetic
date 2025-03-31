@@ -1,9 +1,16 @@
-import { CartItem } from '@magnetic/interfaces';
+import { CartItem, OrderItem } from '@magnetic/interfaces';
 
 export type ServiceTotal = {
   service: string;
   serviceType: string;
   total: number;
+};
+
+type GroupedCategory = {
+  category: string;
+  categoryId: number;
+  type: string;
+  items: OrderItem[];
 };
 
 export function getTotalByService(items: CartItem[]): ServiceTotal[] {
@@ -27,4 +34,24 @@ export function calculateTotalCartItems(items: CartItem[]): number {
     result += itemTotal;
     return result;
   }, 0);
+}
+
+export function orderItemsByCategory(items: OrderItem[]): GroupedCategory[] {
+  return items.reduce<GroupedCategory[]>((result, currentItem) => {
+    const categoryName = currentItem.item.service?.name;
+    const categoryType = currentItem.item.service?.serviceType;
+    const categoryId = currentItem.item.service?.id;
+    let category = result.find((group) => group.category === categoryName);
+    if (!category) {
+      category = {
+        category: categoryName,
+        items: [],
+        type: categoryType,
+        categoryId,
+      };
+      result.push(category);
+    }
+    category.items.push(currentItem);
+    return result;
+  }, []);
 }
