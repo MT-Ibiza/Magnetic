@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, FC, ReactNode } from 'react';
+import { MdRemoveCircle } from 'react-icons/md';
 
 export interface CustomInputProps {
   name: string;
@@ -87,6 +88,16 @@ export const CustomInput: FC<CustomInputProps> = ({
       )
     : options;
 
+  function onRemoveFilter(name: string, value: string) {
+    setInputValue(value);
+
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(() => {
+      onChange(name, value);
+    }, 500);
+  }
+
   return (
     <div className={`relative flex ${className}`} ref={containerRef}>
       <div
@@ -109,6 +120,11 @@ export const CustomInput: FC<CustomInputProps> = ({
               onClick={() => allowTyping && setShowPopover(true)}
               onChange={allowTyping ? handleInputChange : undefined}
               ref={inputRef}
+            />
+            <MdRemoveCircle
+              onClick={() => {
+                onRemoveFilter(name, '');
+              }}
             />
             <span className="block mt-0.5 text-sm text-neutral-400 font-light">
               <span className="line-clamp-1">{desc}</span>
