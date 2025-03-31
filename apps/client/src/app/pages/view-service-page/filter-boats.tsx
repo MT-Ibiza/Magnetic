@@ -62,14 +62,15 @@ function FilterBoats(props: Props) {
     }
   };
 
-  const handleDateChange = (date: Date) => {
+  const handleDateChange = (date: Date | null) => {
     const updatedFilters = {
       ...searchParams,
-      from: moment(date).format('YYYY-MM-DD'),
+      from: date ? moment(date).format('YYYY-MM-DD') : undefined,
     };
     setSearchParams(updatedFilters);
     onChangeFilters(updatedFilters);
   };
+  
 
   return (
     <>

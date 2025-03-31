@@ -12,12 +12,13 @@ import {
 import { BsCalendar } from 'react-icons/bs';
 import DatePickerCustomHeaderTwoMonth from './date-picker-custom-header';
 import DatePickerCustomDay from './date-picker-day';
+import ClearDataButton from './clear-btn';
 
 interface RentalCarDatesRangeInputProps {
   className?: string;
   fieldClassName?: string;
   hasButtonSubmit?: boolean;
-  onSelectDate: (date: Date) => void;
+  onSelectDate: (date: Date | null) => void;
 }
 
 export const RentalCarDatesRangeInput: FC<RentalCarDatesRangeInputProps> = ({
@@ -33,6 +34,11 @@ export const RentalCarDatesRangeInput: FC<RentalCarDatesRangeInputProps> = ({
     if (date) {
       onSelectDate(date);
     }
+  };
+
+  const onClearDate = () => {
+    setSelectedDate(null);
+    onSelectDate(null);
   };
 
   const renderInput = () => {
@@ -75,6 +81,7 @@ export const RentalCarDatesRangeInput: FC<RentalCarDatesRangeInputProps> = ({
                 onClickCapture={() => document.querySelector('html')?.click()}
               >
                 {renderInput()}
+                {selectedDate && <ClearDataButton onClick={onClearDate} />}
               </PopoverButton>
               {hasButtonSubmit && (
                 <div className="pr-2 xl:pr-4">

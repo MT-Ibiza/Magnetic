@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, FC, ReactNode } from 'react';
-import { MdRemoveCircle } from 'react-icons/md';
+import ClearDataButton from './clear-btn';
 
 export interface CustomInputProps {
   name: string;
@@ -110,7 +110,7 @@ export const CustomInput: FC<CustomInputProps> = ({
           {icon && (
             <div className="text-neutral-300 dark:text-neutral-400">{icon}</div>
           )}
-          <div className="flex-grow">
+          <div className="flex-1">
             <input
               className="block w-full bg-transparent border-none focus:ring-0 p-0 focus:outline-none focus:placeholder-neutral-300 xl:text-lg font-semibold placeholder-neutral-800 dark:placeholder-neutral-200 truncate cursor-pointer"
               placeholder={placeHolder}
@@ -121,11 +121,13 @@ export const CustomInput: FC<CustomInputProps> = ({
               onChange={allowTyping ? handleInputChange : undefined}
               ref={inputRef}
             />
-            <MdRemoveCircle
-              onClick={() => {
-                onRemoveFilter(name, '');
-              }}
-            />
+            {value  && (
+              <ClearDataButton
+                onClick={() => {
+                  onRemoveFilter(name, '');
+                }}
+              />
+            )}
             <span className="block mt-0.5 text-sm text-neutral-400 font-light">
               <span className="line-clamp-1">{desc}</span>
             </span>
