@@ -33,7 +33,7 @@ export async function POST() {
           const iCalData = await response.text();
           const events = ical.parseICS(iCalData);
 
-          const availability = Object.values(events)
+          const calendarEvents = Object.values(events)
             .filter(
               (event) => event?.type === 'VEVENT' && event.start && event.end
             )
@@ -52,20 +52,7 @@ export async function POST() {
             },
           });
 
-          for (const event of availability) {
-            const existingEvent = await db.boatAvailability.findFirst({
-              where: {
-                boatId: event.boatId,
-                startDate: event.startDate,
-                endDate: event.endDate,
-                source: 'ical',
-              },
-            });
-
-            if (!existingEvent) {
-              await db.boatAvailability.create({ data: event });
-            }
-          }
+          await db.boatAvailability.createMany({ data: calendarEvents });
 
           updatedBoats++;
         } catch (error) {
