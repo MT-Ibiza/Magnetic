@@ -11,7 +11,7 @@ export function newUserGoldTemplate({
 }) {
   const year = getCurrentYear();
   return `
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -49,9 +49,8 @@ export function newUserGoldTemplate({
 			.content {
 				padding: 20px;
 			}
-			.content h2 {
-				color: #333;
-				font-size: 20px;
+			.content h3 {
+				font-size: 18px;
 			}
 			.content p {
 				color: #555;
@@ -79,7 +78,7 @@ export function newUserGoldTemplate({
 				border-radius: 5px;
 				font-size: 16px;
 			}
-			.content a:hover {
+			.content .link-btn:hover {
 				background-color: #4338ca;
 			}
 			.main-content {
@@ -125,16 +124,16 @@ export function newUserGoldTemplate({
 					<li>Private Chefs & Assistants</li>
 					<li>Food & Drinks Delivery</li>
 				</ul>
-				<p>
+				<h3>
 					<strong>Online Bookings:</strong>
-				</p>
+				</h3>
 				<p>
 					Our online booking platform allows you to explore services and make
 					reservations at your convenience.
 				</p>
-				<p>
+				<h3>
 					<strong>Important reminder:</strong>
-				</p>
+				</h3>
 				<p>
 					This is a pre-arrival service, available until 7 days before your
 					arrival. Please ensure all requests are submitted in advance.
@@ -156,20 +155,21 @@ export function newUserGoldTemplate({
 						>Get Started</a
 					>
 				</div>
-				<p>Enhance Your Stay</p>
+				<h3>Enhance Your Stay</h3>
 				<p>
 					For a more personalised experience with access to additional services,
 					we invite you to explore our
 					<span class="highlight">Platinum</span> and
 					<span class="highlight">Diamond</span> packages.
 				</p>
-				<a
-					class="link-btn"
-					href="https://bookings.magnetic-travel.com/packages"
-					target="_blank"
-					>View Packages</a
-				>
 				<p>
+					<a
+						href="https://bookings.magnetic-travel.com/packages"
+						target="_blank"
+						>View Packages</a
+					>
+				</p>
+				<p style="margin-top: 50px">
 					Thank you for choosing Magnetic Travel. We look forward to welcoming
 					you to Ibiza soon!
 				</p>
