@@ -7,6 +7,7 @@ import {
 } from '@headlessui/react';
 import { MdWineBar } from 'react-icons/md';
 import Checkbox from './checkbox';
+import ClearDataButton from './clear-btn';
 
 export interface SelectCategoryProps {
   onChange?: (categories: any) => void;
@@ -27,6 +28,15 @@ export const SelectCategory: FC<SelectCategoryProps> = ({
       .map((cat) => cat.name)
       .join(', ') || 'Category';
 
+  const handleClear = () => {
+    const clearedCategories = categories.map((cat) => ({
+      ...cat,
+      checked: false,
+    }));
+    setCategories(clearedCategories);
+    onChange && onChange(clearedCategories);
+  };
+
   return (
     <Popover className="flex relative flex-1">
       {({ open }) => (
@@ -46,6 +56,9 @@ export const SelectCategory: FC<SelectCategoryProps> = ({
               <span className="block mt-1 text-sm text-neutral-400 leading-none font-light">
                 Search by type
               </span>
+              {categories.some((cat) => cat.checked) && (
+                <ClearDataButton onClick={() => handleClear()} />
+              )}
             </div>
           </PopoverButton>
           {open && (
