@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getTokenFromRequest } from '../../../../util';
 import db from 'apps/magnetic/src/app/libs/db';
+import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
+import { modifyRequestTemplate } from 'apps/magnetic/src/app/emails/modify-booking';
 
 export async function POST(
   request: Request,
@@ -14,6 +16,24 @@ export async function POST(
 
     const body = await request.json();
     const { message } = body;
+    const { id } = decodedToken;
+
+    const user = await db.user.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          message: 'User not found',
+        },
+        {
+          status: 400,
+        }
+      );
+    }
 
     const booking = await db.orderBookingForm.update({
       where: {
@@ -24,6 +44,19 @@ export async function POST(
         modificationRequest: message,
       },
     });
+
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: 'Modify Request',
+        html: modifyRequestTemplate({
+          requestContent: message,
+          clientName: user.firstName,
+        }),
+      });
+    } catch (emailError) {
+      console.error('Error sending email:', emailError);
+    }
 
     return NextResponse.json(booking);
   } catch (error: any) {

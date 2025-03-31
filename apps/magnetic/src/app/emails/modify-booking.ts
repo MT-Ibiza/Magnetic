@@ -1,7 +1,10 @@
-export function modifyRequestTemplate(
-  requestContent: string,
-  clientName: string
-) {
+export function modifyRequestTemplate({
+  requestContent,
+  clientName,
+}: {
+  requestContent: string;
+  clientName: string;
+}) {
   return `
 <!DOCTYPE html>
 <html lang="en">
