@@ -11,15 +11,19 @@ export function newUserGoldTemplate({
 }) {
   const year = getCurrentYear();
   return `
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Welcome to Magnetic Travel</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+			rel="stylesheet"
+		/>
 		<style>
 			body {
-				font-family: Arial, sans-serif;
+				font-family: "Poppins", Arial, sans-serif;
 				background-color: #f9f9f9;
 				margin: 0;
 				padding: 0;
@@ -28,16 +32,15 @@ export function newUserGoldTemplate({
 				max-width: 600px;
 				margin: 20px auto;
 				background: #fff;
-				border: 1px solid #ddd;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 				border-radius: 8px;
 				overflow: hidden;
-				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 			}
 			.header {
-				background-color: #4f46e5;
 				color: #fff;
 				padding: 20px;
 				text-align: center;
+				border-bottom: 2px solid #e7e7e7;
 			}
 			.header h1 {
 				margin: 0;
@@ -54,12 +57,19 @@ export function newUserGoldTemplate({
 				color: #555;
 				line-height: 1.6;
 				margin: 10px 0;
+				font-size: 16px;
+			}
+			.content li {
+				color: #555;
+				line-height: 1.6;
+				margin: 5px 0;
+				font-size: 16px;
 			}
 			.content .highlight {
 				color: #4f46e5;
 				font-weight: bold;
 			}
-			.content a {
+			.content .link-btn {
 				display: inline-block;
 				margin: 10px 0px;
 				padding: 10px 20px;
@@ -72,12 +82,16 @@ export function newUserGoldTemplate({
 			.content a:hover {
 				background-color: #4338ca;
 			}
+			.main-content {
+				background: #f7f7f7;
+				padding: 10px 30px;
+			}
 			.footer {
-				background-color: #f4f4f9;
+				background-color: #1f2a37;
 				padding: 10px;
 				text-align: center;
 				font-size: 14px;
-				color: #888;
+				color: white;
 			}
 			.footer a {
 				color: #4f46e5;
@@ -91,7 +105,10 @@ export function newUserGoldTemplate({
 	<body>
 		<div class="email-container">
 			<div class="header">
-				<h1>Welcome to Magnetic Travel!</h1>
+				<img
+					src="https://www.magnetic-travel.com/wp-content/uploads/2018/05/rsz_logo_mgtedit.png"
+					style="width: 100px"
+				/>
 			</div>
 			<div class="content">
 				<h2>Hi, ${name}</h2>
@@ -116,28 +133,40 @@ export function newUserGoldTemplate({
 					reservations at your convenience.
 				</p>
 				<p>
-					<strong>Important reminder:</strong> This is a pre-arrival service,
-					available until 7 days before your arrival. Please ensure all requests
-					are submitted in advance.
+					<strong>Important reminder:</strong>
 				</p>
-				<h3>Your Login Details</h3>
 				<p>
-					Access your personal dashboard and start arranging your trip using the
-					details below:
+					This is a pre-arrival service, available until 7 days before your
+					arrival. Please ensure all requests are submitted in advance.
 				</p>
-				<p><strong>Username:</strong> ${email}</p>
-				<p><strong>Password:</strong> ${password}</p>
-				<a href="https://bookings.magnetic-travel.com/dashboard" target="_blank"
-					>Get Started</a
-				>
-				<h3>Enhance Your Stay</h3>
+				<div class="main-content">
+					<p>
+						<strong>Your Login Details</strong>
+					</p>
+					<p>
+						Access your personal dashboard and start arranging your trip using
+						the details below:
+					</p>
+					<p><strong>Username:</strong> ${email}</p>
+					<p><strong>Password:</strong> ${password}</p>
+					<a
+						class="link-btn"
+						href="https://bookings.magnetic-travel.com/login"
+						target="_blank"
+						>Get Started</a
+					>
+				</div>
+				<p>Enhance Your Stay</p>
 				<p>
 					For a more personalised experience with access to additional services,
 					we invite you to explore our
 					<span class="highlight">Platinum</span> and
 					<span class="highlight">Diamond</span> packages.
 				</p>
-				<a href="https://bookings.magnetic-travel.com/packages" target="_blank"
+				<a
+					class="link-btn"
+					href="https://bookings.magnetic-travel.com/packages"
+					target="_blank"
 					>View Packages</a
 				>
 				<p>
@@ -148,10 +177,6 @@ export function newUserGoldTemplate({
 				<p><strong>The Magnetic Travel Team</strong></p>
 			</div>
 			<div class="footer">
-				<p>
-					Thank you for choosing Magnetic Travel. We look forward to welcoming
-					you to Ibiza soon!
-				</p>
 				<p>&copy; ${year} Magnetic Travel. All rights reserved.</p>
 			</div>
 		</div>
