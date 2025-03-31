@@ -11,7 +11,7 @@ export function newUserGoldTemplate({
 }) {
   const year = getCurrentYear();
   return `
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -124,16 +124,12 @@ export function newUserGoldTemplate({
 					<li>Private Chefs & Assistants</li>
 					<li>Food & Drinks Delivery</li>
 				</ul>
-				<h3>
-					<strong>Online Bookings:</strong>
-				</h3>
+				<h3>Online Bookings:</h3>
 				<p>
 					Our online booking platform allows you to explore services and make
 					reservations at your convenience.
 				</p>
-				<h3>
-					<strong>Important reminder:</strong>
-				</h3>
+				<h3>Important reminder:</h3>
 				<p>
 					This is a pre-arrival service, available until 7 days before your
 					arrival. Please ensure all requests are submitted in advance.

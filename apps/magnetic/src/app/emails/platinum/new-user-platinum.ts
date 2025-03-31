@@ -11,7 +11,7 @@ export function newUserPlatinumTemplate({
 }) {
   const year = getCurrentYear();
   return `
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -127,16 +127,12 @@ export function newUserPlatinumTemplate({
 					<li>Restaurant & Club Reservations</li>
 					<li>Childcare Services</li>
 				</ul>
-				<h3>
-					<strong>Online Bookings</strong>
-				</h3>
+				<h3>Online Bookings</h3>
 				<p>
 					Our online booking platform allows you to explore services and make
 					reservations at your convenience.
 				</p>
-				<h3>
-					<strong>Important reminder:</strong>
-				</h3>
+				<h3>Important reminder:</h3>
 				<p>
 					So that we can ensure service availability, online bookings close 7
 					days before your arrival - please ensure all requests are submitted in
