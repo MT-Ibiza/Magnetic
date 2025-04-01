@@ -74,7 +74,6 @@ export const CustomInput: FC<CustomInputProps> = ({
     const value = e.target.value;
     const name = e.target.name;
     setInputValue(value);
-
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
     timeoutRef.current = setTimeout(() => {
@@ -88,14 +87,10 @@ export const CustomInput: FC<CustomInputProps> = ({
       )
     : options;
 
-  function onRemoveFilter(name: string, value: string) {
-    setInputValue(value);
-
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
-    timeoutRef.current = setTimeout(() => {
-      onChange(name, value);
-    }, 500);
+  function onRemoveFilter(name: string, label: string) {
+    onChange(name, '');
+    setInputValue(label);
+    setShowPopover(false);
   }
 
   return (
@@ -121,10 +116,11 @@ export const CustomInput: FC<CustomInputProps> = ({
               onChange={allowTyping ? handleInputChange : undefined}
               ref={inputRef}
             />
-            {value  && (
+            {value && (
               <ClearDataButton
                 onClick={() => {
-                  onRemoveFilter(name, '');
+                  const option = options.find((op) => op.value === '');
+                  onRemoveFilter(name, option?.label || name);
                 }}
               />
             )}
