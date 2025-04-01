@@ -56,13 +56,11 @@ export function newUserGoldTemplate({
 				color: #555;
 				line-height: 1.6;
 				margin: 10px 0;
-				font-size: 16px;
 			}
 			.content li {
 				color: #555;
 				line-height: 1.6;
 				margin: 5px 0;
-				font-size: 16px;
 			}
 			.content .highlight {
 				color: #4f46e5;
@@ -76,7 +74,6 @@ export function newUserGoldTemplate({
 				color: #fff;
 				text-decoration: none;
 				border-radius: 5px;
-				font-size: 16px;
 			}
 			.content .link-btn:hover {
 				background-color: #4338ca;
@@ -142,7 +139,7 @@ export function newUserGoldTemplate({
 						Access your personal dashboard and start arranging your trip using
 						the details below:
 					</p>
-					<p><strong>Username:</strong> ${email}</p>
+					<p><strong>Email:</strong> ${email}</p>
 					<p><strong>Password:</strong> ${password}</p>
 					<a
 						class="link-btn"
