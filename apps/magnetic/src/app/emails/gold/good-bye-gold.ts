@@ -1,14 +1,18 @@
 export function goodbyeGoldDepartureTemplate(clientName: string) {
   return `
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Thank You for Visiting Ibiza!</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+			rel="stylesheet"
+		/>
 		<style>
 			body {
-				font-family: Arial, sans-serif;
+				font-family: "Poppins", Arial, sans-serif;
 				background-color: #f9f9f9;
 				margin: 0;
 				padding: 0;
@@ -23,10 +27,10 @@ export function goodbyeGoldDepartureTemplate(clientName: string) {
 				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 			}
 			.header {
-				background-color: #4f46e5;
 				color: #fff;
 				padding: 20px;
 				text-align: center;
+				border-bottom: 2px solid #e7e7e7;
 			}
 			.header h1 {
 				margin: 0;
@@ -44,32 +48,22 @@ export function goodbyeGoldDepartureTemplate(clientName: string) {
 				line-height: 1.6;
 				margin: 10px 0;
 			}
-			.content a {
-				display: inline-block;
-				margin-top: 20px;
-				padding: 10px 20px;
-				background-color: #4f46e5;
-				color: #fff;
-				text-decoration: none;
-				border-radius: 5px;
-				font-size: 16px;
-			}
-			.content a:hover {
-				background-color: #4338ca;
-			}
 			.footer {
-				background-color: #f4f4f9;
+				background-color: #1f2a37;
 				padding: 10px;
 				text-align: center;
 				font-size: 14px;
-				color: #888;
+				color: white;
 			}
 		</style>
 	</head>
 	<body>
 		<div class="email-container">
 			<div class="header">
-				<h1>Thank You for Visiting Ibiza!</h1>
+				<img
+					src="https://www.magnetic-travel.com/wp-content/uploads/2018/05/rsz_logo_mgtedit.png"
+					style="width: 100px"
+				/>
 			</div>
 			<div class="content">
 				<h2>Hi, ${clientName}</h2>
@@ -82,8 +76,10 @@ export function goodbyeGoldDepartureTemplate(clientName: string) {
 					Thank you for choosing Magnetic Travel. We hope to see you back in
 					Ibiza again soon!
 				</p>
-				<p>Regards,</p>
-				<p><strong>The Magnetic Travel Team</strong></p>
+				<div style="margin-top: 50px">
+					<p>Regards,</p>
+					<p><strong>The Magnetic Travel Team</strong></p>
+				</div>
 			</div>
 			<div class="footer">
 				<p>&copy; 2025 Magnetic Travel. All rights reserved.</p>
@@ -91,6 +87,5 @@ export function goodbyeGoldDepartureTemplate(clientName: string) {
 		</div>
 	</body>
 </html>
-
   `;
 }
