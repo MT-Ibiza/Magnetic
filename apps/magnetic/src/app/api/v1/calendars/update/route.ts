@@ -8,6 +8,7 @@ export async function POST() {
       select: {
         id: true,
         iCal: true,
+        secondName: true,
       },
       where: {
         iCal: { not: null },
@@ -26,7 +27,7 @@ export async function POST() {
         try {
           const response = await fetch(boat.iCal as string);
           if (!response.ok) {
-            console.warn(`Failed to fetch iCal for boat ${boat.id}`);
+            console.warn(`Failed to fetch iCal for boat ${boat.secondName}`);
             return;
           }
 
