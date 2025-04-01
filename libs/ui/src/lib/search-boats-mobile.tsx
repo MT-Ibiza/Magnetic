@@ -94,7 +94,7 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
   };
 
   const renderCapacityInput = () => {
-    const isActive = fieldNameShow === 'capacity';
+    const isActive = fieldNameShow === 'dates';
     return (
       <div
         className={`w-full bg-white dark:bg-neutral-800 ${
@@ -224,9 +224,9 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
   return (
     <div>
       <div className="w-full space-y-5">
+        {renderInputDates()}
         {renderCapacityInput()}
         {renderSizeInput()}
-        {renderInputDates()}
         {renderBudgetInput()}
       </div>
       <div className="absolute bottom-0 z-30  w-full p-4 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-700 flex justify-end">

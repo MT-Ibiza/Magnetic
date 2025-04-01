@@ -4,6 +4,7 @@ import {
   CustomInput,
   FilterSearchMobile,
   RentalCarDatesRangeInput,
+  Text,
 } from '@magnetic/ui';
 import { BoatsSearchAttributes } from '@magnetic/interfaces';
 import moment from 'moment';
@@ -12,14 +13,7 @@ import {
   capacityFilterOptions,
   sizeFilterOptions,
 } from '../../constants';
-import {
-  BsArrowsExpand,
-  BsArrowsMove,
-  BsCurrencyDollar,
-  BsFillCalendarDateFill,
-  BsPeople,
-  BsPeopleFill,
-} from 'react-icons/bs';
+import { BsArrowsExpand, BsCurrencyDollar, BsPeople } from 'react-icons/bs';
 
 interface Props {
   onChangeFilters: (filters: BoatsSearchAttributes) => void;
@@ -27,8 +21,7 @@ interface Props {
 
 function FilterBoats(props: Props) {
   const { onChangeFilters } = props;
-
-  const [searchParams, setSearchParams] = useState<BoatsSearchAttributes>({
+  const defaultFilters = {
     price_gt: undefined,
     price_lt: undefined,
     capacity_gt: undefined,
@@ -37,7 +30,10 @@ function FilterBoats(props: Props) {
     size_lt: undefined,
     from: undefined,
     to: undefined,
-  });
+  };
+
+  const [searchParams, setSearchParams] =
+    useState<BoatsSearchAttributes>(defaultFilters);
 
   const allFilters = {
     capacity: { greater: 'capacity_gt', less: 'capacity_lt' },
@@ -70,7 +66,11 @@ function FilterBoats(props: Props) {
     setSearchParams(updatedFilters);
     onChangeFilters(updatedFilters);
   };
-  
+
+  function onClearDate() {
+    setSearchParams(defaultFilters);
+    onChangeFilters(defaultFilters);
+  }
 
   return (
     <>
@@ -90,7 +90,12 @@ function FilterBoats(props: Props) {
       </div>
       <div className="border border-neutral-200 hidden lg:block sticky z-10 top-[80px] w-full relative mt-4 rounded-[45px] shadow-xl dark:shadow-2xl bg-white dark:bg-neutral-800">
         <form className="lg:grid grid-cols-4 gap-x-[30px]">
+          <RentalCarDatesRangeInput
+            onSelectDate={handleDateChange}
+            onClearFilter={onClearDate}
+          />
           <CustomInput
+            disable={!searchParams.from}
             name="capacity"
             desc="Select capacity"
             options={capacityFilterOptions}
@@ -101,6 +106,7 @@ function FilterBoats(props: Props) {
             }
           />
           <CustomInput
+            disable={!searchParams.from}
             name="size"
             desc="Select size"
             options={sizeFilterOptions}
@@ -110,8 +116,8 @@ function FilterBoats(props: Props) {
               <BsArrowsExpand className="w-5 h-5 lg:w-7 lg:h-7 text-neutral-400" />
             }
           />
-          <RentalCarDatesRangeInput onSelectDate={handleDateChange} />
           <CustomInput
+            disable={!searchParams.from}
             name="budget"
             desc="Select budget"
             options={budgetFilterOptions}

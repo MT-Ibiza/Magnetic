@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect, FC, ReactNode } from 'react';
 import ClearDataButton from './clear-btn';
+import Tooltip from './tooltip';
 
 export interface CustomInputProps {
   name: string;
@@ -15,6 +16,9 @@ export interface CustomInputProps {
   autoFocus?: boolean;
   allowTyping?: boolean;
   icon?: ReactNode;
+  disable?: boolean;
+  highlight?: boolean;
+  tooltip?: string;
 }
 
 export const CustomInput: FC<CustomInputProps> = ({
@@ -29,6 +33,8 @@ export const CustomInput: FC<CustomInputProps> = ({
   autoFocus = false,
   allowTyping = false,
   icon,
+  disable = false,
+  highlight = false,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -54,6 +60,13 @@ export const CustomInput: FC<CustomInputProps> = ({
       inputRef.current.focus();
     }
   }, [showPopover]);
+
+  useEffect(() => {
+    if (value === '') {
+      const option = options.find((op) => op.value === '');
+      setInputValue(option?.label || '');
+    }
+  }, [value]);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -99,15 +112,13 @@ export const CustomInput: FC<CustomInputProps> = ({
         onClick={() => !allowTyping && setShowPopover(!showPopover)}
         className={`flex z-10 flex-1 relative [ nc-hero-field-padding ] flex-shrink-0 items-center space-x-3 cursor-pointer focus:outline-none text-left ${
           showPopover ? 'nc-hero-field-focused' : ''
-        }`}
+        } ${disable ? 'pointer-events-none opacity-45' : ''}`}
       >
         <>
-          {icon && (
-            <div className="text-neutral-300 dark:text-neutral-400">{icon}</div>
-          )}
+          {icon && <div className="text-neutral-300">{icon}</div>}
           <div className="flex-1">
             <input
-              className="block w-full bg-transparent border-none focus:ring-0 p-0 focus:outline-none focus:placeholder-neutral-300 xl:text-lg font-semibold placeholder-neutral-800 dark:placeholder-neutral-200 truncate cursor-pointer"
+              className="block w-full bg-transparent border-none focus:ring-0 p-0 focus:outline-none focus:placeholder-neutral-300 xl:text-lg font-semibold placeholder-neutral-800 truncate cursor-pointer"
               placeholder={placeHolder}
               value={inputValue}
               name={name}
