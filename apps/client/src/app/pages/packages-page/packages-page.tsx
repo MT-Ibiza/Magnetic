@@ -25,16 +25,16 @@ export function PackagePage() {
 
   return (
     <>
-      <div className="nc-PageSubcription pb-24 lg:pb-32 ${className}">
-        <div className="text-center mb-10">
-          <header className="text-center max-w-2xl mx-auto mt-12 mb-20">
-            <h2 className="flex items-center text-3xl leading-[115%] md:text-5xl md:leading-[115%] font-semibold text-neutral-900 dark:text-neutral-100 justify-center">
+      <div className="nc-PageSubcription pb-24 lg:pb-32">
+        <div className="text-center">
+          <header className="text-center max-w-2xl mx-auto mt-12 lg:mb-20">
+            <h2 className="text-3xl md:text-4xl font-semibold">
               Concierge Packages
             </h2>
-            <span className="block text-sm mt-2 text-neutral-700 sm:text-base dark:text-neutral-200">
+            <span className="block text-sm mt-2 md:mt-3 text-neutral-700 sm:text-lg dark:text-neutral-200">
               Explore the perfect package for your stay.
             </span>
-            <Button className="mt-[15px]" onClick={toggleOpeModal}>
+            <Button className="mt-2 md:mt-3" onClick={toggleOpeModal}>
               Book a Call
             </Button>
           </header>

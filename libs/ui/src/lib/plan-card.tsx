@@ -57,8 +57,8 @@ export function PlanCard(props: Props) {
         {packageId === userPackageId ? (
           <h2 className="flex flex-col text-5xl leading-none">
             <span className="text-3xl lg:text-4xl">Your Package</span>
-            <span className="text-base lg:text-lg ml-1 font-normal text-neutral-500">
-              (Included)
+            <span className="text-base lg:text-lg mt-2 font-normal text-neutral-500">
+              Included
             </span>
           </h2>
         ) : (
@@ -68,20 +68,21 @@ export function PlanCard(props: Props) {
                 <span className="text-3xl lg:text-4xl">
                   +10% Management Fee
                 </span>
-                <span className="text-base lg:text-lg ml-1 font-normal text-neutral-500">
+                <span className="text-base mt-2 lg:text-lg font-normal text-neutral-500">
                   Minimum spend €15,000 per week.
                 </span>
-                <span className="text-base lg:text-lg ml-1 font-normal text-neutral-500">
+                <span className="text-base lg:text-lg font-normal text-neutral-500">
                   €1,800 flat fee for lower spend.
                 </span>
               </div>
             ) : (
-              <>
-                <span className="text-3xl lg:text-5xl">{price}€</span>
-                <span className="text-base lg:text-lg ml-1 font-normal text-neutral-500">
-                  per week
+              <div className="flex flex-col">
+                {' '}
+                <span className="text-3xl lg:text-4xl">{price}€</span>
+                <span className="text-base mt-2 lg:text-lg font-normal text-neutral-500">
+                  Per week
                 </span>
-              </>
+              </div>
             )}
           </h2>
         )}
@@ -97,7 +98,7 @@ export function PlanCard(props: Props) {
         ))}
       </nav>
       <div className="flex flex-col mt-auto">
-        <div className="flex justify-end pb-[15px]">
+        {/* <div className="flex justify-end pb-[15px]">
           {seeMoreLink &&
             maxFeatures !== undefined &&
             parsedFeatures.length > maxFeatures && (
@@ -108,7 +109,7 @@ export function PlanCard(props: Props) {
                 See more features
               </Link>
             )}
-        </div>
+        </div> */}
         <Button className="w-full" href={seeMoreLink}>
           View Details
         </Button>

@@ -50,7 +50,7 @@ export function DashboardClientPage() {
                     Your concierge package:{' '}
                     <Link
                       to={`/packages/${userAccount.package?.id}`}
-                      className="font-medium text-neutral-700 cursor-pointer hover:underline"
+                      className="bg-[#5046e5] ml-[5px] rounded-[15px] py-[2px] px-[20px] text-[16px] text-white cursor-pointer"
                     >
                       {userAccount.package?.name}
                     </Link>
