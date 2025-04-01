@@ -43,7 +43,7 @@ export const GalleryModal = ({ images }: GalleryModalProps) => {
         >
           {isSingleImage ? (
             <div
-              className="relative w-full h-full rounded-md sm:rounded-xl overflow-hidden cursor-pointer"
+              className="relative w-full h-[270px] lg:h-full rounded-md sm:rounded-xl overflow-hidden cursor-pointer"
               onClick={() => setSelectedIndex(0)}
             >
               <img

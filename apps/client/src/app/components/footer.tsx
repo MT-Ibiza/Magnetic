@@ -6,7 +6,7 @@ function Footer(props: Props) {
 
   return (
     <div className="bg-gray-800">
-      <div className='container lg:px-[100px] p-5 flex justify-between'>
+      <div className='container lg:px-[100px] p-5 flex flex-col lg:flex-row gap-[5px] lg:gap-[0px] lg:justify-between'>
         <Text className="text-white" size="1">
           © 2025 Magnetic Travel
         </Text>
@@ -14,14 +14,14 @@ function Footer(props: Props) {
           <a
             href="/terms-conditions"
             target="_blank"
-            className="underline text-white"
+            className="hover:underline text-white"
           >
             <Text size="1">Terms & Conditions</Text>
           </a>
           <a
             href="/privacy-policy"
             target="_blank"
-            className="underline text-white"
+            className="hover:underline text-white"
           >
             <Text size="1">Privacy</Text>
           </a>

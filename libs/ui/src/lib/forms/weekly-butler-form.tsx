@@ -185,8 +185,8 @@ export function WeeklyButlerServiceForm({
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <div className="flex justify-between gap-3 w-full">
-            <h2 className="text-xl">
+          <div className="flex items-center justify-between gap-3 w-full">
+            <h2 className="text-md lg:text-xl">
               Total:{' '}
               {centsToEurosWithCurrency(
                 (currentSelectItem?.priceInCents || 0) * amount

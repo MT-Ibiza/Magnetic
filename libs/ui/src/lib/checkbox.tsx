@@ -5,6 +5,7 @@ export interface CheckboxProps {
   label?: string;
   subLabel?: string;
   className?: string;
+  underline?: boolean;
   name: string;
   defaultChecked?: boolean;
   onChange?: (checked: boolean) => void;
@@ -17,6 +18,7 @@ export function Checkbox({
   name,
   className = '',
   defaultChecked,
+  underline,
   onChange,
 }: CheckboxProps) {
   return (
@@ -35,7 +37,7 @@ export function Checkbox({
       {label && (
         <label
           htmlFor={name}
-          className="cursor-pointer ml-3.5 flex flex-col flex-1 justify-center hover:text-gray-600"
+          className={`${underline ? "underline" : ""} cursor-pointer ml-3.5 flex flex-col flex-1 justify-center hover:text-gray-600`}
         >
           {url ? (
             <a href={url} target="_blank">

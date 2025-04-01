@@ -12,7 +12,7 @@ export function SectionCard(props: Props) {
   return (
     <div className="bg-base-100 listingSection__wrap overflow-hidden">
       <div>
-        <h2 className="text-2xl font-semibold">{title}</h2>
+        <h2 className="text-xl lg:text-2xl font-semibold">{title}</h2>
         {subTitle && <span className="block mt-2">{subTitle}</span>}
       </div>
       <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>

@@ -26,6 +26,7 @@ function CheckoutPayment(props: Props) {
       <Checkbox
         name="paymentConfirmed"
         url="/terms-conditions"
+        underline={true}
         label="By continuing, you confirm your acceptance of the Terms and Conditions."
         defaultChecked={accepted}
         onChange={(checked) => {

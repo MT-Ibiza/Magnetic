@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import isInViewport from '../utils';
 import MenuBar from './menu-bar-mobile';
 import { useCartStore } from '../hooks/useCartStore';
+import { HiOutlineBell, HiOutlineChartPie, HiOutlineShoppingCart } from 'react-icons/hi';
 
 let WIN_PREV_POSITION = window.pageYOffset;
 
@@ -13,26 +14,11 @@ interface NavItem {
   icon: any;
 }
 
-const NAV: NavItem[] = [
-  {
-    name: 'Dashboard',
-    link: '/dashboard',
-    icon: FaChartPie,
-  },
-  {
-    name: 'Services',
-    link: '/services',
-    icon: FaConciergeBell,
-  },
-  {
-    name: 'Cart',
-    link: '/cart',
-    icon: FaShoppingCart,
-  },
-  {
-    name: 'Menu',
-    icon: MenuBar,
-  },
+const NAV = [
+  { name: 'Dashboard', link: '/dashboard', icon: HiOutlineChartPie },
+  { name: 'Services', link: '/services', icon: HiOutlineBell },
+  { name: 'Cart', link: '/cart', icon: HiOutlineShoppingCart },
+  { name: 'Menu', icon: MenuBar },
 ];
 
 const FooterNav = () => {
@@ -92,7 +78,7 @@ const FooterNav = () => {
               active ? 'text-neutral-900 dark:text-neutral-100' : ''
             }`}
           >
-            <item.icon className={`w-6 h-6 ${active ? 'text-red-600' : ''}`} />
+            <item.icon className={`w-5 h-5 ${active ? 'text-primary-600' : ''}`} />
             <span className="text-[11px] leading-none mt-1">{item.name}</span>
             {item.link === '/cart' && totalItems > 0 && (
               <div

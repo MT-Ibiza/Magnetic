@@ -85,15 +85,25 @@ export function CartPage() {
                           <h4 className="text-sm dark:text-gray-100">
                             {cartItem.item.name}
                           </h4>
-                          <p className="text-xs">
-                            Quantity: {cartItem.quantity}
-                          </p>
-                          <p className="text-xs">
-                            {centsToEurosWithCurrency(
-                              cartItem.item.priceInCents
-                            )}{' '}
-                            x unit
-                          </p>
+                          {cartItem.item.service.serviceType === 'drinks' ? (
+                            <>
+                              <p className="text-xs">
+                                Quantity: {cartItem.quantity}
+                              </p>
+                              <p className="text-xs">
+                                {centsToEurosWithCurrency(
+                                  cartItem.item.priceInCents
+                                )}{' '}
+                                x unit
+                              </p>
+                            </>
+                          ) : (
+                            <p className="text-xs">
+                              {centsToEurosWithCurrency(
+                                cartItem.item.priceInCents
+                              )}
+                            </p>
+                          )}
                         </div>
                       </div>
                     </li>

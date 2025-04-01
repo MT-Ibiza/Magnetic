@@ -58,10 +58,10 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
   const handleBudgetChange = (
     name: string,
     value: string,
-    data: { size_gt: string; size_lt: string }
+    data: { price_gt: string; price_lt: string }
   ) => {
-    setBudgetGt(data.size_gt);
-    setBudgetLt(data.size_lt);
+    setBudgetGt(data.price_gt);
+    setBudgetLt(data.price_lt);
   };
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(
@@ -226,8 +226,8 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
       <div className="w-full space-y-5">
         {renderCapacityInput()}
         {renderSizeInput()}
-        {renderBudgetInput()}
         {renderInputDates()}
+        {renderBudgetInput()}
       </div>
       <div className="absolute bottom-0 z-30  w-full p-4 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-700 flex justify-end">
         <Button

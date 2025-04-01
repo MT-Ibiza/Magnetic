@@ -74,7 +74,7 @@ export function ViewItemDefault({ item }: Props) {
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="col-span-2 space-y-6">
-          <div className="listingSection__wrap bg-base-100 !space-y-6">
+          <div className="listingSection__wrap !space-y-6">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
               {item?.name}
             </h2>
