@@ -111,7 +111,7 @@ export function ViewBoat({ item }: Props) {
       value: cabins || 'n/a',
     },
     {
-      name: 'Fuel Consumption',
+      name: 'Fuel',
       icon: <FaGasPump className="text-lg" />,
       value: fuelConsumption ? fuelConsumption + ' L/H' : 'n/a',
     },
