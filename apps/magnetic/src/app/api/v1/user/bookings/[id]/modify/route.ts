@@ -50,7 +50,7 @@ export async function POST(
         to: user.email,
         subject: 'Modify Request',
         html: modifyRequestTemplate({
-          requestContent: message,
+          message: message,
           clientName: user.firstName,
         }),
       });
