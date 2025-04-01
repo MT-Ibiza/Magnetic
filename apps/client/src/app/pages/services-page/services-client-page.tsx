@@ -36,7 +36,7 @@ export function ServiceClientPage() {
       <div className="mx-auto"> 
         <header className="text-center max-w-2xl mx-auto lg:mt-12 mb-10 lg:mb-20">
           <h2 className="text-3xl md:text-4xl font-semibold">Services</h2>
-          <span className="mt-2 md:mt-3 font-normal block text-base sm:text-lg text-neutral-500 dark:text-neutral-400">
+          <span className="mt-2 md:mt-3 font-normal block text-sm sm:text-lg text-neutral-500 dark:text-neutral-400">
             Browse and book premium services to enhance your stay.
           </span>
         </header>
