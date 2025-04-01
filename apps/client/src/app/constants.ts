@@ -72,7 +72,7 @@ export const budgetFilterOptions = [
     data: { price_gt: '0', price_lt: '2000' },
   },
   {
-    value: '1000',
+    value: '2000',
     label: '€2000 - €4000',
     data: { price_gt: '2000', price_lt: '4000' },
   },

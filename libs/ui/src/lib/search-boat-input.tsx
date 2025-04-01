@@ -38,7 +38,7 @@ export const SearchBoatInput: FC<Props> = ({
   const renderSearchValues = () => {
     return (
       <>
-        <p className="block font-semibold text-base">{headingText}</p>
+        {/* <p className="block font-semibold text-base">{headingText}</p> */}
         <div className="mt-3">
           {options.map((item) => (
             <div

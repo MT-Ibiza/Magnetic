@@ -1,4 +1,9 @@
-import { CustomInput, SelectCategory } from '@magnetic/ui';
+import {
+  CustomInput,
+  FilterSearchMobile,
+  SearchDrinksMobile,
+  SelectCategory,
+} from '@magnetic/ui';
 import { useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
 
@@ -39,6 +44,16 @@ function FilterDrinks(props: Props) {
 
   return (
     <>
+      <div className="w-full sticky z-10 top-[0px] lg:hidden  w-full !mx-auto">
+        <div className="w-full !mx-auto md:px-3">
+          <FilterSearchMobile title="Search Drink" options="Search • Category">
+            <SearchDrinksMobile
+              value={searchParams.drink}
+              onChange={handleSearchChange}
+            />
+          </FilterSearchMobile>
+        </div>
+      </div>
       <div className="border border-neutral-200 hidden lg:block sticky z-10 top-[80px] w-full relative mt-8 rounded-[40px] xl:rounded-[49px] shadow-xl dark:shadow-2xl bg-white dark:bg-neutral-800">
         <form className="lg:grid grid-cols-2 gap-x-[30px]">
           <CustomInput

@@ -29,7 +29,7 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
 
   const [fieldNameShow, setFieldNameShow] = useState<
     'capacity' | 'size' | 'budget' | 'dates'
-  >('capacity');
+  >('dates');
   const [capacityGt, setCapacityGt] = useState(searchParams.capacity_gt || '');
   const [capacityLt, setCapacityLt] = useState(searchParams.capacity_lt || '');
   const [sizeGt, setSizeGt] = useState(searchParams.size_gt || '');
@@ -94,7 +94,7 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
   };
 
   const renderCapacityInput = () => {
-    const isActive = fieldNameShow === 'dates';
+    const isActive = fieldNameShow === 'capacity';
     return (
       <div
         className={`w-full bg-white dark:bg-neutral-800 ${
@@ -111,14 +111,19 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
             <span className="text-neutral-400">Capacity</span>
             <span>
               {capacityGt && capacityLt
-                ? `${capacityGt} - ${capacityLt}`
+                ? `${capacityGt} - ${capacityLt} people`
+                : capacityGt
+                ? `${capacityGt} people`
+                : capacityLt
+                ? `${capacityLt} people`
                 : 'Select Capacity'}
             </span>
           </button>
         ) : (
           <SearchBoatInput
+            headingText='Select Capacity'
             name={fieldNameShow}
-            options={capacityOptions}
+            options={capacityOptions.filter(option => option.value !== '')}
             defaultValue={capacityGt}
             onChange={handleCapacityChange}
           />
@@ -144,13 +149,20 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
           >
             <span className="text-neutral-400">Size</span>
             <span>
-              {sizeGt && sizeLt ? `${sizeGt} - ${sizeLt}` : 'Select Capacity'}
+              {sizeGt && sizeLt
+                ? `${sizeGt} - ${sizeLt} ft`
+                : sizeGt
+                ? `${sizeGt} ft`
+                : sizeLt
+                ? `${sizeLt} ft`
+                : 'Select Size'}
             </span>
           </button>
         ) : (
           <SearchBoatInput
+            headingText='Select size'
             name={fieldNameShow}
-            options={sizeOptions}
+            options={sizeOptions.filter(option => option.value !== '')}
             defaultValue={sizeGt}
             onChange={handleSizeChange}
           />
@@ -175,13 +187,22 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
             onClick={() => setFieldNameShow('budget')}
           >
             <span className="text-neutral-400">Budget</span>
-            {/* <span>{budget || 'Select Budget'}</span> */}
+            <span>
+              {budgetGt && budgetLt
+                ? `${budgetGt} - ${budgetLt}`
+                : budgetGt
+                ? `${budgetGt}`
+                : budgetLt
+                ? `${budgetLt}`
+                : 'Select Budget'}
+            </span>
           </button>
         ) : (
           <SearchBoatInput
+            headingText='Select budget'
             name={fieldNameShow}
-            options={budgetOptions}
-            defaultValue={budgetGt}
+            options={budgetOptions.filter(option => option.value !== '')}
+            defaultValue={budgetGt || budgetLt}
             onChange={handleBudgetChange}
           />
         )}
@@ -223,7 +244,7 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
 
   return (
     <div>
-      <div className="w-full space-y-5">
+      <div className="w-full space-y-5 overflow-y-auto pb-[100px]">
         {renderInputDates()}
         {renderCapacityInput()}
         {renderSizeInput()}

@@ -33,7 +33,7 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
     <div>
       <div className="p-5">
         <span className="block font-semibold text-xl sm:text-2xl">
-          {`Add Date`}
+          {`Select Date`}
         </span>
       </div>
       <div

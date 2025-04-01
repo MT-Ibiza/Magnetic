@@ -299,8 +299,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 @media (max-width: 768px) {
   .listingSection__wrap {
-    @apply w-full flex flex-col rounded-2xl border-b border-t border-l border-r border-neutral-200  space-y-8 pb-10 p-4;
-    // @apply w-full flex pb-6;
+    // @apply w-full flex flex-col rounded-2xl border-b border-t border-l border-r border-neutral-200  space-y-8 pb-10 p-4;
+    @apply w-full flex rounded-2xl border-b border-t border-l border-r border-neutral-200 pb-6;
   }
 }
 

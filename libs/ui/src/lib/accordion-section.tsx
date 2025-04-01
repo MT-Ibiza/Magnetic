@@ -20,7 +20,7 @@ export function AccordionSection(props: Props) {
     <div className="bg-base-100 listingSection__wrap overflow-hidden hover:shadow-lg transition-shadow space-y-6">
       <div>
         <h2
-          className="text-2xl font-semibold cursor-pointer flex items-center justify-between"
+          className="text-[20px] lg:text-2xl font-semibold cursor-pointer flex items-center justify-between"
           onClick={toggleAccordion}
         >
           {title}

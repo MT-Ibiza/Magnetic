@@ -20,10 +20,16 @@ import {
 interface Props {
   children?: React.ReactElement;
   onCLose?: () => void;
+  title?: string;
+  options?: string;
 }
 
-export const FilterSearchMobile = (props: Props) => {
-  const { children } = props;
+export const FilterSearchMobile = ({
+  title = 'Search',
+  options = 'Calendar • Capacity • Size • Budget',
+  children,
+}: Props) => {
+  // const { children } = props;
   const [showModal, setShowModal] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
 
@@ -40,15 +46,13 @@ export const FilterSearchMobile = (props: Props) => {
     return (
       <button
         onClick={openModal}
-        className="relative flex items-center w-full border border-neutral-200 dark:border-neutral-6000 px-4 py-2 pr-11 rounded-full shadow-lg"
+        className="bg-white relative flex items-center w-full border border-neutral-200 dark:border-neutral-6000 px-4 py-2 pr-11 rounded-full shadow-lg"
       >
         <AiOutlineSearch className="flex-shrink-0 w-5 h-5" />
         <div className="ml-3 flex-1 text-left overflow-hidden">
-          <span className="block font-medium text-sm">Search</span>
+          <span className="block font-medium text-sm">{title}</span>
           <div className="block mt-0.5 text-xs font-light text-neutral-500 dark:text-neutral-400 ">
-            <span className="line-clamp-1">
-              Capacity • Size • Budget • Calendar
-            </span>
+            <span className="line-clamp-1">{options}</span>
           </div>
         </div>
         <span className="absolute right-2 top-1/2 transform -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full border border-neutral-200 dark:border-neutral-6000 dark:text-neutral-300">
