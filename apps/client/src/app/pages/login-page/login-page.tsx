@@ -70,13 +70,13 @@ export function LoginPage() {
   ];
 
   return (
-    <div className="lg:min-h-screen flex ">
+    <div className="min-h-screen flex justify-center items-center">
       {/* <div
         className="bg-[url('/images/cover-image-login.jpg')] lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center"
       >
         <div className="absolute bg-black opacity-50 inset-0 z-0"></div>
       </div> */}
-      <div className="lg:w-full w-full flex flex-col items-center justify-center md:px-16 px-0 z-0 b-[#161616]">
+      <div className="w-full h-full flex flex-col items-center justify-center md:px-16 px-0 z-0 b-[#161616]">
         {error && (
           <p className="text-lg text-red-500 p-3 rounded mb-2">{error}</p>
         )}
