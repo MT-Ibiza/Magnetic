@@ -1,4 +1,4 @@
-export function promoGoldTemplate(clientName: string) {
+export function goldPromoTemplate(clientName: string) {
   return `
   <!DOCTYPE html>
 <html lang="en">

@@ -1,4 +1,4 @@
-export function goodbyeGoldDepartureTemplate(clientName: string) {
+export function goodByeTemplate(clientName: string) {
   return `
   <!DOCTYPE html>
 <html lang="en">

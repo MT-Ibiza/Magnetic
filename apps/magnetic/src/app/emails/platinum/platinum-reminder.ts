@@ -1,4 +1,4 @@
-export function reminderPlatinum(clientName: string) {
+export function platinumReminderTemplate(clientName: string) {
   return `
   <!DOCTYPE html>
 <html lang="en">

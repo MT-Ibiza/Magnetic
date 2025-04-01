@@ -1,4 +1,4 @@
-export function reminderGold7DaysArrivalTemplate(username: string) {
+export function goldLastReminderTemplate(username: string) {
   return `
 <!DOCTYPE html>
 <html lang="en">
