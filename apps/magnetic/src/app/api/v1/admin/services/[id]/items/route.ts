@@ -22,6 +22,9 @@ export async function POST(
   const transferAttributes = data.get('transferAttributes')
     ? JSON.parse(data.get('transferAttributes') as string)
     : null;
+  const childcareAttributes = data.get('childcareAttributes')
+    ? JSON.parse(data.get('childcareAttributes') as string)
+    : null;
 
   try {
     let imageUrls: string[] = [];
@@ -66,6 +69,13 @@ export async function POST(
           ? {
               create: {
                 capacity: transferAttributes.capacity,
+              },
+            }
+          : {},
+        childcareAttributes: childcareAttributes
+          ? {
+              create: {
+                hours: childcareAttributes.hours,
               },
             }
           : {},
