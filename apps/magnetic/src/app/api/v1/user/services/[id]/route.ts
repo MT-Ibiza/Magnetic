@@ -53,6 +53,11 @@ export async function GET(
                 hours: true,
               },
             },
+            securityAttributes: {
+              select: {
+                hours: true,
+              },
+            },
             position: true,
             variants: {
               select: {

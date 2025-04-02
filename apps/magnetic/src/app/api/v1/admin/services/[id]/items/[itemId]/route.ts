@@ -34,6 +34,7 @@ export async function GET(
         drinkAttributes: true,
         transferAttributes: true,
         childcareAttributes: true,
+        securityAttributes: true,
         seasonPrices: true,
         variants: {
           select: {
