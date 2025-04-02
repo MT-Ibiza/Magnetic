@@ -56,8 +56,7 @@ function ItemCard({
         <ItemWellnessCard
           item={item}
           cartItemAmount={currentAmount}
-          onClickAdd={onClickAdd}
-          onClickRemove={onClickRemove}
+          onClickBookNow={onClickBookNow}
         />
       );
     case 'spa':
@@ -84,6 +83,14 @@ function ItemCard({
           onClickBookNow={onClickBookNow}
         />
       );
+      case 'reservations':
+        return (
+          <ItemDefaultServiceCard
+            item={item}
+            cartItemAmount={currentAmount}
+            onClickBookNow={onClickBookNow}
+          />
+        );
     default:
       return (
         <ItemDefaultCard

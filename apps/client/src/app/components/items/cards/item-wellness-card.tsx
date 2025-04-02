@@ -5,19 +5,17 @@ import {
   centsToEurosWithCurrency,
   sortImagesByPosition,
 } from '@magnetic/utils';
-import ItemCounterButtons from '../item-counter-buttons';
+import ItemHandleBookButtons from '../item-handle-book-buttons';
 
 interface Props {
   item: Item;
   cartItemAmount: number;
-  onClickAdd: (amount: number) => void;
-  onClickRemove: (amount: number) => void;
+  onClickBookNow: (amount: number) => void;
 }
 
 function ItemWellnessCard({
   item,
-  onClickAdd,
-  onClickRemove,
+  onClickBookNow,
   cartItemAmount,
 }: Props) {
   const { name, priceInCents, images, id, serviceId } = item;
@@ -41,7 +39,7 @@ function ItemWellnessCard({
             <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
               {name}
             </p>
-          </div>
+          </div> . 
           <div className="flex justify-between mt-5">
             <div className="flex gap-1 items-center">
               <Text className="text-base font-semibold">
@@ -51,10 +49,10 @@ function ItemWellnessCard({
                 / per hour
               </Text>
             </div>
-            <ItemCounterButtons
+             <ItemHandleBookButtons
+              item={item}
+              onClickBookNow={onClickBookNow}
               currentAmount={cartItemAmount}
-              onClickAdd={onClickAdd}
-              onClickRemove={onClickRemove}
             />
           </div>
         </div>
