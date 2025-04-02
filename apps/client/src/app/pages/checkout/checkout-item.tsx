@@ -22,6 +22,21 @@ function CheckoutItem(props: Props) {
   const formType = category?.formType || service?.serviceType;
   const price = priceInCents;
 
+  const renderServiceInfo = () => {
+    switch (serviceType) {
+      case 'boat_rental':
+        return <BoatsInfo cartItem={cartItem} formType={formType} />;
+      case 'transfer':
+        return <TransferInfo cartItem={cartItem} formType={formType} />;
+      case 'chefs':
+        return <ChefsInfo cartItem={cartItem} formType={formType} />;
+      case 'drinks':
+        return <DrinkInfo cartItem={cartItem} formType={formType} />;
+      default:
+        return <DefaultServiceInfo cartItem={cartItem} formType={formType} />;
+    }
+  };
+
   return (
     <div className="lg:flex grid grid-cols-4 lg:justify-between w-full">
       <div className="grid grid-cols-2 col-span-3 lg:flex lg:gap-3">
@@ -32,20 +47,7 @@ function CheckoutItem(props: Props) {
             alt={item.name}
           />
         </div>
-        <div>
-          {serviceType === 'boat_rental' && (
-            <BoatsInfo cartItem={cartItem} formType={formType} />
-          )}
-          {serviceType === 'transfer' && (
-            <TransferInfo cartItem={cartItem} formType={formType} />
-          )}
-          {serviceType === 'chefs' && (
-            <ChefsInfo cartItem={cartItem} formType={formType} />
-          )}
-          {serviceType === 'drinks' && (
-            <DrinkInfo cartItem={cartItem} formType={formType} />
-          )}
-        </div>
+        <div>{renderServiceInfo()}</div>
       </div>
       <div className="col-span-1 flex items-end flex-col">
         <Text>Total</Text>
@@ -57,6 +59,30 @@ function CheckoutItem(props: Props) {
     </div>
   );
 }
+
+const DefaultServiceInfo = ({
+  cartItem,
+  formType,
+}: {
+  cartItem: CartItem;
+  formType: string;
+}) => (
+  <div className="flex flex-col gap-1">
+    <h1>{cartItem.item.name}</h1>
+    {cartItem.formData && (
+      <>
+        <Text size="1">Date: {formatDate(cartItem.formData.date)}</Text>
+        <Text size="1">Time: {formatTime(cartItem.formData.time)}</Text>
+      </>
+    )}
+    <CheckoutItemEdit
+      formData={cartItem.formData}
+      formType={formType}
+      item={cartItem.item}
+      cartItemId={cartItem.id}
+    />
+  </div>
+);
 
 const TransferInfo = ({
   cartItem,
