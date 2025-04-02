@@ -4,20 +4,8 @@ import {
   Item,
   WellnessFitnessFormData,
 } from '@magnetic/interfaces';
-import {
-  Button,
-  Checkbox,
-  Input,
-  ItemCounterButtons,
-  Modal,
-  Text,
-  TextArea,
-} from '@magnetic/ui';
-import {
-  centsToEurosWithCurrency,
-  placeholderItemImage,
-  TODAY_DATE,
-} from '@magnetic/utils';
+import { Button, Input, Modal, Text, TextArea } from '@magnetic/ui';
+import { centsToEurosWithCurrency, TODAY_DATE } from '@magnetic/utils';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -36,7 +24,17 @@ export function WellnessFitnessBookingForm({
   formData,
   onCancel,
 }: Props) {
-  const currentSelectItem = item;
+  const currentSelectItem = item as Item;
+  const variantOptions =
+    currentSelectItem?.variants.map((variant) => {
+      return {
+        value: `${variant.id}`,
+        text: `${currentSelectItem.name} - ${variant.name}`,
+      };
+    }) || [];
+
+  const allOptions = variantOptions;
+
   const {
     register,
     handleSubmit,
@@ -57,27 +55,18 @@ export function WellnessFitnessBookingForm({
       : undefined,
   });
 
-  const [total, setTotal] = useState(currentSelectItem?.priceInCents || 0);
-  const [amount, setAmount] = useState(formData?.numberOfPeople || 1);
-  const [selectedVariantId, setSelectedVariantId] = useState(
-    formData.variantId
-  );
-
-  const variantOptions =
-    currentSelectItem?.variants.map((variant) => {
-      return {
-        value: variant.id,
-        text: `${variant.name}`,
-      };
-    }) || [];
-
-  const selectedVariant = variantOptions.find((variant) => {
-    return variant.value === selectedVariantId;
-  });
-
+  const variantSelected = formData?.variantId
+    ? currentSelectItem.variants.find((variant) => {
+        return variant.id === formData?.variantId;
+      })
+    : undefined;
+  const itemPrice = variantSelected
+    ? variantSelected.priceInCents
+    : currentSelectItem.priceInCents;
+  const [price, setPrice] = useState(itemPrice);
   const handleFormSubmit = async (data: WellnessFitnessFormData) => {
-    console.log(data);
-    // onSubmit(data);
+    const formData = data;
+    onSubmit({ form: formData, variantId: data.variantId });
   };
 
   return (
@@ -90,42 +79,42 @@ export function WellnessFitnessBookingForm({
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Modal.Body>
           <div className="p-10">
-            {variantOptions.length > 0 && (
-              <div className="mb-6">
-                <Text className="mb-2">Select Option</Text>
-                <select
-                  className="select select-bordered w-full"
-                  onChange={(e) => {
-                    const value = e.target.value;
-
-                    if (!value) {
-                      // Si selecciona la opción predeterminada, usa el precio base del servicio
-                      setTotal(currentSelectItem?.priceInCents || 0);
-                      setSelectedVariantId(undefined);
-                      setValue('variantId', undefined);
-                    } else {
-                      const variant = currentSelectItem?.variants.find(
+            <div className="mb-6">
+              {variantOptions.length > 0 && (
+                <div className="">
+                  <Text className="mb-2">Number of People</Text>
+                  <select
+                    {...register('variantId', {
+                      required: 'Number of People is required',
+                      valueAsNumber: true,
+                    })}
+                    className="select select-bordered w-full"
+                    value={watch('variantId')}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      const variant = currentSelectItem.variants.find(
                         (v) => v.id === Number(value)
                       );
                       if (variant) {
-                        setTotal(variant.priceInCents);
-                        setSelectedVariantId(variant.id);
+                        setPrice(variant.priceInCents);
                         setValue('variantId', variant.id);
+                      } else {
+                        setValue('variantId', undefined);
+                        setPrice(currentSelectItem.priceInCents);
                       }
-                    }
-                  }}
-                >
-                  <option value="">{currentSelectItem?.name}</option>
-                  {variantOptions.map((option, index) => (
-                    <option value={option.value} key={index}>
-                      {option.text}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
+                    }}
+                  >
+                    {allOptions.map((option, index) => (
+                      <option value={option.value} key={index}>
+                        {option.text}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* <div>
+              <div>
                 <Text className="mb-2">Service</Text>
                 <Input
                   type="text"
@@ -140,18 +129,18 @@ export function WellnessFitnessBookingForm({
                     {errors.service.message}
                   </p>
                 )}
-              </div> */}
+              </div>
               <div>
                 <Text className="mb-2">Date</Text>
                 <Input
                   type="date"
                   min={TODAY_DATE}
                   className="w-full"
-                  {...register('dates', { required: 'Date is required' })}
+                  {...register('date', { required: 'Date is required' })}
                 />
-                {errors.dates && (
+                {errors.date && (
                   <p className="text-[12px] text-red-500 pt-2">
-                    {errors.dates.message}
+                    {errors.date.message}
                   </p>
                 )}
               </div>
@@ -198,11 +187,7 @@ export function WellnessFitnessBookingForm({
         <Modal.Footer>
           <div className="flex items-center justify-between w-full">
             <h2 className="text-md lg:text-xl">
-              {/* Total:{' '}
-              {centsToEurosWithCurrency(
-                (currentSelectItem?.priceInCents || 0) * amount
-              )} */}
-              Total: {centsToEurosWithCurrency(total)}
+              Total: {centsToEurosWithCurrency(price)}
             </h2>
             <div className="flex gap-3">
               {onCancel && (
