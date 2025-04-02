@@ -16,12 +16,12 @@ function SpaBeautySummary(props: Props) {
           <Text className="text-gray-500">{formData.service}</Text>
         </div>
         <div>
-          <Text className="font-medium">Dates</Text>
-          <Text className="text-gray-500">{formatDate(formData.dates)}</Text>
+          <Text className="font-medium">Date</Text>
+          <Text className="text-gray-500">{formatDate(formData.date)}</Text>
         </div>
         <div>
           <Text className="font-medium">Time</Text>
-          <Text className="text-gray-500">{formData.time}</Text>
+          <Text className="text-gray-500">{formatTime(formData.time)}</Text>
         </div>
         <div>
           <Text className="font-medium">Number of people</Text>
@@ -38,7 +38,9 @@ function SpaBeautySummary(props: Props) {
       </div>
       <div className="mt-6">
         <Text className="font-medium">Payment Confirmed</Text>
-        <Text className="text-gray-500">{formData.paymentConfirmed ? 'Yes' : 'No'}</Text>
+        <Text className="text-gray-500">
+          {formData.paymentConfirmed ? 'Yes' : 'No'}
+        </Text>
       </div>
     </div>
   );

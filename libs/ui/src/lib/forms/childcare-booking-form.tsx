@@ -13,7 +13,7 @@ import {
   Text,
   TextArea,
 } from '@magnetic/ui';
-import { centsToEurosWithCurrency } from '@magnetic/utils';
+import { centsToEurosWithCurrency, TODAY_DATE } from '@magnetic/utils';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -57,7 +57,7 @@ export function ChildcareBookingForm({
   const handleFormSubmit = async (data: ChildcareFormData) => {
     const formData = { ...data, ...{ numberOfBabysitters: amount } };
     onSubmit({ form: formData, quantity: amount });
-    console.log('a',formData)
+    console.log('a', formData);
   };
 
   const [amount, setAmount] = useState(formData?.numberOfGuards || 1);
@@ -114,12 +114,12 @@ export function ChildcareBookingForm({
                 )}
               </div>
               <div>
-                <Text className="mb-2">Date(s)</Text>
+                <Text className="mb-2">Date</Text>
                 <Input
-                  type="text"
+                  type="date"
                   className="w-full"
-                  placeholder="e.g., 2024-12-20, 2024-12-21"
-                  {...register('date', { required: 'Date(s) are required' })}
+                  min={TODAY_DATE}
+                  {...register('date', { required: 'Date is required' })}
                 />
                 {errors.date && (
                   <p className="text-[12px] text-red-500 pt-2">

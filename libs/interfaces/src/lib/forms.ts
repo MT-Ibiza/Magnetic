@@ -47,7 +47,7 @@ export interface RestaurantBookingFormData {
 export interface SecurityFormData {
   numberOfGuards: number;
   service: string;
-  dates: string;
+  date: string;
   time: string;
   startTime: string;
   finishTime: string;
@@ -60,7 +60,7 @@ export interface ReservationsFormData {
   numberOfPeople: number;
   childrenAges: string;
   service: string;
-  dates: string;
+  date: string;
   time: string;
   startTime: string;
   finishTime: string;
@@ -77,10 +77,10 @@ export interface SingleChefServiceFormData {
   location: string;
   dietaryComments: string;
 }
- 
+
 export interface SpaBeautyFormData {
   service: string;
-  dates: string;
+  date: string;
   time: string;
   numberOfPeople: number;
   location: string;
@@ -129,7 +129,7 @@ export interface WeeklyChefServiceFormData {
 
 export interface WellnessFitnessFormData {
   service: string;
-  dates: string;
+  date: string;
   time: string;
   numberOfPeople: number;
   location: string;

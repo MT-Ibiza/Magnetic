@@ -48,7 +48,7 @@ export function WellnessFitnessBookingForm({
       ? {
           service: currentSelectItem?.name || formData.service,
           numberOfPeople: formData.numberOfPeople,
-          dates: formData.date,
+          date: formData.date,
           time: formData.time,
           location: formData.location || user?.accommodation,
           comments: formData.comments,

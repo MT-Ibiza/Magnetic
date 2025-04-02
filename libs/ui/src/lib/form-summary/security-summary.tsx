@@ -16,16 +16,20 @@ function SecuritySummary(props: Props) {
           <Text className="text-gray-500">{formData.service}</Text>
         </div>
         <div>
-          <Text className="font-medium">Dates</Text>
-          <Text className="text-gray-500">{formatDate(formData.dates)}</Text>
+          <Text className="font-medium">Date</Text>
+          <Text className="text-gray-500">{formatDate(formData.date)}</Text>
         </div>
         <div>
           <Text className="font-medium">Start Time</Text>
-          <Text className="text-gray-500">{formatTime(formData.startTime)}</Text>
+          <Text className="text-gray-500">
+            {formatTime(formData.startTime)}
+          </Text>
         </div>
         <div>
           <Text className="font-medium">Finish Time</Text>
-          <Text className="text-gray-500">{formatTime(formData.finishTime)}</Text>
+          <Text className="text-gray-500">
+            {formatTime(formData.finishTime)}
+          </Text>
         </div>
         <div>
           <Text className="font-medium">Location</Text>
@@ -38,7 +42,9 @@ function SecuritySummary(props: Props) {
       </div>
       <div className="mt-6">
         <Text className="font-medium">Payment Confirmed</Text>
-        <Text className="text-gray-500">{formData.paymentConfirmed ? 'Yes' : 'No'}</Text>
+        <Text className="text-gray-500">
+          {formData.paymentConfirmed ? 'Yes' : 'No'}
+        </Text>
       </div>
     </div>
   );

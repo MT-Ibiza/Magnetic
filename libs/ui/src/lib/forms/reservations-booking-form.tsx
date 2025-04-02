@@ -13,7 +13,7 @@ import {
   Text,
   TextArea,
 } from '@magnetic/ui';
-import { centsToEurosWithCurrency } from '@magnetic/utils';
+import { centsToEurosWithCurrency, TODAY_DATE } from '@magnetic/utils';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -46,7 +46,7 @@ export function ReservationsBookingForm({
           service: currentSelectItem?.name || formData.service,
           numberOfPeople: formData.numberOfPeople,
           childrenAges: formData.childrenAges,
-          dates: formData.date,
+          date: formData.date,
           time: formData.time,
           comments: formData.comments,
         }
@@ -58,7 +58,7 @@ export function ReservationsBookingForm({
   const handleFormSubmit = async (data: ReservationsFormData) => {
     const formData = { ...data, ...{ numberOfPeople: amount } };
     onSubmit({ form: formData, quantity: amount });
-    console.log('a',formData)
+    console.log('a', formData);
   };
 
   return (
@@ -89,16 +89,16 @@ export function ReservationsBookingForm({
                 )}
               </div>
               <div>
-                <Text className="mb-2">Date(s)</Text>
+                <Text className="mb-2">Date</Text>
                 <Input
-                  type="text"
+                  type="date"
                   className="w-full"
-                  placeholder="e.g., 2024-12-20, 2024-12-21"
-                  {...register('dates', { required: 'Date(s) are required' })}
+                  min={TODAY_DATE}
+                  {...register('date', { required: 'Date is required' })}
                 />
-                {errors.dates && (
+                {errors.date && (
                   <p className="text-[12px] text-red-500 pt-2">
-                    {errors.dates.message}
+                    {errors.date.message}
                   </p>
                 )}
               </div>
