@@ -8,6 +8,7 @@ import WeeklyButlerServiceForm from './weekly-butler-form';
 import SingleChefServiceForm from './single-chef-service';
 import { FormSubmitParams, Item, CurrentUser } from '@magnetic/interfaces';
 import BoatCharterBookingForm from './boat-charter-form';
+import WellnessFitnessBookingForm from './wellness-fitness-form';
 
 interface Props {
   type: string;
@@ -85,9 +86,17 @@ export function RenderBookingForm(props: Props) {
         />
       );
     case 'wellness':
-      return <div></div>;
+      return <WellnessFitnessBookingForm onSubmit={onSubmit} />;
     case 'spa':
-      return <SpaBeautyBookingForm onSubmit={onSubmit} />;
+      return (
+        <SpaBeautyBookingForm
+          user={user}
+          item={item}
+          formData={formData}
+          onSubmit={onSubmit}
+          onCancel={onClose}
+        />
+      );
     case 'childcare':
       return <ChildcareBookingForm onSubmit={onSubmit} />;
     case 'security':

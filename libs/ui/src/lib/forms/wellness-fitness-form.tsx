@@ -1,9 +1,18 @@
-import { WellnessFitnessFormData } from '@magnetic/interfaces';
+import {
+  CurrentUser,
+  FormSubmitParams,
+  Item,
+  WellnessFitnessFormData,
+} from '@magnetic/interfaces';
 import { Button, Checkbox, Input, Text, TextArea } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 
 interface Props {
-  onSubmit: (data: WellnessFitnessFormData) => void;
+  onSubmit: (data: FormSubmitParams<WellnessFitnessFormData>) => void;
+  onCancel?: () => void;
+  item?: Item;
+  user?: CurrentUser;
+  formData?: any;
 }
 
 export function WellnessFitnessBookingForm({ onSubmit }: Props) {
@@ -27,7 +36,7 @@ export function WellnessFitnessBookingForm({ onSubmit }: Props) {
 
   const handleFormSubmit = async (data: WellnessFitnessFormData) => {
     console.log(data);
-    onSubmit(data);
+    // onSubmit(data);
   };
 
   return (

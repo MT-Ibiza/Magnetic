@@ -50,6 +50,7 @@ function FilterDrinks(props: Props) {
             <SearchDrinksMobile
               value={searchParams.drink}
               onChange={handleSearchChange}
+              categoriesAvailable={categories}
             />
           </FilterSearchMobile>
         </div>
