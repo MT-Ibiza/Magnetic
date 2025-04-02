@@ -67,11 +67,14 @@ export function modifyRequestTemplate({
 				background-color: #4338ca;
 			}
 			.footer {
-				background-color: #1f2a37;
-				padding: 10px;
-				text-align: center;
-				font-size: 14px;
-				color: white;
+				background-color: white;
+				color: black;
+				font-size: 12px;
+				padding: 10px 20px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				border-top: 1px solid #ddd;
 			}
 		</style>
 	</head>
@@ -100,6 +103,11 @@ export function modifyRequestTemplate({
 			</div>
 			<div class="footer">
 				<p>&copy; 2025 Magnetic Travel. All rights reserved.</p>
+				<a
+					href="https://bookings.magnetic-travel.com/terms-conditions"
+					style="color: black; text-decoration: none"
+					>Terms & Conditions</a
+				>
 			</div>
 		</div>
 	</body>
