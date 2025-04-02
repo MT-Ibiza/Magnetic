@@ -60,6 +60,7 @@ export async function GET(
                 priceInCents: true,
                 name: true,
                 capacity: true,
+                hours: true,
               },
             },
             category: {

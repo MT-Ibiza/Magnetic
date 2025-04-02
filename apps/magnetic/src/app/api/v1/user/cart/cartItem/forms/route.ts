@@ -33,6 +33,9 @@ export async function PUT(request: Request) {
     const { item } = cartItem;
     const variant = item.variants.find((v) => v.id === variantId);
     priceItem = variant?.priceInCents || priceItem;
+  } else {
+    const { item } = cartItem;
+    priceItem = item.priceInCents;
   }
 
   if (seasonId) {

@@ -6,7 +6,6 @@ import {
 } from '@magnetic/interfaces';
 import {
   Button,
-  Checkbox,
   Input,
   ItemCounterButtons,
   Modal,
@@ -22,7 +21,7 @@ interface Props {
   onCancel?: () => void;
   item?: Item;
   user?: CurrentUser;
-  formData?: any;
+  formData?: ChildcareFormData;
 }
 
 export function ChildcareBookingForm({
@@ -32,7 +31,22 @@ export function ChildcareBookingForm({
   formData,
   onCancel,
 }: Props) {
-  const currentSelectItem = item;
+  const currentSelectItem = item as Item;
+  const variantOptions =
+    currentSelectItem?.variants.map((variant) => {
+      return {
+        value: `${variant.id}`,
+        text: `${currentSelectItem.name} - ${variant.hours} hours`,
+      };
+    }) || [];
+
+  const allOptions = [
+    {
+      value: '',
+      text: `${currentSelectItem.name} - ${currentSelectItem.childcareAttributes?.hours} hours`,
+    },
+  ].concat(variantOptions);
+
   const {
     register,
     handleSubmit,
@@ -50,17 +64,26 @@ export function ChildcareBookingForm({
           location: formData.location || user?.accommodation,
           comments: formData.comments,
           disclaimerAccepted: formData.disclaimerAccepted,
+          variantId: formData.variantId,
         }
       : undefined,
   });
 
   const handleFormSubmit = async (data: ChildcareFormData) => {
     const formData = { ...data, ...{ numberOfBabysitters: amount } };
-    onSubmit({ form: formData, quantity: amount });
-    console.log('a', formData);
+    onSubmit({ form: formData, quantity: amount, variantId: data.variantId });
   };
 
-  const [amount, setAmount] = useState(formData?.numberOfGuards || 1);
+  const [amount, setAmount] = useState(formData?.numberOfBabysitters || 1);
+  const variantSelected = formData?.variantId
+    ? currentSelectItem.variants.find((variant) => {
+        return variant.id === formData?.variantId;
+      })
+    : undefined;
+  const itemPrice = variantSelected
+    ? variantSelected.priceInCents
+    : currentSelectItem.priceInCents;
+  const [total, setTotal] = useState(itemPrice);
 
   return (
     <div>
@@ -72,27 +95,59 @@ export function ChildcareBookingForm({
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Modal.Body>
           <div className="p-10 flex flex-col gap-6">
-            <div>
-              <div className="product flex justify-between items-center border border-gray-300 p-4 mb-3 rounded-md">
-                <div className="flex gap-3 items-center">
-                  <Text>Number of Babysitters</Text>
-                </div>
-                <div>
-                  <ItemCounterButtons
-                    currentAmount={amount}
-                    onClickAdd={() => {
-                      const newAmount = amount + 1;
-                      setAmount(newAmount);
-                      setValue('numberOfBabysitters', newAmount);
-                    }}
-                    onClickRemove={() => {
-                      if (amount > 1) {
-                        const newAmount = amount - 1;
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
+              <div>
+                {variantOptions.length > 0 && (
+                  <div className="">
+                    <Text className="mb-2">Select Duration</Text>
+                    <select
+                      className="select select-bordered w-full"
+                      value={watch('variantId')}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        const variant = currentSelectItem.variants.find(
+                          (v) => v.id === Number(value)
+                        );
+                        if (variant) {
+                          setTotal(variant.priceInCents);
+                          setValue('variantId', variant.id);
+                        } else {
+                          setValue('variantId', undefined);
+                          setTotal(currentSelectItem.priceInCents);
+                        }
+                      }}
+                    >
+                      {allOptions.map((option, index) => (
+                        <option value={option.value} key={index}>
+                          {option.text}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+              </div>
+              <div>
+                <div className="product flex justify-between items-center border border-gray-300 p-4 rounded-md h-[48px]">
+                  <div className="flex gap-3 items-center">
+                    <Text>Number of Babysitters</Text>
+                  </div>
+                  <div>
+                    <ItemCounterButtons
+                      currentAmount={amount}
+                      onClickAdd={() => {
+                        const newAmount = amount + 1;
                         setAmount(newAmount);
                         setValue('numberOfBabysitters', newAmount);
-                      }
-                    }}
-                  />
+                      }}
+                      onClickRemove={() => {
+                        if (amount > 1) {
+                          const newAmount = amount - 1;
+                          setAmount(newAmount);
+                          setValue('numberOfBabysitters', newAmount);
+                        }
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -169,11 +224,8 @@ export function ChildcareBookingForm({
         </Modal.Body>
         <Modal.Footer>
           <div className="flex items-center justify-between w-full">
-            <h2 className="text-md lg:text-xl">
-              Total:{' '}
-              {centsToEurosWithCurrency(
-                (currentSelectItem?.priceInCents || 0) * amount
-              )}
+            <h2 className="text-xl">
+              Total: {centsToEurosWithCurrency(total * amount)}
             </h2>
             <div className="flex gap-3">
               {onCancel && (

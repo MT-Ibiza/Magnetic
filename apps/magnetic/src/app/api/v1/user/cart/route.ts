@@ -69,11 +69,17 @@ export async function GET(request: Request) {
                     priceInCents: true,
                     name: true,
                     capacity: true,
+                    hours: true,
                   },
                 },
                 transferAttributes: {
                   select: {
                     capacity: true,
+                  },
+                },
+                childcareAttributes: {
+                  select: {
+                    hours: true,
                   },
                 },
                 boatAttributes: {

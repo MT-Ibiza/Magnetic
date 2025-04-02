@@ -157,4 +157,5 @@ export interface ChildcareFormData {
   numberOfBabysitters: number;
   disclaimerAccepted: boolean;
   paymentConfirmed: boolean;
+  variantId?: number;
 }
