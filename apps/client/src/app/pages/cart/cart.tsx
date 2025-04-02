@@ -20,15 +20,17 @@ export function CartPage() {
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   if (totalItems === 0) {
     return (
-      <EmptyState
+      <div className='h-full flex justify-center items-center'>
+`      <EmptyState
         icon={FaShoppingCart}
         title="Your cart is empty"
-        description="Check our services"
+        description="Select services to begin"
       >
         <Link to="/services">
           <Button size={2}>View Services</Button>
         </Link>
-      </EmptyState>
+      </EmptyState>`
+      </div>
     );
   }
 
@@ -44,7 +46,7 @@ export function CartPage() {
   }
 
   return (
-    <div className="flex flex-col gap-[15px] lg:grid lg:grid-cols-12 lg:gap-x-[20px]">
+    <div className="flex flex-col gap-[15px] lg:gap-x-[20px]">
       <div className="flex flex-col gap-4">
         <div className="bg-white dark:bg-neutral-800 p-4">
           <div className="flex items-center justify-between">

@@ -81,8 +81,8 @@ export function LoginPage() {
           <p className="text-lg text-red-500 p-3 rounded mb-2">{error}</p>
         )}
         <img
-          className="w-[250px]"
-          src={'/icons/logo-app-black.png'
+          className="w-[200px] pb-[40px]"
+          src={'/icons/logo-no-bg.png'
           }
           alt="Logo"
         />

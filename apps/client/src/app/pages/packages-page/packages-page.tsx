@@ -27,7 +27,7 @@ export function PackagePage() {
     <>
       <div className="nc-PageSubcription pb-24 lg:pb-32">
         <div className="text-center">
-          <header className="text-center max-w-2xl mx-auto mt-12 mb-10 lg:mb-20">
+          <header className="text-center max-w-2xl mx-auto lg:mt-12 mb-10 lg:mb-20">
             <h2 className="text-3xl md:text-4xl font-semibold">
               Concierge Packages
             </h2>

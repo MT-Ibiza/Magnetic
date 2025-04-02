@@ -112,7 +112,7 @@ export function DashboardClientPage() {
               </div>
             </div>
           </div>
-          <div className="pt-[20px] lg:pt-[2rem]">
+          <div className="pt-[40px] lg:pt-[2rem]">
             <CarouselServices
               title="Services"
               itemPerRow={5}

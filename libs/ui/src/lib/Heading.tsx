@@ -26,7 +26,7 @@ export const Heading: React.FC<HeadingProps> = ({
         }
       >
         <h1
-          className={`text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-3xl dark:text-neutral-100 max-w-4xl `}
+          className={`pl-6 lg:pl-0 text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-3xl dark:text-neutral-100 max-w-4xl `}
           {...args}
         >
           {children || `Section Heading`}

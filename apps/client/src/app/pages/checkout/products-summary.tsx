@@ -49,7 +49,7 @@ function ProductsSummary() {
               {category.type === 'drinks' && drinkItem && (
                 <DrinkInfo drinkItem={drinkItem} />
               )}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-4">
                 {category.items.map((item) => (
                   <CheckoutItem cartItem={item} key={item.id} />
                 ))}
