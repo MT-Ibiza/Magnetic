@@ -14,8 +14,6 @@ export function NewItemPage() {
   const serviceId = Number(params.serviceId);
   const navigate = useNavigate();
 
-  const otherForms = ['drinks', 'boat_rental', 'transfer'];
-
   const { isLoading, isError, service, categories, error } =
     useNewItem(serviceId);
 
@@ -26,6 +24,64 @@ export function NewItemPage() {
   if (isError) {
     return <ErrorText text={error?.message || ''} />;
   }
+
+  const renderForm = () => {
+    switch (service?.serviceType) {
+      case 'boat_rental':
+        return (
+          <FormBoatItem
+            serviceId={serviceId}
+            onSave={() => {
+              navigate(`/services/${serviceId}`, { replace: true });
+            }}
+            serviceCategories={categories}
+          />
+        );
+      case 'drinks':
+        return (
+          <FormDrinkItem
+            serviceId={serviceId}
+            onSave={() => {
+              navigate(`/services/${serviceId}`, { replace: true });
+            }}
+            serviceCategories={categories}
+          />
+        );
+      case 'transfer':
+        return (
+          <FormTransferItem
+            serviceId={serviceId}
+            onSave={() => {
+              navigate(`/services/${serviceId}`, { replace: true });
+            }}
+            serviceCategories={categories}
+          />
+        );
+      case 'childcare':
+        return (
+          <FormChildcareItem
+            serviceId={serviceId}
+            onSave={() => {
+              navigate(`/services/${serviceId}`, { replace: true });
+            }}
+            serviceCategories={categories}
+          />
+        );
+      default:
+        return (
+          <FormItem
+            serviceId={serviceId}
+            serviceCategories={categories}
+            service={service}
+            // item={selectedItem}
+            onSave={() => {
+              navigate(`/services/${serviceId}`, { replace: true });
+              // toggleDrawer();
+            }}
+          />
+        );
+    }
+  };
 
   return (
     <div className="new-booking-page">
@@ -45,56 +101,7 @@ export function NewItemPage() {
               <li>New Item</li>
             </ul>
           </div>
-          <div className="bg-base-100 listingSection__wrap">
-            {service.serviceType === 'boat_rental' && (
-              <FormBoatItem
-                serviceId={serviceId}
-                onSave={() => {
-                  navigate(`/services/${serviceId}`, { replace: true });
-                }}
-                serviceCategories={categories}
-              />
-            )}
-            {service.serviceType === 'drinks' && (
-              <FormDrinkItem
-                serviceId={serviceId}
-                onSave={() => {
-                  navigate(`/services/${serviceId}`, { replace: true });
-                }}
-                serviceCategories={categories}
-              />
-            )}
-            {service.serviceType === 'transfer' && (
-              <FormTransferItem
-                serviceId={serviceId}
-                onSave={() => {
-                  navigate(`/services/${serviceId}`, { replace: true });
-                }}
-                serviceCategories={categories}
-              />
-            )}
-            {service.serviceType === 'childcare' && (
-              <FormChildcareItem
-                serviceId={serviceId}
-                onSave={() => {
-                  navigate(`/services/${serviceId}`, { replace: true });
-                }}
-                serviceCategories={categories}
-              />
-            )}
-            {!otherForms.includes(service.serviceType) && (
-              <FormItem
-                serviceId={serviceId}
-                serviceCategories={categories}
-                service={service}
-                // item={selectedItem}
-                onSave={() => {
-                  navigate(`/services/${serviceId}`, { replace: true });
-                  // toggleDrawer();
-                }}
-              />
-            )}
-          </div>
+          <div className="bg-base-100 listingSection__wrap">{renderForm()}</div>
         </>
       )}
     </div>
