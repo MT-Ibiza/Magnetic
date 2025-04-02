@@ -85,6 +85,12 @@ export function BoatCharterBookingForm({
     }
   }, [currentSelectItem?.id]);
 
+  useEffect(() => {
+    if (selectedDate) {
+      setValue('date', moment(selectedDate).toISOString());
+    }
+  }, []);
+
   const handleFormSubmit = async (data: BoatCharterFormData) => {
     onSubmit({
       form: {

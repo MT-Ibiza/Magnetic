@@ -90,6 +90,10 @@ function FilterBoats(props: Props) {
       </div>
       <div className="border border-neutral-200 hidden lg:block sticky z-10 top-[80px] w-full relative mt-4 rounded-[45px] shadow-xl dark:shadow-2xl bg-white dark:bg-neutral-800">
         <form className="lg:grid grid-cols-4 gap-x-[30px]">
+          <RentalCarDatesRangeInput
+            onSelectDate={handleDateChange}
+            onClearFilter={onClearDate}
+          />
           <CustomInput
             disable={!searchParams.from}
             name="capacity"
@@ -111,10 +115,6 @@ function FilterBoats(props: Props) {
             icon={
               <BsArrowsExpand className="w-5 h-5 lg:w-7 lg:h-7 text-neutral-400" />
             }
-          />
-          <RentalCarDatesRangeInput
-            onSelectDate={handleDateChange}
-            onClearFilter={onClearDate}
           />
           <CustomInput
             disable={!searchParams.from}
