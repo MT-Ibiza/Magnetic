@@ -9,6 +9,7 @@ import { useCartStore } from '../../hooks/useCartStore';
 import Modal from '../../components/modal';
 import ItemCard from '../../components/items/cards/item-card';
 import { API_URL } from '../../apis/api-constants';
+import { useAuth } from '../../hooks/useAuth';
 
 interface Props {
   items: Item[];
@@ -22,6 +23,8 @@ function ListProducts(props: Props) {
   const { addItem, removeItem, cart, totalDrinks } = useCartStore();
   const [openFormModal, setOpenFormModal] = useState(false);
   const [currentItemSelected, setCurrentItemSelected] = useState<Item>();
+  const { getCurrentUser } = useAuth();
+  const user = getCurrentUser();
   const isDrinksService = service.serviceType === 'drinks';
   const [alert, setAlert] = useState<{
     message: string;
@@ -217,6 +220,7 @@ function ListProducts(props: Props) {
       </dialog>
       <Modal open={openFormModal}>
         <RenderBookingForm
+          user={user}
           apiUrl={API_URL}
           item={currentItemSelected}
           type={

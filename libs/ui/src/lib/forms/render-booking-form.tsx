@@ -126,17 +126,17 @@ export function RenderBookingForm(props: Props) {
           onCancel={onClose}
         />
       );
-      case 'reservations':
-        return (
-          <ReservationsBookingForm
-            user={user}
-            item={item}
-            formData={formData}
-            onSubmit={onSubmit}
-            onCancel={onClose}
-          />
-        );
-      
+    case 'reservations':
+      return (
+        <ReservationsBookingForm
+          user={user}
+          item={item}
+          formData={formData}
+          onSubmit={onSubmit}
+          onCancel={onClose}
+        />
+      );
+
     default:
       return <div></div>;
   }

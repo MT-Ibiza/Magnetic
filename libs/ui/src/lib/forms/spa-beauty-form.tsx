@@ -67,7 +67,7 @@ export function SpaBeautyBookingForm({
     <div className="">
       <Modal.Header onClose={onCancel}>
         <div className="flex justify-between">
-          <h2 className="text-2xl font-bold">SPA & Beauty Booking</h2>
+          <h2 className="text-2xl font-bold">Spa & Beauty Booking</h2>
         </div>
       </Modal.Header>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
