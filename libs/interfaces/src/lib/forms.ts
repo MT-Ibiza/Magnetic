@@ -54,6 +54,7 @@ export interface SecurityFormData {
   location: string;
   comments: string;
   paymentConfirmed: boolean;
+  variantId?: number;
 }
 
 export interface ReservationsFormData {

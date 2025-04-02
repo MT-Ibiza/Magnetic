@@ -82,6 +82,11 @@ export async function GET(request: Request) {
                     hours: true,
                   },
                 },
+                securityAttributes: {
+                  select: {
+                    hours: true,
+                  },
+                },
                 boatAttributes: {
                   select: {
                     id: true,
