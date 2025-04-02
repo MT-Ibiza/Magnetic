@@ -48,6 +48,11 @@ export async function GET(
                 capacity: true,
               },
             },
+            childcareAttributes: {
+              select: {
+                hours: true,
+              },
+            },
             position: true,
             variants: {
               select: {
