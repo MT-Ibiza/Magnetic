@@ -9,3 +9,15 @@ export function getCapacityRange(capacities: { capacity: number }[]) {
     { low: Infinity, high: -Infinity }
   );
 }
+
+export function getRangeByField(fields: { value: number }[]) {
+  if (!fields.length) return { low: 0, high: 0 };
+
+  return fields.reduce(
+    (acc, { value }) => ({
+      low: Math.min(acc.low, value),
+      high: Math.max(acc.high, value),
+    }),
+    { low: Infinity, high: -Infinity }
+  );
+}

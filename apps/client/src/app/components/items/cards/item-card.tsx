@@ -6,6 +6,7 @@ import ItemChefsCard from './item-chefs-card';
 import ItemTransferCard from './item-transfer-card';
 import ItemWellnessCard from './item-wellness-card';
 import ItemDefaultServiceCard from './item-default-service-card';
+import ItemChildcareCard from './item-childcare-card';
 
 interface ItemCardProps {
   item: Item;
@@ -69,7 +70,7 @@ function ItemCard({
       );
     case 'childcare':
       return (
-        <ItemDefaultServiceCard
+        <ItemChildcareCard
           item={item}
           cartItemAmount={currentAmount}
           onClickBookNow={onClickBookNow}
@@ -83,14 +84,14 @@ function ItemCard({
           onClickBookNow={onClickBookNow}
         />
       );
-      case 'reservations':
-        return (
-          <ItemDefaultServiceCard
-            item={item}
-            cartItemAmount={currentAmount}
-            onClickBookNow={onClickBookNow}
-          />
-        );
+    case 'reservations':
+      return (
+        <ItemDefaultServiceCard
+          item={item}
+          cartItemAmount={currentAmount}
+          onClickBookNow={onClickBookNow}
+        />
+      );
     default:
       return (
         <ItemDefaultCard
