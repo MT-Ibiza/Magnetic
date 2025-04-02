@@ -99,6 +99,10 @@ export async function PUT(
   const childcareAttributes = data.get('childcareAttributes')
     ? JSON.parse(data.get('childcareAttributes') as string)
     : null;
+  const securityAttributes = data.get('securityAttributes')
+    ? JSON.parse(data.get('securityAttributes') as string)
+    : null;
+
   const imageFiles = data.getAll('imageFiles') as File[];
   const categoryId = data.get('categoryId') as string;
   const removeImagesIds = data.getAll('removeImagesIds') as string[];
@@ -183,6 +187,18 @@ export async function PUT(
               },
               update: {
                 ...childcareAttributes,
+              },
+            },
+          },
+        }),
+        ...(securityAttributes && {
+          securityAttributes: {
+            upsert: {
+              create: {
+                ...securityAttributes,
+              },
+              update: {
+                ...securityAttributes,
               },
             },
           },

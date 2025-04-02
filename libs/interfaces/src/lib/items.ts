@@ -28,6 +28,9 @@ export interface ItemBase {
   childcareAttributes?: {
     hours: number;
   };
+  securityAttributes?: {
+    hours: number;
+  };
   images: Image[];
   removeImagesIds?: number[];
 }

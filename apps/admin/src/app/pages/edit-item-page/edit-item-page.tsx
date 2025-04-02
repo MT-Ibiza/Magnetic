@@ -8,6 +8,7 @@ import FormBoatItem from '../../components/services/form-boat-item';
 import FormDrinkItem from '../../components/services/form-drink-item';
 import FormTransferItem from '../../components/services/form-transfer-item';
 import FormChildcareItem from '../../components/services/form-childcare-item';
+import FormSecurityItem from '../../components/services/form-security-item';
 
 export function EditItemPage() {
   const params = useParams();
@@ -64,6 +65,15 @@ export function EditItemPage() {
       case 'childcare':
         return (
           <FormChildcareItem
+            item={item}
+            serviceId={serviceId}
+            onSave={() => navigate(`/services/${serviceId}`, { replace: true })}
+            serviceCategories={serviceCategories}
+          />
+        );
+      case 'security':
+        return (
+          <FormSecurityItem
             item={item}
             serviceId={serviceId}
             onSave={() => navigate(`/services/${serviceId}`, { replace: true })}

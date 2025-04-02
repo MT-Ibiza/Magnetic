@@ -1,4 +1,4 @@
-import { CardWrapper, Text } from '@magnetic/ui';
+import { Text } from '@magnetic/ui';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
@@ -8,6 +8,7 @@ import FormBoatItem from '../../components/services/form-boat-item';
 import FormDrinkItem from '../../components/services/form-drink-item';
 import FormTransferItem from '../../components/services/form-transfer-item';
 import FormChildcareItem from '../../components/services/form-childcare-item';
+import FormSecurityItem from '../../components/services/form-security-item';
 
 export function NewItemPage() {
   const params = useParams();
@@ -60,6 +61,16 @@ export function NewItemPage() {
       case 'childcare':
         return (
           <FormChildcareItem
+            serviceId={serviceId}
+            onSave={() => {
+              navigate(`/services/${serviceId}`, { replace: true });
+            }}
+            serviceCategories={categories}
+          />
+        );
+      case 'security':
+        return (
+          <FormSecurityItem
             serviceId={serviceId}
             onSave={() => {
               navigate(`/services/${serviceId}`, { replace: true });

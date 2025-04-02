@@ -139,6 +139,13 @@ model ChildcareAttributes {
   item   Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
 }
 
+model SecurityAttributes {
+  id     Int  @id @default(autoincrement())
+  hours  Int  @default(1)
+  itemId Int  @unique
+  item   Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+}
+
 model Item {
   id                  Int                  @id @default(autoincrement())
   createdAt           DateTime             @default(now())
@@ -161,6 +168,7 @@ model Item {
   drinkAttributes     DrinkAttributes?
   transferAttributes  TransferAttributes?
   childcareAttributes ChildcareAttributes?
+  securityAttributes  SecurityAttributes?
 }
 
 model Image {
