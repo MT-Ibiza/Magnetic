@@ -15,6 +15,7 @@ export interface SearchItemParams {
 
 export interface ItemBase {
   name: string;
+  capacity: number;
   description: string;
   priceInCents: number;
   categoryId?: number | null;

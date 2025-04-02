@@ -135,6 +135,7 @@ export interface WellnessFitnessFormData {
   location: string;
   comments: string;
   paymentConfirmed: boolean;
+  variantId?: number;
 }
 
 export interface ClubBookingFormData {

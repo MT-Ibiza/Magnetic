@@ -16,6 +16,7 @@ import {
 import {
   centsToEurosWithCurrency,
   placeholderItemImage,
+  TODAY_DATE,
 } from '@magnetic/utils';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -51,11 +52,28 @@ export function WellnessFitnessBookingForm({
           time: formData.time,
           location: formData.location || user?.accommodation,
           comments: formData.comments,
+          variantId: formData.variantId,
         }
       : undefined,
   });
 
+  const [total, setTotal] = useState(currentSelectItem?.priceInCents || 0);
   const [amount, setAmount] = useState(formData?.numberOfPeople || 1);
+  const [selectedVariantId, setSelectedVariantId] = useState(
+    formData.variantId
+  );
+
+  const variantOptions =
+    currentSelectItem?.variants.map((variant) => {
+      return {
+        value: variant.id,
+        text: `${variant.name}`,
+      };
+    }) || [];
+
+  const selectedVariant = variantOptions.find((variant) => {
+    return variant.value === selectedVariantId;
+  });
 
   const handleFormSubmit = async (data: WellnessFitnessFormData) => {
     console.log(data);
@@ -72,35 +90,42 @@ export function WellnessFitnessBookingForm({
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Modal.Body>
           <div className="p-10">
-            <Text className="mb-2">Number of People</Text>
-            <div className="product flex justify-between items-center border border-gray-300 p-4 mb-6 rounded-md">
-              <div className="flex gap-3 items-center">
-                <img
-                  className="w-[35px] bg-gray-50"
-                  src={
-                    currentSelectItem?.images[0]
-                      ? currentSelectItem.images[0].url
-                      : placeholderItemImage
-                  }
-                />
-                <Text>{currentSelectItem?.name}</Text>
-              </div>
-              <div>
-                <ItemCounterButtons
-                  currentAmount={amount}
-                  onClickAdd={() => {
-                    setAmount(amount + 1);
-                  }}
-                  onClickRemove={() => {
-                    if (amount > 1) {
-                      setAmount(amount - 1);
+            {variantOptions.length > 0 && (
+              <div className="mb-6">
+                <Text className="mb-2">Select Option</Text>
+                <select
+                  className="select select-bordered w-full"
+                  onChange={(e) => {
+                    const value = e.target.value;
+
+                    if (!value) {
+                      // Si selecciona la opción predeterminada, usa el precio base del servicio
+                      setTotal(currentSelectItem?.priceInCents || 0);
+                      setSelectedVariantId(undefined);
+                      setValue('variantId', undefined);
+                    } else {
+                      const variant = currentSelectItem?.variants.find(
+                        (v) => v.id === Number(value)
+                      );
+                      if (variant) {
+                        setTotal(variant.priceInCents);
+                        setSelectedVariantId(variant.id);
+                        setValue('variantId', variant.id);
+                      }
                     }
                   }}
-                />
+                >
+                  <option value="">{currentSelectItem?.name}</option>
+                  {variantOptions.map((option, index) => (
+                    <option value={option.value} key={index}>
+                      {option.text}
+                    </option>
+                  ))}
+                </select>
               </div>
-            </div>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
+              {/* <div>
                 <Text className="mb-2">Service</Text>
                 <Input
                   type="text"
@@ -115,14 +140,14 @@ export function WellnessFitnessBookingForm({
                     {errors.service.message}
                   </p>
                 )}
-              </div>
+              </div> */}
               <div>
-                <Text className="mb-2">Date(s)</Text>
+                <Text className="mb-2">Date</Text>
                 <Input
-                  type="text"
+                  type="date"
+                  min={TODAY_DATE}
                   className="w-full"
-                  placeholder="e.g., 2024-12-20, 2024-12-21"
-                  {...register('dates', { required: 'Date(s) are required' })}
+                  {...register('dates', { required: 'Date is required' })}
                 />
                 {errors.dates && (
                   <p className="text-[12px] text-red-500 pt-2">
@@ -173,10 +198,11 @@ export function WellnessFitnessBookingForm({
         <Modal.Footer>
           <div className="flex items-center justify-between w-full">
             <h2 className="text-md lg:text-xl">
-              Total:{' '}
+              {/* Total:{' '}
               {centsToEurosWithCurrency(
                 (currentSelectItem?.priceInCents || 0) * amount
-              )}
+              )} */}
+              Total: {centsToEurosWithCurrency(total)}
             </h2>
             <div className="flex gap-3">
               {onCancel && (
