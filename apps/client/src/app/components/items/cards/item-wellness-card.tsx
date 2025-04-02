@@ -4,6 +4,8 @@ import { GallerySlider, Text } from '@magnetic/ui';
 import {
   centsToEurosWithCurrency,
   sortImagesByPosition,
+  getPriceRange,
+  getRangeByField,
 } from '@magnetic/utils';
 import ItemHandleBookButtons from '../item-handle-book-buttons';
 
@@ -13,15 +15,29 @@ interface Props {
   onClickBookNow: (amount: number) => void;
 }
 
-function ItemWellnessCard({
-  item,
-  onClickBookNow,
-  cartItemAmount,
-}: Props) {
-  const { name, priceInCents, images, id, serviceId } = item;
+function ItemWellnessCard(props: Props) {
+  const { item, onClickBookNow, cartItemAmount } = props;
+  const { name, priceInCents, variants, childcareAttributes } = item;
+  const hours = childcareAttributes?.hours || 1;
+  const variantsWithHours = variants.map((v) => {
+    return {
+      value: v.hours || 1,
+    };
+  });
+
   const imagesSorted = useMemo(() => {
-    return sortImagesByPosition(images);
-  }, [images]);
+    return sortImagesByPosition(item.images);
+  }, [item.images]);
+
+  const priceRange = useMemo(
+    () => getPriceRange([...variants, { priceInCents }]),
+    [variants, priceInCents]
+  );
+
+  const hoursRange = useMemo(
+    () => getRangeByField([...variantsWithHours, { value: hours }]),
+    [variants, priceInCents]
+  );
 
   return (
     <div
@@ -29,27 +45,33 @@ function ItemWellnessCard({
     >
       <div className="relative w-full rounded-2xl overflow-hidden">
         <GallerySlider
-          href={`/services/${serviceId}/item/${id}`}
+          href={`/services/${item.serviceId}/item/${item.id}`}
           galleryImgs={imagesSorted}
           classImage="h-[200px]"
-          uniqueID={`ExperiencesCard_${id}`}
+          uniqueID={`ExperiencesCard_${item.id}`}
         />
         <div className="p-5 space-y-4">
-          <div className="w-full pb-2 flex flex-col gap-3">
+          <div className="space-y-2 flex flex-col">
             <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
               {name}
             </p>
-          </div> . 
+            {/* <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
+              <span className="">
+                {hoursRange.low === hoursRange.high
+                  ? `${hoursRange.low} hours`
+                  : `${hoursRange.low} - ${hoursRange.high} hours`}
+              </span>
+            </div> */}
+          </div>
           <div className="flex justify-between mt-5">
-            <div className="flex gap-1 items-center">
-              <Text className="text-base font-semibold">
-                {centsToEurosWithCurrency(priceInCents)}
-              </Text>
-              <Text className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
-                / per hour
-              </Text>
-            </div>
-             <ItemHandleBookButtons
+            <Text className="text-base font-semibold">
+              {priceRange.low === priceRange.high
+                ? `${centsToEurosWithCurrency(priceInCents)}`
+                : `From ${centsToEurosWithCurrency(
+                    priceRange.low
+                  )} - ${centsToEurosWithCurrency(priceRange.high)}`}
+            </Text>
+            <ItemHandleBookButtons
               item={item}
               onClickBookNow={onClickBookNow}
               currentAmount={cartItemAmount}
