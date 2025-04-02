@@ -69,13 +69,14 @@ function FormVariant(props: Props) {
   });
 
   const onSubmit = async (data: ItemVariantBase) => {
-    const { name, description, priceInCents, capacity } = data;
+    const { name, description, priceInCents, capacity, hours } = data;
     if (variant) {
       await updateVariant.mutateAsync({
         itemId,
         name,
         description,
         capacity: capacity ? Number(capacity) : undefined,
+        hours: hours ? Number(hours) : undefined,
         priceInCents: eurosToCents(priceInCents),
       });
     } else {
@@ -84,6 +85,7 @@ function FormVariant(props: Props) {
         name,
         description,
         capacity: capacity ? Number(capacity) : undefined,
+        hours: hours ? Number(hours) : undefined,
         priceInCents: eurosToCents(priceInCents),
       });
     }

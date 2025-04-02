@@ -33,6 +33,7 @@ export async function GET(
         boatAttributes: true,
         drinkAttributes: true,
         transferAttributes: true,
+        childcareAttributes: true,
         seasonPrices: true,
         variants: {
           select: {
@@ -41,6 +42,7 @@ export async function GET(
             priceInCents: true,
             description: true,
             capacity: true,
+            hours: true,
           },
           orderBy: {
             createdAt: 'asc',
@@ -93,6 +95,9 @@ export async function PUT(
     : null;
   const transferAttributes = data.get('transferAttributes')
     ? JSON.parse(data.get('transferAttributes') as string)
+    : null;
+  const childcareAttributes = data.get('childcareAttributes')
+    ? JSON.parse(data.get('childcareAttributes') as string)
     : null;
   const imageFiles = data.getAll('imageFiles') as File[];
   const categoryId = data.get('categoryId') as string;
@@ -166,6 +171,18 @@ export async function PUT(
               },
               update: {
                 ...transferAttributes,
+              },
+            },
+          },
+        }),
+        ...(childcareAttributes && {
+          childcareAttributes: {
+            upsert: {
+              create: {
+                ...childcareAttributes,
+              },
+              update: {
+                ...childcareAttributes,
               },
             },
           },
