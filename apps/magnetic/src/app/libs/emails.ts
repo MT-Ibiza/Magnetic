@@ -20,6 +20,7 @@ export async function sendEmail(params: {
   to: string;
   subject: string;
   html: string;
+  cc?: string;
 }) {
   const { to, subject, html } = params;
   if (!process.env.SMTP_EMAIL) {

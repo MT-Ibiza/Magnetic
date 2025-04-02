@@ -53,6 +53,7 @@ export async function POST(
           message: message,
           clientName: user.firstName,
         }),
+        cc: process.env.EMAIL_COPY,
       });
     } catch (emailError) {
       console.error('Error sending email:', emailError);
