@@ -185,7 +185,7 @@ function ListDrinks(props: Props) {
   }
 
   return (
-    <>
+    <div className='flex flex-col gap-[15px] lg:gap-[40px]'>
       <FilterDrinks onChangeFilters={handleSearch} categories={categories} />
       {isLoading ? (
         <GridSkeleton
@@ -198,7 +198,7 @@ function ListDrinks(props: Props) {
             <div>
               {itemsGroup.map((group, index) => (
                 <div key={index} className="pt-[30px]">
-                  <h2 className="text-2xl font-semibold">{group.category}</h2>
+                  <h2 className="md:text-lg lg:text-[22px] font-semibold">{group.category}</h2>
                   <div className="grid pt-[30px] gap-3 lg:gap-6 md:gap-8 grid-cols-2 lg:grid-cols-5">
                     {group.items.map((item, index) => (
                       <ItemDrinkCard
@@ -247,7 +247,7 @@ function ListDrinks(props: Props) {
           onCancel={toggleModal}
         />
       </Modal>
-    </>
+    </div>
   );
 }
 export default ListDrinks;

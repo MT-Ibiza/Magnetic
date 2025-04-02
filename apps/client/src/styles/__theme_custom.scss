@@ -192,12 +192,12 @@ button.gm-control-active.gm-fullscreen-control {
 
 // LISTING PAGE DETAIL
 .listingSection__wrap { 
-  @apply w-full flex flex-col rounded-2xl border-b sm:border-t sm:border-l sm:border-r border-neutral-200 dark:border-neutral-700 space-y-6 sm:space-y-8 pb-10 p-4 xl:p-8;
+  @apply w-full flex flex-col rounded-2xl border-b sm:border-t sm:border-l sm:border-r border-neutral-200 dark:border-neutral-700 space-y-6 lg:space-y-8 pb-10 p-4 lg:p-6 xl:p-8;
 } 
 
 // LISTING PAGE DETAIL
 .listingSectionSidebar__wrap {
-  @apply w-full flex flex-col rounded-2xl border-b border-t border-l border-r border-neutral-200 dark:border-neutral-700 space-y-6 xl:space-y-7 pb-10 p-4 xl:px-8 xl:py-6;
+  @apply w-full flex flex-col rounded-2xl border-b border-t border-l border-r border-neutral-200 dark:border-neutral-700 space-y-6 xl:space-y-7 pb-10 p-4 lg:p-6 xl:px-8 xl:py-6;
 }
 
 //
@@ -328,5 +328,65 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .custom-accordion {
   margin-top: 0 !important;
+}
+
+/* 📱 Celular vertical (hasta 480px) */
+@media (max-width: 480px) {
+  .responsive-card-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    // justify-content: space-between;
+    margin-top: 1.25rem;
+  }
+
+  .btn-card-item {
+    display: flex;
+    justify-content: end;
+  }
+}
+
+/* 📱 Celular horizontal (481px a 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+  .responsive-card-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    // justify-content: space-between;
+    margin-top: 1.25rem;
+  }
+
+  .btn-card-item {
+    display: flex;
+    justify-content: end;
+  }
+  
+}
+
+/* 📲 Tablet vertical (768px a 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .responsive-card-item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+  }
+}
+
+/* 💻 Tablet horizontal (1024px a 1279px) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .responsive-card-item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+  }
+}
+
+/* 🖥️ Pantallas web (1280px en adelante) */
+@media (min-width: 1280px) {
+  .responsive-card-item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+  }
 }
 

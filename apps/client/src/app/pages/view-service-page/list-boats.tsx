@@ -42,7 +42,6 @@ function ListBoats(props: Props) {
   });
 
   return (
-    <>
       <div className="flex flex-col gap-[15px] lg:gap-[40px]">
         <FilterBoats
           onChangeFilters={(filters) => {
@@ -80,7 +79,6 @@ function ListBoats(props: Props) {
           </>
         )}
       </div>
-    </>
   );
 }
 export default ListBoats;

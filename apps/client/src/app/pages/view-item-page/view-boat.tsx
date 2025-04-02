@@ -147,11 +147,11 @@ export function ViewBoat({ item }: Props) {
       );
     }
   };
-
+ 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="col-span-2 space-y-6">
+      <div className="relative z-10 flex flex-col lg:flex-row">
+        <div className="w-full lg:w-3/5 xl:w-2/3 space-y-8 lg:pr-10 lg:space-y-10">
           <div className="listingSection__wrap bg-base-100 !space-y-6">
             <div className="flex justify-between items-center">
               <Badge name={port} />
@@ -256,7 +256,7 @@ export function ViewBoat({ item }: Props) {
             </SectionCard>
           )}
         </div>
-        <div className="hidden lg:block col-span-1">
+        <div className="hidden lg:block flex-grow mt-14 lg:mt-0">
           <BookBoatCard
             calendarRef={calendarRef}
             price={boatPrice}

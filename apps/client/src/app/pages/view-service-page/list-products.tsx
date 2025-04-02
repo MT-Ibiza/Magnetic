@@ -173,7 +173,7 @@ function ListProducts(props: Props) {
     <>
       {itemsGroup.map((group, index) => (
         <div key={index} className="pt-[30px]">
-          <h2 className="text-2xl font-semibold">{group.category}</h2>
+          <h2 className="text-lg lg:text-[22px] font-semibold">{group.category}</h2>
           <div
             className={`grid pt-[30px] gap-6 md:gap-8 sm:grid-cols-2 ${
               isDrinksService ? 'lg:grid-cols-5' : 'lg:grid-cols-3'

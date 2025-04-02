@@ -63,8 +63,8 @@ function ItemBoatCard({ item, priceMonthNumber, selectedDate }: Props) {
               <span>{capacity} pax</span>
             </div>
           </div>
-          <div className="flex justify-between mt-5">
-            <div className="flex gap-1 items-center">
+          <div className="responsive-card-item flex justify-between mt-5">
+            <div className=" flex gap-1 items-center">
               <Text className="text-base font-semibold">
                 {selectedDate
                   ? `${centsToEurosWithCurrency(displayPrice)}`
@@ -78,7 +78,7 @@ function ItemBoatCard({ item, priceMonthNumber, selectedDate }: Props) {
                 /day
               </Text>
             </div>
-            <Button href={url}>View Details</Button>
+              <Button href={url}>View Details</Button>
           </div>
         </div>
       </div>
