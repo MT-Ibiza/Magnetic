@@ -95,7 +95,7 @@ export function WeeklyChefServiceForm({
                   />
                 </div>
               </div>
-            </div>
+            </div> 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <Text className="mb-2">Service</Text>
