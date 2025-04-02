@@ -132,27 +132,35 @@ model TransferAttributes {
   item     Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
 }
 
+model ChildcareAttributes {
+  id     Int  @id @default(autoincrement())
+  hours  Int  @default(1)
+  itemId Int  @unique
+  item   Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+}
+
 model Item {
-  id                 Int                 @id @default(autoincrement())
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @updatedAt
-  name               String
-  description        String
-  published          Boolean             @default(false)
-  priceInCents       Int
-  serviceId          Int
-  position           Int                 @default(1)
-  service            Service             @relation(fields: [serviceId], references: [id])
-  cartItems          CartItem[]
-  ordenItems         OrderItem[]
-  variants           ItemVariant[]
-  categoryId         Int?
-  category           Category?           @relation(fields: [categoryId], references: [id])
-  images             Image[]
-  seasonPrices       SeasonPrice[]
-  boatAttributes     BoatAttributes?
-  drinkAttributes    DrinkAttributes?
-  transferAttributes TransferAttributes?
+  id                  Int                  @id @default(autoincrement())
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  name                String
+  description         String
+  published           Boolean              @default(false)
+  priceInCents        Int
+  serviceId           Int
+  position            Int                  @default(1)
+  service             Service              @relation(fields: [serviceId], references: [id])
+  cartItems           CartItem[]
+  ordenItems          OrderItem[]
+  variants            ItemVariant[]
+  categoryId          Int?
+  category            Category?            @relation(fields: [categoryId], references: [id])
+  images              Image[]
+  seasonPrices        SeasonPrice[]
+  boatAttributes      BoatAttributes?
+  drinkAttributes     DrinkAttributes?
+  transferAttributes  TransferAttributes?
+  childcareAttributes ChildcareAttributes?
 }
 
 model Image {
@@ -172,6 +180,7 @@ model ItemVariant {
   description  String?
   priceInCents Int
   capacity     Int?
+  hours        Int?
   itemId       Int
   item         Item        @relation(fields: [itemId], references: [id])
   CartItem     CartItem[]

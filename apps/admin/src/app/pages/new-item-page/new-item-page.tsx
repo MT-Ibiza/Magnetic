@@ -7,6 +7,7 @@ import { useNewItem } from '../../hooks/useNewItem';
 import FormBoatItem from '../../components/services/form-boat-item';
 import FormDrinkItem from '../../components/services/form-drink-item';
 import FormTransferItem from '../../components/services/form-transfer-item';
+import FormChildcareItem from '../../components/services/form-childcare-item';
 
 export function NewItemPage() {
   const params = useParams();
@@ -65,6 +66,15 @@ export function NewItemPage() {
             )}
             {service.serviceType === 'transfer' && (
               <FormTransferItem
+                serviceId={serviceId}
+                onSave={() => {
+                  navigate(`/services/${serviceId}`, { replace: true });
+                }}
+                serviceCategories={categories}
+              />
+            )}
+            {service.serviceType === 'childcare' && (
+              <FormChildcareItem
                 serviceId={serviceId}
                 onSave={() => {
                   navigate(`/services/${serviceId}`, { replace: true });

@@ -25,6 +25,9 @@ export interface ItemBase {
   transferAttributes?: {
     capacity: number;
   };
+  childcareAttributes?: {
+    hours: number;
+  };
   images: Image[];
   removeImagesIds?: number[];
 }

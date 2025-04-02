@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   const data: NewItemVariant = await request.json();
-  const { name, description, priceInCents, itemId, capacity } = data;
+  const { name, description, priceInCents, itemId, capacity, hours } = data;
   try {
     const variant = await db.itemVariant.create({
       data: {
@@ -12,6 +12,7 @@ export async function POST(request: Request) {
         description,
         priceInCents,
         capacity,
+        hours,
         itemId: Number(itemId),
       },
     });

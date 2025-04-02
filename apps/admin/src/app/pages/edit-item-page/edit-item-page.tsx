@@ -7,13 +7,13 @@ import { useItem } from '../../hooks/useItem';
 import FormBoatItem from '../../components/services/form-boat-item';
 import FormDrinkItem from '../../components/services/form-drink-item';
 import FormTransferItem from '../../components/services/form-transfer-item';
+import FormChildcareItem from '../../components/services/form-childcare-item';
 
 export function EditItemPage() {
   const params = useParams();
   const serviceId = Number(params.serviceId);
   const itemId = Number(params.itemId);
   const navigate = useNavigate();
-  const otherForms = ['drinks', 'boat_rental', 'transfer'];
 
   const { isLoading, isError, item, serviceCategories, error } = useItem(
     serviceId,
@@ -31,7 +31,57 @@ export function EditItemPage() {
   if (!item) {
     return <Text>Item Not Found</Text>;
   }
-  console.log(item);
+
+  const renderForm = () => {
+    switch (item.service.serviceType) {
+      case 'boat_rental':
+        return (
+          <FormBoatItem
+            item={item}
+            serviceId={serviceId}
+            onSave={() => navigate(`/services/${serviceId}`, { replace: true })}
+            serviceCategories={serviceCategories}
+          />
+        );
+      case 'drinks':
+        return (
+          <FormDrinkItem
+            item={item}
+            serviceId={serviceId}
+            onSave={() => navigate(`/services/${serviceId}`, { replace: true })}
+            serviceCategories={serviceCategories}
+          />
+        );
+      case 'transfer':
+        return (
+          <FormTransferItem
+            item={item}
+            serviceId={serviceId}
+            onSave={() => navigate(`/services/${serviceId}`, { replace: true })}
+            serviceCategories={serviceCategories}
+          />
+        );
+      case 'childcare':
+        return (
+          <FormChildcareItem
+            item={item}
+            serviceId={serviceId}
+            onSave={() => navigate(`/services/${serviceId}`, { replace: true })}
+            serviceCategories={serviceCategories}
+          />
+        );
+      default:
+        return (
+          <FormItem
+            serviceCategories={serviceCategories}
+            serviceId={serviceId}
+            item={item}
+            onSave={() => navigate(`/services/${serviceId}`)}
+          />
+        );
+    }
+  };
+
   return (
     <div className="new-booking-page">
       <Text size="4" className="mb-3">
@@ -48,48 +98,7 @@ export function EditItemPage() {
           <li>Edit Product</li>
         </ul>
       </div>
-      <div className="bg-base-100 listingSection__wrap">
-        {item.service.serviceType === 'boat_rental' && (
-          <FormBoatItem
-            item={item}
-            serviceId={serviceId}
-            onSave={() => {
-              navigate(`/services/${serviceId}`, { replace: true });
-            }}
-            serviceCategories={serviceCategories}
-          />
-        )}
-        {item.service.serviceType === 'drinks' && (
-          <FormDrinkItem
-            item={item}
-            serviceId={serviceId}
-            onSave={() => {
-              navigate(`/services/${serviceId}`, { replace: true });
-            }}
-            serviceCategories={serviceCategories}
-          />
-        )}
-        {item.service.serviceType === 'transfer' && (
-          <FormTransferItem
-            item={item}
-            serviceId={serviceId}
-            onSave={() => {
-              navigate(`/services/${serviceId}`, { replace: true });
-            }}
-            serviceCategories={serviceCategories}
-          />
-        )}
-        {!otherForms.includes(item.service.serviceType) && (
-          <FormItem
-            serviceCategories={serviceCategories}
-            serviceId={serviceId}
-            item={item}
-            onSave={() => {
-              navigate(`/services/${serviceId}`);
-            }}
-          />
-        )}
-      </div>
+      <div className="bg-base-100 listingSection__wrap">{renderForm()}</div>
     </div>
   );
 }
