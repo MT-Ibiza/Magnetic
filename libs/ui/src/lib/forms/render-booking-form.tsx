@@ -86,11 +86,15 @@ export function RenderBookingForm(props: Props) {
         />
       );
     case 'wellness':
-      return <WellnessFitnessBookingForm user={user}
-      item={item}
-      formData={formData}
-      onSubmit={onSubmit}
-      onCancel={onClose}/>;
+      return (
+        <WellnessFitnessBookingForm
+          user={user}
+          item={item}
+          formData={formData}
+          onSubmit={onSubmit}
+          onCancel={onClose}
+        />
+      );
     case 'spa':
       return (
         <SpaBeautyBookingForm
@@ -102,13 +106,25 @@ export function RenderBookingForm(props: Props) {
         />
       );
     case 'childcare':
-      return <ChildcareBookingForm onSubmit={onSubmit} />;
+      return (
+        <ChildcareBookingForm
+          user={user}
+          item={item}
+          formData={formData}
+          onSubmit={onSubmit}
+          onCancel={onClose}
+        />
+      );
     case 'security':
-      return <SecurityBookingForm  user={user}
-      item={item}
-      formData={formData}
-      onSubmit={onSubmit}
-      onCancel={onClose} />;
+      return (
+        <SecurityBookingForm
+          user={user}
+          item={item}
+          formData={formData}
+          onSubmit={onSubmit}
+          onCancel={onClose}
+        />
+      );
     default:
       return <div></div>;
   }

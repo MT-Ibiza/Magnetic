@@ -133,11 +133,14 @@ export interface ClubBookingFormData {
 
 export interface ChildcareFormData {
   service: string;
+  date: string;
+  time: string;
   kidsAges: string;
   startDateTime: string;
   finishDateTime: string;
   location: string;
   comments: string;
+  numberOfBabysitters: number;
   disclaimerAccepted: boolean;
   paymentConfirmed: boolean;
 }
