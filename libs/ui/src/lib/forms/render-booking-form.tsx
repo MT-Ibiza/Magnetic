@@ -9,6 +9,7 @@ import SingleChefServiceForm from './single-chef-service';
 import { FormSubmitParams, Item, CurrentUser } from '@magnetic/interfaces';
 import BoatCharterBookingForm from './boat-charter-form';
 import WellnessFitnessBookingForm from './wellness-fitness-form';
+import ReservationsBookingForm from './reservations-booking-form';
 
 interface Props {
   type: string;
@@ -125,6 +126,17 @@ export function RenderBookingForm(props: Props) {
           onCancel={onClose}
         />
       );
+      case 'reservations':
+        return (
+          <ReservationsBookingForm
+            user={user}
+            item={item}
+            formData={formData}
+            onSubmit={onSubmit}
+            onCancel={onClose}
+          />
+        );
+      
     default:
       return <div></div>;
   }

@@ -56,6 +56,19 @@ export interface SecurityFormData {
   paymentConfirmed: boolean;
 }
 
+export interface ReservationsFormData {
+  numberOfPeople: number;
+  childrenAges: string;
+  service: string;
+  dates: string;
+  time: string;
+  startTime: string;
+  finishTime: string;
+  location: string;
+  comments: string;
+  paymentConfirmed: boolean;
+}
+
 export interface SingleChefServiceFormData {
   date: string;
   startTime: string;
