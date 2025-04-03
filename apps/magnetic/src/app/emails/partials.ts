@@ -108,3 +108,73 @@ export const stylesEmails = `
 			}
 	</style>
 `;
+
+export const stylesEmailsTable = `
+	<style>
+		body {
+			font-family: "Poppins", Arial, sans-serif;
+			background-color: #f9f9f9;
+			margin: 0;
+			padding: 0;
+		}
+		.email-container {
+			max-width: 800px;
+			margin: 20px auto;
+			background: #fff;
+			padding: 20px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			border-radius: 8px;
+			overflow: hidden;
+		}
+		header {
+			color: #fff;
+			padding: 20px;
+			text-align: center;
+			border-bottom: 2px solid #e7e7e7;
+		}
+		.content p {
+			color: #555;
+			font-size: 16px;
+			margin: 0 0 5px 0;
+		}
+		.content h3 {
+			font-size: 18px;
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 10px;
+		}
+		table th,
+		table td {
+			border: 1px solid #ddd;
+			padding: 8px;
+			text-align: center;
+		}
+		table th {
+			background: #f7f7f7;
+			color: #333;
+			font-weight: bold;
+		}
+		table td {
+			color: #555;
+		}
+		.total {
+			text-align: right;
+			margin-top: 10px;
+			font-size: 18px;
+			font-weight: bold;
+			color: #333;
+		}
+		footer {
+			background-color: white;
+			color: black;
+			font-size: 12px;
+			padding: 10px 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			border-top: 1px solid #ddd;
+		}
+	</style>
+`;
