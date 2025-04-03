@@ -10,7 +10,7 @@ import './styles.scss';
 import { useState } from 'react';
 
 interface Props {}
-
+ 
 function ViewServicePage(props: Props) {
   const {} = props;
   const params = useParams();
@@ -18,6 +18,9 @@ function ViewServicePage(props: Props) {
   const { getCurrentUser } = useAuth();
   const user = getCurrentUser();
   const { isLoading, isError, service, error } = useService(serviceId);
+  const sortedCategories = service?.categories
+  ? [...service.categories].sort((a, b) => a.position - b.position)
+  : [];
 
   const [selectedCarService, setSelectedCarService] = useState('standard');
 
@@ -225,7 +228,7 @@ function ViewServicePage(props: Props) {
             {service.serviceType === 'drinks' && (
               <ListDrinks
                 serviceId={serviceId}
-                categories={service.categories}
+                categories={sortedCategories}
               />
             )}
             {service.serviceType === 'boat_rental' && <ListBoats />}
