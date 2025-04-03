@@ -311,7 +311,6 @@ export function FormSecurityItem(props: Props) {
                             {item?.name} - {variant.name}
                           </div>
                         </Text>
-                        <Text className="text-gray-500">({variant.hours})</Text>
                         <Text className="text-gray-500">
                           {`${centsToEurosWithCurrency(variant.priceInCents)}`}
                         </Text>

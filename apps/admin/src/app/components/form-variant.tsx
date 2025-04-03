@@ -91,6 +91,8 @@ function FormVariant(props: Props) {
     }
   };
 
+  const hoursServices = ['childcare', 'security'];
+
   return (
     <div className="form-provider">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -123,13 +125,12 @@ function FormVariant(props: Props) {
               <Input type="number" min={1} {...register('capacity')} />
             </div>
           )}
-          {serviceType === 'childcare' ||
-            (serviceType === 'security' && (
-              <div className="flex flex-col gap-[10px]">
-                <Text>Hours</Text>
-                <Input type="number" min={1} {...register('hours')} />
-              </div>
-            ))}
+          {hoursServices.includes(serviceType as string) && (
+            <div className="flex flex-col gap-[10px]">
+              <Text>Hours</Text>
+              <Input type="number" min={1} {...register('hours')} />
+            </div>
+          )}
           <div className="flex flex-col gap-[10px]">
             <Text>Description</Text>
             <Input
