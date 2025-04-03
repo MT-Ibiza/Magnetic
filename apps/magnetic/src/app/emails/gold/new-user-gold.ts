@@ -33,7 +33,7 @@ export function newUserGoldTemplate({
 			<li>Private Chefs & Assistants</li>
 			<li>Food & Drinks Delivery</li>
 		</ul>
-		<div style="margin-bottom: 1rem">
+		<div style="margin-bottom: 20px">
 			<h3>Online Bookings</h3>
 			<p>
 				Our online booking platform allows you to explore services and make
