@@ -73,49 +73,50 @@ export async function POST(request: Request) {
       console.log(
         `✅ Pago exitoso. Pedido: ${orderId}, Monto: ${amount}, Moneda: ${currency}`
       );
+
+      const texto = orderId as string;
+      const id = texto.split('-')[1];
+
+      // Buscar la orden en la base de datos
+      const order = await db.order.findUnique({
+        where: {
+          id: Number(id),
+        },
+        include: {
+          user: true,
+          forms: true,
+          items: {
+            include: {
+              item: true,
+            },
+          },
+        },
+      });
+
+      if (!order) {
+        return NextResponse.json(
+          { message: 'Orden no encontrada' },
+          { status: 404 }
+        );
+      }
+
+      const { user } = order;
+
+      // Enviar email de confirmación
+      try {
+        await sendEmail({
+          to: user.email,
+          subject: `New Order: ${order.id}`,
+          html: bookingConfirmationTemplate(order as any),
+        });
+      } catch (emailError) {
+        console.error('Error enviando email:', emailError);
+      }
     } else {
       console.warn(
         `❌ Pago fallido. Pedido: ${orderId}, Código de respuesta: ${responseCode}`
       );
     }
-
-    // Buscar la orden en la base de datos
-    const order = await db.order.findUnique({
-      where: {
-        id: orderId,
-      },
-      include: {
-        user: true,
-        forms: true,
-        items: {
-          include: {
-            item: true,
-          },
-        },
-      },
-    });
-
-    if (!order) {
-      return NextResponse.json(
-        { message: 'Orden no encontrada' },
-        { status: 404 }
-      );
-    }
-
-    const { user } = order;
-
-    // Enviar email de confirmación
-    try {
-      await sendEmail({
-        to: user.email,
-        subject: `New Order: ${order.id}`,
-        html: bookingConfirmationTemplate(order as any),
-      });
-    } catch (emailError) {
-      console.error('Error enviando email:', emailError);
-    }
-
-    // Responder a Redsys para confirmar la recepción de la notificación
     return NextResponse.json({ message: 'OK' });
   } catch (error: any) {
     console.error('Error en la notificación de pago:', error);
