@@ -30,12 +30,29 @@ export async function POST(
           message: 'User not found',
         },
         {
-          status: 400,
+          status: 404,
         }
       );
     }
 
-    const booking = await db.orderBookingForm.update({
+    const booking = await db.orderBookingForm.findUnique({
+      where: {
+        id: Number(params.id),
+      },
+    });
+
+    if (!booking) {
+      return NextResponse.json(
+        {
+          message: 'Booking not found',
+        },
+        {
+          status: 404,
+        }
+      );
+    }
+
+    const bookingUpdated = await db.orderBookingForm.update({
       where: {
         id: Number(params.id),
       },
@@ -45,10 +62,27 @@ export async function POST(
       },
     });
 
+    const orderItem = await db.orderItem.findFirst({
+      where: {
+        orderId: booking.orderId,
+        cartItemId: booking.cartItemId,
+      },
+      select: {
+        item: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
+    let itemName = orderItem ? orderItem.item.name : 'Product';
+    itemName = booking.type === 'drinks' ? 'Drinks Service' : itemName;
+
     try {
       await sendEmail({
         to: user.email,
-        subject: 'Modify Request',
+        subject: `Request Received - ${itemName}`,
         html: modifyRequestTemplate({
           message: message,
           clientName: user.firstName,
@@ -59,7 +93,7 @@ export async function POST(
       console.error('Error sending email:', emailError);
     }
 
-    return NextResponse.json(booking);
+    return NextResponse.json(bookingUpdated);
   } catch (error: any) {
     console.error('Error updating booking:', error);
     return NextResponse.json(
