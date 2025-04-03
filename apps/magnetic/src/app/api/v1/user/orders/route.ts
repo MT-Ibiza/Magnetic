@@ -155,17 +155,6 @@ export async function POST(request: Request) {
           id: cart.id,
         },
       });
-
-      try {
-        await sendEmail({
-          to: cart.user.email,
-          subject: `New Order: ${order.id}`,
-          html: bookingConfirmationTemplate(order as any),
-        });
-      } catch (emailError) {
-        console.error('Error sending email:', emailError);
-      }
-
       return NextResponse.json(order);
     } else {
       return NextResponse.json(

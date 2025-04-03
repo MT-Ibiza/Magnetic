@@ -1,3 +1,6 @@
+import { bookingConfirmationTemplate } from 'apps/magnetic/src/app/emails/new-order-confirmation';
+import db from 'apps/magnetic/src/app/libs/db';
+import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
 import { NextResponse } from 'next/server';
 const Redsys = require('node-redsys-api').Redsys;
 
@@ -7,6 +10,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { Ds_SignatureVersion, Ds_MerchantParameters, Ds_Signature } = body;
+    console.log('body: ', body);
 
     // Validar que los datos existen
     if (!Ds_SignatureVersion || !Ds_MerchantParameters || !Ds_Signature) {
@@ -59,6 +63,37 @@ export async function POST(request: Request) {
         `Pago fallido. Pedido: ${orderId}, Código de respuesta: ${responseCode}`
       );
       // Aquí puedes registrar que el pago falló
+    }
+
+    const order = await db.order.findUnique({
+      where: {
+        id: orderId,
+      },
+      include: {
+        user: true,
+        forms: true,
+        items: {
+          include: {
+            item: true,
+          },
+        },
+      },
+    });
+
+    if (!order) {
+      return NextResponse.json({ message: 'failed' });
+    }
+
+    const { user } = order;
+
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: `New Order: ${order.id}`,
+        html: bookingConfirmationTemplate(order as any),
+      });
+    } catch (emailError) {
+      console.error('Error sending email:', emailError);
     }
 
     // Responder a Redsys para confirmar la recepción de la notificación
