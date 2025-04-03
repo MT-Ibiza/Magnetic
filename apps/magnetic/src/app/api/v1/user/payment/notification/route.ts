@@ -1,12 +1,14 @@
 import { bookingConfirmationTemplate } from 'apps/magnetic/src/app/emails/new-order-confirmation';
 import db from 'apps/magnetic/src/app/libs/db';
 import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 const Redsys = require('node-redsys-api').Redsys;
 
 const SECRET_KEY = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; // Clave secreta de pruebas
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  console.log('callback payment');
+  console.log(request);
   try {
     const body = await request.json();
     const { Ds_SignatureVersion, Ds_MerchantParameters, Ds_Signature } = body;
