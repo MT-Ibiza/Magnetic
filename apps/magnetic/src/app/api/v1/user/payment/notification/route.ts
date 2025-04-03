@@ -4,7 +4,7 @@ import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
 import { NextRequest, NextResponse } from 'next/server';
 const Redsys = require('node-redsys-api').Redsys;
 
-const SECRET_KEY = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; // Clave secreta de pruebas
+const SECRET_KEY = process.env.PAYMENT_SECRET_KEY;
 
 export async function POST(request: Request) {
   console.log('callback payment recibido');

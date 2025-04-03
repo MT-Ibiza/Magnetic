@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 const Redsys = require('node-redsys-api').Redsys;
 
-const REDSYS_URL = 'https://sis-t.redsys.es:25443/sis/realizarPago'; // URL de pruebas
-const SECRET_KEY = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; // Clave secreta de encriptación de pruebas
-const MERCHANT_CODE = '327234688'; // Número de comercio de prueba
-const TERMINAL = '1'; // Terminal de pruebas para pagos en EUROS (protocolo CES)
-const CURRENCY = '978'; // Código ISO para Euros
+const REDSYS_URL = process.env.PAYMENT_REDSYS_URL;
+const SECRET_KEY = process.env.PAYMENT_SECRET_KEY;
+const MERCHANT_CODE = process.env.PAYMENT_MERCHANT_CODE;
+const TERMINAL = process.env.PAYMENT_TERMINAL;
+const CURRENCY = process.env.PAYMENT_CURRENCY;
 
 interface InitPaymentRequest {
   amount: number; // En céntimos (1000 = 10€)
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     const redsys = new Redsys();
 
     const merchantParams = {
-      DS_MERCHANT_AMOUNT: `${Math.round(amount)}`, // Convertir a entero en caso de decimales
+      DS_MERCHANT_AMOUNT: `${amount}`, // Convertir a entero en caso de decimales
       DS_MERCHANT_ORDER: `MAGNETIC-${orderId}`,
       DS_MERCHANT_MERCHANTCODE: MERCHANT_CODE,
       DS_MERCHANT_CURRENCY: CURRENCY,
