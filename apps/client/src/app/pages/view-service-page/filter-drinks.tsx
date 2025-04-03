@@ -43,7 +43,7 @@ function FilterDrinks(props: Props) {
   };
 
   return (
-    <>
+    <> 
       <div className="w-full sticky z-10 top-[0px] lg:hidden  w-full !mx-auto">
         <div className="w-full !mx-auto md:px-3">
           <FilterSearchMobile title="Search Drink" options="Search • Category">

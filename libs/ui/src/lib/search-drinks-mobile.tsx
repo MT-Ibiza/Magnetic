@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import { BoatsSearchAttributes } from '@magnetic/interfaces';
 import Button from './button';
-import DatesRangeInput from './DatesRangeInput';
-import moment from 'moment';
 import { AiOutlineSearch } from 'react-icons/ai';
 import SearchBoatInput from './search-boat-input';
 
@@ -15,7 +12,7 @@ interface CategoriesSelect {
 interface SearchDrinksMobileProps {
   onChange: (name: string, value: string, data?: any) => void;
   value: string;
-  //   searchParams: BoatsSearchAttributes;
+  
   onClose?: () => void;
   categoriesAvailable: { name: string; id: number; checked?: boolean }[];
 }
@@ -25,29 +22,42 @@ type DateRage = [Date | null, Date | null];
 export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
   const {
     onChange,
-    // searchParams,
     categoriesAvailable,
     onClose,
-    value
+    value,
   } = props;
 
-  const [fieldNameShow, setFieldNameShow] = useState<
-    'search' | 'category'
-  >('category');
+  const [fieldNameShow, setFieldNameShow] = useState<'search' | 'category'>(
+    'search'
+  );
+  const [selectedCategories, setSelectedCategories] =
+    useState(categoriesAvailable);
+  const [searchParams, setSearchParams] = useState({ drink: '', categoriesIds: undefined });
 
-  //   const handleSearchChange = (
-  //     name: string,
-  //     value: string,
-  //     data: { capacity_gt: string; capacity_lt: string }
-  //   ) => {
-  //     setCapacityGt(data.capacity_gt);
-  //     setCapacityLt(data.capacity_lt);
-  //   };
+  const handleCategoryChange = (updatedCategories: CategoriesSelect[]) => {
+    setSelectedCategories(updatedCategories);
+  };
 
-  const [searchParams, setSearchParams] = useState({
-    drink: '',
-    categoriesIds: undefined,
-  });
+  const handleCategoryFilter = () => {
+    const selectedCategoryIds = selectedCategories
+      .filter((category) => category.checked)
+      .map((category) => category.id);
+    if (searchParams.drink) {
+      onChange("drink", searchParams.drink); 
+    }
+    if (selectedCategoryIds.length > 0) {
+      onChange("categoriesIds", selectedCategoryIds.join(",")); 
+    }
+  };
+  
+  const selectedText =
+    selectedCategories.length > 0 &&
+    selectedCategories.some((cat) => cat.checked)
+      ? selectedCategories
+          .filter((cat) => cat.checked)
+          .map((cat) => cat.name)
+          .join(', ')
+      : '';
 
   const renderSearchInput = () => {
     const isActive = fieldNameShow === 'search';
@@ -64,12 +74,12 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
             className="w-full flex justify-between text-sm font-medium p-4"
             onClick={() => setFieldNameShow('search')}
           >
-            <span className="text-neutral-400">Capacity</span>
+            <span className="text-neutral-400">Search by Name</span>
             <span>Search</span>
           </button>
         ) : (
           <SearchBoatInput
-            headingText='Search by name'
+            headingText="Search by name"
             name={fieldNameShow}
             options={[]}
             defaultValue={value}
@@ -92,20 +102,42 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
       >
         {!isActive ? (
           <button
-            className="w-full flex justify-between text-sm font-medium p-4"
-            onClick={() => setFieldNameShow('search')}
+            className={`w-full flex gap-[5px] justify-start text-sm font-medium p-4 ${
+              selectedCategories.filter((cat) => cat.checked).length === 0
+                ? 'justify-between'
+                : 'flex-col'
+            }`}
+            
+            onClick={() => setFieldNameShow('category')}
           >
-            <span className="text-neutral-400">Category</span>
-            <span>Search</span>
+            <span className="text-neutral-400 text-start">Categories</span>
+            {selectedCategories.filter((cat) => cat.checked).length === 0 ? (
+              <span>Search</span>
+            ) : (
+              <div className="flex flex-wrap gap-2 mt-2">
+                {selectedText.split(', ').map((category, index) => (
+                  <span
+                    key={index}
+                    className={
+                      'py-1.5 px-4 flex items-center rounded-full font-medium text-xs cursor-pointer select-none border border-neutral-300 dark:border-neutral-700'
+                    }
+                  >
+                    {category}
+                  </span>
+                ))}
+              </div>
+            )}
           </button>
         ) : (
           <SearchBoatInput
-            headingText='Search by name'
+            headingText="Search by type"
             name={fieldNameShow}
             options={[]}
-            optionCategories={categoriesAvailable}
+            optionCategories={selectedCategories}
             defaultValue={value}
-            onChange={onChange}
+            onChange={(name, value, data) => {
+              handleCategoryChange(data);
+            }}
           />
         )}
       </div>
@@ -123,7 +155,7 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
           className="flex gap-[10px]"
           size={2}
           type="submit"
-          onClick={() => console.log()}
+          onClick={handleCategoryFilter}        
         >
           <AiOutlineSearch className="flex-shrink-0 w-5 h-5" />
           Search
@@ -134,4 +166,3 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
 };
 
 export default SearchDrinksMobile;
-
