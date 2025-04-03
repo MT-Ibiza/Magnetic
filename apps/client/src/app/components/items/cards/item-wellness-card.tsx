@@ -5,7 +5,6 @@ import {
   centsToEurosWithCurrency,
   sortImagesByPosition,
   getPriceRange,
-  getRangeByField,
 } from '@magnetic/utils';
 import ItemHandleBookButtons from '../item-handle-book-buttons';
 
@@ -17,13 +16,7 @@ interface Props {
 
 function ItemWellnessCard(props: Props) {
   const { item, onClickBookNow, cartItemAmount } = props;
-  const { name, priceInCents, variants, childcareAttributes } = item;
-  const hours = childcareAttributes?.hours || 1;
-  const variantsWithHours = variants.map((v) => {
-    return {
-      value: v.hours || 1,
-    };
-  });
+  const { name, priceInCents, variants } = item;
 
   const imagesSorted = useMemo(() => {
     return sortImagesByPosition(item.images);
@@ -31,11 +24,6 @@ function ItemWellnessCard(props: Props) {
 
   const priceRange = useMemo(
     () => getPriceRange([...variants, { priceInCents }]),
-    [variants, priceInCents]
-  );
-
-  const hoursRange = useMemo(
-    () => getRangeByField([...variantsWithHours, { value: hours }]),
     [variants, priceInCents]
   );
 
@@ -55,21 +43,13 @@ function ItemWellnessCard(props: Props) {
             <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
               {name}
             </p>
-            {/* <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
-              <span className="">
-                {hoursRange.low === hoursRange.high
-                  ? `${hoursRange.low} hours`
-                  : `${hoursRange.low} - ${hoursRange.high} hours`}
-              </span>
-            </div> */}
+            <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
+              <span className="">60min</span>
+            </div>
           </div>
           <div className="flex justify-between mt-5">
             <Text className="text-base font-semibold">
-              {priceRange.low === priceRange.high
-                ? `${centsToEurosWithCurrency(priceInCents)}`
-                : `From ${centsToEurosWithCurrency(
-                    priceRange.low
-                  )} - ${centsToEurosWithCurrency(priceRange.high)}`}
+              {`From ${centsToEurosWithCurrency(priceRange.low)} `}
             </Text>
             <ItemHandleBookButtons
               item={item}
