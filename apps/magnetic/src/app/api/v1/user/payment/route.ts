@@ -3,7 +3,7 @@ const Redsys = require('node-redsys-api').Redsys;
 
 const REDSYS_URL = 'https://sis-t.redsys.es:25443/sis/realizarPago'; // URL de pruebas
 const SECRET_KEY = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; // Clave secreta de encriptación de pruebas
-const MERCHANT_CODE = '263100000'; // Número de comercio de prueba
+const MERCHANT_CODE = '327234688'; // Número de comercio de prueba
 const TERMINAL = '1'; // Terminal de pruebas para pagos en EUROS (protocolo CES)
 const CURRENCY = '978'; // Código ISO para Euros
 
