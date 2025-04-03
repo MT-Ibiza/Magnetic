@@ -62,7 +62,7 @@ export function OrdersTable(props: Props) {
                 </Link>
               </td>
               <td>{order.user?.name}</td>
-              <td>{centsToEurosWithCurrency(order.totalWithVatInCents)}</td>
+              <td>{centsToEurosWithCurrency(order.totalInCents)}</td>
               <td> {moment(order.createdAt).format('DD MMM YYYY')}</td>
               <td>{order.status}</td>
               <td>

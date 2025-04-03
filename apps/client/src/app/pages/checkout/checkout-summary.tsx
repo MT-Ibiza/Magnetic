@@ -1,10 +1,5 @@
 import { Text } from '@magnetic/ui';
-import { useCartStore } from '../../hooks/useCartStore';
-import {
-  centsToEurosWithCurrency,
-  getTotalByService,
-  ServiceTotal,
-} from '@magnetic/utils';
+import { centsToEurosWithCurrency, ServiceTotal } from '@magnetic/utils';
 
 interface Props {
   servicesSummary: ServiceTotal[];
@@ -16,7 +11,8 @@ function CheckoutSummary(props: Props) {
 
   const subtotal = totalServices;
   const vat = subtotal * 0.21;
-  const total = subtotal + vat;
+  const fee = (subtotal + vat) * 0.02;
+  const total = subtotal + vat + fee;
 
   return (
     <div className="flex flex-col space-y-4">
@@ -40,6 +36,12 @@ function CheckoutSummary(props: Props) {
         </Text>
         <Text.TextNumeric className="text-neutral-600 dark:text-neutral-300">
           {centsToEurosWithCurrency(vat)}
+        </Text.TextNumeric>
+      </div>
+      <div className="flex justify-between mt-3">
+        <Text className="text-neutral-600 dark:text-neutral-300">Fee (2%)</Text>
+        <Text.TextNumeric className="text-neutral-600 dark:text-neutral-300">
+          {centsToEurosWithCurrency(fee)}
         </Text.TextNumeric>
       </div>
       <div className="flex justify-between font-semibold mt-3">

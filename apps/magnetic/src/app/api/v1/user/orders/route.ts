@@ -101,15 +101,17 @@ export async function POST(request: Request) {
       );
 
       const VAT_RATE = 0.21;
-      const vatAmount = Math.round(totalOrder * VAT_RATE);
-      const totalWithVat = totalOrder + vatAmount;
+      const FEE_RATE = 0.02;
+      const vatAmount = totalOrder * VAT_RATE;
+      const feeAmount = (totalOrder + vatAmount) * FEE_RATE;
+      const total = totalOrder + vatAmount + feeAmount;
 
       const order = await db.order.create({
         data: {
           userId,
-          totalInCents: totalOrder,
+          totalInCents: total,
           vatInCents: vatAmount,
-          totalWithVatInCents: totalWithVat,
+          feeInCents: feeAmount,
           items: {
             createMany: {
               data: orderItems,

@@ -14,7 +14,7 @@ export interface Order {
   status: string;
   totalInCents: number;
   vatInCents: number;
-  totalWithVatInCents: number;
+  feeInCents: number;
   forms: OrderForm[];
 }
 

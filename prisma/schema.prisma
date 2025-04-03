@@ -265,17 +265,18 @@ model OrderBookingForm {
 }
 
 model Order {
-  id                  Int                @id @default(autoincrement())
-  createdAt           DateTime           @default(now())
-  updatedAt           DateTime           @updatedAt
-  userId              Int
-  user                User               @relation(fields: [userId], references: [id])
-  items               OrderItem[]
-  totalInCents        Int
-  vatInCents          Int                @default(0)
-  totalWithVatInCents Int                @default(0)
-  status              String             @default("pending")
-  forms               OrderBookingForm[]
+  id           Int                @id @default(autoincrement())
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  userId       Int
+  user         User               @relation(fields: [userId], references: [id])
+  items        OrderItem[]
+  totalInCents Int
+  subtotal     Int                @default(0)
+  feeInCents   Int                @default(0)
+  vatInCents   Int                @default(0)
+  status       String             @default("pending")
+  forms        OrderBookingForm[]
 }
 
 model OrderItem {
