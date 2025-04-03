@@ -6,11 +6,18 @@ const Redsys = require('node-redsys-api').Redsys;
 
 const SECRET_KEY = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; // Clave secreta de pruebas
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   console.log('callback payment');
-  console.log(request);
+  // console.log(request);
+  console.log('Request Headers:', Object.fromEntries(request.headers as any));
+
+  // console.log('Headers:', request.headers);
   try {
+    // const rawBody = await request.text();
+    // console.log('Raw body:', rawBody);
+
     const body = await request.json();
+    console.log('---------------');
     const { Ds_SignatureVersion, Ds_MerchantParameters, Ds_Signature } = body;
     console.log('body: ', body);
 
