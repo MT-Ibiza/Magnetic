@@ -55,7 +55,7 @@ function ItemDrinkCard({
           </div>
         </div>
       </div>
-      <div className="absolute bottom-5 left-0 right-0 flex flex-col gap-[5px] items-center lg:flex-row lg:justify-between px-5">
+      <div className="absolute bottom-5 left-0 right-0 flex flex-col gap-[5px] items-center md:flex-row md:justify-between px-5">
         <Text className="text-base font-semibold">
           {centsToEurosWithCurrency(priceInCents)}
         </Text>
