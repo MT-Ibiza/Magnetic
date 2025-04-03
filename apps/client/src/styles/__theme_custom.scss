@@ -330,7 +330,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   margin-top: 0 !important;
 }
 
-/* 📱 Celular vertical (hasta 480px) */
 @media (max-width: 480px) {
   .responsive-card-item {
     display: flex;
@@ -346,7 +345,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   // }
 }
 
-/* 📱 Celular horizontal (481px a 767px) */
 @media (min-width: 481px) and (max-width: 767px) {
   .responsive-card-item {
     display: flex;
@@ -363,7 +361,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   
 }
 
-/* 📲 Tablet vertical (768px a 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
   .responsive-card-item {
     display: flex;
@@ -372,7 +369,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
 }
 
-/* 💻 Tablet horizontal (1024px a 1279px) */
 @media (min-width: 1024px) and (max-width: 1279px) {
   .responsive-card-item {
     display: flex;
@@ -381,7 +377,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
 }
 
-/* 🖥️ Pantallas web (1280px en adelante) */
 @media (min-width: 1280px) {
   .responsive-card-item {
     display: flex;

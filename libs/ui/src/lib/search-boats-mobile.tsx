@@ -67,9 +67,11 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     searchParams.from ? new Date(searchParams.from) : null
   );
+  const [isDateSelected, setIsDateSelected] = useState<boolean>(!!selectedDate);
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
+    setIsDateSelected(!!date);
   };
 
   const handleSearch = () => {
@@ -95,18 +97,20 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
 
   const renderCapacityInput = () => {
     const isActive = fieldNameShow === 'capacity';
+    const isDisabled = !isDateSelected;
     return (
       <div
         className={`w-full bg-white dark:bg-neutral-800 ${
           isActive
             ? 'rounded-2xl shadow-lg'
             : 'rounded-xl shadow-[0px_2px_2px_0px_rgba(0,0,0,0.25)]'
-        }`}
+        } ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
         {!isActive ? (
           <button
             className="w-full flex justify-between text-sm font-medium p-4"
             onClick={() => setFieldNameShow('capacity')}
+            disabled={isDisabled}
           >
             <span className="text-neutral-400">Capacity</span>
             <span>
@@ -134,18 +138,20 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
 
   const renderSizeInput = () => {
     const isActive = fieldNameShow === 'size';
+    const isDisabled = !isDateSelected;
     return (
       <div
         className={`w-full bg-white dark:bg-neutral-800 ${
           isActive
             ? 'rounded-2xl shadow-lg'
             : 'rounded-xl shadow-[0px_2px_2px_0px_rgba(0,0,0,0.25)]'
-        }`}
+        } ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
         {!isActive ? (
           <button
             className="w-full flex justify-between text-sm font-medium p-4"
             onClick={() => setFieldNameShow('size')}
+            disabled={isDisabled}
           >
             <span className="text-neutral-400">Size</span>
             <span>
@@ -173,18 +179,20 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
 
   const renderBudgetInput = () => {
     const isActive = fieldNameShow === 'budget';
+    const isDisabled = !isDateSelected;
     return (
       <div
         className={`w-full bg-white dark:bg-neutral-800 ${
           isActive
             ? 'rounded-2xl shadow-lg'
             : 'rounded-xl shadow-[0px_2px_2px_0px_rgba(0,0,0,0.25)]'
-        }`}
+        } ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
         {!isActive ? (
           <button
             className="w-full flex justify-between text-sm font-medium p-4"
             onClick={() => setFieldNameShow('budget')}
+            disabled={isDisabled}
           >
             <span className="text-neutral-400">Budget</span>
             <span>
