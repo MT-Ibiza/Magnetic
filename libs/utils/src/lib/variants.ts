@@ -57,3 +57,32 @@ export function createVariantTransferOptions(
 
   return sortOptions;
 }
+
+export function createVariantOptions(variants: ItemVariant[], item: Item) {
+  const variantOptions =
+    variants.map((variant) => {
+      return {
+        value: `${variant.id}`,
+        text: `${item.name} - ${variant.name}`,
+        price: variant.priceInCents,
+      };
+    }) || [];
+
+  const mainItemOption = {
+    value: '',
+    text: `${item.name}`,
+    price: item.priceInCents,
+  };
+
+  const isMainOptionInVariants = !!variantOptions.find(
+    (variant) => variant.price === mainItemOption.price
+  );
+
+  const options = isMainOptionInVariants
+    ? variantOptions
+    : variantOptions.concat(mainItemOption);
+
+  const sortOptions = options.sort((a, b) => a.price - b.price);
+
+  return sortOptions;
+}
