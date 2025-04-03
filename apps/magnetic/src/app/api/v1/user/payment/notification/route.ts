@@ -42,15 +42,20 @@ export async function POST(request: Request) {
     );
     console.log('Decoded Params:', decodedParams);
 
-    // Validar la firma
-    const isValidSignature = redsys.validateMerchantSignature(
+    // Crear la firma esperada a partir de los parámetros y la clave secreta
+    const merchantSignatureNotif = redsys.createMerchantSignatureNotif(
       SECRET_KEY,
-      Ds_MerchantParameters,
-      Ds_Signature
+      Ds_MerchantParameters
+    );
+
+    // Comparar la firma recibida con la generada
+    const isValidSignature = redsys.merchantSignatureIsValid(
+      Ds_Signature,
+      merchantSignatureNotif
     );
 
     if (!isValidSignature) {
-      console.error('Firma inválida en la notificación:', { decodedParams });
+      console.error('❌ Firma inválida en la notificación:', { decodedParams });
       return NextResponse.json({ message: 'Firma inválida' }, { status: 400 });
     }
 
