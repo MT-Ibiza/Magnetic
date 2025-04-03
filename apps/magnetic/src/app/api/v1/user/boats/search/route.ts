@@ -1,6 +1,7 @@
 import { Item } from '@magnetic/interfaces';
 import { getNumberMonth } from '@magnetic/utils';
 import db from 'apps/magnetic/src/app/libs/db';
+import moment from 'moment';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
@@ -31,14 +32,20 @@ export async function GET(request: NextRequest) {
       filters.push({ sizeInFeet: { lte: parseInt(sizeLessThan) } });
 
     if (startDate) {
-      const start = new Date(startDate);
+      const startUTC = moment.utc(startDate).startOf('day');
+      const nextDayUTC = moment.utc(startDate).add(1, 'day').startOf('day');
+
       const unavailableBoats = await db.boatAvailability.findMany({
         where: {
-          OR: [{ endDate: { gte: start } }],
+          AND: [
+            { endDate: { gte: startUTC.toDate() } },
+            { endDate: { lt: nextDayUTC.toDate() } },
+          ],
         },
-        select: { boatId: true },
+        select: { boatId: true, text: true, startDate: true },
       });
       const unavailableBoatIds = unavailableBoats.map((b) => b.boatId);
+      // console.log('unavailableBoatIds: ', unavailableBoats);
       filters.push({ id: { notIn: unavailableBoatIds } });
     }
 
@@ -143,8 +150,6 @@ function filterItemsByPriceRange(
   minPrice?: number,
   maxPrice?: number
 ) {
-  console.log('minPrice: ', minPrice);
-  console.log('maxPrice: ', maxPrice);
   return items.filter(({ prices, name }) => {
     console.log(`${name}:  prices: [${prices}]`);
     return prices.some(
