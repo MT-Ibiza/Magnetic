@@ -24,9 +24,9 @@ function BookCard(props: Props) {
     };
   });
 
-  const itemName = isTransfer
-    ? `${item.name} (${item.transferAttributes?.capacity || 4} pax)`
-    : item.name;
+  // const itemName = isTransfer
+  //   ? `${item.name} (${item.transferAttributes?.capacity || 4} pax)`
+  //   : item.name;
 
   return (
     <div className="sticky bg-base-100 top-[90px] listingSectionSidebar__wrap shadow-xl">
@@ -50,7 +50,7 @@ function BookCard(props: Props) {
               }
             }}
           >
-            <option value="">{itemName}</option>
+            {/* <option value="">{itemName}</option> */}
             {variantOptions.map((option, index) => (
               <option value={option.value} key={index}>
                 {option.text}

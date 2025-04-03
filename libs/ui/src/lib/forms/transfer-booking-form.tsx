@@ -24,23 +24,22 @@ export function TransferBookingForm({
   user,
   item,
 }: Props) {
-  const currentSelectItem = item;
-  const [total, setTotal] = useState(currentSelectItem?.priceInCents || 0);
-  const [selectedVariantId, setSelectedVariantId] = useState(
-    formData.variantId
-  );
-
+  const currentSelectItem = item as Item;
   const variantOptions =
     currentSelectItem?.variants.map((variant) => {
       return {
-        value: variant.id,
+        value: `${variant.id}`,
         text: `${currentSelectItem.name} - ${variant.name} - (${variant.capacity} pax)`,
+        capacity: variant.capacity || 0,
       };
     }) || [];
 
-  const selectedVariant = variantOptions.find((variant) => {
-    return variant.value === selectedVariantId;
-  });
+  const allOptions = variantOptions.sort((a, b) => a.capacity - b.capacity);
+
+  const [price, setPrice] = useState(currentSelectItem?.priceInCents || 0);
+  const [selectedVariantId, setSelectedVariantId] = useState(
+    formData.variantId
+  );
 
   const {
     register,
@@ -94,24 +93,19 @@ export function TransferBookingForm({
                   className="select select-bordered w-full"
                   onChange={(e) => {
                     const value = e.target.value;
-                    const variant = currentSelectItem?.variants.find(
+                    const variant = currentSelectItem.variants.find(
                       (v) => v.id === Number(value)
                     );
                     if (variant) {
-                      setSelectedVariantId(variant.id);
-                      setTotal(variant.priceInCents);
+                      setPrice(variant.priceInCents);
                       setValue('variantId', variant.id);
+                    } else {
+                      setValue('variantId', undefined);
+                      setPrice(currentSelectItem.priceInCents);
                     }
                   }}
                 >
-                  <option value="">
-                    {`${
-                      selectedVariant
-                        ? selectedVariant.text
-                        : `${currentSelectItem?.name} (${currentSelectItem?.transferAttributes?.capacity}) pax`
-                    }`}
-                  </option>
-                  {variantOptions.map((option, index) => (
+                  {allOptions.map((option, index) => (
                     <option value={option.value} key={index}>
                       {option.text}
                     </option>
@@ -262,7 +256,7 @@ export function TransferBookingForm({
         <Modal.Footer>
           <div className="flex justify-between gap-3 w-full">
             <h2 className="text-xl">
-              Total: {centsToEurosWithCurrency(total)}
+              Total: {centsToEurosWithCurrency(price)}
             </h2>
             <div className="flex gap-3">
               {onCancel && (
