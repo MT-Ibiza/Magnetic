@@ -48,6 +48,16 @@ export async function GET(
             capacity: true,
           },
         },
+        childcareAttributes: {
+          select: {
+            hours: true,
+          },
+        },
+        securityAttributes: {
+          select: {
+            hours: true,
+          },
+        },
         variants: {
           select: {
             id: true,
@@ -55,6 +65,7 @@ export async function GET(
             priceInCents: true,
             description: true,
             capacity: true,
+            hours: true,
           },
           orderBy: {
             createdAt: 'asc',
