@@ -82,7 +82,7 @@ export async function POST(request: Request) {
     // Buscar la orden en la base de datos
     const order = await db.order.findUnique({
       where: {
-        id: orderId,
+        id: Number(orderId),
       },
       include: {
         user: true,
