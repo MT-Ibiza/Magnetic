@@ -1,6 +1,10 @@
 import { Button, Input, Modal, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
-import { centsToEurosWithCurrency, TODAY_DATE } from '@magnetic/utils';
+import {
+  centsToEurosWithCurrency,
+  createVariantTransferOptions,
+  TODAY_DATE,
+} from '@magnetic/utils';
 import { useState } from 'react';
 import {
   FormSubmitParams,
@@ -25,26 +29,27 @@ export function TransferBookingForm({
   item,
 }: Props) {
   const currentSelectItem = item as Item;
-  const variantOptions =
-    currentSelectItem?.variants.map((variant) => {
-      return {
-        value: `${variant.id}`,
-        text: `${currentSelectItem.name} - ${variant.name} - (${variant.capacity} pax)`,
-        capacity: variant.capacity || 0,
-      };
-    }) || [];
-
-  const allOptions = variantOptions.sort((a, b) => a.capacity - b.capacity);
-
-  const [price, setPrice] = useState(currentSelectItem?.priceInCents || 0);
-  const [selectedVariantId, setSelectedVariantId] = useState(
-    formData.variantId
+  const allOptions = createVariantTransferOptions(
+    currentSelectItem.variants,
+    currentSelectItem
   );
+
+  const variantSelected = formData?.variantId
+    ? allOptions.find((option) => {
+        return Number(option.value) === formData?.variantId;
+      })
+    : undefined;
+
+  const itemPrice = variantSelected
+    ? variantSelected.price
+    : currentSelectItem.priceInCents;
+  const [price, setPrice] = useState(itemPrice);
 
   const {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<TransferFormData>({
     defaultValues: formData
@@ -70,7 +75,7 @@ export function TransferBookingForm({
   const handleFormSubmit = async (data: TransferFormData) => {
     onSubmit({
       form: data,
-      variantId: selectedVariantId,
+      variantId: data.variantId,
     });
   };
 
@@ -86,11 +91,12 @@ export function TransferBookingForm({
       <form onSubmit={handleSubmit(handleFormSubmit)} className="">
         <Modal.Body>
           <div className={`p-6 lg:p-10`}>
-            {variantOptions.length > 0 && (
+            {allOptions.length > 0 && (
               <div className="mb-6">
                 <Text className="mb-2">Select Option</Text>
                 <select
                   className="select select-bordered w-full"
+                  value={watch('variantId')}
                   onChange={(e) => {
                     const value = e.target.value;
                     const variant = currentSelectItem.variants.find(
