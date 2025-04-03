@@ -6,10 +6,12 @@ interface Props {
   items: OrderItem[];
   totalInCents: number;
   vatInCents?: number;
+  feeInCents?: number;
 }
 
 function OrderItemsTable(props: Props) {
-  const { items, totalInCents, vatInCents } = props;
+  const { items, totalInCents, vatInCents, feeInCents } = props;
+  const subtotal = totalInCents - (vatInCents || 0) - (feeInCents || 0);
 
   return (
     <div className="">
@@ -67,7 +69,7 @@ function OrderItemsTable(props: Props) {
                 </td>
                 <td>
                   <Text.TextNumeric>
-                    {centsToEurosWithCurrency(totalInCents)}
+                    {centsToEurosWithCurrency(subtotal)}
                   </Text.TextNumeric>
                 </td>
               </tr>
@@ -75,7 +77,7 @@ function OrderItemsTable(props: Props) {
                 <td></td>
                 <td></td>
                 <td>
-                  <h1>V.A.T</h1>
+                  <h1>V.A.T (21%)</h1>
                 </td>
                 <td>
                   <Text.TextNumeric>
@@ -83,6 +85,20 @@ function OrderItemsTable(props: Props) {
                   </Text.TextNumeric>
                 </td>
               </tr>
+              {!!feeInCents && (
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <h1>Fee (2%)</h1>
+                  </td>
+                  <td>
+                    <Text.TextNumeric>
+                      {centsToEurosWithCurrency(feeInCents)}
+                    </Text.TextNumeric>
+                  </td>
+                </tr>
+              )}
             </>
           )}
           <tr>
@@ -93,7 +109,7 @@ function OrderItemsTable(props: Props) {
             </td>
             <td>
               <Text.TextNumeric>
-                {centsToEurosWithCurrency(totalInCents + (vatInCents || 0))}
+                {centsToEurosWithCurrency(totalInCents)}
               </Text.TextNumeric>
             </td>
           </tr>

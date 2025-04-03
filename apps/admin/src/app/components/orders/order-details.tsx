@@ -47,6 +47,7 @@ function OrderDetail(props: Props) {
         items={order.items}
         totalInCents={order.totalInCents}
         vatInCents={order.vatInCents}
+        feeInCents={order.feeInCents}
       />
     </CardWrapper>
   );
