@@ -7,19 +7,24 @@ const Redsys = require('node-redsys-api').Redsys;
 const SECRET_KEY = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; // Clave secreta de pruebas
 
 export async function POST(request: Request) {
-  console.log('callback payment');
-  // console.log(request);
-  console.log('Request Headers:', Object.fromEntries(request.headers as any));
+  console.log('callback payment recibido');
 
-  // console.log('Headers:', request.headers);
   try {
-    // const rawBody = await request.text();
-    // console.log('Raw body:', rawBody);
+    // Obtener el body como texto
+    const rawBody = await request.text();
+    console.log('Raw body:', rawBody);
 
-    const body = await request.json();
-    console.log('---------------');
-    const { Ds_SignatureVersion, Ds_MerchantParameters, Ds_Signature } = body;
-    console.log('body: ', body);
+    // Convertir el body a un objeto usando URLSearchParams
+    const params = new URLSearchParams(rawBody);
+    const Ds_SignatureVersion = params.get('Ds_SignatureVersion');
+    const Ds_MerchantParameters = params.get('Ds_MerchantParameters');
+    const Ds_Signature = params.get('Ds_Signature');
+
+    console.log('Parsed Params:', {
+      Ds_SignatureVersion,
+      Ds_MerchantParameters,
+      Ds_Signature,
+    });
 
     // Validar que los datos existen
     if (!Ds_SignatureVersion || !Ds_MerchantParameters || !Ds_Signature) {
@@ -31,10 +36,13 @@ export async function POST(request: Request) {
 
     const redsys = new Redsys();
 
-    // Validar la firma
+    // Decodificar los parámetros
     const decodedParams = redsys.decodeMerchantParameters(
       Ds_MerchantParameters
     );
+    console.log('Decoded Params:', decodedParams);
+
+    // Validar la firma
     const isValidSignature = redsys.validateMerchantSignature(
       SECRET_KEY,
       Ds_MerchantParameters,
@@ -57,23 +65,21 @@ export async function POST(request: Request) {
 
     console.log('Notificación de Redsys recibida:', decodedParams);
 
-    // Verificar el estado de la operación
+    // Verificar el estado del pago
     const isSuccess =
       parseInt(responseCode, 10) >= 0 && parseInt(responseCode, 10) <= 99;
 
-    // Lógica para manejar el estado del pago
     if (isSuccess) {
       console.log(
-        `Pago exitoso. Pedido: ${orderId}, Monto: ${amount}, Moneda: ${currency}`
+        `✅ Pago exitoso. Pedido: ${orderId}, Monto: ${amount}, Moneda: ${currency}`
       );
-      // Aquí puedes guardar el pago como exitoso en tu base de datos
     } else {
       console.warn(
-        `Pago fallido. Pedido: ${orderId}, Código de respuesta: ${responseCode}`
+        `❌ Pago fallido. Pedido: ${orderId}, Código de respuesta: ${responseCode}`
       );
-      // Aquí puedes registrar que el pago falló
     }
 
+    // Buscar la orden en la base de datos
     const order = await db.order.findUnique({
       where: {
         id: orderId,
@@ -90,11 +96,15 @@ export async function POST(request: Request) {
     });
 
     if (!order) {
-      return NextResponse.json({ message: 'failed' });
+      return NextResponse.json(
+        { message: 'Orden no encontrada' },
+        { status: 404 }
+      );
     }
 
     const { user } = order;
 
+    // Enviar email de confirmación
     try {
       await sendEmail({
         to: user.email,
@@ -102,20 +112,18 @@ export async function POST(request: Request) {
         html: bookingConfirmationTemplate(order as any),
       });
     } catch (emailError) {
-      console.error('Error sending email:', emailError);
+      console.error('Error enviando email:', emailError);
     }
 
     // Responder a Redsys para confirmar la recepción de la notificación
     return NextResponse.json({ message: 'OK' });
   } catch (error: any) {
-    console.error('Error notificación de pago:', error);
+    console.error('Error en la notificación de pago:', error);
     return NextResponse.json(
       {
         message: error.message,
       },
-      {
-        status: 500,
-      }
+      { status: 500 }
     );
   }
 }
