@@ -1,5 +1,5 @@
-import ListDrinks from '../view-service-page/list-drinks';
 import { useDrinksServices } from '../../hooks/useDrinks';
+import PublicListDrinks from './public-list-drinks';
 
 function DrinksListPage() {
   const { isLoading, isError, data, error } = useDrinksServices();
@@ -17,7 +17,7 @@ function DrinksListPage() {
 
   return (
     <div className="container pt-10 lg:pt-4 pb-10">
-      {data && <ListDrinks serviceId={data.id} categories={sortedCategories} />}
+      {data && <PublicListDrinks categories={sortedCategories} />}
     </div>
   );
 }
