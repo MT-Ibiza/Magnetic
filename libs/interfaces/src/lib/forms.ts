@@ -87,6 +87,7 @@ export interface SpaBeautyFormData {
   location: string;
   comments: string;
   paymentConfirmed: boolean;
+  variantId?: number;
 }
 
 export interface TransferFormData {

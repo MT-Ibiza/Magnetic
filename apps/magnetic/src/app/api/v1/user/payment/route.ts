@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     const redsys = new Redsys();
 
     const merchantParams = {
-      DS_MERCHANT_AMOUNT: `${amount}`, // Convertir a entero en caso de decimales
+      DS_MERCHANT_AMOUNT: `${amount}`, // amount in cents
       DS_MERCHANT_ORDER: `MAGNETIC-${orderId}`,
       DS_MERCHANT_MERCHANTCODE: MERCHANT_CODE,
       DS_MERCHANT_CURRENCY: CURRENCY,
