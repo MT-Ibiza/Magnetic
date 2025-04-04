@@ -10,6 +10,7 @@ export function useDrinksList() {
     queryFn: async () => {
       return getDrinks();
     },
+    refetchOnWindowFocus: false,
   });
 
   return {
