@@ -1,5 +1,5 @@
-import { CardWrapper } from '@magnetic/ui';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Button, CardWrapper } from '@magnetic/ui';
 import { useDrinksList } from '../../hooks/useDrinksList';
 import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
@@ -16,6 +16,7 @@ function NewDrinksListPage() {
       items: Item[];
     }[]
   >([]);
+  const [selectedItems, setSelectedItems] = useState<Item[]>([]);
 
   useEffect(() => {
     if (drinks.length > 0) {
@@ -24,13 +25,21 @@ function NewDrinksListPage() {
     }
   }, [drinks]);
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  const handleAddItem = (item: Item) => {
+    setSelectedItems((prev) => {
+      if (!prev.find((i) => i.id === item.id)) {
+        return [...prev, item];
+      }
+      return prev;
+    });
+  };
 
-  if (isError) {
-    return <ErrorText text={error?.message || ''} />;
-  }
+  const handleRemoveItem = (id: number) => {
+    setSelectedItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  if (isLoading) return <Loading />;
+  if (isError) return <ErrorText text={error?.message || ''} />;
 
   return (
     <div>
@@ -42,30 +51,41 @@ function NewDrinksListPage() {
           <li>New List</li>
         </ul>
       </div>
+
       <CardWrapper className="p-6">
         <div className="flex gap-10">
+          {/* Available items */}
           <div className="w-full bg-gray-100 p-5">
+            <Text className="font-semibold text-lg mb-4">Available Drinks</Text>
             {sortedItems.map((group, index) => (
               <div key={index} className="mb-6">
                 <Text className="font-semibold mb-3">{group.category}</Text>
-                <div className="flex flex-col gap-5">
-                  {group.items.map((item, idx) => (
+                <div className="flex flex-col gap-2">
+                  {group.items.map((item) => (
                     <div
                       key={item.id}
-                      className="cursor-grab relative p-2 bg-white rounded-lg shadow-md flex gap-5"
+                      className="flex gap-5 justify-between items-center p-2 bg-white rounded-lg shadow-md"
                     >
-                      <img
-                        src={
-                          item.images.length > 0
-                            ? item.images[0].url
-                            : placeholderItemImage
-                        }
-                        alt="item"
-                        className="w-14 h-14 object-cover rounded-lg"
-                      />
-                      <div className="mt-2 text-center">
-                        <Text size="1">{item.name}</Text>
+                      <div className="flex gap-3">
+                        <img
+                          src={
+                            item.images.length > 0
+                              ? item.images[0].url
+                              : placeholderItemImage
+                          }
+                          alt={item.name}
+                          className="w-10 h-10 object-cover rounded-lg"
+                        />
+                        <div className="mt-2 text-center">
+                          <Text size="1">{item.name}</Text>
+                        </div>
                       </div>
+                      <Button
+                        onClick={() => handleAddItem(item)}
+                        disabled={selectedItems.some((i) => i.id === item.id)}
+                      >
+                        + Add
+                      </Button>
                     </div>
                   ))}
                 </div>
@@ -73,7 +93,34 @@ function NewDrinksListPage() {
             ))}
           </div>
           <div className="w-full bg-gray-100 p-5">
-            <Text> List (Drag and drop the drinks here)</Text>
+            <Text className="font-semibold text-lg mb-4">Selected Drinks</Text>
+            <div className="flex flex-col gap-5">
+              {selectedItems.length === 0 && (
+                <Text size="1">No drinks selected yet.</Text>
+              )}
+              {selectedItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex gap-5 justify-between items-center p-2 bg-white rounded-lg"
+                >
+                  <div className="flex gap-3">
+                    <img
+                      src={
+                        item.images.length > 0
+                          ? item.images[0].url
+                          : placeholderItemImage
+                      }
+                      alt={item.name}
+                      className="w-12 h-12 object-cover rounded-lg"
+                    />
+                    <div className="mt-2 text-center">
+                      <Text size="1">{item.name}</Text>
+                    </div>
+                  </div>
+                  <Button onClick={() => handleRemoveItem(item.id)}>x</Button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </CardWrapper>
