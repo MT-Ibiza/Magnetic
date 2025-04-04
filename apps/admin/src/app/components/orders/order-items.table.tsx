@@ -65,7 +65,7 @@ function OrderItemsTable(props: Props) {
                 <td></td>
                 <td></td>
                 <td>
-                  <h1>V.A.T (21%)</h1>
+                  <h1>Includes VAT (21%)</h1>
                 </td>
                 <td>
                   <Text.TextNumeric>
@@ -78,7 +78,7 @@ function OrderItemsTable(props: Props) {
                   <td></td>
                   <td></td>
                   <td>
-                    <h1>Fee (2%)</h1>
+                    <h1>Service Fee (2%)</h1>
                   </td>
                   <td>
                     <Text.TextNumeric>

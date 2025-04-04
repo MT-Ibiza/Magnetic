@@ -80,14 +80,14 @@ export function bookingConfirmationTemplate(order: Order) {
 						<td></td>
 						<td></td>
 						<td></td>
-						<td><strong>VAT (21%)</strong></td>
+						<td><strong>Includes VAT (21%)</strong></td>
 						<td><strong>${centsToEurosWithCurrency(vatAmount)}</strong></td>
 					</tr>
           <tr>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td><strong>Fee (2%)</strong></td>
+						<td><strong>Service Fee (2%)</strong></td>
 						<td><strong>${centsToEurosWithCurrency(feeInCents)}</strong></td>
 					</tr>
 					<tr>

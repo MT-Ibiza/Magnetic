@@ -34,19 +34,23 @@ function CheckoutSummary(props: Props) {
         ))}
       </div>
       <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
-      <div className="flex justify-between mt-3">
-        <Text className="text-neutral-600 dark:text-neutral-300">
-          VAT (21%)
-        </Text>
-        <Text.TextNumeric className="text-neutral-600 dark:text-neutral-300">
-          {centsToEurosWithCurrency(vatFixed)}
-        </Text.TextNumeric>
-      </div>
-      <div className="flex justify-between mt-3">
-        <Text className="text-neutral-600 dark:text-neutral-300">Fee (2%)</Text>
-        <Text.TextNumeric className="text-neutral-600 dark:text-neutral-300">
-          {centsToEurosWithCurrency(fee)}
-        </Text.TextNumeric>
+      <div className="flex flex-col gap-2">
+        <div className="flex justify-between">
+          <Text className="text-neutral-600 dark:text-neutral-300">
+            Includes VAT (21%)
+          </Text>
+          <Text.TextNumeric className="text-neutral-600 dark:text-neutral-300">
+            {centsToEurosWithCurrency(vatFixed)}
+          </Text.TextNumeric>
+        </div>
+        <div className="flex justify-between">
+          <Text className="text-neutral-600 dark:text-neutral-300">
+            Service Fee (2%)
+          </Text>
+          <Text.TextNumeric className="text-neutral-600 dark:text-neutral-300">
+            {centsToEurosWithCurrency(fee)}
+          </Text.TextNumeric>
+        </div>
       </div>
       <div className="flex justify-between font-semibold mt-3">
         <h1>Total</h1>
