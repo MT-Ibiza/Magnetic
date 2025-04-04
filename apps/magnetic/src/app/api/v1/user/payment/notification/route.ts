@@ -89,7 +89,11 @@ export async function POST(request: Request) {
         },
         include: {
           user: true,
-          forms: true,
+          forms: {
+            orderBy: {
+              date: 'asc',
+            },
+          },
           items: {
             include: {
               item: true,
@@ -105,13 +109,11 @@ export async function POST(request: Request) {
         );
       }
 
-      const { user } = order;
-
       // Enviar email de confirmación
       try {
         await sendEmail({
-          to: user.email,
-          subject: `New Order: ${order.id}`,
+          to: order.user.email,
+          subject: `Order Confirmation #${order.id} - Magnetic Travel`,
           html: bookingConfirmationTemplate(order as any),
         });
       } catch (emailError) {

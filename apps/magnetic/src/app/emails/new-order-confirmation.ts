@@ -1,24 +1,45 @@
 import { Order } from '@magnetic/interfaces';
-import {
-  centsToEurosWithCurrency,
-  formatDate,
-  getCurrentYear,
-  orderItemsByCategory,
-} from '@magnetic/utils';
-import moment from 'moment';
+import { centsToEurosWithCurrency, getCurrentYear } from '@magnetic/utils';
 import { footerTemplate, headerTemplate, stylesEmailsTable } from './partials';
+import moment from 'moment';
 
 export function bookingConfirmationTemplate(order: Order) {
   const year = getCurrentYear();
 
-  // const itemsByCategory = orderItemsByCategory(order.items);
+  const forms = order.forms;
+  const items = order.items;
 
-  const itemsHtml = order.items
+  const tableItems = forms.map((form) => {
+    const isDrinks = form.type === 'drinks';
+    const orderItems = items.filter((orderItem) =>
+      isDrinks
+        ? orderItem.type === 'drinks'
+        : orderItem.cartItemId === form.cartItemId
+    );
+    const mainOrderItem = orderItems[0];
+
+    const totalItems = orderItems.reduce((total, item) => {
+      const totalOrderItem = item.quantity * item.priceInCents;
+      return total + totalOrderItem;
+    }, 0);
+
+    return {
+      product:
+        form.type === 'drinks' ? 'Drinks Service' : mainOrderItem.item.name,
+      date: form.date,
+      quantity: form.type === 'drinks' ? 1 : mainOrderItem.quantity,
+      priceInCents:
+        form.type === 'drinks' ? totalItems : mainOrderItem.priceInCents,
+      total: totalItems,
+    };
+  });
+
+  const itemsHtml = tableItems
     .map(
       (item) => `
         <tr>
-          <td>${item.item.name}</td>
-          <td>date</td>
+          <td>${item.product}</td>
+          <td>${moment(item.date).format('D/M/YYYY')}</td>
           <td>${item.quantity}</td>
           <td>${centsToEurosWithCurrency(item.priceInCents)}</td>
           <td>${centsToEurosWithCurrency(

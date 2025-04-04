@@ -15,7 +15,7 @@ export interface Order {
   totalInCents: number;
   vatInCents: number;
   feeInCents: number;
-  forms: OrderForm[];
+  forms: BookingForm[];
 }
 
 export interface ItemBaseFields {
