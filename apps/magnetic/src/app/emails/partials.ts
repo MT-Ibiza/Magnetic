@@ -134,8 +134,8 @@ export const stylesEmailsTable = `
 		}
 		.content p {
 			color: #555;
-			font-size: 16px;
-			margin: 0 0 5px 0;
+			line-height: 1.6;
+			margin: 10px 0;
 		}
 		.content h3 {
 			font-size: 18px;
