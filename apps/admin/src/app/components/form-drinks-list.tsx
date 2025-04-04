@@ -5,6 +5,7 @@ import { DrinksListBase } from 'libs/interfaces/src/lib/drinks';
 import DrinksListHandle from './drinks-list-handle';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import slugify from 'slugify';
 
 interface Props {
   list?: DrinksListBase;
@@ -18,6 +19,7 @@ function FormDrinksList({ list, drinks }: Props) {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<DrinksListBase>({
     defaultValues: list ? { ...list } : undefined,
@@ -26,6 +28,8 @@ function FormDrinksList({ list, drinks }: Props) {
   const onSubmit = async (data: DrinksListBase) => {
     console.log(data);
   };
+
+  const slug = slugify(watch('name') || '', { lower: true });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -57,7 +61,7 @@ function FormDrinksList({ list, drinks }: Props) {
           <div className="mt-3 border rounded-md h-[40px] bg-gray-50 text-gray-800 flex items-center pl-5">
             <Text size="1">
               {'https://bookings.magnetic-travel.com/list/drinks/'}
-              <strong>JSJS-02</strong>
+              <strong>{slug}</strong>
             </Text>
           </div>
         </div>
