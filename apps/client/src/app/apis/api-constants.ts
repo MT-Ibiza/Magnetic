@@ -1,6 +1,7 @@
 // @ts-nocheck
 const API = `${import.meta.env.VITE_API_URL}/api`;
 export const API_URL = `${API}/v1/user`;
+export const API_PUBLIC_URL = `${API}/v1/public`;
 
 export const WEBSITE_URL = import.meta.env.VITE_API_URL;
 
@@ -69,3 +70,8 @@ export const URL_REQUEST_PAYMENT_FAILURE = `${API_URL}/payment/failure`;
 //Drinks
 export const URL_SEARCH_DRINKS = (query: string) =>
   `${API_URL}/drinks/search?${query}`;
+
+export const URL_LIST_DRINKS = (query: string) =>
+  `${API_PUBLIC_URL}/drinks/?${query}`;
+
+export const URL_GET_DRINKS_SERVICE = `${API_PUBLIC_URL}/drinks`;
