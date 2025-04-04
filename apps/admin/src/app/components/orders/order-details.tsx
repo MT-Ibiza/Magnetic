@@ -21,7 +21,7 @@ function OrderDetail(props: Props) {
         <div>
           <span
             className={`capitalize px-4 py-1 text-xs font-medium rounded-full ${
-              order.status === 'Completed'
+              order.status === 'success'
                 ? 'bg-green-100 text-green-600'
                 : order.status === 'pending'
                 ? 'bg-yellow-100 text-yellow-600'
