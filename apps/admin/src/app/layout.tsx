@@ -9,7 +9,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from './hooks/useAuth';
 import { FaUserFriends, FaBook, FaCog } from 'react-icons/fa';
-import { MdDashboardCustomize } from 'react-icons/md';
+import { MdDashboardCustomize, MdWineBar } from 'react-icons/md';
 import { SiAirtable, SiTask } from 'react-icons/si';
 import { User } from '@magnetic/interfaces';
 import { FiBookOpen, FiUser } from 'react-icons/fi';
@@ -73,6 +73,12 @@ function Layout(props: Props) {
           key: 'airtable',
           url: '/airtable',
           icon: SiAirtable,
+        },
+        {
+          text: 'Drinks List',
+          key: 'drinks',
+          url: '/drinks-list',
+          icon: MdWineBar,
         },
       ],
     },
