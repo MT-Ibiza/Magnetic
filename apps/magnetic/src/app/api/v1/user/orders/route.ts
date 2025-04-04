@@ -5,6 +5,7 @@ import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
 import { BoatCharterFormData, Item } from '@magnetic/interfaces';
 import moment from 'moment';
 import { bookingConfirmationTemplate } from 'apps/magnetic/src/app/emails/new-order-confirmation';
+import { centsFixed } from '@magnetic/utils';
 
 export async function POST(request: Request) {
   try {
@@ -100,18 +101,21 @@ export async function POST(request: Request) {
         0
       );
 
-      const VAT_RATE = 0.21;
+      // const VAT_RATE = 0.21;
       const FEE_RATE = 0.02;
-      const vatAmount = totalOrder * VAT_RATE;
-      const feeAmount = (totalOrder + vatAmount) * FEE_RATE;
-      const total = totalOrder + vatAmount + feeAmount;
+
+      const vat = totalOrder - totalOrder / 1.21;
+      const vatInCents = centsFixed(vat);
+
+      const feeInCents = totalOrder * FEE_RATE;
+      const total = totalOrder + feeInCents;
 
       const order = await db.order.create({
         data: {
           userId,
           totalInCents: total,
-          vatInCents: vatAmount,
-          feeInCents: feeAmount,
+          vatInCents: vatInCents,
+          feeInCents: feeInCents,
           items: {
             createMany: {
               data: orderItems,

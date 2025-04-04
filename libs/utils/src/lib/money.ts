@@ -29,3 +29,13 @@ export function getPriceRange(prices: { priceInCents: number }[]) {
     { low: Infinity, high: -Infinity }
   );
 }
+
+export function centsFixed(priceInCents: number) {
+  const price = priceInCents / 100;
+  const priceFormatted = new Intl.NumberFormat('en-US', {
+    currency: 'EUR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(price);
+  return Number(priceFormatted) * 100;
+}
