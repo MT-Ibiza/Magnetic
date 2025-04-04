@@ -52,7 +52,7 @@ export function bookingConfirmationTemplate(order: Order) {
 
   const vatAmount = order.vatInCents;
   const feeInCents = order.feeInCents;
-  const totalWithFee = order.totalInCents + vatAmount;
+  const totalWithFee = order.totalInCents + feeInCents;
 
   const content = `
 		<div class="content">
