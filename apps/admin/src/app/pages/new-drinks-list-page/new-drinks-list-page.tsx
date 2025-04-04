@@ -43,35 +43,38 @@ function NewDrinksListPage() {
         </ul>
       </div>
       <CardWrapper className="p-6">
-        <div>
-          {sortedItems.map((group, index) => (
-            <div key={index} className="mb-6">
-              <Text className="font-semibold">{group.category}</Text>
-
-              {group.items.map((item, idx) => (
-                <div
-                  key={item.id}
-                  className="cursor-grab relative p-2 bg-white rounded-lg shadow-md"
-                >
-                  <span className="absolute top-1 right-1 bg-black text-white text-xs px-2 py-1 rounded">
-                    {idx + 1}
-                  </span>
-                  <img
-                    src={
-                      item.images.length > 0
-                        ? item.images[0].url
-                        : placeholderItemImage
-                    }
-                    alt="item"
-                    className="w-full h-32 object-cover rounded-lg"
-                  />
-                  <div className="mt-2 text-center">
-                    <Text size="1">{item.name}</Text>
-                  </div>
+        <div className="flex gap-10">
+          <div className="w-full bg-gray-100 p-5">
+            {sortedItems.map((group, index) => (
+              <div key={index} className="mb-6">
+                <Text className="font-semibold mb-3">{group.category}</Text>
+                <div className="flex flex-col gap-5">
+                  {group.items.map((item, idx) => (
+                    <div
+                      key={item.id}
+                      className="cursor-grab relative p-2 bg-white rounded-lg shadow-md flex gap-5"
+                    >
+                      <img
+                        src={
+                          item.images.length > 0
+                            ? item.images[0].url
+                            : placeholderItemImage
+                        }
+                        alt="item"
+                        className="w-14 h-14 object-cover rounded-lg"
+                      />
+                      <div className="mt-2 text-center">
+                        <Text size="1">{item.name}</Text>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
+          <div className="w-full bg-gray-100 p-5">
+            <Text> List</Text>
+          </div>
         </div>
       </CardWrapper>
     </div>
