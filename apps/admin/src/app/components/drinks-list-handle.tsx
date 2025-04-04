@@ -40,7 +40,6 @@ function DrinksListHandle({ drinks }: Props) {
 
   return (
     <div className="flex gap-10">
-      {/* Available items */}
       <div className="w-full bg-gray-100 p-5">
         <Text className="font-semibold text-lg mb-4">Drinks</Text>
         {sortedItems.map((group, index) => (

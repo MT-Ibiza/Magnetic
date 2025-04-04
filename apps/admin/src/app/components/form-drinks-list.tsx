@@ -1,14 +1,19 @@
 import { Item } from '@magnetic/interfaces';
-import { Input, Text } from '@magnetic/ui';
+import { Button, Input, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 import { DrinksListBase } from 'libs/interfaces/src/lib/drinks';
 import DrinksListHandle from './drinks-list-handle';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 interface Props {
   list?: DrinksListBase;
   drinks: Item[];
 }
 function FormDrinksList({ list, drinks }: Props) {
+  const navigate = useNavigate();
+  const [isSaving, setIsSaving] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -18,11 +23,13 @@ function FormDrinksList({ list, drinks }: Props) {
     defaultValues: list ? { ...list } : undefined,
   });
 
-  const onSubmit = async (data: DrinksListBase) => {};
+  const onSubmit = async (data: DrinksListBase) => {
+    console.log(data);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div className="flex gap-5">
+      <div className="flex gap-10">
         <div className="flex flex-col w-full">
           <label
             htmlFor="name"
@@ -45,17 +52,33 @@ function FormDrinksList({ list, drinks }: Props) {
             htmlFor="name"
             className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
           >
-            Description
+            Share URL
           </label>
-          <Input
-            id="description"
-            type="text"
-            {...register('description')}
-            className="mt-2"
-          />
+          <div className="mt-3 border rounded-md h-[40px] bg-gray-50 text-gray-800 flex items-center pl-5">
+            <Text size="1">
+              {'https://bookings.magnetic-travel.com/list/drinks/'}
+              <strong>JSJS-02</strong>
+            </Text>
+          </div>
         </div>
       </div>
       <DrinksListHandle drinks={drinks} />
+
+      <div className="flex justify-end gap-6 mt-8">
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(-1);
+          }}
+          variant="outline"
+          className="px-8 py-2"
+        >
+          Cancel
+        </Button>
+        <Button type="submit" className="px-8 py-2" loading={isSaving}>
+          {list ? 'Update List' : 'Create List'}
+        </Button>
+      </div>
     </form>
   );
 }
