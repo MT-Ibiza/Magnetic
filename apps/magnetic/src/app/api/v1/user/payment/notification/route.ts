@@ -109,6 +109,15 @@ export async function POST(request: Request) {
         );
       }
 
+      await db.order.update({
+        where: {
+          id: Number(id),
+        },
+        data: {
+          status: 'success',
+        },
+      });
+
       // Enviar email de confirmación
       try {
         await sendEmail({
