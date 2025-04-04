@@ -199,7 +199,7 @@ function ListDrinks(props: Props) {
               {itemsGroup.map((group, index) => (
                 <div key={index} className="pt-[30px]">
                   <h2 className="md:text-lg lg:text-[22px] font-semibold">{group.category}</h2>
-                  <div className="grid pt-[30px] gap-3 lg:gap-6 md:gap-8 grid-cols-2 lg:grid-cols-5">
+                  <div className="grid pt-[30px] gap-3 lg:gap-6 md:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-5">
                     {group.items.map((item, index) => (
                       <ItemDrinkCard
                         key={index}

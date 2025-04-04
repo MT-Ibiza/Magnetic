@@ -78,7 +78,7 @@ function ItemBoatCard({ item, priceMonthNumber, selectedDate }: Props) {
                 /day
               </Text>
             </div>
-              <Button href={url}>View Details</Button>
+              <Button href={url}>Details</Button>
           </div>
         </div>
       </div>

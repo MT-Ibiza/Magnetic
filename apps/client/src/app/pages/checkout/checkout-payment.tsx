@@ -28,7 +28,8 @@ function CheckoutPayment(props: Props) {
         name="paymentConfirmed"
         url="/terms-conditions"
         underline={true}
-        label="By continuing, you confirm your acceptance of the Terms and Conditions."
+        text="By continuing, you confirm your acceptance of the"
+        label="Terms and Conditions."
         defaultChecked={accepted}
         onChange={(checked) => {
           setAccepted(checked);
@@ -36,7 +37,6 @@ function CheckoutPayment(props: Props) {
         className="mb-3"
       />
       <PaymentButton amountInCents={total} disable={isPayDisabled} />
-
       {hasInsufficientDrinks && (
         <Text size="1" className="mt-3 text-red-600">
           * You must add {centsToEurosWithCurrency(missingAmount)} more in

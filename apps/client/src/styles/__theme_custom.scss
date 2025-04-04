@@ -333,10 +333,10 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 @media (max-width: 480px) {
   .responsive-card-item {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    // justify-content: space-between;
-    margin-top: 1.25rem;
+    // flex-direction: column;
+    // gap: 0.5rem;
+    justify-content: space-between;
+    // margin-top: 1.25rem;
   }
 
   // .btn-card-item {
@@ -348,10 +348,10 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 @media (min-width: 481px) and (max-width: 767px) {
   .responsive-card-item {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    // justify-content: space-between;
-    margin-top: 1.25rem;
+    // flex-direction: column;
+    // gap: 0.5rem;
+    justify-content: space-between;
+    // margin-top: 1.25rem;
   }
 
   // .btn-card-item {

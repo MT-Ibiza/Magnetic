@@ -28,7 +28,7 @@ function ItemDrinkCard({
 
   return (
     <div
-      className={`nc-CarCard w-full min-h-[380px] lg:min-h-[360px] group relative border border-neutral-200 dark:border-neutral-700 rounded-3xl hover:shadow-xl transition-shadow bg-white dark:bg-neutral-900 will-change-transform`}
+      className={`nc-CarCard w-full min-h-[350px] lg:min-h-[360px] group relative border border-neutral-200 dark:border-neutral-700 rounded-3xl hover:shadow-xl transition-shadow bg-white dark:bg-neutral-900 will-change-transform`}
     >
       <div className="relative w-full rounded-3xl overflow-hidden">
         <GallerySlider
@@ -55,7 +55,7 @@ function ItemDrinkCard({
           </div>
         </div>
       </div>
-      <div className="absolute bottom-5 left-0 right-0 flex flex-col gap-[5px] items-center md:flex-row md:justify-between px-5">
+      <div className="absolute bottom-5 left-0 right-0 flex gap-[5px] items-center md:flex-row justify-between px-5">
         <Text className="text-base font-semibold">
           {centsToEurosWithCurrency(priceInCents)}
         </Text>
