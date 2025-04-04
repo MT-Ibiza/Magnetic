@@ -125,6 +125,7 @@ export async function POST(request: Request) {
           subject: `Order Confirmation #${order.id} - Magnetic Travel`,
           html: bookingConfirmationTemplate(order as any),
         });
+        console.log('email sent to: ', order.user.email);
       } catch (emailError) {
         console.error('Error enviando email:', emailError);
       }

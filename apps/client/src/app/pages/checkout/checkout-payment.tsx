@@ -17,9 +17,10 @@ function CheckoutPayment(props: Props) {
   const missingAmount = DRINKS_MINIMUM - totalDrinks;
   const hasInsufficientDrinks = drinkService && totalDrinks < DRINKS_MINIMUM;
   const isPayDisabled = !accepted || hasInsufficientDrinks;
-  const subtotal = totalServices;
-  const vat = subtotal * 0.21;
-  const total = subtotal + vat;
+
+  const fee = totalServices * 0.02;
+  const total = totalServices + fee;
+  console.log('total: ', total);
 
   return (
     <div>
