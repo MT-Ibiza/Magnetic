@@ -30,7 +30,11 @@ export function BookingsTable(props: Props) {
     else if (status === 'cancelled') color = 'bg-red-500';
     else if (status === 'pending' || status === 'modification_requested')
       color = 'bg-orange-500';
-    return <span className={`p-[5px] w-2 h-2 lg:p-[7px] lg:w-3 lg:h-3 rounded-full ${color}`} />;
+    return (
+      <span
+        className={`p-[5px] w-2 h-2 lg:p-[7px] lg:w-3 lg:h-3 rounded-full ${color}`}
+      />
+    );
   };
 
   return (
@@ -151,12 +155,18 @@ export function BookingsTable(props: Props) {
                       ? moment(booking.date).format('DD MMM YYYY')
                       : 'n/a'}
                   </Text>
-                  <Text className="font-semibold">
-                    {orderItem?.item?.name || 'N/A'}
-                  </Text>
-                  <Text size="1" className="text-gray-500">
-                    {orderItem?.variant?.name}
-                  </Text>
+                  {orderItem?.item?.drinkAttributes ? (
+                    <div className="flex flex-col gap-1">
+                      <Text>Drinks Delivery</Text>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-1">
+                      <Text>{orderItem?.item?.name || 'N/A'}</Text>
+                      <Text size="1" className="text-gray-500">
+                        {orderItem?.variant?.name}
+                      </Text>
+                    </div>
+                  )}
                 </div>
                 <img
                   className="w-16 h-10 object-cover rounded-md"
@@ -210,7 +220,6 @@ export function BookingsTable(props: Props) {
         })}
       </div>
 
-      {/* MODAL */}
       <Modal open={openModal}>
         <>
           {openFormType === 'view-details' && selectedBooking && (

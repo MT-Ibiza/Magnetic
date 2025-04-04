@@ -36,7 +36,7 @@ function DrinksSummary(props: Props) {
         </div>
       </div>
       {items.length > 0 && (
-        <div className="p-6 lg:p-10">
+        <div className="hidden md:block px-6 pb-6 lg:px-10 lg:pb-[10]">
           <table className="table">
             <thead>
               <tr>
@@ -99,6 +99,53 @@ function DrinksSummary(props: Props) {
           </table>
         </div>
       )}
+      <div className="block md:hidden px-6 pb-6 space-y-6">
+        {items.map((item, index) => (
+          <div
+            key={index}
+            className="border rounded-lg p-4 flex flex-col gap-4 shadow-sm"
+          >
+            <div className="flex gap-4">
+              <img
+                className="w-16 h-16 object-cover rounded-md"
+                src={
+                  item.item.images && item.item.images.length > 0
+                    ? item.item.images[0].url
+                    : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
+                }
+                alt={item.item.name}
+              />
+              <div className="flex flex-col justify-center">
+                <Text className="font-medium line-clamp-2">{item.item.name}</Text>
+                {item.item.service?.name && (
+                  <Text size="1" className="text-gray-500">
+                    {item.item.service.name}
+                  </Text>
+                )}
+              </div>
+            </div>
+            <div className="grid grid-cols-3 items-center gap-2 text-sm text-gray-700">
+              <div>
+                <Text className="font-medium">Price</Text>
+                <Text.TextNumeric>
+                  {centsToEurosWithCurrency(item.priceInCents)}
+                </Text.TextNumeric>
+              </div>
+              <div>
+                <Text className="font-medium">Quantity</Text>
+                <Text>x {item.quantity}</Text>
+              </div>
+              <div className="">
+                <Text className="font-medium">Total</Text>
+                <Text.TextNumeric>
+                  {centsToEurosWithCurrency(item.quantity * item.priceInCents)}
+                </Text.TextNumeric>
+              </div>
+            </div>
+          </div>
+        ))}
+
+      </div>
     </>
   );
 }
