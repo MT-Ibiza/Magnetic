@@ -73,7 +73,7 @@ function NewDrinksListPage() {
             ))}
           </div>
           <div className="w-full bg-gray-100 p-5">
-            <Text> List</Text>
+            <Text> List (Drag and drop the drinks here)</Text>
           </div>
         </div>
       </CardWrapper>
