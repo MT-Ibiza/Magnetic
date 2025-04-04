@@ -50,8 +50,9 @@ export function bookingConfirmationTemplate(order: Order) {
     )
     .join('');
 
-  const vatAmount = order.totalInCents * 0.21;
-  const totalWithVAT = order.totalInCents + vatAmount;
+  const vatAmount = order.vatInCents;
+  const feeInCents = order.feeInCents;
+  const totalWithFee = order.totalInCents + vatAmount;
 
   const content = `
 		<div class="content">
@@ -82,13 +83,20 @@ export function bookingConfirmationTemplate(order: Order) {
 						<td><strong>VAT (21%)</strong></td>
 						<td><strong>${centsToEurosWithCurrency(vatAmount)}</strong></td>
 					</tr>
+          <tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><strong>Fee (2%)</strong></td>
+						<td><strong>${centsToEurosWithCurrency(feeInCents)}</strong></td>
+					</tr>
 					<tr>
 						<td></td>
 						<td></td>
 						<td></td>
 						<td><strong>Total Amount</strong></td>
 						<td>
-							<strong>${centsToEurosWithCurrency(totalWithVAT)}</strong>
+							<strong>${centsToEurosWithCurrency(totalWithFee)}</strong>
 						</td>
 					</tr>
 				</tbody>
