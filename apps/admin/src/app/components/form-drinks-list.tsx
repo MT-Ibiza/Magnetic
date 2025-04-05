@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import slugify from 'slugify';
 import { useMutation } from '@tanstack/react-query';
-import { newDrinkList } from '../apis/api-drinks';
+import { editDrinkList, newDrinkList } from '../apis/api-drinks';
 import { toast } from 'sonner';
 import { URL_FRONTED } from '../constants';
 
@@ -19,10 +19,12 @@ interface Props {
   list?: {
     name: string;
     itemsIds: number[];
+    id: number;
   };
   drinks: Item[];
+  onSave: () => void;
 }
-function FormDrinksList({ list, drinks }: Props) {
+function FormDrinksList({ list, drinks, onSave }: Props) {
   const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
   const itemsIds = list?.itemsIds || [];
@@ -56,11 +58,36 @@ function FormDrinksList({ list, drinks }: Props) {
     },
   });
 
+  const updateList = useMutation<DrinksList, Error, NewDrinksList>({
+    mutationFn: (data) => {
+      const id = list?.id || 0;
+      setIsSaving(true);
+      return editDrinkList(id, data);
+    },
+    onSuccess: () => {
+      toast.success('List Updated!');
+      setIsSaving(false);
+      onSave();
+      // onSave={() => navigate(`/services/${serviceId}`, { replace: true })}
+    },
+    onError: (error) => {
+      toast.error('The list could not be updated');
+      setIsSaving(false);
+    },
+  });
+
   const onSubmit = async (data: DrinksListBase) => {
-    await createList.mutateAsync({
-      name: data.name,
-      itemsIds: selectedItems.map((item) => item.id),
-    });
+    if (list?.id) {
+      await updateList.mutateAsync({
+        name: data.name,
+        itemsIds: selectedItems.map((item) => item.id),
+      });
+    } else {
+      await createList.mutateAsync({
+        name: data.name,
+        itemsIds: selectedItems.map((item) => item.id),
+      });
+    }
   };
 
   return (
@@ -93,6 +120,7 @@ function FormDrinksList({ list, drinks }: Props) {
           <div className="mt-3 border rounded-md h-[40px] bg-gray-50 text-gray-800 flex items-center pl-5">
             <Text size="1">
               {URL_FRONTED}
+              {'/'}
               <strong>{slug}</strong>
             </Text>
           </div>

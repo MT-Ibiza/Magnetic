@@ -3,12 +3,13 @@ import { useDrinksList } from '../../hooks/useDrinksList';
 import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
 import FormDrinksList from '../../components/form-drinks-list';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useList } from '../../hooks/useList';
 
 function EditListItemsPage() {
   const params = useParams();
   const listId = Number(params.id);
+  const navigate = useNavigate();
 
   const {
     isLoading: isLoadingList,
@@ -45,9 +46,11 @@ function EditListItemsPage() {
         <FormDrinksList
           drinks={drinks}
           list={{
+            id: listData?.id || 0,
             name: listData?.name || '',
             itemsIds: listData ? listData.items.map((item) => item.itemId) : [],
           }}
+          onSave={() => navigate(`/list/drinks`, { replace: true })}
         />
       </CardWrapper>
     </div>
