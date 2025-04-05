@@ -116,7 +116,7 @@ function FilterDrinks(props: Props) {
           />
         </form>
       </div>
-      <div className="flex flex-wrap gap-[10px]">
+      <div className="lg:hidden flex flex-wrap gap-[10px]">
         {selectedCategories.map((cat) => (
           <div
             key={cat.id}
