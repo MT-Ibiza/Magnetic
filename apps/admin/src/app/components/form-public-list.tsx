@@ -30,7 +30,7 @@ function FormPublicList({ list, items, type, onSave }: Props) {
   const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
   const itemsIds = list?.itemsIds || [];
-  const initialItems = items.filter((drink) => itemsIds.includes(drink.id));
+  const initialItems = items.filter((item) => itemsIds.includes(item.id));
   const [selectedItems, setSelectedItems] = useState<Item[]>(initialItems);
 
   const {

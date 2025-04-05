@@ -44,16 +44,18 @@ function EditDrinkListPage() {
         </ul>
       </div>
       <CardWrapper className="p-6">
-        <FormPublicList
-          items={items}
-          type={type}
-          list={{
-            id: listData?.id || 0,
-            name: listData?.name || '',
-            itemsIds: listData ? listData.items.map((item) => item.itemId) : [],
-          }}
-          onSave={() => navigate(`/list/drinks`, { replace: true })}
-        />
+        {listData && items.length > 0 && (
+          <FormPublicList
+            items={items}
+            type={type}
+            list={{
+              id: listData.id,
+              name: listData.name,
+              itemsIds: listData.items.map((item) => item.itemId),
+            }}
+            onSave={() => navigate(`/list/drinks`, { replace: true })}
+          />
+        )}
       </CardWrapper>
     </div>
   );
