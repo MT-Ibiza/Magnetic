@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Button from './button';
 import { AiOutlineSearch } from 'react-icons/ai';
 import SearchBoatInput from './search-boat-input';
+import SearchInputMobileDrink from './search-mobile-drinks';
 
 interface CategoriesSelect {
   name: string;
@@ -12,7 +13,7 @@ interface CategoriesSelect {
 interface SearchDrinksMobileProps {
   onChange: (name: string, value: string, data?: any) => void;
   value: string;
-
+  searchValue?: string;
   onClose?: () => void;
   categoriesAvailable: { name: string; id: number; checked?: boolean }[];
 }
@@ -20,18 +21,20 @@ interface SearchDrinksMobileProps {
 type DateRage = [Date | null, Date | null];
 
 export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
-  const { onChange, categoriesAvailable, onClose, value } = props;
+  const { onChange, categoriesAvailable, onClose, value, searchValue } = props;
 
   const [fieldNameShow, setFieldNameShow] = useState<'search' | 'category'>(
     'search'
   );
 
   useEffect(() => {
-    const anyChecked = selectedCategories.some((cat) => cat.checked);
-    if (!anyChecked) {
-      setSelectedCategories(categoriesAvailable);
+    if (!searchParams.drink) {
+      setSearchParams((prev) => ({
+        ...prev,
+        drink: value,
+      }));
     }
-  }, [categoriesAvailable]);
+  }, [value]);
 
   const [selectedCategories, setSelectedCategories] =
     useState(categoriesAvailable);
@@ -48,9 +51,12 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
     const selectedCategoryIds = selectedCategories
       .filter((category) => category.checked)
       .map((category) => category.id);
+
+    // Solo buscar cuando hay texto o categorías seleccionadas
     if (searchParams.drink) {
       onChange('drink', searchParams.drink);
     }
+
     if (selectedCategoryIds.length > 0) {
       onChange(
         'categoriesIds',
@@ -88,16 +94,27 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
             className="w-full flex justify-between text-sm font-medium p-4"
             onClick={() => setFieldNameShow('search')}
           >
-            <span className="text-neutral-400">Search by Name</span>
-            <span>Search</span>
+            <span className="text-neutral-400">
+              Search by Name {searchValue}
+            </span>
+            <span>Search </span>
           </button>
         ) : (
-          <SearchBoatInput
-            headingText="Search by name"
-            name={fieldNameShow}
+          <SearchInputMobileDrink
+            allowTyping
+            placeHolder={'Search'}
+            searchValue={searchValue}
+            name="drink"
+            desc="Search by name"
             options={[]}
-            defaultValue={value}
-            onChange={onChange}
+            value={searchParams.drink}
+            onChange={(name, value) => {
+              setSearchParams((prev) => ({
+                ...prev,
+                [name]: value,
+              }));
+            }}
+            headingText="Search by name"
           />
         )}
       </div>

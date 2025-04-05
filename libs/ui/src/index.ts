@@ -55,4 +55,5 @@ export { BoatCharterBookingForm } from './lib/forms/boat-charter-form';
 export { GridSkeleton } from './lib/grid-skeleton';
 export { ButtonSubmitFilters } from './lib/btn-submit-form';
 export { SearchDrinksMobile } from './lib/search-drinks-mobile';
+export { SearchInputMobileDrink } from './lib/search-mobile-drinks';
 

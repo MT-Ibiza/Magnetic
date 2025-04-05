@@ -88,6 +88,7 @@ function FilterDrinks(props: Props) {
         <div className="w-full">
           <FilterSearchMobile title="Search Drink" options="Search • Category">
             <SearchDrinksMobile
+              searchValue={searchParams.drink || 'da'}
               value={searchParams.drink}
               onChange={handleSearchChange}
               categoriesAvailable={categories}
@@ -117,6 +118,12 @@ function FilterDrinks(props: Props) {
         </form>
       </div>
       <div className="lg:hidden flex flex-wrap gap-[10px]">
+        {searchParams.drink && (
+          <div className="flex items-center justify-center px-4 py-2 text-sm rounded-full border border-primary-500 bg-primary-50 text-primary-700 focus:outline-none">
+            {searchParams.drink}
+            {renderXClear(() => handleSearchChange('drink', ''))}
+          </div>
+        )}
         {selectedCategories.map((cat) => (
           <div
             key={cat.id}
