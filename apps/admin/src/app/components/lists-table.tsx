@@ -1,14 +1,13 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { deleteDrinkList } from '../apis/api-drinks';
 import { PublicList } from '@magnetic/interfaces';
-import Loading from './loading';
 import { ErrorText } from './error-text';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../utils';
 import { Button } from '@magnetic/ui';
 import { URL_FRONTED } from '../constants';
 import { toast } from 'sonner';
-import { getLists } from '../apis/api-public-lists';
+import { deletePublicList, getLists } from '../apis/api-public-lists';
+import Loading from './loading';
 
 interface Props {
   type: string;
@@ -33,7 +32,7 @@ function ListsTable(props: Props) {
 
   const removeList = useMutation<any, Error, number>({
     mutationFn: (listId) => {
-      return deleteDrinkList(listId);
+      return deletePublicList(listId);
     },
     onSuccess: () => {
       refetch();

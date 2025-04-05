@@ -1,15 +1,11 @@
-import {
-  DrinksList,
-  Item,
-  ParamsPublicList,
-  PublicList,
-} from '@magnetic/interfaces';
+import { Item, ParamsPublicList, PublicList } from '@magnetic/interfaces';
 import {
   URL_GET_DRINKS_LIST,
   URL_GET_ITEMS_SERVICE,
   URL_GET_PUBLIC_LISTS,
   URL_NEW_PUBLIC_LIST,
-  URL_UPDATE_PUBLIC_LISTS,
+  URL_REMOVE_PUBLIC_LIST,
+  URL_UPDATE_PUBLIC_LIST,
 } from './api-constants';
 
 export async function getList(listId: number): Promise<PublicList> {
@@ -98,12 +94,26 @@ export async function editPublicList(
   listId: number,
   params: ParamsPublicList
 ): Promise<PublicList> {
-  const url = URL_UPDATE_PUBLIC_LISTS(listId);
+  const url = URL_UPDATE_PUBLIC_LIST(listId);
   const response = await fetch(url, {
     method: 'PUT',
     body: JSON.stringify(params),
   });
 
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
+
+  return dataJson;
+}
+
+export async function deletePublicList(listId: number): Promise<any> {
+  const url = URL_REMOVE_PUBLIC_LIST(listId);
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);
 

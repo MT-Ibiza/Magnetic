@@ -1,10 +1,10 @@
 import { CardWrapper } from '@magnetic/ui';
-import { useDrinksList } from '../../hooks/useDrinksList';
-import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
-import FormDrinksList from '../../components/form-drinks-list';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useList } from '../../hooks/useList';
+import { useListServiceItems } from '../../hooks/useListServiceItems';
+import FormPublicList from '../../components/form-public-list';
+import { usePublicList } from '../../hooks/usePublicList';
+import Loading from '../../components/loading';
 
 function EditListItemsPage() {
   const params = useParams();
@@ -16,14 +16,14 @@ function EditListItemsPage() {
     isError: isErrorList,
     error: errorList,
     data: listData,
-  } = useList(listId);
+  } = usePublicList(listId);
 
   const {
     isLoading: isLoadingDrinks,
     isError: isErrorDrinks,
     error: errorDrinks,
-    drinks,
-  } = useDrinksList();
+    items,
+  } = useListServiceItems('drinks');
 
   const isLoading = isLoadingList || isLoadingDrinks;
   const isError = isErrorList || isErrorDrinks;
@@ -43,8 +43,9 @@ function EditListItemsPage() {
         </ul>
       </div>
       <CardWrapper className="p-6">
-        <FormDrinksList
-          drinks={drinks}
+        <FormPublicList
+          items={items}
+          type="drinks"
           list={{
             id: listData?.id || 0,
             name: listData?.name || '',

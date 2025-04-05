@@ -143,7 +143,8 @@ export const URL_GET_PUBLIC_LISTS = (type: string) =>
   `${API_URL}/lists?type=${type}`;
 export const URL_NEW_PUBLIC_LIST = `${API_URL}/lists`;
 export const URL_GET_PUBLIC_LIST = (id: number) => `${API_URL}/lists/${id}`;
-export const URL_UPDATE_PUBLIC_LISTS = (id: number) => `${API_URL}/lists/${id}`;
+export const URL_UPDATE_PUBLIC_LIST = (id: number) => `${API_URL}/lists/${id}`;
+export const URL_REMOVE_PUBLIC_LIST = (id: number) => `${API_URL}/lists/${id}`;
 
 export const URL_GET_ITEMS_SERVICE = (type: string) =>
   `${API_URL}/lists/items?type=${type}`;

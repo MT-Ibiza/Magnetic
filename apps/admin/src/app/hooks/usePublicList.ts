@@ -1,10 +1,10 @@
-import { DrinksList } from '@magnetic/interfaces';
+import { PublicList } from '@magnetic/interfaces';
 import { useQuery } from '@tanstack/react-query';
 import { getList } from '../apis/api-public-lists';
 
-export function useList(listId: number) {
+export function usePublicList(listId: number) {
   const { isLoading, isError, data, error, isSuccess, refetch } =
-    useQuery<DrinksList>({
+    useQuery<PublicList>({
       queryKey: [`list=${listId}`],
       queryFn: async () => {
         return getList(listId);

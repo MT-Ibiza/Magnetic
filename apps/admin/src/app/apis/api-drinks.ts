@@ -1,34 +1,10 @@
 import { DrinksList, Item, NewDrinksList } from '@magnetic/interfaces';
 import {
-  URL_GET_DRINKS,
   URL_GET_DRINKS_LISTS,
   URL_NEW_DRINKS_LIST,
   URL_REMOVE_DRINKS_LIST,
   URL_UPDATE_DRINKS_LIST,
 } from './api-constants';
-
-export async function getDrinks(): Promise<Item[]> {
-  const url = URL_GET_DRINKS;
-
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const dataJson = await response.json();
-
-    if (!response.ok) {
-      throw new Error(dataJson.message || 'Failed to fetch boats');
-    }
-
-    return dataJson;
-  } catch (error: any) {
-    console.error('Error fetching boats:', error);
-    throw error;
-  }
-}
 
 export async function getDrinksLists(): Promise<DrinksList[]> {
   const url = URL_GET_DRINKS_LISTS;
