@@ -32,6 +32,7 @@ import AirtablePage from '../pages/airtable-page/airtable-page';
 import BookingPage from '../pages/booking-page/booking-page';
 import DrinksListPage from '../pages/drinks-list-page/drinks-list-page';
 import NewDrinksListPage from '../pages/new-drinks-list-page/new-drinks-list-page';
+import EditListItemsPage from '../pages/edit-list-items-page/edit-list-items-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -85,8 +86,9 @@ export const AppRouter = () => {
             <Route path="overview" element={<OverviewPage />} />
           </Route>
           <Route path="airtable" element={<AirtablePage />} />
-          <Route path="drinks-list" element={<DrinksListPage />} />
-          <Route path="drinks-list/new" element={<NewDrinksListPage />} />
+          <Route path="list/drinks" element={<DrinksListPage />} />
+          <Route path="list/drinks/new" element={<NewDrinksListPage />} />
+          <Route path="list/drinks/edit/:id" element={<EditListItemsPage />} />
         </Route>
       </Route>
     </Routes>

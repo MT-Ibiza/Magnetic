@@ -68,7 +68,7 @@ function Layout() {
         {
           text: 'Drinks List',
           key: 'drinks',
-          url: '/drinks-list',
+          url: '/list/drinks',
           icon: MdWineBar,
         },
       ],

@@ -18,7 +18,7 @@ function DrinksListPage(props: Props) {
         </div>
         <div className="flex gap-3 justify-end lg:w-auto w-full">
           <Button
-            href={'/drinks-list/new'}
+            href={'/list/drinks/new'}
             className="px-6 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600"
           >
             + Create List

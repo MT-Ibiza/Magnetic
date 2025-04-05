@@ -42,7 +42,7 @@ function ListsTable(props: Props) {
         <tr>
           <th>Name</th>
           <th>Url</th>
-          <th>Created at</th>
+          <th>Created on</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -52,7 +52,7 @@ function ListsTable(props: Props) {
             <td>
               <Link
                 className="hover:text-primary-500 hover:underline"
-                to={`/lists/edit/${list.id}`}
+                to={`/list/drinks/edit/${list.id}`}
               >
                 {list.name}
               </Link>
