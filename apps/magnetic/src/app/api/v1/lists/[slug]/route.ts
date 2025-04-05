@@ -14,7 +14,14 @@ export async function GET(
         items: {
           select: {
             itemId: true,
-            item: true,
+            item: {
+              include: {
+                boatAttributes: true,
+                drinkAttributes: true,
+                images: true,
+                seasonPrices: true,
+              },
+            },
           },
         },
       },
