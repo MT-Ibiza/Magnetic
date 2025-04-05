@@ -1,4 +1,4 @@
-import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import Layout from '../layout';
 import PrivateRoutes from './private-routes';
 import UsersPage from '../pages/users-page/users-page';
@@ -29,9 +29,10 @@ import AirtablePage from '../pages/airtable-page/airtable-page';
 import BookingPage from '../pages/booking-page/booking-page';
 import DrinksListPage from '../pages/drinks-list-page/drinks-list-page';
 import NewDrinksListPage from '../pages/new-drinks-list-page/new-drinks-list-page';
-import EditListItemsPage from '../pages/edit-list-items-page/edit-list-items-page';
 import BoatListsPage from '../pages/boat-lists-page/boat-lists-page';
 import NewBoatListPage from '../pages/new-boat-list-page/new-boat-list-page';
+import EditBoatListPage from '../pages/edit-boat-list-page/edit-boat-list-page';
+import EditDrinkListPage from '../pages/edit-drink-list-page/edit-drink-list-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -79,10 +80,10 @@ export const AppRouter = () => {
           <Route path="airtable" element={<AirtablePage />} />
           <Route path="list/drinks" element={<DrinksListPage />} />
           <Route path="list/drinks/new" element={<NewDrinksListPage />} />
-          <Route path="list/drinks/edit/:id" element={<EditListItemsPage />} />
+          <Route path="list/drinks/edit/:id" element={<EditDrinkListPage />} />
           <Route path="list/boats" element={<BoatListsPage />} />
           <Route path="list/boats/new" element={<NewBoatListPage />} />
-          <Route path="list/boats/edit/:id" element={<EditListItemsPage />} />
+          <Route path="list/boats/edit/:id" element={<EditBoatListPage />} />
         </Route>
       </Route>
     </Routes>

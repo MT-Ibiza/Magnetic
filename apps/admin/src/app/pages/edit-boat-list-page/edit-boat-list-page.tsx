@@ -6,10 +6,11 @@ import FormPublicList from '../../components/form-public-list';
 import { usePublicList } from '../../hooks/usePublicList';
 import Loading from '../../components/loading';
 
-function EditListItemsPage() {
+function EditBoatListPage() {
   const params = useParams();
   const listId = Number(params.id);
   const navigate = useNavigate();
+  const type = 'boat_rental';
 
   const {
     isLoading: isLoadingList,
@@ -23,7 +24,7 @@ function EditListItemsPage() {
     isError: isErrorDrinks,
     error: errorDrinks,
     items,
-  } = useListServiceItems('drinks');
+  } = useListServiceItems(type);
 
   const isLoading = isLoadingList || isLoadingDrinks;
   const isError = isErrorList || isErrorDrinks;
@@ -37,7 +38,7 @@ function EditListItemsPage() {
       <div className="breadcrumbs text-sm">
         <ul>
           <li>
-            <a href="/list/drinks">Drinks Lists</a>
+            <a href="/list/drinks">Boat Lists</a>
           </li>
           <li>New List</li>
         </ul>
@@ -45,17 +46,17 @@ function EditListItemsPage() {
       <CardWrapper className="p-6">
         <FormPublicList
           items={items}
-          type="drinks"
+          type={type}
           list={{
             id: listData?.id || 0,
             name: listData?.name || '',
             itemsIds: listData ? listData.items.map((item) => item.itemId) : [],
           }}
-          onSave={() => navigate(`/list/drinks`, { replace: true })}
+          onSave={() => navigate(`/list/boats`)}
         />
       </CardWrapper>
     </div>
   );
 }
 
-export default EditListItemsPage;
+export default EditBoatListPage;

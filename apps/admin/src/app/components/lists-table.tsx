@@ -15,6 +15,11 @@ interface Props {
 
 function ListsTable(props: Props) {
   const { type } = props;
+
+  const routes = {
+    boat_rental: 'boats',
+    drinks: 'drinks',
+  };
   const {
     data: lists = [],
     isLoading,
@@ -67,7 +72,7 @@ function ListsTable(props: Props) {
             <td>
               <Link
                 className="hover:text-primary-500 hover:underline"
-                to={`/list/drinks/edit/${list.id}`}
+                to={`/list/${routes[type as 'drinks']}/edit/${list.id}`}
               >
                 {list.name}
               </Link>
