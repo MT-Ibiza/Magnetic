@@ -129,5 +129,6 @@ export const URL_REMOVE_SEASON_PRICE = (id: number) =>
 export const URL_SORT_IMAGES = `${API_URL}/images/sort`;
 
 //Drinks
-export const URL_GET_DRINKS = `${API_URL}/lists/drinks`;
+export const URL_GET_DRINKS = `${API_URL}/lists/drinks/new`;
+export const URL_GET_DRINKS_LISTS = `${API_URL}/lists/drinks`;
 export const URL_NEW_DRINKS_LIST = `${API_URL}/lists/drinks`;

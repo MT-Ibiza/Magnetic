@@ -13,6 +13,7 @@ import slugify from 'slugify';
 import { useMutation } from '@tanstack/react-query';
 import { newDrinkList } from '../apis/api-drinks';
 import { toast } from 'sonner';
+import { URL_FRONTED } from '../constants';
 
 interface Props {
   list?: DrinksListBase;
@@ -86,7 +87,7 @@ function FormDrinksList({ list, drinks }: Props) {
           </label>
           <div className="mt-3 border rounded-md h-[40px] bg-gray-50 text-gray-800 flex items-center pl-5">
             <Text size="1">
-              {'https://bookings.magnetic-travel.com/list/drinks/'}
+              {URL_FRONTED}
               <strong>{slug}</strong>
             </Text>
           </div>

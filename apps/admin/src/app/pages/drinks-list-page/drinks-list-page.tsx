@@ -1,5 +1,6 @@
 import { Button, CardWrapper } from '@magnetic/ui';
 import React from 'react';
+import ListsTable from '../../components/lists-table';
 
 interface Props {}
 
@@ -24,6 +25,7 @@ function DrinksListPage(props: Props) {
           </Button>
         </div>
       </div>
+      <ListsTable />
     </CardWrapper>
   );
 }
