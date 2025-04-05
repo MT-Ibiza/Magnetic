@@ -2,7 +2,7 @@ import { HeaderApp, Sidebar, AvatarDropdown } from '@magnetic/ui';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from './hooks/useAuth';
-import { FaUserFriends, FaBook } from 'react-icons/fa';
+import { FaUserFriends, FaBook, FaShip } from 'react-icons/fa';
 import { MdDashboardCustomize, MdWineBar } from 'react-icons/md';
 import { SiAirtable, SiTask } from 'react-icons/si';
 import { User } from '@magnetic/interfaces';
@@ -65,11 +65,22 @@ function Layout() {
           url: '/airtable',
           icon: SiAirtable,
         },
+      ],
+    },
+    {
+      text: 'Lists',
+      options: [
         {
-          text: 'Drinks List',
+          text: 'Drink List',
           key: 'drinks',
           url: '/list/drinks',
           icon: MdWineBar,
+        },
+        {
+          text: 'Boat List',
+          key: 'boats',
+          url: '/list/boats',
+          icon: FaShip,
         },
       ],
     },

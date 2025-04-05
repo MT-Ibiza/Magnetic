@@ -1,6 +1,6 @@
 import { DrinksList } from '@magnetic/interfaces';
 import { useQuery } from '@tanstack/react-query';
-import { getList } from '../apis/api-lists-items';
+import { getList } from '../apis/api-public-lists';
 
 export function useList(listId: number) {
   const { isLoading, isError, data, error, isSuccess, refetch } =

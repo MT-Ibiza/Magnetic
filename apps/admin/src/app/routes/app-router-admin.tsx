@@ -30,6 +30,7 @@ import BookingPage from '../pages/booking-page/booking-page';
 import DrinksListPage from '../pages/drinks-list-page/drinks-list-page';
 import NewDrinksListPage from '../pages/new-drinks-list-page/new-drinks-list-page';
 import EditListItemsPage from '../pages/edit-list-items-page/edit-list-items-page';
+import BoatListsPage from '../pages/boat-lists-page/boat-lists-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -78,6 +79,9 @@ export const AppRouter = () => {
           <Route path="list/drinks" element={<DrinksListPage />} />
           <Route path="list/drinks/new" element={<NewDrinksListPage />} />
           <Route path="list/drinks/edit/:id" element={<EditListItemsPage />} />
+          <Route path="list/boats" element={<BoatListsPage />} />
+          <Route path="list/boats/new" element={<NewDrinksListPage />} />
+          <Route path="list/boats/edit/:id" element={<EditListItemsPage />} />
         </Route>
       </Route>
     </Routes>

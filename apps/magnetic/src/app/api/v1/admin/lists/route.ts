@@ -43,9 +43,16 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const type = searchParams.get('type');
+
   try {
-    const lists = await db.publicList.findMany({});
+    const lists = await db.publicList.findMany({
+      where: {
+        type: type as 'drinks',
+      },
+    });
     return NextResponse.json(lists);
   } catch (error) {
     console.error('Unexpected error:', error);

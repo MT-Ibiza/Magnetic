@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import React from 'react';
-import { deleteDrinkList, getDrinksLists } from '../apis/api-drinks';
-import { DrinksList } from '@magnetic/interfaces';
+import { deleteDrinkList } from '../apis/api-drinks';
+import { PublicList } from '@magnetic/interfaces';
 import Loading from './loading';
 import { ErrorText } from './error-text';
 import { Link } from 'react-router-dom';
@@ -9,22 +8,24 @@ import { formatDate } from '../utils';
 import { Button } from '@magnetic/ui';
 import { URL_FRONTED } from '../constants';
 import { toast } from 'sonner';
+import { getLists } from '../apis/api-public-lists';
 
-interface Props {}
+interface Props {
+  type: string;
+}
 
 function ListsTable(props: Props) {
-  const {} = props;
-
+  const { type } = props;
   const {
     data: lists = [],
     isLoading,
     isError,
     error,
     refetch,
-  } = useQuery<DrinksList[]>({
-    queryKey: ['lists'],
+  } = useQuery<PublicList[]>({
+    queryKey: [`lists-${type}`],
     queryFn: async () => {
-      const result = getDrinksLists();
+      const result = getLists(type);
       await new Promise((resolve) => setTimeout(resolve, 500));
       return result;
     },

@@ -138,3 +138,5 @@ export const URL_UPDATE_DRINKS_LIST = (id: number) =>
   `${API_URL}/lists/drinks/${id}`;
 export const URL_REMOVE_DRINKS_LIST = (id: number) =>
   `${API_URL}/lists/drinks/${id}`;
+
+export const URL_GET_LISTS = (type: string) => `${API_URL}/lists?type=${type}`;
