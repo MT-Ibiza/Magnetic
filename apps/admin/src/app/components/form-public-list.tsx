@@ -123,7 +123,7 @@ function FormPublicList({ list, items, type, onSave }: Props) {
           <div className="mt-3 border rounded-md h-[40px] bg-gray-50 text-gray-800 flex items-center pl-5">
             <Text size="1">
               {URL_FRONTED}
-              {'/'}
+              {'/list/'}
               <strong>{slug}</strong>
             </Text>
           </div>
