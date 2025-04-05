@@ -1,7 +1,7 @@
 import { Item, ParamsPublicList, PublicList } from '@magnetic/interfaces';
 import {
-  URL_GET_DRINKS_LIST,
   URL_GET_ITEMS_SERVICE,
+  URL_GET_PUBLIC_LIST,
   URL_GET_PUBLIC_LISTS,
   URL_NEW_PUBLIC_LIST,
   URL_REMOVE_PUBLIC_LIST,
@@ -9,7 +9,7 @@ import {
 } from './api-constants';
 
 export async function getList(listId: number): Promise<PublicList> {
-  const url = URL_GET_DRINKS_LIST(listId);
+  const url = URL_GET_PUBLIC_LIST(listId);
   try {
     const response = await fetch(url, {
       method: 'GET',

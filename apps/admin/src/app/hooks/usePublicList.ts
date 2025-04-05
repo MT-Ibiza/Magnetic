@@ -5,11 +5,10 @@ import { getList } from '../apis/api-public-lists';
 export function usePublicList(listId: number) {
   const { isLoading, isError, data, error, isSuccess, refetch } =
     useQuery<PublicList>({
-      queryKey: [`list=${listId}`],
+      queryKey: [`list-${listId}`],
       queryFn: async () => {
         return getList(listId);
       },
-      refetchOnWindowFocus: false,
     });
 
   return {
