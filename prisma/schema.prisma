@@ -169,7 +169,6 @@ model Item {
   transferAttributes  TransferAttributes?
   childcareAttributes ChildcareAttributes?
   securityAttributes  SecurityAttributes?
-  drinksListItems     DrinksListItem[]
   publicListItems     PublicListItem[]
 }
 
@@ -306,26 +305,6 @@ model SeasonPrice {
   endMonth     Int // 1 - 12
   endDay       Int // 1 - 31
   priceInCents Int
-}
-
-model DrinksList {
-  id          Int              @id @default(autoincrement())
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  name        String
-  slug        String           @unique
-  description String
-  items       DrinksListItem[]
-}
-
-model DrinksListItem {
-  id              Int        @id @default(autoincrement())
-  drinkItemList   DrinksList @relation(fields: [drinkItemListId], references: [id], onDelete: Cascade)
-  drinkItemListId Int
-  item            Item       @relation(fields: [itemId], references: [id])
-  itemId          Int
-
-  @@unique([drinkItemListId, itemId])
 }
 
 model PublicList {
