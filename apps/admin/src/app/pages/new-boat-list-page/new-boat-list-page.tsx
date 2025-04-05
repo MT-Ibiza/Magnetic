@@ -5,8 +5,9 @@ import FormDrinksList from '../../components/form-drinks-list';
 import { useNavigate } from 'react-router-dom';
 import { useListServiceItems } from '../../hooks/useListServiceItems';
 
-function NewDrinksListPage() {
-  const { isLoading, isError, error, items } = useListServiceItems('drinks');
+function NewBoatListPage() {
+  const { isLoading, isError, error, items } =
+    useListServiceItems('boat_rental');
   const navigate = useNavigate();
 
   if (isLoading) return <Loading />;
@@ -17,7 +18,7 @@ function NewDrinksListPage() {
       <div className="breadcrumbs text-sm">
         <ul>
           <li>
-            <a href="/list/drinks">Drinks Lists</a>
+            <a href="/list/drinks">Boats Lists</a>
           </li>
           <li>New List</li>
         </ul>
@@ -25,11 +26,11 @@ function NewDrinksListPage() {
       <CardWrapper className="p-6">
         <FormDrinksList
           drinks={items}
-          onSave={() => navigate(`/list/drinks`, { replace: true })}
+          onSave={() => navigate(`/list/boats`, { replace: true })}
         />
       </CardWrapper>
     </div>
   );
 }
 
-export default NewDrinksListPage;
+export default NewBoatListPage;

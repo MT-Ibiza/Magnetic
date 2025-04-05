@@ -21,10 +21,11 @@ interface Props {
     itemsIds: number[];
     id: number;
   };
+  type: string;
   drinks: Item[];
   onSave: () => void;
 }
-function FormDrinksList({ list, drinks, onSave }: Props) {
+function FormPublicList({ list, drinks, type, onSave }: Props) {
   const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
   const itemsIds = list?.itemsIds || [];
@@ -120,7 +121,7 @@ function FormDrinksList({ list, drinks, onSave }: Props) {
           <div className="mt-3 border rounded-md h-[40px] bg-gray-50 text-gray-800 flex items-center pl-5">
             <Text size="1">
               {URL_FRONTED}
-              {'/list/'}
+              {'/'}
               <strong>{slug}</strong>
             </Text>
           </div>
@@ -151,4 +152,4 @@ function FormDrinksList({ list, drinks, onSave }: Props) {
   );
 }
 
-export default FormDrinksList;
+export default FormPublicList;

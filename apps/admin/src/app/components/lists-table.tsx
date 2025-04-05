@@ -73,7 +73,7 @@ function ListsTable(props: Props) {
                 {list.name}
               </Link>
             </td>
-            <td>{`${URL_FRONTED}/${list.slug}`}</td>
+            <td>{`${URL_FRONTED}/list/${list.slug}`}</td>
             <td> {formatDate(list.createdAt)}</td>
             <td>
               <Button

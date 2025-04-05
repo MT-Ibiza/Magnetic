@@ -5,12 +5,12 @@ import { Item } from '@magnetic/interfaces';
 import { Text } from '@magnetic/ui';
 
 interface Props {
-  drinks: Item[];
+  items: Item[];
   onItemsChange: (items: Item[]) => void;
   listItems: Item[];
 }
 
-function DrinksListHandle({ drinks, onItemsChange, listItems }: Props) {
+function PublicListItemsHandle({ items, onItemsChange, listItems }: Props) {
   const [sortedItems, setSortedItems] = useState<
     {
       category: string;
@@ -21,11 +21,11 @@ function DrinksListHandle({ drinks, onItemsChange, listItems }: Props) {
   const [selectedItems, setSelectedItems] = useState<Item[]>(listItems);
 
   useEffect(() => {
-    if (drinks.length > 0) {
-      const itemsGroup = groupItemsByCategory(drinks);
+    if (items.length > 0) {
+      const itemsGroup = groupItemsByCategory(items);
       setSortedItems(itemsGroup);
     }
-  }, [drinks]);
+  }, [items]);
 
   useEffect(() => {
     onItemsChange(selectedItems);
@@ -47,7 +47,7 @@ function DrinksListHandle({ drinks, onItemsChange, listItems }: Props) {
   return (
     <div className="flex gap-10">
       <div className="w-full bg-gray-100 p-5">
-        <Text className="font-semibold text-lg mb-4">Drinks</Text>
+        <Text className="font-semibold text-lg mb-4">All Products</Text>
         {sortedItems.map((group, index) => (
           <div key={index} className="mb-6">
             <Text className="font-semibold mb-3">{group.category}</Text>
@@ -84,10 +84,10 @@ function DrinksListHandle({ drinks, onItemsChange, listItems }: Props) {
         ))}
       </div>
       <div className="w-full bg-gray-100 p-5">
-        <Text className="font-semibold text-lg mb-4">Selected Drinks</Text>
+        <Text className="font-semibold text-lg mb-4">Selected Products</Text>
         <div className="flex flex-col gap-5">
           {selectedItems.length === 0 && (
-            <Text size="1">No drinks selected yet.</Text>
+            <Text size="1">No items selected yet.</Text>
           )}
           {selectedItems.map((item) => (
             <div
@@ -117,4 +117,4 @@ function DrinksListHandle({ drinks, onItemsChange, listItems }: Props) {
   );
 }
 
-export default DrinksListHandle;
+export default PublicListItemsHandle;
