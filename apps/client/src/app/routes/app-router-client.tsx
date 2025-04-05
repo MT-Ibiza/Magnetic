@@ -16,6 +16,7 @@ import BookingsPage from '../pages/bookings-page/bookings-page';
 import PrivacyPolicyPage from '../pages/privacy-policy-page/privacy-policy-page';
 import TermsConditionsPage from '../pages/terms-conditions-page/terms-conditions-page';
 import DrinksListPage from '../pages/drinks-list-page/drinks-list-page';
+import PublicListPage from '../pages/public-list-page/public-list-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -29,7 +30,7 @@ export const AppRouter = () => {
       <Route path="login" element={<RedirectRoute />} />
       <Route path="terms-conditions" element={<TermsConditionsPage />} />
       <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
-      <Route path="drinks" element={<DrinksListPage />} />
+      <Route path="list/:slug" element={<PublicListPage />} />
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<DashboardClientPage />} />
