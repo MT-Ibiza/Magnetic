@@ -10,7 +10,7 @@ import './styles.scss';
 import { useState } from 'react';
 
 interface Props {}
- 
+
 function ViewServicePage(props: Props) {
   const {} = props;
   const params = useParams();
@@ -19,8 +19,8 @@ function ViewServicePage(props: Props) {
   const user = getCurrentUser();
   const { isLoading, isError, service, error } = useService(serviceId);
   const sortedCategories = service?.categories
-  ? [...service.categories].sort((a, b) => a.position - b.position)
-  : [];
+    ? [...service.categories].sort((a, b) => a.position - b.position)
+    : [];
 
   const [selectedCarService, setSelectedCarService] = useState('standard');
 
@@ -202,7 +202,12 @@ function ViewServicePage(props: Props) {
                   <iframe
                     // scrolling="auto"
                     // scrolling="no"
-                    style={{ overflow: 'auto', width: '100%', border: 'none', height: '50rem' }}
+                    style={{
+                      overflow: 'auto',
+                      width: '100%',
+                      border: 'none',
+                      height: '50rem',
+                    }}
                     src="https://classrentacar.es/afiliados/211/?lang=es"
                   ></iframe>
                 )}
@@ -226,10 +231,7 @@ function ViewServicePage(props: Props) {
         ) : (
           <>
             {service.serviceType === 'drinks' && (
-              <ListDrinks
-                serviceId={serviceId}
-                categories={sortedCategories}
-              />
+              <ListDrinks serviceId={serviceId} categories={sortedCategories} />
             )}
             {service.serviceType === 'boat_rental' && <ListBoats />}
             {!['drinks', 'boat_rental'].includes(service.serviceType) && (

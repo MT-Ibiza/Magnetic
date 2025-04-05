@@ -1,21 +1,12 @@
-import {
-  HeaderApp,
-  Sidebar,
-  AvatarDropdown,
-  Text,
-  ThemeSelector,
-} from '@magnetic/ui';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { HeaderApp, Sidebar, AvatarDropdown } from '@magnetic/ui';
+import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from './hooks/useAuth';
-import { FaUserFriends, FaBook, FaCog } from 'react-icons/fa';
-import { MdDashboardCustomize } from 'react-icons/md';
+import { FaUserFriends, FaBook, FaShip } from 'react-icons/fa';
+import { MdDashboardCustomize, MdWineBar } from 'react-icons/md';
 import { SiAirtable, SiTask } from 'react-icons/si';
 import { User } from '@magnetic/interfaces';
 import { FiBookOpen, FiUser } from 'react-icons/fi';
-import { usePathname } from 'next/navigation';
-
-interface Props {}
 
 const titles = {
   users: 'Users',
@@ -26,7 +17,7 @@ const titles = {
   bookings: 'Bookings',
 };
 
-function Layout(props: Props) {
+function Layout() {
   const { logout, getCurrentUser } = useAuth();
   const user = getCurrentUser();
   const location = useLocation();
@@ -77,6 +68,23 @@ function Layout(props: Props) {
       ],
     },
     {
+      text: 'Lists',
+      options: [
+        {
+          text: 'Drink List',
+          key: 'drinks',
+          url: '/list/drinks',
+          icon: MdWineBar,
+        },
+        {
+          text: 'Boat List',
+          key: 'boats',
+          url: '/list/boats',
+          icon: FaShip,
+        },
+      ],
+    },
+    {
       text: 'Users',
       options: [
         {
@@ -95,12 +103,6 @@ function Layout(props: Props) {
           url: '/users',
           icon: FaUserFriends,
         },
-        // {
-        //   text: 'Admin',
-        //   key: 'users',
-        //   url: '/users',
-        //   icon: FaUserFriends,
-        // },
       ],
     },
     {
@@ -128,40 +130,6 @@ function Layout(props: Props) {
         },
       ],
     },
-    // {
-    //   text: 'Orders',
-    //   options: [
-    //     {
-    //       text: 'Orders',
-    //       key: 'orders',
-    //       url: '/orders',
-    //       icon: SiTask,
-    //     },
-    //     // {
-    //     //   text: 'Settings',
-    //     //   key: 'settings',
-    //     //   url: '/settings',
-    //     //   icon: FaCog,
-    //     // },
-    //   ],
-    // },
-    // {
-    //   text: 'Bookings',
-    //   options: [
-    //     {
-    //       text: 'Bookings',
-    //       key: 'bookings',
-    //       url: '/bookings',
-    //       icon: FaBook,
-    //     },
-    //     // {
-    //     //   text: 'Settings',
-    //     //   key: 'settings',
-    //     //   url: '/settings',
-    //     //   icon: FaCog,
-    //     // },
-    //   ],
-    // },
   ];
 
   const navigationOptions = [

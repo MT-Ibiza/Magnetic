@@ -1,4 +1,4 @@
-import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import Layout from '../layout';
 import PrivateRoutes from './private-routes';
 import UsersPage from '../pages/users-page/users-page';
@@ -6,9 +6,6 @@ import DashboardPage from '../pages/dashboard-page/dashboard';
 import BookingsPage from '../pages/bookings-page/bookings-page';
 import SettingsPage from '../pages/settings-page/settings-page';
 import NewServicePage from '../pages/new-service-page/new-service-page';
-import ServiceLayout from '../pages/services/services-layout';
-import OverviewPage from '../pages/services/overview-page';
-import ProductsViewPage from '../pages/services/products-page';
 import RedirectRoute from './redirect-route';
 import NewUserPage from '../pages/new-user-page/new-user-page';
 import EditUserPage from '../pages/edit-user-page/edit-user-page';
@@ -30,6 +27,12 @@ import ViewOrderPage from '../pages/view-order-page/view-order-page';
 import CategoriesPage from '../pages/categories-page/categories-page';
 import AirtablePage from '../pages/airtable-page/airtable-page';
 import BookingPage from '../pages/booking-page/booking-page';
+import DrinksListPage from '../pages/drinks-list-page/drinks-list-page';
+import NewDrinksListPage from '../pages/new-drinks-list-page/new-drinks-list-page';
+import BoatListsPage from '../pages/boat-lists-page/boat-lists-page';
+import NewBoatListPage from '../pages/new-boat-list-page/new-boat-list-page';
+import EditBoatListPage from '../pages/edit-boat-list-page/edit-boat-list-page';
+import EditDrinkListPage from '../pages/edit-drink-list-page/edit-drink-list-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -74,15 +77,13 @@ export const AppRouter = () => {
           <Route path="bookings/:id" element={<BookingPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="clients/:id" element={<UserLayout />}></Route>
-          <Route
-            path="services/:id"
-            element={<Navigate replace to="overview" />}
-          />
-          <Route path="services/:id" element={<ServiceLayout />}>
-            <Route path="products" element={<ProductsViewPage />} />
-            <Route path="overview" element={<OverviewPage />} />
-          </Route>
           <Route path="airtable" element={<AirtablePage />} />
+          <Route path="list/drinks" element={<DrinksListPage />} />
+          <Route path="list/drinks/new" element={<NewDrinksListPage />} />
+          <Route path="list/drinks/edit/:id" element={<EditDrinkListPage />} />
+          <Route path="list/boats" element={<BoatListsPage />} />
+          <Route path="list/boats/new" element={<NewBoatListPage />} />
+          <Route path="list/boats/edit/:id" element={<EditBoatListPage />} />
         </Route>
       </Route>
     </Routes>

@@ -13,6 +13,7 @@ export interface HeaderProps {
   isSidebarVisible?: boolean;
   toggleSidebar: () => void;
   pageTitle?: string;
+  links?: any[];
 }
 
 const navigation = [
@@ -43,7 +44,8 @@ const navigation = [
 ];
 
 export function HeaderClient(props: HeaderProps) {
-  const { className, children } = props;
+  const { className, children, links } = props;
+  const navLinks = links || navigation;
 
   return (
     <div
@@ -65,7 +67,7 @@ export function HeaderClient(props: HeaderProps) {
           </div>
           <div className="w-full flex justify-center px-3">
             <ul className="links flex gap-3 pr-8">
-              {navigation.map((option, index) => (
+              {navLinks.map((option, index) => (
                 <li
                   key={index}
                   className="cursor-pointer flex items-center w-full"
@@ -75,12 +77,12 @@ export function HeaderClient(props: HeaderProps) {
                     className={({ isActive }) =>
                       `inline-flex items-center text-sm xl:text-base font-normal text-neutral-700 dark:text-neutral-300 py-2 px-4 xl:px-5 rounded-full hover:text-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-neutral-200 ${
                         isActive
-                          ? "!font-semibold !text-neutral-900 bg-neutral-100 dark:bg-neutral-800 dark:!text-neutral-100"
-                          : ""
+                          ? '!font-semibold !text-neutral-900 bg-neutral-100 dark:bg-neutral-800 dark:!text-neutral-100'
+                          : ''
                       }`
                     }
                   >
-                      {option.text}
+                    {option.text}
                   </NavLink>
                 </li>
               ))}

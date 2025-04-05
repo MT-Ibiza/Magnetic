@@ -56,6 +56,7 @@
     "react-swipeable": "^7.0.2",
     "redsys-api": "0.0.3",
     "slick-carousel": "^1.8.1",
+    "slugify": "1.6.6",
     "sonner": "1.7.0",
     "sortablejs": "1.15.6",
     "uuid": "11.0.5",

@@ -169,6 +169,7 @@ model Item {
   transferAttributes  TransferAttributes?
   childcareAttributes ChildcareAttributes?
   securityAttributes  SecurityAttributes?
+  publicListItems     PublicListItem[]
 }
 
 model Image {
@@ -304,6 +305,26 @@ model SeasonPrice {
   endMonth     Int // 1 - 12
   endDay       Int // 1 - 31
   priceInCents Int
+}
+
+model PublicList {
+  id        Int              @id @default(autoincrement())
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  slug      String           @unique
+  name      String
+  type      ServiceType
+  items     PublicListItem[]
+}
+
+model PublicListItem {
+  id           Int        @id @default(autoincrement())
+  publicList   PublicList @relation(fields: [publicListId], references: [id], onDelete: Cascade)
+  publicListId Int
+  item         Item       @relation(fields: [itemId], references: [id])
+  itemId       Int
+
+  @@unique([publicListId, itemId])
 }
 
 enum Role {
