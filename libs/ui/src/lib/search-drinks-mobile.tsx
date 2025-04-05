@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from './button';
 import { AiOutlineSearch } from 'react-icons/ai';
 import SearchBoatInput from './search-boat-input';
@@ -12,7 +12,7 @@ interface CategoriesSelect {
 interface SearchDrinksMobileProps {
   onChange: (name: string, value: string, data?: any) => void;
   value: string;
-  
+
   onClose?: () => void;
   categoriesAvailable: { name: string; id: number; checked?: boolean }[];
 }
@@ -20,19 +20,25 @@ interface SearchDrinksMobileProps {
 type DateRage = [Date | null, Date | null];
 
 export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
-  const {
-    onChange,
-    categoriesAvailable,
-    onClose,
-    value,
-  } = props;
+  const { onChange, categoriesAvailable, onClose, value } = props;
 
   const [fieldNameShow, setFieldNameShow] = useState<'search' | 'category'>(
     'search'
   );
+
+  useEffect(() => {
+    const anyChecked = selectedCategories.some((cat) => cat.checked);
+    if (!anyChecked) {
+      setSelectedCategories(categoriesAvailable);
+    }
+  }, [categoriesAvailable]);
+
   const [selectedCategories, setSelectedCategories] =
     useState(categoriesAvailable);
-  const [searchParams, setSearchParams] = useState({ drink: '', categoriesIds: undefined });
+  const [searchParams, setSearchParams] = useState({
+    drink: '',
+    categoriesIds: undefined,
+  });
 
   const handleCategoryChange = (updatedCategories: CategoriesSelect[]) => {
     setSelectedCategories(updatedCategories);
@@ -43,13 +49,21 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
       .filter((category) => category.checked)
       .map((category) => category.id);
     if (searchParams.drink) {
-      onChange("drink", searchParams.drink); 
+      onChange('drink', searchParams.drink);
     }
     if (selectedCategoryIds.length > 0) {
-      onChange("categoriesIds", selectedCategoryIds.join(",")); 
+      onChange(
+        'categoriesIds',
+        selectedCategoryIds.join(','),
+        selectedCategories.filter((cat) => cat.checked)
+      );
+    }
+
+    if (onClose) {
+      onClose();
     }
   };
-  
+
   const selectedText =
     selectedCategories.length > 0 &&
     selectedCategories.some((cat) => cat.checked)
@@ -107,7 +121,6 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
                 ? 'justify-between'
                 : 'flex-col'
             }`}
-            
             onClick={() => setFieldNameShow('category')}
           >
             <span className="text-neutral-400 text-start">Categories</span>
@@ -155,7 +168,7 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
           className="flex gap-[10px]"
           size={2}
           type="submit"
-          onClick={handleCategoryFilter}        
+          onClick={handleCategoryFilter}
         >
           <AiOutlineSearch className="flex-shrink-0 w-5 h-5" />
           Search
