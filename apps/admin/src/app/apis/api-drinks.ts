@@ -3,6 +3,7 @@ import {
   URL_GET_DRINKS,
   URL_GET_DRINKS_LISTS,
   URL_NEW_DRINKS_LIST,
+  URL_REMOVE_DRINKS_LIST,
   URL_UPDATE_DRINKS_LIST,
 } from './api-constants';
 
@@ -75,6 +76,20 @@ export async function editDrinkList(
     body: JSON.stringify(params),
   });
 
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
+
+  return dataJson;
+}
+
+export async function deleteDrinkList(listId: number): Promise<any> {
+  const url = URL_REMOVE_DRINKS_LIST(listId);
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
   const dataJson = await response.json();
   if (!response.ok) throw new Error(dataJson.message);
 

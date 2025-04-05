@@ -51,6 +51,7 @@ function FormDrinksList({ list, drinks, onSave }: Props) {
     onSuccess: () => {
       toast.success('New List Created!');
       setIsSaving(false);
+      onSave();
     },
     onError: (error) => {
       toast.error('The list could not be created');
@@ -68,7 +69,6 @@ function FormDrinksList({ list, drinks, onSave }: Props) {
       toast.success('List Updated!');
       setIsSaving(false);
       onSave();
-      // onSave={() => navigate(`/services/${serviceId}`, { replace: true })}
     },
     onError: (error) => {
       toast.error('The list could not be updated');

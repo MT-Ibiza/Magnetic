@@ -319,7 +319,7 @@ model DrinksList {
 
 model DrinksListItem {
   id              Int        @id @default(autoincrement())
-  drinkItemList   DrinksList @relation(fields: [drinkItemListId], references: [id])
+  drinkItemList   DrinksList @relation(fields: [drinkItemListId], references: [id], onDelete: Cascade)
   drinkItemListId Int
   item            Item       @relation(fields: [itemId], references: [id])
   itemId          Int

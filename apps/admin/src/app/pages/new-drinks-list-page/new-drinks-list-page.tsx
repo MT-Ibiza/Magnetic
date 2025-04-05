@@ -17,7 +17,7 @@ function NewDrinksListPage() {
       <div className="breadcrumbs text-sm">
         <ul>
           <li>
-            <a href="/drinks-list">Drinks Lists</a>
+            <a href="/list/drinks">Drinks Lists</a>
           </li>
           <li>New List</li>
         </ul>

@@ -97,3 +97,29 @@ export async function PUT(
     );
   }
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { listId: string } }
+) {
+  try {
+    await db.drinksList.delete({
+      where: {
+        id: Number(params.listId),
+      },
+    });
+    return NextResponse.json(
+      { message: 'List deleted successfully' },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        message: error.message,
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
