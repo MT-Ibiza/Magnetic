@@ -6,9 +6,10 @@ import { Text } from '@magnetic/ui';
 
 interface Props {
   drinks: Item[];
+  onItemsChange: (items: Item[]) => void;
 }
 
-function DrinksListHandle({ drinks }: Props) {
+function DrinksListHandle({ drinks, onItemsChange }: Props) {
   const [sortedItems, setSortedItems] = useState<
     {
       category: string;
@@ -24,6 +25,10 @@ function DrinksListHandle({ drinks }: Props) {
       setSortedItems(itemsGroup);
     }
   }, [drinks]);
+
+  useEffect(() => {
+    onItemsChange(selectedItems);
+  }, [selectedItems]);
 
   const handleAddItem = (item: Item) => {
     setSelectedItems((prev) => {

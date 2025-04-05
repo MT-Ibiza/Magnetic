@@ -1,11 +1,18 @@
-import { Item } from '@magnetic/interfaces';
+import {
+  DrinksList,
+  DrinksListBase,
+  Item,
+  NewDrinksList,
+} from '@magnetic/interfaces';
 import { Button, Input, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
-import { DrinksListBase } from 'libs/interfaces/src/lib/drinks';
 import DrinksListHandle from './drinks-list-handle';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import slugify from 'slugify';
+import { useMutation } from '@tanstack/react-query';
+import { newDrinkList } from '../apis/api-drinks';
+import { toast } from 'sonner';
 
 interface Props {
   list?: DrinksListBase;
@@ -14,6 +21,7 @@ interface Props {
 function FormDrinksList({ list, drinks }: Props) {
   const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
+  const [selectedItems, setSelectedItems] = useState<Item[]>([]);
 
   const {
     register,
@@ -25,11 +33,29 @@ function FormDrinksList({ list, drinks }: Props) {
     defaultValues: list ? { ...list } : undefined,
   });
 
-  const onSubmit = async (data: DrinksListBase) => {
-    console.log(data);
-  };
-
   const slug = slugify(watch('name') || '', { lower: true });
+
+  const createList = useMutation<DrinksList, Error, NewDrinksList>({
+    mutationFn: (data) => {
+      setIsSaving(true);
+      return newDrinkList(data);
+    },
+    onSuccess: () => {
+      toast.success('New List Created!');
+      setIsSaving(false);
+    },
+    onError: (error) => {
+      toast.error('The list could not be created');
+      setIsSaving(false);
+    },
+  });
+
+  const onSubmit = async (data: DrinksListBase) => {
+    await createList.mutateAsync({
+      name: data.name,
+      itemsIds: selectedItems.map((item) => item.id),
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -66,7 +92,7 @@ function FormDrinksList({ list, drinks }: Props) {
           </div>
         </div>
       </div>
-      <DrinksListHandle drinks={drinks} />
+      <DrinksListHandle drinks={drinks} onItemsChange={setSelectedItems} />
 
       <div className="flex justify-end gap-6 mt-8">
         <Button

@@ -1,14 +1,7 @@
-import { useEffect, useState } from 'react';
-import { Button, CardWrapper } from '@magnetic/ui';
+import { CardWrapper } from '@magnetic/ui';
 import { useDrinksList } from '../../hooks/useDrinksList';
 import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
-import { groupItemsByCategory, placeholderItemImage } from '@magnetic/utils';
-import { Item } from '@magnetic/interfaces';
-import { Text } from '@magnetic/ui';
-import DrinksListHandle from '../../components/drinks-list-handle';
-import { useForm } from 'react-hook-form';
-import { DrinksListBase } from 'libs/interfaces/src/lib/drinks';
 import FormDrinksList from '../../components/form-drinks-list';
 
 function NewDrinksListPage() {

@@ -30,3 +30,8 @@ export interface DrinksList extends DrinksListBase {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface NewDrinksList {
+  name: string;
+  itemsIds: number[];
+}
