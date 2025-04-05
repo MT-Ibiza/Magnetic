@@ -16,13 +16,18 @@ import { toast } from 'sonner';
 import { URL_FRONTED } from '../constants';
 
 interface Props {
-  list?: DrinksListBase;
+  list?: {
+    name: string;
+    itemsIds: number[];
+  };
   drinks: Item[];
 }
 function FormDrinksList({ list, drinks }: Props) {
   const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
-  const [selectedItems, setSelectedItems] = useState<Item[]>([]);
+  const itemsIds = list?.itemsIds || [];
+  const initialItems = drinks.filter((drink) => itemsIds.includes(drink.id));
+  const [selectedItems, setSelectedItems] = useState<Item[]>(initialItems);
 
   const {
     register,
@@ -93,7 +98,11 @@ function FormDrinksList({ list, drinks }: Props) {
           </div>
         </div>
       </div>
-      <DrinksListHandle drinks={drinks} onItemsChange={setSelectedItems} />
+      <DrinksListHandle
+        drinks={drinks}
+        onItemsChange={setSelectedItems}
+        listItems={initialItems}
+      />
 
       <div className="flex justify-end gap-6 mt-8">
         <Button

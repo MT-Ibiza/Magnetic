@@ -3,15 +3,30 @@ import { useDrinksList } from '../../hooks/useDrinksList';
 import Loading from '../../components/loading';
 import { ErrorText } from '../../components/error-text';
 import FormDrinksList from '../../components/form-drinks-list';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useList } from '../../hooks/useList';
 
 function EditListItemsPage() {
   const params = useParams();
-  const listId = Number(params.listId);
-  const itemId = Number(params.itemId);
-  const navigate = useNavigate();
+  const listId = Number(params.id);
 
-  const { isLoading, isError, error, drinks } = useDrinksList();
+  const {
+    isLoading: isLoadingList,
+    isError: isErrorList,
+    error: errorList,
+    data: listData,
+  } = useList(listId);
+
+  const {
+    isLoading: isLoadingDrinks,
+    isError: isErrorDrinks,
+    error: errorDrinks,
+    drinks,
+  } = useDrinksList();
+
+  const isLoading = isLoadingList || isLoadingDrinks;
+  const isError = isErrorList || isErrorDrinks;
+  const error = errorList || errorDrinks;
 
   if (isLoading) return <Loading />;
   if (isError) return <ErrorText text={error?.message || ''} />;
@@ -27,7 +42,13 @@ function EditListItemsPage() {
         </ul>
       </div>
       <CardWrapper className="p-6">
-        <FormDrinksList drinks={drinks} />
+        <FormDrinksList
+          drinks={drinks}
+          list={{
+            name: listData?.name || '',
+            itemsIds: listData ? listData.items.map((item) => item.itemId) : [],
+          }}
+        />
       </CardWrapper>
     </div>
   );
