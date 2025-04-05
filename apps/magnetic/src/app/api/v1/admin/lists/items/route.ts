@@ -28,6 +28,7 @@ export async function GET(request: Request) {
             images: true,
             boatAttributes: true,
             drinkAttributes: true,
+            priceInCents: true,
             category: {
               select: {
                 id: true,

@@ -6,7 +6,7 @@ import {
 } from '@magnetic/interfaces';
 import { Button, Input, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
-import PublicListItemsHandle from './public-list-items-handle';
+import PublicListItemsHandle from './public-lists/public-list-items-handle';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import slugify from 'slugify';
@@ -130,6 +130,7 @@ function FormPublicList({ list, items, type, onSave }: Props) {
         </div>
       </div>
       <PublicListItemsHandle
+        type={type}
         items={items}
         onItemsChange={setSelectedItems}
         listItems={initialItems}
