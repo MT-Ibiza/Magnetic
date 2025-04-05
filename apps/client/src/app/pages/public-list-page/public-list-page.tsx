@@ -3,6 +3,7 @@ import { usePublicList } from '../../hooks/usePublicList';
 import { useParams } from 'react-router-dom';
 import PublicListBoats from './public-list-boats';
 import { Item } from '@magnetic/interfaces';
+import PublicListDrinks from './public-list-drinks';
 
 interface Props {}
 
@@ -30,6 +31,7 @@ function PublicListPage(props: Props) {
   return (
     <div className="container pt-10 lg:pt-4 pb-10">
       {data?.type === 'boat_rental' && <PublicListBoats items={items} />}
+      {data?.type === 'drinks' && <PublicListDrinks items={items} />}
     </div>
   );
 }
