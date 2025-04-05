@@ -4,6 +4,7 @@ import { ErrorText } from '../../components/error-text';
 import FormDrinksList from '../../components/form-drinks-list';
 import { useNavigate } from 'react-router-dom';
 import { useListServiceItems } from '../../hooks/useListServiceItems';
+import FormPublicList from '../../components/form-public-list';
 
 function NewBoatListPage() {
   const { isLoading, isError, error, items } =
@@ -24,8 +25,9 @@ function NewBoatListPage() {
         </ul>
       </div>
       <CardWrapper className="p-6">
-        <FormDrinksList
-          drinks={items}
+        <FormPublicList
+          items={items}
+          type="boat_rental"
           onSave={() => navigate(`/list/boats`, { replace: true })}
         />
       </CardWrapper>

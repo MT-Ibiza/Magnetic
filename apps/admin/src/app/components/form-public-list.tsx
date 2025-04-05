@@ -1,8 +1,8 @@
 import {
-  DrinksList,
   DrinksListBase,
   Item,
-  NewDrinksList,
+  ParamsPublicList,
+  PublicList,
 } from '@magnetic/interfaces';
 import { Button, Input, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
@@ -11,9 +11,9 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import slugify from 'slugify';
 import { useMutation } from '@tanstack/react-query';
-import { editDrinkList, newDrinkList } from '../apis/api-drinks';
 import { toast } from 'sonner';
 import { URL_FRONTED } from '../constants';
+import { editPublicList, newPublicList } from '../apis/api-public-lists';
 
 interface Props {
   list?: {
@@ -22,20 +22,20 @@ interface Props {
     id: number;
   };
   type: string;
-  drinks: Item[];
+  items: Item[];
   onSave: () => void;
 }
-function FormPublicList({ list, drinks, type, onSave }: Props) {
+
+function FormPublicList({ list, items, type, onSave }: Props) {
   const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
   const itemsIds = list?.itemsIds || [];
-  const initialItems = drinks.filter((drink) => itemsIds.includes(drink.id));
+  const initialItems = items.filter((drink) => itemsIds.includes(drink.id));
   const [selectedItems, setSelectedItems] = useState<Item[]>(initialItems);
 
   const {
     register,
     handleSubmit,
-    setValue,
     watch,
     formState: { errors },
   } = useForm<DrinksListBase>({
@@ -44,10 +44,10 @@ function FormPublicList({ list, drinks, type, onSave }: Props) {
 
   const slug = slugify(watch('name') || '', { lower: true });
 
-  const createList = useMutation<DrinksList, Error, NewDrinksList>({
+  const createList = useMutation<PublicList, Error, ParamsPublicList>({
     mutationFn: (data) => {
       setIsSaving(true);
-      return newDrinkList(data);
+      return newPublicList(data);
     },
     onSuccess: () => {
       toast.success('New List Created!');
@@ -60,11 +60,11 @@ function FormPublicList({ list, drinks, type, onSave }: Props) {
     },
   });
 
-  const updateList = useMutation<DrinksList, Error, NewDrinksList>({
+  const updateList = useMutation<PublicList, Error, ParamsPublicList>({
     mutationFn: (data) => {
       const id = list?.id || 0;
       setIsSaving(true);
-      return editDrinkList(id, data);
+      return editPublicList(id, data);
     },
     onSuccess: () => {
       toast.success('List Updated!');
@@ -82,11 +82,13 @@ function FormPublicList({ list, drinks, type, onSave }: Props) {
       await updateList.mutateAsync({
         name: data.name,
         itemsIds: selectedItems.map((item) => item.id),
+        type,
       });
     } else {
       await createList.mutateAsync({
         name: data.name,
         itemsIds: selectedItems.map((item) => item.id),
+        type,
       });
     }
   };
@@ -128,7 +130,7 @@ function FormPublicList({ list, drinks, type, onSave }: Props) {
         </div>
       </div>
       <PublicListItemsHandle
-        items={drinks}
+        items={items}
         onItemsChange={setSelectedItems}
         listItems={initialItems}
       />

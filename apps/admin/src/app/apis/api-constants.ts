@@ -129,7 +129,6 @@ export const URL_REMOVE_SEASON_PRICE = (id: number) =>
 export const URL_SORT_IMAGES = `${API_URL}/images/sort`;
 
 //Drinks
-export const URL_GET_DRINKS = `${API_URL}/lists/drinks/new`;
 export const URL_GET_DRINKS_LISTS = `${API_URL}/lists/drinks`;
 export const URL_NEW_DRINKS_LIST = `${API_URL}/lists/drinks`;
 export const URL_GET_DRINKS_LIST = (id: number) =>
@@ -139,6 +138,12 @@ export const URL_UPDATE_DRINKS_LIST = (id: number) =>
 export const URL_REMOVE_DRINKS_LIST = (id: number) =>
   `${API_URL}/lists/drinks/${id}`;
 
-export const URL_GET_LISTS = (type: string) => `${API_URL}/lists?type=${type}`;
+//Lists
+export const URL_GET_PUBLIC_LISTS = (type: string) =>
+  `${API_URL}/lists?type=${type}`;
+export const URL_NEW_PUBLIC_LIST = `${API_URL}/lists`;
+export const URL_GET_PUBLIC_LIST = (id: number) => `${API_URL}/lists/${id}`;
+export const URL_UPDATE_PUBLIC_LISTS = (id: number) => `${API_URL}/lists/${id}`;
+
 export const URL_GET_ITEMS_SERVICE = (type: string) =>
   `${API_URL}/lists/items?type=${type}`;
