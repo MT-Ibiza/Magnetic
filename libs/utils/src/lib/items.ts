@@ -8,7 +8,7 @@ export function groupItemsByCategory(
   } = {};
 
   items.forEach((item) => {
-    const categoryName: string = item.category?.name || 'unknown';
+    const categoryName: string = item.category?.name || 'No Category';
     const categoryId = item.categoryId || 0;
     const categoryPosition: number = item.category?.position || 0;
 

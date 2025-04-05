@@ -46,46 +46,58 @@ function PublicListItemsHandle({ items, onItemsChange, listItems }: Props) {
 
   return (
     <div className="flex gap-10">
-      <div className="w-full bg-gray-100 p-5">
+      <div className="w-full ">
         <Text className="font-semibold text-lg mb-4">All Products</Text>
-        {sortedItems.map((group, index) => (
-          <div key={index} className="mb-6">
-            <Text className="font-semibold mb-3">{group.category}</Text>
-            <div className="flex flex-col gap-3">
-              {group.items.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex gap-5 justify-between items-center p-2 bg-white rounded-lg shadow-md"
-                >
-                  <div className="flex gap-3">
-                    <img
-                      src={
-                        item.images.length > 0
-                          ? item.images[0].url
-                          : placeholderItemImage
-                      }
-                      alt={item.name}
-                      className="w-10 h-10 object-cover rounded-lg"
-                    />
-                    <div className="mt-2 text-center">
-                      <Text size="1">{item.name}</Text>
-                    </div>
-                  </div>
-                  <Button
-                    onClick={() => handleAddItem(item)}
-                    disabled={selectedItems.some((i) => i.id === item.id)}
-                  >
-                    + Add
-                  </Button>
+        <div className="h-[35rem] overflow-y-scroll p-3 border rounded-md">
+          <div className="flex flex-col gap-3">
+            {sortedItems.map((group, index) => (
+              <div
+                className="border-gray-300 collapse collapse-plus border"
+                key={index}
+              >
+                <input type="checkbox" className="peer" />
+                <div className="collapse-title font-semibold">
+                  {group.category}
                 </div>
-              ))}
-            </div>
+                <div className="collapse-content flex flex-col gap-3">
+                  {group.items.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex gap-5 justify-between items-center p-2 border rounded-md"
+                    >
+                      <div className="flex gap-3">
+                        <img
+                          src={
+                            item.images.length > 0
+                              ? item.images[0].url
+                              : placeholderItemImage
+                          }
+                          alt={item.name}
+                          className="w-10 h-10 object-cover rounded-lg"
+                        />
+                        <div className="mt-2 text-center">
+                          <Text size="1">{item.name}</Text>
+                        </div>
+                      </div>
+                      <Button
+                        onClick={() => handleAddItem(item)}
+                        disabled={selectedItems.some((i) => i.id === item.id)}
+                      >
+                        + Add
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
-      <div className="w-full bg-gray-100 p-5">
-        <Text className="font-semibold text-lg mb-4">Selected Products</Text>
-        <div className="flex flex-col gap-5">
+      <div className="w-full">
+        <Text className="font-semibold text-lg mb-4">
+          Selected Products ({selectedItems.length})
+        </Text>
+        <div className="flex flex-col gap-5 h-[33rem] overflow-y-scroll bg-gray-100 p-5">
           {selectedItems.length === 0 && (
             <Text size="1">No items selected yet.</Text>
           )}
