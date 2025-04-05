@@ -6,9 +6,6 @@ import DashboardPage from '../pages/dashboard-page/dashboard';
 import BookingsPage from '../pages/bookings-page/bookings-page';
 import SettingsPage from '../pages/settings-page/settings-page';
 import NewServicePage from '../pages/new-service-page/new-service-page';
-import ServiceLayout from '../pages/services/services-layout';
-import OverviewPage from '../pages/services/overview-page';
-import ProductsViewPage from '../pages/services/products-page';
 import RedirectRoute from './redirect-route';
 import NewUserPage from '../pages/new-user-page/new-user-page';
 import EditUserPage from '../pages/edit-user-page/edit-user-page';
@@ -77,14 +74,6 @@ export const AppRouter = () => {
           <Route path="bookings/:id" element={<BookingPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="clients/:id" element={<UserLayout />}></Route>
-          <Route
-            path="services/:id"
-            element={<Navigate replace to="overview" />}
-          />
-          <Route path="services/:id" element={<ServiceLayout />}>
-            <Route path="products" element={<ProductsViewPage />} />
-            <Route path="overview" element={<OverviewPage />} />
-          </Route>
           <Route path="airtable" element={<AirtablePage />} />
           <Route path="list/drinks" element={<DrinksListPage />} />
           <Route path="list/drinks/new" element={<NewDrinksListPage />} />
