@@ -11,36 +11,46 @@ export interface NavMobileProps {
 }
 
 const NavMobile: React.FC<NavMobileProps> = ({
-  data = NAVIGATION_DEMO,
+  data = NAVIGATION_DEMO(),
   onClickClose,
 }) => {
   const _renderItem = (item: NavItemType, index: number) => {
+    const isLink = !!item.href;
+  
     return (
       <Disclosure
         key={item.id}
         as="li"
         className="text-neutral-900 dark:text-white"
       >
-        <NavLink
-          end
-          className={({ isActive }) =>
-            `flex w-full px-4 font-medium uppercase tracking-wide text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg ${
-              isActive ? 'text-secondary' : ''
-            }`
-          }
-          to={{
-            pathname: item.href || undefined,
-          }}
-        >
-          <span
-            className={`py-2.5 pr-3 ${!item.children ? 'block w-full' : ''}`}
+        {isLink ? (
+          <NavLink
+            end
+            className={({ isActive }) =>
+              `flex w-full px-4 font-medium uppercase tracking-wide text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg ${
+                isActive ? 'text-secondary' : ''
+              }`
+            }
+            to={item.href || '#'}
+          >
+            <span
+              className={`py-2.5 pr-3 ${!item.children ? 'block w-full' : ''}`}
+            >
+              {item.name}
+            </span>
+          </NavLink>
+        ) : (
+          <button
+            onClick={item.onClick}
+            className="flex w-full px-4 py-2.5 pr-3 font-medium uppercase tracking-wide text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg text-left"
           >
             {item.name}
-          </span>
-        </NavLink>
+          </button>
+        )}
       </Disclosure>
     );
   };
+  
 
   return (
     <div className="overflow-y-auto w-full h-screen py-2 transition transform shadow-lg ring-1 dark:ring-neutral-700 bg-white dark:bg-neutral-900 divide-y-2 divide-neutral-100 dark:divide-neutral-800">

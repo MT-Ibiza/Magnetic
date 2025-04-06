@@ -49,7 +49,7 @@ export function HeaderClient(props: HeaderProps) {
 
   return (
     <div
-      className={`hidden lg:block nc-header-bg sticky top-0 left-0 right-0 z-20 shadow-sm lg:ml-0 w-full ${className}`}
+      className={`hidden md:block nc-header-bg sticky top-0 left-0 right-0 z-20 shadow-sm lg:ml-0 w-full ${className}`}
     >
       <div className={`nc-MainNav1 relative z-10 ${className}`}>
         <div className="px-4 lg:container py-4 lg:py-5 relative flex justify-between items-center">

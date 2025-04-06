@@ -6,7 +6,7 @@ function Footer(props: Props) {
 
   return (
     <div className="bg-gray-800">
-      <div className='container lg:px-[100px] p-5 flex flex-col lg:flex-row gap-[5px] lg:gap-[0px] lg:justify-between'>
+      <div className='container lg:px-[100px] p-5 flex flex-col md:flex-row gap-[5px] lg:gap-[0px] md:justify-between'>
         <Text className="text-white" size="1">
           © 2025 Magnetic Travel
         </Text>

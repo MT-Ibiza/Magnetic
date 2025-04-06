@@ -11,8 +11,9 @@ export interface NavItemType {
   id: string;
   name: string;
   isNew?: boolean;
-  href: string;
+  href?: string;
   targetBlank?: boolean;
+  onClick?: () => void;
   children?: NavItemType[];
   megaMenu?: MegamenuItem[];
   type?: "dropdown" | "megaMenu" | "none";
