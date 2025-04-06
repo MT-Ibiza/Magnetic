@@ -74,7 +74,7 @@ function FilterBoats(props: Props) {
 
   return (
     <>
-      <div className="shadow-sm w-full sticky z-10 top-[0px] lg:hidden  w-full !mx-auto">
+      <div className="shadow-sm w-full sticky z-10 top-[0px] md:top-[67px] lg:hidden  w-full !mx-auto">
         <div className="w-full !mx-auto lg:px-3">
           <FilterSearchMobile>
             <SearchBoatsMobile
