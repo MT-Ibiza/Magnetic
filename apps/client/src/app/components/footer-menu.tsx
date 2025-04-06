@@ -1,12 +1,22 @@
-import { FaChartPie, FaConciergeBell, FaBox, FaShoppingCart } from 'react-icons/fa';
+import {
+  FaChartPie,
+  FaConciergeBell,
+  FaBox,
+  FaShoppingCart,
+} from 'react-icons/fa';
 import React, { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import isInViewport from '../utils';
 import MenuBar from './menu-bar-mobile';
 import { useCartStore } from '../hooks/useCartStore';
-import { HiOutlineBell, HiOutlineChartPie, HiOutlineShoppingCart } from 'react-icons/hi';
+import {
+  HiOutlineBell,
+  HiOutlineChartPie,
+  HiOutlineShoppingCart,
+} from 'react-icons/hi';
 
 let WIN_PREV_POSITION = window.pageYOffset;
+let hideTimeout: ReturnType<typeof setTimeout> | null = null;
 
 interface NavItem {
   name: string;
@@ -26,9 +36,13 @@ const FooterNav = () => {
   const location = useLocation();
   const { cart } = useCartStore();
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  
+
   useEffect(() => {
     window.addEventListener('scroll', handleEvent);
+    return () => {
+      window.removeEventListener('scroll', handleEvent);
+      if (hideTimeout) clearTimeout(hideTimeout);
+    };
   }, []);
 
   const handleEvent = () => {
@@ -36,9 +50,8 @@ const FooterNav = () => {
   };
 
   const showHideHeaderMenu = () => {
-    let currentScrollPos = window.pageYOffset;
+    const currentScrollPos = window.pageYOffset;
     if (!containerRef.current) return;
-
     if (currentScrollPos > WIN_PREV_POSITION) {
       if (
         isInViewport(containerRef.current) &&
@@ -46,8 +59,10 @@ const FooterNav = () => {
       ) {
         return;
       }
-
-      containerRef.current.classList.add('FooterNav--hide');
+      if (hideTimeout) clearTimeout(hideTimeout);
+      hideTimeout = setTimeout(() => {
+        containerRef.current?.classList.add('FooterNav--hide');
+      }, 1000);
     } else {
       if (
         !isInViewport(containerRef.current) &&
@@ -55,9 +70,9 @@ const FooterNav = () => {
       ) {
         return;
       }
+      if (hideTimeout) clearTimeout(hideTimeout);
       containerRef.current.classList.remove('FooterNav--hide');
     }
-
     WIN_PREV_POSITION = currentScrollPos;
   };
 
@@ -72,22 +87,22 @@ const FooterNav = () => {
           const active = location.pathname === item.link;
           return item.link ? (
             <Link
-            key={index}
-            to={item.link}
-            className={`relative flex flex-col items-center justify-between text-neutral-500 dark:text-neutral-300/90 ${
-              active ? 'text-neutral-900 dark:text-neutral-100' : ''
-            }`}
-          >
-            <item.icon className={`w-5 h-5 ${active ? 'text-primary-600' : ''}`} />
-            <span className="text-[11px] leading-none mt-1">{item.name}</span>
-            {item.link === '/cart' && totalItems > 0 && (
-              <div
-                className="absolute -top-1 -right-3 bg-red-600 text-white text-xs font-bold h-5 w-5 rounded-full flex items-center justify-center shadow-lg"
-              >
-                {totalItems}
-              </div>
-            )}
-          </Link>
+              key={index}
+              to={item.link}
+              className={`relative flex flex-col items-center justify-between text-neutral-500 dark:text-neutral-300/90 ${
+                active ? 'text-neutral-900 dark:text-neutral-100' : ''
+              }`}
+            >
+              <item.icon
+                className={`w-5 h-5 ${active ? 'text-primary-600' : ''}`}
+              />
+              <span className="text-[11px] leading-none mt-1">{item.name}</span>
+              {item.link === '/cart' && totalItems > 0 && (
+                <div className="absolute -top-1 -right-3 bg-red-600 text-white text-xs font-bold h-5 w-5 rounded-full flex items-center justify-center shadow-lg">
+                  {totalItems}
+                </div>
+              )}
+            </Link>
           ) : (
             <div
               key={index}
