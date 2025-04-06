@@ -1,6 +1,6 @@
 import { FormSubmitParams, Item } from '@magnetic/interfaces';
 import { useQuery } from '@tanstack/react-query';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useCart } from '../../hooks/useCart';
 import { useCartStore } from '../../hooks/useCartStore';
 import FilterDrinks from './filter-drinks';
@@ -13,10 +13,12 @@ import {
   EmptyState,
   GridSkeleton,
 } from '@magnetic/ui';
-import { groupItemsByCategory } from '@magnetic/utils';
+import { groupItemsByCategory, userCanMakeBooking } from '@magnetic/utils';
 import Modal from '../../components/modal';
 import { useAuth } from '../../hooks/useAuth';
 import { PiBeerBottleFill } from 'react-icons/pi';
+import { getCurrentClient } from '../../apis/api-client';
+import NoBookings from '../../components/messages/no-bookings';
 
 interface Props {
   serviceId: number;
@@ -25,12 +27,13 @@ interface Props {
 
 function ListDrinks(props: Props) {
   const { serviceId, categories } = props;
-  const [openFormModal, setOpenFormModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const { addDrinkToCart } = useCart();
   const { addItem, removeItem, cart, totalDrinks } = useCartStore();
   const { getCurrentUser } = useAuth();
   const user = getCurrentUser();
 
+  const [isOutDated, setIsOutDated] = useState(false);
   const [currentItemSelected, setCurrentItemSelected] = useState<Item>();
   const [searchParams, setSearchParams] = useState<DrinkSearchAttributes>({
     categoriesIds: undefined,
@@ -38,15 +41,15 @@ function ListDrinks(props: Props) {
   });
 
   const toggleModal = () => {
-    setOpenFormModal((prevState) => !prevState);
+    setOpenModal((prevState) => !prevState);
   };
 
   const openForm = () => {
-    setOpenFormModal(true);
+    setOpenModal(true);
   };
 
   const closeForm = () => {
-    setOpenFormModal(false);
+    setOpenModal(false);
   };
 
   const cartMap = useMemo(
@@ -66,6 +69,23 @@ function ListDrinks(props: Props) {
       return result;
     },
   });
+
+  async function checkIfCanBook() {
+    try {
+      const user = await getCurrentClient();
+      const isValid = userCanMakeBooking(user.arrivalDate);
+      setIsOutDated(!isValid);
+    } catch (error) {
+      setIsOutDated(true);
+      toggleModal();
+    }
+  }
+
+  useEffect(() => {
+    if (drinks) {
+      checkIfCanBook();
+    }
+  }, [drinks]);
 
   const itemsGroup = useMemo(
     () => groupItemsByCategory(drinks || []),
@@ -185,7 +205,7 @@ function ListDrinks(props: Props) {
   }
 
   return (
-    <div className='flex flex-col gap-[15px] lg:gap-[40px]'>
+    <div className="flex flex-col gap-[15px] lg:gap-[40px]">
       <FilterDrinks onChangeFilters={handleSearch} categories={categories} />
       {isLoading ? (
         <GridSkeleton
@@ -198,7 +218,9 @@ function ListDrinks(props: Props) {
             <div>
               {itemsGroup.map((group, index) => (
                 <div key={index} className="pt-[30px]">
-                  <h2 className="md:text-lg lg:text-[22px] font-semibold">{group.category}</h2>
+                  <h2 className="md:text-lg lg:text-[22px] font-semibold">
+                    {group.category}
+                  </h2>
                   <div className="grid pt-[30px] gap-3 lg:gap-6 md:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-5">
                     {group.items.map((item, index) => (
                       <ItemDrinkCard
@@ -237,15 +259,19 @@ function ListDrinks(props: Props) {
           onClose={() => setAlert(null)}
         />
       )}
-      <Modal open={openFormModal}>
-        <DrinksDeliveryBookingForm
-          user={user}
-          onSubmit={handleSaveForm}
-          formData={{
-            serviceId,
-          }}
-          onCancel={toggleModal}
-        />
+      <Modal open={openModal}>
+        {isOutDated ? (
+          <NoBookings onClose={toggleModal} />
+        ) : (
+          <DrinksDeliveryBookingForm
+            user={user}
+            onSubmit={handleSaveForm}
+            formData={{
+              serviceId,
+            }}
+            onCancel={toggleModal}
+          />
+        )}
       </Modal>
     </div>
   );

@@ -5,7 +5,7 @@ import {
   URL_UPDATE_CLIENT,
 } from './api-constants';
 
-export async function getCurrentUser(): Promise<UserBase> {
+export async function getCurrentClient(): Promise<UserBase> {
   const accessToken = localStorage.getItem('magnetic_auth');
   const response = await fetch(URL_GET_CURRENT_USER, {
     method: 'GET',

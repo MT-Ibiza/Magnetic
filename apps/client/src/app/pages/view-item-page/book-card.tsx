@@ -1,14 +1,11 @@
 import { Item } from '@magnetic/interfaces';
-import { Alert, Button, Modal, Text } from '@magnetic/ui';
+import { Text } from '@magnetic/ui';
 import {
   centsToEurosWithCurrency,
   createVariantOptions,
   createVariantTransferOptions,
-  userCanMakeBooking,
 } from '@magnetic/utils';
 import { useState } from 'react';
-import { getCurrentUser } from '../../apis/api-client';
-import NoBookings from '../../components/messages/no-bookings';
 import BookButton from '../../components/bookings/book-button';
 
 interface Props {

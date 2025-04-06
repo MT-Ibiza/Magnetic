@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Modal } from '@magnetic/ui';
-import { getCurrentUser } from '../../apis/api-client';
+import { getCurrentClient } from '../../apis/api-client';
 import { userCanMakeBooking } from '@magnetic/utils';
 import NoBookings from '../messages/no-bookings';
 
@@ -20,7 +20,7 @@ function BookButton(props: Props) {
   };
 
   async function checkIfCanBook() {
-    const user = await getCurrentUser();
+    const user = await getCurrentClient();
     const isValid = userCanMakeBooking(user.arrivalDate);
     if (isValid) {
       onClick();
