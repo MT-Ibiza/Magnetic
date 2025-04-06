@@ -40,17 +40,20 @@ export function PackagePage() {
           </header>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <section className="text-neutral-600 text-sm md:text-base overflow-hidden">
+        <div className="grid lg:grid-cols-3 gap-5 xl:gap-8">
           {sortedPackages.map((pkg) => (
             <PlanCard
               key={pkg.id}
-              maxFeatures={3}
+              // maxFeatures={3}
               seeMoreLink={`/packages/${pkg.id}`}
               title={pkg.name}
               price={pkg.priceInCents}
               features={pkg.features}
               packageId={pkg.id}
               userPackageId={user?.package?.id}
+              userPackageName={user?.package?.name}
+
               className={`${
                 pkg.id === user?.package?.id
                   ? 'border-primary-500'
@@ -59,6 +62,8 @@ export function PackagePage() {
             />
           ))}
         </div>
+        </section>
+
       </div>
       <Modal open={openModal}>
         <FormCalendly

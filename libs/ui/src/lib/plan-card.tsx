@@ -11,6 +11,7 @@ interface Props {
   className?: string;
   packageId?: number;
   userPackageId?: number;
+  userPackageName?: string;
 }
 
 export function PlanCard(props: Props) {
@@ -23,7 +24,14 @@ export function PlanCard(props: Props) {
     className,
     packageId,
     userPackageId,
+    userPackageName,
   } = props;
+
+  const isIncludedForHigherTier = () => {
+    if (!userPackageName) return false;
+    const levels = ['Gold', 'Platinum', 'Diamond'];
+    return levels.indexOf(userPackageName) > levels.indexOf(title);
+  };
 
   const parseFeaturesFromHtml = (
     featuresHtml: string | undefined
@@ -61,30 +69,30 @@ export function PlanCard(props: Props) {
               Included
             </span>
           </h2>
-        ) : (
-          <h2 className="text-5xl leading-none flex items-center ">
-            {title === 'Diamond' ? (
-              <div className="flex flex-col">
-                <span className="text-3xl lg:text-4xl">
-                  +10% Management Fee
-                </span>
-                <span className="text-base mt-2 lg:text-lg font-normal text-neutral-500">
-                  Minimum spend €15,000 per week.
-                </span>
-                <span className="text-base lg:text-lg font-normal text-neutral-500">
-                  €1,800 flat fee for lower spend.
-                </span>
-              </div>
-            ) : (
-              <div className="flex flex-col">
-                {' '}
-                <span className="text-3xl lg:text-4xl">{price}€</span>
-                <span className="text-base mt-2 lg:text-lg font-normal text-neutral-500">
-                  Per week
-                </span>
-              </div>
-            )}
+        ) : isIncludedForHigherTier() ? (
+          <h2 className="flex flex-col text-5xl leading-none">
+            <h2 className="text-3xl lg:text-4xl">Included</h2>
+            <span className="text-base lg:text-lg mt-2 font-normal text-neutral-500">
+              With your package
+            </span>
           </h2>
+        ) : title === 'Diamond' ? (
+          <div className="flex flex-col">
+            <span className="text-3xl lg:text-4xl">+10% Management Fee</span>
+            <span className="text-base mt-2 lg:text-lg font-normal text-neutral-500">
+              Minimum spend €15,000 per week.
+            </span>
+            <span className="text-base lg:text-lg font-normal text-neutral-500">
+              €1,800 flat fee for lower spend.
+            </span>
+          </div>
+        ) : (
+          <div className="flex flex-col">
+            <span className="text-3xl lg:text-4xl">{price}€</span>
+            <span className="text-base mt-2 lg:text-lg font-normal text-neutral-500">
+              Per week
+            </span>
+          </div>
         )}
       </div>
       <nav className="space-y-4 mb-8">

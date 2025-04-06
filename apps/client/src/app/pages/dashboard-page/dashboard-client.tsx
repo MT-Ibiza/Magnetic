@@ -46,7 +46,7 @@ export function DashboardClientPage() {
                       userAccount.lastName
                     )}
                   </h1>
-                  <span className="font-semibold text-neutral-700 text-base md:text-lg">
+                  <span className="text-neutral-700 text-base md:text-lg">
                     Your concierge package:{' '}
                     <Link
                       to={`/packages/${userAccount.package?.id}`}
