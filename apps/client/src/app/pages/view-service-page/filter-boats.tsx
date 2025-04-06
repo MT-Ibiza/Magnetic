@@ -88,7 +88,7 @@ function FilterBoats(props: Props) {
           </FilterSearchMobile>
         </div>
       </div>
-      <div className="border border-neutral-200 hidden lg:block sticky z-10 top-[80px] w-full relative mt-4 rounded-[45px] shadow-xl dark:shadow-2xl bg-white dark:bg-neutral-800">
+      <div className="border border-neutral-200 hidden lg:block sticky z-10 lg:top-[76px] xl:top-[80px] w-full relative mt-4 rounded-[45px] shadow-xl dark:shadow-2xl bg-white dark:bg-neutral-800">
         <form className="lg:grid grid-cols-4 gap-x-[30px]">
           <RentalCarDatesRangeInput
             onSelectDate={handleDateChange}

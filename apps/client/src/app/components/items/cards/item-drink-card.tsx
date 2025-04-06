@@ -33,7 +33,7 @@ function ItemDrinkCard({
       <div className="relative w-full rounded-3xl overflow-hidden">
         <GallerySlider
           galleryImgs={imagesSorted}
-          classImage="h-[200px]"
+          classImage="h-[200px] w-full"
           uniqueID={`ExperiencesCard_${item.id}`}
         />
         <div className="p-5 flex flex-col justify-end space-y-4">

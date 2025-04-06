@@ -40,7 +40,7 @@ export function ServiceClientPage() {
             Browse and book premium services to enhance your stay.
           </span>
         </header>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[32px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-[32px]">
           {services.map((service) => (
             <Link
               key={service.id}

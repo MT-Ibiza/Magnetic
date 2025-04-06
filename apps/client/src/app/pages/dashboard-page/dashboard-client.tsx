@@ -38,7 +38,7 @@ export function DashboardClientPage() {
           >
             <div className="flex flex-col lg:grid lg:grid-cols-2 gap-[15px] lg:gap-[30px] lg:items-center h-full">
               <div className="h-full flex flex-col gap-[15px]">
-                <div className="h-full flex flex-col items-start rounded-2xl space-y-8 sm:space-y-4 xl:pr-14 lg:mr-10 xl:mr-0 border border-neutral-200 p-6">
+                <div className="h-full flex flex-col items-start rounded-2xl space-y-8 sm:space-y-4 xl:pr-14 xl:mr-0 border border-neutral-200 p-6">
                   <h1 className=" text-neutral-900 font-semibold text-3xl md:text-4xl md:!leading-[120%] lg:text-3xl dark:text-neutral-100 max-w-4xl ">
                     Welcome,{' '}
                     {getNameFromUsername(

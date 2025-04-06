@@ -210,7 +210,7 @@ function ListDrinks(props: Props) {
       {isLoading ? (
         <GridSkeleton
           totalItems={10}
-          classNameContent="grid pt-[30px] gap-6 md:gap-8 grid-cols-2 lg:grid-cols-5"
+          classNameContent="grid pt-[30px] gap-6 md:gap-8 grid-cols-2 lg:grid-cols-4 xl:grid-cols-5"
         />
       ) : (
         <>
@@ -221,7 +221,7 @@ function ListDrinks(props: Props) {
                   <h2 className="md:text-lg lg:text-[22px] font-semibold">
                     {group.category}
                   </h2>
-                  <div className="grid pt-[30px] gap-3 lg:gap-6 md:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-5">
+                  <div className="grid pt-[30px] gap-3 lg:gap-6 md:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
                     {group.items.map((item, index) => (
                       <ItemDrinkCard
                         key={index}
