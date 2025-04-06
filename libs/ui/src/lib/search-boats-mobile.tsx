@@ -258,7 +258,7 @@ export const SearchBoatsMobile = (props: SearchBoatsMobileProps) => {
         {renderSizeInput()}
         {renderBudgetInput()}
       </div>
-      <div className="absolute bottom-0 z-30  w-full p-4 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-700 flex justify-end">
+      <div className="absolute bottom-0 left-0 z-30  w-full p-4 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-700 flex justify-end">
         <Button
           radius="full"
           className="flex gap-[10px]"
