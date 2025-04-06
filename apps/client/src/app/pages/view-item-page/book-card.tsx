@@ -1,11 +1,15 @@
 import { Item } from '@magnetic/interfaces';
-import { Button, Text } from '@magnetic/ui';
+import { Alert, Button, Modal, Text } from '@magnetic/ui';
 import {
   centsToEurosWithCurrency,
   createVariantOptions,
   createVariantTransferOptions,
+  userCanMakeBooking,
 } from '@magnetic/utils';
 import { useState } from 'react';
+import { getCurrentUser } from '../../apis/api-client';
+import NoBookings from '../../components/messages/no-bookings';
+import BookButton from '../../components/bookings/book-button';
 
 interface Props {
   item: Item;
@@ -15,17 +19,12 @@ interface Props {
 function BookCard(props: Props) {
   const { item, onClick } = props;
   const { variants, service } = item;
-
   const [priceSelected, setPriceSelected] = useState(item.priceInCents);
   const isTransfer = service.serviceType === 'transfer';
 
   const variantOptions = isTransfer
     ? createVariantTransferOptions(variants, item)
     : createVariantOptions(variants, item);
-
-  // const itemName = isTransfer
-  //   ? `${item.name} (${item.transferAttributes?.capacity || 4} pax)`
-  //   : item.name;
 
   return (
     <div className="sticky bg-base-100 top-[90px] listingSectionSidebar__wrap shadow-xl">
@@ -58,9 +57,7 @@ function BookCard(props: Props) {
         </>
       )}
 
-      <Button size={2} radius="full" onClick={onClick}>
-        Book Now
-      </Button>
+      <BookButton size={2} radius="full" onClick={onClick} />
     </div>
   );
 }

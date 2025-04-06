@@ -83,8 +83,8 @@ export function DashboardClientPage() {
                     <div className="flex items-center gap-4">
                       <FaClock className="text-neutral-700 dark:text-neutral-300 text-2xl lg:text-xl md:text-2xl" />
                       <span>
-                        The booking services has closed as the date has already
-                        passed.
+                        Online bookings are not available within 7 days of
+                        arrival.
                       </span>
                     </div>
                   )}

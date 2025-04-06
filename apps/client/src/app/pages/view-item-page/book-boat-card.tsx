@@ -1,5 +1,4 @@
 import { Item } from '@magnetic/interfaces';
-import { Button } from '@magnetic/ui';
 import {
   centsToEurosWithCurrency,
   formatDate,
@@ -7,6 +6,7 @@ import {
 } from '@magnetic/utils';
 import { MutableRefObject, useMemo } from 'react';
 import { FaCalendarAlt } from 'react-icons/fa';
+import BookButton from '../../components/bookings/book-button';
 
 interface Props {
   item: Item;
@@ -63,15 +63,13 @@ function BookBoatCard(props: Props) {
         </div>
         <div className="border-b border-neutral-200"></div>
       </div>
-      <Button
+      <BookButton
         size={2}
         radius="full"
         onClick={() => {
           onClick(startDate);
         }}
-      >
-        Book Now
-      </Button>
+      />
     </div>
   );
 }

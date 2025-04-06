@@ -10,6 +10,7 @@ export const URL_LOGIN = `${API_URL}/login`;
 
 //Client
 export const URL_GET_CLIENT = `${API_URL}/account`;
+export const URL_GET_CURRENT_USER = `${API_URL}`;
 export const URL_UPDATE_CLIENT = `${API_URL}/account`;
 
 //Services
