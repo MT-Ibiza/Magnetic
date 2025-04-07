@@ -12,9 +12,10 @@ interface Props {
   item: Item;
   selectedDate?: string;
   priceMonthNumber: number;
+  url?: string;
 }
 
-function ItemBoatCard({ item, priceMonthNumber, selectedDate }: Props) {
+function ItemBoatCard({ item, priceMonthNumber, selectedDate, url }: Props) {
   const {
     name,
     priceInCents,
@@ -41,21 +42,21 @@ function ItemBoatCard({ item, priceMonthNumber, selectedDate }: Props) {
   );
 
   const displayPrice = monthPrice?.priceInCents ?? priceInCents;
-  const baseUrl = `/services/${serviceId}/item/${id}`;
-  const url = selectedDate ? `${baseUrl}?date=${selectedDate}` : baseUrl;
+  const baseUrl = url || `/services/${serviceId}/item/${id}`;
+  const urlPage = selectedDate ? `${baseUrl}?date=${selectedDate}` : baseUrl;
 
   return (
     <div className="nc-CarCard group relative border border-neutral-200 dark:border-neutral-700 rounded-3xl overflow-hidden hover:shadow-xl transition-shadow bg-white dark:bg-neutral-900">
       <div className="relative w-full rounded-2xl overflow-hidden">
         <GallerySlider
-          href={url}
+          href={urlPage}
           galleryImgs={imagesSorted}
           classImage="h-[200px]"
           uniqueID={`ExperiencesCard_${id}`}
         />
         <div className="p-5 space-y-4">
           <div className="space-y-2 flex flex-col">
-            <Link to={url} className="capitalize text-base font-medium">
+            <Link to={urlPage} className="capitalize text-base font-medium">
               <span className="line-clamp-1">{name}</span>
             </Link>
             <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
@@ -78,7 +79,7 @@ function ItemBoatCard({ item, priceMonthNumber, selectedDate }: Props) {
                 /day
               </Text>
             </div>
-              <Button href={url}>Details</Button>
+            <Button href={url}>Details</Button>
           </div>
         </div>
       </div>

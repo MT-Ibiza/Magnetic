@@ -77,3 +77,5 @@ export const URL_LIST_DRINKS = (query: string) =>
 
 export const URL_GET_DRINKS_SERVICE = `${API_LIST}/drinks`;
 export const URL_GET_PUBLIC_LIST = (slug: string) => `${API_LIST}/${slug}`;
+export const URL_GET_PUBLIC_ITEM_LIST = (slug: string, itemId: number) =>
+  `${API_LIST}/${slug}/items/${itemId}`;

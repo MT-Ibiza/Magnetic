@@ -15,8 +15,9 @@ import ViewItemPage from '../pages/view-item-page/view-item-page';
 import BookingsPage from '../pages/bookings-page/bookings-page';
 import PrivacyPolicyPage from '../pages/privacy-policy-page/privacy-policy-page';
 import TermsConditionsPage from '../pages/terms-conditions-page/terms-conditions-page';
-import DrinksListPage from '../pages/drinks-list-page/drinks-list-page';
 import PublicListPage from '../pages/public-list-page/public-list-page';
+import PublicLayout from '../pages/public-list-page/public-layout';
+import ListItemPage from '../pages/public-list-page/list-item-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -30,7 +31,10 @@ export const AppRouter = () => {
       <Route path="login" element={<RedirectRoute />} />
       <Route path="terms-conditions" element={<TermsConditionsPage />} />
       <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
-      <Route path="list/:slug" element={<PublicListPage />} />
+      <Route element={<PublicLayout />}>
+        <Route path="list/:slug" element={<PublicListPage />} />
+        <Route path="list/:slug/:itemId" element={<ListItemPage />} />
+      </Route>
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<DashboardClientPage />} />

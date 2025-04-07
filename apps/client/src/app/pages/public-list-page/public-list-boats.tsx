@@ -8,17 +8,18 @@ import { getNumberMonth } from '@magnetic/utils';
 
 interface Props {
   items: Item[];
+  slug: string;
 }
 
 function PublicListBoats(props: Props) {
-  const { items } = props;
+  const { items, slug } = props;
   const defaultMonthNumber = getNumberMonth();
   const [currentMonthNumber, setCurrentMonthNumber] =
     useState(defaultMonthNumber);
 
   return (
     <div className="flex flex-col gap-[15px] lg:gap-[40px]">
-      <FilterBoats onChangeFilters={(filters) => {}} />
+      {/* <FilterBoats onChangeFilters={(filters) => {}} /> */}
 
       {items.length !== 0 ? (
         <div className="grid grid-cols-1 gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -28,6 +29,7 @@ function PublicListBoats(props: Props) {
                 selectedDate={undefined}
                 item={item}
                 priceMonthNumber={currentMonthNumber}
+                url={`/list/${slug}/${item.id}`}
               />
             </div>
           ))}
