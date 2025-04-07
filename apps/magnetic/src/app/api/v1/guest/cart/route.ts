@@ -1,11 +1,21 @@
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 import { getTokenFromRequest } from '../../util';
+import { cookies } from 'next/headers';
 
 export async function GET(request: Request) {
   try {
+    const cookieStore = cookies();
+
+    const cartIdFromCookie = cookieStore.get('cartId')?.value;
+    console.log('my cart: ', cartIdFromCookie);
+
+    if (!cartIdFromCookie) {
+      return NextResponse.json(null);
+    }
+
     const cart = await db.cart.findUnique({
-      where: { id: 1 },
+      where: { id: Number(cartIdFromCookie) },
       include: {
         items: {
           orderBy: {

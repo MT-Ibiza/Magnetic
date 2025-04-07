@@ -8,13 +8,12 @@ import {
 
 export async function getGuestCart(): Promise<Cart> {
   const url = URL_GET_GUEST_CART;
-  const accessToken = localStorage.getItem('magnetic_auth');
   const response = await fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
     },
+    credentials: 'include',
   });
 
   const dataJson = await response.json();
@@ -58,6 +57,7 @@ export async function addItemBoatToGuestCart(params: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
+    credentials: 'include',
     body: JSON.stringify(params),
   });
 

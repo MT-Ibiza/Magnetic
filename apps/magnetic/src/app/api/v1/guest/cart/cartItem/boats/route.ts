@@ -25,9 +25,11 @@ export async function POST(request: Request) {
     }
 
     let cart;
+    let cartIdCookie;
     const cookieStore = cookies();
 
     const cartIdFromCookie = cookieStore.get('cartId')?.value;
+    console.log('cartIdFromCookie: ', cartIdFromCookie);
 
     if (cartIdFromCookie) {
       cart = await db.cart.findUnique({
@@ -37,21 +39,15 @@ export async function POST(request: Request) {
 
     if (!cart) {
       cart = await db.cart.create({ data: {} });
-
       // Establece cookie con cartId
-      const cartIdCookie = serialize('cartId', cart.id.toString(), {
+      cartIdCookie = serialize('cartId', cart.id.toString(), {
         httpOnly: true,
         path: '/',
         maxAge: 60 * 60 * 24 * 7, // 7 días
         sameSite: 'lax',
         secure: process.env.NODE_ENV === 'production',
       });
-
-      const response = NextResponse.json({
-        message: 'Boat added to cart successfully (new cart)',
-      });
-      response.headers.set('Set-Cookie', cartIdCookie);
-      return response;
+      console.log('cartIdCookie: ', cartIdCookie);
     }
 
     // Calcular precio
@@ -79,10 +75,16 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       message: 'Boat added to cart successfully',
       cartItem: newCartItem,
     });
+
+    if (cartIdCookie) {
+      response.headers.set('Set-Cookie', cartIdCookie);
+    }
+
+    return response;
   } catch (error: any) {
     console.error('Error adding item to cart:', error);
     return NextResponse.json(

@@ -1,5 +1,5 @@
-import { EditCartItem } from '@magnetic/interfaces';
-import { useMutation } from '@tanstack/react-query';
+import { Cart, EditCartItem } from '@magnetic/interfaces';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   removeServiceCart,
   createItemBoatToCart,
@@ -7,9 +7,18 @@ import {
   addItemCartDrink,
   updateFormCartItem,
 } from '../apis/api-cart';
-import { addItemBoatToGuestCart } from '../apis/api-guest-cart';
+import { addItemBoatToGuestCart, getGuestCart } from '../apis/api-guest-cart';
 
 export const useGuestCartActions = () => {
+  const { isLoading, isError, data, error, refetch, isSuccess } =
+    useQuery<Cart>({
+      queryKey: [`cart`],
+      queryFn: async () => {
+        return getGuestCart();
+      },
+      enabled: true,
+    });
+
   const addBoatToCart = useMutation({
     mutationFn: (params: {
       itemId: number;

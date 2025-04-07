@@ -31,6 +31,7 @@ import BoatCalendar from '../view-item-page/boat-calendar';
 import BookBoatCard from '../view-item-page/book-boat-card';
 import { useGuestCartActions } from '../../hooks/useGuestCartActions';
 import { useGuestCartStore } from '../../hooks/useGuestCartStore';
+import Cookies from 'js-cookie';
 
 interface Props {
   item: Item;
@@ -47,6 +48,9 @@ export function ViewPublicBoat({ item }: Props) {
   const { setSelectedItem } = useApp();
   const { seasonPrices, priceInCents, service } = item;
   const boat = item.boatAttributes as Boat;
+  let cartId = Cookies.get('cartId');
+  console.log(cartId);
+
   const {
     port,
     secondName,
