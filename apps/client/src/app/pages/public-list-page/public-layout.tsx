@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import FooterNav from '../../components/footer-menu';
 import Footer from '../../components/footer';
 import { HeaderClient } from '@magnetic/ui';
-import CartGuest from '../../components/cart/cart-guest';
+import CartShopping from '../../components/cart/cart-shopping';
 
 function PublicLayout() {
   return (
@@ -13,7 +13,7 @@ function PublicLayout() {
         links={[]}
       >
         <div className="flex items-center gap-4">
-          <CartGuest />
+          <CartShopping guestMode />
         </div>
       </HeaderClient>
       <div className="flex flex-1">

@@ -14,14 +14,14 @@ export function useGuestCartStore() {
   } = useAppStore();
 
   return {
-    guestCart,
-    totalGuestCart,
-    totalDrinksGuestCart,
-    addItemGuestCart,
-    removeGuestCartService,
-    removeGuestCartItem,
-    clearGuestCart,
-    calculateTotalGuestCart,
-    getGroupedItemsByServiceGuestCart,
+    cart: guestCart,
+    total: totalGuestCart,
+    addItem: addItemGuestCart,
+    removeItem: removeGuestCartItem,
+    removeService: removeGuestCartService,
+    clearCart: clearGuestCart,
+    calculateTotal: calculateTotalGuestCart,
+    getGroupedItemsByService: getGroupedItemsByServiceGuestCart,
+    totalDrinks: totalDrinksGuestCart,
   };
 }

@@ -14,10 +14,16 @@ import { Button } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { useGuestCartActions } from '../../hooks/useGuestCartActions';
+import { useGuestCartStore } from '../../hooks/useGuestCartStore';
 
-export function CartShopping() {
-  const { isLoading, data, removeAllItemsCart, error } = useCart();
-  const { cart, clearCart, addItem, getGroupedItemsByService } = useCartStore();
+export function CartShopping({ guestMode }: { guestMode?: boolean }) {
+  const { isLoading, data, removeAllItemsCart, error } = guestMode
+    ? useGuestCartActions()
+    : useCart();
+  const { cart, clearCart, addItem, getGroupedItemsByService } = guestMode
+    ? useGuestCartStore()
+    : useCartStore();
   const { showSessionExpiredError } = useAuth();
   const groupedCart = getGroupedItemsByService();
 
@@ -48,7 +54,7 @@ export function CartShopping() {
   }, [data]);
 
   useEffect(() => {
-    if (error) {
+    if (error && !guestMode) {
       showSessionExpiredError(true);
     }
   }, [error]);

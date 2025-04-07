@@ -18,6 +18,7 @@ import TermsConditionsPage from '../pages/terms-conditions-page/terms-conditions
 import PublicListPage from '../pages/public-list-page/public-list-page';
 import PublicLayout from '../pages/public-list-page/public-layout';
 import ListItemPage from '../pages/public-list-page/list-item-page';
+import PublicCheckoutPage from '../pages/public-list-page/public-checkout-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -34,6 +35,7 @@ export const AppRouter = () => {
       <Route element={<PublicLayout />}>
         <Route path="list/:slug" element={<PublicListPage />} />
         <Route path="list/:slug/:itemId" element={<ListItemPage />} />
+        <Route path="checkout" element={<PublicCheckoutPage />} />
       </Route>
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>

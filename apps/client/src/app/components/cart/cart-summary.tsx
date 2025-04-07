@@ -1,13 +1,17 @@
-import React from 'react';
 import { useCartStore } from '../../hooks/useCartStore';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { Button, Text } from '@magnetic/ui';
+import { useGuestCartStore } from '../../hooks/useGuestCartStore';
 
-interface Props {}
+interface Props {
+  guestMode?: boolean;
+}
 
 function CartSummary(props: Props) {
-  const {} = props;
-  const { cart, total, clearCart } = useCartStore();
+  const { guestMode } = props;
+  const { cart, total, clearCart } = guestMode
+    ? useGuestCartStore()
+    : useCartStore();
 
   return (
     <div className="mt-5 p-5 border-t" style={{ minWidth: '24rem' }}>

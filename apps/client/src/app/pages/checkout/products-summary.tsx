@@ -11,9 +11,10 @@ import { Link } from 'react-router-dom';
 import { DRINKS_MINIMUM } from '../../constants';
 import CheckoutItemEdit from './checkout-item-edit';
 import { CartItem } from '@magnetic/interfaces';
+import { useGuestCartStore } from '../../hooks/useGuestCartStore';
 
-function ProductsSummary() {
-  const { cart } = useCartStore();
+function ProductsSummary({ guestMode }: { guestMode?: boolean }) {
+  const { cart } = guestMode ? useGuestCartStore() : useCartStore();
   const itemsByCategory = groupCartItemsByCategory(cart);
   const drinkItem = findICartItemDrink(cart);
 
