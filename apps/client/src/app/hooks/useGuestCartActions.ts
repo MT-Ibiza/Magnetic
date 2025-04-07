@@ -7,6 +7,7 @@ import {
   addItemCartDrink,
   updateFormCartItem,
 } from '../apis/api-cart';
+import { addItemBoatToGuestCart } from '../apis/api-guest-cart';
 
 export const useGuestCartActions = () => {
   const addBoatToCart = useMutation({
@@ -14,7 +15,7 @@ export const useGuestCartActions = () => {
       itemId: number;
       formData: any;
       seasonId?: number;
-    }) => createItemBoatToCart(params),
+    }) => addItemBoatToGuestCart(params),
     onSuccess: () => {
       // refetch();
     },

@@ -141,7 +141,8 @@ export function ViewPublicBoat({ item }: Props) {
             });
             showAlert('Boat added to the cart', 'success');
           },
-          onError: () => {
+          onError: (error) => {
+            console.log(error);
             showAlert('Failed to add Boat to the cart', 'error');
           },
         }

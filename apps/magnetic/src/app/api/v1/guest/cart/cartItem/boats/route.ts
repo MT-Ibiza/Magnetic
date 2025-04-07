@@ -1,16 +1,12 @@
 import { NextResponse } from 'next/server';
 import db from 'apps/magnetic/src/app/libs/db';
-import { getTokenFromRequest } from '../../../../util';
+import { cookies } from 'next/headers';
+//@ts-ignore
+import { serialize } from 'cookie';
 
 export async function POST(request: Request) {
   try {
-    const decodedToken = getTokenFromRequest(request);
-    if (!decodedToken) {
-      return NextResponse.json({ message: 'Invalid Token' }, { status: 403 });
-    }
-
     const { itemId, formData, seasonId } = await request.json();
-    const userId = decodedToken.id;
     const SEABOB_PRICE_CENTS = 36500;
 
     if (!itemId) {
@@ -28,11 +24,37 @@ export async function POST(request: Request) {
       );
     }
 
-    let cart = await db.cart.findUnique({ where: { userId } });
-    if (!cart) {
-      cart = await db.cart.create({ data: { userId } });
+    let cart;
+    const cookieStore = cookies();
+
+    const cartIdFromCookie = cookieStore.get('cartId')?.value;
+
+    if (cartIdFromCookie) {
+      cart = await db.cart.findUnique({
+        where: { id: parseInt(cartIdFromCookie) },
+      });
     }
 
+    if (!cart) {
+      cart = await db.cart.create({ data: {} });
+
+      // Establece cookie con cartId
+      const cartIdCookie = serialize('cartId', cart.id.toString(), {
+        httpOnly: true,
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7, // 7 días
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+      });
+
+      const response = NextResponse.json({
+        message: 'Boat added to cart successfully (new cart)',
+      });
+      response.headers.set('Set-Cookie', cartIdCookie);
+      return response;
+    }
+
+    // Calcular precio
     let seasonPrice = 0;
     if (seasonId) {
       const season = await db.seasonPrice.findUnique({
