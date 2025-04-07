@@ -52,7 +52,6 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
       .filter((category) => category.checked)
       .map((category) => category.id);
 
-    // Solo buscar cuando hay texto o categorías seleccionadas
     if (searchParams.drink) {
       onChange('drink', searchParams.drink);
     }
@@ -175,7 +174,7 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
   };
   return (
     <div>
-      <div className="w-full space-y-5">
+      <div className="w-full space-y-5 pb-[100px]">
         {renderSearchInput()}
         {renderCategoryInput()}
       </div>

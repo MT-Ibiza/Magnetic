@@ -55,21 +55,19 @@ function ItemChildcareCard(props: Props) {
             <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
               {name}
             </p>
-            <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
+            {/* <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
               <span className="">
                 {hoursRange.low === hoursRange.high
                   ? `${hoursRange.low} hours`
                   : `${hoursRange.low} - ${hoursRange.high} hours`}
               </span>
-            </div>
+            </div> */}
           </div>
           <div className="flex justify-between mt-5">
             <Text className="text-base font-semibold">
-              {priceRange.low === priceRange.high
-                ? `${centsToEurosWithCurrency(priceInCents)}`
-                : `From ${centsToEurosWithCurrency(
-                    priceRange.low
-                  )} - ${centsToEurosWithCurrency(priceRange.high)}`}
+              {`${centsToEurosWithCurrency(priceInCents)} per ${hours} ${
+                hours === 1 ? 'hour' : 'hours'
+              }`}
             </Text>
             <ItemHandleBookButtons
               item={item}

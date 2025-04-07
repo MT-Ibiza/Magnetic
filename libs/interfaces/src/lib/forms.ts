@@ -151,7 +151,9 @@ export interface ChildcareFormData {
   service: string;
   date: string;
   time: string;
+  hours: number;
   kidsAges: string;
+  childrenAges: string;
   startDateTime: string;
   finishDateTime: string;
   location: string;

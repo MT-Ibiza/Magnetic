@@ -4,6 +4,7 @@ interface Props {
   id?: string;
   open: boolean;
   children: React.ReactNode;
+  onClose?: () => void;
 }
 
 interface ModalFooterProps extends React.HTMLProps<HTMLDivElement> {
@@ -11,7 +12,7 @@ interface ModalFooterProps extends React.HTMLProps<HTMLDivElement> {
 }
 
 function Modal(props: Props) {
-  const { id, open, children } = props;
+  const { id, open, children, onClose } = props;
   const [openContent, setOpenContent] = useState(open);
   const modalId = id ? id : 'modal-magnetic';
 

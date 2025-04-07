@@ -12,7 +12,11 @@ import {
   Text,
   TextArea,
 } from '@magnetic/ui';
-import { centsToEurosWithCurrency, TODAY_DATE } from '@magnetic/utils';
+import {
+  centsToEurosWithCurrency,
+  placeholderItemImage,
+  TODAY_DATE,
+} from '@magnetic/utils';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -61,6 +65,7 @@ export function ChildcareBookingForm({
             formData.numberOfBabysitters || formData.numberOfBabysitters,
           date: formData.date,
           time: formData.time,
+          childrenAges: formData.childrenAges || formData.childrenAges,
           location: formData.location || user?.accommodation,
           comments: formData.comments,
           disclaimerAccepted: formData.disclaimerAccepted,
@@ -70,11 +75,22 @@ export function ChildcareBookingForm({
   });
 
   const handleFormSubmit = async (data: ChildcareFormData) => {
-    const formData = { ...data, ...{ numberOfBabysitters: amount } };
-    onSubmit({ form: formData, quantity: amount, variantId: data.variantId });
+    const formData = {
+      ...data,
+      numberOfBabysitters: amount,
+      totalPriceInCents: total,
+    };
+  
+    onSubmit({
+      form: formData,
+      quantity: amount,
+      variantId: data.variantId,
+    });
   };
-
+  
   const [amount, setAmount] = useState(formData?.numberOfBabysitters || 1);
+  const [pricePerHour, setPricePerHour] = useState(4);
+
   const variantSelected = formData?.variantId
     ? currentSelectItem.variants.find((variant) => {
         return variant.id === formData?.variantId;
@@ -83,51 +99,50 @@ export function ChildcareBookingForm({
   const itemPrice = variantSelected
     ? variantSelected.priceInCents
     : currentSelectItem.priceInCents;
-  const [total, setTotal] = useState(itemPrice);
+  
+  const total = (itemPrice || 0) * pricePerHour * amount;
 
   return (
     <div>
       <Modal.Header onClose={onCancel}>
         <div className="flex justify-between">
-          <h2 className="text-2xl font-bold">Childcare Service Booking</h2>
+          <h2 className="text-2xl font-bold">Childcare Booking</h2>
         </div>
       </Modal.Header>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Modal.Body>
           <div className="p-10 flex flex-col gap-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
-              <div>
-                {variantOptions.length > 0 && (
-                  <div className="">
-                    <Text className="mb-2">Select Duration</Text>
-                    <select
-                      className="select select-bordered w-full"
-                      value={watch('variantId')}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        const variant = currentSelectItem.variants.find(
-                          (v) => v.id === Number(value)
-                        );
-                        if (variant) {
-                          setTotal(variant.priceInCents);
-                          setValue('variantId', variant.id);
-                        } else {
-                          setValue('variantId', undefined);
-                          setTotal(currentSelectItem.priceInCents);
-                        }
-                      }}
-                    >
-                      {allOptions.map((option, index) => (
-                        <option value={option.value} key={index}>
-                          {option.text}
-                        </option>
-                      ))}
-                    </select>
+              <div className="">
+                <div>
+                  <Text className="mb-2">Select Duration</Text>
+                  <div className="product flex justify-between items-center border border-gray-300 p-4 mb-3 rounded-md">
+                    <div className="flex gap-3 items-center">
+                      <Text>Number of hours</Text>
+                    </div>
+                    <div>
+                      <ItemCounterButtons
+                        currentAmount={pricePerHour}
+                        min={4}
+                        max={12}
+                        onClickAdd={() => {
+                          if (pricePerHour < 12) {
+                            setPricePerHour(pricePerHour + 1);
+                          }
+                        }}
+                        onClickRemove={() => {
+                          if (pricePerHour > 4) {
+                            setPricePerHour(pricePerHour - 1);
+                          }
+                        }}
+                      />
+                    </div>
                   </div>
-                )}
+                </div>
               </div>
-              <div>
-                <div className="product flex justify-between items-center border border-gray-300 p-4 rounded-md h-[48px]">
+              <div className="">
+                {/* <Text className="mb-2">Number of Babysitters</Text> */}
+                <div className="product flex justify-between items-center border border-gray-300 p-4 mb-3 rounded-md">
                   <div className="flex gap-3 items-center">
                     <Text>Number of Babysitters</Text>
                   </div>
@@ -150,24 +165,49 @@ export function ChildcareBookingForm({
                   </div>
                 </div>
               </div>
+              <Text className="text-primary-600 mt-[-30px]" size="1">
+                Minimum 4 hours
+              </Text>
+              <div className="col-span-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <Text className="mb-2">Service</Text>
+                    <Input
+                      type="text"
+                      className="w-full"
+                      disabled
+                      defaultValue={currentSelectItem?.name}
+                      placeholder="Specify the service"
+                      {...register('service', {
+                        required: 'Service is required',
+                      })}
+                    />
+                    {errors.service && (
+                      <p className="text-[12px] text-red-500 pt-2">
+                        {errors.service.message}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <Text className="mb-2">Children & Ages</Text>
+                    <Input
+                      type="text"
+                      className="w-full"
+                      placeholder="e.g., 2 kids, ages 5 and 8"
+                      {...register('childrenAges', {
+                        required: 'Kids and ages are required',
+                      })}
+                    />
+                    {errors.childrenAges && (
+                      <p className="text-[12px] text-red-500 pt-2">
+                        {errors.childrenAges.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Text className="mb-2">Service</Text>
-                <Input
-                  type="text"
-                  className="w-full"
-                  disabled
-                  defaultValue={currentSelectItem?.name}
-                  placeholder="Specify the service"
-                  {...register('service', { required: 'Service is required' })}
-                />
-                {errors.service && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.service.message}
-                  </p>
-                )}
-              </div>
               <div>
                 <Text className="mb-2">Date</Text>
                 <Input
@@ -183,7 +223,7 @@ export function ChildcareBookingForm({
                 )}
               </div>
               <div>
-                <Text className="mb-2">Time</Text>
+                <Text className="mb-2">Start Time</Text>
                 <Input
                   type="time"
                   className="w-full"
@@ -225,7 +265,7 @@ export function ChildcareBookingForm({
         <Modal.Footer>
           <div className="flex items-center justify-between w-full">
             <h2 className="text-xl">
-              Total: {centsToEurosWithCurrency(total * amount)}
+              Total: {centsToEurosWithCurrency(total)}
             </h2>
             <div className="flex gap-3">
               {onCancel && (
