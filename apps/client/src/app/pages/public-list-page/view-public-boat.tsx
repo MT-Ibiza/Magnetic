@@ -3,6 +3,7 @@ import {
   Alert,
   Badge,
   BoatCharterBookingForm,
+  Button,
   SectionCard,
 } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
@@ -17,7 +18,6 @@ import {
   FaGasPump,
 } from 'react-icons/fa';
 import MobileItemSticky from '../../components/mobile-footer-item';
-import BoatCalendar from './boat-calendar';
 import Modal from '../../components/modal';
 import {
   Boat,
@@ -27,15 +27,16 @@ import {
 } from '@magnetic/interfaces';
 import { useApp } from '../../hooks/useApp';
 import moment from 'moment';
-import BookBoatCard from './book-boat-card';
 import { getNumberMonth } from '../../utils';
 import { API_URL } from '../../apis/api-constants';
+import BoatCalendar from '../view-item-page/boat-calendar';
+import BookBoatCard from '../view-item-page/book-boat-card';
 
 interface Props {
   item: Item;
 }
 
-export function ViewBoat({ item }: Props) {
+export function ViewPublicBoat({ item }: Props) {
   const [searchParams] = useSearchParams();
   const selectedDate = searchParams.get('date');
   const initialDate = selectedDate ? moment(selectedDate).toDate() : null;
@@ -262,12 +263,18 @@ export function ViewBoat({ item }: Props) {
             price={boatPrice}
             startDate={startDate}
             item={item}
-            onClick={(date) => {
-              setOpenFormModal(true);
-              setSelectedItem(item);
-              setStartDate(date);
-            }}
-          />
+            onClick={() => {}}
+          >
+            <Button
+              onClick={() => {
+                setOpenFormModal(true);
+                setSelectedItem(item);
+                // setStartDate(date);
+              }}
+            >
+              Book Now
+            </Button>
+          </BookBoatCard>
         </div>
         <div className="block lg:hidden">
           <MobileItemSticky
@@ -312,4 +319,4 @@ function getSeasonPrice(seasonPrices: SeasonPrice[], numberMonth: number) {
     (seasonPrice) => seasonPrice.startMonth === numberMonth
   );
 }
-export default ViewBoat;
+export default ViewPublicBoat;

@@ -3,8 +3,8 @@ import { useItem } from '../../hooks/useItem';
 import { GalleryModal } from '@magnetic/ui';
 import { useEffect } from 'react';
 import { useApp } from '../../hooks/useApp';
-import ViewBoat from '../view-item-page/view-boat';
 import { useListItem } from '../../hooks/useListItem';
+import ViewPublicBoat from './view-public-boat';
 
 export function ListItemPage() {
   const params = useParams();
@@ -40,7 +40,7 @@ export function ListItemPage() {
             {item.images && item.images.length > 0 && (
               <GalleryModal images={item?.images} />
             )}
-            <ViewBoat item={item} />
+            <ViewPublicBoat item={item} />
           </div>
         )}
       </div>

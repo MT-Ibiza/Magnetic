@@ -14,10 +14,12 @@ interface Props {
   price: number;
   onClick: (date: Date | null) => void;
   calendarRef: MutableRefObject<HTMLDivElement | null>;
+  disableValidation?: boolean;
+  children?: React.ReactNode;
 }
 
 function BookBoatCard(props: Props) {
-  const { item, startDate, onClick, price, calendarRef } = props;
+  const { item, startDate, onClick, price, calendarRef, children } = props;
   const { priceInCents, seasonPrices } = item;
 
   const priceRange = useMemo(
@@ -63,13 +65,17 @@ function BookBoatCard(props: Props) {
         </div>
         <div className="border-b border-neutral-200"></div>
       </div>
-      <BookButton
-        size={2}
-        radius="full"
-        onClick={() => {
-          onClick(startDate);
-        }}
-      />
+      {children ? (
+        <>{children}</>
+      ) : (
+        <BookButton
+          size={2}
+          radius="full"
+          onClick={() => {
+            onClick(startDate);
+          }}
+        />
+      )}
     </div>
   );
 }
