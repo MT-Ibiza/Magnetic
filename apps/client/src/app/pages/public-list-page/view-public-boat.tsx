@@ -6,8 +6,6 @@ import {
   Button,
   SectionCard,
 } from '@magnetic/ui';
-import { useCart } from '../../hooks/useCart';
-import { useCartStore } from '../../hooks/useCartStore';
 import { useRef, useState } from 'react';
 import {
   FaUsers,
@@ -31,6 +29,8 @@ import { getNumberMonth } from '../../utils';
 import { API_URL } from '../../apis/api-constants';
 import BoatCalendar from '../view-item-page/boat-calendar';
 import BookBoatCard from '../view-item-page/book-boat-card';
+import { useGuestCartActions } from '../../hooks/useGuestCartActions';
+import { useGuestCartStore } from '../../hooks/useGuestCartStore';
 
 interface Props {
   item: Item;
@@ -40,8 +40,8 @@ export function ViewPublicBoat({ item }: Props) {
   const [searchParams] = useSearchParams();
   const selectedDate = searchParams.get('date');
   const initialDate = selectedDate ? moment(selectedDate).toDate() : null;
-  const { addBoatToCart } = useCart();
-  const { addItem } = useCartStore();
+  const { addBoatToCart } = useGuestCartActions();
+  const { addItemGuestCart } = useGuestCartStore();
   const [startDate, setStartDate] = useState<Date | null>(initialDate);
   const [openFormModal, setOpenFormModal] = useState(false);
   const { setSelectedItem } = useApp();
@@ -131,7 +131,7 @@ export function ViewPublicBoat({ item }: Props) {
           onSuccess: (response) => {
             const { cartItem } = response;
             setOpenFormModal(false);
-            addItem({
+            addItemGuestCart({
               id: cartItem.id,
               item: item,
               quantity: 1,

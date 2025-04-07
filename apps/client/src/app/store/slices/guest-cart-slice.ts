@@ -6,12 +6,12 @@ const CART_STORAGE_KEY = 'cart_guest_state';
 
 export type GuestCartSlice = {
   guestCart: CartItem[];
-  total: number;
+  totalGuestCart: number;
   totalDrinksGuestCart: number;
-  addItem: (item: CartItem) => void;
-  removeService: (id: number) => void;
-  removeItem: (id: number) => void;
-  clearCart: () => void;
+  addItemGuestCart: (item: CartItem) => void;
+  removeGuestCartService: (id: number) => void;
+  removeGuestCartItem: (id: number) => void;
+  clearGuestCart: () => void;
   calculateTotalGuestCart: () => number;
   getGroupedItemsByService: () => {
     [serviceId: string]: { service: any; items: CartItem[] };
@@ -25,9 +25,9 @@ export const createGuestCartSlice: StateCreator<
   GuestCartSlice
 > = (set, get) => ({
   guestCart: [],
-  total: 0,
+  totalGuestCart: 0,
   totalDrinksGuestCart: 0,
-  addItem: (item) => {
+  addItemGuestCart: (item) => {
     set((state) => {
       const existingItem = state.guestCart.find(
         (cartItem) => cartItem.id === item.id
@@ -55,21 +55,21 @@ export const createGuestCartSlice: StateCreator<
       });
       // localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
       return {
-        cart: updatedCart,
-        total: get().calculateTotalGuestCart(),
+        guestCart: updatedCart,
+        totalGuestCart: get().calculateTotalGuestCart(),
       };
     });
   },
-  removeService: (id) => {
+  removeGuestCartService: (id) => {
     set((state) => {
       const updatedCart = state.guestCart.filter((item) => item.id !== id);
       return {
-        cart: updatedCart,
-        total: get().calculateTotalGuestCart(),
+        guestCart: updatedCart,
+        totalGuestCart: get().calculateTotalGuestCart(),
       };
     });
   },
-  removeItem: (id) => {
+  removeGuestCartItem: (id) => {
     set((state) => {
       const itemToRemove = state.guestCart.find((item) => item.id === id);
       if (!itemToRemove) return state;
@@ -86,15 +86,15 @@ export const createGuestCartSlice: StateCreator<
         : get().totalDrinksGuestCart;
 
       return {
-        cart: updatedCart,
-        total: get().calculateTotalGuestCart(),
+        guestCart: updatedCart,
+        totalGuestCart: get().calculateTotalGuestCart(),
         totalDrinksGuestCart: newTotalDrinks,
       };
     });
   },
-  clearCart: () => {
+  clearGuestCart: () => {
     localStorage.removeItem(CART_STORAGE_KEY);
-    set({ cart: [], total: 0, totalDrinksGuestCart: 0 });
+    set({ guestCart: [], totalGuestCart: 0, totalDrinksGuestCart: 0 });
   },
 
   calculateTotalGuestCart: () => {

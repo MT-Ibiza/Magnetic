@@ -2,6 +2,7 @@
 const API = `${import.meta.env.VITE_API_URL}/api`;
 export const API_URL = `${API}/v1/user`;
 export const API_LIST = `${API}/v1/lists`;
+export const API_GUEST = `${API}/v1/guest`;
 
 export const WEBSITE_URL = import.meta.env.VITE_API_URL;
 
@@ -79,3 +80,16 @@ export const URL_GET_DRINKS_SERVICE = `${API_LIST}/drinks`;
 export const URL_GET_PUBLIC_LIST = (slug: string) => `${API_LIST}/${slug}`;
 export const URL_GET_PUBLIC_ITEM_LIST = (slug: string, itemId: number) =>
   `${API_LIST}/${slug}/items/${itemId}`;
+
+// Guest Cart
+export const URL_GET_GUEST_CART = `${API_GUEST}/cart`;
+export const REMOVE_GUEST_CART = `${API_GUEST}/cart`;
+
+//Guest CartItem
+export const URL_ADD_SERVICE_TO_GUEST_CART = `${API_GUEST}/cart/cartItem/services`;
+export const URL_ADD_PRODUCT_TO_GUEST_CART = `${API_GUEST}/cart/cartItem/products`;
+export const URL_ADD_BOAT_TO_GUEST_CART = `${API_GUEST}/cart/cartItem/boats`;
+export const URL_ADD_DRINK_TO_GUEST_CART = `${API_GUEST}/cart/cartItem/drinks`;
+export const URL_EDIT_FORM_GUEST_CART_ITEM = `${API_GUEST}/cart/cartItem/forms`;
+export const URL_REMOVE_GUEST_CART_ITEM = (id: number) =>
+  `${API_GUEST}/cart/cartItem/${id}`;
