@@ -30,6 +30,7 @@ import moment from 'moment';
 import BookBoatCard from './book-boat-card';
 import { getNumberMonth } from '../../utils';
 import { API_URL } from '../../apis/api-constants';
+import { useCartActions } from '../../hooks/useCartActions';
 
 interface Props {
   item: Item;
@@ -39,7 +40,7 @@ export function ViewBoat({ item }: Props) {
   const [searchParams] = useSearchParams();
   const selectedDate = searchParams.get('date');
   const initialDate = selectedDate ? moment(selectedDate).toDate() : null;
-  const { addBoatToCart } = useCart();
+  const { addBoatToCart } = useCartActions();
   const { addItem } = useCartStore();
   const [startDate, setStartDate] = useState<Date | null>(initialDate);
   const [openFormModal, setOpenFormModal] = useState(false);
@@ -147,7 +148,7 @@ export function ViewBoat({ item }: Props) {
       );
     }
   };
- 
+
   return (
     <>
       <div className="relative z-10 flex flex-col lg:flex-row">
