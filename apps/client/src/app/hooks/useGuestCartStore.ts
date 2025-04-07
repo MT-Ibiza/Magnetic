@@ -10,7 +10,7 @@ export function useGuestCartStore() {
     removeGuestCartItem,
     clearGuestCart,
     calculateTotalGuestCart,
-    getGroupedItemsByService,
+    getGroupedItemsByServiceGuestCart,
   } = useAppStore();
 
   return {
@@ -22,6 +22,6 @@ export function useGuestCartStore() {
     removeGuestCartItem,
     clearGuestCart,
     calculateTotalGuestCart,
-    getGroupedItemsByService,
+    getGroupedItemsByServiceGuestCart,
   };
 }

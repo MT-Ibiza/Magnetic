@@ -69,6 +69,13 @@ export const useGuestCartActions = () => {
   });
 
   return {
+    isLoading,
+    isError,
+    isSuccess,
+    cart: data,
+    data,
+    error,
+    refetch,
     addDrinkToCart,
     removeAllItemsCart,
     removeItemCart,

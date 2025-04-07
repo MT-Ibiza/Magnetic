@@ -13,7 +13,7 @@ export type GuestCartSlice = {
   removeGuestCartItem: (id: number) => void;
   clearGuestCart: () => void;
   calculateTotalGuestCart: () => number;
-  getGroupedItemsByService: () => {
+  getGroupedItemsByServiceGuestCart: () => {
     [serviceId: string]: { service: any; items: CartItem[] };
   };
 };
@@ -106,7 +106,7 @@ export const createGuestCartSlice: StateCreator<
     );
   },
 
-  getGroupedItemsByService: () => {
+  getGroupedItemsByServiceGuestCart: () => {
     const { guestCart } = get();
     const grouped = guestCart.reduce((groups: any, cartItem: CartItem) => {
       const service = cartItem.item?.service;

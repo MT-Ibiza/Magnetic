@@ -1,23 +1,75 @@
 import {
-  Button,
   Popover,
   PopoverButton,
   PopoverPanel,
   Transition,
 } from '@headlessui/react';
 import { centsToEurosWithCurrency } from '@magnetic/utils';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { FaCartArrowDown, FaShoppingCart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { useGuestCartActions } from '../../hooks/useGuestCartActions';
+import { useGuestCartStore } from '../../hooks/useGuestCartStore';
+import { Button } from '@magnetic/ui';
 
 interface Props {}
 
 function CartGuest(props: Props) {
   const {} = props;
+  const { isLoading, data, removeAllItemsCart, error } = useGuestCartActions();
+  const {
+    guestCart,
+    clearGuestCart,
+    addItemGuestCart,
+    getGroupedItemsByServiceGuestCart,
+  } = useGuestCartStore();
 
-  const total = 0;
-  const totalItems = 0;
+  const groupedCart = getGroupedItemsByServiceGuestCart();
+
+  const total = guestCart.reduce(
+    (sum, cartItem) => sum + cartItem.priceInCents * cartItem.quantity,
+    0
+  );
+
+  const totalItems = guestCart.reduce((sum, item) => sum + item.quantity, 0);
+
   const [isBouncing, setIsBouncing] = useState(false);
+
+  useEffect(() => {
+    if (totalItems > 0) {
+      setIsBouncing(true);
+      const timeout = setTimeout(() => setIsBouncing(false), 300);
+      return () => clearTimeout(timeout);
+    }
+  }, [totalItems]);
+
+  useEffect(() => {
+    if (data) {
+      clearGuestCart();
+      data.items.forEach((cartItem) => {
+        addItemGuestCart(cartItem);
+      });
+    }
+  }, [data]);
+
+  if (isLoading) {
+    return <h1>Loading....</h1>;
+  }
+
+  async function handleRemoveAllItems() {
+    await removeAllItemsCart.mutate(undefined, {
+      onSuccess: () => {
+        clearGuestCart();
+      },
+      onError: () => {
+        // showAlert('Failed to add item to the cart', 'error');
+      },
+    });
+  }
+
+  // const total = 0;
+  // const totalItems = 0;
+  // const [isBouncing, setIsBouncing] = useState(false);
 
   return (
     <Popover className="relative">
@@ -51,98 +103,97 @@ function CartGuest(props: Props) {
                     <h3 className="text-lg font-medium dark:text-gray-200">
                       My Cart
                     </h3>
-                    {/* {cart.length > 0 && (
-                          <button
-                            onClick={handleRemoveAllItems}
-                            className="text-primary-700 underline text-sm"
-                          >
-                            Clear All
-                          </button>
-                        )} */}
+                    {guestCart.length > 0 && (
+                      <button
+                        onClick={handleRemoveAllItems}
+                        className="text-primary-700 underline text-sm"
+                      >
+                        Clear All
+                      </button>
+                    )}
                   </div>
-                  {/* <ul className="mt-4 space-y-2 max-h-[55vh] overflow-y-auto">
-                        {Object.entries(groupedCart).length > 0 ? (
-                          Object.entries(groupedCart).map(
-                            ([serviceId, group]: any) => (
-                              <div key={serviceId} className="mb-4 space-y-4">
-                                <h4 className="text-md font-bold text-gray-700 dark:text-gray-100">
-                                  {group.service
-                                    ? group.service.name
-                                    : 'No Service'}
-                                </h4>
-                                {group.items.map((cartItem: any, index: number) => (
-                                  <li
-                                    key={index}
-                                    className="flex items-center gap-4 justify-between"
-                                  >
-                                    <div className="flex gap-4">
-                                      <img
-                                        className="w-14 h-14 rounded object-cover"
-                                        src={
-                                          cartItem.item.images &&
-                                          cartItem.item.images.length > 0
-                                            ? cartItem.item.images[0].url
-                                            : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
-                                        }
-                                        alt={cartItem.item.name}
-                                      />
-                                      <div className="flex flex-col">
-                                        <h4 className="text-sm dark:text-gray-100">
-                                          {cartItem.item.name}
-                                        </h4>
-                                        {cartItem.item.service.serviceType ===
-                                        'drinks' ? (
-                                          <>
-                                            <p className="text-xs">
-                                              Quantity: {cartItem.quantity}
-                                            </p>
-                                            <p className="text-xs">
-                                              {centsToEurosWithCurrency(
-                                                cartItem.item.priceInCents
-                                              )}{' '}
-                                              x unit
-                                            </p>
-                                          </>
-                                        ) : (
-                                          <p className="text-xs">
-                                            {centsToEurosWithCurrency(
-                                              cartItem.item.priceInCents
-                                            )}
-                                          </p>
+                  <ul className="mt-4 space-y-2 max-h-[55vh] overflow-y-auto">
+                    {Object.entries(groupedCart).length > 0 ? (
+                      Object.entries(groupedCart).map(
+                        ([serviceId, group]: any) => (
+                          <div key={serviceId} className="mb-4 space-y-4">
+                            <h4 className="text-md font-bold text-gray-700 dark:text-gray-100">
+                              {group.service
+                                ? group.service.name
+                                : 'No Service'}
+                            </h4>
+                            {group.items.map((cartItem: any, index: number) => (
+                              <li
+                                key={index}
+                                className="flex items-center gap-4 justify-between"
+                              >
+                                <div className="flex gap-4">
+                                  <img
+                                    className="w-14 h-14 rounded object-cover"
+                                    src={
+                                      cartItem.item.images &&
+                                      cartItem.item.images.length > 0
+                                        ? cartItem.item.images[0].url
+                                        : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU'
+                                    }
+                                    alt={cartItem.item.name}
+                                  />
+                                  <div className="flex flex-col">
+                                    <h4 className="text-sm dark:text-gray-100">
+                                      {cartItem.item.name}
+                                    </h4>
+                                    {cartItem.item.service.serviceType ===
+                                    'drinks' ? (
+                                      <>
+                                        <p className="text-xs">
+                                          Quantity: {cartItem.quantity}
+                                        </p>
+                                        <p className="text-xs">
+                                          {centsToEurosWithCurrency(
+                                            cartItem.item.priceInCents
+                                          )}{' '}
+                                          x unit
+                                        </p>
+                                      </>
+                                    ) : (
+                                      <p className="text-xs">
+                                        {centsToEurosWithCurrency(
+                                          cartItem.item.priceInCents
                                         )}
-                                      </div>
-                                    </div>
-                                  </li>
-                                ))}
-                              </div>
-                            )
-                          )
-                        ) : (
-                          <div className="flex flex-col items-center text-gray-500 py-6">
-                            <FaCartArrowDown size={48} className="mb-4" />
-                            <p className="text-sm">Your cart is empty.</p>
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+                              </li>
+                            ))}
                           </div>
-                        )}
-                      </ul>
+                        )
+                      )
+                    ) : (
+                      <div className="flex flex-col items-center text-gray-500 py-6">
+                        <FaCartArrowDown size={48} className="mb-4" />
+                        <p className="text-sm">Your cart is empty.</p>
+                      </div>
+                    )}
+                  </ul>
 
-                      {cart.length > 0 && (
-                        <div className="mt-4 space-y-2">
-                          <div className="flex justify-between">
-                            <p className="text-md font-bold">Total:</p>
-                            <p className="text-md font-bold">
-                              {centsToEurosWithCurrency(total)}
-                            </p>
-                          </div>
-                          <div className="flex flex-col gap-2">
-
-                            <Link to="/checkout">
-                              <Button className="py-[8px] text-[16px] w-full">
-                                Checkout
-                              </Button>
-                            </Link>
-                          </div>
-                        </div>
-                      )} */}
+                  {guestCart.length > 0 && (
+                    <div className="mt-4 space-y-2">
+                      <div className="flex justify-between">
+                        <p className="text-md font-bold">Total:</p>
+                        <p className="text-md font-bold">
+                          {centsToEurosWithCurrency(total)}
+                        </p>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <Link to="/checkout">
+                          <Button className="py-[8px] text-[16px] w-full">
+                            Checkout
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </PopoverPanel>
