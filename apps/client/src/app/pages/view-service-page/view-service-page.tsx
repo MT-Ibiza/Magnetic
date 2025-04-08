@@ -9,20 +9,33 @@ import ListDrinks from './list-drinks';
 import './styles.scss';
 import { useState } from 'react';
 import { useServiceBoats } from '../../hooks/useServiceBoats';
+import { useServiceDrinks } from '../../hooks/useServiceDrinks';
 
 interface Props {
   guestMode?: boolean;
+  serviceType?: string;
 }
 
 function ViewServicePage(props: Props) {
-  const { guestMode } = props;
+  const { guestMode, serviceType } = props;
+
+  const hooks = {
+    drinks: useServiceDrinks,
+    boats: useServiceBoats,
+  };
+
+  const hook = hooks[serviceType as 'drinks'];
+
   const params = useParams();
   const serviceId = parseInt(params.id || '');
   const { getCurrentUser } = useAuth();
   const user = getCurrentUser();
-  const { isLoading, isError, service, error } = guestMode
-    ? useServiceBoats()
-    : useService(serviceId);
+  const { isLoading, isError, service, error } =
+    guestMode && serviceType
+      ? hook
+        ? hook()
+        : useService(serviceId)
+      : useService(serviceId);
   const sortedCategories = service?.categories
     ? [...service.categories].sort((a, b) => a.position - b.position)
     : [];

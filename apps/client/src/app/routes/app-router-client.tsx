@@ -47,7 +47,14 @@ export const AppRouter = () => {
       <Route path="terms-conditions" element={<TermsConditionsPage />} />
       <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
       <Route element={<PublicLayout />}>
-        <Route path="boat-charters" element={<ViewServicePage guestMode />} />
+        <Route
+          path="boat-charters"
+          element={<ViewServicePage guestMode serviceType="boats" />}
+        />
+        <Route
+          path="drinks"
+          element={<ViewServicePage guestMode serviceType="drinks" />}
+        />
         <Route path="boat-charters/:itemId" element={<PublicBoatPage />} />
         <Route path="boat-charters/checkout" element={<PublicCheckoutPage />} />
         <Route path="list/:slug" element={<PublicListPage />} />

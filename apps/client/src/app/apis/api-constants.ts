@@ -20,6 +20,8 @@ export const URL_GET_SERVICE = (id: number) => `${API_URL}/services/${id}`;
 export const URL_GET_SERVICE_BOAT = `${API_URL}/services/boats`;
 export const URL_GET_BOAT = (itemId: number) =>
   `${API_URL}/services/boats/${itemId}`;
+export const URL_GET_SERVICE_DRINKS = `${API_URL}/services/drinks`;
+
 //Items
 export const URL_GET_ITEM = (serviceId: number, itemId: number) =>
   `${API_URL}/services/${serviceId}/items/${itemId}`;
