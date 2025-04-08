@@ -47,6 +47,9 @@ export async function PUT(request: Request) {
   }
 
   try {
+    const childcareForm = cartItem.type === 'childcare' ? formData as any : undefined ;
+    priceItem = childcareForm ?  Number(childcareForm?.hours) * cartItem.item.priceInCents : priceItem;
+
     const updatedCartItem = await db.cartItem.update({
       where: { id: cartItem.id },
       data: {

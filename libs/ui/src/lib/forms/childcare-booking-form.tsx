@@ -70,6 +70,7 @@ export function ChildcareBookingForm({
           comments: formData.comments,
           disclaimerAccepted: formData.disclaimerAccepted,
           variantId: formData.variantId,
+          hours: formData.hours || 4,
         }
       : undefined,
   });
@@ -79,15 +80,16 @@ export function ChildcareBookingForm({
       ...data,
       numberOfBabysitters: amount,
       totalPriceInCents: total,
+      hours: pricePerHour
     };
-  
+
     onSubmit({
       form: formData,
       quantity: amount,
       variantId: data.variantId,
     });
   };
-  
+
   const [amount, setAmount] = useState(formData?.numberOfBabysitters || 1);
   const [pricePerHour, setPricePerHour] = useState(4);
 
@@ -99,8 +101,8 @@ export function ChildcareBookingForm({
   const itemPrice = variantSelected
     ? variantSelected.priceInCents
     : currentSelectItem.priceInCents;
-  
-  const total = (itemPrice || 0) * pricePerHour * amount;
+
+  const total = itemPrice * pricePerHour * amount;
 
   return (
     <div>

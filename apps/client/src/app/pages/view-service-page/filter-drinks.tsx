@@ -88,7 +88,6 @@ function FilterDrinks(props: Props) {
         <div className="w-full">
           <FilterSearchMobile title="Search Drink" options="Search • Category">
             <SearchDrinksMobile
-              searchValue={searchParams.drink}
               value={searchParams.drink}
               onChange={handleSearchChange}
               categoriesAvailable={categories}

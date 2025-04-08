@@ -13,7 +13,6 @@ interface CategoriesSelect {
 interface SearchDrinksMobileProps {
   onChange: (name: string, value: string, data?: any) => void;
   value: string;
-  searchValue?: string;
   onClose?: () => void;
   categoriesAvailable: { name: string; id: number; checked?: boolean }[];
 }
@@ -21,27 +20,27 @@ interface SearchDrinksMobileProps {
 type DateRage = [Date | null, Date | null];
 
 export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
-  const { onChange, categoriesAvailable, onClose, value, searchValue } = props;
+  const { onChange, categoriesAvailable, onClose, value } = props;
 
   const [fieldNameShow, setFieldNameShow] = useState<'search' | 'category'>(
     'search'
   );
 
+  const [selectedCategories, setSelectedCategories] = useState(categoriesAvailable);
+  
+  const [searchParams, setSearchParams] = useState({
+    drink: value || '',
+    categoriesIds: undefined,
+  });
+
   useEffect(() => {
-    if (!searchParams.drink) {
+    if (value) {
       setSearchParams((prev) => ({
         ...prev,
         drink: value,
       }));
     }
   }, [value]);
-
-  const [selectedCategories, setSelectedCategories] =
-    useState(categoriesAvailable);
-  const [searchParams, setSearchParams] = useState({
-    drink: '',
-    categoriesIds: undefined,
-  });
 
   const handleCategoryChange = (updatedCategories: CategoriesSelect[]) => {
     setSelectedCategories(updatedCategories);
@@ -51,7 +50,6 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
     const selectedCategoryIds = selectedCategories
       .filter((category) => category.checked)
       .map((category) => category.id);
-
     if (searchParams.drink) {
       onChange('drink', searchParams.drink);
     }
@@ -67,7 +65,8 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
     if (onClose) {
       onClose();
     }
-  };
+};
+
 
   const selectedText =
     selectedCategories.length > 0 &&
@@ -94,7 +93,7 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
             onClick={() => setFieldNameShow('search')}
           >
             <span className="text-neutral-400">
-              Search by Name {searchValue}
+              Search by Name {value}
             </span>
             <span>Search </span>
           </button>
@@ -102,11 +101,10 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
           <SearchInputMobileDrink
             allowTyping
             placeHolder={'Search'}
-            searchValue={searchValue}
             name="drink"
             desc="Search by name"
             options={[]}
-            value={searchParams.drink}
+            value={value}
             onChange={(name, value) => {
               setSearchParams((prev) => ({
                 ...prev,
@@ -172,6 +170,7 @@ export const SearchDrinksMobile = (props: SearchDrinksMobileProps) => {
       </div>
     );
   };
+
   return (
     <div>
       <div className="w-full space-y-5 pb-[100px]">

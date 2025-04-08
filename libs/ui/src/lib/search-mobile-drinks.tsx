@@ -5,7 +5,6 @@ import { FaSearch } from 'react-icons/fa';
 
 export interface SearchInputMobileDrinkProps {
   name: string;
-  searchValue?: string;
   options: { value: string; label: string; data?: any }[];
   value: string;
   onChange: (name: string, value: string, data?: any) => void;
@@ -28,7 +27,6 @@ export const SearchInputMobileDrink: FC<SearchInputMobileDrinkProps> = ({
   value,
   headingText,
   onChange,
-  searchValue,
   placeHolder = 'Select an option',
   desc = 'Choose an option',
   className = 'nc-flex-1.5',
@@ -44,17 +42,17 @@ export const SearchInputMobileDrink: FC<SearchInputMobileDrinkProps> = ({
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const [showPopover, setShowPopover] = useState(autoFocus);
-  const [inputValue, setInputValue] = useState(searchValue || '');
+  const [inputValue, setInputValue] = useState(value || '');
 
   useEffect(() => {
     if (
       !showPopover &&
-      searchValue !== undefined &&
-      searchValue !== inputValue
+      value !== undefined &&
+      value !== inputValue
     ) {
-      setInputValue(searchValue);
+      setInputValue(value);
     }
-  }, [searchValue, showPopover]);
+  }, [value, showPopover]);
 
   useEffect(() => {
     if (showPopover) {

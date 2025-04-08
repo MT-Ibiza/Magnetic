@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import db from 'apps/magnetic/src/app/libs/db';
 import { getTokenFromRequest } from '../../../../util';
+import { ChildcareFormData } from '@magnetic/interfaces';
 
 export async function POST(request: Request) {
   try {
@@ -67,6 +68,7 @@ export async function POST(request: Request) {
         },
       });
     }
+    
     let priceItem = item.priceInCents;
 
     if (variantId) {
@@ -118,6 +120,9 @@ export async function POST(request: Request) {
         cartItem: newCartItem,
       });
     } else {
+      const childcareForm = item.service.serviceType === 'childcare' ? formData as any : undefined ;
+      priceItem = childcareForm ?  Number(childcareForm?.hours) * item.priceInCents : priceItem;
+
       const newCartItem = await db.cartItem.create({
         data: {
           cartId: cart.id,
