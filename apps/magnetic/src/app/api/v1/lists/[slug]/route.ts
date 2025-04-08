@@ -20,6 +20,8 @@ export async function GET(
                 drinkAttributes: true,
                 images: true,
                 seasonPrices: true,
+                category: true,
+                service: true,
               },
             },
           },
