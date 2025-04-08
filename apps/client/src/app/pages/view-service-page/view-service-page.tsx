@@ -234,13 +234,6 @@ function ViewServicePage(props: Props) {
                     dangerouslySetInnerHTML={{ __html: service.script }}
                   ></div>
                 )}
-                {/* {selectedCarService === 'luxury' && (
-                  <iframe
-                    style={{ width: '100%', border: 'none', height: '40rem' }}
-                    id="iframe_carplus_afiliado"
-                    src="https://exclusiverentalcars.es/iframe-dynamic/"
-                  ></iframe>
-                )} */}
               </div>
             ) : (
               <div dangerouslySetInnerHTML={{ __html: service.script }}></div>

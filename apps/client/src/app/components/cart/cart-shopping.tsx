@@ -12,7 +12,7 @@ import { centsToEurosWithCurrency } from '@magnetic/utils';
 import { useCartStore } from '../../hooks/useCartStore';
 import { Button } from '@magnetic/ui';
 import { useCart } from '../../hooks/useCart';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useGuestCartActions } from '../../hooks/useGuestCartActions';
 import { useGuestCartStore } from '../../hooks/useGuestCartStore';
@@ -20,6 +20,10 @@ import { useGuestCartStore } from '../../hooks/useGuestCartStore';
 export function CartShopping({ guestMode }: { guestMode?: boolean }) {
   const params = useParams();
   const slug = params.slug || '';
+  const location = useLocation();
+  const pathSegments = location.pathname.split('/');
+  const section = pathSegments[1];
+
   const { isLoading, data, removeAllItemsCart, error } = guestMode
     ? useGuestCartActions()
     : useCart();
@@ -192,9 +196,7 @@ export function CartShopping({ guestMode }: { guestMode?: boolean }) {
                       </div>
                       <div className="flex flex-col gap-2">
                         <Link
-                          to={
-                            guestMode ? `/boat-charters/checkout` : '/checkout'
-                          }
+                          to={guestMode ? `/${section}/checkout` : '/checkout'}
                         >
                           <Button className="py-[8px] text-[16px] w-full">
                             Checkout

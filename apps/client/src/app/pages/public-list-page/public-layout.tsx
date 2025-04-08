@@ -1,12 +1,13 @@
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import FooterNav from '../../components/footer-menu';
 import Footer from '../../components/footer';
 import { HeaderClient } from '@magnetic/ui';
 import CartShopping from '../../components/cart/cart-shopping';
 
 function PublicLayout() {
-  const params = useParams();
-  const slug = params.slug || '';
+  const location = useLocation();
+  const pathSegments = location.pathname.split('/');
+  const section = pathSegments[1];
 
   return (
     <div className="app flex flex-col min-h-screen">
@@ -14,7 +15,7 @@ function PublicLayout() {
         toggleSidebar={() => {}}
         isSidebarVisible={false}
         links={[]}
-        mainLink={`/list/${slug}`}
+        mainLink={`/${section}`}
       >
         <div className="flex items-center gap-4">
           <CartShopping guestMode />

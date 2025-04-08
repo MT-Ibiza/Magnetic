@@ -1,17 +1,12 @@
 import { NextResponse } from 'next/server';
 import db from 'apps/magnetic/src/app/libs/db';
-import { getTokenFromRequest } from '../../../../util';
+import { cookies } from 'next/headers';
+//@ts-ignore
+import { serialize } from 'cookie';
 
 export async function POST(request: Request) {
   try {
-    const decodedToken = getTokenFromRequest(request);
-    if (!decodedToken) {
-      return NextResponse.json({ message: 'Invalid Token' }, { status: 403 });
-    }
-
-    const userId = decodedToken.id;
-    const body = await request.json();
-    const { itemId, quantity, formData } = body;
+    const { itemId, quantity, formData } = await request.json();
 
     if (!itemId || quantity < 0) {
       return NextResponse.json(
@@ -31,9 +26,29 @@ export async function POST(request: Request) {
       );
     }
 
-    let cart = await db.cart.findUnique({ where: { userId } });
+    let cart;
+    let cartIdCookie;
+    const cookieStore = cookies();
+
+    const cartIdFromCookie = cookieStore.get('cartId')?.value;
+    console.log('cartIdFromCookie: ', cartIdFromCookie);
+
+    if (cartIdFromCookie) {
+      cart = await db.cart.findUnique({
+        where: { id: parseInt(cartIdFromCookie) },
+      });
+    }
+
     if (!cart) {
-      cart = await db.cart.create({ data: { userId } });
+      cart = await db.cart.create({ data: {} });
+      cartIdCookie = serialize('cartId', cart.id.toString(), {
+        httpOnly: true,
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7, // 7 días
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+      });
+      console.log('cartIdCookie: ', cartIdCookie);
     }
 
     const existingCartItem = await db.cartItem.findFirst({

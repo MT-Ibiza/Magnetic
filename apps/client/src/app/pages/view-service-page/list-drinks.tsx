@@ -19,6 +19,8 @@ import { useAuth } from '../../hooks/useAuth';
 import { PiBeerBottleFill } from 'react-icons/pi';
 import { getCurrentClient } from '../../apis/api-client';
 import NoBookings from '../../components/messages/no-bookings';
+import { useGuestCartActions } from '../../hooks/useGuestCartActions';
+import { useGuestCartStore } from '../../hooks/useGuestCartStore';
 
 interface Props {
   serviceId: number;
@@ -29,8 +31,10 @@ interface Props {
 function ListDrinks(props: Props) {
   const { serviceId, categories, guestMode } = props;
   const [openModal, setOpenModal] = useState(false);
-  const { addDrinkToCart } = useCart();
-  const { addItem, removeItem, cart, totalDrinks } = useCartStore();
+  const { addDrinkToCart } = guestMode ? useGuestCartActions() : useCart();
+  const { addItem, removeItem, cart, totalDrinks } = guestMode
+    ? useGuestCartStore()
+    : useCartStore();
   const { getCurrentUser } = useAuth();
   const user = getCurrentUser();
 
@@ -83,7 +87,7 @@ function ListDrinks(props: Props) {
   }
 
   useEffect(() => {
-    if (drinks) {
+    if (drinks && !guestMode) {
       checkIfCanBook();
     }
   }, [drinks]);
@@ -138,7 +142,7 @@ function ListDrinks(props: Props) {
     }
   };
 
-  const handleSaveAddDrink = (item: Item, quantity: number, formData?: any) => {
+  const handleSaveDrink = (item: Item, quantity: number, formData?: any) => {
     const newVal = quantity;
     addDrinkToCart.mutate(
       { itemId: item.id, quantity: newVal, formData },
@@ -187,7 +191,7 @@ function ListDrinks(props: Props) {
     if (totalDrinks === 0) {
       openForm();
     } else {
-      handleSaveAddDrink(item, amount, undefined);
+      handleSaveDrink(item, amount, undefined);
     }
   }
 

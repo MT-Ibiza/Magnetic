@@ -1,5 +1,5 @@
 import { Button, EmptyState, Text } from '@magnetic/ui';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { getTotalByService } from '@magnetic/utils';
 import { useGuestCartStore } from '../../hooks/useGuestCartStore';
 import CheckoutSummary from '../checkout/checkout-summary';
@@ -10,6 +10,11 @@ import { useGuestCartActions } from '../../hooks/useGuestCartActions';
 export function PublicCheckoutPage() {
   const params = useParams();
   const slug = params.slug || '';
+
+  const location = useLocation();
+  const pathSegments = location.pathname.split('/');
+  const section = pathSegments[1];
+
   const { cart } = useGuestCartStore();
   const { isLoading, data } = useGuestCartActions();
   const servicesSummary = getTotalByService(cart);
@@ -26,7 +31,7 @@ export function PublicCheckoutPage() {
     <>
       {cart.length === 0 ? (
         <EmptyState title="Your cart is empty">
-          <Link to={`/list/${slug}`}>
+          <Link to={`/${section}`}>
             <Button>View List</Button>
           </Link>
         </EmptyState>
