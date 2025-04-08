@@ -1,5 +1,5 @@
-import { Image, Item } from './items';
-import { User, UserBase } from './users';
+import { Image } from './items';
+import { GuestUser, User } from './users';
 import { ItemVariant } from './variants';
 
 export interface Order {
@@ -16,8 +16,7 @@ export interface Order {
   vatInCents: number;
   feeInCents: number;
   forms: BookingForm[];
-  guestEmail?: string;
-  guestName?: string;
+  guestUser?: GuestUser;
 }
 
 export interface ItemBaseFields {
@@ -90,8 +89,7 @@ export interface BookingForm {
     id: number;
     status: string;
     totalInCents: number;
-    guestEmail?: string;
-    guestName?: string;
+    guestUser?: GuestUser;
     user?: {
       name: string;
       id: number;
@@ -113,16 +111,14 @@ export interface BookingUser {
   user?: User;
   booking: BookingForm;
   orderItems: OrderItem[];
-  guestEmail?: string;
-  guestName?: string;
+  guestUser?: GuestUser;
 }
 
 export interface BookingAdmin {
   user: User;
   booking: BookingForm;
   orderItems: OrderItem[];
-  guestEmail?: string;
-  guestName?: string;
+  guestUser?: GuestUser;
 }
 
 export interface AdminDashboard {

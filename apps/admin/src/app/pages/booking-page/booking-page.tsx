@@ -97,14 +97,16 @@ export function BookingPage() {
             <div className="flex flex-col gap-1">
               <h2 className="text-2xl font-semibold">
                 {' '}
-                {data?.guestEmail ? 'Guest' : ''} Booking #{bookingId}
+                {data?.guestUser?.email ? 'Guest' : ''} Booking #{bookingId}
               </h2>
               <Text className="text-sm text-gray-500 ">
                 Client:{' '}
-                {data?.user ? data?.user.name : data?.guestName || 'Guest User'}
+                {data?.user
+                  ? data?.user.name
+                  : data?.guestUser?.name || 'Guest User'}
               </Text>
               <Text className="text-sm text-gray-500 ">
-                Email: {data?.user ? data?.user.email : data?.guestEmail}
+                Email: {data?.user ? data?.user.email : data?.guestUser?.email}
               </Text>
               <Link to={`/orders/${data?.booking.orderId}`}>
                 <Text className="text-sm text-gray-500">

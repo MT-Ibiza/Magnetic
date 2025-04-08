@@ -11,6 +11,7 @@ export async function GET(
         id: Number(params.orderId),
       },
       include: {
+        guestUser: true,
         user: {
           select: { id: true, name: true, email: true, phone: true },
         },

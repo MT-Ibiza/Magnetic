@@ -89,6 +89,7 @@ export async function POST(request: Request) {
         },
         include: {
           user: true,
+          guestUser: true,
           forms: {
             orderBy: {
               date: 'asc',
@@ -128,13 +129,13 @@ export async function POST(request: Request) {
           });
           console.log('email sent to: ', order.user.email);
         }
-        if (order.guestEmail) {
+        if (order.guestUser) {
           await sendEmail({
-            to: order.guestEmail,
+            to: order.guestUser.email,
             subject: `Order Confirmation #${order.id} - Magnetic Travel`,
             html: bookingConfirmationTemplate(order as any),
           });
-          console.log('guest email sent to: ', order.guestEmail);
+          console.log('guest email sent to: ', order.guestUser.email);
         }
       } catch (emailError) {
         console.error('Error enviando email:', emailError);

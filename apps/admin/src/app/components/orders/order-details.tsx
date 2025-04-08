@@ -17,7 +17,7 @@ function OrderDetail(props: Props) {
       <div className="flex items-center justify-between mb-4">
         <div className="text-base text-gray-800">
           <h1 className="font-semibold text-xl">{`${
-            order.guestEmail ? 'Guest' : ''
+            order.guestUser ? 'Guest' : ''
           } Order #${order.id}`}</h1>
         </div>
         <div>
@@ -38,7 +38,9 @@ function OrderDetail(props: Props) {
         <div className="flex flex-col gap-2">
           <p className="text-sm text-gray-600">
             Client:{' '}
-            {order.user ? order.user.name : order.guestName || 'Guest User'}
+            {order.user
+              ? order.user.name
+              : order.guestUser?.name || 'Guest User'}
           </p>
           <p>Created: {moment(order.createdAt).format('DD MMM YYYY')}</p>
         </div>

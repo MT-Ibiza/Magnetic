@@ -7,8 +7,7 @@ export async function GET() {
   try {
     const orders = await db.order.findMany({
       select: {
-        guestEmail: true,
-        guestName: true,
+        guestUser: true,
         user: {
           select: {
             id: true,
@@ -55,6 +54,7 @@ export async function GET() {
       .map((order) => {
         return order.forms.map((form) => ({
           user: order.user,
+          guestUser: order.guestUser,
           booking: form,
           orderItems: order.items.filter(
             (itemCart) => itemCart.cartItemId === form.cartItemId

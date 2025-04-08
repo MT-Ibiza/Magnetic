@@ -57,11 +57,15 @@ export function OrdersTable(props: Props) {
                   className="hover:text-primary-500 hover:underline"
                   to={`/orders/${order.id}`}
                 >
-                  {`${order.guestEmail ? 'Guest' : ''} Order #${order.id}`}
+                  {`${order.guestUser?.email ? 'Guest' : ''} Order #${
+                    order.id
+                  }`}
                 </Link>
               </td>
               <td>
-                {order.user ? order.user.name : order.guestName || 'Guest User'}
+                {order.user
+                  ? order.user.name
+                  : order.guestUser?.name || 'Guest User'}
               </td>
               <td>{centsToEurosWithCurrency(order.totalInCents)}</td>
               <td> {moment(order.createdAt).format('DD MMM YYYY')}</td>

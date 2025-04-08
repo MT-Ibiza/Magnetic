@@ -34,7 +34,7 @@ export function BookingsTable(props: Props) {
         </thead>
         <tbody>
           {bookings.map((elm, index) => {
-            const { booking, user, orderItems } = elm;
+            const { booking, user, orderItems, guestUser } = elm;
             const orderItem = orderItems[0];
             return (
               <tr className="hover" key={index}>
@@ -60,7 +60,7 @@ export function BookingsTable(props: Props) {
                       </p>
                     </Link>
                   ) : (
-                    <Text>Guest User</Text>
+                    <Text>{guestUser ? guestUser.name : 'Guest User'}</Text>
                   )}
                 </td>
                 <td>
