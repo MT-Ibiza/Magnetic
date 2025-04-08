@@ -86,3 +86,12 @@ export interface UserResponse {
   totalPages: number;
   users: User[];
 }
+
+export interface GuestUser {
+  email: string;
+  name: string;
+  passportNumber: string;
+  billingAddress: string;
+  phone: string;
+  companyName?: string;
+}

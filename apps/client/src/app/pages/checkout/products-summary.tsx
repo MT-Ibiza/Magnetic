@@ -7,13 +7,17 @@ import { useCartStore } from '../../hooks/useCartStore';
 import { formatDate, groupCartItemsByCategory } from '../../utils';
 import CheckoutItem from './checkout-item';
 import { Text } from '@magnetic/ui';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { DRINKS_MINIMUM } from '../../constants';
 import CheckoutItemEdit from './checkout-item-edit';
 import { CartItem } from '@magnetic/interfaces';
 import { useGuestCartStore } from '../../hooks/useGuestCartStore';
 
 function ProductsSummary({ guestMode }: { guestMode?: boolean }) {
+  const location = useLocation();
+  const pathSegments = location.pathname.split('/');
+  const section = pathSegments[1];
+
   const { cart } = guestMode ? useGuestCartStore() : useCartStore();
   const itemsByCategory = groupCartItemsByCategory(cart);
   const drinkItem = findICartItemDrink(cart);
@@ -36,7 +40,11 @@ function ProductsSummary({ guestMode }: { guestMode?: boolean }) {
                   </Text>
                   <Link
                     className="text-sm underline"
-                    to={`/services/${category.categoryId}`}
+                    to={
+                      guestMode
+                        ? `/${section}`
+                        : `/services/${category.categoryId}`
+                    }
                   >
                     Add Drinks
                   </Link>

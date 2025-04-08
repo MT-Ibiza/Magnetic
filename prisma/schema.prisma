@@ -14,6 +14,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model GuestUser {
+  id             Int     @id @default(autoincrement())
+  email          String  @unique
+  name           String
+  passportNumber String?
+  billingAddress String?
+  phone          String?
+  companyName    String?
+  orders         Order[]
+}
+
 model User {
   id                    Int       @id @default(autoincrement())
   createdAt             DateTime  @default(now())
@@ -220,15 +231,13 @@ model Provider {
 }
 
 model Cart {
-  id         Int        @id @default(autoincrement())
-  userId     Int?       @unique
-  user       User?      @relation(fields: [userId], references: [id])
-  items      CartItem[]
-  forms      Json[]
-  guestName  String?
-  guestEmail String?
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  id        Int        @id @default(autoincrement())
+  userId    Int?       @unique
+  user      User?      @relation(fields: [userId], references: [id])
+  items     CartItem[]
+  forms     Json[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model CartItem {
@@ -280,8 +289,8 @@ model Order {
   vatInCents   Int                @default(0)
   status       String             @default("pending")
   forms        OrderBookingForm[]
-  guestName    String?
-  guestEmail   String?
+  guestUser    GuestUser?         @relation(fields: [guestUserId], references: [id])
+  guestUserId  Int?
 }
 
 model OrderItem {

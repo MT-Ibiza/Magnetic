@@ -1,9 +1,10 @@
 import { Button, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 import Modal from './modal';
+import { GuestUser } from '@magnetic/interfaces';
 
 function FormGuestUser(props: {
-  onSave: (params: { guestEmail: string; guestName?: string }) => void;
+  onSave: (user: GuestUser) => void;
   onCancel: () => void;
 }) {
   const { onCancel, onSave } = props;
@@ -14,12 +15,16 @@ function FormGuestUser(props: {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      guestName: '',
-      guestEmail: '',
+      name: '',
+      email: '',
+      passportNumber: '',
+      billingAddress: '',
+      phone: '',
+      companyName: '',
     },
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: GuestUser) => {
     onSave(data);
   };
 
@@ -36,34 +41,88 @@ function FormGuestUser(props: {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body>
           <div className="px-10 py-5 flex flex-col gap-5">
+            <div className="flex gap-5">
+              <div className="form-control w-full">
+                <label htmlFor="name" className="label">
+                  <span className="label-text">Name</span>
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="Full name"
+                  className="input input-bordered"
+                  {...register('name')}
+                />
+              </div>
+              <div className="form-control w-full">
+                <label htmlFor="email" className="label">
+                  <span className="label-text">Email *</span>
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="youremail@mail.com"
+                  className="input input-bordered"
+                  {...register('email', {
+                    required: 'Email is required',
+                  })}
+                />
+                {errors.email && (
+                  <Text.TextInputError text={errors.email.message || ''} />
+                )}
+              </div>
+            </div>
+            <div className="flex gap-5">
+              <div className="form-control w-full">
+                <label htmlFor="passportNumber" className="label">
+                  <span className="label-text">Passport Number</span>
+                </label>
+                <input
+                  id="passportNumber"
+                  type="text"
+                  placeholder="Passport number"
+                  className="input input-bordered"
+                  {...register('passportNumber')}
+                />
+              </div>
+              <div className="form-control w-full">
+                <label htmlFor="phone" className="label">
+                  <span className="label-text">Phone</span>
+                </label>
+                <input
+                  id="phone"
+                  type="tel"
+                  placeholder="Phone number"
+                  className="input input-bordered"
+                  {...register('phone')}
+                />
+              </div>
+            </div>
+
             <div className="form-control">
-              <label htmlFor="name" className="label">
-                <span className="label-text">Name</span>
+              <label htmlFor="billingAddress" className="label">
+                <span className="label-text">Billing Address</span>
               </label>
               <input
-                id="name"
+                id="billingAddress"
                 type="text"
-                placeholder="Fullname"
+                placeholder="Billing address"
                 className="input input-bordered"
-                {...register('guestName')}
+                {...register('billingAddress')}
               />
             </div>
+
             <div className="form-control">
-              <label htmlFor="email" className="label">
-                <span className="label-text">Email *</span>
+              <label htmlFor="companyName" className="label">
+                <span className="label-text">Company (Optional)</span>
               </label>
               <input
-                id="email"
-                type="email"
-                placeholder="youremail@mail.com"
+                id="companyName"
+                type="text"
+                placeholder="Company name"
                 className="input input-bordered"
-                {...register('guestEmail', {
-                  required: 'Email is required',
-                })}
+                {...register('companyName')}
               />
-              {errors.guestEmail && (
-                <Text.TextInputError text={errors.guestEmail.message || ''} />
-              )}
             </div>
           </div>
         </Modal.Body>

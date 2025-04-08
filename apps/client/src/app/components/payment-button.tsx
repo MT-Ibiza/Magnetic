@@ -133,7 +133,7 @@ export function PaymentButton(props: {
         <FormGuestUser
           onCancel={toggleModal}
           onSave={async (data) => {
-            await createOrderAndPay(data);
+            // await createOrderAndPay(data);
           }}
         />
       </Modal>
