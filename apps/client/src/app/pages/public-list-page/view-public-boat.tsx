@@ -49,7 +49,6 @@ export function ViewPublicBoat({ item }: Props) {
   const { seasonPrices, priceInCents, service } = item;
   const boat = item.boatAttributes as Boat;
   let cartId = Cookies.get('cartId');
-  console.log(cartId);
 
   const {
     port,

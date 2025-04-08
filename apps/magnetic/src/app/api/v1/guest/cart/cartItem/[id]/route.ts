@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { getTokenFromRequest } from '../../../../util';
 import db from 'apps/magnetic/src/app/libs/db';
 import { cookies } from 'next/headers';
 

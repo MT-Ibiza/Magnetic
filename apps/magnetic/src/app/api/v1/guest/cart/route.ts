@@ -5,9 +5,8 @@ import { cookies } from 'next/headers';
 export async function GET(request: Request) {
   try {
     const cookieStore = cookies();
-
     const cartIdFromCookie = cookieStore.get('cartId')?.value;
-    console.log('my cart: ', cartIdFromCookie);
+    console.log('my cart drinks: ', cartIdFromCookie);
 
     if (!cartIdFromCookie) {
       return NextResponse.json(null);

@@ -33,8 +33,8 @@ export async function addItemDrinkToGuestCart(params: {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(params),
     credentials: 'include',
+    body: JSON.stringify(params),
   });
 
   const dataJson = await response.json();

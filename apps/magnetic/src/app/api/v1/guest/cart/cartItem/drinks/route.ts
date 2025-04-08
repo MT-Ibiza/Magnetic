@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     const cookieStore = cookies();
 
     const cartIdFromCookie = cookieStore.get('cartId')?.value;
-    console.log('cartIdFromCookie: ', cartIdFromCookie);
+    console.log('drinks cartIdFromCookie: ', cartIdFromCookie);
 
     if (cartIdFromCookie) {
       cart = await db.cart.findUnique({
@@ -110,10 +110,16 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       message: 'Drink added to cart successfully',
       cartItem: newCartItem,
     });
+
+    if (cartIdCookie) {
+      response.headers.set('Set-Cookie', cartIdCookie);
+    }
+
+    return response;
   } catch (error: any) {
     console.error('Error adding drink to cart:', error);
 
