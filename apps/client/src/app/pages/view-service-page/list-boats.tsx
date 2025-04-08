@@ -9,11 +9,11 @@ import { EmptyState, GridSkeleton } from '@magnetic/ui';
 import { FaShip } from 'react-icons/fa';
 
 interface Props {
-  slugGuestMode?: string;
+  guestMode?: boolean;
 }
 
 function ListBoats(props: Props) {
-  const { slugGuestMode } = props;
+  const { guestMode } = props;
   const [isFilterBoats, setIsFilterBoats] = useState(false);
   const defaultMonthNumber = getNumberMonth();
   const [currentMonthNumber, setCurrentMonthNumber] =
@@ -67,11 +67,7 @@ function ListBoats(props: Props) {
                     selectedDate={searchParams.from}
                     item={item}
                     priceMonthNumber={currentMonthNumber}
-                    url={
-                      slugGuestMode
-                        ? `/list/${slugGuestMode}/${item.id}`
-                        : undefined
-                    }
+                    url={guestMode ? `/boat-charters/${item.id}` : undefined}
                   />
                 </div>
               ))}

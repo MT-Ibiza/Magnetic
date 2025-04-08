@@ -236,14 +236,21 @@ function ViewServicePage(props: Props) {
         ) : (
           <>
             {service.serviceType === 'drinks' && (
-              <ListDrinks serviceId={serviceId} categories={sortedCategories} />
+              <ListDrinks
+                serviceId={serviceId}
+                categories={sortedCategories}
+                guestMode={guestMode}
+              />
             )}
-            {service.serviceType === 'boat_rental' && <ListBoats />}
+            {service.serviceType === 'boat_rental' && (
+              <ListBoats guestMode={guestMode} />
+            )}
             {!['drinks', 'boat_rental'].includes(service.serviceType) && (
               <ListProducts
                 service={service}
                 items={publishedItems}
                 availableInPlan={availableInPlan}
+                guestMode={guestMode}
               />
             )}
           </>

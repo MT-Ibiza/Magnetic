@@ -22,11 +22,12 @@ import NoBookings from '../../components/messages/no-bookings';
 
 interface Props {
   serviceId: number;
+  guestMode?: boolean;
   categories: { id: number; name: string }[];
 }
 
 function ListDrinks(props: Props) {
-  const { serviceId, categories } = props;
+  const { serviceId, categories, guestMode } = props;
   const [openModal, setOpenModal] = useState(false);
   const { addDrinkToCart } = useCart();
   const { addItem, removeItem, cart, totalDrinks } = useCartStore();
