@@ -121,7 +121,7 @@ export async function POST(request: Request) {
 
       const order = await db.order.create({
         data: {
-          userId,
+          userId: userId || undefined,
           guestEmail,
           guestName,
           totalInCents: total,

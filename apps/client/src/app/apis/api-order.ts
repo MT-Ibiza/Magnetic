@@ -21,6 +21,7 @@ export async function createOrder(params?: {
       Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(params),
+    credentials: 'include',
   });
 
   const dataJson = await response.json();
