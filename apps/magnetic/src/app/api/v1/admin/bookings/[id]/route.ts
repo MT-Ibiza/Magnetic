@@ -63,6 +63,8 @@ export async function GET(
     const order = await db.order.findUnique({
       where: { id: booking.orderId },
       select: {
+        guestEmail: true,
+        guestName: true,
         user: {
           select: {
             id: true,
@@ -78,6 +80,8 @@ export async function GET(
     return NextResponse.json({
       booking,
       user: order?.user || null,
+      guestEmail: order?.guestEmail,
+      guestName: order?.guestName,
       orderItems,
     });
   } catch (error: any) {

@@ -95,9 +95,16 @@ export function BookingPage() {
         <div className="gap-[15px] lg:flex-row lg:justify-between lg:items-center mb-6 pb-4">
           <div className="flex justify-between">
             <div className="flex flex-col gap-1">
-              <h2 className="text-2xl font-semibold">Booking #{bookingId}</h2>
+              <h2 className="text-2xl font-semibold">
+                {' '}
+                {data?.guestEmail ? 'Guest' : ''} Booking #{bookingId}
+              </h2>
               <Text className="text-sm text-gray-500 ">
-                Client: {data?.user.name}
+                Client:{' '}
+                {data?.user ? data?.user.name : data?.guestName || 'Guest User'}
+              </Text>
+              <Text className="text-sm text-gray-500 ">
+                Email: {data?.user ? data?.user.email : data?.guestEmail}
               </Text>
               <Link to={`/orders/${data?.booking.orderId}`}>
                 <Text className="text-sm text-gray-500">

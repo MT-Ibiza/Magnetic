@@ -13,8 +13,7 @@ interface Props {}
 
 export function OrdersTable(props: Props) {
   const {} = props;
-  const { isLoading, orders, ordersOptions, error, isError, refetch } =
-    useOrders();
+  const { isLoading, orders, error, isError, refetch } = useOrders();
 
   const mutation = useMutation<any, Error, any>({
     mutationFn: (orderId) => {
@@ -58,10 +57,12 @@ export function OrdersTable(props: Props) {
                   className="hover:text-primary-500 hover:underline"
                   to={`/orders/${order.id}`}
                 >
-                  {ordersOptions[index]?.label || `Order #${order.id}`}
+                  {`${order.guestEmail ? 'Guest' : ''} Order #${order.id}`}
                 </Link>
               </td>
-              <td>{order.user?.name}</td>
+              <td>
+                {order.user ? order.user.name : order.guestName || 'Guest User'}
+              </td>
               <td>{centsToEurosWithCurrency(order.totalInCents)}</td>
               <td> {moment(order.createdAt).format('DD MMM YYYY')}</td>
               <td>{order.status}</td>

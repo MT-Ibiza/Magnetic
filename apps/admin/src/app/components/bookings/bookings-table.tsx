@@ -34,7 +34,8 @@ export function BookingsTable(props: Props) {
         </thead>
         <tbody>
           {bookings.map((elm, index) => {
-            const { booking, user, orderItem } = elm;
+            const { booking, user, orderItems } = elm;
+            const orderItem = orderItems[0];
             return (
               <tr className="hover" key={index}>
                 <td>
@@ -44,19 +45,23 @@ export function BookingsTable(props: Props) {
                     </Text>
                   </Link>
                 </td>
-                    <td>
-                    <Text size="1" className="text-gray-500">
+                <td>
+                  <Text size="1" className="text-gray-500">
                     {booking.date
                       ? moment(booking.date).format('DD MMM YYYY')
                       : 'n/a'}
                   </Text>
                 </td>
                 <td>
-                  <Link to={`/clients/${user.id}`}>
-                    <p className="hover:text-primary-500 hover:underline">
-                      {user.name}
-                    </p>
-                  </Link>
+                  {user ? (
+                    <Link to={`/clients/${user.id}`}>
+                      <p className="hover:text-primary-500 hover:underline">
+                        {user.name}
+                      </p>
+                    </Link>
+                  ) : (
+                    <Text>Guest User</Text>
+                  )}
                 </td>
                 <td>
                   <div className="flex gap-3 items-center text-neutral-6000 dark:text-neutral-300">

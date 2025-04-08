@@ -16,7 +16,9 @@ function OrderDetail(props: Props) {
     <CardWrapper className="">
       <div className="flex items-center justify-between mb-4">
         <div className="text-base text-gray-800">
-          <h1 className="font-semibold text-xl">{`Order #${order.id}`}</h1>
+          <h1 className="font-semibold text-xl">{`${
+            order.guestEmail ? 'Guest' : ''
+          } Order #${order.id}`}</h1>
         </div>
         <div>
           <span
@@ -35,12 +37,10 @@ function OrderDetail(props: Props) {
       <div className="flex items-center justify-between text-sm text-gray-600 mb-4 pb-4">
         <div className="flex flex-col gap-2">
           <p className="text-sm text-gray-600">
-            <strong>Client:</strong> {order.user?.name} ({order.user?.email})
+            Client:{' '}
+            {order.user ? order.user.name : order.guestName || 'Guest User'}
           </p>
-          <p>
-            <strong>Created:</strong>{' '}
-            {moment(order.createdAt).format('DD MMM YYYY')}
-          </p>
+          <p>Created: {moment(order.createdAt).format('DD MMM YYYY')}</p>
         </div>
       </div>
       <OrderItemsTable

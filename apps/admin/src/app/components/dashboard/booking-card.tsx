@@ -37,7 +37,9 @@ function BookingCard(props: Props) {
       <Text className="text-gray-500">
         {moment(booking.date).format('DD MMM YYYY')}
       </Text>
-      <Text className="text-gray-500">{booking.order.user.name}</Text>
+      <Text className="text-gray-500">
+        {booking.order.user ? booking.order.user.name : booking.order.guestName}
+      </Text>
       <Link to={`/bookings/${booking.id}`}>
         <p className="text-end text-sm font-medium text-primary-700 hover:text-primary-800 hover:underline">
           View

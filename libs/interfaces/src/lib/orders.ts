@@ -16,6 +16,8 @@ export interface Order {
   vatInCents: number;
   feeInCents: number;
   forms: BookingForm[];
+  guestEmail?: string;
+  guestName?: string;
 }
 
 export interface ItemBaseFields {
@@ -88,7 +90,9 @@ export interface BookingForm {
     id: number;
     status: string;
     totalInCents: number;
-    user: {
+    guestEmail?: string;
+    guestName?: string;
+    user?: {
       name: string;
       id: number;
       accommodation: string;
@@ -106,15 +110,19 @@ export interface BookingForm {
 }
 
 export interface BookingUser {
-  user: User;
+  user?: User;
   booking: BookingForm;
   orderItems: OrderItem[];
+  guestEmail?: string;
+  guestName?: string;
 }
 
 export interface BookingAdmin {
   user: User;
   booking: BookingForm;
   orderItems: OrderItem[];
+  guestEmail?: string;
+  guestName?: string;
 }
 
 export interface AdminDashboard {
