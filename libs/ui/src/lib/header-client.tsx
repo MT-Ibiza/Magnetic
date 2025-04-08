@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Text } from '@magnetic/ui';
 import { FaUserFriends, FaBook } from 'react-icons/fa';
 import { SiTask } from 'react-icons/si';
 import { MdDashboardCustomize } from 'react-icons/md';
@@ -14,6 +13,7 @@ export interface HeaderProps {
   toggleSidebar: () => void;
   pageTitle?: string;
   links?: any[];
+  mainLink?: string;
 }
 
 const navigation = [
@@ -44,7 +44,7 @@ const navigation = [
 ];
 
 export function HeaderClient(props: HeaderProps) {
-  const { className, children, links } = props;
+  const { className, children, links, mainLink } = props;
   const navLinks = links || navigation;
 
   return (
@@ -55,7 +55,7 @@ export function HeaderClient(props: HeaderProps) {
         <div className="px-4 lg:container py-4 lg:py-5 relative flex justify-between items-center">
           <div className="flex gap-3">
             <NavLink
-              to="/dashboard"
+              to={mainLink || '/dashboard'}
               className="main-logo flex items-center shrink-0 gap-2"
             >
               <img
