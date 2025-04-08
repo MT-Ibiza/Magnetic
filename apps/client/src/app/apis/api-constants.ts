@@ -17,6 +17,7 @@ export const URL_UPDATE_CLIENT = `${API_URL}/account`;
 //Services
 export const URL_GET_SERVICES = `${API_URL}/services`;
 export const URL_GET_SERVICE = (id: number) => `${API_URL}/services/${id}`;
+export const URL_GET_SERVICE_BOAT = `${API_URL}/services/boats`;
 
 //Items
 export const URL_GET_ITEM = (serviceId: number, itemId: number) =>
