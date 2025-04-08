@@ -1,19 +1,25 @@
 import { NextResponse } from 'next/server';
 import { getTokenFromRequest } from '../../../../util';
 import db from 'apps/magnetic/src/app/libs/db';
+import { cookies } from 'next/headers';
 
 export async function DELETE(
   request: Request,
   { params }: { params: { id: string } }
 ) {
   try {
-    const decodedToken = getTokenFromRequest(request);
-    if (!decodedToken) {
-      return NextResponse.json({ message: 'Invalid Token' }, { status: 403 });
+    const cookieStore = cookies();
+
+    const cartIdFromCookie = cookieStore.get('cartId')?.value;
+    console.log('my cart: ', cartIdFromCookie);
+
+    if (!cartIdFromCookie) {
+      return NextResponse.json(null);
     }
+
     const cartItemId = Number(params.id);
     const cartItem = await db.cartItem.findUnique({
-      where: { id: cartItemId },
+      where: { id: cartItemId, cartId: Number(cartIdFromCookie) },
       select: { cartId: true, type: true, formData: true },
     });
 

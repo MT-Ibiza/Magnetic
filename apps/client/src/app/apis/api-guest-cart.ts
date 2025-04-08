@@ -28,14 +28,13 @@ export async function addItemDrinkToGuestCart(params: {
   formData?: any;
 }): Promise<{ message: string; cartItem: CartItem }> {
   const url = URL_ADD_DRINK_TO_GUEST_CART;
-  const accessToken = localStorage.getItem('magnetic_auth');
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(params),
+    credentials: 'include',
   });
 
   const dataJson = await response.json();
@@ -50,12 +49,10 @@ export async function addItemBoatToGuestCart(params: {
   seasonId?: number;
 }): Promise<{ message: string; cartItem: CartItem }> {
   const url = URL_ADD_BOAT_TO_GUEST_CART;
-  const accessToken = localStorage.getItem('magnetic_auth');
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
     },
     credentials: 'include',
     body: JSON.stringify(params),

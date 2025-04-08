@@ -9,6 +9,7 @@ import {
   URL_ADD_DRINK_TO_CART,
   URL_EDIT_FORM_CART_ITEM,
   REMOVE_GUEST_CART,
+  URL_REMOVE_GUEST_CART_ITEM,
 } from './api-constants';
 
 export async function getCart(): Promise<Cart> {
@@ -175,6 +176,22 @@ export async function updateFormCartItem(
 
 export async function removeGuestCart(): Promise<null> {
   const url = REMOVE_GUEST_CART;
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  });
+
+  const dataJson = await response.json();
+  if (!response.ok)
+    throw new Error(dataJson.message || 'Failed to add item to cart');
+  return dataJson;
+}
+
+export async function deleteGuestCartItem(cartItemId: number): Promise<null> {
+  const url = URL_REMOVE_GUEST_CART_ITEM(cartItemId);
   const response = await fetch(url, {
     method: 'DELETE',
     headers: {
