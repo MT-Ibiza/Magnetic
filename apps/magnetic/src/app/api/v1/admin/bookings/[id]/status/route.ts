@@ -42,7 +42,7 @@ export async function PUT(
       },
     });
 
-    if (order) {
+    if (order && order.user) {
       const { user } = order;
       try {
         await sendEmail({
