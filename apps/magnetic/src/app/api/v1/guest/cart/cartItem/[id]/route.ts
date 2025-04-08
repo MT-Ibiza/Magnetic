@@ -8,9 +8,7 @@ export async function DELETE(
 ) {
   try {
     const cookieStore = cookies();
-
     const cartIdFromCookie = cookieStore.get('cartId')?.value;
-    console.log('my cart: ', cartIdFromCookie);
 
     if (!cartIdFromCookie) {
       return NextResponse.json(null);
@@ -55,6 +53,9 @@ export async function DELETE(
       await db.cart.delete({
         where: { id: cartItem.cartId },
       });
+      const cookieStore = cookies();
+      cookieStore.delete('cartId');
+      console.log('remove guest cart');
     }
 
     return NextResponse.json({
