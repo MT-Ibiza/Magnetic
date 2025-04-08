@@ -18,7 +18,6 @@ import PublicListPage from '../pages/public-list-page/public-list-page';
 import PublicLayout from '../pages/public-list-page/public-layout';
 import ListItemPage from '../pages/public-list-page/list-item-page';
 import PublicCheckoutPage from '../pages/public-list-page/public-checkout-page';
-import PublicBoatsPage from '../pages/public-list-page/public-boats-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
