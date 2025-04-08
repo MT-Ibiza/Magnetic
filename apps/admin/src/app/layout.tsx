@@ -67,23 +67,23 @@ function Layout() {
         },
       ],
     },
-    {
-      text: 'Lists',
-      options: [
-        {
-          text: 'Drink List',
-          key: 'drinks',
-          url: '/list/drinks',
-          icon: MdWineBar,
-        },
-        {
-          text: 'Boat List',
-          key: 'boats',
-          url: '/list/boats',
-          icon: FaShip,
-        },
-      ],
-    },
+    // {
+    //   text: 'Lists',
+    //   options: [
+    //     {
+    //       text: 'Drink List',
+    //       key: 'drinks',
+    //       url: '/list/drinks',
+    //       icon: MdWineBar,
+    //     },
+    //     {
+    //       text: 'Boat List',
+    //       key: 'boats',
+    //       url: '/list/boats',
+    //       icon: FaShip,
+    //     },
+    //   ],
+    // },
     {
       text: 'Users',
       options: [
