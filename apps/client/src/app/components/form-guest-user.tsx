@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import Modal from './modal';
 
 function FormGuestUser(props: {
-  onSave: (params: { email: string; name?: string }) => void;
+  onSave: (params: { guestEmail: string; guestName?: string }) => void;
   onCancel: () => void;
 }) {
   const { onCancel, onSave } = props;
@@ -14,8 +14,8 @@ function FormGuestUser(props: {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: '',
-      email: '',
+      guestName: '',
+      guestEmail: '',
     },
   });
 
@@ -45,7 +45,7 @@ function FormGuestUser(props: {
                 type="text"
                 placeholder="Fullname"
                 className="input input-bordered"
-                {...register('name')}
+                {...register('guestName')}
               />
             </div>
             <div className="form-control">
@@ -57,12 +57,12 @@ function FormGuestUser(props: {
                 type="email"
                 placeholder="youremail@mail.com"
                 className="input input-bordered"
-                {...register('email', {
+                {...register('guestEmail', {
                   required: 'Email is required',
                 })}
               />
-              {errors.email && (
-                <Text.TextInputError text={errors.email.message || ''} />
+              {errors.guestEmail && (
+                <Text.TextInputError text={errors.guestEmail.message || ''} />
               )}
             </div>
           </div>

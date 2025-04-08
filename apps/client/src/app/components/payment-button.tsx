@@ -20,7 +20,7 @@ export function PaymentButton(props: {
   };
 
   const createOrderMutation = useMutation({
-    mutationFn: () => createOrder([]),
+    mutationFn: (params: any) => createOrder(params),
     onSuccess: (order: Order) => {
       handlePayment(order.id);
     },
@@ -89,14 +89,21 @@ export function PaymentButton(props: {
     }
   };
 
-  async function createOrderAndPay() {
+  async function payOrRequestInformation() {
     if (guestMode) {
       toggleModal();
     } else {
-      //@ts-ignore
-      document.getElementById('processing-order-modal').showModal();
-      await createOrderMutation.mutateAsync();
+      await createOrderAndPay();
     }
+  }
+
+  async function createOrderAndPay(params?: {
+    guestEmail: string;
+    guestName?: string;
+  }) {
+    //@ts-ignore
+    document.getElementById('processing-order-modal').showModal();
+    await createOrderMutation.mutateAsync(params);
   }
 
   return (
@@ -104,7 +111,7 @@ export function PaymentButton(props: {
       <Button
         size={2}
         radius="full"
-        onClick={createOrderAndPay}
+        onClick={payOrRequestInformation}
         disabled={loading || disable}
         className="text-[17px] leading-[24px] p-4 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 w-full"
       >
@@ -123,7 +130,12 @@ export function PaymentButton(props: {
       </dialog>
 
       <Modal open={openModal}>
-        <FormGuestUser onCancel={toggleModal} onSave={() => {}} />
+        <FormGuestUser
+          onCancel={toggleModal}
+          onSave={async (data) => {
+            await createOrderAndPay(data);
+          }}
+        />
       </Modal>
     </>
   );

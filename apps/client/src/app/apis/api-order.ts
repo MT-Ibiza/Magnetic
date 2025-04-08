@@ -6,9 +6,11 @@ import {
   URL_GET_ORDERS,
 } from './api-constants';
 
-export async function createOrder(
-  forms: { data: any; serviceId: number; itemId?: number }[]
-): Promise<Order> {
+export async function createOrder(params?: {
+  guestEmail: string;
+  guestName?: string;
+}): Promise<Order> {
+  console.log(params);
   const url = URL_CREATE_ORDER;
   const accessToken = localStorage.getItem('magnetic_auth');
 
@@ -18,7 +20,7 @@ export async function createOrder(
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({ forms }),
+    body: JSON.stringify(params),
   });
 
   const dataJson = await response.json();

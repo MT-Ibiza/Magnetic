@@ -42,7 +42,7 @@ export function ViewPublicBoat({ item }: Props) {
   const selectedDate = searchParams.get('date');
   const initialDate = selectedDate ? moment(selectedDate).toDate() : null;
   const { addBoatToCart } = useGuestCartActions();
-  const { addItemGuestCart } = useGuestCartStore();
+  const { addItem } = useGuestCartStore();
   const [startDate, setStartDate] = useState<Date | null>(initialDate);
   const [openFormModal, setOpenFormModal] = useState(false);
   const { setSelectedItem } = useApp();
@@ -135,7 +135,7 @@ export function ViewPublicBoat({ item }: Props) {
           onSuccess: (response) => {
             const { cartItem } = response;
             setOpenFormModal(false);
-            addItemGuestCart({
+            addItem({
               id: cartItem.id,
               item: item,
               quantity: 1,
