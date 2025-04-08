@@ -4,6 +4,7 @@ import {
   removeServiceCart,
   deleteCartItem,
   updateFormCartItem,
+  removeGuestCart,
 } from '../apis/api-cart';
 import {
   addItemBoatToGuestCart,
@@ -50,7 +51,7 @@ export const useGuestCartActions = () => {
   });
 
   const removeAllItemsCart = useMutation({
-    mutationFn: () => removeServiceCart(),
+    mutationFn: () => removeGuestCart(),
     onSuccess: () => {
       // refetch();
     },

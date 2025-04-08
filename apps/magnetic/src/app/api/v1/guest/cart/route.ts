@@ -120,14 +120,17 @@ export async function GET(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
-    const decodedToken = getTokenFromRequest(request);
-    if (!decodedToken) {
-      return NextResponse.json({ message: 'Invalid Token' }, { status: 403 });
+    const cookieStore = cookies();
+
+    const cartIdFromCookie = cookieStore.get('cartId')?.value;
+    console.log('my cart: ', cartIdFromCookie);
+
+    if (!cartIdFromCookie) {
+      return NextResponse.json(null);
     }
-    const userId = decodedToken.id;
 
     const cart = await db.cart.findUnique({
-      where: { userId },
+      where: { id: Number(cartIdFromCookie) },
     });
     if (cart) {
       await db.cart.delete({

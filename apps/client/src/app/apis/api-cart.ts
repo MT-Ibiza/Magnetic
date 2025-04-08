@@ -8,6 +8,7 @@ import {
   URL_REMOVE_CART_ITEM,
   URL_ADD_DRINK_TO_CART,
   URL_EDIT_FORM_CART_ITEM,
+  REMOVE_GUEST_CART,
 } from './api-constants';
 
 export async function getCart(): Promise<Cart> {
@@ -164,6 +165,22 @@ export async function updateFormCartItem(
       Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(params),
+  });
+
+  const dataJson = await response.json();
+  if (!response.ok)
+    throw new Error(dataJson.message || 'Failed to add item to cart');
+  return dataJson;
+}
+
+export async function removeGuestCart(): Promise<null> {
+  const url = REMOVE_GUEST_CART;
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
   });
 
   const dataJson = await response.json();
