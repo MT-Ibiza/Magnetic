@@ -1,23 +1,32 @@
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 import { getTokenFromRequest } from '../../util';
-import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
 import { BoatCharterFormData, Item } from '@magnetic/interfaces';
-import moment from 'moment';
-import { bookingConfirmationTemplate } from 'apps/magnetic/src/app/emails/new-order-confirmation';
 import { centsFixed } from '@magnetic/utils';
+import { cookies } from 'next/headers';
+import moment from 'moment';
 
 export async function POST(request: Request) {
   try {
-    const body: { forms: any[] } = await request.json();
-    // const { forms } = body;
-    const decodedToken = getTokenFromRequest(request);
-    if (!decodedToken) {
-      return NextResponse.json({ message: 'Invalid Token' }, { status: 403 });
+    const { guestName, guestEmail } = await request.json();
+
+    const cookieStore = cookies();
+
+    const cartIdFromCookie = cookieStore.get('cartId')?.value;
+    console.log('Guest cart: ', cartIdFromCookie);
+
+    let userId = 0;
+
+    if (!cartIdFromCookie) {
+      const decodedToken = getTokenFromRequest(request);
+      if (!decodedToken) {
+        return NextResponse.json({ message: 'Invalid Token' }, { status: 403 });
+      }
+      userId = decodedToken.id;
     }
-    const userId = decodedToken.id;
+
     const cart = await db.cart.findUnique({
-      where: { userId },
+      where: cartIdFromCookie ? { id: Number(cartIdFromCookie) } : { userId },
       include: {
         items: {
           select: {
@@ -113,6 +122,8 @@ export async function POST(request: Request) {
       const order = await db.order.create({
         data: {
           userId,
+          guestEmail,
+          guestName,
           totalInCents: total,
           vatInCents: vatInCents,
           feeInCents: feeInCents,

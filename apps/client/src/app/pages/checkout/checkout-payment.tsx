@@ -58,7 +58,11 @@ function CheckoutPayment(props: Props) {
         }}
         className="mb-3"
       />
-      <PaymentButton amountInCents={total} disable={isPayDisabled} />
+      <PaymentButton
+        amountInCents={total}
+        disable={isPayDisabled}
+        guestMode={guestMode}
+      />
       {hasInsufficientDrinks && (
         <Text size="1" className="mt-3 text-red-600">
           * You must add {centsToEurosWithCurrency(missingAmount)} more in

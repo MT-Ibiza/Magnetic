@@ -26,6 +26,20 @@ export const AppRouter = () => {
     </div>
   );
 
+  const PaymentSuccess = () => (
+    <div className="text-center p-5">
+      <h1>Order Successful</h1>
+      <h1>Thanks for your payment</h1>
+    </div>
+  );
+
+  const PaymentFailed = () => (
+    <div className="text-center p-5">
+      <h1>Order Failed</h1>
+      <h1>Please try again</h1>
+    </div>
+  );
+
   return (
     <Routes>
       <Route path="login" element={<RedirectRoute />} />
@@ -35,6 +49,8 @@ export const AppRouter = () => {
         <Route path="list/:slug" element={<PublicListPage />} />
         <Route path="list/:slug/:itemId" element={<ListItemPage />} />
         <Route path="checkout" element={<PublicCheckoutPage />} />
+        <Route path="payment/success" element={<PaymentSuccess />} />
+        <Route path="payment/failed" element={<PaymentFailed />} />
       </Route>
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>

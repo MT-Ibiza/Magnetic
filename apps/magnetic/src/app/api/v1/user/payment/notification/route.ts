@@ -120,12 +120,22 @@ export async function POST(request: Request) {
 
       // Enviar email de confirmación
       try {
-        await sendEmail({
-          to: order.user.email,
-          subject: `Order Confirmation #${order.id} - Magnetic Travel`,
-          html: bookingConfirmationTemplate(order as any),
-        });
-        console.log('email sent to: ', order.user.email);
+        if (order.user) {
+          await sendEmail({
+            to: order.user.email,
+            subject: `Order Confirmation #${order.id} - Magnetic Travel`,
+            html: bookingConfirmationTemplate(order as any),
+          });
+          console.log('email sent to: ', order.user.email);
+        }
+        if (order.guestEmail) {
+          await sendEmail({
+            to: order.guestEmail,
+            subject: `Order Confirmation #${order.id} - Magnetic Travel`,
+            html: bookingConfirmationTemplate(order as any),
+          });
+          console.log('guest email sent to: ', order.guestEmail);
+        }
       } catch (emailError) {
         console.error('Error enviando email:', emailError);
       }

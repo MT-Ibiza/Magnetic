@@ -1,16 +1,23 @@
 import { useState } from 'react';
 import { URL_REQUEST_PAYMENT } from '../apis/api-constants';
-import { Button } from '@magnetic/ui';
+import { Button, Modal } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { createOrder } from '../apis/api-order';
 import { Order } from '@magnetic/interfaces';
+import FormGuestUser from './form-guest-user';
 
 export function PaymentButton(props: {
   amountInCents: number;
   disable?: boolean;
+  guestMode?: boolean;
 }) {
-  const { amountInCents, disable } = props;
+  const { amountInCents, disable, guestMode } = props;
   const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
+  const toggleModal = () => {
+    setOpenModal((prevState) => !prevState);
+  };
 
   const createOrderMutation = useMutation({
     mutationFn: () => createOrder([]),
@@ -28,8 +35,12 @@ export function PaymentButton(props: {
         body: JSON.stringify({
           amount: amountInCents,
           orderId: `${orderId}`,
-          urlOk: `${window.location.origin}/bookings`, // URL en caso de éxito
-          urlKo: `${window.location.origin}/checkout/failure`, // URL en caso de error
+          urlOk: guestMode
+            ? `${window.location.origin}/payment/success`
+            : `${window.location.origin}/bookings`,
+          urlKo: guestMode
+            ? `${window.location.origin}/payment/failed`
+            : `${window.location.origin}/checkout/failure`,
         }),
       });
 
@@ -79,9 +90,13 @@ export function PaymentButton(props: {
   };
 
   async function createOrderAndPay() {
-    //@ts-ignore
-    document.getElementById('processing-order-modal').showModal();
-    await createOrderMutation.mutateAsync();
+    if (guestMode) {
+      toggleModal();
+    } else {
+      //@ts-ignore
+      document.getElementById('processing-order-modal').showModal();
+      await createOrderMutation.mutateAsync();
+    }
   }
 
   return (
@@ -106,6 +121,10 @@ export function PaymentButton(props: {
           </p>
         </div>
       </dialog>
+
+      <Modal open={openModal}>
+        <FormGuestUser onCancel={toggleModal} onSave={() => {}} />
+      </Modal>
     </>
   );
 }
