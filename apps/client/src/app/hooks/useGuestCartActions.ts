@@ -2,12 +2,14 @@ import { Cart, EditCartItem } from '@magnetic/interfaces';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   removeServiceCart,
-  createItemBoatToCart,
   deleteCartItem,
-  addItemCartDrink,
   updateFormCartItem,
 } from '../apis/api-cart';
-import { addItemBoatToGuestCart, getGuestCart } from '../apis/api-guest-cart';
+import {
+  addItemBoatToGuestCart,
+  addItemDrinkToGuestCart,
+  getGuestCart,
+} from '../apis/api-guest-cart';
 
 export const useGuestCartActions = () => {
   const { isLoading, isError, data, error, refetch, isSuccess } =
@@ -41,7 +43,7 @@ export const useGuestCartActions = () => {
       cartItemId?: number;
       quantity: number;
       formData?: any;
-    }) => addItemCartDrink({ itemId, cartItemId, quantity, formData }),
+    }) => addItemDrinkToGuestCart({ itemId, cartItemId, quantity, formData }),
     onSuccess: () => {
       // refetch();
     },
