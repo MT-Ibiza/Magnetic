@@ -1,8 +1,6 @@
 import { Cart, EditCartItem } from '@magnetic/interfaces';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
-  removeServiceCart,
-  deleteCartItem,
   updateFormCartItem,
   removeGuestCart,
   deleteGuestCartItem,

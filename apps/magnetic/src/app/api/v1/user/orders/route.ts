@@ -5,16 +5,18 @@ import { BoatCharterFormData, Item } from '@magnetic/interfaces';
 import { centsFixed } from '@magnetic/utils';
 import { cookies } from 'next/headers';
 import moment from 'moment';
+import { GuestUser } from '@prisma/client';
 
 export async function POST(request: Request) {
   try {
-    const { guestName, guestEmail } = await request.json();
+    const guestUser: GuestUser = await request.json();
 
     const cookieStore = cookies();
 
-    const cartIdFromCookie = guestEmail
+    const cartIdFromCookie = guestUser?.email
       ? cookieStore.get('cartId')?.value
       : undefined;
+
     console.log('Guest cart: ', cartIdFromCookie);
 
     let userId = 0;
@@ -121,14 +123,22 @@ export async function POST(request: Request) {
       const feeInCents = totalOrder * FEE_RATE;
       const total = totalOrder + feeInCents;
 
+      let newGuestId;
+
+      if (guestUser?.email) {
+        const guestUserDb = await db.guestUser.create({
+          data: guestUser,
+        });
+        newGuestId = guestUserDb.id;
+      }
+
       const order = await db.order.create({
         data: {
           userId: userId || undefined,
-          guestEmail,
-          guestName,
           totalInCents: total,
           vatInCents: vatInCents,
           feeInCents: feeInCents,
+          guestUserId: newGuestId,
           items: {
             createMany: {
               data: orderItems,

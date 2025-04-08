@@ -1,4 +1,4 @@
-import { Cart, CartItem, Order, OrderForm } from '@magnetic/interfaces';
+import { GuestUser, Order, OrderForm } from '@magnetic/interfaces';
 import {
   URL_CREATE_ORDER,
   URL_EDIT_FORM_ORDER,
@@ -6,11 +6,7 @@ import {
   URL_GET_ORDERS,
 } from './api-constants';
 
-export async function createOrder(params?: {
-  guestEmail: string;
-  guestName?: string;
-}): Promise<Order> {
-  console.log(params);
+export async function createOrder(guestUser?: GuestUser): Promise<Order> {
   const url = URL_CREATE_ORDER;
   const accessToken = localStorage.getItem('magnetic_auth');
 
@@ -20,7 +16,7 @@ export async function createOrder(params?: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify(params || {}),
+    body: JSON.stringify(guestUser || {}),
     credentials: 'include',
   });
 

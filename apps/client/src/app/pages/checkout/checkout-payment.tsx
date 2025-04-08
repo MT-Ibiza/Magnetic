@@ -8,15 +8,22 @@ import {
   userCanMakeBooking,
 } from '@magnetic/utils';
 import { getCurrentClient } from '../../apis/api-client';
+import OrderButton from '../../components/order-button';
 
 interface Props {
   servicesSummary: ServiceTotal[];
   total: number;
   guestMode?: boolean;
+  skipPayment?: boolean;
 }
 
 function CheckoutPayment(props: Props) {
-  const { servicesSummary: services, total: totalServices, guestMode } = props;
+  const {
+    servicesSummary: services,
+    total: totalServices,
+    guestMode,
+    skipPayment,
+  } = props;
   const [isOutDated, setIsOutDated] = useState(false);
   const [accepted, setAccepted] = useState(false);
   const drinkService = services.find((s) => s.serviceType === 'drinks');
@@ -58,11 +65,19 @@ function CheckoutPayment(props: Props) {
         }}
         className="mb-3"
       />
-      <PaymentButton
-        amountInCents={total}
-        disable={isPayDisabled}
-        guestMode={guestMode}
-      />
+      {skipPayment ? (
+        <OrderButton
+          amountInCents={total}
+          disable={isPayDisabled}
+          guestMode={guestMode}
+        />
+      ) : (
+        <PaymentButton
+          amountInCents={total}
+          disable={isPayDisabled}
+          guestMode={guestMode}
+        />
+      )}
       {hasInsufficientDrinks && (
         <Text size="1" className="mt-3 text-red-600">
           * You must add {centsToEurosWithCurrency(missingAmount)} more in

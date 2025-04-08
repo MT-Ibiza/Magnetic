@@ -62,6 +62,7 @@ export function PublicCheckoutPage() {
                 servicesSummary={servicesSummary}
                 total={total}
                 guestMode={true}
+                skipPayment={section === 'drinks-catalog'}
               />
             </div>
           </div>
