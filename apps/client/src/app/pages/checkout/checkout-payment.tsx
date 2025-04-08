@@ -12,10 +12,11 @@ import { getCurrentClient } from '../../apis/api-client';
 interface Props {
   servicesSummary: ServiceTotal[];
   total: number;
+  guestMode?: boolean;
 }
 
 function CheckoutPayment(props: Props) {
-  const { servicesSummary: services, total: totalServices } = props;
+  const { servicesSummary: services, total: totalServices, guestMode } = props;
   const [isOutDated, setIsOutDated] = useState(false);
   const [accepted, setAccepted] = useState(false);
   const drinkService = services.find((s) => s.serviceType === 'drinks');
@@ -38,7 +39,9 @@ function CheckoutPayment(props: Props) {
   }
 
   useEffect(() => {
-    checkIfCanBook();
+    if (!guestMode) {
+      checkIfCanBook();
+    }
   }, []);
 
   return (

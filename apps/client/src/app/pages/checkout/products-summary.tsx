@@ -48,11 +48,15 @@ function ProductsSummary({ guestMode }: { guestMode?: boolean }) {
                 {category.category}
               </h3>
               {category.type === 'drinks' && drinkItem && (
-                <DrinkInfo drinkItem={drinkItem} />
+                <DrinkInfo drinkItem={drinkItem} guestMode={guestMode} />
               )}
               <div className="flex flex-col gap-4">
                 {category.items.map((item) => (
-                  <CheckoutItem cartItem={item} key={item.id} />
+                  <CheckoutItem
+                    cartItem={item}
+                    key={item.id}
+                    guestMode={guestMode}
+                  />
                 ))}
               </div>
             </div>
@@ -63,7 +67,13 @@ function ProductsSummary({ guestMode }: { guestMode?: boolean }) {
   );
 }
 
-const DrinkInfo = ({ drinkItem }: { drinkItem: CartItem }) => (
+const DrinkInfo = ({
+  drinkItem,
+  guestMode,
+}: {
+  drinkItem: CartItem;
+  guestMode?: boolean;
+}) => (
   <div className="flex justify-between w-full mb-5">
     <div className="flex gap-2">
       <Text size="1">Location: {drinkItem.formData.location}</Text>
@@ -71,6 +81,7 @@ const DrinkInfo = ({ drinkItem }: { drinkItem: CartItem }) => (
       <Text size="1">{formatDate(drinkItem.formData.date)}</Text>
     </div>
     <CheckoutItemEdit
+      guestMode={guestMode}
       formData={drinkItem.formData}
       formType={'drinks'}
       item={drinkItem.item}

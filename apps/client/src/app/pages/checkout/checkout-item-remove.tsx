@@ -5,16 +5,21 @@ import { GoTrash } from 'react-icons/go';
 import { useCart } from '../../hooks/useCart';
 import { CartItem, Item } from '@magnetic/interfaces';
 import { useCartStore } from '../../hooks/useCartStore';
+import { useGuestCartActions } from '../../hooks/useGuestCartActions';
+import { useGuestCartStore } from '../../hooks/useGuestCartStore';
 
 interface Props {
   cartItem: CartItem;
+  guestMode?: boolean;
 }
 
 function CheckoutItemRemove(props: Props) {
-  const { cartItem } = props;
+  const { cartItem, guestMode } = props;
   const { item } = cartItem;
-  const { removeItemCart } = useCart();
-  const { removeItem, removeService } = useCartStore();
+  const { removeItemCart } = guestMode ? useGuestCartActions() : useCart();
+  const { removeItem, removeService } = guestMode
+    ? useGuestCartStore()
+    : useCartStore();
 
   const handleRemoveItem = () => {
     removeItemCart.mutate(cartItem.id, {

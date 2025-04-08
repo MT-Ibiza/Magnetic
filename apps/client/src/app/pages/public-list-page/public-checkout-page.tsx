@@ -57,6 +57,7 @@ export function PublicCheckoutPage() {
               <CheckoutPayment
                 servicesSummary={servicesSummary}
                 total={total}
+                guestMode={true}
               />
             </div>
           </div>

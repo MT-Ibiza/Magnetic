@@ -11,10 +11,11 @@ import CheckoutItemRemove from './checkout-item-remove';
 
 interface Props {
   cartItem: CartItem;
+  guestMode?: boolean;
 }
 
 function CheckoutItem(props: Props) {
-  const { cartItem } = props;
+  const { cartItem, guestMode } = props;
   const { item, priceInCents } = cartItem;
   const { service, images, category } = item;
   const image = images?.length > 0 ? images[0].url : placeholderItemImage;
@@ -25,15 +26,39 @@ function CheckoutItem(props: Props) {
   const renderServiceInfo = () => {
     switch (serviceType) {
       case 'boat_rental':
-        return <BoatsInfo cartItem={cartItem} formType={formType} />;
+        return (
+          <BoatsInfo
+            cartItem={cartItem}
+            formType={formType}
+            guestMode={guestMode}
+          />
+        );
       case 'transfer':
-        return <TransferInfo cartItem={cartItem} formType={formType} />;
+        return (
+          <TransferInfo
+            cartItem={cartItem}
+            formType={formType}
+            guestMode={guestMode}
+          />
+        );
       case 'chefs':
-        return <ChefsInfo cartItem={cartItem} formType={formType} />;
+        return (
+          <ChefsInfo
+            cartItem={cartItem}
+            formType={formType}
+            guestMode={guestMode}
+          />
+        );
       case 'drinks':
         return <DrinkInfo cartItem={cartItem} formType={formType} />;
       default:
-        return <DefaultServiceInfo cartItem={cartItem} formType={formType} />;
+        return (
+          <DefaultServiceInfo
+            cartItem={cartItem}
+            formType={formType}
+            guestMode={guestMode}
+          />
+        );
     }
   };
 
@@ -54,7 +79,7 @@ function CheckoutItem(props: Props) {
         <Text className="mb-2 text-green-800">
           {centsToEurosWithCurrency(cartItem.quantity * price)}
         </Text>
-        <CheckoutItemRemove cartItem={cartItem} />
+        <CheckoutItemRemove cartItem={cartItem} guestMode={guestMode} />
       </div>
     </div>
   );
@@ -63,9 +88,11 @@ function CheckoutItem(props: Props) {
 const DefaultServiceInfo = ({
   cartItem,
   formType,
+  guestMode,
 }: {
   cartItem: CartItem;
   formType: string;
+  guestMode?: boolean;
 }) => (
   <div className="flex flex-col gap-1">
     <h1>{cartItem.item.name}</h1>
@@ -76,6 +103,7 @@ const DefaultServiceInfo = ({
       </>
     )}
     <CheckoutItemEdit
+      guestMode={guestMode}
       formData={cartItem.formData}
       formType={formType}
       item={cartItem.item}
@@ -87,9 +115,11 @@ const DefaultServiceInfo = ({
 const TransferInfo = ({
   cartItem,
   formType,
+  guestMode,
 }: {
   cartItem: CartItem;
   formType: string;
+  guestMode?: boolean;
 }) => (
   <div className="flex flex-col gap-1">
     <h1>
@@ -107,6 +137,7 @@ const TransferInfo = ({
       </>
     )}
     <CheckoutItemEdit
+      guestMode={guestMode}
       formData={cartItem.formData}
       formType={formType}
       item={cartItem.item}
@@ -118,9 +149,11 @@ const TransferInfo = ({
 const BoatsInfo = ({
   cartItem,
   formType,
+  guestMode,
 }: {
   cartItem: CartItem;
   formType: string;
+  guestMode?: boolean;
 }) => (
   <div className="flex flex-col gap-1">
     <h1>{cartItem.item.name}</h1>
@@ -131,6 +164,7 @@ const BoatsInfo = ({
       </>
     )}
     <CheckoutItemEdit
+      guestMode={guestMode}
       formData={cartItem.formData}
       formType={formType}
       item={cartItem.item}
@@ -142,9 +176,11 @@ const BoatsInfo = ({
 const ChefsInfo = ({
   cartItem,
   formType,
+  guestMode,
 }: {
   cartItem: CartItem;
   formType: string;
+  guestMode?: boolean;
 }) => (
   <div className="flex flex-col gap-1">
     <h1>{cartItem.item.name}</h1>
@@ -155,6 +191,7 @@ const ChefsInfo = ({
       </>
     )}
     <CheckoutItemEdit
+      guestMode={guestMode}
       formData={cartItem.formData}
       formType={formType}
       item={cartItem.item}

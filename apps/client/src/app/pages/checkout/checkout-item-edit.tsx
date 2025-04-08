@@ -7,19 +7,23 @@ import { useApp } from '../../hooks/useApp';
 import { useCart } from '../../hooks/useCart';
 import { API_URL } from '../../apis/api-constants';
 import { toast } from 'sonner';
+import { useGuestCartActions } from '../../hooks/useGuestCartActions';
 
 interface Props {
   formType: string;
   item: Item;
   formData?: any;
   cartItemId: number;
+  guestMode?: boolean;
 }
 
 function CheckoutItemEdit(props: Props) {
-  const { formType, item, cartItemId, formData } = props;
+  const { formType, item, cartItemId, formData, guestMode } = props;
   const [openFormModal, setOpenFormModal] = useState(false);
   const { setSelectedItem } = useApp();
-  const { editFormItemCart, refetch } = useCart();
+  const { editFormItemCart, refetch } = guestMode
+    ? useGuestCartActions()
+    : useCart();
 
   const handleEditForm = (data: FormSubmitParams<any>) => {
     editFormItemCart.mutate(
