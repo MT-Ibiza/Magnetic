@@ -1,5 +1,5 @@
 import { Button, EmptyState, Text } from '@magnetic/ui';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getTotalByService } from '@magnetic/utils';
 import { useGuestCartStore } from '../../hooks/useGuestCartStore';
 import CheckoutSummary from '../checkout/checkout-summary';
@@ -8,6 +8,8 @@ import CheckoutPayment from '../checkout/checkout-payment';
 import { useGuestCartActions } from '../../hooks/useGuestCartActions';
 
 export function PublicCheckoutPage() {
+  const params = useParams();
+  const slug = params.slug || '';
   const { cart } = useGuestCartStore();
   const { isLoading, data } = useGuestCartActions();
   const servicesSummary = getTotalByService(cart);
@@ -23,12 +25,9 @@ export function PublicCheckoutPage() {
   return (
     <>
       {cart.length === 0 ? (
-        <EmptyState
-          title="Your cart is empty"
-          description="Browse services to start planning your trip."
-        >
-          <Link to={`/services`}>
-            <Button>View Services</Button>
+        <EmptyState title="Your cart is empty">
+          <Link to={`/list/${slug}`}>
+            <Button>View List</Button>
           </Link>
         </EmptyState>
       ) : (

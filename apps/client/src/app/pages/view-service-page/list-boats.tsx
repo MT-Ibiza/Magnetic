@@ -8,10 +8,12 @@ import { getNumberMonth } from '../../utils';
 import { EmptyState, GridSkeleton } from '@magnetic/ui';
 import { FaShip } from 'react-icons/fa';
 
-interface Props {}
+interface Props {
+  slugGuestMode?: string;
+}
 
 function ListBoats(props: Props) {
-  const {} = props;
+  const { slugGuestMode } = props;
   const [isFilterBoats, setIsFilterBoats] = useState(false);
   const defaultMonthNumber = getNumberMonth();
   const [currentMonthNumber, setCurrentMonthNumber] =
@@ -42,43 +44,48 @@ function ListBoats(props: Props) {
   });
 
   return (
-      <div className="flex flex-col gap-[15px] lg:gap-[40px]">
-        <FilterBoats
-          onChangeFilters={(filters) => {
-            if (filters.from) {
-              const newMonthNumber = getNumberMonth(filters.from);
-              setCurrentMonthNumber(newMonthNumber);
-              setIsFilterBoats(true);
-            }
-            setSearchParams(filters);
-          }}
-        />
-        {isLoading ? (
-          <GridSkeleton totalItems={6} />
-        ) : (
-          <>
-            {boats?.length !== 0 ? (
-              <div className="grid grid-cols-1 gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {boats?.map((item, index) => (
-                  <div key={index}>
-                    <ItemBoatCard
-                      selectedDate={searchParams.from}
-                      item={item}
-                      priceMonthNumber={currentMonthNumber}
-                    />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <EmptyState
-                icon={FaShip}
-                title="No boats found"
-                description="Adjust your filters and try again"
-              ></EmptyState>
-            )}
-          </>
-        )}
-      </div>
+    <div className="flex flex-col gap-[15px] lg:gap-[40px]">
+      <FilterBoats
+        onChangeFilters={(filters) => {
+          if (filters.from) {
+            const newMonthNumber = getNumberMonth(filters.from);
+            setCurrentMonthNumber(newMonthNumber);
+            setIsFilterBoats(true);
+          }
+          setSearchParams(filters);
+        }}
+      />
+      {isLoading ? (
+        <GridSkeleton totalItems={6} />
+      ) : (
+        <>
+          {boats?.length !== 0 ? (
+            <div className="grid grid-cols-1 gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {boats?.map((item, index) => (
+                <div key={index}>
+                  <ItemBoatCard
+                    selectedDate={searchParams.from}
+                    item={item}
+                    priceMonthNumber={currentMonthNumber}
+                    url={
+                      slugGuestMode
+                        ? `/list/${slugGuestMode}/${item.id}`
+                        : undefined
+                    }
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <EmptyState
+              icon={FaShip}
+              title="No boats found"
+              description="Adjust your filters and try again"
+            ></EmptyState>
+          )}
+        </>
+      )}
+    </div>
   );
 }
 export default ListBoats;
