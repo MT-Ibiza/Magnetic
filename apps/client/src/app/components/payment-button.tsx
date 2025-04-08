@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { createOrder } from '../apis/api-order';
 import { GuestUser, Order } from '@magnetic/interfaces';
 import FormGuestUser from './form-guest-user';
+import { useLocation } from 'react-router-dom';
 
 export function PaymentButton(props: {
   amountInCents: number;
@@ -14,6 +15,9 @@ export function PaymentButton(props: {
   const { amountInCents, disable, guestMode } = props;
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const location = useLocation();
+  const pathSegments = location.pathname.split('/');
+  const section = pathSegments[1];
 
   const toggleModal = () => {
     setOpenModal((prevState) => !prevState);
@@ -36,10 +40,10 @@ export function PaymentButton(props: {
           amount: amountInCents,
           orderId: `${orderId}`,
           urlOk: guestMode
-            ? `${window.location.origin}/payment/success`
+            ? `${window.location.origin}/${section}/payment/success`
             : `${window.location.origin}/bookings`,
           urlKo: guestMode
-            ? `${window.location.origin}/payment/failed`
+            ? `${window.location.origin}/${section}/payment/failed`
             : `${window.location.origin}/checkout/failure`,
         }),
       });

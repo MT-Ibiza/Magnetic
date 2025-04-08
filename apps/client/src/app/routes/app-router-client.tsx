@@ -41,6 +41,10 @@ export const AppRouter = () => {
     </div>
   );
 
+  const slugBoats = 'boat-charters';
+  const slugShopDrinks = 'shop-drinks';
+  const slugDrinksCatalogue = 'drinks-catalog';
+
   return (
     <Routes>
       <Route path="login" element={<RedirectRoute />} />
@@ -48,29 +52,51 @@ export const AppRouter = () => {
       <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
       <Route element={<PublicLayout />}>
         <Route
-          path="boat-charters"
+          path={`${slugBoats}`}
           element={<ViewServicePage guestMode serviceType="boats" />}
         />
-        <Route path="boat-charters/:itemId" element={<PublicBoatPage />} />
-        <Route path="boat-charters/checkout" element={<PublicCheckoutPage />} />
+        <Route path={`${slugBoats}/:itemId`} element={<PublicBoatPage />} />
         <Route
-          path="shop-drinks"
-          element={<ViewServicePage guestMode serviceType="drinks" />}
-        />
-        <Route path="shop-drinks/checkout" element={<PublicCheckoutPage />} />
-        <Route
-          path="drinks-catalog"
-          element={<ViewServicePage guestMode serviceType="drinks" />}
-        />
-        <Route
-          path="drinks-catalog/checkout"
+          path={`${slugBoats}/checkout`}
           element={<PublicCheckoutPage />}
         />
-        <Route path="list/:slug" element={<PublicListPage />} />
+        <Route
+          path={`${slugBoats}/payment/success`}
+          element={<PaymentSuccess />}
+        />
+        <Route
+          path={`${slugBoats}/payment/failed`}
+          element={<PaymentFailed />}
+        />
+        <Route
+          path={`${slugShopDrinks}`}
+          element={<ViewServicePage guestMode serviceType="drinks" />}
+        />
+        <Route
+          path={`${slugShopDrinks}/checkout`}
+          element={<PublicCheckoutPage />}
+        />
+        <Route
+          path={`${slugShopDrinks}/payment/success`}
+          element={<PaymentSuccess />}
+        />
+        <Route
+          path={`${slugShopDrinks}/payment/failed`}
+          element={<PaymentFailed />}
+        />
+        <Route
+          path={`${slugDrinksCatalogue}`}
+          element={<ViewServicePage guestMode serviceType="drinks" />}
+        />
+        <Route
+          path={`${slugDrinksCatalogue}/checkout`}
+          element={<PublicCheckoutPage />}
+        />
+        {/* <Route path="list/:slug" element={<PublicListPage />} />
         <Route path="list/:slug/:itemId" element={<ListItemPage />} />
         <Route path="list/:slug/checkout" element={<PublicCheckoutPage />} />
         <Route path="list/:slug/payment/success" element={<PaymentSuccess />} />
-        <Route path="list/:slug/payment/failed" element={<PaymentFailed />} />
+        <Route path="list/:slug/payment/failed" element={<PaymentFailed />} /> */}
       </Route>
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
