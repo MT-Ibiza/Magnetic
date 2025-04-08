@@ -12,7 +12,9 @@ export async function POST(request: Request) {
 
     const cookieStore = cookies();
 
-    const cartIdFromCookie = cookieStore.get('cartId')?.value;
+    const cartIdFromCookie = guestEmail
+      ? cookieStore.get('cartId')?.value
+      : undefined;
     console.log('Guest cart: ', cartIdFromCookie);
 
     let userId = 0;

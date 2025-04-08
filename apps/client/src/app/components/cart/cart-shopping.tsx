@@ -189,15 +189,7 @@ export function CartShopping({ guestMode }: { guestMode?: boolean }) {
                         </p>
                       </div>
                       <div className="flex flex-col gap-2">
-                        {/* <Link to="/cart">
-                          <Button
-                            variant="outline"
-                            className="py-[8px] text-[16px] w-full"
-                          >
-                            View My Cart
-                          </Button>
-                        </Link> */}
-                        <Link to="/checkout">
+                        <Link to={guestMode ? '/guest/checkout' : '/checkout'}>
                           <Button className="py-[8px] text-[16px] w-full">
                             Checkout
                           </Button>

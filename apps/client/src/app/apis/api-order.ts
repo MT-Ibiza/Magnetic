@@ -20,7 +20,7 @@ export async function createOrder(params?: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify(params),
+    body: JSON.stringify(params || {}),
     credentials: 'include',
   });
 

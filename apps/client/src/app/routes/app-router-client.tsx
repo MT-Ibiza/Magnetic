@@ -48,7 +48,7 @@ export const AppRouter = () => {
       <Route element={<PublicLayout />}>
         <Route path="list/:slug" element={<PublicListPage />} />
         <Route path="list/:slug/:itemId" element={<ListItemPage />} />
-        <Route path="checkout" element={<PublicCheckoutPage />} />
+        <Route path="guest/checkout" element={<PublicCheckoutPage />} />
         <Route path="payment/success" element={<PaymentSuccess />} />
         <Route path="payment/failed" element={<PaymentFailed />} />
       </Route>
