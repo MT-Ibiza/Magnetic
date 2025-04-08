@@ -3,7 +3,7 @@ import { URL_REQUEST_PAYMENT } from '../apis/api-constants';
 import { Button, Modal } from '@magnetic/ui';
 import { useMutation } from '@tanstack/react-query';
 import { createOrder } from '../apis/api-order';
-import { Order } from '@magnetic/interfaces';
+import { GuestUser, Order } from '@magnetic/interfaces';
 import FormGuestUser from './form-guest-user';
 
 export function PaymentButton(props: {
@@ -97,13 +97,10 @@ export function PaymentButton(props: {
     }
   }
 
-  async function createOrderAndPay(params?: {
-    guestEmail: string;
-    guestName?: string;
-  }) {
+  async function createOrderAndPay(guestUser?: GuestUser) {
     //@ts-ignore
     document.getElementById('processing-order-modal').showModal();
-    await createOrderMutation.mutateAsync(params);
+    await createOrderMutation.mutateAsync(guestUser);
   }
 
   return (
@@ -133,7 +130,7 @@ export function PaymentButton(props: {
         <FormGuestUser
           onCancel={toggleModal}
           onSave={async (data) => {
-            // await createOrderAndPay(data);
+            await createOrderAndPay(data);
           }}
         />
       </Modal>
