@@ -49,6 +49,7 @@ export const AppRouter = () => {
       <Route element={<PublicLayout />}>
         <Route path="boat-charters" element={<ViewServicePage guestMode />} />
         <Route path="boat-charters/:itemId" element={<PublicBoatPage />} />
+        <Route path="boat-charters/checkout" element={<PublicCheckoutPage />} />
         <Route path="list/:slug" element={<PublicListPage />} />
         <Route path="list/:slug/:itemId" element={<ListItemPage />} />
         <Route path="list/:slug/checkout" element={<PublicCheckoutPage />} />
