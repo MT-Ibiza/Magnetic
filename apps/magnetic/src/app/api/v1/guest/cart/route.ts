@@ -121,7 +121,6 @@ export async function DELETE(request: Request) {
     const cookieStore = cookies();
 
     const cartIdFromCookie = cookieStore.get('cartId')?.value;
-    console.log('my cart: ', cartIdFromCookie);
 
     if (!cartIdFromCookie) {
       return NextResponse.json(null);
@@ -134,6 +133,10 @@ export async function DELETE(request: Request) {
       await db.cart.delete({
         where: { id: cart.id },
       });
+
+      const cookieStore = cookies();
+      cookieStore.delete('cartId');
+      console.log('remove guest cart');
       return NextResponse.json({ message: 'ok' });
     } else {
       return NextResponse.json(
