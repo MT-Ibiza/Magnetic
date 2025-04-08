@@ -51,13 +51,21 @@ export const AppRouter = () => {
           path="boat-charters"
           element={<ViewServicePage guestMode serviceType="boats" />}
         />
-        <Route
-          path="drinks"
-          element={<ViewServicePage guestMode serviceType="drinks" />}
-        />
         <Route path="boat-charters/:itemId" element={<PublicBoatPage />} />
         <Route path="boat-charters/checkout" element={<PublicCheckoutPage />} />
-        <Route path="drinks/checkout" element={<PublicCheckoutPage />} />
+        <Route
+          path="shop-drinks"
+          element={<ViewServicePage guestMode serviceType="drinks" />}
+        />
+        <Route path="shop-drinks/checkout" element={<PublicCheckoutPage />} />
+        <Route
+          path="drinks-catalog"
+          element={<ViewServicePage guestMode serviceType="drinks" />}
+        />
+        <Route
+          path="drinks-catalog/checkout"
+          element={<PublicCheckoutPage />}
+        />
         <Route path="list/:slug" element={<PublicListPage />} />
         <Route path="list/:slug/:itemId" element={<ListItemPage />} />
         <Route path="list/:slug/checkout" element={<PublicCheckoutPage />} />
