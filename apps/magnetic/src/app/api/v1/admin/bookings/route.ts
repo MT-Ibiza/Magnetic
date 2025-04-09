@@ -1,11 +1,17 @@
 import db from 'apps/magnetic/src/app/libs/db';
-import { NextResponse } from 'next/server';
+import { getParamsFromUrl } from 'apps/magnetic/src/app/services/products';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic'; // Desactiva la optimización estática
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const { page, pageSize } = getParamsFromUrl(req.nextUrl.searchParams);
+    const offset = (page - 1) * pageSize;
+
     const allBookings = await db.orderBookingForm.findMany({
+      skip: offset,
+      take: pageSize,
       include: {
         order: {
           include: {
