@@ -20,9 +20,6 @@ export async function GET(request: Request) {
         accommodation: true,
         arrivalDate: true,
         departureDate: true,
-        passportNumber: true,
-        billingAddress: true,
-        passportAttachmentUrl: true,
         package: {
           select: {
             id: true,
@@ -31,7 +28,24 @@ export async function GET(request: Request) {
         },
       },
     });
-    return NextResponse.json(user);
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          message: 'No user session',
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    const cart = await db.cart.findUnique({
+      where: {
+        userId: userId,
+      },
+    });
+    return NextResponse.json({ ...user, ...{ cartId: cart?.id } });
   } catch (error: any) {
     return NextResponse.json(
       {

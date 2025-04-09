@@ -39,9 +39,6 @@ export async function POST(
         accommodation: true,
         arrivalDate: true,
         departureDate: true,
-        passportNumber: true,
-        billingAddress: true,
-        passportAttachmentUrl: true,
         package: {
           select: {
             id: true,
