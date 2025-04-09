@@ -191,7 +191,34 @@ const ReservationInfo = ({
   guestMode?: boolean;
 }) => (
   <div className="flex flex-col gap-1">
-    <h1>{cartItem.item.name} aadsasd</h1>
+    <h1>{cartItem.item.name}</h1>
+    {cartItem.formData && (
+      <>
+        <Text size="1">Date: {formatDate(cartItem.formData.date)}</Text>
+        <Text size="1">Venue: {cartItem.formData.venue}</Text>
+      </>
+    )}
+    <CheckoutItemEdit
+      guestMode={guestMode}
+      formData={cartItem.formData}
+      formType={formType}
+      item={cartItem.item}
+      cartItemId={cartItem.id}
+    />
+  </div>
+);
+
+const ChildcareInfo = ({
+  cartItem,
+  formType,
+  guestMode,
+}: {
+  cartItem: CartItem;
+  formType: string;
+  guestMode?: boolean;
+}) => (
+  <div className="flex flex-col gap-1">
+    <h1>{cartItem.item.name}</h1>
     {cartItem.formData && (
       <>
         <Text size="1">Date: {formatDate(cartItem.formData.date)}</Text>

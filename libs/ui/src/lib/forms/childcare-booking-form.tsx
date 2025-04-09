@@ -176,7 +176,7 @@ export function ChildcareBookingForm({
                 className="text-primary-600 mb-[10px] md:mb-[0px] md:mt-[-30px]"
                 size="1"
               >
-                Service available for 4 to 12 hours.
+                Minimum service 4 hours.
               </Text>
               <div className="col-span-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -272,7 +272,10 @@ export function ChildcareBookingForm({
             </div>
             <div>
               <Checkbox
-                label="I accept the childcare service disclaimer."
+                text="I have read and accept the"
+                label="service disclaimer."
+                underline={true}
+                url='https://www.magnetic-travel.com/wp-content/uploads/2025/04/Consent-Disclaimer-Magnetic-Travel.pdf'
                 className="mt-0"
                 {...register('disclaimerAccepted', {
                   required: 'You must accept the disclaimer to continue',

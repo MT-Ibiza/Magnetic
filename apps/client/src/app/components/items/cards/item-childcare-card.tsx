@@ -17,27 +17,10 @@ interface Props {
 
 function ItemChildcareCard(props: Props) {
   const { item, onClickBookNow, cartItemAmount } = props;
-  const { name, priceInCents, variants, childcareAttributes } = item;
-  const hours = childcareAttributes?.hours || 1;
-  const variantsWithHours = variants.map((v) => {
-    return {
-      value: v.hours || 1,
-    };
-  });
-
+  const { name, priceInCents } = item;
   const imagesSorted = useMemo(() => {
     return sortImagesByPosition(item.images);
   }, [item.images]);
-
-  const priceRange = useMemo(
-    () => getPriceRange([...variants, { priceInCents }]),
-    [variants, priceInCents]
-  );
-
-  const hoursRange = useMemo(
-    () => getRangeByField([...variantsWithHours, { value: hours }]),
-    [variants, priceInCents]
-  );
 
   return (
     <div
@@ -45,9 +28,9 @@ function ItemChildcareCard(props: Props) {
     >
       <div className="relative w-full rounded-2xl overflow-hidden">
         <GallerySlider
-          href={`/services/${item.serviceId}/item/${item.id}`}
+          // href={`/services/${item.serviceId}/item/${item.id}`}
           galleryImgs={imagesSorted}
-          classImage="h-[200px]"
+          classImage="h-[200px] cursor-default"
           uniqueID={`ExperiencesCard_${item.id}`}
         />
         <div className="p-5 space-y-4">
@@ -55,18 +38,16 @@ function ItemChildcareCard(props: Props) {
             <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
               {name}
             </p>
-            {/* <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
-              <span className="">
-                {hoursRange.low === hoursRange.high
-                  ? `${hoursRange.low} hours`
-                  : `${hoursRange.low} - ${hoursRange.high} hours`}
-              </span>
-            </div> */}
           </div>
           <div className="flex justify-between mt-5">
-            <Text className="text-base font-semibold">
-              {`${centsToEurosWithCurrency(priceInCents)} per hour`}
-            </Text>
+            <div className="flex gap-1 items-center">
+              <Text className="text-base font-semibold">
+                {centsToEurosWithCurrency(priceInCents)}
+              </Text>
+              <Text className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
+                / per hour
+              </Text>
+            </div>
             <ItemHandleBookButtons
               item={item}
               onClickBookNow={onClickBookNow}
