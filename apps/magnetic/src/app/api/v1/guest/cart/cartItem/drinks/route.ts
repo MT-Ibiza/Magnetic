@@ -39,14 +39,16 @@ export async function POST(request: Request) {
       });
     }
 
+    const isProduction = process.env.NODE_ENV === 'production';
+
     if (!cart) {
       cart = await db.cart.create({ data: {} });
-      cartIdCookie = serialize('cartId', cart.id.toString(), {
+      const cartIdCookie = serialize('cartId', cart.id.toString(), {
         httpOnly: true,
         path: '/',
-        maxAge: 60 * 60 * 24 * 7, // 7 días
-        sameSite: 'lax',
-        secure: process.env.NODE_ENV === 'production',
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        sameSite: isProduction ? 'none' : 'lax',
+        secure: isProduction,
       });
       console.log('cartIdCookie: ', cartIdCookie);
     }
