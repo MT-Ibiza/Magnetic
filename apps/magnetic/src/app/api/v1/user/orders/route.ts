@@ -87,7 +87,7 @@ export async function POST(request: Request) {
           const formData = cartItem.formData as any;
           const date = formData?.date
             ? moment(formData?.date).toDate()
-            : undefined;
+            : moment().toDate();
           return {
             date,
             formData,
