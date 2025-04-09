@@ -51,12 +51,17 @@ function FormGuestUser(props: {
                   type="text"
                   placeholder="Full name"
                   className="input input-bordered"
-                  {...register('name')}
+                  {...register('name', {
+                    required: 'Name is required',
+                  })}
                 />
+                {errors.name && (
+                  <Text.TextInputError text={errors.name.message || ''} />
+                )}
               </div>
               <div className="form-control w-full">
                 <label htmlFor="email" className="label">
-                  <span className="label-text">Email *</span>
+                  <span className="label-text">Email</span>
                 </label>
                 <input
                   id="email"
@@ -114,7 +119,9 @@ function FormGuestUser(props: {
 
             <div className="form-control">
               <label htmlFor="companyName" className="label">
-                <span className="label-text">Company (Optional)</span>
+                <span className="label-text">
+                  Company Name/Number (Optional)
+                </span>
               </label>
               <input
                 id="companyName"
