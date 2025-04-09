@@ -18,7 +18,6 @@ interface Props {
 }
 
 function UsersTable(props: Props) {
-  const { onClickEdit, onClickRemove } = props;
   const [selectedUser, setSelectedUser] = useState<User>();
   const [showAlert, setShowAlert] = useState(false);
   const { getCurrentUser, logout } = useAuth();

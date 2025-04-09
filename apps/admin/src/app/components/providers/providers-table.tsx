@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { useProviders } from '../../hooks/useProviders';
 import { Provider } from '@magnetic/interfaces';
+import ConfirmAlert from '../confirm-alert';
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { removeProvider } from '../../apis/api-providers';
 
 interface Props {
   onClickEdit?: (provider: Provider) => void;
@@ -12,7 +16,25 @@ interface Props {
 
 function ProvidersTable(props: Props) {
   const { onClickEdit, onRefetch } = props;
+  const [showAlert, setShowAlert] = useState(false);
+  const [selectedProvider, setSelectedProvider] = useState<Provider>();
   const { isLoading, providers, error, isError, refetch } = useProviders();
+  const toggleAlert = () => {
+    setShowAlert((prevState) => !prevState);
+  };
+
+  const removeSupplier = useMutation<Provider, Error, any>({
+    mutationFn: (ProviderId: number) => {
+      return removeProvider(ProviderId);
+    },
+    onSuccess: () => {
+      toggleAlert();
+      refetch();
+    },
+    onError: (error) => {
+      console.log('error: ', error);
+    },
+  });
 
   if (isLoading) {
     return <Loading />;
@@ -25,9 +47,9 @@ function ProvidersTable(props: Props) {
   if (onRefetch) {
     onRefetch(refetch);
   }
-  
+
   return (
-    <div className="">
+    <>
       <table className="table w-full">
         <thead>
           <tr>
@@ -63,10 +85,11 @@ function ProvidersTable(props: Props) {
                     </li>
                     <li
                       onClick={() => {
-                        // onClickRemove && onClickRemove(user);
+                        setSelectedProvider(provider);
+                        toggleAlert();
                       }}
                     >
-                      <a>Remove</a>
+                      <a>Delete</a>
                     </li>
                   </ul>
                 </div>
@@ -75,7 +98,20 @@ function ProvidersTable(props: Props) {
           ))}
         </tbody>
       </table>
-    </div>
+      <ConfirmAlert
+        title={'Remove Supplier'}
+        message={`Are you sure you want to remove ${selectedProvider?.name} supplier?`}
+        show={showAlert}
+        onClickConfirm={async () => {
+          if (selectedProvider) {
+            await removeSupplier.mutateAsync(selectedProvider.id);
+          }
+        }}
+        onClickCancel={() => {
+          setShowAlert(false);
+        }}
+      />
+    </>
   );
 }
 
