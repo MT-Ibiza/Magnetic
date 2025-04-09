@@ -29,7 +29,7 @@ function BookingCard(props: Props) {
       </div>
       <div>
         {booking.type === 'drinks' ? (
-          <Text className="text-gray-500">Many products</Text>
+          <Text className="text-gray-500">Drinks</Text>
         ) : (
           <Text className="text-gray-500">{mainItem.item.name}</Text>
         )}
@@ -38,7 +38,9 @@ function BookingCard(props: Props) {
         {moment(booking.date).format('DD MMM YYYY')}
       </Text>
       <Text className="text-gray-500">
-        {booking.order.user ? booking.order.user.name : booking.order.guestName}
+        {booking.order.user
+          ? booking.order.user.name
+          : booking.order.guestUser?.name}
       </Text>
       <Link to={`/bookings/${booking.id}`}>
         <p className="text-end text-sm font-medium text-primary-700 hover:text-primary-800 hover:underline">
