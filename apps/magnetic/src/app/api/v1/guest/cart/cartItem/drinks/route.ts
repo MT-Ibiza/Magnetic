@@ -40,17 +40,19 @@ export async function POST(request: Request) {
     }
 
     const isProduction = process.env.NODE_ENV === 'production';
+    console.log('isProduction: ', isProduction);
 
     if (!cart) {
       cart = await db.cart.create({ data: {} });
-      const cartIdCookie = serialize('cartId', cart.id.toString(), {
+      const cookieOptions = {
         httpOnly: true,
         path: '/',
-        maxAge: 60 * 60 * 24 * 7, // 7 days
+        maxAge: 60 * 60 * 24 * 7, // 7 días
         sameSite: isProduction ? 'none' : 'lax',
         secure: isProduction,
-      });
-      console.log('cartIdCookie: ', cartIdCookie);
+      };
+      cartIdCookie = serialize('cartId', cart.id.toString(), cookieOptions);
+      console.log('cookieOptions: ', cookieOptions);
     }
 
     const existingCartItem = await db.cartItem.findFirst({
