@@ -122,19 +122,6 @@ function ViewServicePage(props: Props) {
                 <span className="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity"></span>
               </div>
             </a>
-            {/* <a
-              href="https://www.samos-deli.com/online-shop/"
-              target="_blank"
-              className="cursor-pointer font-semibold text-white"
-            >
-              <div className={`cursor-pointer relative`}>
-                <div className="rounded-[10px] flex items-center bg-primary-700 h-[30px] px-[30px] absolute z-10 bottom-[10px] right-[10px]">
-                  <label className="cursor-pointer font-semibold text-white">
-                    Visit Shop
-                  </label>
-                </div>
-              </div>
-            </a> */}
           </div>
         )}
         {service.script ? (
@@ -182,39 +169,6 @@ function ViewServicePage(props: Props) {
                       </label>
                     </div>
                   </div>
-                  {/* <div
-                    className={`border border-gray-600 rounded-md py-3 px-10 cursor-pointer hover:bg-primary-100 ${
-                      selectedCarService === 'standard' &&
-                      'border-primary-500 bg-primary-100'
-                    }`}
-                    onClick={() => {
-                      setSelectedCarService('standard');
-                    }}
-                  >
-                    Standard
-                  </div>
-                  <div
-                    className={`border border-gray-600 rounded-md py-3 px-10 cursor-pointer hover:bg-primary-100 ${
-                      selectedCarService === 'premium' &&
-                      'border-primary-500 bg-primary-100'
-                    }`}
-                    onClick={() => {
-                      setSelectedCarService('premium');
-                    }}
-                  >
-                    Premium
-                  </div> */}
-                  {/* <div
-                    className={`border border-gray-600 rounded-md py-3 px-10 cursor-pointer hover:bg-gray-50 ${
-                      selectedCarService === 'luxury' &&
-                      'border-primary-500 hover:bg-primary-100 bg-primary-100'
-                    }`}
-                    onClick={() => {
-                      setSelectedCarService('luxury');
-                    }}
-                  >
-                    Luxury
-                  </div> */}
                 </div>
                 {selectedCarService === 'standard' && (
                   <iframe

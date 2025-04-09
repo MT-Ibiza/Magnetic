@@ -61,7 +61,8 @@ export async function GET() {
           ),
         }));
       })
-      .flat();
+      .flat()
+      .sort((a, b) => a.booking.id - b.booking.id);
 
     return NextResponse.json(transformedOrders);
   } catch (error: any) {
