@@ -74,7 +74,7 @@ export function BookingsUser(props: Props) {
                       .map((item, index) => (
                         <li key={index}>
                           {booking.type === 'drinks'
-                            ? 'Many drinks'
+                            ? 'Drinks'
                             : item.item.name}
                         </li>
                       ))}
