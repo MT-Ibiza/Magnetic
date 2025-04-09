@@ -5,66 +5,69 @@ export const dynamic = 'force-dynamic'; // Desactiva la optimización estática
 
 export async function GET() {
   try {
-    const orders = await db.order.findMany({
-      select: {
-        guestUser: true,
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
-        forms: true,
-        items: {
-          select: {
-            id: true,
-            priceInCents: true,
-            quantity: true,
-            cartItemId: true,
-            variant: {
+    const allBookings = await db.orderBookingForm.findMany({
+      include: {
+        order: {
+          include: {
+            items: {
               select: {
                 id: true,
-                name: true,
                 priceInCents: true,
-              },
-            },
-            item: {
-              select: {
-                name: true,
-                serviceId: true,
-                drinkAttributes: {
+                quantity: true,
+                cartItemId: true,
+                variant: {
                   select: {
                     id: true,
+                    name: true,
+                    priceInCents: true,
                   },
                 },
-                images: {
+                item: {
                   select: {
-                    url: true,
+                    name: true,
+                    serviceId: true,
+                    drinkAttributes: {
+                      select: {
+                        id: true,
+                      },
+                    },
+                    images: {
+                      select: {
+                        url: true,
+                      },
+                    },
                   },
                 },
               },
             },
+            user: true,
+            guestUser: true,
           },
         },
       },
+      orderBy: {
+        id: 'desc',
+      },
     });
 
-    const transformedOrders = orders
-      .map((order) => {
-        return order.forms.map((form) => ({
-          user: order.user,
-          guestUser: order.guestUser,
+    const bookings = allBookings
+      .map((fullBooking) => {
+        const {
+          order: { user, guestUser, items },
+        } = fullBooking;
+        const { order, ...form } = fullBooking;
+        return {
           booking: form,
-          orderItems: order.items.filter(
+          user: user,
+          guestUser: guestUser,
+          orderItems: items.filter(
             (itemCart) => itemCart.cartItemId === form.cartItemId
           ),
-        }));
+        };
       })
-      .flat()
-      .sort((a, b) => a.booking.id - b.booking.id);
+      .flat();
 
-    return NextResponse.json(transformedOrders);
+    return NextResponse.json(bookings);
   } catch (error: any) {
     return NextResponse.json(
       {
