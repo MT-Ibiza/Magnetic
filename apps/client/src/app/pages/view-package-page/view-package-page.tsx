@@ -85,7 +85,11 @@ function ViewPackagePage(props: Props) {
                   </p>
                   <div className="space-y-4">
                     {plan.name !== 'Diamond' && (
-                      <Button variant="outline" className="w-full">
+                      <Button
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => {}}
+                      >
                         Upgrade Now
                       </Button>
                     )}
