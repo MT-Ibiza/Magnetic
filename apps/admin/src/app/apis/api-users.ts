@@ -12,6 +12,7 @@ import {
   URL_NEW_CLIENT,
   URL_NEW_USER,
   URL_REMOVE_ADMIN,
+  URL_REMOVE_USER,
   URL_UPDATE_ADMIN,
   URL_UPDATE_CLIENT,
 } from './api-constants';
@@ -120,6 +121,16 @@ export async function getBookings(userId: number): Promise<BookingForm[]> {
 
 export async function removeAdmin(userId: number): Promise<User> {
   const url = URL_REMOVE_ADMIN(userId);
+  const response = await fetch(url, {
+    method: 'DELETE',
+  });
+  const dataJson = await response.json();
+  if (!response.ok) throw new Error(dataJson.message);
+  return dataJson;
+}
+
+export async function removeUser(userId: number): Promise<User> {
+  const url = URL_REMOVE_USER(userId);
   const response = await fetch(url, {
     method: 'DELETE',
   });

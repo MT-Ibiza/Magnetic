@@ -6,6 +6,11 @@ import { User } from '@magnetic/interfaces';
 import { Avatar, Button, Text } from '@magnetic/ui';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../../utils';
+import ConfirmAlert from '../confirm-alert';
+import { useAuth } from '../../hooks/useAuth';
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { removeUser } from '../../apis/api-users';
 
 interface Props {
   onClickEdit?: (user: User) => void;
@@ -14,6 +19,13 @@ interface Props {
 
 function UsersTable(props: Props) {
   const { onClickEdit, onClickRemove } = props;
+  const [selectedUser, setSelectedUser] = useState<User>();
+  const [showAlert, setShowAlert] = useState(false);
+  const { getCurrentUser, logout } = useAuth();
+  const currentUser = getCurrentUser();
+  const toggleAlert = () => {
+    setShowAlert((prevState) => !prevState);
+  };
   const {
     isLoading,
     isError,
@@ -28,6 +40,24 @@ function UsersTable(props: Props) {
     role: 'client',
   });
 
+  const removeAdminUser = useMutation<User, Error, any>({
+    mutationFn: (userId: number) => {
+      return removeUser(userId);
+    },
+    onSuccess: () => {
+      if (currentUser?.id === selectedUser?.id) {
+        toggleAlert();
+        logout();
+      } else {
+        toggleAlert();
+        refetch();
+      }
+    },
+    onError: (error) => {
+      console.log('error: ', error);
+    },
+  });
+
   if (isLoading) {
     return <Loading />;
   }
@@ -37,10 +67,9 @@ function UsersTable(props: Props) {
   }
 
   return (
-    <div className="">
+    <>
       <table className="table w-full">
         <thead>
-          {/* Name, Accommodation, Arrival Date, Package, Edit */}
           <tr>
             <th>Name</th>
             <th>Accommodation</th>
@@ -92,7 +121,8 @@ function UsersTable(props: Props) {
                     </li>
                     <li
                       onClick={() => {
-                        onClickRemove && onClickRemove(user);
+                        setSelectedUser(user);
+                        toggleAlert();
                       }}
                     >
                       <a>Delete</a>
@@ -117,7 +147,21 @@ function UsersTable(props: Props) {
           </Button>
         </div>
       )}
-    </div>
+
+      <ConfirmAlert
+        title={'Remove User'}
+        message={`Are you sure you want to remove ${selectedUser?.name} account?`}
+        show={showAlert}
+        onClickConfirm={async () => {
+          if (selectedUser) {
+            await removeAdminUser.mutateAsync(selectedUser.id);
+          }
+        }}
+        onClickCancel={() => {
+          setShowAlert(false);
+        }}
+      />
+    </>
   );
 }
 
