@@ -126,3 +126,11 @@ export interface AdminDashboard {
   active: BookingForm[];
   upcoming: User[];
 }
+
+export interface BookingAdminPagination {
+  page: number;
+  pageSize: number;
+  totalItems: number;
+  totalPages: number;
+  bookings: BookingUser[];
+}

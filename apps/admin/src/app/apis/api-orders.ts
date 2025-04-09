@@ -1,4 +1,9 @@
-import { Order, BookingUser, BookingAdmin } from '@magnetic/interfaces';
+import {
+  Order,
+  BookingUser,
+  BookingAdmin,
+  BookingAdminPagination,
+} from '@magnetic/interfaces';
 import {
   URL_GET_BOOKING,
   URL_GET_BOOKINGS_ORDERS,
@@ -46,26 +51,23 @@ export async function getOrder(id: number): Promise<Order> {
   return dataJson;
 }
 
-export async function getBookingsOrders(): Promise<BookingUser[]> {
-  try {
-    const response = await fetch(URL_GET_BOOKINGS_ORDERS, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+export async function getBookingsOrders(
+  params: any
+): Promise<BookingAdminPagination> {
+  const { itemsPerPage, page } = params;
+  const searchPage = page || 1;
+  const pageSize = itemsPerPage || 20;
+  const queryParams: Record<string, string> = {
+    page: searchPage.toString(),
+    pageSize: pageSize.toString(),
+  };
 
-    const dataJson = await response.json();
-
-    if (!response.ok) {
-      throw new Error(dataJson.message);
-    }
-
-    return dataJson;
-  } catch (error: any) {
-    console.error('Error fetching orders:', error.message);
-    throw error;
-  }
+  const queryString = new URLSearchParams(queryParams).toString();
+  const url = queryString
+    ? `${URL_GET_BOOKINGS_ORDERS}?${queryString}`
+    : `${URL_GET_BOOKINGS_ORDERS}`;
+  const response = await fetch(url);
+  return await response.json();
 }
 
 export async function getBooking(id: number): Promise<BookingAdmin> {

@@ -10,7 +10,10 @@ interface Props {}
 
 export function BookingsTable(props: Props) {
   const {} = props;
-  const { isLoading, bookings, error, isError, refetch } = useBookings();
+  const { isLoading, isError, bookings, error, hasNextPage, fetchNextPage } =
+    useBookings({
+      itemsPerPage: 10,
+    });
 
   if (isLoading) {
     return <Loading />;
@@ -93,6 +96,19 @@ export function BookingsTable(props: Props) {
           })}
         </tbody>
       </table>
+      {hasNextPage && (
+        <div className="text-center">
+          <Button
+            className="text-center m-5 bg-primary hover:bg-primary-800"
+            variant="solid"
+            onClick={() => {
+              fetchNextPage();
+            }}
+          >
+            Load More Bookings
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

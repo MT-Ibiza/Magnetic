@@ -1,69 +1,88 @@
 import db from 'apps/magnetic/src/app/libs/db';
-import { NextResponse } from 'next/server';
+import { getParamsFromUrl } from 'apps/magnetic/src/app/services/products';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic'; // Desactiva la optimización estática
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    const orders = await db.order.findMany({
-      select: {
-        guestUser: true,
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
-        forms: true,
-        items: {
-          select: {
-            id: true,
-            priceInCents: true,
-            quantity: true,
-            cartItemId: true,
-            variant: {
+    const { page, pageSize } = getParamsFromUrl(req.nextUrl.searchParams);
+    const offset = (page - 1) * pageSize;
+
+    const allBookings = await db.orderBookingForm.findMany({
+      skip: offset,
+      take: pageSize,
+      include: {
+        order: {
+          include: {
+            items: {
               select: {
                 id: true,
-                name: true,
                 priceInCents: true,
-              },
-            },
-            item: {
-              select: {
-                name: true,
-                serviceId: true,
-                drinkAttributes: {
+                quantity: true,
+                cartItemId: true,
+                variant: {
                   select: {
                     id: true,
+                    name: true,
+                    priceInCents: true,
                   },
                 },
-                images: {
+                item: {
                   select: {
-                    url: true,
+                    name: true,
+                    serviceId: true,
+                    drinkAttributes: {
+                      select: {
+                        id: true,
+                      },
+                    },
+                    images: {
+                      select: {
+                        url: true,
+                      },
+                    },
                   },
                 },
               },
             },
+            user: true,
+            guestUser: true,
           },
         },
       },
+      orderBy: {
+        id: 'desc',
+      },
     });
 
-    const transformedOrders = orders
-      .map((order) => {
-        return order.forms.map((form) => ({
-          user: order.user,
-          guestUser: order.guestUser,
+    const bookings = allBookings
+      .map((fullBooking) => {
+        const {
+          order: { user, guestUser, items },
+        } = fullBooking;
+        const { order, ...form } = fullBooking;
+        return {
           booking: form,
-          orderItems: order.items.filter(
+          user: user,
+          guestUser: guestUser,
+          orderItems: items.filter(
             (itemCart) => itemCart.cartItemId === form.cartItemId
           ),
-        }));
+        };
       })
       .flat();
 
-    return NextResponse.json(transformedOrders);
+    const totalItems = await db.item.count();
+    const totalPages = Math.ceil(totalItems / pageSize);
+
+    return NextResponse.json({
+      page,
+      pageSize,
+      totalItems,
+      totalPages,
+      bookings,
+    });
   } catch (error: any) {
     return NextResponse.json(
       {
