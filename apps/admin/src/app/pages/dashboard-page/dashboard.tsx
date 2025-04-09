@@ -1,6 +1,5 @@
 import BookingDashboard from '../../components/booking-dashboard';
 import BookingCard from '../../components/dashboard/booking-card';
-import UpcomingBookingCard from '../../components/dashboard/upcoming-booking-card';
 import { ErrorText } from '../../components/error-text';
 import { useAdminDashboard } from '../../hooks/useDashboard';
 import Loading from '../../components/loading';
@@ -37,7 +36,7 @@ export function DashboardPage() {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500">No bookings available</p>
+                <p className="text-sm text-gray-500">No new bookings</p>
               )}
             </BookingDashboard>
             <BookingDashboard title="Active Bookings">
@@ -48,7 +47,7 @@ export function DashboardPage() {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500">No bookings available</p>
+                <p className="text-sm text-gray-500">No active bookings</p>
               )}
             </BookingDashboard>
             <BookingDashboard title="Pending Bookings">
@@ -59,7 +58,7 @@ export function DashboardPage() {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500">No bookings available</p>
+                <p className="text-sm text-gray-500">No pending bookings</p>
               )}
             </BookingDashboard>
           </>
