@@ -68,7 +68,7 @@ export async function POST(request: Request) {
         },
       });
     }
-    
+
     let priceItem = item.priceInCents;
 
     if (variantId) {
@@ -120,8 +120,13 @@ export async function POST(request: Request) {
         cartItem: newCartItem,
       });
     } else {
-      const childcareForm = item.service.serviceType === 'childcare' ? formData as any : undefined ;
-      priceItem = childcareForm ?  Number(childcareForm?.hours) * item.priceInCents : priceItem;
+      const childcareForm =
+        item.service.serviceType === 'childcare'
+          ? (formData as any)
+          : undefined;
+      priceItem = childcareForm
+        ? Number(childcareForm?.hours) * item.priceInCents
+        : priceItem;
 
       const newCartItem = await db.cartItem.create({
         data: {
