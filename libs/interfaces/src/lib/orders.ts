@@ -37,6 +37,7 @@ export interface OrderItem {
   priceInCents: number;
   quantity: number;
   itemId: number;
+  hours: number;
   orderId: number;
   item: ItemBaseFields;
   variantId?: number;

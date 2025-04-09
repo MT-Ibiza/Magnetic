@@ -105,7 +105,6 @@ export function ChildcareBookingForm({
     : currentSelectItem.priceInCents;
 
   const total = itemPrice * numberOfHours * amount;
-  console.log(numberOfHours);
 
   return (
     <div>

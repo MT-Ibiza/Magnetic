@@ -51,6 +51,7 @@ export function ReservationsRestaurantBookingForm({
           time: formData.time,
           comments: formData.comments,
           venue: formData.venue,
+          beachReservations: formData.beachReservations
         }
       : undefined,
   });
@@ -193,7 +194,7 @@ export function ReservationsRestaurantBookingForm({
               <TextArea
                 className="w-full"
                 placeholder="Amount of beds required & arrival time"
-                {...register('comments')}
+                {...register('beachReservations')}
               />
             </div>
           </div>

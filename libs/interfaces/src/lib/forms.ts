@@ -70,6 +70,7 @@ export interface ReservationsFormData {
   location: string;
   comments: string;
   paymentConfirmed: boolean;
+  beachReservations: string;
 }
 
 export interface SingleChefServiceFormData {
