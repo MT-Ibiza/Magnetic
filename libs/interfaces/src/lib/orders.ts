@@ -124,7 +124,7 @@ export interface BookingAdmin {
 export interface AdminDashboard {
   new: BookingForm[];
   active: BookingForm[];
-  upcoming: User[];
+  pending: BookingForm[];
 }
 
 export interface BookingAdminPagination {

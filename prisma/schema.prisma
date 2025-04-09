@@ -263,7 +263,7 @@ model OrderBookingForm {
   cartItemId            Int? //could be associate specific item and service
   formData              Json
   orderId               Int
-  date                  DateTime?
+  date                  DateTime
   modificationRequest   String?
   modificationResponse  String?
   cancellationRequest   String?

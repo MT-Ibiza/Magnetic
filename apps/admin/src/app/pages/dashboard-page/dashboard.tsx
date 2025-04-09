@@ -13,7 +13,7 @@ export function DashboardPage() {
     error,
     newBookings,
     activeBookings,
-    upcomingUsers,
+    pendingBookings,
   } = useAdminDashboard();
 
   if (isLoading) {
@@ -51,11 +51,11 @@ export function DashboardPage() {
                 <p className="text-sm text-gray-500">No bookings available</p>
               )}
             </BookingDashboard>
-            <BookingDashboard title="Upcoming Clients">
-              {upcomingUsers.length > 0 ? (
+            <BookingDashboard title="Pending Bookings">
+              {pendingBookings.length > 0 ? (
                 <div className="space-y-3 max-h-[70vh] overflow-y-auto">
-                  {upcomingUsers.map((user, index) => (
-                    <UpcomingBookingCard user={user} key={index} />
+                  {pendingBookings.map((booking, index) => (
+                    <BookingCard booking={booking} key={index} />
                   ))}
                 </div>
               ) : (
