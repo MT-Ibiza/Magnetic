@@ -125,7 +125,7 @@ export function DashboardClientPage() {
       </div>
       <div>
         <FloatingWhatsApp
-          phoneNumber="46728482437"
+          phoneNumber="34680419368"
           accountName="Magnetic Travel"
           initialMessageByServer="Hi there! How can I assist you?"
           initialMessageByClient="Hello! I would like to chat with you"
