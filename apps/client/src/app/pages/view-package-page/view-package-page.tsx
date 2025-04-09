@@ -5,6 +5,11 @@ import { usePackage } from '../../hooks/usePackage';
 import FormCalendly from '../../components/form-calendly';
 import { useState } from 'react';
 import SkeletonPlan from '../../components/skeletons/skeleton-plan';
+import { useMutation } from '@tanstack/react-query';
+import { User } from '@magnetic/interfaces';
+import { upgradePackage } from '../../apis/api-packages';
+import { toast } from 'sonner';
+import { useAuth } from '../../hooks/useAuth';
 
 interface Props {}
 
@@ -23,7 +28,8 @@ function ViewPackagePage(props: Props) {
   const packageId = parseInt(params.id || '');
   const { isLoading, isError, plan, error } = usePackage(packageId);
   const [openModal, setOpenModal] = useState(false);
-
+  const { setCurrentUser, getCurrentUser } = useAuth();
+  const user = getCurrentUser();
   function toggleOpeModal() {
     setOpenModal(!openModal);
   }
@@ -41,6 +47,27 @@ function ViewPackagePage(props: Props) {
     const featureList = tempDiv.querySelectorAll('li');
     return Array.from(featureList).map((li) => li.textContent?.trim() || '');
   };
+
+  const upgradePackageMutation = useMutation<User, Error, number>({
+    mutationFn: (id) => {
+      return upgradePackage(id);
+    },
+    onSuccess: (user) => {
+      setCurrentUser({
+        name: `${user.name}`,
+        email: user.email,
+        arrivalDate: user.arrivalDate,
+        accommodation: user.accommodation,
+        package: user.package,
+        phone: user.phone,
+        id: user.id,
+      });
+      toast.success(`Package upgraded!`);
+    },
+    onError: () => {
+      toast.error(`Package couldn't be upgraded!`);
+    },
+  });
 
   return (
     <>
@@ -84,15 +111,18 @@ function ViewPackagePage(props: Props) {
                     with our team to learn more.
                   </p>
                   <div className="space-y-4">
-                    {plan.name !== 'Diamond' && (
-                      <Button
-                        variant="outline"
-                        className="w-full"
-                        onClick={() => {}}
-                      >
-                        Upgrade Now
-                      </Button>
-                    )}
+                    {plan.name !== 'Diamond' &&
+                      user?.package?.name !== 'Platinum' && (
+                        <Button
+                          variant="outline"
+                          className="w-full"
+                          onClick={async () => {
+                            await upgradePackageMutation.mutateAsync(packageId);
+                          }}
+                        >
+                          Upgrade Now
+                        </Button>
+                      )}
                     <Button
                       variant="outline"
                       className="w-full"

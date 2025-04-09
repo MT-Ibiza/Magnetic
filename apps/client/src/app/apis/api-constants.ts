@@ -29,6 +29,8 @@ export const URL_GET_ITEM = (serviceId: number, itemId: number) =>
 //Package
 export const URL_GET_PACKAGE = (id: number) => `${API_URL}/packages/${id}`;
 export const URL_GET_PACKAGES = `${API_URL}/packages`;
+export const URL_UPGRADE_PACKAGE = (id: number) =>
+  `${API_URL}/packages/${id}/upgrade`;
 
 //Dashboard
 export const URL_GET_DASHBOARD = `${API_URL}/dashboard`;
