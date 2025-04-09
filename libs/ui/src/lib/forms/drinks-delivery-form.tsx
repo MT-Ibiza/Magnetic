@@ -22,7 +22,7 @@ export function DrinksDeliveryBookingForm(props: Props) {
   const currentSelectItem = item;
   const arrivalDate = moment(user?.arrivalDate).format('YYYY-MM-DD');
   const {
-    register,
+    register, 
     handleSubmit,
     formState: { errors },
     setValue,

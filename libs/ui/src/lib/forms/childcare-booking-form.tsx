@@ -6,6 +6,7 @@ import {
 } from '@magnetic/interfaces';
 import {
   Button,
+  Checkbox,
   Input,
   ItemCounterButtons,
   Modal,
@@ -50,6 +51,8 @@ export function ChildcareBookingForm({
       text: `${currentSelectItem.name} - ${currentSelectItem.childcareAttributes?.hours} hours`,
     },
   ].concat(variantOptions);
+  const [numberOfHours, setNumberOfHours] = useState(formData?.hours || 4);
+  const [accepted, setAccepted] = useState(false);
 
   const {
     register,
@@ -70,7 +73,7 @@ export function ChildcareBookingForm({
           comments: formData.comments,
           disclaimerAccepted: formData.disclaimerAccepted,
           variantId: formData.variantId,
-          hours: formData.hours || 4,
+          hours: formData.hours || numberOfHours,
         }
       : undefined,
   });
@@ -80,7 +83,7 @@ export function ChildcareBookingForm({
       ...data,
       numberOfBabysitters: amount,
       totalPriceInCents: total,
-      hours: pricePerHour
+      hours: numberOfHours,
     };
 
     onSubmit({
@@ -91,7 +94,6 @@ export function ChildcareBookingForm({
   };
 
   const [amount, setAmount] = useState(formData?.numberOfBabysitters || 1);
-  const [pricePerHour, setPricePerHour] = useState(4);
 
   const variantSelected = formData?.variantId
     ? currentSelectItem.variants.find((variant) => {
@@ -102,7 +104,8 @@ export function ChildcareBookingForm({
     ? variantSelected.priceInCents
     : currentSelectItem.priceInCents;
 
-  const total = itemPrice * pricePerHour * amount;
+  const total = itemPrice * numberOfHours * amount;
+  console.log(numberOfHours);
 
   return (
     <div>
@@ -114,31 +117,31 @@ export function ChildcareBookingForm({
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Modal.Body>
           <div className="p-10 flex flex-col gap-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
-              <div className="">
-                <div>
-                  <Text className="mb-2">Select Duration</Text>
-                  <div className="product flex justify-between items-center border border-gray-300 p-4 mb-3 rounded-md">
-                    <div className="flex gap-3 items-center">
-                      <Text>Number of hours</Text>
-                    </div>
-                    <div>
-                      <ItemCounterButtons
-                        currentAmount={pricePerHour}
-                        min={4}
-                        max={12}
-                        onClickAdd={() => {
-                          if (pricePerHour < 12) {
-                            setPricePerHour(pricePerHour + 1);
-                          }
-                        }}
-                        onClickRemove={() => {
-                          if (pricePerHour > 4) {
-                            setPricePerHour(pricePerHour - 1);
-                          }
-                        }}
-                      />
-                    </div>
+            <div className="flex flex-col md:grid md:grid-cols-2 gap-2 md:gap-6 md:items-end">
+              <div className="col-span-1">
+                <Text className="mb-2">Select Duration</Text>
+                <div className="product flex justify-between items-center border border-gray-300 p-4 mb-3 rounded-md">
+                  <div className="flex gap-3 items-center">
+                    <Text className="text-[14px] md:text-[16px]">
+                      Number of hours
+                    </Text>
+                  </div>
+                  <div>
+                    <ItemCounterButtons
+                      currentAmount={numberOfHours}
+                      min={4}
+                      max={12}
+                      onClickAdd={() => {
+                        if (numberOfHours < 12) {
+                          setNumberOfHours(numberOfHours + 1);
+                        }
+                      }}
+                      onClickRemove={() => {
+                        if (numberOfHours > 4) {
+                          setNumberOfHours(numberOfHours - 1);
+                        }
+                      }}
+                    />
                   </div>
                 </div>
               </div>
@@ -146,7 +149,9 @@ export function ChildcareBookingForm({
                 {/* <Text className="mb-2">Number of Babysitters</Text> */}
                 <div className="product flex justify-between items-center border border-gray-300 p-4 mb-3 rounded-md">
                   <div className="flex gap-3 items-center">
-                    <Text>Number of Babysitters</Text>
+                    <Text className="text-[14px] md:text-[16px]">
+                      Number of Babysitters
+                    </Text>
                   </div>
                   <div>
                     <ItemCounterButtons
@@ -167,8 +172,11 @@ export function ChildcareBookingForm({
                   </div>
                 </div>
               </div>
-              <Text className="text-primary-600 mt-[-30px]" size="1">
-                Minimum 4 hours
+              <Text
+                className="text-primary-600 mb-[10px] md:mb-[0px] md:mt-[-30px]"
+                size="1"
+              >
+                Service available for 4 to 12 hours.
               </Text>
               <div className="col-span-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -262,6 +270,17 @@ export function ChildcareBookingForm({
                 {...register('comments')}
               />
             </div>
+            <div>
+              <Checkbox
+                label="I accept the childcare service disclaimer."
+                className="mt-0"
+                {...register('disclaimerAccepted', {
+                  required: 'You must accept the disclaimer to continue',
+                })}
+                defaultChecked={watch('disclaimerAccepted')}
+                onChange={(checked) => setValue('disclaimerAccepted', checked)}
+              />
+            </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -282,7 +301,11 @@ export function ChildcareBookingForm({
                   Cancel
                 </Button>
               )}
-              <Button radius="full" type="submit">
+              <Button
+                disabled={!watch('disclaimerAccepted')}
+                radius="full"
+                type="submit"
+              >
                 Book Service
               </Button>
             </div>

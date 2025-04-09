@@ -65,9 +65,7 @@ function ItemChildcareCard(props: Props) {
           </div>
           <div className="flex justify-between mt-5">
             <Text className="text-base font-semibold">
-              {`${centsToEurosWithCurrency(priceInCents)} per ${hours} ${
-                hours === 1 ? 'hour' : 'hours'
-              }`}
+              {`${centsToEurosWithCurrency(priceInCents)} per hour`}
             </Text>
             <ItemHandleBookButtons
               item={item}

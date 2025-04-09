@@ -199,7 +199,7 @@ export function FormChildcareItem(props: Props) {
               )}
             </div>
             <div className="flex flex-col lg:flex-row gap-6">
-              <div className="w-full">
+              {/* <div className="w-full">
                 <Text className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
                   Hours
                 </Text>
@@ -217,14 +217,14 @@ export function FormChildcareItem(props: Props) {
                     {errors.childcareAttributes?.hours.message}
                   </p>
                 )}
-              </div>
+              </div> */}
               <div className="w-full">
                 <div className="flex flex-col">
                   <label
                     htmlFor="priceInCents"
                     className="text-sm font-semibold text-neutral-800 dark:text-neutral-200"
                   >
-                    Base Price
+                    Price per Hour
                   </label>
                   <Input
                     id="priceInCents"
