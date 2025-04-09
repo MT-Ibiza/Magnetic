@@ -43,7 +43,7 @@ export const AppRouter = () => {
 
   const slugBoats = 'boat-charters';
   const slugShopDrinks = 'shop-drinks';
-  const slugDrinksCatalogue = 'drinks-catalog';
+  const slugOrderDrinks = 'order-drinks';
 
   return (
     <Routes>
@@ -85,11 +85,11 @@ export const AppRouter = () => {
           element={<PaymentFailed />}
         />
         <Route
-          path={`${slugDrinksCatalogue}`}
+          path={`${slugOrderDrinks}`}
           element={<ViewServicePage guestMode serviceType="drinks" />}
         />
         <Route
-          path={`${slugDrinksCatalogue}/checkout`}
+          path={`${slugOrderDrinks}/checkout`}
           element={<PublicCheckoutPage />}
         />
         {/* <Route path="list/:slug" element={<PublicListPage />} />
