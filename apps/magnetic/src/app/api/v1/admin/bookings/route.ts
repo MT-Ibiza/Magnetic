@@ -73,7 +73,16 @@ export async function GET(req: NextRequest) {
       })
       .flat();
 
-    return NextResponse.json(bookings);
+    const totalItems = await db.item.count();
+    const totalPages = Math.ceil(totalItems / pageSize);
+
+    return NextResponse.json({
+      page,
+      pageSize,
+      totalItems,
+      totalPages,
+      bookings,
+    });
   } catch (error: any) {
     return NextResponse.json(
       {
