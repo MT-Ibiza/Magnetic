@@ -85,6 +85,8 @@ export async function POST(request: Request) {
         })
         .map((cartItem) => {
           const formData = cartItem.formData as any;
+          const formReservation = cartItem.type === 'reservations';
+          const status = formReservation ? 'pending' : 'accepted';
           const date = formData?.date
             ? moment(formData?.date).toDate()
             : moment().toDate();
@@ -92,7 +94,7 @@ export async function POST(request: Request) {
             date,
             formData,
             serviceId: cartItem.item.serviceId,
-            status: 'accepted' as 'accepted',
+            status: status as 'accepted',
             cartItemId: cartItem.id,
             type: cartItem.type,
           };
