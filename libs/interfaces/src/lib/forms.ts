@@ -60,8 +60,10 @@ export interface SecurityFormData {
 export interface ReservationsFormData {
   numberOfPeople: number;
   childrenAges: string;
+  clientName: string;
   service: string;
   date: string;
+  venue: string;
   time: string;
   startTime: string;
   finishTime: string;

@@ -8,6 +8,7 @@ import ItemWellnessCard from './item-wellness-card';
 import ItemDefaultServiceCard from './item-default-service-card';
 import ItemChildcareCard from './item-childcare-card';
 import ItemSecurityCard from './item-security-card';
+import ItemReservationCard from './item-reservation-card';
 
 interface ItemCardProps {
   item: Item;
@@ -87,7 +88,7 @@ function ItemCard({
       );
     case 'reservations':
       return (
-        <ItemDefaultServiceCard
+        <ItemReservationCard
           item={item}
           cartItemAmount={currentAmount}
           onClickBookNow={onClickBookNow}

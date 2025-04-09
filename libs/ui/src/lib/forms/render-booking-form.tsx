@@ -9,7 +9,8 @@ import SingleChefServiceForm from './single-chef-service';
 import { FormSubmitParams, Item, CurrentUser } from '@magnetic/interfaces';
 import BoatCharterBookingForm from './boat-charter-form';
 import WellnessFitnessBookingForm from './wellness-fitness-form';
-import ReservationsBookingForm from './reservations-booking-form';
+import { ReservationsRestaurantBookingForm } from './reservations-booking-form';
+import ReservationVipBookingForm from './reservation-vip-form';
 
 interface Props {
   type: string;
@@ -127,16 +128,28 @@ export function RenderBookingForm(props: Props) {
         />
       );
     case 'reservations':
-      return (
-        <ReservationsBookingForm
-          user={user}
-          item={item}
-          formData={formData}
-          onSubmit={onSubmit}
-          onCancel={onClose}
-        />
-      );
-
+      if (item?.name === 'Restaurant & Beach Club') {
+        return (
+          <ReservationsRestaurantBookingForm
+            user={user}
+            item={item}
+            formData={formData}
+            onSubmit={onSubmit}
+            onCancel={onClose}
+          />
+        );
+      } else if (item?.name === 'VIP Nightclub') {
+        return (
+          <ReservationVipBookingForm
+            user={user}
+            item={item}
+            formData={formData}
+            onSubmit={onSubmit}
+            onCancel={onClose}
+          />
+        );
+      }
+      return <div></div>;
     default:
       return <div></div>;
   }

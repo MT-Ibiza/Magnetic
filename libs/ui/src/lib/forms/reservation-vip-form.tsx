@@ -25,7 +25,7 @@ interface Props {
   formData?: any;
 }
 
-export function ReservationsRestaurantBookingForm({
+export function ReservationVipBookingForm({
   onSubmit,
   formData,
   onCancel,
@@ -55,8 +55,6 @@ export function ReservationsRestaurantBookingForm({
       : undefined,
   });
 
-  const [amount, setAmount] = useState(formData?.numberOfPeople || 1);
-
   const handleFormSubmit = async (data: ReservationsFormData) => {
     const formData = { ...data };
     onSubmit({ form: formData });
@@ -67,7 +65,7 @@ export function ReservationsRestaurantBookingForm({
     <div>
       <Modal.Header onClose={onCancel}>
         <div className="flex justify-between">
-          <h2 className="text-2xl font-bold">Restaurant Reservation</h2>
+          <h2 className="text-2xl font-bold">VIP Reservation</h2>
         </div>
       </Modal.Header>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -79,7 +77,7 @@ export function ReservationsRestaurantBookingForm({
                 <Input
                   type="text"
                   className="w-full"
-                  placeholder="Enter the name of the restaurant"
+                  placeholder="Enter your preferred club name"
                   {...register('venue', {
                     required: 'Venue is required',
                   })}
@@ -134,19 +132,6 @@ export function ReservationsRestaurantBookingForm({
                 )}
               </div>
               <div>
-                <Text className="mb-2">Preferred Time</Text>
-                <Input
-                  type="time"
-                  className="w-full"
-                  {...register('time', { required: 'Time is required' })}
-                />
-                {errors.time && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.time.message}
-                  </p>
-                )}
-              </div>
-              <div>
                 <Text className="mb-2">Number of People</Text>
                 <Input
                   type="number"
@@ -163,36 +148,12 @@ export function ReservationsRestaurantBookingForm({
                   </p>
                 )}
               </div>
-              <div>
-                <Text className="mb-2">Children & Ages</Text>
-                <Input
-                  type="text"
-                  className="w-full"
-                  placeholder="e.g., 2 kids, ages 5 and 8"
-                  {...register('childrenAges', {
-                    required: 'Kids and ages are required',
-                  })}
-                />
-                {errors.childrenAges && (
-                  <p className="text-[12px] text-red-500 pt-2">
-                    {errors.childrenAges.message}
-                  </p>
-                )}
-              </div>
             </div>
             <div className="">
               <Text className="mb-2">Comments</Text>
               <TextArea
                 className="w-full"
                 placeholder="Additional comments or specific requests"
-                {...register('comments')}
-              />
-            </div>
-            <div className="">
-              <Text className="mb-2">Beach Reservations (if applicable)</Text>
-              <TextArea
-                className="w-full"
-                placeholder="Amount of beds required & arrival time"
                 {...register('comments')}
               />
             </div>
@@ -230,4 +191,4 @@ export function ReservationsRestaurantBookingForm({
   );
 }
 
-export default ReservationsRestaurantBookingForm;
+export default ReservationVipBookingForm;
