@@ -49,6 +49,14 @@ function CheckoutItem(props: Props) {
             guestMode={guestMode}
           />
         );
+      case 'reservations':
+        return (
+          <ReservationInfo
+            cartItem={cartItem}
+            formType={formType}
+            guestMode={guestMode}
+          />
+        );
       case 'drinks':
         return <DrinkInfo cartItem={cartItem} formType={formType} />;
       default:
@@ -161,6 +169,33 @@ const BoatsInfo = ({
       <>
         <Text size="1">Date: {formatDate(cartItem.formData.date)}</Text>
         <Text size="1">Time: {formatTime(cartItem.formData.startTime)}</Text>
+      </>
+    )}
+    <CheckoutItemEdit
+      guestMode={guestMode}
+      formData={cartItem.formData}
+      formType={formType}
+      item={cartItem.item}
+      cartItemId={cartItem.id}
+    />
+  </div>
+);
+
+const ReservationInfo = ({
+  cartItem,
+  formType,
+  guestMode,
+}: {
+  cartItem: CartItem;
+  formType: string;
+  guestMode?: boolean;
+}) => (
+  <div className="flex flex-col gap-1">
+    <h1>{cartItem.item.name} aadsasd</h1>
+    {cartItem.formData && (
+      <>
+        <Text size="1">Date: {formatDate(cartItem.formData.date)}</Text>
+        <Text size="1">Venue: {cartItem.formData.venue}</Text>
       </>
     )}
     <CheckoutItemEdit

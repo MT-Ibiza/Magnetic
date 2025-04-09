@@ -13,11 +13,7 @@ interface Props {
   onClickBookNow: (amount: number) => void;
 }
 
-function ItemReservationCard({
-  item,
-  onClickBookNow,
-  cartItemAmount,
-}: Props) {
+function ItemReservationCard({ item, onClickBookNow, cartItemAmount }: Props) {
   const { name, priceInCents, images, id, serviceId } = item;
   const imagesSorted = useMemo(() => {
     return sortImagesByPosition(images);
@@ -29,7 +25,7 @@ function ItemReservationCard({
     >
       <div className="relative w-full rounded-2xl overflow-hidden">
         <GallerySlider
-          href={`/services/${serviceId}/item/${id}`}
+          // href={`/services/${serviceId}/item/${id}`}
           galleryImgs={imagesSorted}
           classImage="h-[200px]"
           uniqueID={`ExperiencesCard_${id}`}
@@ -40,12 +36,7 @@ function ItemReservationCard({
               {name}
             </p>
           </div>
-          <div className="flex justify-between mt-5">
-            <div className="flex gap-1 items-center">
-              <Text className="text-base font-regular">
-                Price after booking
-              </Text>
-            </div>
+          <div className="flex justify-end mt-5">
             <ItemHandleBookButtons
               item={item}
               onClickBookNow={onClickBookNow}

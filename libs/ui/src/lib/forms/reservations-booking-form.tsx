@@ -94,7 +94,7 @@ export function ReservationsRestaurantBookingForm({
                 <Text className="mb-2">Name</Text>
                 <Input
                   type="text"
-                  disabled
+                  // disabled
                   className="w-full"
                   defaultValue={user?.name}
                   placeholder="Enter the name of the restaurant"

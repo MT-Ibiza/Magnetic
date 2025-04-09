@@ -200,7 +200,6 @@ export function FormItem(props: Props) {
                 <p className="text-xs text-red-500 mt-1">Name is required</p>
               )}
             </div>
-
             <div className="flex flex-col">
               <label
                 htmlFor="priceInCents"
@@ -211,7 +210,7 @@ export function FormItem(props: Props) {
               <Input
                 id="priceInCents"
                 type="number"
-                min={1}
+                min={0}
                 step={0.01}
                 placeholder="Enter the price product"
                 {...register('priceInCents', { required: true })}

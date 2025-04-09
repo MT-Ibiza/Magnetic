@@ -127,8 +127,9 @@ export function RenderBookingForm(props: Props) {
           onCancel={onClose}
         />
       );
-    case 'reservations':
-      if (item?.name === 'Restaurant & Beach Club') {
+    case 'reservations': {
+      const name = item?.name?.toLowerCase() || '';
+      if (name.includes('restaurant') || name.includes('beach')) {
         return (
           <ReservationsRestaurantBookingForm
             user={user}
@@ -138,7 +139,11 @@ export function RenderBookingForm(props: Props) {
             onCancel={onClose}
           />
         );
-      } else if (item?.name === 'VIP Nightclub') {
+      } else if (
+        name.includes('vip') ||
+        name.includes('nightclub') ||
+        name.includes('night club')
+      ) {
         return (
           <ReservationVipBookingForm
             user={user}
@@ -149,7 +154,10 @@ export function RenderBookingForm(props: Props) {
           />
         );
       }
+
       return <div></div>;
+    }
+
     default:
       return <div></div>;
   }
