@@ -1,9 +1,4 @@
-import {
-  DrinksListBase,
-  Item,
-  ParamsPublicList,
-  PublicList,
-} from '@magnetic/interfaces';
+import { Item, ParamsPublicList, PublicList } from '@magnetic/interfaces';
 import { Button, Input, Text } from '@magnetic/ui';
 import { useForm } from 'react-hook-form';
 import PublicListItemsHandle from './public-lists/public-list-items-handle';
@@ -38,7 +33,7 @@ function FormPublicList({ list, items, type, onSave }: Props) {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<DrinksListBase>({
+  } = useForm<any>({
     defaultValues: list ? { ...list } : undefined,
   });
 
@@ -77,7 +72,7 @@ function FormPublicList({ list, items, type, onSave }: Props) {
     },
   });
 
-  const onSubmit = async (data: DrinksListBase) => {
+  const onSubmit = async (data: any) => {
     if (list?.id) {
       await updateList.mutateAsync({
         name: data.name,
