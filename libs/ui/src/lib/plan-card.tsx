@@ -1,6 +1,7 @@
 import { FaCheck } from 'react-icons/fa';
 import Button from './button';
 import { Link } from 'react-router-dom';
+import { centsToEuros } from '@magnetic/utils';
 
 interface Props {
   title: string;
@@ -92,7 +93,9 @@ export function PlanCard(props: Props) {
           </div>
         ) : (
           <div className="flex flex-col">
-            <span className="text-3xl lg:text-3xl xl:text-4xl">{price}€</span>
+            <span className="text-3xl lg:text-3xl xl:text-4xl">
+              {centsToEuros(price)}€
+            </span>
             <span className="text-base mt-2 lg:text-lg font-normal text-neutral-500">
               Per week
             </span>
