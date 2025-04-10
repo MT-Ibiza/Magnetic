@@ -21,11 +21,7 @@ function EditPackagePage(props: Props) {
     return <ErrorText text={error?.message || ''} />;
   }
 
-  return (
-    <div>
-      <PackagesForm plan={plan} />
-    </div>
-  );
+  return <PackagesForm plan={plan} />;
 }
 
 export default EditPackagePage;

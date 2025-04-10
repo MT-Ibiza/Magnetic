@@ -76,7 +76,7 @@ function ViewPackagePage(props: Props) {
                   <span className="mr-4 inline-flex flex-shrink-0">
                     <FaCircleCheck className="text-primary-700" />
                   </span>
-                  <span className='text-[14px] lg:text-[16px]'>{feature}</span>
+                  <span className="text-[14px] lg:text-[16px]">{feature}</span>
                 </li>
               ))}
             </div>

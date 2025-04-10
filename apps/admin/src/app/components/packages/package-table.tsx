@@ -6,6 +6,7 @@ import { usePackages } from '../../hooks/usePackages';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { removePackage } from '../../apis/api-packages';
+import { centsToEuros } from '@magnetic/utils';
 
 interface Props {}
 
@@ -58,7 +59,7 @@ export function PackagesTable(props: Props) {
                   {packageItem.name}
                 </Link>
               </td>
-              <td>{packageItem.priceInCents}</td>
+              <td>{centsToEuros(packageItem.priceInCents)}</td>
               <td>
                 <div className="dropdown dropdown-bottom dropdown-end">
                   <div tabIndex={0} role="button" className="m-1">

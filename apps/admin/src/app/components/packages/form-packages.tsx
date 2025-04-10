@@ -7,6 +7,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { toast } from 'sonner';
 import { editPackage, newPackage } from '../../apis/api-packages';
+import { centsToEuros, eurosToCents } from '@magnetic/utils';
+import { useNavigate } from 'react-router-dom';
 
 export interface FormPackagesData {
   name: string;
@@ -22,6 +24,7 @@ export interface Props {
 
 export function PackagesForm(props: Props) {
   const { className, plan } = props;
+  const navigate = useNavigate();
 
   const {
     register,
@@ -34,7 +37,7 @@ export function PackagesForm(props: Props) {
           name: plan.name,
           description: plan.description,
           features: plan.features,
-          priceInCents: plan.priceInCents,
+          priceInCents: centsToEuros(plan.priceInCents),
         }
       : undefined,
   });
@@ -47,10 +50,11 @@ export function PackagesForm(props: Props) {
       return newPackage(data);
     },
     onSuccess: () => {
-      toast.success(`Service created!`);
+      navigate('/packages');
+      toast.success(`Package created!`);
     },
     onError: () => {
-      toast.success(`Service couldn't be created!`);
+      toast.success(`Package couldn't be created!`);
     },
   });
 
@@ -60,10 +64,11 @@ export function PackagesForm(props: Props) {
       return editPackage(packageId, data);
     },
     onSuccess: () => {
-      toast.success(`Service updated!`);
+      navigate('/packages');
+      toast.success(`Package updated!`);
     },
     onError: () => {
-      toast.success(`Service couldn't be update!`);
+      toast.success(`Package couldn't be update!`);
     },
   });
 
@@ -74,14 +79,14 @@ export function PackagesForm(props: Props) {
         name,
         description: description || '',
         features: features || '',
-        priceInCents: parseInt(priceInCents as unknown as string, 10),
+        priceInCents: eurosToCents(priceInCents),
       });
     } else {
       await createPackage.mutateAsync({
         name,
         description: description || '',
         features: features || '',
-        priceInCents: parseInt(priceInCents as unknown as string, 10),
+        priceInCents: eurosToCents(priceInCents),
       });
     }
   };
