@@ -93,7 +93,10 @@ function ViewPackagePage(props: Props) {
                   <div className="space-y-4">
                     {plan.name !== 'Diamond' &&
                       user?.package?.name !== 'Platinum' && (
-                        <UpgradeButton amountInCents={0} packageId={plan.id} />
+                        <UpgradeButton
+                          amountInCents={plan.priceInCents}
+                          packageId={plan.id}
+                        />
                       )}
                     <Button
                       variant="outline"
