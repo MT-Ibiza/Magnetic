@@ -16,6 +16,9 @@ function PaymentPage() {
       setText('Validated!');
       navigate('/dashboard');
     } catch (error) {
+      setText(
+        "We couldn't validate your payment. If you believe this is a mistake, please contact our support team for assistance."
+      );
       console.error('❌ Error validating payment:', error);
     }
   }, []);
@@ -36,8 +39,8 @@ function PaymentPage() {
   }, []);
 
   return (
-    <div className="text-center">
-      <Text>{text}</Text>
+    <div className="flex justify-center w-full p-10">
+      <Text className="max-w-lg">{text}</Text>
     </div>
   );
 }

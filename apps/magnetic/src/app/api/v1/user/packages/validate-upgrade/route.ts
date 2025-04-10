@@ -39,10 +39,9 @@ export async function POST(request: Request) {
     const isSuccess =
       parseInt(responseCode, 10) >= 0 && parseInt(responseCode, 10) <= 99;
 
+    const orderIdString = orderId as string;
+    const orderIdDB = orderIdString.split('-')[1];
     if (isSuccess) {
-      const orderIdString = orderId as string;
-      const orderIdDB = orderIdString.split('-')[1];
-
       const order = await db.order.findUnique({
         where: {
           id: Number(orderIdDB),
@@ -98,6 +97,11 @@ export async function POST(request: Request) {
       });
       return NextResponse.json({ message: 'OK' });
     } else {
+      await db.order.delete({
+        where: {
+          id: Number(orderIdDB),
+        },
+      });
       return NextResponse.json(
         {
           message: 'We can validate your payment, please contact support',
