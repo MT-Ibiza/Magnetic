@@ -120,6 +120,7 @@ export function BookingsTable(props: Props) {
                     ) : (
                       <Button
                         variant="outline"
+                        disabled={booking.status === 'cancelled'}
                         radius="full"
                         onClick={() => {
                           setSelectedBooking(elm);
