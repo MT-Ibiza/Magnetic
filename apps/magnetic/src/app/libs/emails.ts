@@ -23,7 +23,6 @@ export async function sendEmail(params: {
   cc?: string;
 }) {
   const { to, subject, html, cc } = params;
-  console.log('cc: ', cc);
   if (!process.env.SMTP_EMAIL) {
     return;
   }
@@ -33,7 +32,7 @@ export async function sendEmail(params: {
       to,
       subject,
       html,
-      cc,
+      cc: process.env.EMAIL_COPY,
     });
   } catch (err) {
     console.log('error sending email: ', err);
