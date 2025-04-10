@@ -19,6 +19,11 @@ import PublicLayout from '../pages/public-list-page/public-layout';
 import ListItemPage from '../pages/public-list-page/list-item-page';
 import PublicCheckoutPage from '../pages/public-list-page/public-checkout-page';
 import PublicBoatPage from '../pages/public-list-page/public-boat-page';
+import {
+  SLUG_PUBLIC_BOATS,
+  SLUG_PUBLIC_ORDER_DRINKS,
+  SLUG_PUBLIC_SHOP_DRINKS,
+} from '../constants';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -41,9 +46,9 @@ export const AppRouter = () => {
     </div>
   );
 
-  const slugBoats = 'boat-charters';
-  const slugShopDrinks = 'shop-drinks';
-  const slugOrderDrinks = 'order-drinks';
+  const slugBoats = SLUG_PUBLIC_BOATS;
+  const slugShopDrinks = SLUG_PUBLIC_SHOP_DRINKS;
+  const slugOrderDrinks = SLUG_PUBLIC_ORDER_DRINKS;
 
   return (
     <Routes>

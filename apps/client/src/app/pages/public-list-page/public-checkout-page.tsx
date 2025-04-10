@@ -6,6 +6,7 @@ import CheckoutSummary from '../checkout/checkout-summary';
 import ProductsSummary from '../checkout/products-summary';
 import CheckoutPayment from '../checkout/checkout-payment';
 import { useGuestCartActions } from '../../hooks/useGuestCartActions';
+import { SLUG_PUBLIC_ORDER_DRINKS } from '../../constants';
 
 export function PublicCheckoutPage() {
   const params = useParams();
@@ -62,7 +63,7 @@ export function PublicCheckoutPage() {
                 servicesSummary={servicesSummary}
                 total={total}
                 guestMode={true}
-                skipPayment={section === 'drinks-catalog'}
+                skipPayment={section === SLUG_PUBLIC_ORDER_DRINKS}
               />
             </div>
           </div>
