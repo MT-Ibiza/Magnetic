@@ -95,11 +95,24 @@ export async function POST(request: Request) {
           packageId: packageUpgrade.id,
         },
       });
-      return NextResponse.json({ message: 'OK' });
-    } else {
-      await db.order.delete({
+
+      await db.order.update({
         where: {
           id: Number(orderIdDB),
+        },
+        data: {
+          status: 'success',
+        },
+      });
+      return NextResponse.json({ message: 'OK' });
+    } else {
+      const status = responseCode === '0184' ? 'failed' : 'cancelled';
+      await db.order.update({
+        where: {
+          id: Number(orderIdDB),
+        },
+        data: {
+          status,
         },
       });
       return NextResponse.json(
