@@ -120,9 +120,53 @@ export function BookingPage() {
           </div>
           {data && (
             <div className="">
+              {data.booking.status === 'pending' && (
+                <div className="flex justify-between items-center border p-10 rounded-md w-full mt-5">
+                  <div>
+                    <h1 className="font-medium text-sm mb-2">System Message</h1>
+                    <div className="">
+                      <Text>Please mark this booking as approve or cancel</Text>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="dropdown dropdown-bottom dropdown-end">
+                      <div
+                        tabIndex={0}
+                        role="button"
+                        className="border rounded-md bg-gray-100 p-2"
+                      >
+                        <Text size="1">Change Status</Text>
+                      </div>
+                      <ul
+                        tabIndex={0}
+                        className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                      >
+                        <li
+                          onClick={() => {
+                            setSelectedStatus('accepted');
+                            toggleAlert();
+                          }}
+                        >
+                          <Text size="1">Approve Booking</Text>
+                        </li>
+                        <li
+                          onClick={() => {
+                            setSelectedStatus('cancelled');
+                            toggleAlert();
+                          }}
+                        >
+                          <Text size="1" className="text-red-500">
+                            Cancel Booking
+                          </Text>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
               {data.booking.modificationRequest &&
                 data.booking.status === 'modification_requested' && (
-                  <div className="flex justify-between items-center border p-5 rounded-md w-full mt-5">
+                  <div className="flex justify-between items-center border p-10 rounded-md w-full mt-5">
                     <div>
                       <h1 className="font-medium text-sm mb-2">Message</h1>
                       <div className="">
