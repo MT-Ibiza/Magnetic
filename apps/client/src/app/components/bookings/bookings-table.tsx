@@ -79,9 +79,9 @@ export function BookingsTable(props: Props) {
                       ) : (
                         <div className="flex flex-col gap-1">
                           <Text>{orderItem?.item?.name || 'N/A'}</Text>
-                          <Text size="1" className="text-gray-500">
+                          {/* <Text size="1" className="text-gray-500">
                             {orderItem?.variant?.name}
-                          </Text>
+                          </Text> */}
                         </div>
                       )}
                     </div>

@@ -12,6 +12,7 @@ import WeeklyChefsSummary from './weekly-chef-summary';
 import WeeklyChefsButlerSummary from './chef-weekly-butler-summary';
 import ReservationRestaurantSummary from './reservations-restaurant-summary';
 import ReservationVipSummary from './reservation-vip.summary';
+import WellnessSummary from './wellness-summary';
 
 interface Props {
   booking: BookingForm;
@@ -38,6 +39,8 @@ export function RenderFormSummary(props: Props) {
       return <SingleChefsSummary formData={formData} />;
     case 'chef-weekly':
       return <WeeklyChefsSummary formData={formData} />;
+    case 'wellness':
+      return <WellnessSummary formData={formData} items={items} />;
     case 'reservations':
       const name = formData?.service?.toLowerCase() || '';
       if (name.includes('restaurant') || name.includes('beach')) {
