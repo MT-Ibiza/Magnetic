@@ -3,6 +3,7 @@ import db from 'apps/magnetic/src/app/libs/db';
 import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
 import { NextRequest, NextResponse } from 'next/server';
 const Redsys = require('node-redsys-api').Redsys;
+import { cookies } from 'next/headers';
 
 const SECRET_KEY = process.env.PAYMENT_SECRET_KEY;
 
@@ -118,6 +119,12 @@ export async function POST(request: Request) {
           status: 'success',
         },
       });
+
+      if (order.guestUser) {
+        const cookieStore = cookies();
+        cookieStore.delete('cartId');
+        console.log('remove guest cart');
+      }
 
       // Enviar email de confirmación
       try {
