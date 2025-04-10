@@ -54,6 +54,9 @@ export function bookingConfirmationTemplate(order: Order) {
   const feeInCents = order.feeInCents;
   const total = order.totalInCents;
 
+  const userName = order.guestUser ? order.guestUser.name : order.user.name;
+  const userEmail = order.guestUser ? order.guestUser.email : order.user.email;
+
   const content = `
 		<div class="content">
 			<h3>Order Summary</h3>
@@ -61,8 +64,8 @@ export function bookingConfirmationTemplate(order: Order) {
 			<p>
 				<strong>Date:</strong> ${moment(order.createdAt).format('D/M/YYYY')}
 			</p>
-			<p><strong>Client:</strong> ${order.user.name}</p>
-			<p><strong>Email:</strong> ${order.user.email}</p>
+			<p><strong>Client:</strong> ${userName}</p>
+			<p><strong>Email:</strong> ${userEmail}</p>
 			<h3>Service Details</h3>
 			<table>
 				<thead>
