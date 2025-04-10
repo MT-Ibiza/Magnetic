@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Item } from '@magnetic/interfaces';
 import { GallerySlider, Text } from '@magnetic/ui';
-import {
+import { 
   centsToEurosWithCurrency,
   sortImagesByPosition,
   getPriceRange,
@@ -55,22 +55,23 @@ function ItemSecurityCard(props: Props) {
             <p className="line-clamp-1 capitalize text-lg font-semibold text-primary">
               {name}
             </p>
-            <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
+            {/* <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
               <span className="">
                 {hoursRange.low === hoursRange.high
                   ? `${hoursRange.low} hours`
                   : `${hoursRange.low} - ${hoursRange.high} hours`}
               </span>
-            </div>
+            </div> */}
           </div>
           <div className="flex justify-between mt-5">
-            <Text className="text-base font-semibold">
-              {priceRange.low === priceRange.high
-                ? `${centsToEurosWithCurrency(priceInCents)}`
-                : `From ${centsToEurosWithCurrency(
-                    priceRange.low
-                  )} - ${centsToEurosWithCurrency(priceRange.high)}`}
-            </Text>
+          <div className="flex gap-1 items-center">
+              <Text className="text-base font-semibold">
+                {centsToEurosWithCurrency(priceInCents)}
+              </Text>
+              <Text className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
+                / per hour
+              </Text>
+            </div>
             <ItemHandleBookButtons
               item={item}
               onClickBookNow={onClickBookNow}

@@ -46,6 +46,7 @@ export function SecurityBookingForm({
       text: `${currentSelectItem.name} - ${currentSelectItem.securityAttributes?.hours} hours`,
     },
   ].concat(variantOptions);
+  const [numberOfHours, setNumberOfHours] = useState(formData?.hours || 8);
 
   const {
     register,
@@ -63,11 +64,12 @@ export function SecurityBookingForm({
           location: formData.location || user?.accommodation,
           comments: formData.comments,
           variantId: formData.variantId,
+          hours: formData.hours || numberOfHours,
         }
       : undefined,
   });
-
   const [amount, setAmount] = useState(formData?.numberOfGuards || 1);
+
   const variantSelected = formData?.variantId
     ? currentSelectItem.variants.find((variant) => {
         return variant.id === formData?.variantId;
@@ -76,12 +78,23 @@ export function SecurityBookingForm({
   const itemPrice = variantSelected
     ? variantSelected.priceInCents
     : currentSelectItem.priceInCents;
-  const [price, setPrice] = useState(itemPrice);
 
   const handleFormSubmit = async (data: SecurityFormData) => {
-    const formData = { ...data, ...{ numberOfGuards: amount } };
-    onSubmit({ form: formData, quantity: amount, variantId: data.variantId });
+    const formData = {
+      ...data,
+      numberOfGuards: amount,
+      totalPriceInCents: total,
+      hours: numberOfHours,
+    };
+
+    onSubmit({
+      form: formData,
+      quantity: amount,
+      variantId: data.variantId,
+    });
   };
+
+  const total = itemPrice * numberOfHours * amount;
 
   return (
     <div>
@@ -93,41 +106,40 @@ export function SecurityBookingForm({
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Modal.Body>
           <div className="p-10 flex flex-col gap-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
-              <div>
-                {variantOptions.length > 0 && (
-                  <div className="">
-                    <Text className="mb-2">Select Duration</Text>
-                    <select
-                      className="select select-bordered w-full"
-                      value={watch('variantId')}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        const variant = currentSelectItem.variants.find(
-                          (v) => v.id === Number(value)
-                        );
-                        if (variant) {
-                          setPrice(variant.priceInCents);
-                          setValue('variantId', variant.id);
-                        } else {
-                          setValue('variantId', undefined);
-                          setPrice(currentSelectItem.priceInCents);
+            <div className="flex flex-col md:grid md:grid-cols-2 gap-2 md:gap-6 md:items-end">
+              <div className="col-span-1">
+                <Text className="mb-2">Select Duration</Text>
+                <div className="product flex justify-between items-center border border-gray-300 p-4 mb-3 rounded-md">
+                  <div className="flex gap-3 items-center">
+                    <Text className="text-[14px] md:text-[16px]">
+                      Number of hours
+                    </Text>
+                  </div>
+                  <div>
+                    <ItemCounterButtons
+                      currentAmount={numberOfHours}
+                      min={8}
+                      max={24}
+                      onClickAdd={() => {
+                        if (numberOfHours < 12) {
+                          setNumberOfHours(numberOfHours + 1);
                         }
                       }}
-                    >
-                      {allOptions.map((option, index) => (
-                        <option value={option.value} key={index}>
-                          {option.text}
-                        </option>
-                      ))}
-                    </select>
+                      onClickRemove={() => {
+                        if (numberOfHours > 4) {
+                          setNumberOfHours(numberOfHours - 1);
+                        }
+                      }}
+                    />
                   </div>
-                )}
+                </div>
               </div>
               <div>
-                <div className="product flex justify-between items-center border border-gray-300 p-4 rounded-md h-[48px]">
+                <div className="product flex justify-between items-center border border-gray-300 p-4 mb-3 rounded-md">
                   <div className="flex gap-3 items-center">
-                    <Text>Number of Guards</Text>
+                    <Text className="text-[14px] md:text-[16px]">
+                      Number of Guards
+                    </Text>
                   </div>
                   <div>
                     <ItemCounterButtons
@@ -148,6 +160,12 @@ export function SecurityBookingForm({
                   </div>
                 </div>
               </div>
+              <Text
+                className="text-primary-600 mb-[10px] md:mb-[0px] md:mt-[-30px]"
+                size="1"
+              >
+                Minimum service 8 hours.
+              </Text>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -223,7 +241,7 @@ export function SecurityBookingForm({
         <Modal.Footer>
           <div className="flex items-center justify-between w-full">
             <h2 className="text-md lg:text-xl">
-              Total: {centsToEurosWithCurrency(price * amount)}
+              Total: {centsToEurosWithCurrency(total)}
             </h2>
             <div className="flex gap-3">
               {onCancel && (

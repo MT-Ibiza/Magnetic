@@ -48,6 +48,7 @@ export interface SecurityFormData {
   numberOfGuards: number;
   service: string;
   date: string;
+  hours: number;
   time: string;
   startTime: string;
   finishTime: string;
