@@ -70,7 +70,7 @@ function ListDrinks(props: Props) {
     queryKey: ['drinks', searchParams],
     queryFn: async () => {
       const result = searchDrinks(searchParams);
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 200));
       return result;
     },
   });

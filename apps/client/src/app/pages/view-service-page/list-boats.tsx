@@ -38,7 +38,7 @@ function ListBoats(props: Props) {
     queryKey: ['boats', searchParams],
     queryFn: async () => {
       const result = searchBoats(searchParams);
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      await new Promise((resolve) => setTimeout(resolve, 200));
       return result;
     },
   });
