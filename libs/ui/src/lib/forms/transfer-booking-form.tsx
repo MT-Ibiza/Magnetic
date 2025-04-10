@@ -5,7 +5,7 @@ import {
   createVariantTransferOptions,
   TODAY_DATE,
 } from '@magnetic/utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   FormSubmitParams,
   Item,
@@ -80,6 +80,22 @@ export function TransferBookingForm({
   };
 
   const viewClasses = 'grid grid-cols-1 md:grid-cols-2 gap-6';
+  const selectedVariant = currentSelectItem.variants.find(
+    (v) => v.id === watch('variantId')
+  );
+  const maxCapacity =
+    selectedVariant?.capacity ??
+    currentSelectItem.transferAttributes?.capacity ??
+    100;
+
+  const variantId = watch('variantId');
+  const numberOfPeople = watch('numberOfPeople');
+
+    useEffect(() => {
+      if (numberOfPeople) {
+        setValue('numberOfPeople', numberOfPeople, { shouldValidate: true });
+      }
+    }, [variantId]);
 
   return (
     <div className="">
@@ -180,15 +196,24 @@ export function TransferBookingForm({
                 )}
               </div>
               <div>
-                <Text className="mb-2">Number of People</Text>
+                <Text className="mb-2">
+                  Number of People
+                </Text>
                 <Input
                   type="number"
                   min="1"
-                  max={20}
+                  max={maxCapacity}
                   className="w-full"
                   {...register('numberOfPeople', {
                     required: 'Number of people is required',
                     valueAsNumber: true,
+                    validate: (value) => {
+                      if (isNaN(value)) return 'Please enter a valid number';
+                      if (value > maxCapacity) {
+                        return `Maximum capacity exceeded (${maxCapacity} pax)`;
+                      }
+                      return true;
+                    },
                   })}
                 />
                 {errors.numberOfPeople && (
