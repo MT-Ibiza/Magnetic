@@ -91,15 +91,13 @@ export function ViewItemDefault({ item }: Props) {
           </SectionCard>
         </div>
         <div className="hidden lg:block flex-grow mt-14 lg:mt-0">
-          {item && (
-            <BookCard
-              item={item}
-              onClick={() => {
-                setOpenFormModal(true);
-                setSelectedItem(item);
-              }}
-            />
-          )}
+          <BookCard
+            item={item}
+            onClick={() => {
+              setOpenFormModal(true);
+              setSelectedItem(item);
+            }}
+          />
         </div>
         <div className="block lg:hidden">
           {item && (

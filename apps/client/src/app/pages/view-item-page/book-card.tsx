@@ -5,7 +5,7 @@ import {
   createVariantOptions,
   createVariantTransferOptions,
 } from '@magnetic/utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BookButton from '../../components/bookings/book-button';
 
 interface Props {
@@ -18,6 +18,12 @@ function BookCard(props: Props) {
   const { variants, service } = item;
   const [priceSelected, setPriceSelected] = useState(item.priceInCents);
   const isTransfer = service.serviceType === 'transfer';
+
+  useEffect(() => {
+    if (item) {
+      setPriceSelected(item.priceInCents);
+    }
+  }, [item]);
 
   const variantOptions = isTransfer
     ? createVariantTransferOptions(variants, item)
