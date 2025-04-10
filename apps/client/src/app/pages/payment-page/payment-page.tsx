@@ -1,17 +1,20 @@
 import { Text } from '@magnetic/ui';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { validateUpgradePackage } from '../../apis/api-packages';
 
 function PaymentPage() {
   const [searchParams] = useSearchParams();
   const [text, setText] = useState('Nothing here');
+  const navigate = useNavigate();
 
   const fetchValidation = useCallback(async (data: any) => {
     setText('We are validating your payment...');
     try {
       const response = await validateUpgradePackage(data);
-      console.log('✅ Payment validation response:', response);
+      console.log('✅ Payment validated');
+      setText('Validated!');
+      navigate('/dashboard');
     } catch (error) {
       console.error('❌ Error validating payment:', error);
     }
