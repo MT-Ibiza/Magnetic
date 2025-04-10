@@ -1,5 +1,5 @@
 import {
-    OrderItem,
+  OrderItem,
   WeeklyChefServiceFormData,
   WellnessFitnessFormData,
 } from '@magnetic/interfaces';
@@ -8,21 +8,22 @@ import { formatDate, formatTime } from '@magnetic/utils';
 
 interface Props {
   formData: WellnessFitnessFormData;
-    items: OrderItem[];
-
+  items: OrderItem[];
 }
+
 function WellnessSummary(props: Props) {
   const { formData, items } = props;
-//   console.log('variants',items)
-//   console.log('variant',items[0].variant?.name)
-
+  const firstItem = items?.[0];
 
   return (
     <div className="p-10">
       <div>
         <Text className="font-medium">Number of People</Text>
-        <Text className="text-gray-500">{items[0].variant?.name}</Text>
+        {firstItem?.variant?.name && (
+          <Text className="text-gray-500">{firstItem.variant.name}</Text>
+        )}
       </div>
+
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <Text className="font-medium">Service</Text>
@@ -34,15 +35,14 @@ function WellnessSummary(props: Props) {
         </div>
         <div>
           <Text className="font-medium">Time</Text>
-          <Text className="text-gray-500">
-            {formatTime(formData.time)}
-          </Text>
+          <Text className="text-gray-500">{formatTime(formData.time)}</Text>
         </div>
         <div>
           <Text className="font-medium">Location</Text>
           <Text className="text-gray-500">{formData.location}</Text>
         </div>
       </div>
+
       <div className="mt-6">
         <Text className="font-medium">Comments</Text>
         <Text className="text-gray-500">{formData.comments}</Text>
