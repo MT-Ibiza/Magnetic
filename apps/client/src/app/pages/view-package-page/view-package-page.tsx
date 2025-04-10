@@ -10,6 +10,7 @@ import { User } from '@magnetic/interfaces';
 import { upgradePackage } from '../../apis/api-packages';
 import { toast } from 'sonner';
 import { useAuth } from '../../hooks/useAuth';
+import UpgradeButton from '../../components/upgrade-button';
 
 interface Props {}
 
@@ -47,27 +48,6 @@ function ViewPackagePage(props: Props) {
     const featureList = tempDiv.querySelectorAll('li');
     return Array.from(featureList).map((li) => li.textContent?.trim() || '');
   };
-
-  const upgradePackageMutation = useMutation<User, Error, number>({
-    mutationFn: (id) => {
-      return upgradePackage(id);
-    },
-    onSuccess: (user) => {
-      setCurrentUser({
-        name: `${user.name}`,
-        email: user.email,
-        arrivalDate: user.arrivalDate,
-        accommodation: user.accommodation,
-        package: user.package,
-        phone: user.phone,
-        id: user.id,
-      });
-      toast.success(`Package upgraded!`);
-    },
-    onError: () => {
-      toast.error(`Package couldn't be upgraded!`);
-    },
-  });
 
   return (
     <>
@@ -113,15 +93,7 @@ function ViewPackagePage(props: Props) {
                   <div className="space-y-4">
                     {plan.name !== 'Diamond' &&
                       user?.package?.name !== 'Platinum' && (
-                        <Button
-                          variant="outline"
-                          className="w-full"
-                          onClick={async () => {
-                            await upgradePackageMutation.mutateAsync(packageId);
-                          }}
-                        >
-                          Upgrade Now
-                        </Button>
+                        <UpgradeButton amountInCents={0} packageId={plan.id} />
                       )}
                     <Button
                       variant="outline"
