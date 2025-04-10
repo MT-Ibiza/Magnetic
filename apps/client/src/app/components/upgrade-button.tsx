@@ -28,8 +28,8 @@ export function UpgradeButton(props: {
         body: JSON.stringify({
           amount: amountInCents,
           orderId: `${orderId}`,
-          urlOk: `${window.location.origin}/dashboard`,
-          urlKo: `${window.location.origin}/payment/failure`,
+          urlOk: `${window.location.origin}/payment`,
+          urlKo: `${window.location.origin}/payment`,
         }),
       });
 

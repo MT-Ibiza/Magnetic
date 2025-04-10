@@ -165,9 +165,9 @@ model Item {
   description         String
   published           Boolean              @default(false)
   priceInCents        Int
-  serviceId           Int
+  serviceId           Int?
   position            Int                  @default(1)
-  service             Service              @relation(fields: [serviceId], references: [id])
+  service             Service?             @relation(fields: [serviceId], references: [id])
   cartItems           CartItem[]
   ordenItems          OrderItem[]
   variants            ItemVariant[]
@@ -181,6 +181,7 @@ model Item {
   childcareAttributes ChildcareAttributes?
   securityAttributes  SecurityAttributes?
   publicListItems     PublicListItem[]
+  type                String?
 }
 
 model Image {

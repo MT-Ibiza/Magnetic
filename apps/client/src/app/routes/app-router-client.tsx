@@ -24,6 +24,7 @@ import {
   SLUG_PUBLIC_ORDER_DRINKS,
   SLUG_PUBLIC_SHOP_DRINKS,
 } from '../constants';
+import PaymentPage from '../pages/payment-page/payment-page';
 
 export const AppRouter = () => {
   const PendingPage = () => (
@@ -120,6 +121,7 @@ export const AppRouter = () => {
           <Route path="packages" element={<PackagePage />} />
           <Route path="packages/:id" element={<ViewPackagePage />} />
           <Route path="orders" element={<OrdersPage />} />
+          <Route path="payment" element={<PaymentPage />} />
         </Route>
       </Route>
     </Routes>
