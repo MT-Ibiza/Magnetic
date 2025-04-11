@@ -125,7 +125,7 @@ export function BookingPage() {
                   <div>
                     <h1 className="font-medium text-sm mb-2">System Message</h1>
                     <div className="">
-                      <Text>Please mark this booking as approve or cancel</Text>
+                      <Text>This booking require your answer</Text>
                     </div>
                   </div>
                   <div>
@@ -150,12 +150,12 @@ export function BookingPage() {
                           <Text size="1">Approve Booking</Text>
                         </li>
                         <li
-                            onClick={() => {
-                              setOpenModal(true);
-                            }}
-                          >
-                            <Text size="1">Edit Booking</Text>
-                          </li>
+                          onClick={() => {
+                            setOpenModal(true);
+                          }}
+                        >
+                          <Text size="1">Edit Booking</Text>
+                        </li>
                         <li
                           onClick={() => {
                             setSelectedStatus('cancelled');
