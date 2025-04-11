@@ -1,5 +1,4 @@
 import { Button } from '@magnetic/ui';
-import React from 'react';
 
 interface Props {
   title: string;
@@ -7,10 +6,12 @@ interface Props {
   show: boolean;
   onClickConfirm: () => void;
   onClickCancel: () => void;
+  isSaving?: boolean;
 }
 
 function ConfirmAlert(props: Props) {
-  const { message, show, title, onClickConfirm, onClickCancel } = props;
+  const { message, show, title, onClickConfirm, onClickCancel, isSaving } =
+    props;
 
   return (
     <dialog className={`modal ${show && 'modal-open'}`}>
@@ -28,8 +29,12 @@ function ConfirmAlert(props: Props) {
               >
                 Close
               </Button>
-              <Button type="button" onClick={onClickConfirm}>
-                Yes, confirm
+              <Button
+                type="button"
+                onClick={onClickConfirm}
+                disabled={isSaving}
+              >
+                {isSaving ? 'Saving...' : 'Yes, confirm'}
               </Button>
             </div>
           </form>

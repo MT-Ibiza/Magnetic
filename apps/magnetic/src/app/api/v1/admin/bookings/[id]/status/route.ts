@@ -1,7 +1,6 @@
 import { bookingStatusTemplate } from 'apps/magnetic/src/app/emails/notify-booking-changes';
 import db from 'apps/magnetic/src/app/libs/db';
 import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
-import moment from 'moment';
 import { NextResponse } from 'next/server';
 
 export async function PUT(

@@ -25,6 +25,7 @@ export function BookingPage() {
   const [showAlert, setShowAlert] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<string>();
   const [openModal, setOpenModal] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const toggleAlert = () => {
     setShowAlert((prevState) => !prevState);
@@ -38,17 +39,20 @@ export function BookingPage() {
 
   const updateStatus = useMutation({
     mutationFn: () => {
+      setIsSaving(true);
       return updateBookingStatus(bookingId, {
         status: selectedStatus || 'completed',
         text: '',
       });
     },
     onSuccess: () => {
+      setIsSaving(false);
       toast.success(`Booking updated!`);
       toggleAlert();
       refetch();
     },
     onError: () => {
+      setIsSaving(false);
       toast.success(`Booking couldn't be updated!`);
     },
   });
@@ -234,6 +238,7 @@ export function BookingPage() {
         </div>
       </CardWrapper>
       <ConfirmAlert
+        isSaving={isSaving}
         title="Change Status"
         message={`Are you sure you want to change status booking`}
         show={showAlert}
