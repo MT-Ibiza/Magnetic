@@ -31,8 +31,8 @@ export function OrderButton(props: {
       setTimeout(() => {
         setLoading(false);
         clearCart();
-        navigate(`/${section}`);
-      }, 500);
+        navigate(guestMode ? `/${section}` : `/bookings`);
+      }, 300);
     },
   });
 

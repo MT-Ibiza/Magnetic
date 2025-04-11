@@ -65,7 +65,7 @@ function CheckoutPayment(props: Props) {
         }}
         className="mb-3"
       />
-      {skipPayment ? (
+      {skipPayment || total === 0 ? (
         <OrderButton
           amountInCents={total}
           disable={isPayDisabled}
