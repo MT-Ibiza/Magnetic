@@ -10,7 +10,7 @@ export const headerTemplate = `
 export const footerTemplate = (year: number) => {
   return `
 		<footer>
-			<p>&copy; ${year} Magnetic Travel. All rights reserved.</p>
+			<p>&copy; ${year} Magnetic Travel.</p>
 			<a
 				href="https://bookings.magnetic-travel.com/terms-conditions"
 				style="color: black; text-decoration: none"

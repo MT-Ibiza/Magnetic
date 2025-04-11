@@ -50,8 +50,7 @@ export function newUserGoldTemplate({
 				<strong>Your Login Details</strong>
 			</p>
 			<p>
-				Access your personal dashboard and start arranging your trip using
-				the details below:
+				Access your personal dashboard using the details below:
 			</p>
 			<p><strong>Username:</strong> ${email}</p>
 			<p><strong>Password:</strong> ${password}</p>

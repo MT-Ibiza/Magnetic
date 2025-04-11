@@ -104,11 +104,9 @@ export function bookingConfirmationTemplate(order: Order) {
 					</tr>
 				</tbody>
 			</table>
-			<div style="margin: 50px 0 20px 0">
-				<p>You'll will receive an invoice for your booking shortly.</p>
-				<p>Regards,</p>
-				<p><strong>The Magnetic Travel Team </strong></p>
-			</div>
+      <h3>Thanks for your recent booking!</h3>
+      <p>You'll be contacted ahead of time with further details related to your booking. We'll send you an invoice for your booking shortly.</p>
+			${footerTemplate}
 		</div>
   `;
 

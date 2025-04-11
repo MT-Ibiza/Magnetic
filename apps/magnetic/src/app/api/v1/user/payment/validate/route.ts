@@ -147,7 +147,7 @@ export async function POST(request: Request) {
           if (order.user) {
             await sendEmail({
               to: order.user.email,
-              subject: `Order Confirmation #${order.id} - Magnetic Travel`,
+              subject: `Booking Confirmation #${order.id} - Magnetic Travel`,
               html: bookingConfirmationTemplate(order as any),
             });
             console.log('email sent to: ', order.user.email);
@@ -155,7 +155,7 @@ export async function POST(request: Request) {
           if (order.guestUser) {
             await sendEmail({
               to: order.guestUser.email,
-              subject: `Order Confirmation #${order.id} - Magnetic Travel`,
+              subject: `Booking Confirmation #${order.id} - Magnetic Travel`,
               html: bookingConfirmationTemplate(order as any),
             });
             console.log('guest email sent to: ', order.guestUser.email);

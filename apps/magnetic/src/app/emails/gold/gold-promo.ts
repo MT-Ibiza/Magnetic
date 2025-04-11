@@ -13,8 +13,7 @@ export function goldPromoTemplate(clientName: string) {
 		<div class="content">
   		<h2>Hi, ${clientName}</h2>
   		<p>
-  			Welcome to Ibiza! We hope your arrival was smooth and you're settling
-  			in nicely.
+  			Welcome to Ibiza! We hope you had a smooth arrival and are settling in nicely.
   		</p>
   		<p>
   			We know that sometimes plans change, and you may find you need extra
@@ -30,7 +29,7 @@ export function goldPromoTemplate(clientName: string) {
   		</ul>
   		<a
         class="link-btn"
-        href="https://bookings.magnetic-travel.com/packages"
+        href="https://api.whatsapp.com/send/?phone=34680419368&text=Hello!%20I%20would%20like%20to%20chat%20with%20you"
         target="_blank"
   			>Upgrade Now</a
   		>
