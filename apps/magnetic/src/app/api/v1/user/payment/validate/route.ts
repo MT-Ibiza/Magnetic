@@ -1,6 +1,8 @@
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { sendEmail } from 'apps/magnetic/src/app/libs/emails';
+import { bookingConfirmationTemplate } from 'apps/magnetic/src/app/emails/new-order-confirmation';
 const Redsys = require('node-redsys-api').Redsys;
 
 const SECRET_KEY = process.env.PAYMENT_SECRET_KEY;
@@ -54,6 +56,11 @@ export async function POST(request: Request) {
           items: {
             include: {
               item: true,
+            },
+          },
+          forms: {
+            orderBy: {
+              date: 'asc',
             },
           },
         },
@@ -130,6 +137,28 @@ export async function POST(request: Request) {
           status: 'success',
         },
       });
+
+      try {
+        if (order.user) {
+          await sendEmail({
+            to: order.user.email,
+            subject: `Order Confirmation #${order.id} - Magnetic Travel`,
+            html: bookingConfirmationTemplate(order as any),
+          });
+          console.log('email sent to: ', order.user.email);
+        }
+        if (order.guestUser) {
+          await sendEmail({
+            to: order.guestUser.email,
+            subject: `Order Confirmation #${order.id} - Magnetic Travel`,
+            html: bookingConfirmationTemplate(order as any),
+          });
+          console.log('guest email sent to: ', order.guestUser.email);
+        }
+      } catch (emailError) {
+        console.error('Error sending email:', emailError);
+      }
+
       return NextResponse.json({ message: 'OK' });
     } else {
       const status = responseCode === '0184' ? 'failed' : 'cancelled';
