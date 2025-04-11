@@ -3,14 +3,11 @@ import { Text, Button, SectionCard, Modal } from '@magnetic/ui';
 import { FaCircleCheck } from 'react-icons/fa6';
 import { usePackage } from '../../hooks/usePackage';
 import FormCalendly from '../../components/form-calendly';
-import { useState } from 'react';
+import { use, useState } from 'react';
 import SkeletonPlan from '../../components/skeletons/skeleton-plan';
-import { useMutation } from '@tanstack/react-query';
-import { User } from '@magnetic/interfaces';
-import { upgradePackage } from '../../apis/api-packages';
-import { toast } from 'sonner';
 import { useAuth } from '../../hooks/useAuth';
 import UpgradeButton from '../../components/upgrade-button';
+import { centsToEuros } from '@magnetic/utils';
 
 interface Props {}
 
@@ -57,9 +54,35 @@ function ViewPackagePage(props: Props) {
         <>
           {plan && (
             <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4">
-              <div className="col-span-8 flex flex-col gap-[20px]">
-                <SectionCard title={plan.name}>
+              <div
+                className={`${
+                  (user?.package?.name === 'Gold' &&
+                    (plan.name === 'Platinum' || plan.name === 'Diamond')) ||
+                  (user?.package?.name === 'Platinum' &&
+                    plan.name === 'Diamond')
+                    ? 'col-span-8'
+                    : 'col-span-12'
+                } flex flex-col gap-[20px]`}
+              >
+                <SectionCard
+                  title={plan.name}
+                  subTitle={
+                    plan.name === 'Diamond'
+                      ? '+10% Management Fee'
+                      : `${centsToEuros(plan.priceInCents)}€ Per Week`
+                  }
+                  diamondPackage={plan.name === 'Diamond' ? true : false}
+                  subTitleClassName="lg:text-[20px] font-medium"
+                >
                   <>
+                    {/* <div className="flex flex-col">
+                      <span className="text-3xl lg:text-3xl xl:text-4xl">
+                        {centsToEuros(plan.priceInCents)}€
+                      </span>
+                      <span className="text-base mt-2 lg:text-lg font-normal text-neutral-500">
+                        Per week
+                      </span>
+                    </div> */}
                     {plan.description && (
                       <div
                         className="lg:text-[16px] text-[14px]"
@@ -83,31 +106,36 @@ function ViewPackagePage(props: Props) {
                   </div>
                 </SectionCard>
               </div>
-              <div className="col-span-4">
-                <div className="sticky bg-base-100 top-[90px] listingSection__wrap">
-                  <h3 className="text-xl font-semibold">Elevate Your Stay</h3>
-                  <p className="lg:text-[16px] text-[14px]">
-                    Upgrade your package today for exclusive access, or chat
-                    with our team to learn more.
-                  </p>
-                  <div className="space-y-4">
-                    {plan.name !== 'Diamond' &&
-                      user?.package?.name !== 'Platinum' && (
-                        <UpgradeButton
-                          amountInCents={plan.priceInCents}
-                          packageId={plan.id}
-                        />
-                      )}
-                    <Button
-                      variant="outline"
-                      className="w-full"
-                      onClick={toggleOpeModal}
-                    >
-                      Book a Call
-                    </Button>
+              {(user?.package?.name === 'Gold' &&
+                (plan.name === 'Platinum' || plan.name === 'Diamond')) ||
+              (user?.package?.name === 'Platinum' &&
+                plan.name === 'Diamond') ? (
+                <div className="col-span-4">
+                  <div className="sticky bg-base-100 top-[90px] listingSection__wrap">
+                    <h3 className="text-xl font-semibold">Elevate Your Stay</h3>
+                    <p className="lg:text-[16px] text-[14px]">
+                      Upgrade your package today for exclusive access, or chat
+                      with our team to learn more.
+                    </p>
+                    <div className="space-y-4">
+                      {plan.name !== 'Diamond' &&
+                        user?.package?.name !== 'Platinum' && (
+                          <UpgradeButton
+                            amountInCents={plan.priceInCents}
+                            packageId={plan.id}
+                          />
+                        )}
+                      <Button
+                        variant="outline"
+                        className="w-full"
+                        onClick={toggleOpeModal}
+                      >
+                        Book a Call
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : null}
             </div>
           )}
         </>
