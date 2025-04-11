@@ -112,7 +112,7 @@ export async function POST(request: Request) {
           priceInCents: priceItem,
           variantId,
           type:
-            (item.category?.formType as 'chefs') || item.service.serviceType,
+            (item.category?.formType as 'chefs') || item.service?.serviceType,
         },
       });
       return NextResponse.json({
@@ -120,12 +120,14 @@ export async function POST(request: Request) {
         cartItem: newCartItem,
       });
     } else {
-      const childcareForm =
-        item.service.serviceType === 'childcare'
-          ? (formData as any)
-          : undefined;
-      priceItem = childcareForm
-        ? Number(childcareForm?.hours) * item.priceInCents
+      const serviceWithHours = ['childcare', 'security'];
+      const formWithHours = serviceWithHours.includes(
+        item.service?.serviceType || ''
+      )
+        ? (formData as any)
+        : undefined;
+      priceItem = formWithHours
+        ? Number(formWithHours?.hours) * item.priceInCents
         : priceItem;
 
       const newCartItem = await db.cartItem.create({
@@ -137,7 +139,7 @@ export async function POST(request: Request) {
           variantId,
           priceInCents: priceItem,
           type:
-            (item.category?.formType as 'chefs') || item.service.serviceType,
+            (item.category?.formType as 'chefs') || item.service?.serviceType,
         },
       });
       return NextResponse.json({
