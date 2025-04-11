@@ -150,6 +150,13 @@ export function BookingPage() {
                           <Text size="1">Approve Booking</Text>
                         </li>
                         <li
+                            onClick={() => {
+                              setOpenModal(true);
+                            }}
+                          >
+                            <Text size="1">Edit Booking</Text>
+                          </li>
+                        <li
                           onClick={() => {
                             setSelectedStatus('cancelled');
                             toggleAlert();

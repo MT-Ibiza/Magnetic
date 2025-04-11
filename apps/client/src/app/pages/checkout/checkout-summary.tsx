@@ -13,7 +13,7 @@ interface Props {
 function CheckoutSummary(props: Props) {
   const { servicesSummary: services, total: totalServices } = props;
 
-  const vat = totalServices - totalServices / 1.21;
+  const vat = totalServices - (totalServices / 1.21);
   const vatFixed = centsFixed(vat);
   const fee = totalServices * 0.02;
   const total = totalServices + fee;

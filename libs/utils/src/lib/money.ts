@@ -30,12 +30,20 @@ export function getPriceRange(prices: { priceInCents: number }[]) {
   );
 }
 
+// export function centsFixed(priceInCents: number) {
+//   const price = priceInCents / 100;
+//   const priceFormatted = new Intl.NumberFormat('en-US', {
+//     currency: 'EUR',
+//     minimumFractionDigits: 0,
+//     maximumFractionDigits: 2,
+//   }).format(price);
+//   return Number(priceFormatted) * 100;
+// }
+
 export function centsFixed(priceInCents: number) {
   const price = priceInCents / 100;
-  const priceFormatted = new Intl.NumberFormat('en-US', {
-    currency: 'EUR',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  }).format(price);
-  return Number(priceFormatted) * 100;
+  const rounded = Math.round(price * 100) / 100;
+  return Math.round(rounded * 100); 
 }
+
+
