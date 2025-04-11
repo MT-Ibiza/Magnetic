@@ -41,7 +41,7 @@ export function PaymentButton(props: {
           orderId: `${orderId}`,
           urlOk: guestMode
             ? `${window.location.origin}/${section}/payment`
-            : `${window.location.origin}/payment`,
+            : `${window.location.origin}/payment?redirect=bookings`,
           urlKo: guestMode
             ? `${window.location.origin}/${section}/payment`
             : `${window.location.origin}/payment`,

@@ -12,6 +12,7 @@ import { useMutation } from '@tanstack/react-query';
 function PaymentPage() {
   const [searchParams] = useSearchParams();
   const [text, setText] = useState('');
+  const redirect = searchParams.get('redirect');
   const pathSegments = location.pathname.split('/');
   const section = pathSegments[1];
   const publics = [
@@ -19,7 +20,11 @@ function PaymentPage() {
     SLUG_PUBLIC_SHOP_DRINKS,
     SLUG_PUBLIC_ORDER_DRINKS,
   ];
-  const urlRedirect = publics.includes(section) ? section : `/dashboard`;
+  const urlRedirect = redirect
+    ? redirect
+    : publics.includes(section)
+    ? section
+    : `/dashboard`;
 
   const validateMutation = useMutation<any, Error, any>({
     mutationFn: (data) => {
