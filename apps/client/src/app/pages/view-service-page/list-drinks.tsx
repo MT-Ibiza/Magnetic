@@ -269,7 +269,7 @@ function ListDrinks(props: Props) {
           <NoBookings onClose={toggleModal} />
         ) : (
           <DrinksDeliveryBookingForm
-            user={user}
+            user={guestMode ? undefined : user}
             onSubmit={handleSaveForm}
             formData={{
               serviceId,

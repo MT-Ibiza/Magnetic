@@ -98,6 +98,7 @@ export const AppRouter = () => {
           path={`${slugOrderDrinks}/checkout`}
           element={<PublicCheckoutPage />}
         />
+        <Route path={`${slugShopDrinks}/payment`} element={<PaymentPage />} />
         {/* <Route path="list/:slug" element={<PublicListPage />} />
         <Route path="list/:slug/:itemId" element={<ListItemPage />} />
         <Route path="list/:slug/checkout" element={<PublicCheckoutPage />} />

@@ -80,10 +80,9 @@ export async function POST(request: Request) {
         `✅ Pago exitoso. Pedido: ${orderId}, Monto: ${amount}, Moneda: ${currency}`
       );
 
-      const texto = orderId as string;
-      const id = texto.split('-')[1];
+      const orderIdString = orderId as string;
+      const id = orderIdString.split('-')[1];
 
-      // Buscar la orden en la base de datos
       const order = await db.order.findUnique({
         where: {
           id: Number(id),
@@ -109,6 +108,10 @@ export async function POST(request: Request) {
           { message: 'Orden no encontrada' },
           { status: 404 }
         );
+      }
+
+      if (order.status === 'success') {
+        return NextResponse.json({ message: 'OK' });
       }
 
       await db.order.update({

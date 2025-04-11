@@ -11,6 +11,7 @@ export async function validatePayment(data: any): Promise<any> {
       Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(data),
+    credentials: 'include',
   });
 
   const dataJson = await response.json();
