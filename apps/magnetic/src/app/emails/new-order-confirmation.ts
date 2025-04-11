@@ -1,6 +1,11 @@
 import { Order } from '@magnetic/interfaces';
 import { centsToEurosWithCurrency, getCurrentYear } from '@magnetic/utils';
-import { footerTemplate, headerTemplate, stylesEmailsTable } from './partials';
+import {
+  footerTemplate,
+  headerTemplate,
+  signatureTemplate,
+  stylesEmailsTable,
+} from './partials';
 import moment from 'moment';
 
 export function bookingConfirmationTemplate(order: Order) {
@@ -104,9 +109,9 @@ export function bookingConfirmationTemplate(order: Order) {
 					</tr>
 				</tbody>
 			</table>
-      <h3>Thanks for your recent booking!</h3>
+      <h4>Thanks for your recent booking!</h4>
       <p>You'll be contacted ahead of time with further details related to your booking. We'll send you an invoice for your booking shortly.</p>
-			${footerTemplate}
+			${signatureTemplate}
 		</div>
   `;
 
