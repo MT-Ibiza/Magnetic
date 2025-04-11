@@ -73,11 +73,11 @@ export async function POST(request: Request) {
         );
       }
 
-      if (order.user) {
-        const upgradeItem = order.items.find(
-          (orderItem) => orderItem.item.type === 'upgrade_plan'
-        );
+      const upgradeItem = order.items.find(
+        (orderItem) => orderItem.item.type === 'upgrade_plan'
+      );
 
+      if (order.user) {
         if (upgradeItem) {
           const packageUpgrade = await db.package.findFirst({
             where: {
@@ -138,25 +138,27 @@ export async function POST(request: Request) {
         },
       });
 
-      try {
-        if (order.user) {
-          await sendEmail({
-            to: order.user.email,
-            subject: `Order Confirmation #${order.id} - Magnetic Travel`,
-            html: bookingConfirmationTemplate(order as any),
-          });
-          console.log('email sent to: ', order.user.email);
+      if (!upgradeItem) {
+        try {
+          if (order.user) {
+            await sendEmail({
+              to: order.user.email,
+              subject: `Order Confirmation #${order.id} - Magnetic Travel`,
+              html: bookingConfirmationTemplate(order as any),
+            });
+            console.log('email sent to: ', order.user.email);
+          }
+          if (order.guestUser) {
+            await sendEmail({
+              to: order.guestUser.email,
+              subject: `Order Confirmation #${order.id} - Magnetic Travel`,
+              html: bookingConfirmationTemplate(order as any),
+            });
+            console.log('guest email sent to: ', order.guestUser.email);
+          }
+        } catch (emailError) {
+          console.error('Error sending email:', emailError);
         }
-        if (order.guestUser) {
-          await sendEmail({
-            to: order.guestUser.email,
-            subject: `Order Confirmation #${order.id} - Magnetic Travel`,
-            html: bookingConfirmationTemplate(order as any),
-          });
-          console.log('guest email sent to: ', order.guestUser.email);
-        }
-      } catch (emailError) {
-        console.error('Error sending email:', emailError);
       }
 
       return NextResponse.json({ message: 'OK' });
