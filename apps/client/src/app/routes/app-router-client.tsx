@@ -67,14 +67,6 @@ export const AppRouter = () => {
           element={<PublicCheckoutPage />}
         />
         <Route
-          path={`${slugBoats}/payment/success`}
-          element={<PaymentSuccess />}
-        />
-        <Route
-          path={`${slugBoats}/payment/failed`}
-          element={<PaymentFailed />}
-        />
-        <Route
           path={`${slugShopDrinks}`}
           element={<ViewServicePage guestMode serviceType="drinks" />}
         />
@@ -98,6 +90,7 @@ export const AppRouter = () => {
           path={`${slugOrderDrinks}/checkout`}
           element={<PublicCheckoutPage />}
         />
+        <Route path={`${slugBoats}/payment`} element={<PaymentPage />} />
         <Route path={`${slugShopDrinks}/payment`} element={<PaymentPage />} />
         {/* <Route path="list/:slug" element={<PublicListPage />} />
         <Route path="list/:slug/:itemId" element={<ListItemPage />} />
