@@ -7,6 +7,7 @@ import { goldPromoTemplate } from '../../../emails/gold/gold-promo';
 import { goldSecondReminderTemplate } from '../../../emails/gold/gold-second-reminder';
 import { platinumReminderTemplate } from '../../../emails/platinum/platinum-reminder';
 import { goodByeTemplate } from '../../../emails/good-bye-email';
+import moment from 'moment';
 
 type EmailType =
   | 'goodbye'
@@ -18,7 +19,7 @@ type EmailType =
 
 async function sendUserEmails(emailType: EmailType) {
   let users = [];
-  const today = new Date();
+  const today = moment().toDate();
 
   switch (emailType) {
     case 'goodbye':
@@ -38,8 +39,8 @@ async function sendUserEmails(emailType: EmailType) {
           },
           arrivalDate: {
             in: [
-              new Date(today.setDate(today.getDate() + 30)),
-              new Date(today.setDate(today.getDate() + 10)),
+              moment(today).add(30, 'days').toDate(),
+              moment(today).add(10, 'days').toDate(),
             ],
           },
         },
@@ -53,8 +54,8 @@ async function sendUserEmails(emailType: EmailType) {
           },
           arrivalDate: {
             in: [
-              new Date(today.setDate(today.getDate() + 30)),
-              new Date(today.setDate(today.getDate() + 10)),
+              moment(today).add(30, 'days').toDate(),
+              moment(today).add(10, 'days').toDate(),
             ],
           },
         },
@@ -66,7 +67,7 @@ async function sendUserEmails(emailType: EmailType) {
           package: {
             name: 'gold',
           },
-          arrivalDate: new Date(today.setDate(today.getDate() + 7)),
+          arrivalDate: moment(today).add(7, 'days').toDate(),
         },
       });
       break;
@@ -76,7 +77,7 @@ async function sendUserEmails(emailType: EmailType) {
           package: {
             name: 'gold',
           },
-          arrivalDate: new Date(today.setDate(today.getDate() - 1)),
+          arrivalDate: moment(today).add(1, 'days').toDate(),
         },
       });
       break;
@@ -85,18 +86,19 @@ async function sendUserEmails(emailType: EmailType) {
       users = await db.user.findMany({
         where: {
           package: {
-            name: 'gold',
+            name: 'platinum',
           },
           arrivalDate: {
             in: [
-              new Date(today.setDate(today.getDate() + 30)),
-              new Date(today.setDate(today.getDate() + 10)),
+              moment(today).add(30, 'days').toDate(),
+              moment(today).add(10, 'days').toDate(),
             ],
           },
         },
       });
       break;
   }
+  let sentCount = 0;
 
   for (const user of users) {
     let subject, html;
@@ -134,6 +136,7 @@ async function sendUserEmails(emailType: EmailType) {
         subject,
         html,
       });
+      sentCount++;
     } catch (error) {
       console.error(
         `Error sending ${emailType} email to ${user.email}:`,
@@ -141,6 +144,7 @@ async function sendUserEmails(emailType: EmailType) {
       );
     }
   }
+  return sentCount;
 }
 
 export async function POST(request: Request) {
@@ -162,8 +166,10 @@ export async function POST(request: Request) {
       );
     }
 
-    await sendUserEmails(type as EmailType);
-    return NextResponse.json({ message: `${type} emails sent successfully` });
+    const count = await sendUserEmails(type as EmailType);
+    return NextResponse.json({
+      message: `(${count}) ${type} emails sent successfully`,
+    });
   } catch (error) {
     console.error('Error processing request:', error);
     return NextResponse.json(
