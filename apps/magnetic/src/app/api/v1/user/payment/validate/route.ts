@@ -73,6 +73,10 @@ export async function POST(request: Request) {
         );
       }
 
+      if (order.status === 'success') {
+        return NextResponse.json({ message: 'OK' });
+      }
+
       const upgradeItem = order.items.find(
         (orderItem) => orderItem.item.type === 'upgrade_plan'
       );
