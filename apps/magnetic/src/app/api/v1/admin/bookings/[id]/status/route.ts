@@ -33,6 +33,23 @@ export async function PUT(
     },
   });
 
+  const orderItem = await db.orderItem.findFirst({
+    where: {
+      orderId: bookingDb.orderId,
+      cartItemId: bookingDb.cartItemId,
+    },
+    select: {
+      item: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+
+  let itemName = orderItem ? orderItem.item.name : 'Product';
+  itemName = bookingDb.type === 'drinks' ? 'Drinks Service' : itemName;
+
   try {
     const booking = await db.orderBookingForm.update({
       where: { id: bookingDb.id },
@@ -47,12 +64,11 @@ export async function PUT(
       try {
         await sendEmail({
           to: user.email,
-          subject: `Booking Changes`,
+          subject: `Booking Updated - ${itemName}`,
           html: bookingStatusTemplate({
             username: user.name,
             bookingId: bookingDb.id,
-            bookingDate: moment(bookingDb.date).format('D MMM YYYY'),
-            status,
+            itemName,
           }),
         });
       } catch (emailError) {
