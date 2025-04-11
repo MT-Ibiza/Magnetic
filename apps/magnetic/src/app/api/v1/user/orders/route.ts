@@ -93,7 +93,7 @@ export async function POST(request: Request) {
           return {
             date,
             formData,
-            serviceId: cartItem.item.serviceId,
+            serviceId: cartItem.item.serviceId as number,
             status: status as 'accepted',
             cartItemId: cartItem.id,
             type: cartItem.type,
@@ -104,7 +104,7 @@ export async function POST(request: Request) {
         .filter((item) => {
           return (
             item.formData !== null &&
-            item.item.service.serviceType === 'boat_rental'
+            item.item.service?.serviceType === 'boat_rental'
           );
         })
         .map((item: any) => {
@@ -179,11 +179,11 @@ export async function POST(request: Request) {
         console.error('Error creating boatAvailability');
       }
 
-      await db.cart.delete({
-        where: {
-          id: cart.id,
-        },
-      });
+      // await db.cart.delete({
+      //   where: {
+      //     id: cart.id,
+      //   },
+      // });
       return NextResponse.json(order);
     } else {
       return NextResponse.json(

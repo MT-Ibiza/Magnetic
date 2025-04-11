@@ -41,10 +41,10 @@ export function PaymentButton(props: {
           orderId: `${orderId}`,
           urlOk: guestMode
             ? `${window.location.origin}/${section}/payment/success`
-            : `${window.location.origin}/bookings`,
+            : `${window.location.origin}/payment`,
           urlKo: guestMode
             ? `${window.location.origin}/${section}/payment/failed`
-            : `${window.location.origin}/checkout/failure`,
+            : `${window.location.origin}/payment`,
         }),
       });
 
