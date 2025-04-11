@@ -109,8 +109,10 @@ export function bookingConfirmationTemplate(order: Order) {
 					</tr>
 				</tbody>
 			</table>
-      <h4>Thanks for your recent booking!</h4>
-      <p>You'll be contacted ahead of time with further details related to your booking. We'll send you an invoice for your booking shortly.</p>
+      <div style="margin-top:30px">
+        <h4>Thanks for your recent booking!</h4>
+        <p>You'll be contacted ahead of time with further details related to your booking. We'll send you an invoice for your booking shortly.</p>
+      </div>
 			${signatureTemplate}
 		</div>
   `;

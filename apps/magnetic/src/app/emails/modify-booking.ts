@@ -22,7 +22,7 @@ export function modifyRequestTemplate({
   const content = `
 		<div class="content">
 			<h2>Hi, ${clientName}</h2>
-			<p>Thanks for your request. We've received the following details for booking #${bookingId} ${itemName}:</p>
+			<p>Thanks for your request. We've received the following details for booking #${bookingId} ${itemName}</p>
 			<div style="background-color: #f7f7f7; padding: 3px 10px">
 				<p>${message}</p>
 			</div>
