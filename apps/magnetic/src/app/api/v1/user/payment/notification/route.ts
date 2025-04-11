@@ -11,9 +11,7 @@ export async function POST(request: Request) {
   console.log('callback payment recibido');
 
   try {
-    // Obtener el body como texto
     const rawBody = await request.text();
-    console.log('Raw body:', rawBody);
 
     // Convertir el body a un objeto usando URLSearchParams
     const params = new URLSearchParams(rawBody);
@@ -41,7 +39,6 @@ export async function POST(request: Request) {
     const decodedParams = redsys.decodeMerchantParameters(
       Ds_MerchantParameters
     );
-    console.log('Decoded Params:', decodedParams);
 
     // Crear la firma esperada a partir de los parámetros y la clave secreta
     const merchantSignatureNotif = redsys.createMerchantSignatureNotif(
@@ -80,10 +77,9 @@ export async function POST(request: Request) {
         `✅ Pago exitoso. Pedido: ${orderId}, Monto: ${amount}, Moneda: ${currency}`
       );
 
-      const texto = orderId as string;
-      const id = texto.split('-')[1];
+      const orderIdString = orderId as string;
+      const id = orderIdString.split('-')[1];
 
-      // Buscar la orden en la base de datos
       const order = await db.order.findUnique({
         where: {
           id: Number(id),
@@ -109,6 +105,10 @@ export async function POST(request: Request) {
           { message: 'Orden no encontrada' },
           { status: 404 }
         );
+      }
+
+      if (order.status === 'success') {
+        return NextResponse.json({ message: 'OK' });
       }
 
       await db.order.update({
