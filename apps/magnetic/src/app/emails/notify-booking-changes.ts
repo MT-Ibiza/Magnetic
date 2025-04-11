@@ -9,25 +9,17 @@ import {
 export function bookingStatusTemplate(params: {
   username: string;
   bookingId: number;
-  bookingDate: string;
-  status: string;
+  itemName: string;
 }) {
-  const { status, username, bookingId, bookingDate } = params;
+  const { username, bookingId, itemName } = params;
   const year = getCurrentYear();
-
-  const statusMessage =
-    status === 'cancelled'
-      ? `Your booking #${bookingId} has been successfully cancelled.`
-      : `Your booking #${bookingId} has been updated.`;
-
-  const statusColor = status === 'cancelled' ? '#e53935' : '#4caf50';
 
   const content = `
   <div class="content">
     <h2>Hi, ${username}</h2>
-    <p>${statusMessage}</p>
+    <p>Your booking #${bookingId} ${itemName} has been updated.</p>
     <p>
-     You can view the details visiting your booking page:
+     Visit the booking page to view the latest status and details:
     </p>
     <a
       class="link-btn"
@@ -35,7 +27,6 @@ export function bookingStatusTemplate(params: {
       target="_blank"
       >My Bookings</a
     >
-    <p>If you have any questions or need further assistance, feel free to contact us.</p>
     ${signatureTemplate}
   </div>
 `;
