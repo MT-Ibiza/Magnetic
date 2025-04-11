@@ -86,6 +86,8 @@ export async function POST(
         html: modifyRequestTemplate({
           message: message,
           clientName: user.firstName,
+          itemName: itemName,
+          bookingId: bookingUpdated.id,
         }),
         cc: process.env.EMAIL_COPY,
       });
