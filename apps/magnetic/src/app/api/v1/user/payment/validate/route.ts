@@ -174,6 +174,9 @@ export async function POST(request: Request) {
         },
         data: {
           status,
+          forms: {
+            deleteMany: {},
+          },
         },
       });
       return NextResponse.json(
