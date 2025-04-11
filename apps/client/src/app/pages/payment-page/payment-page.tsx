@@ -7,10 +7,11 @@ import {
   SLUG_PUBLIC_ORDER_DRINKS,
   SLUG_PUBLIC_SHOP_DRINKS,
 } from '../../constants';
+import { useMutation } from '@tanstack/react-query';
 
 function PaymentPage() {
   const [searchParams] = useSearchParams();
-  const [text, setText] = useState('Nothing here');
+  const [text, setText] = useState('');
   const pathSegments = location.pathname.split('/');
   const section = pathSegments[1];
   const publics = [
@@ -20,19 +21,26 @@ function PaymentPage() {
   ];
   const urlRedirect = publics.includes(section) ? section : `/dashboard`;
 
-  const fetchValidation = useCallback(async (data: any) => {
-    setText('We are validating your payment...');
-    try {
-      const response = await validatePayment(data);
+  const validateMutation = useMutation<any, Error, any>({
+    mutationFn: (data) => {
+      setText('We are validating your payment...');
+      return validatePayment(data);
+    },
+    onSuccess: () => {
       console.log('✅ Payment validated');
       setText('Validated!');
       window.location.href = urlRedirect;
-    } catch (error) {
+    },
+    onError: (error) => {
       setText(
         "We couldn't validate your payment. If you believe this is a mistake, please contact our support team for assistance."
       );
       console.error('❌ Error validating payment:', error);
-    }
+    },
+  });
+
+  const fetchValidation = useCallback(async (data: any) => {
+    await validateMutation.mutateAsync(data);
   }, []);
 
   useEffect(() => {
