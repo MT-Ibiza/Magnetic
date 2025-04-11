@@ -28,7 +28,7 @@ function PaymentPage() {
 
   const validateMutation = useMutation<any, Error, any>({
     mutationFn: (data) => {
-      setText('We are validating your payment...');
+      setText('We are checking your payment...');
       return validatePayment(data);
     },
     onSuccess: () => {
