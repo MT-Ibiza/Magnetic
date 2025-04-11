@@ -5,6 +5,11 @@ export const dynamic = 'force-dynamic'; // Desactiva la optimización estática
 
 export async function GET(request: Request) {
   const orders = await db.order.findMany({
+    where: {
+      status: {
+        not: 'cancelled',
+      },
+    },
     include: {
       guestUser: true,
       user: {
