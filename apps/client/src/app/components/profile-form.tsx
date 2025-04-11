@@ -2,12 +2,12 @@ import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { Button, Input, Text } from '@magnetic/ui';
 import { toast } from 'sonner';
-
-import { User, UserBase } from '@magnetic/interfaces';
+import { UserBase } from '@magnetic/interfaces';
 import { useState } from 'react';
 import { editClient } from '../apis/api-client';
 import { useNavigate } from 'react-router-dom';
 import { TODAY_DATE } from '../constants';
+import { useAuth } from '../hooks/useAuth';
 
 export interface ProfileFormData {
   firstName: string;
@@ -34,6 +34,7 @@ export function ProfileForm(props: Props) {
   const [passportFile, setPassportFile] = useState<File | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const navigate = useNavigate();
+  const { setCurrentUser } = useAuth();
 
   const {
     register,
@@ -68,6 +69,16 @@ export function ProfileForm(props: Props) {
       return editClient(data);
     },
     onSuccess: (user) => {
+      setCurrentUser({
+        name: `${user.name}`,
+        email: user.email,
+        arrivalDate: user.arrivalDate,
+        accommodation: user.accommodation,
+        package: user.package,
+        phone: user.phone,
+        //@ts-ignore
+        id: user.id,
+      });
       toast.success('Account Updated!');
       setIsSaving(false);
       navigate(`/dashboard`);

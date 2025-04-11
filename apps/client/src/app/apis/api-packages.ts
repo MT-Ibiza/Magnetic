@@ -15,7 +15,6 @@ export async function getPackage(id: number): Promise<{ package: Package }> {
     },
   });
   const dataJson = await response.json();
-  console.log(dataJson);
   if (!response.ok) throw new Error(dataJson.message);
   return dataJson;
 }
