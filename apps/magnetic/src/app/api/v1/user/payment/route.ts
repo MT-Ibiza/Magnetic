@@ -1,3 +1,4 @@
+import { centsFixed } from '@magnetic/utils';
 import { NextResponse } from 'next/server';
 const Redsys = require('node-redsys-api').Redsys;
 
@@ -39,7 +40,7 @@ export async function POST(request: Request) {
     const redsys = new Redsys();
 
     const merchantParams = {
-      DS_MERCHANT_AMOUNT: `${amount}`, // amount in cents
+      DS_MERCHANT_AMOUNT: `${centsFixed(amount)}`, // amount in cents
       DS_MERCHANT_ORDER: `MAGNETIC-${orderId}`,
       DS_MERCHANT_MERCHANTCODE: MERCHANT_CODE,
       DS_MERCHANT_CURRENCY: CURRENCY,

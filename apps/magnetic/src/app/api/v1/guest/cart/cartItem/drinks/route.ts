@@ -40,7 +40,6 @@ export async function POST(request: Request) {
     }
 
     const isProduction = process.env.NODE_ENV === 'production';
-    console.log('isProduction: ', isProduction);
 
     if (!cart) {
       cart = await db.cart.create({ data: {} });
@@ -52,7 +51,6 @@ export async function POST(request: Request) {
         secure: isProduction,
       };
       cartIdCookie = serialize('cartId', cart.id.toString(), cookieOptions);
-      console.log('cookieOptions: ', cookieOptions);
     }
 
     const existingCartItem = await db.cartItem.findFirst({
