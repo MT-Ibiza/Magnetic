@@ -31,7 +31,6 @@ export const URL_GET_PACKAGE = (id: number) => `${API_URL}/packages/${id}`;
 export const URL_GET_PACKAGES = `${API_URL}/packages`;
 export const URL_UPGRADE_PACKAGE = (id: number) =>
   `${API_URL}/packages/${id}/upgrade`;
-export const URL_VALIDATE_UPGRADE_PACKAGE = `${API_URL}/packages/validate-upgrade`;
 
 //Dashboard
 export const URL_GET_DASHBOARD = `${API_URL}/dashboard`;
