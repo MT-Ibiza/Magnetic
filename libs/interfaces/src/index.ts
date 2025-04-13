@@ -16,3 +16,4 @@ export * from './lib/season-prices';
 export * from './lib/forms';
 export * from './lib/drinks';
 export * from './lib/public-lists';
+export * from './lib/redsys';
