@@ -19,6 +19,9 @@ export async function searchProducts(params: SearchParams) {
         contains: searchText,
         mode: 'insensitive',
       },
+      type: {
+        not: 'upgrade_plan',
+      },
       ...(serviceId && { serviceId }),
       ...(categoryId && { categoryId }),
     },
@@ -58,6 +61,9 @@ export async function searchProducts(params: SearchParams) {
       name: {
         contains: searchText,
         mode: 'insensitive',
+      },
+      type: {
+        not: 'upgrade_plan',
       },
       ...(serviceId && { serviceId }),
       ...(categoryId && { categoryId }),
