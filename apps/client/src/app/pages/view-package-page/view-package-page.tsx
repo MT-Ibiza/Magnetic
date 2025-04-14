@@ -54,16 +54,7 @@ function ViewPackagePage(props: Props) {
         <>
           {plan && (
             <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4">
-              <div
-                className={`${
-                  (user?.package?.name === 'Gold' &&
-                    (plan.name === 'Platinum' || plan.name === 'Diamond')) ||
-                  (user?.package?.name === 'Platinum' &&
-                    plan.name === 'Diamond')
-                    ? 'col-span-8'
-                    : 'col-span-12'
-                } flex flex-col gap-[20px]`}
-              >
+              <div className={`col-span-8 flex flex-col gap-[20px]`}>
                 <SectionCard
                   title={plan.name}
                   subTitle={
@@ -106,11 +97,11 @@ function ViewPackagePage(props: Props) {
                   </div>
                 </SectionCard>
               </div>
-              {(user?.package?.name === 'Gold' &&
-                (plan.name === 'Platinum' || plan.name === 'Diamond')) ||
-              (user?.package?.name === 'Platinum' &&
-                plan.name === 'Diamond') ? (
-                <div className="col-span-4">
+              <div className="col-span-4">
+                {(user?.package?.name === 'Gold' &&
+                  (plan.name === 'Platinum' || plan.name === 'Diamond')) ||
+                (user?.package?.name === 'Platinum' &&
+                  plan.name === 'Diamond') ? (
                   <div className="sticky bg-base-100 top-[90px] listingSection__wrap">
                     <h3 className="text-xl font-semibold">Elevate Your Stay</h3>
                     <p className="lg:text-[16px] text-[14px]">
@@ -134,8 +125,27 @@ function ViewPackagePage(props: Props) {
                       </Button>
                     </div>
                   </div>
-                </div>
-              ) : null}
+                ) : (
+                  <div className="sticky bg-base-100 top-[90px] listingSection__wrap">
+                    <h3 className="text-xl font-semibold">
+                      Discuss Your Package
+                    </h3>
+                    <p className="lg:text-[16px] text-[14px]">
+                      Connect with our team to talk about your trip and the
+                      services available.
+                    </p>
+                    <div className="space-y-4">
+                      <Button
+                        variant="outline"
+                        className="w-full"
+                        onClick={toggleOpeModal}
+                      >
+                        Book a Call
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </>
