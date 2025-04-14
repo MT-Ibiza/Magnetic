@@ -12,6 +12,14 @@ function SecuritySummary(props: Props) {
     <div className="p-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
+          <Text className="font-medium">Number of hours</Text>
+          <Text className="text-gray-500">{formData.hours}</Text>
+        </div>
+        <div>
+          <Text className="font-medium">Number of Babysitters</Text>
+          <Text className="text-gray-500">{formData.numberOfGuards}</Text>
+        </div>
+        <div>
           <Text className="font-medium">Service</Text>
           <Text className="text-gray-500">{formData.service}</Text>
         </div>
@@ -20,16 +28,8 @@ function SecuritySummary(props: Props) {
           <Text className="text-gray-500">{formatDate(formData.date)}</Text>
         </div>
         <div>
-          <Text className="font-medium">Start Time</Text>
-          <Text className="text-gray-500">
-            {formatTime(formData.startTime)}
-          </Text>
-        </div>
-        <div>
-          <Text className="font-medium">Finish Time</Text>
-          <Text className="text-gray-500">
-            {formatTime(formData.finishTime)}
-          </Text>
+          <Text className="font-medium">Time</Text>
+          <Text className="text-gray-500">{formatTime(formData.time)}</Text>
         </div>
         <div>
           <Text className="font-medium">Location</Text>
@@ -39,12 +39,6 @@ function SecuritySummary(props: Props) {
       <div className="mt-6">
         <Text className="font-medium">Comments</Text>
         <Text className="text-gray-500">{formData.comments}</Text>
-      </div>
-      <div className="mt-6">
-        <Text className="font-medium">Payment Confirmed</Text>
-        <Text className="text-gray-500">
-          {formData.paymentConfirmed ? 'Yes' : 'No'}
-        </Text>
       </div>
     </div>
   );
