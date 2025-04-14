@@ -6,6 +6,7 @@ import { GuestUser, Order } from '@magnetic/interfaces';
 import FormGuestUser from './form-guest-user';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useGuestCartStore } from '../hooks/useGuestCartStore';
+import OrderCreated from './order-created';
 
 export function OrderButton(props: {
   amountInCents: number;
@@ -19,6 +20,7 @@ export function OrderButton(props: {
   const { amountInCents, disable, guestMode } = props;
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [successOrder, setSuccessOrder] = useState(false);
   const navigate = useNavigate();
 
   const toggleModal = () => {
@@ -28,11 +30,22 @@ export function OrderButton(props: {
   const createOrderMutation = useMutation({
     mutationFn: (params: any) => createOrder(params),
     onSuccess: (order: Order) => {
-      setTimeout(() => {
-        setLoading(false);
-        clearCart();
-        navigate(guestMode ? `/${section}` : `/bookings`);
-      }, 300);
+      if (guestMode) {
+        setSuccessOrder(true);
+        //@ts-ignore
+        document.getElementById('processing-order-modal').close();
+        setTimeout(() => {
+          setLoading(false);
+          clearCart();
+          navigate(`/${section}`);
+        }, 1200);
+      } else {
+        setTimeout(() => {
+          setLoading(false);
+          clearCart();
+          navigate(`/bookings`);
+        }, 300);
+      }
     },
   });
 
@@ -71,12 +84,16 @@ export function OrderButton(props: {
       </dialog>
 
       <Modal open={openModal}>
-        <FormGuestUser
-          onCancel={toggleModal}
-          onSave={async (userData) => {
-            await createOrderAndPay(userData);
-          }}
-        />
+        {successOrder ? (
+          <OrderCreated onCancel={toggleModal} />
+        ) : (
+          <FormGuestUser
+            onCancel={toggleModal}
+            onSave={async (userData) => {
+              await createOrderAndPay(userData);
+            }}
+          />
+        )}
       </Modal>
     </>
   );

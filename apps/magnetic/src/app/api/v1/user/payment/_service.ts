@@ -12,7 +12,7 @@ export async function sendEmailOrder(order: Order) {
     if (order.user) {
       await sendEmail({
         to: order.user.email,
-        subject: `Order Confirmation #${order.id} - Magnetic Travel`,
+        subject: `Booking Confirmation #${order.id} - Magnetic Travel`,
         html: bookingConfirmationTemplate(order as any),
       });
       console.log('Client email sent to: ', order.user.email);
@@ -20,7 +20,7 @@ export async function sendEmailOrder(order: Order) {
     if (order.guestUser) {
       await sendEmail({
         to: order.guestUser.email,
-        subject: `Order Confirmation #${order.id} - Magnetic Travel`,
+        subject: `Booking Confirmation #${order.id} - Magnetic Travel`,
         html: bookingConfirmationTemplate(order as any),
       });
       console.log('Guest email sent to: ', order.guestUser.email);

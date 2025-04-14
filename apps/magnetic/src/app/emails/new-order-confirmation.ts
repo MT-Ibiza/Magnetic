@@ -11,8 +11,8 @@ import moment from 'moment';
 export function bookingConfirmationTemplate(order: Order) {
   const year = getCurrentYear();
 
-  const forms = order.forms;
-  const items = order.items;
+  const forms = order.forms || [];
+  const items = order.items || [];
 
   const tableItems = forms.map((form) => {
     const isDrinks = form.type === 'drinks';

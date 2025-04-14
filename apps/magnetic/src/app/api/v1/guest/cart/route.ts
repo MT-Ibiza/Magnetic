@@ -6,7 +6,6 @@ export async function GET(request: Request) {
   try {
     const cookieStore = cookies();
     const cartIdFromCookie = cookieStore.get('cartId')?.value;
-    console.log('guest cart id : ', cartIdFromCookie);
 
     if (!cartIdFromCookie) {
       return NextResponse.json(null);

@@ -6,6 +6,7 @@ import { centsFixed } from '@magnetic/utils';
 import { cookies } from 'next/headers';
 import moment from 'moment';
 import { GuestUser } from '@prisma/client';
+import { sendEmailOrder } from '../payment/_service';
 
 export async function POST(request: Request) {
   try {
@@ -159,6 +160,8 @@ export async function POST(request: Request) {
             },
           },
           user: true,
+          guestUser: true,
+          forms: true,
         },
       });
 
@@ -179,11 +182,16 @@ export async function POST(request: Request) {
         console.error('Error creating boatAvailability');
       }
 
-      // await db.cart.delete({
-      //   where: {
-      //     id: cart.id,
-      //   },
-      // });
+      if (cartIdFromCookie) {
+        console.log('here');
+        await db.cart.delete({
+          where: {
+            id: cart.id,
+          },
+        });
+        await sendEmailOrder(order as any);
+      }
+
       return NextResponse.json(order);
     } else {
       return NextResponse.json(
