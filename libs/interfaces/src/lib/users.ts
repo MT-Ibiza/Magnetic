@@ -94,4 +94,5 @@ export interface GuestUser {
   billingAddress: string;
   phone: string;
   companyName?: string;
+  sendEmail?: boolean;
 }

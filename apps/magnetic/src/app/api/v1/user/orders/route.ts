@@ -1,11 +1,10 @@
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 import { getTokenFromRequest } from '../../util';
-import { BoatCharterFormData, Item } from '@magnetic/interfaces';
+import { BoatCharterFormData, GuestUser, Item } from '@magnetic/interfaces';
 import { centsFixed } from '@magnetic/utils';
 import { cookies } from 'next/headers';
 import moment from 'moment';
-import { GuestUser } from '@prisma/client';
 import { sendEmailOrder } from '../payment/_service';
 
 export async function POST(request: Request) {
@@ -183,13 +182,14 @@ export async function POST(request: Request) {
       }
 
       if (cartIdFromCookie) {
-        console.log('here');
         await db.cart.delete({
           where: {
             id: cart.id,
           },
         });
-        await sendEmailOrder(order as any);
+        if (guestUser.sendEmail) {
+          await sendEmailOrder(order as any);
+        }
       }
 
       return NextResponse.json(order);

@@ -28,7 +28,8 @@ export function OrderButton(props: {
   };
 
   const createOrderMutation = useMutation({
-    mutationFn: (params: any) => createOrder(params),
+    mutationFn: (params: any) =>
+      createOrder({ ...params, ...{ sendEmail: true } }),
     onSuccess: (order: Order) => {
       if (guestMode) {
         setSuccessOrder(true);
