@@ -12,12 +12,12 @@ function ModalBookingSummary(props: Props) {
   const { booking, items, onCancel } = props;
 
   const totalInCents = items.reduce((sum, item) => {
-    if (item.type === 'childcare') {
+    if (item.type === 'childcare' || item.type === 'security') {
       return sum + item.priceInCents * booking.formData.hours * item.quantity;
     }
     return sum + item.priceInCents * item.quantity;
   }, 0);
-  
+
   return (
     <div>
       <Modal.Header>Booking Details</Modal.Header>
