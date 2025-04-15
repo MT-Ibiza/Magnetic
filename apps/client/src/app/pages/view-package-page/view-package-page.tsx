@@ -46,6 +46,54 @@ function ViewPackagePage(props: Props) {
     return Array.from(featureList).map((li) => li.textContent?.trim() || '');
   };
 
+  function getSubTitle(userPackage: string, planName: string, price: number) {
+    if (planName === 'Diamond') {
+      if (userPackage === 'Diamond') return 'Your Package';
+      return '+10% Management Fee';
+    }
+
+    if (planName === 'Platinum') {
+      if (userPackage === 'Platinum') return 'Your Package';
+      if (userPackage === 'Diamond') return 'Included';
+    }
+
+    if (planName === 'Gold') {
+      if (userPackage === 'Gold') return 'Your Package';
+      if (userPackage === 'Platinum' || userPackage === 'Diamond')
+        return 'Included';
+    }
+
+    return `${centsToEuros(price)}€ Per Week`;
+  }
+
+  function getSmallText(
+    userPackage: string | undefined,
+    planName: string,
+    price: number
+  ) {
+    if (!userPackage) return `${centsToEuros(price)}€ Per Week`;
+
+    if (userPackage === 'Gold') {
+      if (planName === 'Gold') return 'Included';
+      if (planName === 'Diamond')
+        return 'Minimum spend €15,000 per week. - €1,800 flat fee for lower spend.';
+    }
+
+    if (userPackage === 'Platinum') {
+      if (planName === 'Gold') return 'With your package';
+      if (planName === 'Platinum') return 'Included';
+      if (planName === 'Diamond')
+        return 'Minimum spend €15,000 per week. - €1,800 flat fee for lower spend.';
+    }
+
+    if (userPackage === 'Diamond') {
+      if (planName === 'Diamond') return 'Included';
+      return 'With your package';
+    }
+
+    return ``;
+  }
+
   return (
     <>
       {isLoading ? (
@@ -57,23 +105,19 @@ function ViewPackagePage(props: Props) {
               <div className={`col-span-8 flex flex-col gap-[20px]`}>
                 <SectionCard
                   title={plan.name}
-                  subTitle={
-                    plan.name === 'Diamond'
-                      ? '+10% Management Fee'
-                      : `${centsToEuros(plan.priceInCents)}€ Per Week`
-                  }
-                  diamondPackage={plan.name === 'Diamond' ? true : false}
+                  subTitle={getSubTitle(
+                    user?.package?.name ?? '',
+                    plan.name,
+                    plan.priceInCents
+                  )}
+                  smallText={getSmallText(
+                    user?.package?.name ?? '',
+                    plan.name,
+                    plan.priceInCents
+                  )}
                   subTitleClassName="lg:text-[20px] font-medium"
                 >
                   <>
-                    {/* <div className="flex flex-col">
-                      <span className="text-3xl lg:text-3xl xl:text-4xl">
-                        {centsToEuros(plan.priceInCents)}€
-                      </span>
-                      <span className="text-base mt-2 lg:text-lg font-normal text-neutral-500">
-                        Per week
-                      </span>
-                    </div> */}
                     {plan.description && (
                       <div
                         className="lg:text-[16px] text-[14px]"
