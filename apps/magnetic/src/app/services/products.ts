@@ -15,6 +15,7 @@ export async function searchProducts(params: SearchParams) {
     skip: offset,
     take: pageSize,
     where: {
+      type: null,
       name: {
         contains: searchText,
         mode: 'insensitive',
@@ -55,6 +56,7 @@ export async function searchProducts(params: SearchParams) {
 
   const totalItems = await db.item.count({
     where: {
+      type: null,
       name: {
         contains: searchText,
         mode: 'insensitive',
