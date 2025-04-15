@@ -40,6 +40,7 @@ export function ProfileForm(props: Props) {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<ProfileFormData>({
     defaultValues: user
       ? {
@@ -181,29 +182,15 @@ export function ProfileForm(props: Props) {
           <div className="flex lg:flex-row flex-col gap-5">
             <div className="flex flex-col gap-2 w-full">
               <Text>Arrival Date</Text>
-              <Input
-                type="date"
-                min={TODAY_DATE}
-                {...register('arrivalDate', { required: true })}
-              />
-              {errors.arrivalDate && (
-                <p className="text-[12px] text-red-500">
-                  Arrival Date is required
-                </p>
-              )}
+              <Input type="date" disabled defaultValue={watch('arrivalDate')} />
             </div>
             <div className="flex flex-col gap-2 w-full">
               <Text>Departure Date</Text>
               <Input
                 type="date"
-                min={TODAY_DATE}
-                {...register('departureDate', { required: true })}
+                disabled
+                defaultValue={watch('departureDate')}
               />
-              {errors.departureDate && (
-                <p className="text-[12px] text-red-500">
-                  Departure Date is required
-                </p>
-              )}
             </div>
           </div>
           <div className="flex lg:flex-row flex-col gap-5">
