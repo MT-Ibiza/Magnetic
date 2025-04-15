@@ -1,7 +1,7 @@
 import { User } from '@magnetic/interfaces';
-import moment from 'moment';
 import { useState } from 'react';
 import { Dialog, DialogPanel } from '@headlessui/react';
+import { formatDateWithUTC } from '@magnetic/utils';
 
 interface InformationProfileProps {
   user: User;
@@ -53,9 +53,7 @@ export const InformationProfile = ({ user }: InformationProfileProps) => {
               Arrival Date:
             </strong>
             <span className="text-neutral-600 text-sm">
-              {user.arrivalDate
-                ? moment(user.arrivalDate).format('DD MMM YYYY')
-                : 'N/A'}
+              {user.arrivalDate ? formatDateWithUTC(user.arrivalDate) : 'N/A'}
             </span>
           </li>
           <li className="flex justify-between">
@@ -64,7 +62,7 @@ export const InformationProfile = ({ user }: InformationProfileProps) => {
             </strong>
             <span className="text-neutral-600 text-sm">
               {user.departureDate
-                ? moment(user.departureDate).format('DD MMM YYYY')
+                ? formatDateWithUTC(user.departureDate)
                 : 'N/A'}
             </span>
           </li>
