@@ -160,7 +160,7 @@ async function sendUserEmails(emailType: EmailType) {
   return sentCount;
 }
 
-export async function sendAllEmails() {
+async function sendAllEmails() {
   let totalSent = 0;
 
   for (const type of emailTypes) {
