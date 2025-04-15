@@ -59,7 +59,7 @@ function OrderItemsTable(props: Props) {
               </td>
             </tr>
           ))}
-          {vatInCents && (
+          {!!vatInCents && (
             <>
               <tr>
                 <td></td>

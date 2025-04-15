@@ -1,8 +1,7 @@
 import { Order } from '@magnetic/interfaces';
 import moment from 'moment';
 import OrderItemsTable from './order-items.table';
-import { CardWrapper, FormJsonDetails, Text } from '@magnetic/ui';
-import { useState } from 'react';
+import { CardWrapper } from '@magnetic/ui';
 
 interface Props {
   order: Order;
@@ -10,7 +9,6 @@ interface Props {
 
 function OrderDetail(props: Props) {
   const { order } = props;
-  const [currentTab, setCurrentTab] = useState(0);
 
   return (
     <CardWrapper className="">
