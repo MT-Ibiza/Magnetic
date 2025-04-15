@@ -17,16 +17,28 @@ type EmailType =
   | 'gold-promo'
   | 'platinum-reminder';
 
+const emailTypes: EmailType[] = [
+  'goodbye',
+  'gold-first-reminder',
+  'gold-second-reminder',
+  'gold-last-reminder',
+  'gold-promo',
+  'platinum-reminder',
+];
+
 async function sendUserEmails(emailType: EmailType) {
   let users = [];
   const today = moment().toDate();
+  const startUTC = moment.utc().startOf('day');
+  const nextDayUTC = moment.utc().add(1, 'day').startOf('day');
 
   switch (emailType) {
     case 'goodbye':
       users = await db.user.findMany({
         where: {
           departureDate: {
-            lt: today,
+            gte: startUTC.toDate(),
+            lt: nextDayUTC.toDate(),
           },
         },
       });
@@ -98,6 +110,7 @@ async function sendUserEmails(emailType: EmailType) {
       });
       break;
   }
+
   let sentCount = 0;
 
   for (const user of users) {
@@ -147,19 +160,30 @@ async function sendUserEmails(emailType: EmailType) {
   return sentCount;
 }
 
+export async function sendAllEmails() {
+  let totalSent = 0;
+
+  for (const type of emailTypes) {
+    const count = await sendUserEmails(type);
+    console.log(`Sent ${count} emails for ${type}`);
+    totalSent += count;
+  }
+
+  return totalSent;
+}
+
 export async function POST(request: Request) {
   try {
     const { type } = await request.json();
-    if (
-      ![
-        'goodbye',
-        'gold-first-reminder',
-        'gold-second-reminder',
-        'gold-last-reminder',
-        'gold-promo',
-        'platinum-reminder',
-      ].includes(type)
-    ) {
+
+    if (type === 'all') {
+      const total = await sendAllEmails();
+      return NextResponse.json({
+        message: `Total emails sent across all types: ${total}`,
+      });
+    }
+
+    if (!emailTypes.includes(type)) {
       return NextResponse.json(
         { message: 'Invalid email type' },
         { status: 400 }
