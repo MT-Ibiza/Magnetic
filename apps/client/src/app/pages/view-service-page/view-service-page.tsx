@@ -60,7 +60,9 @@ function ViewServicePage(props: Props) {
 
   return (
     <>
-      <NoticeBookingUnavailable arrivalDate={user?.arrivalDate} />
+      {!guestMode && (
+        <NoticeBookingUnavailable arrivalDate={user?.arrivalDate} />
+      )}
       <div className="space-y-6">
         <SectionCard title={service.name}>
           <div
