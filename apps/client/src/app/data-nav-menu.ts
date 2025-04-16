@@ -33,7 +33,7 @@ export const NAVIGATION_DEMO = (): NavItemType[] => {
     },
     {
       id: ncNanoId(),
-      href: '/cart',
+      href: '/checkout',
       name: 'Cart',
     },
     {

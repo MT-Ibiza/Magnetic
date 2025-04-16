@@ -27,7 +27,7 @@ interface NavItem {
 const NAV = [
   { name: 'Dashboard', link: '/dashboard', icon: HiOutlineChartPie },
   { name: 'Services', link: '/services', icon: HiOutlineBell },
-  { name: 'Cart', link: '/cart', icon: HiOutlineShoppingCart },
+  { name: 'Cart', link: '/checkout', icon: HiOutlineShoppingCart },
   { name: 'Menu', icon: MenuBar },
 ];
 
@@ -79,7 +79,7 @@ const FooterNav = () => {
   return (
     <div
       ref={containerRef}
-      className="FooterNav block md:hidden p-2 bg-white dark:bg-neutral-800 fixed top-auto bottom-0 inset-x-0 z-30 border-t border-neutral-300 dark:border-neutral-700 
+      className="FooterNav block md:hidden p-2 bg-white dark:bg-neutral-800 fixed top-auto bottom-0 inset-x-0 z-30 border-t border-neutral-300 dark:border-neutral-700
         transition-transform duration-300 ease-in-out"
     >
       <div className="w-full max-w-lg flex justify-around mx-auto text-sm text-center ">
@@ -97,7 +97,7 @@ const FooterNav = () => {
                 className={`w-5 h-5 ${active ? 'text-primary-600' : ''}`}
               />
               <span className="text-[11px] leading-none mt-1">{item.name}</span>
-              {item.link === '/cart' && totalItems > 0 && (
+              {item.link === '/checkout' && totalItems > 0 && (
                 <div className="absolute -top-1 -right-3 bg-red-600 text-white text-xs font-bold h-5 w-5 rounded-full flex items-center justify-center shadow-lg">
                   {totalItems}
                 </div>
