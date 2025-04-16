@@ -129,7 +129,14 @@ export async function POST(request: Request) {
 
       if (guestUser?.email) {
         const guestUserDb = await db.guestUser.create({
-          data: guestUser,
+          data: {
+            name: guestUser.name,
+            email: guestUser.email,
+            passportNumber: guestUser.passportNumber,
+            billingAddress: guestUser.billingAddress,
+            phone: guestUser.phone,
+            companyName: guestUser.companyName,
+          },
         });
         newGuestId = guestUserDb.id;
       }
