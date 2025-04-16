@@ -41,7 +41,7 @@ function FormGuestUser(props: {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body>
           <div className="px-10 py-5 flex flex-col gap-5">
-            <div className="flex gap-5">
+            <div className="grid lg:grid-cols-2 gap-5 grid-cols-1">
               <div className="form-control w-full">
                 <label htmlFor="name" className="label">
                   <span className="label-text">Name</span>
@@ -77,7 +77,7 @@ function FormGuestUser(props: {
                 )}
               </div>
             </div>
-            <div className="flex gap-5">
+            <div className="grid lg:grid-cols-2 gap-5 grid-cols-1">
               <div className="form-control w-full">
                 <label htmlFor="passportNumber" className="label">
                   <span className="label-text">Passport Number</span>
