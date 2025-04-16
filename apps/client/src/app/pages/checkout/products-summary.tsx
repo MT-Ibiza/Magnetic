@@ -82,11 +82,11 @@ const DrinkInfo = ({
   drinkItem: CartItem;
   guestMode?: boolean;
 }) => (
-  <div className="flex justify-between w-full mb-5">
+  <div className="flex justify-between w-full mb-5 flex-wrap">
     <div className="flex gap-2">
-      <Text size="1">Location: {drinkItem.formData.location}</Text>
-      <Text className="text-gray-400">/</Text>
-      <Text size="1">{formatDate(drinkItem.formData.date)}</Text>
+      <Text size="1">{`Location: ${drinkItem.formData.location} / ${formatDate(
+        drinkItem.formData.date
+      )}`}</Text>
     </div>
     <CheckoutItemEdit
       guestMode={guestMode}
