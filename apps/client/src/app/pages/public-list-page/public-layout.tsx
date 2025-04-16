@@ -27,7 +27,7 @@ function PublicLayout() {
         </div>
       </div>
       <Footer />
-      <FooterNav />
+      <FooterNav guestMode cartLink={`/${section}`} />
     </div>
   );
 }

@@ -1,9 +1,3 @@
-import {
-  FaChartPie,
-  FaConciergeBell,
-  FaBox,
-  FaShoppingCart,
-} from 'react-icons/fa';
 import React, { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import isInViewport from '../utils';
@@ -13,29 +7,57 @@ import {
   HiOutlineBell,
   HiOutlineChartPie,
   HiOutlineShoppingCart,
+  HiOutlineHome,
 } from 'react-icons/hi';
+import { useGuestCartStore } from '../hooks/useGuestCartStore';
 
 let WIN_PREV_POSITION = window.pageYOffset;
 let hideTimeout: ReturnType<typeof setTimeout> | null = null;
 
-interface NavItem {
-  name: string;
-  link?: string;
-  icon: any;
-}
-
 const NAV = [
   { name: 'Dashboard', link: '/dashboard', icon: HiOutlineChartPie },
   { name: 'Services', link: '/services', icon: HiOutlineBell },
-  { name: 'Cart', link: '/checkout', icon: HiOutlineShoppingCart },
+  {
+    name: 'Cart',
+    link: '/checkout',
+    icon: HiOutlineShoppingCart,
+    showCounter: true,
+  },
   { name: 'Menu', icon: MenuBar },
 ];
 
-const FooterNav = () => {
+const GUEST_NAV = [
+  { name: 'Cart', link: '/checkout', icon: HiOutlineShoppingCart },
+];
+
+const FooterNav = ({
+  guestMode,
+  cartLink,
+}: {
+  guestMode?: boolean;
+  cartLink?: string;
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
-  const { cart } = useCartStore();
+  const { cart } = guestMode ? useGuestCartStore() : useCartStore();
+
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  const navigationMenu = guestMode
+    ? [
+        {
+          name: 'Home',
+          link: `${cartLink}`,
+          icon: HiOutlineHome,
+        },
+        {
+          name: 'Cart',
+          link: `${cartLink}/checkout`,
+          icon: HiOutlineShoppingCart,
+          showCounter: true,
+        },
+      ]
+    : NAV;
 
   useEffect(() => {
     window.addEventListener('scroll', handleEvent);
@@ -83,7 +105,7 @@ const FooterNav = () => {
         transition-transform duration-300 ease-in-out"
     >
       <div className="w-full max-w-lg flex justify-around mx-auto text-sm text-center ">
-        {NAV.map((item, index) => {
+        {navigationMenu.map((item, index) => {
           const active = location.pathname === item.link;
           return item.link ? (
             <Link
@@ -97,7 +119,7 @@ const FooterNav = () => {
                 className={`w-5 h-5 ${active ? 'text-primary-600' : ''}`}
               />
               <span className="text-[11px] leading-none mt-1">{item.name}</span>
-              {item.link === '/checkout' && totalItems > 0 && (
+              {item.showCounter && totalItems > 0 && (
                 <div className="absolute -top-1 -right-3 bg-red-600 text-white text-xs font-bold h-5 w-5 rounded-full flex items-center justify-center shadow-lg">
                   {totalItems}
                 </div>
