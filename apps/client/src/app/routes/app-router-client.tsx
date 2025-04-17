@@ -100,6 +100,7 @@ export const AppRouter = () => {
       </Route>
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Layout />}>
+          <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<DashboardClientPage />} />
           <Route path="account" element={<AccountPage />} />
           <Route path="services" element={<ServiceClientPage />} />

@@ -127,8 +127,8 @@ export function DashboardClientPage() {
         <FloatingWhatsApp
           phoneNumber="34680419368"
           accountName="Magnetic Travel"
-          initialMessageByServer="Hi there! How can I assist you?"
-          initialMessageByClient="Hello! I would like to chat with you"
+          initialMessageByServer="Hi there! How can we assist you?"
+          initialMessageByClient="Hi!"
           statusMessage="Available"
           startChatText="Start chat with us"
           // tooltipText="Need help? Click to chat!"

@@ -1,24 +1,14 @@
-import {
-  HeaderClient,
-  Sidebar,
-  AvatarDropdown,
-  ThemeSelector,
-} from '@magnetic/ui';
+import { HeaderClient, AvatarDropdown } from '@magnetic/ui';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { FaUserFriends, FaShoppingCart, FaBook } from 'react-icons/fa';
-import { SiTask } from 'react-icons/si';
-import { MdDashboardCustomize } from 'react-icons/md';
 import { useAuth } from './hooks/useAuth';
 import { User } from 'libs/interfaces/src/lib/users';
-import { FiBookOpen, FiShoppingCart, FiUser } from 'react-icons/fi';
+import { FiBookOpen, FiUser } from 'react-icons/fi';
 import CartShopping from './components/cart/cart-shopping';
 import FooterNav from './components/footer-menu';
 import Footer from './components/footer';
 
-interface Props {}
-
-function Layout(props: Props) {
+function Layout() {
   const { logoutClient, getCurrentUser } = useAuth();
   const user = getCurrentUser();
   const location = useLocation();
@@ -26,7 +16,6 @@ function Layout(props: Props) {
   const [isSidebarVisible, setSidebarVisible] = useState(
     window.innerWidth >= 1024
   );
-  const [isCartOpen, setCartOpen] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);

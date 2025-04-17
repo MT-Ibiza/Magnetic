@@ -1,11 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { getCurrentClient } from '../apis/api-client';
-import { User } from '@magnetic/interfaces';
 
 const PrivateRoutes = () => {
-  const [user, setUser] = useState<User>();
   const { getCurrentUser, setCurrentUser } = useAuth();
   const userStore = getCurrentUser();
 
