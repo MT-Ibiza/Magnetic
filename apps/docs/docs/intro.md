@@ -2,46 +2,41 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Introduction
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Welcome to the **Magnetic Travel Platform** documentation.
 
-## Getting Started
+Magnetic is an all-in-one travel booking system designed to simplify and streamline the reservation of services. Whether you're managing trips, activities, or travel experiences, Magnetic provides a powerful set of tools for both administrators and clients.
 
-Get started by **creating a new site**.
+## What is Magnetic?
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+Magnetic is a platform that enables **administrators** to manage bookings and clients to **reserve travel services** through a user-friendly application.
 
-### What you'll need
+It includes features like:
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+- Account-based booking flow
+- Online payment integration
+- Reservation management (create, edit, cancel)
+- Full admin control over services and users
 
-## Generate a new site
+## Modules Overview
 
-Generate a new Docusaurus site using the **classic template**.
+The platform is split into three main modules:
 
-The classic template will automatically be added to your project after you run the command:
+- **Admin Panel**: For administrators to manage services, users, and bookings.
+- **Client App**: Where users browse and book available services.
+- **Backend API**: Handles all data, authentication, and business logic.
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+## How to Use This Documentation
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+This documentation is divided by modules and features. You can use the sidebar to explore:
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+- System architecture
+- Module breakdowns
+- Booking flow
+- API references
+- Deployment and configuration
 
-## Start your site
+---
 
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+Let's get started by exploring the core concepts of the Magnetic platform.
