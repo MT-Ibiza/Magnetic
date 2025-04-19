@@ -10,7 +10,8 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
     "prisma:format": "prisma format",
-    "prisma:seed": "ts-node prisma/seed.ts"
+    "prisma:seed": "ts-node prisma/seed.ts",
+    "dev:docs": "nx run docs:dev"
   },
   "private": true,
   "engines": {
@@ -61,7 +62,9 @@
     "sonner": "1.7.0",
     "sortablejs": "1.15.6",
     "uuid": "11.0.5",
-    "zustand": "5.0.2"
+    "zustand": "5.0.2",
+    "nextra": "2.13.3",
+    "nextra-theme-docs": "2.13.3"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",
