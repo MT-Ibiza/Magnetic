@@ -6,6 +6,7 @@
     "dev:app": "npx nx run magnetic:dev",
     "build": "npx nx run build",
     "dev:admin": "npx nx run admin:serve",
+    "dev:docs": "nx serve docs",
     "dev:client": "npx nx run client:serve",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",

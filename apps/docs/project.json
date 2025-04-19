@@ -1,0 +1,20 @@
+{
+  "name": "docs",
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx docusaurus start",
+        "cwd": "apps/docs"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx docusaurus build",
+        "cwd": "apps/docs"
+      }
+    }
+  },
+  "tags": []
+}

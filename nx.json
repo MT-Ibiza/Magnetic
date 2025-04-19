@@ -78,5 +78,8 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     }
+  },
+  "projects": {
+    "docs": "apps/docs"
   }
 }
