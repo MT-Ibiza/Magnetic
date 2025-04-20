@@ -79,6 +79,58 @@ const sidebars: SidebarsConfig = {
             },
           ],
         },
+        {
+          type: 'category',
+          label: 'Services',
+          items: [
+            {
+              type: 'doc',
+              id: 'backend/admin/services/list-services',
+              label: 'List Services',
+            },
+            {
+              type: 'doc',
+              id: 'backend/admin/services/get-service',
+              label: 'Get Service',
+            },
+            {
+              type: 'doc',
+              id: 'backend/admin/services/new-service',
+              label: 'New Service',
+            },
+            {
+              type: 'doc',
+              id: 'backend/admin/services/edit-service',
+              label: 'Edit Service',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Products',
+          items: [
+            {
+              type: 'doc',
+              id: 'backend/admin/products/list-products',
+              label: 'List Products',
+            },
+            {
+              type: 'doc',
+              id: 'backend/admin/products/get-product',
+              label: 'Get Product',
+            },
+            {
+              type: 'doc',
+              id: 'backend/admin/products/new-product',
+              label: 'New Product',
+            },
+            {
+              type: 'doc',
+              id: 'backend/admin/products/edit-product',
+              label: 'Edit Product',
+            },
+          ],
+        },
       ],
     },
     // { type: 'category', label: 'Models', items: ['backend/intro'] },
