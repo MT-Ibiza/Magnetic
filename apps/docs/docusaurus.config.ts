@@ -78,8 +78,11 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Docs',
+          label: 'Overview',
         },
+        { to: 'docs/backend', label: 'Backend', position: 'left' },
+        { to: 'docs/admin', label: 'Admin', position: 'left' },
+        { to: 'docs/client', label: 'Client', position: 'left' },
         {
           href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
