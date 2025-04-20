@@ -37,6 +37,17 @@ const sidebars: SidebarsConfig = {
             },
           ],
         },
+        {
+          type: 'category',
+          label: 'Bookings',
+          items: [
+            {
+              type: 'doc',
+              id: 'backend/admin/bookings/bookings',
+              label: 'GET Bookings',
+            },
+          ],
+        },
 
         // {
         //   type: 'doc',
