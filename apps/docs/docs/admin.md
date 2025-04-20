@@ -1,12 +1,12 @@
 ---
 id: admin
-title: Admin Panel
+title: Admin Overview
 sidebar_position: 2
 ---
 
-# Admin Panel
+# Admin App
 
-The **Admin Panel** is the control center of the Magnetic platform. It allows administrators to manage services, users, and bookings.
+The **Admin App** is the control center of the Magnetic platform. It allows administrators to manage services, users, and bookings.
 
 ## Key Features
 
