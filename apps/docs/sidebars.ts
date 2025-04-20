@@ -23,7 +23,7 @@ const sidebars: SidebarsConfig = {
       items: [
         {
           type: 'category',
-          label: 'Airtable',
+          label: 'Boats Airtable',
           items: [
             {
               type: 'doc',
@@ -33,7 +33,12 @@ const sidebars: SidebarsConfig = {
             {
               type: 'doc',
               id: 'backend/admin/airtable/import-boats',
-              label: 'Import Boats',
+              label: 'Import Boat',
+            },
+            {
+              type: 'doc',
+              id: 'backend/admin/airtable/sync-boat',
+              label: 'Sync Boat',
             },
           ],
         },

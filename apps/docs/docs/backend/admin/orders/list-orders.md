@@ -31,41 +31,57 @@ GET /api/v1/admin/orders
   "totalPages": 4,
   "orders": [
     {
-      "booking": {
-        "id": 123,
-        "cartItemId": "xyz123",
-        "createdAt": "2024-04-10T12:00:00Z",
-        ...
-      },
-      "user": {
-        "id": "user123",
-        "email": "user@example.com",
-        ...
-      },
+      "id": 1470,
+      "createdAt": "2025-04-15T08:22:20.136Z",
+      "updatedAt": "2025-04-15T08:23:29.958Z",
+      "userId": 6,
+      "totalInCents": 640050,
+      "subtotal": 0,
+      "feeInCents": 12550,
+      "vatInCents": 108905,
+      "status": "success",
+      "guestUserId": null,
       "guestUser": null,
-      "orderItems": [
+      "user": {
+        "id": 60,
+        "name": "John Doe",
+        "email": "john@gmail.com"
+      },
+      "items": [
         {
-          "id": "item123",
-          "priceInCents": 2500,
-          "quantity": 2,
-          "variant": {
-            "id": "variant1",
-            "name": "Large",
-            "priceInCents": 2500
-          },
+          "id": 257,
+          "quantity": 1,
+          "priceInCents": 302500,
+          "itemId": 9,
+          "orderId": 147,
+          "type": "chef-weekly",
+          "variantId": null,
+          "cartItemId": 438,
+          "createdAt": "2025-04-15T08:22:20.136Z",
+          "updatedAt": "2025-04-15T08:22:20.136Z",
           "item": {
-            "name": "Cappuccino",
-            "serviceId": "service123",
-            "drinkAttributes": [
-              {
-                "id": "attribute1"
-              }
-            ],
-            "images": [
-              {
-                "url": "https://example.com/image1.jpg"
-              }
-            ]
+            "id": 9,
+            "name": "Private Chef",
+            "description": "",
+            "priceInCents": 302500
+          }
+        },
+        {
+          "id": 258,
+          "quantity": 1,
+          "priceInCents": 325000,
+          "itemId": 67,
+          "orderId": 147,
+          "type": "boat_rental",
+          "variantId": null,
+          "cartItemId": 437,
+          "createdAt": "2025-04-15T08:22:20.136Z",
+          "updatedAt": "2025-04-15T08:22:20.136Z",
+          "item": {
+            "id": 67,
+            "name": "Pershing 5X",
+            "description": "",
+            "priceInCents": 325000
           }
         }
       ]

@@ -1,10 +1,18 @@
-# GET /api/airtable/boats
+# List Boats from airtable
 
 This endpoint retrieves a list of boats from the Airtable API, enriched with data indicating whether each boat has already been imported into the internal Magnetic database.
 
 ---
 
-## 🧩 Description
+## Endpoint
+
+```
+GET /api/airtable/boats
+```
+
+---
+
+## Description
 
 Fetches boats from Airtable (`Boats` view), checks if each record has already been imported (based on `airtableId`), and returns enriched records including name, size, capacity, pricing, and coordinates.
 
@@ -19,7 +27,7 @@ Requires the following **environment variables** for authorization:
 
 ---
 
-## 🧾 Query Parameters
+## Query Parameters
 
 | Parameter  | Type   | Required | Description                                     |
 | ---------- | ------ | -------- | ----------------------------------------------- |
@@ -28,7 +36,7 @@ Requires the following **environment variables** for authorization:
 
 ---
 
-## 📦 Response
+## Response
 
 ```json
 {
