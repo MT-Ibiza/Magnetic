@@ -1,68 +1,66 @@
-# Bookings API
+# List Bookings - Admin API
 
-This API endpoint provides paginated access to booking data, including detailed information about orders, users, and items.
+Retrieves a paginated list of all booking forms along with their related order data, including user details and order items.
+
+---
 
 ## Endpoint
 
-`GET /api/v1/admin/bookings`
+```
+GET /api/v1/admin/bookings
+```
 
-## Description
-
-Fetches a paginated list of bookings from the database. Each booking includes information about the booking form, associated user or guest user, and the items in the order.
+---
 
 ## Query Parameters
 
-| Parameter  | Type   | Required | Description                   |
-| ---------- | ------ | -------- | ----------------------------- |
-| `page`     | Number | Yes      | The page number to retrieve.  |
-| `pageSize` | Number | Yes      | The number of items per page. |
+| Parameter  | Type   | Required | Description                               |
+| ---------- | ------ | -------- | ----------------------------------------- |
+| `page`     | number | Yes      | The current page number (starts at 1).    |
+| `pageSize` | number | Yes      | The number of records to return per page. |
 
-## Response
+---
 
-### Success Response
-
-- **Status Code**: `200 OK`
-- **Content-Type**: `application/json`
-
-#### Example Response Body
+## JSON Response
 
 ```json
 {
   "page": 1,
   "pageSize": 10,
-  "totalItems": 100,
-  "totalPages": 10,
+  "totalItems": 35,
+  "totalPages": 4,
   "bookings": [
     {
       "booking": {
-        "id": 1,
-        "cartItemId": "abc123",
-        "createdAt": "2025-04-19T12:00:00Z",
-        "updatedAt": "2025-04-19T12:00:00Z"
+        "id": 123,
+        "cartItemId": "xyz123",
+        "createdAt": "2024-04-10T12:00:00Z",
+        ...
       },
       "user": {
-        "id": 1,
-        "name": "John Doe",
-        "email": "john.doe@example.com"
+        "id": "user123",
+        "email": "user@example.com",
+        ...
       },
       "guestUser": null,
       "orderItems": [
         {
-          "id": 1,
-          "priceInCents": 1000,
+          "id": "item123",
+          "priceInCents": 2500,
           "quantity": 2,
-          "cartItemId": "abc123",
           "variant": {
-            "id": 1,
-            "name": "Variant A",
-            "priceInCents": 500
+            "id": "variant1",
+            "name": "Large",
+            "priceInCents": 2500
           },
           "item": {
-            "name": "Product A",
+            "name": "Cappuccino",
             "serviceId": "service123",
-            "drinkAttributes": {
-              "id": 1
-            },
+            "drinkAttributes": [
+              {
+                "id": "attribute1"
+              }
+            ],
             "images": [
               {
                 "url": "https://example.com/image1.jpg"
@@ -75,3 +73,26 @@ Fetches a paginated list of bookings from the database. Each booking includes in
   ]
 }
 ```
+
+---
+
+## Example Request
+
+```js
+const fetchBookings = async (page = 1, pageSize = 10) => {
+  const response = await fetch(`/api/v1/admin/bookings?page=${page}&pageSize=${pageSize}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch bookings');
+  }
+  const data = await response.json();
+  console.log(data);
+};
+```
+
+---
+
+## Notes
+
+- The response includes both authenticated users and guest users if applicable.
+- Items are filtered to only include those matching the `cartItemId` from the booking form.
+- Data is returned in descending order of booking IDs (most recent first).

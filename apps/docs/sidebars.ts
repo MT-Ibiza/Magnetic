@@ -44,8 +44,18 @@ const sidebars: SidebarsConfig = {
             {
               type: 'doc',
               id: 'backend/admin/bookings/bookings',
-              label: 'GET Bookings',
+              label: 'List Bookings',
             },
+            {
+              type: 'doc',
+              id: 'backend/admin/bookings/booking',
+              label: 'Get Booking',
+            },
+            // {
+            //   type: 'doc',
+            //   id: 'backend/admin/bookings/booking',
+            //   label: 'Edit Booking',
+            // },
           ],
         },
 
