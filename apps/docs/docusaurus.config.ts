@@ -80,7 +80,13 @@ const config: Config = {
           position: 'left',
           label: 'Overview',
         },
-        { to: 'docs/backend', label: 'Backend', position: 'left' },
+        {
+          type: 'docSidebar',
+          sidebarId: 'backendSidebar',
+          to: 'docs/backend',
+          label: 'Backend',
+          position: 'left',
+        },
         { to: 'docs/admin', label: 'Admin', position: 'left' },
         { to: 'docs/client', label: 'Client', position: 'left' },
         {
