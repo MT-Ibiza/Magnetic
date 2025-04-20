@@ -32,7 +32,6 @@ export async function GET(request: Request) {
       createdAt: 'desc',
     },
   });
-  console.log('total orders: ', orders.length);
   return NextResponse.json(orders, {
     headers: {
       'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',

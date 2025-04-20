@@ -58,12 +58,22 @@ const sidebars: SidebarsConfig = {
             },
           ],
         },
-
-        // {
-        //   type: 'doc',
-        //   id: 'backend/admin/intro',
-        //   label: 'Introduction',
-        // },
+        {
+          type: 'category',
+          label: 'Orders',
+          items: [
+            {
+              type: 'doc',
+              id: 'backend/admin/orders/list-orders',
+              label: 'List Orders',
+            },
+            {
+              type: 'doc',
+              id: 'backend/admin/orders/get-order',
+              label: 'Get Order',
+            },
+          ],
+        },
       ],
     },
     // { type: 'category', label: 'Models', items: ['backend/intro'] },
