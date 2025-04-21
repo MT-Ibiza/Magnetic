@@ -77,18 +77,17 @@ const config: Config = {
         {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
+          to: 'docs/intro',
           position: 'left',
           label: 'Overview',
         },
         {
           type: 'docSidebar',
           sidebarId: 'backendSidebar',
-          to: 'docs/backend',
-          label: 'Backend',
+          to: 'docs/admin',
+          label: 'Admin Docs',
           position: 'left',
         },
-        { to: 'docs/admin', label: 'Admin', position: 'left' },
-        { to: 'docs/client', label: 'Client', position: 'left' },
         {
           href: 'https://github.com/MT-Ibiza/Magnetic',
           label: 'GitHub',
