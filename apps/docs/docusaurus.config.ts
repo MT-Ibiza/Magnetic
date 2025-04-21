@@ -83,7 +83,7 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'backendSidebar',
           to: 'docs/admin',
-          label: 'Admin Docs',
+          label: 'Admin Api',
           position: 'left',
         },
         {
