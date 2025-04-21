@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Magnetic Travel',
-  tagline: 'Dinosaurs are cool',
+  tagline: 'Documentation for Magnetic Travel',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -90,7 +90,7 @@ const config: Config = {
         { to: 'docs/admin', label: 'Admin', position: 'left' },
         { to: 'docs/client', label: 'Client', position: 'left' },
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/MT-Ibiza/Magnetic',
           label: 'GitHub',
           position: 'right',
         },
@@ -109,19 +109,15 @@ const config: Config = {
           ],
         },
         {
-          title: 'Community',
+          title: 'Apps',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'Clients App',
+              href: 'https://bookings.magnetic-travel.com',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
+              label: 'Admin App',
+              href: 'https://admin.magnetic-travel.com',
             },
           ],
         },
@@ -129,12 +125,12 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
+              label: 'Openmind',
+              href: 'https://openmind.cx',
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/MT-Ibiza/Magnetic',
             },
           ],
         },

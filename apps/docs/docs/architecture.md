@@ -1,7 +1,7 @@
 ---
 id: architecture
 title: Architecture & Deployment
-sidebar_position: 5
+sidebar_position: 2
 ---
 
 # Architecture & Deployment
