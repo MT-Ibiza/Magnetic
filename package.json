@@ -7,6 +7,7 @@
     "build": "npx nx run build",
     "dev:admin": "npx nx run admin:serve",
     "dev:docs": "nx serve docs",
+    "build:docs": "nx build docs",
     "dev:client": "npx nx run client:serve",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
