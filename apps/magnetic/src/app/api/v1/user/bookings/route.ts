@@ -13,6 +13,7 @@ export async function GET(request: Request) {
     const orders = await db.order.findMany({
       where: {
         userId: userId,
+        status: 'success',
       },
       select: {
         forms: true,

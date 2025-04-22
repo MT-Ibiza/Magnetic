@@ -12,6 +12,11 @@ export async function GET(req: NextRequest) {
     const allBookings = await db.orderBookingForm.findMany({
       skip: offset,
       take: pageSize,
+      where: {
+        order: {
+          status: 'success',
+        },
+      },
       include: {
         order: {
           include: {
