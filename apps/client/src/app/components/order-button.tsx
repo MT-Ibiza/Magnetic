@@ -37,15 +37,11 @@ export function OrderButton(props: {
         document.getElementById('processing-order-modal').close();
         setTimeout(() => {
           setLoading(false);
-          clearCart();
-          navigate(`/${section}`);
+          window.location.href = `/${section}`;
         }, 1200);
       } else {
-        setTimeout(() => {
-          setLoading(false);
-          clearCart();
-          navigate(`/bookings`);
-        }, 300);
+        setLoading(false);
+        window.location.href = '/bookings';
       }
     },
   });

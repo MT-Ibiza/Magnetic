@@ -194,9 +194,33 @@ export async function POST(request: Request) {
             id: cart.id,
           },
         });
+        await db.order.update({
+          where: {
+            id: order.id,
+          },
+          data: {
+            status: 'success',
+          },
+        })
         if (guestUser.sendEmail) {
           await sendEmailOrder(order as any);
         }
+      }
+
+      if (totalOrder === 0) { // Order only with reservations
+        await db.cart.deleteMany({
+          where: {
+            userId: userId,
+          },
+        });
+        await db.order.update({
+          where: {
+            id: order.id,
+          },
+          data: {
+            status: 'success',
+          },
+        })
       }
 
       return NextResponse.json(order);
