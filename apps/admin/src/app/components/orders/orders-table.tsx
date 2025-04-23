@@ -69,7 +69,19 @@ export function OrdersTable(props: Props) {
               </td>
               <td>{centsToEurosWithCurrency(order.totalInCents)}</td>
               <td> {moment(order.createdAt).format('DD MMM YYYY')}</td>
-              <td>{order.status}</td>
+              <td>
+                <span
+                  className={`capitalize px-4 py-1 text-xs font-medium rounded-full ${
+                    order.status === 'success'
+                      ? 'bg-green-100 text-green-600'
+                      : order.status === 'pending'
+                      ? 'bg-yellow-100 text-yellow-600'
+                      : 'bg-red-100 text-red-600'
+                  }`}
+                >
+                  {order.status}
+                </span>
+              </td>
               <td>
                 <Button
                   onClick={async () => {
