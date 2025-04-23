@@ -45,7 +45,7 @@ export function OrdersTable(props: Props) {
             <th>Client</th>
             <th>Price</th>
             <th>Date</th>
-            <th>Status</th>
+            <th>Payment status</th>
             <th>Actions</th>
           </tr>
         </thead>
