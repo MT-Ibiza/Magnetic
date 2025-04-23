@@ -39,13 +39,14 @@ function PaymentPage() {
     onSuccess: () => {
       setIsLoading(false);
       setPaymentSuccess(true);
-      window.location.href = urlRedirect;
-      console.log('✅ Payment validated');
+      setTimeout(() => {
+        window.location.href = urlRedirect;
+        console.log('✅ Payment validated');
+      }, 500);
     },
     onError: (error) => {
       setIsLoading(false);
       setPaymentSuccess(false);
-
       console.error('❌ Error validating payment:', error);
     },
   });
@@ -56,20 +57,6 @@ function PaymentPage() {
 
   useEffect(() => {
     if (orderId && status) {
-      // if (status === 'ok') {
-      //   setIsLoading(true);
-      //   setTimeout(() => {
-      //     setPaymentSuccess(true);
-      //     setIsLoading(false);
-      //   }, 500);
-      // }
-      // if (status === 'fail') {
-      //   setIsLoading(true);
-      //   setTimeout(() => {
-      //     setPaymentSuccess(false);
-      //     setIsLoading(false);
-      //   }, 500);
-      // }
       fetchValidation({status, orderId});
     }
   }, []);

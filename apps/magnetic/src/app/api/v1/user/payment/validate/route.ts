@@ -36,28 +36,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'OK' });
     }
     if (status === 'ok') {
-      const order = await db.order.update({
-        where: {
-          id: Number(orderId),
-        },
-        data:{
-          status: 'success',
-        },
-        include: {
-          user: true,
-          guestUser: true,
-          forms: {
-            orderBy: {
-              date: 'asc',
-            },
-          },
-          items: {
-            include: {
-              item: true,
-            },
-          },
-        },
-      });
       await handleSuccess(order);
     }
     if (status === 'fail'){
