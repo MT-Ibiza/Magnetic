@@ -80,33 +80,33 @@ export async function POST(request: Request) {
       },
     });
 
-    try {
-      console.log('package: ', newUser.package?.name);
-      if (newUser.package?.name === 'Gold') {
-        await sendEmail({
-          to: newUser.email,
-          subject: 'Your Ibiza Holiday - Concierge Services Platform',
-          html: newUserGoldTemplate({
-            name: newUser.firstName,
-            email: newUser.email,
-            password: fields.password || '',
-          }),
-        });
-      }
-      if (newUser.package?.name === 'Platinum') {
-        await sendEmail({
-          to: newUser.email,
-          subject: 'Your Ibiza Holiday - Concierge Services Platform',
-          html: newUserPlatinumTemplate({
-            name: newUser.firstName,
-            email: newUser.email,
-            password: fields.password || '',
-          }),
-        });
-      }
-    } catch (emailError) {
-      console.error('Error sending email:', emailError);
-    }
+    // try {
+    //   console.log('package: ', newUser.package?.name);
+    //   if (newUser.package?.name === 'Gold') {
+    //     await sendEmail({
+    //       to: newUser.email,
+    //       subject: 'Your Ibiza Holiday - Concierge Services Platform',
+    //       html: newUserGoldTemplate({
+    //         name: newUser.firstName,
+    //         email: newUser.email,
+    //         password: fields.password || '',
+    //       }),
+    //     });
+    //   }
+    //   if (newUser.package?.name === 'Platinum') {
+    //     await sendEmail({
+    //       to: newUser.email,
+    //       subject: 'Your Ibiza Holiday - Concierge Services Platform',
+    //       html: newUserPlatinumTemplate({
+    //         name: newUser.firstName,
+    //         email: newUser.email,
+    //         password: fields.password || '',
+    //       }),
+    //     });
+    //   }
+    // } catch (emailError) {
+    //   console.error('Error sending email:', emailError);
+    // }
 
     return NextResponse.json(newUser);
   } catch (error: any) {
