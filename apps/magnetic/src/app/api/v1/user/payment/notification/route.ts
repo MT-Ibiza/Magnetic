@@ -9,11 +9,9 @@ import {
 
 export async function POST(request: Request) {
   console.log('Notification payment');
-  console.log('request:', request);
   try {
     const rawBody = await request.text();
     const params = new URLSearchParams(rawBody);
-    console.log('params:', params);
 
     const version = params.get('Ds_SignatureVersion');
     const merchantParams = params.get('Ds_MerchantParameters');
@@ -38,15 +36,18 @@ export async function POST(request: Request) {
 
     const { Ds_Response: responseCode } = decodedParams;
     const { order, orderId } = await getOrderFromDecodedParams(decodedParams);
-    console.log('decodedParams:', decodedParams);
+    console.log('responseCode:', responseCode);
+    console.log('orderId:', orderId);
 
     if (!order)
       return NextResponse.json({ message: 'Orden not found' }, { status: 404 });
 
     if (isSuccessResponse(responseCode)) {
       await handleSuccess(order);
+      console.log('order success:', orderId);
     } else {
       await handleFailure(orderId, responseCode);
+      console.log('order cancelled:', orderId);
     }
     return NextResponse.json({ message: 'OK' });
   } catch (error: any) {
