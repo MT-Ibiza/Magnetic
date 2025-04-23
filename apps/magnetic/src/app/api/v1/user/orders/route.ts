@@ -194,15 +194,15 @@ export async function POST(request: Request) {
             id: cart.id,
           },
         });
-        await db.order.update({
-          where: {
-            id: order.id,
-          },
-          data: {
-            status: 'success',
-          },
-        })
         if (guestUser.sendEmail) {
+          await db.order.update({
+            where: {
+              id: order.id,
+            },
+            data: {
+              status: 'success',
+            },
+          })
           await sendEmailOrder(order as any);
         }
       }

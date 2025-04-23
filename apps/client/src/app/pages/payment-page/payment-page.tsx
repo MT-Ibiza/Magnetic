@@ -16,6 +16,8 @@ function PaymentPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState<boolean>();
   const redirect = searchParams.get('redirect');
+  const status = searchParams.get('status');
+  const orderId = searchParams.get('orderId');
   const pathSegments = location.pathname.split('/');
   const section = pathSegments[1];
   const publics = [
@@ -28,13 +30,6 @@ function PaymentPage() {
     : publics.includes(section)
     ? section
     : `/dashboard`;
-
-  const signature = searchParams.get('Ds_Signature');
-  const merchantParams = searchParams.get('Ds_MerchantParameters');
-  const version = searchParams.get('Ds_SignatureVersion');
-  const decoded = merchantParams ? atob(merchantParams) : '{}';
-  const redsysParams = JSON.parse(decoded) as DecodedRedsysParams;
-  const paymentCancelled = redsysParams.Ds_Response === '9915';
 
   const validateMutation = useMutation<any, Error, any>({
     mutationFn: (data) => {
@@ -60,19 +55,24 @@ function PaymentPage() {
   }, []);
 
   useEffect(() => {
-    if (signature && merchantParams && version) {
-      const payload = {
-        signature,
-        merchantParams,
-        version,
-      };
-      fetchValidation(payload);
+    if (orderId && status) {
+      // if (status === 'ok') {
+      //   setIsLoading(true);
+      //   setTimeout(() => {
+      //     setPaymentSuccess(true);
+      //     setIsLoading(false);
+      //   }, 500);
+      // }
+      // if (status === 'fail') {
+      //   setIsLoading(true);
+      //   setTimeout(() => {
+      //     setPaymentSuccess(false);
+      //     setIsLoading(false);
+      //   }, 500);
+      // }
+      fetchValidation({status, orderId});
     }
   }, []);
-
-  if (paymentCancelled) {
-    return <Text className="max-w-lg text-center">Payment Cancelled</Text>;
-  }
 
   return (
     <div className="flex flex-col items-center gap-3 w-full p-10">
