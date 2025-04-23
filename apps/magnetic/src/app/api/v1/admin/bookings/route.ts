@@ -78,7 +78,16 @@ export async function GET(req: NextRequest) {
       })
       .flat();
 
-    const totalItems = await db.orderBookingForm.count();
+    const totalItems = await db.orderBookingForm.count(
+      {
+        where: {
+          order: {
+            status: 'success',
+          },
+        },
+      }
+    );
+
     const totalPages = Math.ceil(totalItems / pageSize);
 
     return NextResponse.json({

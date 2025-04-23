@@ -8,6 +8,7 @@ import {
 } from '../_service';
 
 export async function POST(request: Request) {
+  console.log('Notification payment');
   try {
     const rawBody = await request.text();
     const params = new URLSearchParams(rawBody);
