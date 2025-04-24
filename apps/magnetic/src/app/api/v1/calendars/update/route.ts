@@ -1,6 +1,7 @@
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
 import ical from 'ical';
+import pLimit from 'p-limit';
 
 export async function POST() {
   try {
@@ -22,12 +23,17 @@ export async function POST() {
 
     let updatedBoats = 0;
 
-    await Promise.all(
-      boats.map(async (boat) => {
+    const limit = pLimit(3); // Solo 3 fetch simultáneos
+
+    const tasks = boats.map((boat) =>
+      limit(async () => {
         try {
-          const response = await fetch(boat.iCal as string);
+          const response = await fetch(boat.iCal as string, {
+            credentials: 'omit',
+          });
+
           if (!response.ok) {
-            console.warn(`Failed to fetch iCal for boat ${boat.secondName}`);
+            console.log(`Fetching iCal for boat ${boat.secondName} failed`, response.status, response.statusText);
             return;
           }
 
@@ -46,21 +52,24 @@ export async function POST() {
               source: 'ical',
             }));
 
+          console.log(`${boat.secondName} calendarEvents:`, calendarEvents.length);
+
           await db.boatAvailability.deleteMany({
-            where: {
-              boatId: boat.id,
-              source: 'ical',
-            },
+            where: { boatId: boat.id, source: 'ical' },
           });
 
-          await db.boatAvailability.createMany({ data: calendarEvents });
+          if (calendarEvents.length > 0) {
+            await db.boatAvailability.createMany({ data: calendarEvents });
+          }
 
           updatedBoats++;
         } catch (error) {
-          console.error(`Error processing boat ${boat.id}:`, error);
+          console.error(`Error processing boat ${boat.id} (${boat.secondName}):`, error);
         }
       })
     );
+
+    await Promise.all(tasks);
 
     return NextResponse.json({
       message: `Updated ${updatedBoats} boats successfully`,

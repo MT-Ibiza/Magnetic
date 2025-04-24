@@ -54,6 +54,7 @@ export async function POST(
           source: 'ical',
         };
       });
+    console.log('calendarEvents: ', availability.length)
 
     await db.boatAvailability.deleteMany({
       where: {
