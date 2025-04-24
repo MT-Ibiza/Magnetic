@@ -52,8 +52,6 @@ export async function POST() {
               source: 'ical',
             }));
 
-          console.log(`${boat.secondName} calendarEvents:`, calendarEvents.length);
-
           await db.boatAvailability.deleteMany({
             where: { boatId: boat.id, source: 'ical' },
           });
@@ -70,6 +68,7 @@ export async function POST() {
     );
 
     await Promise.all(tasks);
+    console.log(`Updated ${updatedBoats} boats successfully`);
 
     return NextResponse.json({
       message: `Updated ${updatedBoats} boats successfully`,
