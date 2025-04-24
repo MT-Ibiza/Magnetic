@@ -1,21 +1,17 @@
 import { NextResponse } from 'next/server';
 import {
-  validateSignature,
-  getOrderFromDecodedParams,
-  isSuccessResponse,
   handleSuccess,
   handleFailure,
 } from '../_service';
 import db from 'apps/magnetic/src/app/libs/db';
-import { cookies } from 'next/headers';
-import { getTokenFromRequest } from '../../../util';
 
 export async function POST(request: Request) {
   try {
     const { status, orderId } = await request.json();
+    const orderIdNumber = Number(orderId);
     const order = await db.order.findUnique({
       where: {
-        id: Number(orderId),
+        id: orderIdNumber,
       },
       include: {
         user: true,
@@ -33,21 +29,37 @@ export async function POST(request: Request) {
       },
     });
     if (order?.status !== 'pending') {
-      return NextResponse.json({ message: 'OK' });
+      if (order?.status === 'completed') {
+        return NextResponse.json(
+          { message: 'Payment completed' },
+          { status: 400 }
+        );
+      }
+      if (order?.status === 'failed') {
+        return NextResponse.json(
+          { message: 'Payment failed' },
+          { status: 400 }
+        );
+      }
     }
     if (status === 'ok') {
       await handleSuccess(order);
+      return NextResponse.json({ message: 'OK' });
     }
-    if (status === 'fail'){
+    if (status === 'fail') {
       await db.order.update({
         where: {
-          id: Number(orderId),
+          id: orderIdNumber,
         },
         data: {
           status: 'failed',
         },
       });
-      await handleFailure(orderId, '0184');
+      await handleFailure(orderIdNumber, '0184');
+      return NextResponse.json(
+        { message: 'We can validate your payment, please contact support' },
+        { status: 400 }
+      );
     }
     return NextResponse.json({ message: 'OK' });
   } catch (error: any) {

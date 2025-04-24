@@ -8,7 +8,6 @@ import {
   SLUG_PUBLIC_SHOP_DRINKS,
 } from '../../constants';
 import { useMutation } from '@tanstack/react-query';
-import { DecodedRedsysParams } from '@magnetic/interfaces';
 import { GoCheckCircleFill, GoXCircleFill } from 'react-icons/go';
 
 function PaymentPage() {
@@ -45,9 +44,11 @@ function PaymentPage() {
       }, 500);
     },
     onError: (error) => {
-      setIsLoading(false);
-      setPaymentSuccess(false);
-      console.error('❌ Error validating payment:', error);
+      setTimeout(() => {
+        setIsLoading(false);
+        setPaymentSuccess(false);
+        console.error('❌ Error validating payment:', error);
+      }, 500);
     },
   });
 
@@ -65,14 +66,14 @@ function PaymentPage() {
     <div className="flex flex-col items-center gap-3 w-full p-10">
       {!isLoading && (
         <>
-          {paymentSuccess && (
+          {paymentSuccess === true && (
             <div className="flex flex-col gap-3 items-center">
               <GoCheckCircleFill size={40} color="#15803d" />
               <h3 className="font-semibold">Payment Success</h3>
               <Text>Thanks for your payment!</Text>
             </div>
           )}
-          {!paymentSuccess && (
+          {paymentSuccess === false && (
             <div className="flex flex-col gap-3 items-center">
               <GoXCircleFill size={40} color="#ef4444" />
               <h3 className="font-semibold">Payment Failed</h3>
