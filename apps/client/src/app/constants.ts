@@ -6,7 +6,7 @@ export const capacityFilterOptions = [
   {
     value: '1',
     label: '1-7 people',
-    data: { capacity_gt: '1', capacity_lt: '7' },
+    data: { capacity_gt: '1', capacity_lt: '100' },
   },
   {
     value: '8',
