@@ -29,6 +29,7 @@ export interface ItemBaseFields {
   };
   drinkAttributes?: {
     id: number;
+    size: string;
   };
 }
 

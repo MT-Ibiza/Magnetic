@@ -47,6 +47,11 @@ export async function GET(
                   },
                 },
                 seasonPrices: true,
+                drinkAttributes: {
+                  select: {
+                    size: true,
+                  }
+                }
               },
             },
             variant: {

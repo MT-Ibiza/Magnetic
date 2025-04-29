@@ -43,6 +43,11 @@ function OrderItemsTable(props: Props) {
                     <Text className="text-gray-500" size="1">
                       {item.item.service?.name}
                     </Text>
+                    {item.item.drinkAttributes && (
+                      <Text className="text-gray-500" size="1">
+                        {item.item.drinkAttributes?.size}
+                      </Text>
+                    )}
                   </div>
                 </div>
               </td>
