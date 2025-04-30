@@ -151,7 +151,6 @@ function filterItemsByPriceRange(
   maxPrice?: number
 ) {
   return items.filter(({ prices, name }) => {
-    console.log(`${name}:  prices: [${prices}]`);
     return prices.some(
       (price) =>
         (minPrice === undefined || price >= minPrice) &&
