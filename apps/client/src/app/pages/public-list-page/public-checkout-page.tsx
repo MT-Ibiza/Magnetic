@@ -21,12 +21,8 @@ export function PublicCheckoutPage() {
     0
   );
 
-  const titles = {
-    "order-drinks": "Confirm & Order",
-    "default": "Confirm & Pay"
-  }
-
-  const title = titles[section as 'default'] || titles.default
+  const isPublicOrder = section === SLUG_PUBLIC_ORDER_DRINKS;
+  const title = isPublicOrder ? 'Confirm & Order' : 'Confirm & Pay';
 
   if (isLoading) {
     return <h1>Loading....</h1>;
@@ -44,9 +40,7 @@ export function PublicCheckoutPage() {
         <main className="mt-4 lg:mt-11 flex flex-col gap-[15px] lg:grid lg:grid-cols-12 lg:gap-x-[20px]">
           <div className="col-span-8 w-full ">
             <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 px-0 sm:p-6 xl:p-8">
-              <h2 className="text-3xl lg:text-4xl font-semibold">
-                {title}
-              </h2>
+              <h2 className="text-3xl lg:text-4xl font-semibold">{title}</h2>
               <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
               <Text className="text-gray-500 mt-2">
                 Ensure all details, especially dates and timings, are correct to
@@ -62,7 +56,7 @@ export function PublicCheckoutPage() {
               <CheckoutSummary
                 servicesSummary={servicesSummary}
                 total={total}
-                noIncludeFee={true}
+                noIncludeFee={isPublicOrder}
               />
               <CheckoutPayment
                 servicesSummary={servicesSummary}

@@ -122,7 +122,7 @@ export async function POST(request: Request) {
       const vat = totalOrder - totalOrder / 1.21;
       const vatInCents = centsFixed(vat);
 
-      const feeInCents = totalOrder * FEE_RATE;
+      const feeInCents = guestUser.isOnlyOrden ? 0 : totalOrder * FEE_RATE;
       const total = totalOrder + feeInCents;
 
       let newGuestId;

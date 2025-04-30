@@ -95,4 +95,5 @@ export interface GuestUser {
   phone: string;
   companyName?: string;
   sendEmail?: boolean;
+  isOnlyOrden?: boolean;
 }

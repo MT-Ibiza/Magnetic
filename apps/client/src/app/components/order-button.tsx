@@ -7,6 +7,7 @@ import FormGuestUser from './form-guest-user';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useGuestCartStore } from '../hooks/useGuestCartStore';
 import OrderCreated from './order-created';
+import { SLUG_PUBLIC_ORDER_DRINKS } from '../constants';
 
 export function OrderButton(props: {
   amountInCents: number;
@@ -23,13 +24,18 @@ export function OrderButton(props: {
   const [successOrder, setSuccessOrder] = useState(false);
   const navigate = useNavigate();
 
+  const isOnlyOrden = section === SLUG_PUBLIC_ORDER_DRINKS;
+
   const toggleModal = () => {
     setOpenModal((prevState) => !prevState);
   };
 
   const createOrderMutation = useMutation({
     mutationFn: (params: any) =>
-      createOrder({ ...params, ...{ sendEmail: true } }),
+      createOrder({
+        ...params,
+        ...{ sendEmail: true, isOnlyOrden },
+      }),
     onSuccess: (order: Order) => {
       if (guestMode) {
         setSuccessOrder(true);
