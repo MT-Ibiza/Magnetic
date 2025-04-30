@@ -40,14 +40,14 @@ function OrderItemsTable(props: Props) {
                   />
                   <div className="flex flex-col gap-1">
                     <Text>{item.item.name}</Text>
-                    <Text className="text-gray-500" size="1">
-                      {item.item.service?.name}
-                    </Text>
                     {item.item.drinkAttributes && (
                       <Text className="text-gray-500" size="1">
                         {item.item.drinkAttributes?.size}
                       </Text>
                     )}
+                    <Text className="text-gray-500" size="1">
+                      {item.item.service?.name}
+                    </Text>
                   </div>
                 </div>
               </td>

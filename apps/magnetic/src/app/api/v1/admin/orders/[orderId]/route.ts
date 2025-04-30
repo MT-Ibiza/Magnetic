@@ -28,6 +28,11 @@ export async function GET(
                     serviceType: true,
                   },
                 },
+                drinkAttributes: {
+                  select: {
+                    size: true,
+                  }
+                }
               },
             },
           },
