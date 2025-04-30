@@ -4,10 +4,11 @@ import Modal from './modal';
 import { GuestUser } from '@magnetic/interfaces';
 
 function FormGuestUser(props: {
+  buttonText?: string;
   onSave: (user: GuestUser) => void;
   onCancel: () => void;
 }) {
-  const { onCancel, onSave } = props;
+  const { onCancel, onSave, buttonText = 'Pay Now' } = props;
 
   const {
     register,
@@ -148,7 +149,7 @@ function FormGuestUser(props: {
               </Button>
             )}
             <Button radius="full" type="submit" loadingText="Scheduling...">
-              Pay Now
+              {buttonText}
             </Button>
           </div>
         </Modal.Footer>

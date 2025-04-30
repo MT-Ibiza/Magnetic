@@ -85,6 +85,7 @@ export function OrderButton(props: {
           <OrderCreated onCancel={toggleModal} />
         ) : (
           <FormGuestUser
+            buttonText="Order Now"
             onCancel={toggleModal}
             onSave={async (userData) => {
               await createOrderAndPay(userData);

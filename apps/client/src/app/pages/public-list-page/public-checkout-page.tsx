@@ -9,9 +9,6 @@ import { useGuestCartActions } from '../../hooks/useGuestCartActions';
 import { SLUG_PUBLIC_ORDER_DRINKS } from '../../constants';
 
 export function PublicCheckoutPage() {
-  const params = useParams();
-  const slug = params.slug || '';
-
   const location = useLocation();
   const pathSegments = location.pathname.split('/');
   const section = pathSegments[1];
@@ -23,6 +20,13 @@ export function PublicCheckoutPage() {
     (sum, service) => sum + service.total,
     0
   );
+
+  const titles = {
+    "order-drinks": "Confirm & Order",
+    "default": "Confirm & Pay"
+  }
+
+  const title = titles[section as 'default'] || titles.default
 
   if (isLoading) {
     return <h1>Loading....</h1>;
@@ -41,7 +45,7 @@ export function PublicCheckoutPage() {
           <div className="col-span-8 w-full ">
             <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 px-0 sm:p-6 xl:p-8">
               <h2 className="text-3xl lg:text-4xl font-semibold">
-                Confirm & Pay
+                {title}
               </h2>
               <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
               <Text className="text-gray-500 mt-2">
@@ -58,6 +62,7 @@ export function PublicCheckoutPage() {
               <CheckoutSummary
                 servicesSummary={servicesSummary}
                 total={total}
+                noIncludeFee={true}
               />
               <CheckoutPayment
                 servicesSummary={servicesSummary}

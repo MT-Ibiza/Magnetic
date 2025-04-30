@@ -8,15 +8,20 @@ import {
 interface Props {
   servicesSummary: ServiceTotal[];
   total: number;
+  noIncludeFee?: boolean;
 }
 
 function CheckoutSummary(props: Props) {
-  const { servicesSummary: services, total: totalServices } = props;
+  const {
+    servicesSummary: services,
+    total: totalServices,
+    noIncludeFee,
+  } = props;
 
-  const vat = totalServices - (totalServices / 1.21);
+  const vat = totalServices - totalServices / 1.21;
   const vatFixed = centsFixed(vat);
   const fee = totalServices * 0.02;
-  const total = totalServices + fee;
+  const total = noIncludeFee ? totalServices : totalServices + fee;
 
   return (
     <div className="flex flex-col space-y-4">
@@ -43,14 +48,16 @@ function CheckoutSummary(props: Props) {
             {centsToEurosWithCurrency(vatFixed)}
           </Text.TextNumeric>
         </div>
-        <div className="flex justify-between">
-          <Text className="text-neutral-600 dark:text-neutral-300">
-            Service Fee (2%)
-          </Text>
-          <Text.TextNumeric className="text-neutral-600 dark:text-neutral-300">
-            {centsToEurosWithCurrency(fee)}
-          </Text.TextNumeric>
-        </div>
+        {!!noIncludeFee === false && (
+          <div className="flex justify-between">
+            <Text className="text-neutral-600 dark:text-neutral-300">
+              Service Fee (2%)
+            </Text>
+            <Text.TextNumeric className="text-neutral-600 dark:text-neutral-300">
+              {centsToEurosWithCurrency(fee)}
+            </Text.TextNumeric>
+          </div>
+        )}
       </div>
       <div className="flex justify-between font-semibold mt-3">
         <h1>Total</h1>
