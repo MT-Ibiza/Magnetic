@@ -1,6 +1,7 @@
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
-import ical from 'ical';
+import ical from 'node-ical';
+
 import pLimit from 'p-limit';
 
 export async function POST() {
@@ -28,29 +29,39 @@ export async function POST() {
     const tasks = boats.map((boat) =>
       limit(async () => {
         try {
-          const response = await fetch(boat.iCal as string, {
-            credentials: 'omit',
-          });
+          const events = await ical.async.fromURL(boat.iCal as string);
+          const calendarEvents = Object.values(events).reduce(
+            (acc, calendarEvent) => {
+              if (calendarEvent.type === 'VEVENT') {
+                acc.push({
+                  boatId: boat.id,
+                  startDate: calendarEvent.start
+                    ? new Date(calendarEvent.start)
+                    : new Date(),
+                  endDate: calendarEvent.end
+                    ? new Date(calendarEvent.end)
+                    : new Date(),
+                  text: `${calendarEvent.summary}`,
+                  source: 'ical',
+                });
+              }
+              return acc;
+            },
+            [] as {
+              startDate: Date;
+              endDate: Date;
+              source: string;
+              text: string;
+              boatId: number;
+            }[]
+          );
 
-          if (!response.ok) {
-            console.log(`Fetching iCal for boat ${boat.secondName} failed`, response.status, response.statusText);
-            return;
+          if (calendarEvents.length === 0) {
+            console.log(
+              `Boat ${boat.secondName}, Total events: ${calendarEvents.length}`
+            );
+            console.log(`iCal: ${boat.iCal} `);
           }
-
-          const iCalData = await response.text();
-          const events = ical.parseICS(iCalData);
-
-          const calendarEvents = Object.values(events)
-            .filter(
-              (event) => event?.type === 'VEVENT' && event.start && event.end
-            )
-            .map((event) => ({
-              boatId: boat.id,
-              startDate: event.start ? new Date(event.start) : new Date(),
-              endDate: event.end ? new Date(event.end) : new Date(),
-              text: event.summary || '',
-              source: 'ical',
-            }));
 
           await db.boatAvailability.deleteMany({
             where: { boatId: boat.id, source: 'ical' },
@@ -62,7 +73,10 @@ export async function POST() {
 
           updatedBoats++;
         } catch (error) {
-          console.error(`Error processing boat ${boat.id} (${boat.secondName}):`, error);
+          console.error(
+            `Error processing boat ${boat.id} (${boat.secondName}):`,
+            error
+          );
         }
       })
     );

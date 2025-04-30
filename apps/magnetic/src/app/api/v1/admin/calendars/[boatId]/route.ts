@@ -1,6 +1,6 @@
 import db from 'apps/magnetic/src/app/libs/db';
 import { NextResponse } from 'next/server';
-import ical from 'ical';
+import ical from 'node-ical';
 
 export async function POST(
   request: Request,
@@ -28,32 +28,23 @@ export async function POST(
       return new Response('No iCal URL found');
     }
 
-    const response = await fetch(boat.iCal);
-    if (!response.ok) {
-      return new Response('Failed to fetch iCal data', {
-        status: 500,
-      });
-    }
+    const events = await ical.async.fromURL(boat.iCal);
 
-    const iCalData = await response.text();
-    const events = ical.parseICS(iCalData);
-
-    const availability = Object.values(events)
-      .filter((event) => event.type === 'VEVENT')
-      .map((event) => {
-        if (!event.start || !event.end) {
-          throw new Error(
-            `Invalid event: missing start or end for boatId ${boat.id}`
-          );
-        }
-        return {
+    const availability = Object.values(events).reduce((acc, calendarEvent) => {
+      if (calendarEvent.type === 'VEVENT') {
+        acc.push({
           boatId: boat.id,
-          startDate: new Date(event.start),
-          endDate: new Date(event.end),
-          text: `${event.summary}`,
+          startDate: calendarEvent.start
+            ? new Date(calendarEvent.start)
+            : new Date(),
+          endDate: calendarEvent.end ? new Date(calendarEvent.end) : new Date(),
+          text: `${calendarEvent.summary}`,
           source: 'ical',
-        };
-      });
+        });
+      }
+      return acc;
+    }, [] as { startDate: Date; endDate: Date; source: string; text: string; boatId: number }[]);
+
     console.log('calendarEvents: ', availability.length)
 
     await db.boatAvailability.deleteMany({
