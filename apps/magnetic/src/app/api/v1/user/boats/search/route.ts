@@ -94,6 +94,13 @@ export async function GET(request: NextRequest) {
           },
         },
       },
+      orderBy: {
+        boatAttributes: sizeLessThan ? {
+          sizeInFeet: 'desc'
+        }:{
+          capacity: 'desc'
+        }
+      }
     });
 
     const monthSelected = startDate ? getNumberMonth(startDate) : undefined;
