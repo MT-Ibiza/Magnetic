@@ -47,12 +47,14 @@ export async function POST(
 
     console.log('calendarEvents: ', availability.length)
 
-    await db.boatAvailability.deleteMany({
-      where: {
-        boatId: boat.id,
-        source: 'ical',
-      },
-    });
+    if (availability.length > 0) {
+      await db.boatAvailability.deleteMany({
+        where: {
+          boatId: boat.id,
+          source: 'ical',
+        },
+      });
+    }
 
     for (const event of availability) {
       const conflicts = await db.boatAvailability.findMany({

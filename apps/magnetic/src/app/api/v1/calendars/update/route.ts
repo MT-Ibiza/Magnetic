@@ -63,9 +63,12 @@ export async function POST() {
             console.log(`iCal: ${boat.iCal} `);
           }
 
-          await db.boatAvailability.deleteMany({
-            where: { boatId: boat.id, source: 'ical' },
-          });
+          if (calendarEvents.length > 0) {
+            await db.boatAvailability.deleteMany({
+              where: { boatId: boat.id, source: 'ical' },
+            });
+          }
+
 
           if (calendarEvents.length > 0) {
             await db.boatAvailability.createMany({ data: calendarEvents });
