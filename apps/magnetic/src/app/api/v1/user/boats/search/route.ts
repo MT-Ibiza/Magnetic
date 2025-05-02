@@ -95,11 +95,7 @@ export async function GET(request: NextRequest) {
         },
       },
       orderBy: {
-        boatAttributes: sizeLessThan ? {
-          sizeInFeet: 'desc'
-        }:{
-          capacity: 'desc'
-        }
+        position: 'asc'
       }
     });
 
